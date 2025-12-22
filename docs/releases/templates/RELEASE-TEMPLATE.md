@@ -14,31 +14,56 @@ Nothing is developed unless it is explicitly included in a version.
 > One clear sentence answering:  
 > **What problem does this version solve?**
 
+### Summary
+> A brief paragraph explaining the version in more detail:
+> - Main changes or features introduced
+> - Value or impact for the system or user
+> - Any high-level context relevant for understanding the version
+
 ---
 
 ## Scope (What’s Included)
 
-### Domain
+### Backend
+#### Domain
 - 
 - 
 - 
 
-### Application / Use Cases
+#### Application / Use Cases
 - 
 - 
 - 
 
-### Infrastructure
+#### Infrastructure
 - 
 - 
 - 
 
-### Read Model / Projections
+#### Read Model / Projections
 - 
 - 
 - 
 
-### API / Interfaces
+#### API / Interfaces (GraphQL / REST)
+- 
+- 
+- 
+
+---
+
+### Frontend
+#### Views / UI
+- 
+- 
+- 
+
+#### Actions / Features
+- 
+- 
+- 
+
+#### API Integration
 - 
 - 
 - 
@@ -97,21 +122,5 @@ Ideas or requirements identified during this version but postponed:
 
 ---
 
-## Changelog (Filled on Release)
-
-### Added
-- 
-
-### Changed
-- 
-
-### Fixed
-- 
-
----
-
 ## Release Tag
 - `vX.Y.Z`
-
-## Release Date
-- YYYY-MM-DD
