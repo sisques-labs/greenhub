@@ -1,6 +1,6 @@
 # Release Management
 
-## Version: Entity Editing
+## Entity Editing
 
 ### Status
 - ⏳ Planned
