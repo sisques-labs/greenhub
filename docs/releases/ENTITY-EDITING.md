@@ -1,6 +1,6 @@
 # Release Management
 
-## Version: v0.2.0
+## Version: Entity Editing
 
 ### Status
 - ⏳ Planned
@@ -119,9 +119,4 @@ Ideas or requirements identified during this version but postponed:
 - Rich text editing for notes/metadata
 - Photo/media management
 - Undo/redo functionality
-
----
-
-## Release Tag
-- `v0.2.0`
 
