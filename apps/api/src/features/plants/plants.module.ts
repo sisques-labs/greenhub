@@ -13,7 +13,16 @@ import { AssertPlantExistsService } from '@/features/plants/application/services
 import { AssertPlantViewModelExistsService } from '@/features/plants/application/services/assert-plant-view-model-exists/assert-plant-view-model-exists.service';
 import { PlantAggregateFactory } from '@/features/plants/domain/factories/plant-aggregate/plant-aggregate.factory';
 import { PlantViewModelFactory } from '@/features/plants/domain/factories/plant-view-model/plant-view-model.factory';
+import { PLANT_READ_REPOSITORY_TOKEN } from '@/features/plants/domain/repositories/plant-read/plant-read.repository';
+import { PLANT_WRITE_REPOSITORY_TOKEN } from '@/features/plants/domain/repositories/plant-write/plant-write.repository';
+import { PlantMongoDBMapper } from '@/features/plants/infrastructure/database/mongodb/mappers/plant-mongodb.mapper';
+import { PlantMongoRepository } from '@/features/plants/infrastructure/database/mongodb/repositories/plant-mongodb.repository';
+import { PlantTypeormEntity } from '@/features/plants/infrastructure/database/typeorm/entities/plant-typeorm.entity';
+import { PlantTypeormMapper } from '@/features/plants/infrastructure/database/typeorm/mappers/plant-typeorm.mapper';
+import { PlantTypeormRepository } from '@/features/plants/infrastructure/database/typeorm/repositories/plant-typeorm.repository';
+import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 const SERVICES = [AssertPlantExistsService, AssertPlantViewModelExistsService];
 
@@ -39,15 +48,32 @@ const EVENT_HANDLERS = [
 
 const FACTORIES = [PlantAggregateFactory, PlantViewModelFactory];
 
+const MAPPERS = [PlantTypeormMapper, PlantMongoDBMapper];
+
+const REPOSITORIES = [
+  {
+    provide: PLANT_WRITE_REPOSITORY_TOKEN,
+    useClass: PlantTypeormRepository,
+  },
+  {
+    provide: PLANT_READ_REPOSITORY_TOKEN,
+    useClass: PlantMongoRepository,
+  },
+];
+
+const ENTITIES = [PlantTypeormEntity];
+
 @Module({
-  imports: [],
+  imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
   controllers: [],
   providers: [
     ...SERVICES,
     ...QUERY_HANDLERS,
     ...COMMAND_HANDLERS,
     ...EVENT_HANDLERS,
+    ...REPOSITORIES,
     ...FACTORIES,
+    ...MAPPERS,
   ],
 })
 export class PlantsModule {}
