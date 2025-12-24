@@ -1,0 +1,214 @@
+import { IPlantCreateDto } from '@/features/plants/domain/dtos/entities/plant-create/plant-create.dto';
+import { IPlantUpdateDto } from '@/features/plants/domain/dtos/entities/plant-update/plant-update.dto';
+import { PlantPrimitives } from '@/features/plants/domain/primitives/plant.primitives';
+import { PlantNameValueObject } from '@/features/plants/domain/value-objects/plant-name/plant-name.vo';
+import { PlantNotesValueObject } from '@/features/plants/domain/value-objects/plant-notes/plant-notes.vo';
+import { PlantPlantedDateValueObject } from '@/features/plants/domain/value-objects/plant-planted-date/plant-planted-date.vo';
+import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/plant-species/plant-species.vo';
+import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
+import { BaseAggregate } from '@/shared/domain/aggregates/base-aggregate/base.aggregate';
+import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
+import { PlantDeletedEvent } from '@/shared/domain/events/features/plants/plant-deleted/plant-deleted.event';
+import { PlantStatusChangedEvent } from '@/shared/domain/events/features/plants/plant-status-changed/plant-status-changed.event';
+import { PlantUpdatedEvent } from '@/shared/domain/events/features/plants/plant-updated/plant-updated.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+
+/**
+ * Aggregate root for the Plant domain entity.
+ *
+ * @remarks
+ * Encapsulates all domain logic for a plant entity, manages its lifecycle,
+ * and generates domain events corresponding to changes in the plant.
+ */
+export class PlantAggregate extends BaseAggregate {
+  private readonly _id: PlantUuidValueObject;
+  private _name: PlantNameValueObject;
+  private _species: PlantSpeciesValueObject;
+  private _plantedDate: PlantPlantedDateValueObject | null;
+  private _notes: PlantNotesValueObject | null;
+  private _status: PlantStatusValueObject;
+
+  /**
+   * Creates an instance of PlantAggregate.
+   *
+   * @param props - Properties used to initialize the plant aggregate.
+   * @param generateEvent - Whether to emit a PlantCreatedEvent. Defaults to `true`.
+   */
+  constructor(props: IPlantCreateDto, generateEvent: boolean = true) {
+    super(props.createdAt, props.updatedAt);
+
+    // Initialize value objects from input DTO
+    this._id = props.id;
+    this._name = props.name;
+    this._species = props.species;
+    this._plantedDate = props.plantedDate;
+    this._notes = props.notes;
+    this._status = props.status;
+
+    // Optionally emit the creation domain event
+    if (generateEvent) {
+      this.apply(
+        new PlantCreatedEvent(
+          {
+            aggregateId: this._id.value,
+            aggregateType: PlantAggregate.name,
+            eventType: PlantCreatedEvent.name,
+          },
+          this.toPrimitives(),
+        ),
+      );
+    }
+  }
+
+  /**
+   * Updates plant properties.
+   *
+   * @param props - Properties to update on the plant aggregate.
+   * @param generateEvent - Whether to emit a PlantUpdatedEvent. Defaults to `true`.
+   */
+  public update(props: IPlantUpdateDto, generateEvent: boolean = true) {
+    // Update only properties provided (including explicit nulls).
+    this._name = props.name !== undefined ? props.name : this._name;
+    this._species = props.species !== undefined ? props.species : this._species;
+    this._plantedDate =
+      props.plantedDate !== undefined ? props.plantedDate : this._plantedDate;
+    this._notes = props.notes !== undefined ? props.notes : this._notes;
+    this._status = props.status !== undefined ? props.status : this._status;
+
+    this._updatedAt = new DateValueObject(new Date());
+
+    // Optionally emit the update domain event
+    if (generateEvent) {
+      this.apply(
+        new PlantUpdatedEvent(
+          {
+            aggregateId: this._id.value,
+            aggregateType: PlantAggregate.name,
+            eventType: PlantUpdatedEvent.name,
+          },
+          this.toPrimitives(),
+        ),
+      );
+    }
+  }
+
+  /**
+   * Marks the plant as deleted and emits a PlantDeletedEvent if specified.
+   *
+   * @param generateEvent - Whether to emit a PlantDeletedEvent. Defaults to `true`.
+   */
+  public delete(generateEvent: boolean = true) {
+    if (generateEvent) {
+      this.apply(
+        new PlantDeletedEvent(
+          {
+            aggregateId: this._id.value,
+            aggregateType: PlantAggregate.name,
+            eventType: PlantDeletedEvent.name,
+          },
+          this.toPrimitives(),
+        ),
+      );
+    }
+  }
+
+  /**
+   * Changes the status of the plant and emits a PlantStatusChangedEvent if specified.
+   *
+   * @param status - The new plant status value object.
+   * @param generateEvent - Whether to emit a PlantStatusChangedEvent. Defaults to `true`.
+   */
+  public changeStatus(
+    status: PlantStatusValueObject,
+    generateEvent: boolean = true,
+  ) {
+    this._status = status;
+    this._updatedAt = new DateValueObject(new Date());
+
+    if (generateEvent) {
+      this.apply(
+        new PlantStatusChangedEvent(
+          {
+            aggregateId: this._id.value,
+            aggregateType: PlantAggregate.name,
+            eventType: PlantStatusChangedEvent.name,
+          },
+          this.toPrimitives(),
+        ),
+      );
+    }
+  }
+
+  /**
+   * Gets the unique identifier of the plant.
+   *
+   * @returns The plant's unique identifier value object.
+   */
+  public get id(): PlantUuidValueObject {
+    return this._id;
+  }
+
+  /**
+   * Gets the name of the plant.
+   *
+   * @returns The plant's name value object.
+   */
+  public get name(): PlantNameValueObject {
+    return this._name;
+  }
+
+  /**
+   * Gets the species of the plant.
+   *
+   * @returns The species value object.
+   */
+  public get species(): PlantSpeciesValueObject {
+    return this._species;
+  }
+
+  /**
+   * Gets the planted date of the plant, or null if not set.
+   *
+   * @returns The planted date value object or null.
+   */
+  public get plantedDate(): PlantPlantedDateValueObject | null {
+    return this._plantedDate;
+  }
+
+  /**
+   * Gets the notes associated with the plant, or null if not set.
+   *
+   * @returns The notes value object or null.
+   */
+  public get notes(): PlantNotesValueObject | null {
+    return this._notes;
+  }
+
+  /**
+   * Gets the status of the plant.
+   *
+   * @returns The status value object.
+   */
+  public get status(): PlantStatusValueObject {
+    return this._status;
+  }
+
+  /**
+   * Converts the plant aggregate to a primitive object representation.
+   *
+   * @returns An object containing primitive values representing the plant.
+   */
+  public toPrimitives(): PlantPrimitives {
+    return {
+      id: this._id.value,
+      name: this._name.value,
+      species: this._species.value,
+      plantedDate: this._plantedDate ? this._plantedDate.value : null,
+      notes: this._notes ? this._notes.value : null,
+      status: this._status.value,
+      createdAt: this._createdAt.value,
+      updatedAt: this._updatedAt.value,
+    };
+  }
+}
