@@ -6,8 +6,8 @@ import { PlantCreatedEventHandler } from '@/features/plants/application/event-ha
 import { PlantDeletedEventHandler } from '@/features/plants/application/event-handlers/plant-deleted/plant-deleted.event-handler';
 import { PlantStatusChangedEventHandler } from '@/features/plants/application/event-handlers/plant-status-changed/plant-status-changed.event-handler';
 import { PlantUpdatedEventHandler } from '@/features/plants/application/event-handlers/plant-updated/plant-updated.event-handler';
-import { FindPlantsByCriteriaQueryHandler } from '@/features/plants/application/queries/find-plants-by-criteria/find-plants-by-criteria.query-handler';
 import { FindPlantByIdQueryHandler } from '@/features/plants/application/queries/find-plant-by-id/find-plant-by-id.query-handler';
+import { FindPlantsByCriteriaQueryHandler } from '@/features/plants/application/queries/find-plants-by-criteria/find-plants-by-criteria.query-handler';
 import { PlantViewModelFindByIdQueryHandler } from '@/features/plants/application/queries/plant-view-model-find-by-id/plant-view-model-find-by-id.query-handler';
 import { AssertPlantExistsService } from '@/features/plants/application/services/assert-plant-exists/assert-plant-exists.service';
 import { AssertPlantViewModelExistsService } from '@/features/plants/application/services/assert-plant-view-model-exists/assert-plant-view-model-exists.service';
@@ -20,9 +20,14 @@ import { PlantMongoRepository } from '@/features/plants/infrastructure/database/
 import { PlantTypeormEntity } from '@/features/plants/infrastructure/database/typeorm/entities/plant-typeorm.entity';
 import { PlantTypeormMapper } from '@/features/plants/infrastructure/database/typeorm/mappers/plant-typeorm.mapper';
 import { PlantTypeormRepository } from '@/features/plants/infrastructure/database/typeorm/repositories/plant-typeorm.repository';
+import { PlantGraphQLMapper } from '@/features/plants/transport/graphql/mappers/plant.mapper';
+import { PlantMutationsResolver } from '@/features/plants/transport/graphql/resolvers/plant-mutations.resolver';
+import { PlantQueriesResolver } from '@/features/plants/transport/graphql/resolvers/plant-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+const RESOLVERS = [PlantQueriesResolver, PlantMutationsResolver];
 
 const SERVICES = [AssertPlantExistsService, AssertPlantViewModelExistsService];
 
@@ -48,7 +53,7 @@ const EVENT_HANDLERS = [
 
 const FACTORIES = [PlantAggregateFactory, PlantViewModelFactory];
 
-const MAPPERS = [PlantTypeormMapper, PlantMongoDBMapper];
+const MAPPERS = [PlantTypeormMapper, PlantMongoDBMapper, PlantGraphQLMapper];
 
 const REPOSITORIES = [
   {
@@ -67,6 +72,7 @@ const ENTITIES = [PlantTypeormEntity];
   imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
   controllers: [],
   providers: [
+    ...RESOLVERS,
     ...SERVICES,
     ...QUERY_HANDLERS,
     ...COMMAND_HANDLERS,
