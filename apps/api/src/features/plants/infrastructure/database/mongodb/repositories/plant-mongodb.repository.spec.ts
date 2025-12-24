@@ -1,23 +1,22 @@
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
-import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
 import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
 import { PlantMongoDbDto } from '@/features/plants/infrastructure/database/mongodb/dtos/plant-mongodb.dto';
 import { PlantMongoDBMapper } from '@/features/plants/infrastructure/database/mongodb/mappers/plant-mongodb.mapper';
 import { PlantMongoRepository } from '@/features/plants/infrastructure/database/mongodb/repositories/plant-mongodb.repository';
-import { MongoTenantService } from '@/shared/infrastructure/database/mongodb/services/mongo-tenant/mongo-tenant.service';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 import { TenantContextService } from '@/shared/infrastructure/services/tenant-context/tenant-context.service';
-import { Db, Collection } from 'mongodb';
+import { Collection } from 'mongodb';
 
 describe('PlantMongoRepository', () => {
   let repository: PlantMongoRepository;
-  let mockMongoTenantService: jest.Mocked<MongoTenantService>;
+  let mockMongoMasterService: jest.Mocked<MongoMasterService>;
   let mockTenantContextService: jest.Mocked<TenantContextService>;
   let mockPlantMongoDBMapper: jest.Mocked<PlantMongoDBMapper>;
   let mockCollection: jest.Mocked<Collection>;
-  let mockDb: jest.Mocked<Db>;
 
   beforeEach(() => {
     mockCollection = {
@@ -28,13 +27,9 @@ describe('PlantMongoRepository', () => {
       countDocuments: jest.fn(),
     } as unknown as jest.Mocked<Collection>;
 
-    mockDb = {
-      collection: jest.fn().mockReturnValue(mockCollection),
-    } as unknown as jest.Mocked<Db>;
-
-    mockMongoTenantService = {
-      getTenantDatabase: jest.fn().mockResolvedValue(mockDb),
-    } as unknown as jest.Mocked<MongoTenantService>;
+    mockMongoMasterService = {
+      getCollection: jest.fn().mockReturnValue(mockCollection),
+    } as unknown as jest.Mocked<MongoMasterService>;
 
     mockTenantContextService = {
       getTenantIdOrThrow: jest.fn().mockReturnValue('test-tenant-123'),
@@ -46,7 +41,7 @@ describe('PlantMongoRepository', () => {
     } as unknown as jest.Mocked<PlantMongoDBMapper>;
 
     repository = new PlantMongoRepository(
-      mockMongoTenantService,
+      mockMongoMasterService,
       mockTenantContextService,
       mockPlantMongoDBMapper,
     );
@@ -64,6 +59,7 @@ describe('PlantMongoRepository', () => {
       const plantedDate = new Date('2024-01-15');
       const mongoDoc: PlantMongoDbDto = {
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -90,11 +86,16 @@ describe('PlantMongoRepository', () => {
       const result = await repository.findById(plantId);
 
       expect(result).toBe(viewModel);
-      expect(mockMongoTenantService.getTenantDatabase).toHaveBeenCalled();
-      expect(mockDb.collection).toHaveBeenCalledWith('plants');
-      expect(mockCollection.findOne).toHaveBeenCalledWith({ id: plantId });
+      expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
+        'plants',
+      );
+      expect(mockCollection.findOne).toHaveBeenCalledWith({
+        id: plantId,
+        tenantId: 'test-tenant-123',
+      });
       expect(mockPlantMongoDBMapper.toViewModel).toHaveBeenCalledWith({
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -114,7 +115,10 @@ describe('PlantMongoRepository', () => {
       const result = await repository.findById(plantId);
 
       expect(result).toBeNull();
-      expect(mockCollection.findOne).toHaveBeenCalledWith({ id: plantId });
+      expect(mockCollection.findOne).toHaveBeenCalledWith({
+        id: plantId,
+        tenantId: 'test-tenant-123',
+      });
       expect(mockPlantMongoDBMapper.toViewModel).not.toHaveBeenCalled();
     });
 
@@ -125,7 +129,10 @@ describe('PlantMongoRepository', () => {
       mockCollection.findOne.mockRejectedValue(mongoError);
 
       await expect(repository.findById(plantId)).rejects.toThrow(mongoError);
-      expect(mockCollection.findOne).toHaveBeenCalledWith({ id: plantId });
+      expect(mockCollection.findOne).toHaveBeenCalledWith({
+        id: plantId,
+        tenantId: 'test-tenant-123',
+      });
     });
   });
 
@@ -139,6 +146,7 @@ describe('PlantMongoRepository', () => {
       const mongoDocs: PlantMongoDbDto[] = [
         {
           id: '123e4567-e89b-12d3-a456-426614174000',
+          tenantId: 'test-tenant-123',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: plantedDate,
@@ -149,6 +157,7 @@ describe('PlantMongoRepository', () => {
         },
         {
           id: '223e4567-e89b-12d3-a456-426614174001',
+          tenantId: 'test-tenant-123',
           name: 'Basil',
           species: 'Ocimum basilicum',
           plantedDate: null,
@@ -163,6 +172,7 @@ describe('PlantMongoRepository', () => {
         (doc) =>
           new PlantViewModel({
             id: doc.id,
+            tenantId: doc.tenantId,
             name: doc.name,
             species: doc.species,
             plantedDate: doc.plantedDate,
@@ -244,6 +254,7 @@ describe('PlantMongoRepository', () => {
       const mongoDocs: PlantMongoDbDto[] = [
         {
           id: '123e4567-e89b-12d3-a456-426614174000',
+          tenantId: 'test-tenant-123',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: new Date('2024-01-15'),
@@ -256,6 +267,7 @@ describe('PlantMongoRepository', () => {
 
       const viewModel = new PlantViewModel({
         id: mongoDocs[0].id,
+        tenantId: mongoDocs[0].tenantId,
         name: mongoDocs[0].name,
         species: mongoDocs[0].species,
         plantedDate: mongoDocs[0].plantedDate,
@@ -296,6 +308,7 @@ describe('PlantMongoRepository', () => {
       const mongoDocs: PlantMongoDbDto[] = [
         {
           id: '123e4567-e89b-12d3-a456-426614174000',
+          tenantId: 'test-tenant-123',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -308,6 +321,7 @@ describe('PlantMongoRepository', () => {
 
       const viewModel = new PlantViewModel({
         id: mongoDocs[0].id,
+        tenantId: mongoDocs[0].tenantId,
         name: mongoDocs[0].name,
         species: mongoDocs[0].species,
         plantedDate: mongoDocs[0].plantedDate,
@@ -375,6 +389,7 @@ describe('PlantMongoRepository', () => {
 
       const mongoData: PlantMongoDbDto = {
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -395,14 +410,15 @@ describe('PlantMongoRepository', () => {
 
       await repository.save(viewModel);
 
-      expect(mockMongoTenantService.getTenantDatabase).toHaveBeenCalled();
-      expect(mockDb.collection).toHaveBeenCalledWith('plants');
+      expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
+        'plants',
+      );
       expect(mockPlantMongoDBMapper.toMongoData).toHaveBeenCalledWith(
         viewModel,
       );
       expect(mockCollection.replaceOne).toHaveBeenCalledWith(
-        { id: plantId },
-        mongoData,
+        { id: plantId, tenantId: 'test-tenant-123' },
+        { ...mongoData, tenantId: 'test-tenant-123' },
         { upsert: true },
       );
     });
@@ -425,6 +441,7 @@ describe('PlantMongoRepository', () => {
 
       const mongoData: PlantMongoDbDto = {
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -457,9 +474,13 @@ describe('PlantMongoRepository', () => {
 
       await repository.delete(plantId);
 
-      expect(mockMongoTenantService.getTenantDatabase).toHaveBeenCalled();
-      expect(mockDb.collection).toHaveBeenCalledWith('plants');
-      expect(mockCollection.deleteOne).toHaveBeenCalledWith({ id: plantId });
+      expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
+        'plants',
+      );
+      expect(mockCollection.deleteOne).toHaveBeenCalledWith({
+        id: plantId,
+        tenantId: 'test-tenant-123',
+      });
       expect(mockCollection.deleteOne).toHaveBeenCalledTimes(1);
     });
 
@@ -470,7 +491,10 @@ describe('PlantMongoRepository', () => {
       mockCollection.deleteOne.mockRejectedValue(mongoError);
 
       await expect(repository.delete(plantId)).rejects.toThrow(mongoError);
-      expect(mockCollection.deleteOne).toHaveBeenCalledWith({ id: plantId });
+      expect(mockCollection.deleteOne).toHaveBeenCalledWith({
+        id: plantId,
+        tenantId: 'test-tenant-123',
+      });
     });
   });
 });

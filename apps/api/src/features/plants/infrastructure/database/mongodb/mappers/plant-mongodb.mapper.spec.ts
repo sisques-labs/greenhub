@@ -31,6 +31,7 @@ describe('PlantMongoDBMapper', () => {
       const plantedDate = new Date('2024-01-15');
       const mongoDoc: PlantMongoDbDto = {
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -59,6 +60,7 @@ describe('PlantMongoDBMapper', () => {
       expect(result).toBe(mockViewModel);
       expect(mockPlantViewModelFactory.create).toHaveBeenCalledWith({
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -76,6 +78,7 @@ describe('PlantMongoDBMapper', () => {
       const updatedAt = new Date('2024-01-02');
       const mongoDoc: PlantMongoDbDto = {
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -104,6 +107,7 @@ describe('PlantMongoDBMapper', () => {
       expect(result).toBe(mockViewModel);
       expect(mockPlantViewModelFactory.create).toHaveBeenCalledWith({
         id: plantId,
+        tenantId: 'test-tenant-123',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -128,6 +132,7 @@ describe('PlantMongoDBMapper', () => {
       testCases.forEach((status) => {
         const mongoDoc: PlantMongoDbDto = {
           id: plantId,
+          tenantId: 'test-tenant-123',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -183,6 +188,7 @@ describe('PlantMongoDBMapper', () => {
 
       expect(result).toEqual({
         id: plantId,
+        tenantId: null,
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -213,6 +219,7 @@ describe('PlantMongoDBMapper', () => {
 
       expect(result).toEqual({
         id: plantId,
+        tenantId: null,
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
