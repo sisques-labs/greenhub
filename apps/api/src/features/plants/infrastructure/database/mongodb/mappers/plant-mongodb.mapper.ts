@@ -22,13 +22,14 @@ export class PlantMongoDBMapper {
    * @param doc - The MongoDB document to convert
    * @returns The plant view model
    */
-  toViewModel(doc: PlantMongoDbDto): PlantViewModel {
+  public toViewModel(doc: PlantMongoDbDto): PlantViewModel {
     this.logger.log(
       `Converting MongoDB document to plant view model with id ${doc.id}`,
     );
 
     return this.plantViewModelFactory.create({
       id: doc.id,
+      tenantId: doc.tenantId,
       name: doc.name,
       species: doc.species,
       plantedDate: doc.plantedDate,
@@ -47,13 +48,14 @@ export class PlantMongoDBMapper {
    * @param plantViewModel - The plant view model to convert
    * @returns The MongoDB document
    */
-  toMongoData(plantViewModel: PlantViewModel): PlantMongoDbDto {
+  public toMongoData(plantViewModel: PlantViewModel): PlantMongoDbDto {
     this.logger.log(
       `Converting plant view model with id ${plantViewModel.id} to MongoDB document`,
     );
 
     return {
       id: plantViewModel.id,
+      tenantId: plantViewModel.tenantId,
       name: plantViewModel.name,
       species: plantViewModel.species,
       plantedDate: plantViewModel.plantedDate,

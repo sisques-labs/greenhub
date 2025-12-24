@@ -1,5 +1,6 @@
 import { IPlantCreateViewModelDto } from '@/features/plants/domain/dtos/view-models/plant-create/plant-create-view-model.dto';
 import { IPlantUpdateViewModelDto } from '@/features/plants/domain/dtos/view-models/plant-update/plant-update-view-model.dto';
+import { BaseViewModelWithTenant } from '@/shared/domain/view-models/base-view-model-with-tenant/base-view-model-with-tenant';
 
 /**
  * Represents a plant view model for the presentation layer.
@@ -24,15 +25,12 @@ import { IPlantUpdateViewModelDto } from '@/features/plants/domain/dtos/view-mod
  * });
  * ```
  */
-export class PlantViewModel {
-  private readonly _id: string;
+export class PlantViewModel extends BaseViewModelWithTenant {
   private _name: string;
   private _species: string;
   private _plantedDate: Date | null;
   private _notes: string | null;
   private _status: string;
-  private _createdAt: Date;
-  private _updatedAt: Date;
 
   /**
    * Creates a new PlantViewModel instance.
@@ -40,23 +38,12 @@ export class PlantViewModel {
    * @param props - The plant creation view model data used for initialization
    */
   constructor(props: IPlantCreateViewModelDto) {
-    this._id = props.id;
+    super(props);
     this._name = props.name;
     this._species = props.species;
     this._plantedDate = props.plantedDate;
     this._notes = props.notes;
     this._status = props.status;
-    this._createdAt = props.createdAt;
-    this._updatedAt = props.updatedAt;
-  }
-
-  /**
-   * Gets the plant's unique identifier.
-   *
-   * @returns The plant's id
-   */
-  public get id(): string {
-    return this._id;
   }
 
   /**
@@ -105,15 +92,6 @@ export class PlantViewModel {
   }
 
   /**
-   * Gets the creation date of the plant entity.
-   *
-   * @returns The date the plant was created
-   */
-  public get createdAt(): Date {
-    return this._createdAt;
-  }
-
-  /**
    * Gets the last update date of the plant entity.
    *
    * @returns The date the plant was last updated
@@ -145,6 +123,8 @@ export class PlantViewModel {
       updateData.notes !== undefined ? updateData.notes : this._notes;
     this._status =
       updateData.status !== undefined ? updateData.status : this._status;
-    this._updatedAt = new Date();
+
+    // TODO: Use the update method from the base class
+    // this._updatedAt = new Date();
   }
 }

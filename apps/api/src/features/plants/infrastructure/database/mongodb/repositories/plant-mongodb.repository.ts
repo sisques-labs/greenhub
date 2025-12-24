@@ -4,7 +4,7 @@ import { PlantMongoDBMapper } from '@/features/plants/infrastructure/database/mo
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { BaseMongoTenantRepository } from '@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-tenant/base-mongo-tenant.repository';
-import { MongoTenantService } from '@/shared/infrastructure/database/mongodb/services/mongo-tenant/mongo-tenant.service';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 import { TenantContextService } from '@/shared/infrastructure/services/tenant-context/tenant-context.service';
 import { Injectable, Logger, Scope } from '@nestjs/common';
 
@@ -24,11 +24,11 @@ export class PlantMongoRepository
   private readonly collectionName = 'plants';
 
   constructor(
-    mongoTenantService: MongoTenantService,
+    mongoMasterService: MongoMasterService,
     tenantContextService: TenantContextService,
     private readonly plantMongoDBMapper: PlantMongoDBMapper,
   ) {
-    super(mongoTenantService, tenantContextService);
+    super(mongoMasterService, tenantContextService);
     this.logger = new Logger(PlantMongoRepository.name);
   }
 
@@ -41,13 +41,13 @@ export class PlantMongoRepository
   async findById(id: string): Promise<PlantViewModel | null> {
     this.logger.log(`Finding plant by id: ${id}`);
 
-    const db = await this.getTenantDatabase();
-    const collection = db.collection(this.collectionName);
-    const plantViewModel = await collection.findOne({ id });
+    const collection = this.getCollection(this.collectionName);
+    const plantViewModel = await this.findOneById(collection, id);
 
     return plantViewModel
       ? this.plantMongoDBMapper.toViewModel({
           id: plantViewModel.id,
+          tenantId: plantViewModel.tenantId,
           name: plantViewModel.name,
           species: plantViewModel.species,
           plantedDate: plantViewModel.plantedDate,
@@ -70,17 +70,16 @@ export class PlantMongoRepository
   ): Promise<PaginatedResult<PlantViewModel>> {
     this.logger.log(`Finding plants by criteria: ${JSON.stringify(criteria)}`);
 
-    const db = await this.getTenantDatabase();
-    const collection = db.collection(this.collectionName);
+    const collection = this.getCollection(this.collectionName);
 
-    // 01: Build MongoDB query from criteria
-    const mongoQuery = this.buildMongoQuery(criteria);
+    // 01: Build MongoDB query from criteria with tenant filter
+    const mongoQuery = this.buildMongoQueryWithTenant(criteria);
     const sortQuery = this.buildSortQuery(criteria);
 
     // 02: Calculate pagination
     const page = criteria.pagination.page || 1;
-    const perPage = criteria.pagination.perPage || 10;
-    const skip = (page - 1) * perPage;
+    const limit = criteria.pagination.perPage || 10;
+    const skip = (page - 1) * limit;
 
     // 03: Execute query with pagination
     const [items, total] = await this.executeQueryWithPagination(
@@ -88,13 +87,14 @@ export class PlantMongoRepository
       mongoQuery,
       sortQuery,
       skip,
-      perPage,
+      limit,
     );
 
     // 04: Convert MongoDB documents to domain entities
     const plants = items.map((doc) =>
       this.plantMongoDBMapper.toViewModel({
         id: doc.id,
+        tenantId: doc.tenantId,
         name: doc.name,
         species: doc.species,
         plantedDate: doc.plantedDate,
@@ -105,7 +105,7 @@ export class PlantMongoRepository
       }),
     );
 
-    return new PaginatedResult<PlantViewModel>(plants, total, page, perPage);
+    return new PaginatedResult<PlantViewModel>(plants, total, page, limit);
   }
 
   /**
@@ -116,14 +116,11 @@ export class PlantMongoRepository
   async save(plantViewModel: PlantViewModel): Promise<void> {
     this.logger.log(`Saving plant view model with id: ${plantViewModel.id}`);
 
-    const db = await this.getTenantDatabase();
-    const collection = db.collection(this.collectionName);
+    const collection = this.getCollection(this.collectionName);
     const mongoData = this.plantMongoDBMapper.toMongoData(plantViewModel);
 
     // 01: Use upsert to either insert or update the plant view model
-    await collection.replaceOne({ id: plantViewModel.id }, mongoData, {
-      upsert: true,
-    });
+    await this.saveWithTenant(collection, plantViewModel.id, mongoData);
   }
 
   /**
@@ -135,10 +132,9 @@ export class PlantMongoRepository
   async delete(id: string): Promise<void> {
     this.logger.log(`Deleting plant view model by id: ${id}`);
 
-    const db = await this.getTenantDatabase();
-    const collection = db.collection(this.collectionName);
+    const collection = this.getCollection(this.collectionName);
 
-    // 01: Delete the plant view model from the collection
-    await collection.deleteOne({ id });
+    // 01: Delete the plant view model from the collection with tenant filter
+    await this.deleteById(collection, id);
   }
 }
