@@ -22,7 +22,6 @@ describe('PlantUpdatedContainerEventHandler', () => {
   describe('handle', () => {
     it('should do nothing when event is handled', async () => {
       const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
 
       const event = new PlantUpdatedEvent(
         {
