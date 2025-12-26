@@ -3,17 +3,21 @@
 ## Core Cultivation MVP
 
 ### Status
+
 - 🚧 In Progress
 
 ### Objective
+
 > Provide a foundational structure to model and manage plants and their containers, enabling creation, assignment, removal, and archiving of plants and containers.
 
 ### Summary
-> This version sets up the core cultivation domain for the MVP.  
-> - Allows modeling of plants and containers and their relationships  
-> - Establishes CRUD operations for plants and containers  
-> - Introduces domain events and read models for CQRS  
-> - Provides a minimal GraphQL API for frontend integration  
+
+> This version sets up the core cultivation domain for the MVP.
+>
+> - Allows modeling of plants and containers and their relationships
+> - Establishes CRUD operations for plants and containers
+> - Introduces domain events and read models for CQRS
+> - Provides a minimal GraphQL API for frontend integration
 > - Prepares multi-tenant support and soft delete for future expansion
 
 ---
@@ -21,13 +25,16 @@
 ## Scope (What’s Included)
 
 ### Backend
+
 #### Domain
+
 - Plant aggregate: creation, name, species, planted date, notes (optional)
-- Plant status: `ACTIVE | ARCHIVED`
+- Plant status: `PLANTED | GROWING | HARVESTED | DEAD | ARCHIVED`
 - Container aggregate: creation, type, name, location, metadata (optional)
 - Relationship: assign/remove plant to/from container (1..N)
 
 #### Application / Use Cases
+
 - Create plant
 - Create container
 - Assign plant to container
@@ -35,16 +42,19 @@
 - Archive plant
 
 #### Infrastructure
+
 - TypeORM for write model (Postgres)
 - MongoDB for read projections (CQRS)
 - Multi-tenant support (DB or schema per tenant)
 - Soft delete technical (not exposed in API)
 
 #### Read Model / Projections
+
 - `PlantView`: id, name, species, status, container (id + name), location
 - `ContainerView`: id, name, type, location, plants[] (id + name)
 
 #### API / Interfaces (GraphQL)
+
 - **Mutations**
   - `createPlant(input: CreatePlantInput): Plant`
   - `archivePlant(id: ID!): Plant`
@@ -59,18 +69,22 @@
 ---
 
 ### Frontend
+
 #### Views / UI
+
 - List of plants
 - List of containers
 - Container detail showing assigned plants
 
 #### Actions / Features
+
 - Create plant
 - Create container
 - Assign / remove plant from container
 - Archive plant
 
 #### API Integration
+
 - Connect to backend GraphQL API
 - Handle queries and mutations for listed actions
 
