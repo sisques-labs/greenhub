@@ -4,6 +4,9 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('plants')
 export class PlantTypeormEntity extends BaseTypeormWithTenantEntity {
+  @Column({ type: 'uuid' })
+  containerId: string;
+
   @Column({ type: 'varchar' })
   name: string;
 
