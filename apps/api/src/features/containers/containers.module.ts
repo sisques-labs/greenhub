@@ -23,6 +23,9 @@ import { ContainerMongoRepository } from '@/features/containers/infrastructure/d
 import { ContainerTypeormEntity } from '@/features/containers/infrastructure/database/typeorm/entities/container-typeorm.entity';
 import { ContainerTypeormMapper } from '@/features/containers/infrastructure/database/typeorm/mappers/container-typeorm.mapper';
 import { ContainerTypeormRepository } from '@/features/containers/infrastructure/database/typeorm/repositories/container-typeorm.repository';
+import { ContainerGraphQLMapper } from '@/features/containers/transport/graphql/mappers/container.mapper';
+import { ContainerMutationsResolver } from '@/features/containers/transport/graphql/resolvers/container-mutations/container-mutations.resolver';
+import { ContainerQueriesResolver } from '@/features/containers/transport/graphql/resolvers/container-queries/container-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -57,7 +60,13 @@ const EVENT_HANDLERS = [
 
 const FACTORIES = [ContainerAggregateFactory, ContainerViewModelFactory];
 
-const MAPPERS = [ContainerTypeormMapper, ContainerMongoDBMapper];
+const MAPPERS = [
+  ContainerTypeormMapper,
+  ContainerMongoDBMapper,
+  ContainerGraphQLMapper,
+];
+
+const RESOLVERS = [ContainerQueriesResolver, ContainerMutationsResolver];
 
 const REPOSITORIES = [
   {
@@ -76,6 +85,7 @@ const ENTITIES = [ContainerTypeormEntity];
   imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
   controllers: [],
   providers: [
+    ...RESOLVERS,
     ...SERVICES,
     ...QUERY_HANDLERS,
     ...COMMAND_HANDLERS,
