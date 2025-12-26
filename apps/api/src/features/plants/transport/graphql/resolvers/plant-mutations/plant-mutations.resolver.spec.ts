@@ -1,8 +1,8 @@
-import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
 import { PlantChangeStatusCommand } from '@/features/plants/application/commands/plant-change-status/plant-change-status.command';
 import { PlantCreateCommand } from '@/features/plants/application/commands/plant-create/plant-create.command';
 import { PlantDeleteCommand } from '@/features/plants/application/commands/plant-delete/plant-delete.command';
 import { PlantUpdateCommand } from '@/features/plants/application/commands/plant-update/plant-update.command';
+import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
 import { CreatePlantRequestDto } from '@/features/plants/transport/graphql/dtos/requests/create-plant.request.dto';
 import { DeletePlantRequestDto } from '@/features/plants/transport/graphql/dtos/requests/delete-plant.request.dto';
 import { PlantChangeStatusRequestDto } from '@/features/plants/transport/graphql/dtos/requests/plant-change-status.request.dto';
@@ -41,6 +41,7 @@ describe('PlantMutationsResolver', () => {
       const plantId = '123e4567-e89b-12d3-a456-426614174000';
       const plantedDate = new Date('2024-01-15');
       const input: CreatePlantRequestDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -81,6 +82,7 @@ describe('PlantMutationsResolver', () => {
     it('should create plant with minimal properties', async () => {
       const plantId = '123e4567-e89b-12d3-a456-426614174000';
       const input: CreatePlantRequestDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Basil',
         species: 'Ocimum basilicum',
         status: PlantStatusEnum.PLANTED,
@@ -107,6 +109,7 @@ describe('PlantMutationsResolver', () => {
 
     it('should handle errors from command bus', async () => {
       const input: CreatePlantRequestDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,

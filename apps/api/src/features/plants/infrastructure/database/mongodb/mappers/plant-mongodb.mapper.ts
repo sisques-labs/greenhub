@@ -30,6 +30,7 @@ export class PlantMongoDBMapper {
     return this.plantViewModelFactory.create({
       id: doc.id,
       tenantId: doc.tenantId,
+      containerId: doc.containerId,
       name: doc.name,
       species: doc.species,
       plantedDate: doc.plantedDate,
@@ -56,6 +57,7 @@ export class PlantMongoDBMapper {
     return {
       id: plantViewModel.id,
       tenantId: plantViewModel.tenantId,
+      containerId: plantViewModel.containerId,
       name: plantViewModel.name,
       species: plantViewModel.species,
       plantedDate: plantViewModel.plantedDate,

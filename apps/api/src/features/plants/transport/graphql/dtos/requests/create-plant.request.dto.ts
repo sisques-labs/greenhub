@@ -10,6 +10,11 @@ import {
 
 @InputType('CreatePlantRequestDto')
 export class CreatePlantRequestDto {
+  @Field(() => String, { description: 'The container id of the plant' })
+  @IsString()
+  @IsNotEmpty()
+  containerId: string;
+
   @Field(() => String, { description: 'The name of the plant' })
   @IsString()
   @IsNotEmpty()

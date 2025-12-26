@@ -1,9 +1,9 @@
 import { JwtAuthGuard } from '@/auth-context/auth/infrastructure/auth/jwt-auth.guard';
-import { TenantRoles } from '@/auth-context/auth/infrastructure/decorators/tenant-roles/tenant-roles.decorator';
 import { Roles } from '@/auth-context/auth/infrastructure/decorators/roles/roles.decorator';
+import { TenantRoles } from '@/auth-context/auth/infrastructure/decorators/tenant-roles/tenant-roles.decorator';
 import { RolesGuard } from '@/auth-context/auth/infrastructure/guards/roles/roles.guard';
-import { TenantGuard } from '@/auth-context/auth/infrastructure/guards/tenant/tenant.guard';
 import { TenantRolesGuard } from '@/auth-context/auth/infrastructure/guards/tenant-roles/tenant-roles.guard';
+import { TenantGuard } from '@/auth-context/auth/infrastructure/guards/tenant/tenant.guard';
 import { PlantChangeStatusCommand } from '@/features/plants/application/commands/plant-change-status/plant-change-status.command';
 import { PlantCreateCommand } from '@/features/plants/application/commands/plant-create/plant-create.command';
 import { PlantDeleteCommand } from '@/features/plants/application/commands/plant-delete/plant-delete.command';
@@ -12,10 +12,10 @@ import { CreatePlantRequestDto } from '@/features/plants/transport/graphql/dtos/
 import { DeletePlantRequestDto } from '@/features/plants/transport/graphql/dtos/requests/delete-plant.request.dto';
 import { PlantChangeStatusRequestDto } from '@/features/plants/transport/graphql/dtos/requests/plant-change-status.request.dto';
 import { UpdatePlantRequestDto } from '@/features/plants/transport/graphql/dtos/requests/update-plant.request.dto';
-import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
-import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 import { TenantMemberRoleEnum } from '@/shared/domain/enums/tenant-context/tenant-members/tenant-member-role/tenant-member-role.enum';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 import { Logger, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
@@ -59,6 +59,7 @@ export class PlantMutationsResolver {
     // 01: Send the command to the command bus
     const createdPlantId = await this.commandBus.execute(
       new PlantCreateCommand({
+        containerId: input.containerId,
         name: input.name,
         species: input.species,
         plantedDate: input.plantedDate,

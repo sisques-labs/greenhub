@@ -1,9 +1,9 @@
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
 import {
   PaginatedPlantResultDto,
   PlantResponseDto,
 } from '@/features/plants/transport/graphql/dtos/responses/plant.response.dto';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { Injectable, Logger } from '@nestjs/common';
 
 /**
@@ -28,6 +28,7 @@ export class PlantGraphQLMapper {
 
     return {
       id: plant.id,
+      containerId: plant.containerId,
       name: plant.name,
       species: plant.species,
       plantedDate: plant.plantedDate,

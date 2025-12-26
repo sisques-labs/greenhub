@@ -6,6 +6,9 @@ export class PlantResponseDto {
   @Field(() => String, { description: 'The id of the plant' })
   id: string;
 
+  @Field(() => String, { description: 'The container id of the plant' })
+  containerId: string;
+
   @Field(() => String, { description: 'The name of the plant' })
   name: string;
 

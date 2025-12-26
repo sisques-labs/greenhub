@@ -19,6 +19,7 @@ describe('PlantGraphQLMapper', () => {
 
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -32,6 +33,7 @@ describe('PlantGraphQLMapper', () => {
 
       expect(result).toEqual({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -49,6 +51,7 @@ describe('PlantGraphQLMapper', () => {
 
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -62,6 +65,7 @@ describe('PlantGraphQLMapper', () => {
 
       expect(result).toEqual({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -86,6 +90,7 @@ describe('PlantGraphQLMapper', () => {
       testCases.forEach((status) => {
         const viewModel = new PlantViewModel({
           id: plantId,
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -113,6 +118,7 @@ describe('PlantGraphQLMapper', () => {
       const viewModels: PlantViewModel[] = [
         new PlantViewModel({
           id: '123e4567-e89b-12d3-a456-426614174000',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: plantedDate,
@@ -123,6 +129,7 @@ describe('PlantGraphQLMapper', () => {
         }),
         new PlantViewModel({
           id: '223e4567-e89b-12d3-a456-426614174001',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Basil',
           species: 'Ocimum basilicum',
           plantedDate: null,
@@ -141,6 +148,7 @@ describe('PlantGraphQLMapper', () => {
         items: [
           {
             id: '123e4567-e89b-12d3-a456-426614174000',
+            containerId: '123e4567-e89b-12d3-a456-426614174000',
             name: 'Aloe Vera',
             species: 'Aloe barbadensis',
             plantedDate: plantedDate,
@@ -151,6 +159,7 @@ describe('PlantGraphQLMapper', () => {
           },
           {
             id: '223e4567-e89b-12d3-a456-426614174001',
+            containerId: '123e4567-e89b-12d3-a456-426614174000',
             name: 'Basil',
             species: 'Ocimum basilicum',
             plantedDate: null,
@@ -188,6 +197,7 @@ describe('PlantGraphQLMapper', () => {
       const viewModels: PlantViewModel[] = [
         new PlantViewModel({
           id: '123e4567-e89b-12d3-a456-426614174000',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -206,6 +216,7 @@ describe('PlantGraphQLMapper', () => {
         items: [
           {
             id: '123e4567-e89b-12d3-a456-426614174000',
+            containerId: '123e4567-e89b-12d3-a456-426614174000',
             name: 'Aloe Vera',
             species: 'Aloe barbadensis',
             plantedDate: null,

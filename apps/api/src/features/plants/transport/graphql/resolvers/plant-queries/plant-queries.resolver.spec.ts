@@ -1,16 +1,16 @@
-import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
-import { PlantViewModelFindByIdQuery } from '@/features/plants/application/queries/plant-view-model-find-by-id/plant-view-model-find-by-id.query';
 import { FindPlantsByCriteriaQuery } from '@/features/plants/application/queries/find-plants-by-criteria/find-plants-by-criteria.query';
+import { PlantViewModelFindByIdQuery } from '@/features/plants/application/queries/plant-view-model-find-by-id/plant-view-model-find-by-id.query';
+import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
+import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
 import { PlantFindByCriteriaRequestDto } from '@/features/plants/transport/graphql/dtos/requests/plant-find-by-criteria.request.dto';
 import { PlantFindByIdRequestDto } from '@/features/plants/transport/graphql/dtos/requests/plant-find-by-id.request.dto';
 import {
-  PlantResponseDto,
   PaginatedPlantResultDto,
+  PlantResponseDto,
 } from '@/features/plants/transport/graphql/dtos/responses/plant.response.dto';
 import { PlantGraphQLMapper } from '@/features/plants/transport/graphql/mappers/plant.mapper';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
 import { QueryBus } from '@nestjs/cqrs';
 import { PlantQueriesResolver } from './plant-queries.resolver';
 
@@ -50,6 +50,7 @@ describe('PlantQueriesResolver', () => {
       const viewModels: PlantViewModel[] = [
         new PlantViewModel({
           id: '123e4567-e89b-12d3-a456-426614174000',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: plantedDate,
@@ -65,6 +66,7 @@ describe('PlantQueriesResolver', () => {
         items: [
           {
             id: '123e4567-e89b-12d3-a456-426614174000',
+            containerId: '123e4567-e89b-12d3-a456-426614174000',
             name: 'Aloe Vera',
             species: 'Aloe barbadensis',
             plantedDate: plantedDate,
@@ -133,6 +135,7 @@ describe('PlantQueriesResolver', () => {
       const viewModels: PlantViewModel[] = [
         new PlantViewModel({
           id: '123e4567-e89b-12d3-a456-426614174000',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -148,6 +151,7 @@ describe('PlantQueriesResolver', () => {
         items: [
           {
             id: '123e4567-e89b-12d3-a456-426614174000',
+            containerId: '123e4567-e89b-12d3-a456-426614174000',
             name: 'Aloe Vera',
             species: 'Aloe barbadensis',
             plantedDate: null,
@@ -208,6 +212,7 @@ describe('PlantQueriesResolver', () => {
       const plantedDate = new Date('2024-01-15');
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -219,6 +224,7 @@ describe('PlantQueriesResolver', () => {
 
       const responseDto: PlantResponseDto = {
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -255,6 +261,7 @@ describe('PlantQueriesResolver', () => {
       const updatedAt = new Date('2024-01-02');
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -266,6 +273,7 @@ describe('PlantQueriesResolver', () => {
 
       const responseDto: PlantResponseDto = {
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,

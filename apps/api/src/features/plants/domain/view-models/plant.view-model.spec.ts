@@ -8,6 +8,7 @@ describe('PlantViewModel', () => {
     const now = new Date();
     return {
       id: '123e4567-e89b-12d3-a456-426614174000',
+      containerId: '223e4567-e89b-12d3-a456-426614174000',
       name: 'Aloe Vera',
       species: 'Aloe barbadensis',
       plantedDate: new Date('2024-01-15'),
@@ -25,6 +26,7 @@ describe('PlantViewModel', () => {
 
       expect(viewModel).toBeInstanceOf(PlantViewModel);
       expect(viewModel.id).toBe(props.id);
+      expect(viewModel.containerId).toBe(props.containerId);
       expect(viewModel.name).toBe(props.name);
       expect(viewModel.species).toBe(props.species);
       expect(viewModel.plantedDate).toEqual(props.plantedDate);
@@ -57,6 +59,7 @@ describe('PlantViewModel', () => {
       const viewModel = new PlantViewModel(props);
 
       expect(viewModel.id).toBe(props.id);
+      expect(viewModel.containerId).toBe(props.containerId);
       expect(viewModel.name).toBe(props.name);
       expect(viewModel.species).toBe(props.species);
       expect(viewModel.plantedDate).toEqual(props.plantedDate);
@@ -83,6 +86,7 @@ describe('PlantViewModel', () => {
 
       const beforeUpdate = viewModel.updatedAt.getTime();
       const updateData: IPlantUpdateViewModelDto = {
+        containerId: '323e4567-e89b-12d3-a456-426614174000',
         name: 'Basil',
         species: 'Ocimum basilicum',
         plantedDate: new Date('2024-02-01'),
@@ -92,6 +96,9 @@ describe('PlantViewModel', () => {
 
       viewModel.update(updateData);
 
+      expect(viewModel.containerId).toBe(
+        '323e4567-e89b-12d3-a456-426614174000',
+      );
       expect(viewModel.name).toBe('Basil');
       expect(viewModel.species).toBe('Ocimum basilicum');
       expect(viewModel.plantedDate).toEqual(new Date('2024-02-01'));

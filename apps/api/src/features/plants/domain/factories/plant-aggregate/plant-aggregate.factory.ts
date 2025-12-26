@@ -8,6 +8,7 @@ import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { Injectable } from '@nestjs/common';
 
@@ -60,6 +61,7 @@ export class PlantAggregateFactory
     return new PlantAggregate(
       {
         id: new PlantUuidValueObject(data.id),
+        containerId: new ContainerUuidValueObject(data.containerId),
         name: new PlantNameValueObject(data.name),
         species: new PlantSpeciesValueObject(data.species),
         plantedDate: data.plantedDate

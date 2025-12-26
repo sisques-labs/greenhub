@@ -4,6 +4,7 @@ import { PlantPlantedDateValueObject } from '@/features/plants/domain/value-obje
 import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { IBaseAggregateDto } from '@/shared/domain/interfaces/base-aggregate-dto.interface';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -17,6 +18,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  */
 export interface IPlantCreateDto extends IBaseAggregateDto {
   id: PlantUuidValueObject;
+  containerId: ContainerUuidValueObject;
   name: PlantNameValueObject;
   species: PlantSpeciesValueObject;
   plantedDate: PlantPlantedDateValueObject | null;

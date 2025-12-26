@@ -75,4 +75,22 @@ export class PlantTypeormRepository
 
     await this.repository.softDelete(id);
   }
+
+  /**
+   * Finds all plants by container ID within the current tenant context.
+   * Tenant filtering is automatically applied by BaseTypeormTenantRepository.
+   *
+   * @param containerId - The container ID to search for
+   * @returns Promise that resolves to an array of PlantAggregate instances
+   */
+  async findByContainerId(containerId: string): Promise<PlantAggregate[]> {
+    this.logger.log(`Finding plants by container id: ${containerId}`);
+    const plantEntities = await this.repository.find({
+      where: { containerId },
+    });
+
+    return plantEntities.map((entity) =>
+      this.plantTypeormMapper.toDomainEntity(entity),
+    );
+  }
 }

@@ -48,6 +48,7 @@ describe('FindPlantsByCriteriaQueryHandler', () => {
       const now = new Date();
       const mockViewModel = new PlantViewModel({
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),

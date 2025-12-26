@@ -1,7 +1,3 @@
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { TenantContextService } from '@/shared/infrastructure/services/tenant-context/tenant-context.service';
 import { PlantAggregate } from '@/features/plants/domain/aggregates/plant.aggregate';
 import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
 import { PlantNameValueObject } from '@/features/plants/domain/value-objects/plant-name/plant-name.vo';
@@ -11,6 +7,11 @@ import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/p
 import { PlantTypeormEntity } from '@/features/plants/infrastructure/database/typeorm/entities/plant-typeorm.entity';
 import { PlantTypeormMapper } from '@/features/plants/infrastructure/database/typeorm/mappers/plant-typeorm.mapper';
 import { PlantTypeormRepository } from '@/features/plants/infrastructure/database/typeorm/repositories/plant-typeorm.repository';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { TenantContextService } from '@/shared/infrastructure/services/tenant-context/tenant-context.service';
 import { Repository } from 'typeorm';
 
 describe('PlantTypeormRepository', () => {
@@ -77,6 +78,9 @@ describe('PlantTypeormRepository', () => {
       const plantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(plantedDate),
@@ -127,6 +131,9 @@ describe('PlantTypeormRepository', () => {
       const plantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(plantedDate),
@@ -153,6 +160,9 @@ describe('PlantTypeormRepository', () => {
       const savedPlantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(plantedDate),

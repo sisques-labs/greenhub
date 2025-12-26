@@ -31,6 +31,7 @@ export class PlantTypeormMapper {
 
     return this.plantAggregateFactory.fromPrimitives({
       id: plantEntity.id,
+      containerId: plantEntity.containerId,
       name: plantEntity.name,
       species: plantEntity.species,
       plantedDate: plantEntity.plantedDate,
@@ -57,6 +58,7 @@ export class PlantTypeormMapper {
     const entity = new PlantTypeormEntity();
 
     entity.id = primitives.id;
+    entity.containerId = primitives.containerId;
     entity.name = primitives.name;
     entity.species = primitives.species;
     entity.plantedDate = primitives.plantedDate;

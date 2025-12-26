@@ -60,6 +60,7 @@ describe('PlantMongoRepository', () => {
       const mongoDoc: PlantMongoDbDto = {
         id: plantId,
         tenantId: 'test-tenant-123',
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -71,6 +72,7 @@ describe('PlantMongoRepository', () => {
 
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -96,6 +98,7 @@ describe('PlantMongoRepository', () => {
       expect(mockPlantMongoDBMapper.toViewModel).toHaveBeenCalledWith({
         id: plantId,
         tenantId: 'test-tenant-123',
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -147,6 +150,7 @@ describe('PlantMongoRepository', () => {
         {
           id: '123e4567-e89b-12d3-a456-426614174000',
           tenantId: 'test-tenant-123',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: plantedDate,
@@ -158,6 +162,7 @@ describe('PlantMongoRepository', () => {
         {
           id: '223e4567-e89b-12d3-a456-426614174001',
           tenantId: 'test-tenant-123',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Basil',
           species: 'Ocimum basilicum',
           plantedDate: null,
@@ -173,6 +178,7 @@ describe('PlantMongoRepository', () => {
           new PlantViewModel({
             id: doc.id,
             tenantId: doc.tenantId,
+            containerId: doc.containerId,
             name: doc.name,
             species: doc.species,
             plantedDate: doc.plantedDate,
@@ -255,6 +261,7 @@ describe('PlantMongoRepository', () => {
         {
           id: '123e4567-e89b-12d3-a456-426614174000',
           tenantId: 'test-tenant-123',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: new Date('2024-01-15'),
@@ -268,6 +275,7 @@ describe('PlantMongoRepository', () => {
       const viewModel = new PlantViewModel({
         id: mongoDocs[0].id,
         tenantId: mongoDocs[0].tenantId,
+        containerId: mongoDocs[0].containerId,
         name: mongoDocs[0].name,
         species: mongoDocs[0].species,
         plantedDate: mongoDocs[0].plantedDate,
@@ -309,6 +317,7 @@ describe('PlantMongoRepository', () => {
         {
           id: '123e4567-e89b-12d3-a456-426614174000',
           tenantId: 'test-tenant-123',
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -322,6 +331,7 @@ describe('PlantMongoRepository', () => {
       const viewModel = new PlantViewModel({
         id: mongoDocs[0].id,
         tenantId: mongoDocs[0].tenantId,
+        containerId: mongoDocs[0].containerId,
         name: mongoDocs[0].name,
         species: mongoDocs[0].species,
         plantedDate: mongoDocs[0].plantedDate,
@@ -378,6 +388,7 @@ describe('PlantMongoRepository', () => {
 
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -390,6 +401,7 @@ describe('PlantMongoRepository', () => {
       const mongoData: PlantMongoDbDto = {
         id: plantId,
         tenantId: 'test-tenant-123',
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: plantedDate,
@@ -430,6 +442,7 @@ describe('PlantMongoRepository', () => {
 
       const viewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -442,6 +455,7 @@ describe('PlantMongoRepository', () => {
       const mongoData: PlantMongoDbDto = {
         id: plantId,
         tenantId: 'test-tenant-123',
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,

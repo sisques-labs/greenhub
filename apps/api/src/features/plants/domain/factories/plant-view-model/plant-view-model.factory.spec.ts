@@ -10,6 +10,7 @@ import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantViewModelFactory', () => {
@@ -24,6 +25,7 @@ describe('PlantViewModelFactory', () => {
       const now = new Date();
       const dto: IPlantCreateViewModelDto = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -37,6 +39,7 @@ describe('PlantViewModelFactory', () => {
 
       expect(viewModel).toBeInstanceOf(PlantViewModel);
       expect(viewModel.id).toBe(dto.id);
+      expect(viewModel.containerId).toBe(dto.containerId);
       expect(viewModel.name).toBe(dto.name);
       expect(viewModel.species).toBe(dto.species);
       expect(viewModel.plantedDate).toEqual(dto.plantedDate);
@@ -50,6 +53,7 @@ describe('PlantViewModelFactory', () => {
       const now = new Date();
       const dto: IPlantCreateViewModelDto = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -69,6 +73,7 @@ describe('PlantViewModelFactory', () => {
       const now = new Date();
       const dto: IPlantCreateViewModelDto = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -90,6 +95,7 @@ describe('PlantViewModelFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -103,6 +109,7 @@ describe('PlantViewModelFactory', () => {
 
       expect(viewModel).toBeInstanceOf(PlantViewModel);
       expect(viewModel.id).toBe(primitives.id);
+      expect(viewModel.containerId).toBe(primitives.containerId);
       expect(viewModel.name).toBe(primitives.name);
       expect(viewModel.species).toBe(primitives.species);
       expect(viewModel.plantedDate).toEqual(primitives.plantedDate);
@@ -116,6 +123,7 @@ describe('PlantViewModelFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -135,6 +143,7 @@ describe('PlantViewModelFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -157,6 +166,9 @@ describe('PlantViewModelFactory', () => {
       const aggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+          containerId: new ContainerUuidValueObject(
+            '223e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -172,6 +184,7 @@ describe('PlantViewModelFactory', () => {
 
       expect(viewModel).toBeInstanceOf(PlantViewModel);
       expect(viewModel.id).toBe(aggregate.id.value);
+      expect(viewModel.containerId).toBe(aggregate.containerId.value);
       expect(viewModel.name).toBe(aggregate.name.value);
       expect(viewModel.species).toBe(aggregate.species.value);
       expect(viewModel.plantedDate).toEqual(aggregate.plantedDate?.value);
@@ -186,6 +199,9 @@ describe('PlantViewModelFactory', () => {
       const aggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+          containerId: new ContainerUuidValueObject(
+            '223e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: null,
@@ -208,6 +224,9 @@ describe('PlantViewModelFactory', () => {
       const aggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+          containerId: new ContainerUuidValueObject(
+            '223e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),

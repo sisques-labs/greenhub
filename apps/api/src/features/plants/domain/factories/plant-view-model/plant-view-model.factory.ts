@@ -63,6 +63,7 @@ export class PlantViewModelFactory
 
     return new PlantViewModel({
       id: plantPrimitives.id,
+      containerId: plantPrimitives.containerId,
       name: plantPrimitives.name,
       species: plantPrimitives.species,
       plantedDate: plantPrimitives.plantedDate,
@@ -89,6 +90,7 @@ export class PlantViewModelFactory
 
     return new PlantViewModel({
       id: plantAggregate.id.value,
+      containerId: plantAggregate.containerId.value,
       name: plantAggregate.name.value,
       species: plantAggregate.species.value,
       plantedDate: plantAggregate.plantedDate?.value ?? null,

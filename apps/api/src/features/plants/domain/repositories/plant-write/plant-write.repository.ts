@@ -4,9 +4,16 @@ import { IBaseWriteRepository } from '@/shared/domain/interfaces/base-write-repo
 export const PLANT_WRITE_REPOSITORY_TOKEN = Symbol('PlantWriteRepository');
 
 /**
- * Type alias for the plant write repository.
- * This repository handles write operations (create, update, delete) for plants.
- *
- * @type PlantWriteRepository
+ * Write repository interface for Plant aggregate.
+ * Extends IBaseWriteRepository with additional query methods.
  */
-export type PlantWriteRepository = IBaseWriteRepository<PlantAggregate>;
+export interface PlantWriteRepository
+  extends IBaseWriteRepository<PlantAggregate> {
+  /**
+   * Finds all plants by container ID.
+   *
+   * @param containerId - The container ID to search for
+   * @returns Promise that resolves to an array of PlantAggregate instances
+   */
+  findByContainerId(containerId: string): Promise<PlantAggregate[]>;
+}

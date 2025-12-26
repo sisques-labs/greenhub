@@ -7,6 +7,7 @@ import { PlantPlantedDateValueObject } from '@/features/plants/domain/value-obje
 import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { Test } from '@nestjs/testing';
 import { FindPlantByIdQuery } from './find-plant-by-id.query';
@@ -46,6 +47,9 @@ describe('FindPlantByIdQueryHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '223e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -89,6 +93,9 @@ describe('FindPlantByIdQueryHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '223e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),

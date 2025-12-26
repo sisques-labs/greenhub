@@ -1,4 +1,3 @@
-import { PlantStatusChangedEvent } from '@/shared/domain/events/features/plants/plant-status-changed/plant-status-changed.event';
 import { PlantNotFoundException } from '@/features/plants/application/exceptions/plant-not-found/plant-not-found.exception';
 import { AssertPlantViewModelExistsService } from '@/features/plants/application/services/assert-plant-view-model-exists/assert-plant-view-model-exists.service';
 import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
@@ -7,6 +6,7 @@ import {
   PlantReadRepository,
 } from '@/features/plants/domain/repositories/plant-read/plant-read.repository';
 import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
+import { PlantStatusChangedEvent } from '@/shared/domain/events/features/plants/plant-status-changed/plant-status-changed.event';
 import { Test } from '@nestjs/testing';
 import { PlantStatusChangedEventHandler } from './plant-status-changed.event-handler';
 
@@ -67,6 +67,7 @@ describe('PlantStatusChangedEventHandler', () => {
       const now = new Date();
       const existingViewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -140,6 +141,7 @@ describe('PlantStatusChangedEventHandler', () => {
       const now = new Date();
       const existingViewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),

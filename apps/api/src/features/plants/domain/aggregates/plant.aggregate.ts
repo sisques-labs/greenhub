@@ -12,6 +12,7 @@ import { PlantDeletedEvent } from '@/shared/domain/events/features/plants/plant-
 import { PlantStatusChangedEvent } from '@/shared/domain/events/features/plants/plant-status-changed/plant-status-changed.event';
 import { PlantUpdatedEvent } from '@/shared/domain/events/features/plants/plant-updated/plant-updated.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -23,6 +24,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  */
 export class PlantAggregate extends BaseAggregate {
   private readonly _id: PlantUuidValueObject;
+  private _containerId: ContainerUuidValueObject;
   private _name: PlantNameValueObject;
   private _species: PlantSpeciesValueObject;
   private _plantedDate: PlantPlantedDateValueObject | null;
@@ -40,6 +42,7 @@ export class PlantAggregate extends BaseAggregate {
 
     // Initialize value objects from input DTO
     this._id = props.id;
+    this._containerId = props.containerId;
     this._name = props.name;
     this._species = props.species;
     this._plantedDate = props.plantedDate;
@@ -69,6 +72,8 @@ export class PlantAggregate extends BaseAggregate {
    */
   public update(props: IPlantUpdateDto, generateEvent: boolean = true) {
     // Update only properties provided (including explicit nulls).
+    this._containerId =
+      props.containerId !== undefined ? props.containerId : this._containerId;
     this._name = props.name !== undefined ? props.name : this._name;
     this._species = props.species !== undefined ? props.species : this._species;
     this._plantedDate =
@@ -150,6 +155,15 @@ export class PlantAggregate extends BaseAggregate {
   }
 
   /**
+   * Gets the container identifier of the plant, or null if not assigned.
+   *
+   * @returns The container's unique identifier value object or null.
+   */
+  public get containerId(): ContainerUuidValueObject {
+    return this._containerId;
+  }
+
+  /**
    * Gets the name of the plant.
    *
    * @returns The plant's name value object.
@@ -202,6 +216,7 @@ export class PlantAggregate extends BaseAggregate {
   public toPrimitives(): PlantPrimitives {
     return {
       id: this._id.value,
+      containerId: this._containerId.value,
       name: this._name.value,
       species: this._species.value,
       plantedDate: this._plantedDate ? this._plantedDate.value : null,

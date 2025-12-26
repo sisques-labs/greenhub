@@ -10,6 +10,7 @@ import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantAggregateFactory', () => {
@@ -25,6 +26,9 @@ describe('PlantAggregateFactory', () => {
 
       const dto: IPlantCreateDto = {
         id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+        containerId: new ContainerUuidValueObject(
+          '223e4567-e89b-12d3-a456-426614174000',
+        ),
         name: new PlantNameValueObject('Aloe Vera'),
         species: new PlantSpeciesValueObject('Aloe barbadensis'),
         plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -38,6 +42,7 @@ describe('PlantAggregateFactory', () => {
 
       expect(aggregate).toBeInstanceOf(PlantAggregate);
       expect(aggregate.id.value).toBe(dto.id.value);
+      expect(aggregate.containerId?.value).toBe(dto.containerId?.value);
       expect(aggregate.name.value).toBe(dto.name.value);
       expect(aggregate.species.value).toBe(dto.species.value);
       expect(aggregate.plantedDate?.value).toEqual(dto.plantedDate?.value);
@@ -57,6 +62,9 @@ describe('PlantAggregateFactory', () => {
 
       const dto: IPlantCreateDto = {
         id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+        containerId: new ContainerUuidValueObject(
+          '223e4567-e89b-12d3-a456-426614174000',
+        ),
         name: new PlantNameValueObject('Aloe Vera'),
         species: new PlantSpeciesValueObject('Aloe barbadensis'),
         plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -70,6 +78,7 @@ describe('PlantAggregateFactory', () => {
 
       expect(aggregate).toBeInstanceOf(PlantAggregate);
       expect(aggregate.id.value).toBe(dto.id.value);
+      expect(aggregate.containerId?.value).toBe(dto.containerId?.value);
       expect(aggregate.name.value).toBe(dto.name.value);
 
       // Check that no event was generated
@@ -82,6 +91,9 @@ describe('PlantAggregateFactory', () => {
 
       const dto: IPlantCreateDto = {
         id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+        containerId: new ContainerUuidValueObject(
+          '223e4567-e89b-12d3-a456-426614174000',
+        ),
         name: new PlantNameValueObject('Aloe Vera'),
         species: new PlantSpeciesValueObject('Aloe barbadensis'),
         plantedDate: null,
@@ -104,6 +116,9 @@ describe('PlantAggregateFactory', () => {
 
       const dto: IPlantCreateDto = {
         id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+        containerId: new ContainerUuidValueObject(
+          '223e4567-e89b-12d3-a456-426614174000',
+        ),
         name: new PlantNameValueObject('Aloe Vera'),
         species: new PlantSpeciesValueObject('Aloe barbadensis'),
         plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -127,6 +142,7 @@ describe('PlantAggregateFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -140,6 +156,7 @@ describe('PlantAggregateFactory', () => {
 
       expect(aggregate).toBeInstanceOf(PlantAggregate);
       expect(aggregate.id.value).toBe(primitives.id);
+      expect(aggregate.containerId?.value).toBe(primitives.containerId);
       expect(aggregate.name.value).toBe(primitives.name);
       expect(aggregate.species.value).toBe(primitives.species);
       expect(aggregate.plantedDate?.value).toEqual(primitives.plantedDate);
@@ -153,6 +170,7 @@ describe('PlantAggregateFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -177,6 +195,7 @@ describe('PlantAggregateFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -201,6 +220,7 @@ describe('PlantAggregateFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -213,6 +233,7 @@ describe('PlantAggregateFactory', () => {
       const aggregate = factory.fromPrimitives(primitives);
 
       expect(aggregate.id).toBeInstanceOf(PlantUuidValueObject);
+      expect(aggregate.containerId).toBeInstanceOf(ContainerUuidValueObject);
       expect(aggregate.name).toBeInstanceOf(PlantNameValueObject);
       expect(aggregate.species).toBeInstanceOf(PlantSpeciesValueObject);
       expect(aggregate.plantedDate).toBeInstanceOf(PlantPlantedDateValueObject);
@@ -226,6 +247,7 @@ describe('PlantAggregateFactory', () => {
       const now = new Date();
       const primitives: PlantPrimitives = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        containerId: '223e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),

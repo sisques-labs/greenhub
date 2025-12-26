@@ -26,6 +26,7 @@ import { BaseViewModelWithTenant } from '@/shared/domain/view-models/base-view-m
  * ```
  */
 export class PlantViewModel extends BaseViewModelWithTenant {
+  private _containerId: string;
   private _name: string;
   private _species: string;
   private _plantedDate: Date | null;
@@ -39,11 +40,21 @@ export class PlantViewModel extends BaseViewModelWithTenant {
    */
   constructor(props: IPlantCreateViewModelDto) {
     super(props);
+    this._containerId = props.containerId;
     this._name = props.name;
     this._species = props.species;
     this._plantedDate = props.plantedDate;
     this._notes = props.notes;
     this._status = props.status;
+  }
+
+  /**
+   * Gets the container identifier of the plant.
+   *
+   * @returns The container identifier
+   */
+  public get containerId(): string {
+    return this._containerId;
   }
 
   /**
@@ -112,6 +123,10 @@ export class PlantViewModel extends BaseViewModelWithTenant {
    * ```
    */
   public update(updateData: IPlantUpdateViewModelDto): void {
+    this._containerId =
+      updateData.containerId !== undefined
+        ? updateData.containerId
+        : this._containerId;
     this._name = updateData.name !== undefined ? updateData.name : this._name;
     this._species =
       updateData.species !== undefined ? updateData.species : this._species;

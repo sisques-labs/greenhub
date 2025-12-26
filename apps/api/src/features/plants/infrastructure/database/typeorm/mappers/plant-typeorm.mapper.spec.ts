@@ -1,5 +1,3 @@
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { PlantAggregate } from '@/features/plants/domain/aggregates/plant.aggregate';
 import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
 import { PlantAggregateFactory } from '@/features/plants/domain/factories/plant-aggregate/plant-aggregate.factory';
@@ -10,6 +8,9 @@ import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { PlantTypeormEntity } from '@/features/plants/infrastructure/database/typeorm/entities/plant-typeorm.entity';
 import { PlantTypeormMapper } from '@/features/plants/infrastructure/database/typeorm/mappers/plant-typeorm.mapper';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantTypeormMapper', () => {
   let mapper: PlantTypeormMapper;
@@ -48,6 +49,9 @@ describe('PlantTypeormMapper', () => {
       const mockPlantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(plantedDate),
@@ -97,6 +101,9 @@ describe('PlantTypeormMapper', () => {
       const mockPlantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: null,
@@ -137,6 +144,9 @@ describe('PlantTypeormMapper', () => {
       const mockPlantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(plantedDate),
@@ -152,6 +162,7 @@ describe('PlantTypeormMapper', () => {
         .spyOn(mockPlantAggregate, 'toPrimitives')
         .mockReturnValue({
           id: plantId,
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: plantedDate,
@@ -165,6 +176,7 @@ describe('PlantTypeormMapper', () => {
 
       expect(result).toBeInstanceOf(PlantTypeormEntity);
       expect(result.id).toBe(plantId);
+      expect(result.containerId).toBe('123e4567-e89b-12d3-a456-426614174000');
       expect(result.name).toBe('Aloe Vera');
       expect(result.species).toBe('Aloe barbadensis');
       expect(result.plantedDate).toEqual(plantedDate);
@@ -185,6 +197,9 @@ describe('PlantTypeormMapper', () => {
       const mockPlantAggregate = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(
+            '123e4567-e89b-12d3-a456-426614174000',
+          ),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: null,
@@ -200,6 +215,7 @@ describe('PlantTypeormMapper', () => {
         .spyOn(mockPlantAggregate, 'toPrimitives')
         .mockReturnValue({
           id: plantId,
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
           name: 'Aloe Vera',
           species: 'Aloe barbadensis',
           plantedDate: null,
@@ -213,6 +229,7 @@ describe('PlantTypeormMapper', () => {
 
       expect(result).toBeInstanceOf(PlantTypeormEntity);
       expect(result.id).toBe(plantId);
+      expect(result.containerId).toBe('123e4567-e89b-12d3-a456-426614174000');
       expect(result.name).toBe('Aloe Vera');
       expect(result.species).toBe('Aloe barbadensis');
       expect(result.plantedDate).toBeNull();

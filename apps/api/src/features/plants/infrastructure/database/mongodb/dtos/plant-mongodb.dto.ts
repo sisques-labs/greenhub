@@ -8,6 +8,7 @@ import { BaseMongoWithTenantIdDto } from '@/shared/infrastructure/database/mongo
  * It matches the structure of PlantPrimitives for consistency.
  */
 export type PlantMongoDbDto = BaseMongoWithTenantIdDto & {
+  containerId: string;
   name: string;
   species: string;
   plantedDate: Date | null;

@@ -1,6 +1,3 @@
-import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { IPlantCreateCommandDto } from '@/features/plants/application/dtos/commands/plant-create/plant-create-command.dto';
 import { PlantAggregate } from '@/features/plants/domain/aggregates/plant.aggregate';
 import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
@@ -14,6 +11,10 @@ import { PlantNotesValueObject } from '@/features/plants/domain/value-objects/pl
 import { PlantPlantedDateValueObject } from '@/features/plants/domain/value-objects/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
+import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { EventBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { PlantCreateCommand } from './plant-create.command';
@@ -70,6 +71,7 @@ describe('PlantCreateCommandHandler', () => {
   describe('execute', () => {
     it('should create plant successfully', async () => {
       const commandDto: IPlantCreateCommandDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -82,6 +84,7 @@ describe('PlantCreateCommandHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(),
+          containerId: new ContainerUuidValueObject(),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -123,6 +126,7 @@ describe('PlantCreateCommandHandler', () => {
 
     it('should create plant with null plantedDate', async () => {
       const commandDto: IPlantCreateCommandDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -135,6 +139,7 @@ describe('PlantCreateCommandHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(),
+          containerId: new ContainerUuidValueObject(),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: null,
@@ -160,6 +165,7 @@ describe('PlantCreateCommandHandler', () => {
 
     it('should publish PlantCreatedEvent when plant is created', async () => {
       const commandDto: IPlantCreateCommandDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -172,6 +178,7 @@ describe('PlantCreateCommandHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(),
+          containerId: new ContainerUuidValueObject(),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -197,6 +204,7 @@ describe('PlantCreateCommandHandler', () => {
 
     it('should save plant before publishing events', async () => {
       const commandDto: IPlantCreateCommandDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -209,6 +217,7 @@ describe('PlantCreateCommandHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(),
+          containerId: new ContainerUuidValueObject(),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -234,6 +243,7 @@ describe('PlantCreateCommandHandler', () => {
 
     it('should return the created plant id', async () => {
       const commandDto: IPlantCreateCommandDto = {
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -247,6 +257,7 @@ describe('PlantCreateCommandHandler', () => {
       const mockPlant = new PlantAggregate(
         {
           id: new PlantUuidValueObject(plantId),
+          containerId: new ContainerUuidValueObject(),
           name: new PlantNameValueObject('Aloe Vera'),
           species: new PlantSpeciesValueObject('Aloe barbadensis'),
           plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),

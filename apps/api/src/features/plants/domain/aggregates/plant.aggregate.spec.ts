@@ -12,6 +12,7 @@ import { PlantDeletedEvent } from '@/shared/domain/events/features/plants/plant-
 import { PlantStatusChangedEvent } from '@/shared/domain/events/features/plants/plant-status-changed/plant-status-changed.event';
 import { PlantUpdatedEvent } from '@/shared/domain/events/features/plants/plant-updated/plant-updated.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantAggregate', () => {
@@ -19,6 +20,9 @@ describe('PlantAggregate', () => {
     const now = new Date();
     return {
       id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+      containerId: new ContainerUuidValueObject(
+        '223e4567-e89b-12d3-a456-426614174000',
+      ),
       name: new PlantNameValueObject('Aloe Vera'),
       species: new PlantSpeciesValueObject('Aloe barbadensis'),
       plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -36,6 +40,7 @@ describe('PlantAggregate', () => {
 
       expect(aggregate).toBeInstanceOf(PlantAggregate);
       expect(aggregate.id.value).toBe(props.id.value);
+      expect(aggregate.containerId?.value).toBe(props.containerId?.value);
       expect(aggregate.name.value).toBe(props.name.value);
       expect(aggregate.species.value).toBe(props.species.value);
       expect(aggregate.plantedDate?.value).toEqual(props.plantedDate?.value);
@@ -86,12 +91,16 @@ describe('PlantAggregate', () => {
   });
 
   describe('update', () => {
-    it('should update the name, species, plantedDate, notes, and status', () => {
+    it('should update the containerId, name, species, plantedDate, notes, and status', () => {
       const props = createProps();
       const aggregate = new PlantAggregate(props, false);
 
       const beforeUpdate = aggregate.updatedAt.value.getTime();
+      const newContainerId = new ContainerUuidValueObject(
+        '323e4567-e89b-12d3-a456-426614174000',
+      );
       const updateDto: IPlantUpdateDto = {
+        containerId: newContainerId,
         name: new PlantNameValueObject('Basil'),
         species: new PlantSpeciesValueObject('Ocimum basilicum'),
         plantedDate: new PlantPlantedDateValueObject(new Date('2024-02-01')),
@@ -101,6 +110,7 @@ describe('PlantAggregate', () => {
 
       aggregate.update(updateDto, false);
 
+      expect(aggregate.containerId.value).toBe(newContainerId.value);
       expect(aggregate.name.value).toBe('Basil');
       expect(aggregate.species.value).toBe('Ocimum basilicum');
       expect(aggregate.plantedDate?.value).toEqual(new Date('2024-02-01'));
@@ -283,6 +293,7 @@ describe('PlantAggregate', () => {
 
       expect(primitives).toEqual({
         id: props.id.value,
+        containerId: props.containerId.value,
         name: props.name.value,
         species: props.species.value,
         plantedDate: props.plantedDate?.value,
@@ -320,6 +331,7 @@ describe('PlantAggregate', () => {
       const aggregate = new PlantAggregate(props, false);
 
       expect(aggregate.id).toBeInstanceOf(PlantUuidValueObject);
+      expect(aggregate.containerId).toBeInstanceOf(ContainerUuidValueObject);
       expect(aggregate.name).toBeInstanceOf(PlantNameValueObject);
       expect(aggregate.species).toBeInstanceOf(PlantSpeciesValueObject);
       expect(aggregate.plantedDate).toBeInstanceOf(PlantPlantedDateValueObject);

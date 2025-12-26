@@ -1,12 +1,12 @@
-import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
 import { PlantStatusEnum } from '@/features/plants/domain/enums/plant-status/plant-status.enum';
-import { PlantPrimitives } from '@/features/plants/domain/primitives/plant.primitives';
 import { PlantViewModelFactory } from '@/features/plants/domain/factories/plant-view-model/plant-view-model.factory';
+import { PlantPrimitives } from '@/features/plants/domain/primitives/plant.primitives';
 import {
   PLANT_READ_REPOSITORY_TOKEN,
   PlantReadRepository,
 } from '@/features/plants/domain/repositories/plant-read/plant-read.repository';
 import { PlantViewModel } from '@/features/plants/domain/view-models/plant.view-model';
+import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
 import { Test } from '@nestjs/testing';
 import { PlantCreatedEventHandler } from './plant-created.event-handler';
 
@@ -56,6 +56,7 @@ describe('PlantCreatedEventHandler', () => {
       const now = new Date();
       const plantPrimitives: PlantPrimitives = {
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -76,6 +77,7 @@ describe('PlantCreatedEventHandler', () => {
 
       const mockViewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -103,6 +105,7 @@ describe('PlantCreatedEventHandler', () => {
       const now = new Date();
       const plantPrimitives: PlantPrimitives = {
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -123,6 +126,7 @@ describe('PlantCreatedEventHandler', () => {
 
       const mockViewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: null,
@@ -148,6 +152,7 @@ describe('PlantCreatedEventHandler', () => {
       const now = new Date();
       const plantPrimitives: PlantPrimitives = {
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -168,6 +173,7 @@ describe('PlantCreatedEventHandler', () => {
 
       const mockViewModel = new PlantViewModel({
         id: plantId,
+        containerId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),

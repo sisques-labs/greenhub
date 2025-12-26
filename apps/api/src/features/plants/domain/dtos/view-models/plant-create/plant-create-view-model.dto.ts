@@ -11,6 +11,7 @@ import { IBaseViewModelWithTenantDto } from '@/shared/domain/interfaces/base-vie
  * @see IPlantCreateDto for entity data structure
  */
 export interface IPlantCreateViewModelDto extends IBaseViewModelWithTenantDto {
+  containerId: string;
   name: string;
   species: string;
   plantedDate: Date | null;

@@ -40,6 +40,7 @@ export class PlantCreateCommandHandler
     const plant = this.plantAggregateFactory.create(
       {
         ...command,
+
         createdAt: new DateValueObject(new Date()),
         updatedAt: new DateValueObject(new Date()),
       },

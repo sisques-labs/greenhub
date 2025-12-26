@@ -5,6 +5,7 @@ import { PlantNotesValueObject } from '@/features/plants/domain/value-objects/pl
 import { PlantPlantedDateValueObject } from '@/features/plants/domain/value-objects/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -16,6 +17,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  */
 export class PlantCreateCommand {
   readonly id: PlantUuidValueObject;
+  readonly containerId: ContainerUuidValueObject;
   readonly name: PlantNameValueObject;
   readonly species: PlantSpeciesValueObject;
   readonly plantedDate: PlantPlantedDateValueObject | null;
@@ -24,6 +26,7 @@ export class PlantCreateCommand {
 
   constructor(props: IPlantCreateCommandDto) {
     this.id = new PlantUuidValueObject();
+    this.containerId = new ContainerUuidValueObject(props.containerId);
 
     this.name = new PlantNameValueObject(props.name);
     this.species = new PlantSpeciesValueObject(props.species);
