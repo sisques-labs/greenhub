@@ -291,9 +291,78 @@ type PaginatedFeatureResultDto {
   items: [FeatureResponseDto!]!
 }
 
+type ContainerPlantResponseDto {
+  """The id of the plant"""
+  id: String!
+
+  """The name of the plant"""
+  name: String!
+
+  """The species of the plant"""
+  species: String!
+
+  """The date when the plant was planted"""
+  plantedDate: DateTime
+
+  """Additional notes about the plant"""
+  notes: String
+
+  """The status of the plant"""
+  status: String!
+
+  """The created at timestamp of the plant"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the plant"""
+  updatedAt: DateTime!
+}
+
+type ContainerResponseDto {
+  """The id of the container"""
+  id: String!
+
+  """The name of the container"""
+  name: String!
+
+  """The type of the container"""
+  type: String!
+
+  """The plants in the container"""
+  plants: [ContainerPlantResponseDto!]!
+
+  """The number of plants in the container"""
+  numberOfPlants: Float!
+
+  """The created at timestamp of the container"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the container"""
+  updatedAt: DateTime!
+}
+
+type PaginatedContainerResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The containers in the current page"""
+  items: [ContainerResponseDto!]!
+}
+
 type PlantResponseDto {
   """The id of the plant"""
   id: String!
+
+  """The container id of the plant"""
+  containerId: String!
 
   """The name of the plant"""
   name: String!
@@ -840,6 +909,8 @@ type PaginatedUserResultDto {
 type Query {
   hello: String!
   health: String!
+  containersFindByCriteria(input: ContainerFindByCriteriaRequestDto): PaginatedContainerResultDto!
+  containerFindById(input: ContainerFindByIdRequestDto!): ContainerResponseDto
   plantsFindByCriteria(input: PlantFindByCriteriaRequestDto): PaginatedPlantResultDto!
   plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
   eventsFindByCriteria(input: EventFindByCriteriaRequestDto): PaginatedEventResultDto!
@@ -871,7 +942,7 @@ type Query {
   featureFindById(input: FeatureFindByIdRequestDto!): FeatureResponseDto!
 }
 
-input PlantFindByCriteriaRequestDto {
+input ContainerFindByCriteriaRequestDto {
   """The filters to find by"""
   filters: [BaseFilterInput!] = []
 
@@ -925,6 +996,22 @@ input BasePaginationInput {
 
   """The per page to paginate by"""
   perPage: Int!
+}
+
+input ContainerFindByIdRequestDto {
+  """The id of the container to find"""
+  id: String!
+}
+
+input PlantFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
 }
 
 input PlantFindByIdRequestDto {
@@ -1141,6 +1228,9 @@ input FeatureFindByIdRequestDto {
 }
 
 type Mutation {
+  createContainer(input: CreateContainerRequestDto!): MutationResponseDto!
+  updateContainer(input: UpdateContainerRequestDto!): MutationResponseDto!
+  deleteContainer(input: DeleteContainerRequestDto!): MutationResponseDto!
   createPlant(input: CreatePlantRequestDto!): MutationResponseDto!
   updatePlant(input: UpdatePlantRequestDto!): MutationResponseDto!
   deletePlant(input: DeletePlantRequestDto!): MutationResponseDto!
@@ -1194,7 +1284,34 @@ type Mutation {
   changeFeatureStatus(input: FeatureChangeStatusRequestDto!): MutationResponseDto!
 }
 
+input CreateContainerRequestDto {
+  """The name of the container"""
+  name: String!
+
+  """The type of the container"""
+  type: String!
+}
+
+input UpdateContainerRequestDto {
+  """The id of the container"""
+  id: String!
+
+  """The name of the container"""
+  name: String
+
+  """The type of the container"""
+  type: String
+}
+
+input DeleteContainerRequestDto {
+  """The id of the container to delete"""
+  id: String!
+}
+
 input CreatePlantRequestDto {
+  """The container id of the plant"""
+  containerId: String!
+
   """The name of the plant"""
   name: String!
 
