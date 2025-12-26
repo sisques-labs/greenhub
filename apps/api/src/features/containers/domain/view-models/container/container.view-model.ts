@@ -1,5 +1,6 @@
 import { IContainerCreateViewModelDto } from '@/features/containers/domain/dtos/view-models/container-create/container-create-view-model.dto';
 import { IContainerUpdateViewModelDto } from '@/features/containers/domain/dtos/view-models/container-update/container-update-view-model.dto';
+import { ContainerPlantViewModel } from '@/features/containers/domain/view-models/container-plant/container-plant.view-model';
 import { BaseViewModelWithTenant } from '@/shared/domain/view-models/base-view-model-with-tenant/base-view-model-with-tenant';
 
 /**
@@ -25,6 +26,8 @@ import { BaseViewModelWithTenant } from '@/shared/domain/view-models/base-view-m
 export class ContainerViewModel extends BaseViewModelWithTenant {
   private _name: string;
   private _type: string;
+  private _plants: ContainerPlantViewModel[];
+  private _numberOfPlants: number;
 
   /**
    * Creates a new ContainerViewModel instance.
@@ -35,6 +38,8 @@ export class ContainerViewModel extends BaseViewModelWithTenant {
     super(props);
     this._name = props.name;
     this._type = props.type;
+    this._plants = props.plants;
+    this._numberOfPlants = props.numberOfPlants;
   }
 
   /**
@@ -56,6 +61,24 @@ export class ContainerViewModel extends BaseViewModelWithTenant {
   }
 
   /**
+   * Gets the plants in the container.
+   *
+   * @returns The plants in the container
+   */
+  public get plants(): ContainerPlantViewModel[] {
+    return this._plants;
+  }
+
+  /**
+   * Gets the number of plants in the container.
+   *
+   * @returns The number of plants in the container
+   */
+  public get numberOfPlants(): number {
+    return this._numberOfPlants;
+  }
+
+  /**
    * Updates the container view model with new data.
    *
    * @param updateData - The partial update view model data for the container
@@ -69,6 +92,12 @@ export class ContainerViewModel extends BaseViewModelWithTenant {
   public update(updateData: IContainerUpdateViewModelDto): void {
     this._name = updateData.name !== undefined ? updateData.name : this._name;
     this._type = updateData.type !== undefined ? updateData.type : this._type;
+    this._plants =
+      updateData.plants !== undefined ? updateData.plants : this._plants;
+    this._numberOfPlants =
+      updateData.numberOfPlants !== undefined
+        ? updateData.numberOfPlants
+        : this._numberOfPlants;
 
     // TODO: Use the update method from the base class
     // this._updatedAt = new Date();

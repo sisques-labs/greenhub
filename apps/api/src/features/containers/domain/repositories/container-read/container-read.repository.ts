@@ -1,4 +1,4 @@
-import { ContainerViewModel } from '@/features/containers/domain/view-models/container.view-model';
+import { ContainerViewModel } from '@/features/containers/domain/view-models/container/container.view-model';
 import { IBaseReadRepository } from '@/shared/domain/interfaces/base-read-repository.interface';
 
 export const CONTAINER_READ_REPOSITORY_TOKEN = Symbol(

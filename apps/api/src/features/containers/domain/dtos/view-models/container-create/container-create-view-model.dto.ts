@@ -1,3 +1,4 @@
+import { ContainerPlantViewModel } from '@/features/containers/domain/view-models/container-plant/container-plant.view-model';
 import { IBaseViewModelWithTenantDto } from '@/shared/domain/interfaces/base-view-model-with-tenant-dto.interface';
 
 /**
@@ -14,4 +15,6 @@ export interface IContainerCreateViewModelDto
   extends IBaseViewModelWithTenantDto {
   name: string;
   type: string;
+  plants: ContainerPlantViewModel[];
+  numberOfPlants: number;
 }

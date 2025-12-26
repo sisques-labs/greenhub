@@ -5,7 +5,7 @@ import { ContainerViewModelFactory } from '@/features/containers/domain/factorie
 import { ContainerPrimitives } from '@/features/containers/domain/primitives/container.primitives';
 import { ContainerNameValueObject } from '@/features/containers/domain/value-objects/container-name/container-name.vo';
 import { ContainerTypeValueObject } from '@/features/containers/domain/value-objects/container-type/container-type.vo';
-import { ContainerViewModel } from '@/features/containers/domain/view-models/container.view-model';
+import { ContainerViewModel } from '@/features/containers/domain/view-models/container/container.view-model';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 
@@ -21,7 +21,10 @@ describe('ContainerViewModelFactory', () => {
       const now = new Date();
       const dto: IContainerCreateViewModelDto = {
         id: '123e4567-e89b-12d3-a456-426614174000',
+        tenantId: '123e4567-e89b-12d3-a456-426614174000',
         name: 'Garden Bed 1',
+        plants: [],
+        numberOfPlants: 0,
         type: ContainerTypeEnum.GARDEN_BED,
         createdAt: now,
         updatedAt: now,

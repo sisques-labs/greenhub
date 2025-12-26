@@ -1,7 +1,7 @@
 import { ContainerAggregate } from '@/features/containers/domain/aggregates/container.aggregate';
 import { IContainerCreateViewModelDto } from '@/features/containers/domain/dtos/view-models/container-create/container-create-view-model.dto';
 import { ContainerPrimitives } from '@/features/containers/domain/primitives/container.primitives';
-import { ContainerViewModel } from '@/features/containers/domain/view-models/container.view-model';
+import { ContainerViewModel } from '@/features/containers/domain/view-models/container/container.view-model';
 import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
 import { Injectable, Logger } from '@nestjs/common';
 
@@ -67,6 +67,8 @@ export class ContainerViewModelFactory
       id: containerPrimitives.id,
       name: containerPrimitives.name,
       type: containerPrimitives.type,
+      plants: [],
+      numberOfPlants: 0,
       createdAt: containerPrimitives.createdAt,
       updatedAt: containerPrimitives.updatedAt,
     });
@@ -92,6 +94,8 @@ export class ContainerViewModelFactory
       id: containerAggregate.id.value,
       name: containerAggregate.name.value,
       type: containerAggregate.type.value,
+      plants: [],
+      numberOfPlants: 0, // Default value, will be updated by event handlers
       createdAt: containerAggregate.createdAt.value,
       updatedAt: containerAggregate.updatedAt.value,
     });

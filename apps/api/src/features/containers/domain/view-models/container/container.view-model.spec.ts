@@ -1,7 +1,7 @@
 import { IContainerCreateViewModelDto } from '@/features/containers/domain/dtos/view-models/container-create/container-create-view-model.dto';
 import { IContainerUpdateViewModelDto } from '@/features/containers/domain/dtos/view-models/container-update/container-update-view-model.dto';
 import { ContainerTypeEnum } from '@/features/containers/domain/enums/container-type/container-type.enum';
-import { ContainerViewModel } from '@/features/containers/domain/view-models/container.view-model';
+import { ContainerViewModel } from '@/features/containers/domain/view-models/container/container.view-model';
 
 describe('ContainerViewModel', () => {
   const createProps = (): IContainerCreateViewModelDto => {
@@ -10,6 +10,8 @@ describe('ContainerViewModel', () => {
       id: '123e4567-e89b-12d3-a456-426614174000',
       name: 'Garden Bed 1',
       type: ContainerTypeEnum.GARDEN_BED,
+      plants: [],
+      numberOfPlants: 0,
       createdAt: now,
       updatedAt: now,
     };

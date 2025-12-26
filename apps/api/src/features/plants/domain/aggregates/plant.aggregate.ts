@@ -7,6 +7,7 @@ import { PlantPlantedDateValueObject } from '@/features/plants/domain/value-obje
 import { PlantSpeciesValueObject } from '@/features/plants/domain/value-objects/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/features/plants/domain/value-objects/plant-status/plant-status.vo';
 import { BaseAggregate } from '@/shared/domain/aggregates/base-aggregate/base.aggregate';
+import { PlantContainerChangedEvent } from '@/shared/domain/events/features/plants/plant-container-changed/plant-container-changed.event';
 import { PlantCreatedEvent } from '@/shared/domain/events/features/plants/plant-created/plant-created.event';
 import { PlantDeletedEvent } from '@/shared/domain/events/features/plants/plant-deleted/plant-deleted.event';
 import { PlantStatusChangedEvent } from '@/shared/domain/events/features/plants/plant-status-changed/plant-status-changed.event';
@@ -140,6 +141,39 @@ export class PlantAggregate extends BaseAggregate {
             eventType: PlantStatusChangedEvent.name,
           },
           this.toPrimitives(),
+        ),
+      );
+    }
+  }
+
+  /**
+   * Changes the container of the plant and emits a PlantContainerChangedEvent if specified.
+   *
+   * @param newContainerId - The new container identifier value object.
+   * @param generateEvent - Whether to emit a PlantContainerChangedEvent. Defaults to `true`.
+   */
+  public changeContainer(
+    newContainerId: ContainerUuidValueObject,
+    generateEvent: boolean = true,
+  ) {
+    const oldContainerId = this._containerId;
+    this._containerId = newContainerId;
+    this._updatedAt = new DateValueObject(new Date());
+
+    if (generateEvent) {
+      const primitives = this.toPrimitives();
+      this.apply(
+        new PlantContainerChangedEvent(
+          {
+            aggregateId: this._id.value,
+            aggregateType: PlantAggregate.name,
+            eventType: PlantContainerChangedEvent.name,
+          },
+          {
+            ...primitives,
+            oldContainerId: oldContainerId.value,
+            newContainerId: newContainerId.value,
+          },
         ),
       );
     }

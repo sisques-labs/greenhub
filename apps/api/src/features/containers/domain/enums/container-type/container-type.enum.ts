@@ -7,7 +7,6 @@
  * @enum
  * - {@link ContainerTypeEnum.POT}: A pot container for individual plants.
  * - {@link ContainerTypeEnum.GARDEN_BED}: A garden bed for multiple plants.
- * - {@link ContainerTypeEnum.GREENHOUSE}: A greenhouse container.
  * - {@link ContainerTypeEnum.HANGING_BASKET}: A hanging basket container.
  * - {@link ContainerTypeEnum.WINDOW_BOX}: A window box container.
  */
@@ -17,9 +16,6 @@ export enum ContainerTypeEnum {
 
   /** A garden bed for multiple plants. */
   GARDEN_BED = 'GARDEN_BED',
-
-  /** A greenhouse container. */
-  GREENHOUSE = 'GREENHOUSE',
 
   /** A hanging basket container. */
   HANGING_BASKET = 'HANGING_BASKET',
