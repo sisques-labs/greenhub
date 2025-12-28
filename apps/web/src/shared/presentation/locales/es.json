@@ -14,7 +14,8 @@
     "feature1": "Característica 1",
     "feature2": "Característica 2",
     "feature3": "Característica 3",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "plants": "Plantas"
   },
   "authPage": {
     "title": {
@@ -141,6 +142,164 @@
     "validation": {
       "id": {
         "required": "El ID es requerido"
+      }
+    }
+  },
+  "plants": {
+    "title": "Gestión de Plantas",
+    "description": "Gestiona tus plantas y contenedores",
+    "tabs": {
+      "plants": "Plantas",
+      "containers": "Contenedores"
+    },
+    "plants": {
+      "title": "Plantas",
+      "description": "Lista de todas tus plantas",
+      "empty": "No hay plantas registradas"
+    },
+    "containers": {
+      "title": "Contenedores",
+      "description": "Lista de todos tus contenedores",
+      "empty": "No hay contenedores registrados",
+      "noPlants": "Este contenedor no tiene plantas",
+      "plants": "Plantas",
+      "fields": {
+        "type": "Tipo",
+        "numberOfPlants": "Número de plantas"
+      }
+    },
+    "fields": {
+      "containerId": {
+        "label": "Contenedor",
+        "placeholder": "Selecciona un contenedor"
+      },
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Nombre de la planta"
+      },
+      "species": {
+        "label": "Especie",
+        "placeholder": "Especie de la planta"
+      },
+      "plantedDate": {
+        "label": "Fecha de plantación"
+      },
+      "notes": {
+        "label": "Notas",
+        "placeholder": "Notas adicionales sobre la planta"
+      },
+      "status": {
+        "label": "Estado",
+        "placeholder": "Selecciona el estado"
+      }
+    },
+    "status": {
+      "PLANTED": "Plantada",
+      "GROWING": "Creciendo",
+      "HARVESTED": "Cosechada",
+      "DEAD": "Muerta",
+      "ARCHIVED": "Archivada"
+    },
+    "actions": {
+      "create": {
+        "title": "Crear Planta",
+        "description": "Agrega una nueva planta a tu colección",
+        "button": "Crear Planta",
+        "submit": "Crear",
+        "createContainer": "Crear Contenedor"
+      },
+      "createContainer": "Crear Contenedor",
+      "delete": {
+        "confirm": "¿Estás seguro de que quieres eliminar la planta {name}?"
+      }
+    },
+    "validation": {
+      "containerId": {
+        "required": "El contenedor es requerido"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "species": {
+        "required": "La especie es requerida"
+      },
+      "status": {
+        "invalid": "Estado inválido"
+      }
+    }
+  },
+  "plant": {
+    "validation": {
+      "containerId": {
+        "required": "El contenedor es requerido"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "species": {
+        "required": "La especie es requerida"
+      },
+      "status": {
+        "invalid": "Estado inválido"
+      },
+      "id": {
+        "required": "El ID es requerido"
+      }
+    }
+  },
+  "containers": {
+    "fields": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Nombre del contenedor"
+      },
+      "type": {
+        "label": "Tipo",
+        "placeholder": "Selecciona el tipo"
+      },
+      "numberOfPlants": {
+        "label": "Número de plantas"
+      }
+    },
+    "type": {
+      "POT": "Maceta",
+      "GARDEN_BED": "Cama de jardín",
+      "HANGING_BASKET": "Cesta colgante",
+      "WINDOW_BOX": "Jardín de ventana"
+    },
+    "actions": {
+      "create": {
+        "title": "Crear Contenedor",
+        "description": "Agrega un nuevo contenedor para tus plantas",
+        "button": "Crear Contenedor",
+        "submit": "Crear"
+      },
+      "delete": {
+        "confirm": "¿Estás seguro de que quieres eliminar el contenedor {name}?"
+      }
+    },
+    "validation": {
+      "id": {
+        "required": "El ID es requerido"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "type": {
+        "invalid": "Tipo inválido"
+      }
+    }
+  },
+  "container": {
+    "validation": {
+      "id": {
+        "required": "El ID es requerido"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "type": {
+        "invalid": "Tipo inválido"
       }
     }
   }

@@ -1,19 +1,26 @@
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
 
 export const useRoutes = () => {
   const pathname = usePathname();
+  const locale = useLocale();
   const t = useTranslations('nav');
 
+  // Helper function to build localized URLs
+  const buildLocalizedUrl = (path: string): string => {
+    // Remove leading slash if present
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    // Build URL with locale prefix
+    return `/${locale}/${cleanPath}`;
+  };
+
   const routes = {
-    home: '/home',
-    feature1: '/feature1',
-    feature2: '/feature2',
-    feature3: '/feature3',
-    settings: '/settings',
-    auth: '/auth',
-    userProfile: '/user/profile',
+    home: buildLocalizedUrl('/home'),
+    settings: buildLocalizedUrl('/settings'),
+    auth: buildLocalizedUrl('/auth'),
+    userProfile: buildLocalizedUrl('/user/profile'),
+    plants: buildLocalizedUrl('/plants'),
   } as const;
 
   /**
@@ -29,31 +36,18 @@ export const useRoutes = () => {
             {
               title: t('home'),
               url: routes.home,
-              isActive: pathname === routes.home || pathname?.endsWith('/home'),
+              isActive: pathname === routes.home,
             },
           ],
         },
         {
-          title: t('features'),
+          title: t('plants'),
           url: '#',
           items: [
             {
-              title: t('feature1'),
-              url: routes.feature1,
-              isActive:
-                pathname === routes.feature1 || pathname?.endsWith('/feature1'),
-            },
-            {
-              title: t('feature2'),
-              url: routes.feature2,
-              isActive:
-                pathname === routes.feature2 || pathname?.endsWith('/feature2'),
-            },
-            {
-              title: t('feature3'),
-              url: routes.feature3,
-              isActive:
-                pathname === routes.feature3 || pathname?.endsWith('/feature3'),
+              title: t('plants'),
+              url: routes.plants,
+              isActive: pathname === routes.plants,
             },
           ],
         },
@@ -64,8 +58,7 @@ export const useRoutes = () => {
             {
               title: t('settings'),
               url: routes.settings,
-              isActive:
-                pathname === routes.settings || pathname?.endsWith('/settings'),
+              isActive: pathname === routes.settings,
             },
           ],
         },
