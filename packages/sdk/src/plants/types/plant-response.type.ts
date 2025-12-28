@@ -1,3 +1,5 @@
+import { PlantStatus } from './plant-status.type.js';
+
 export type PlantResponse = {
   id: string;
   containerId: string;
@@ -5,7 +7,7 @@ export type PlantResponse = {
   species: string;
   plantedDate?: Date | null;
   notes?: string | null;
-  status: string;
+  status: PlantStatus;
   createdAt?: Date;
   updatedAt?: Date;
 };

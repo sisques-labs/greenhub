@@ -1,4 +1,4 @@
-import type { PlantStatus } from '@repo/sdk';
+import { PLANT_STATUS, type PlantStatus } from '@repo/sdk';
 import { z } from 'zod';
 
 /**
@@ -20,13 +20,18 @@ export function createPlantCreateSchema(translations: (key: string) => string) {
       .min(1, translations('plant.validation.species.required')),
     plantedDate: z.string().optional().nullable(),
     notes: z.string().optional().nullable(),
-    status: z
-      .enum(['PLANTED', 'GROWING', 'HARVESTED', 'DEAD', 'ARCHIVED'], {
-        errorMap: () => ({
-          message: translations('plant.validation.status.invalid'),
-        }),
-      })
-      .default('PLANTED'),
+    status: z.enum(
+      [
+        PLANT_STATUS.PLANTED,
+        PLANT_STATUS.GROWING,
+        PLANT_STATUS.HARVESTED,
+        PLANT_STATUS.DEAD,
+        PLANT_STATUS.ARCHIVED,
+      ] as const,
+      {
+        message: translations('plant.validation.status.invalid'),
+      },
+    ),
   });
 }
 

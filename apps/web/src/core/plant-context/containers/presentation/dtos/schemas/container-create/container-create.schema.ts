@@ -1,3 +1,4 @@
+import { CONTAINER_TYPE } from '@repo/sdk';
 import { z } from 'zod';
 
 /**
@@ -13,11 +14,17 @@ export function createContainerCreateSchema(
 ) {
   return z.object({
     name: z.string().min(1, translations('container.validation.name.required')),
-    type: z.enum(['POT', 'GARDEN_BED', 'HANGING_BASKET', 'WINDOW_BOX'], {
-      errorMap: () => ({
+    type: z.enum(
+      [
+        CONTAINER_TYPE.POT,
+        CONTAINER_TYPE.GARDEN_BED,
+        CONTAINER_TYPE.HANGING_BASKET,
+        CONTAINER_TYPE.WINDOW_BOX,
+      ] as const,
+      {
         message: translations('container.validation.type.invalid'),
-      }),
-    }),
+      },
+    ),
   });
 }
 

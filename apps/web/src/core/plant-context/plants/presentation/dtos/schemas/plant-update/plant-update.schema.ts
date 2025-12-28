@@ -1,3 +1,4 @@
+import { PLANT_STATUS } from '@repo/sdk';
 import { z } from 'zod';
 
 /**
@@ -17,11 +18,18 @@ export function createPlantUpdateSchema(translations: (key: string) => string) {
     plantedDate: z.string().optional().nullable(),
     notes: z.string().optional().nullable(),
     status: z
-      .enum(['PLANTED', 'GROWING', 'HARVESTED', 'DEAD', 'ARCHIVED'], {
-        errorMap: () => ({
+      .enum(
+        [
+          PLANT_STATUS.PLANTED,
+          PLANT_STATUS.GROWING,
+          PLANT_STATUS.HARVESTED,
+          PLANT_STATUS.DEAD,
+          PLANT_STATUS.ARCHIVED,
+        ] as const,
+        {
           message: translations('plant.validation.status.invalid'),
-        }),
-      })
+        },
+      )
       .optional(),
   });
 }

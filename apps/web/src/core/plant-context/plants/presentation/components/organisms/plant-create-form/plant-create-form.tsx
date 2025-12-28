@@ -7,7 +7,7 @@ import {
 } from '@/core/plant-context/plants/presentation/dtos/schemas/plant-create/plant-create.schema';
 import { usePlantCreate } from '@/core/plant-context/plants/presentation/hooks/use-plant-create/use-plant-create';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { ContainerResponse } from '@repo/sdk';
+import { PLANT_STATUS, type ContainerResponse } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
   Dialog,
@@ -75,7 +75,7 @@ export function PlantCreateForm({
       species: '',
       plantedDate: null,
       notes: null,
-      status: 'PLANTED',
+      status: PLANT_STATUS.PLANTED,
     },
   });
 
