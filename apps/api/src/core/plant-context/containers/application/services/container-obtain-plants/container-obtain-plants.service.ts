@@ -1,19 +1,19 @@
 import { ContainerPlantViewModel } from '@/core/plant-context/containers/domain/view-models/container-plant/container-plant.view-model';
-import { FindPlantsByContainerIdQuery } from '@/core/plant-context/plants/application/queries/find-plants-by-container-id/find-plants-by-container-id.query';
+import { FindPlantsViewModelByContainerIdQuery } from '@/core/plant-context/plants/application/queries/find-plants-view-model-by-container-id/find-plants-view-model-by-container-id.query';
+import { PlantViewModel } from '@/core/plant-context/plants/domain/view-models/plant.view-model';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 import { Injectable, Logger } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 
 /**
- * Service responsible for calculating the number of plants
- * within a specified container.
+ * Service responsible for obtaining plants within a specified container.
  *
  * @remarks
- * Uses the {@link QueryBus} to retrieve all plants associated
- * with a given container ID, then returns the count.
+ * Uses the {@link QueryBus} to retrieve all plant view models associated
+ * with a given container ID, then converts them to ContainerPlantViewModel.
  *
  * @implements {@link IBaseService} with `string` as input (containerId)
- * and `number` as output (number of plants).
+ * and `ContainerPlantViewModel[]` as output.
  */
 @Injectable()
 export class ContainerObtainPlantsService
@@ -32,26 +32,40 @@ export class ContainerObtainPlantsService
   constructor(private readonly queryBus: QueryBus) {}
 
   /**
-   * Calculates and returns the number of plants in a specified container.
+   * Obtains and returns all plants in a specified container.
    *
    * @param containerId - The unique identifier for the container.
-   * @returns The number of plants found within the container.
+   * @returns The plants found within the container as ContainerPlantViewModel instances.
    *
    * @throws May propagate errors from the query bus execution.
    */
   async execute(containerId: string): Promise<ContainerPlantViewModel[]> {
-    this.logger.log(
-      `Calculating number of plants for container: ${containerId}`,
+    this.logger.log(`Obtaining plants for container: ${containerId}`);
+
+    // 01: Execute query to get plant view models
+    const plantViewModels: PlantViewModel[] = await this.queryBus.execute(
+      new FindPlantsViewModelByContainerIdQuery({ containerId }),
     );
 
-    const plants: ContainerPlantViewModel[] = await this.queryBus.execute(
-      new FindPlantsByContainerIdQuery({ containerId }),
+    // 02: Convert PlantViewModel to ContainerPlantViewModel
+    const containerPlants: ContainerPlantViewModel[] = plantViewModels.map(
+      (plant) =>
+        new ContainerPlantViewModel({
+          id: plant.id,
+          name: plant.name,
+          species: plant.species,
+          plantedDate: plant.plantedDate,
+          notes: plant.notes,
+          status: plant.status,
+          createdAt: plant.createdAt,
+          updatedAt: plant.updatedAt,
+        }),
     );
 
     this.logger.debug(
-      `Found ${plants.length} plants for container: ${containerId}`,
+      `Found ${containerPlants.length} plants for container: ${containerId}`,
     );
 
-    return plants;
+    return containerPlants;
   }
 }

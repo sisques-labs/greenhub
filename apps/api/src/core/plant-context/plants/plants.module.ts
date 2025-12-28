@@ -9,6 +9,7 @@ import { PlantUpdatedEventHandler } from '@/core/plant-context/plants/applicatio
 import { FindPlantByIdQueryHandler } from '@/core/plant-context/plants/application/queries/find-plant-by-id/find-plant-by-id.query-handler';
 import { FindPlantsByContainerIdQueryHandler } from '@/core/plant-context/plants/application/queries/find-plants-by-container-id/find-plants-by-container-id.query-handler';
 import { FindPlantsByCriteriaQueryHandler } from '@/core/plant-context/plants/application/queries/find-plants-by-criteria/find-plants-by-criteria.query-handler';
+import { FindPlantsViewModelByContainerIdQueryHandler } from '@/core/plant-context/plants/application/queries/find-plants-view-model-by-container-id/find-plants-view-model-by-container-id.query-handler';
 import { PlantViewModelFindByIdQueryHandler } from '@/core/plant-context/plants/application/queries/plant-view-model-find-by-id/plant-view-model-find-by-id.query-handler';
 import { AssertPlantExistsService } from '@/core/plant-context/plants/application/services/assert-plant-exists/assert-plant-exists.service';
 import { AssertPlantViewModelExistsService } from '@/core/plant-context/plants/application/services/assert-plant-view-model-exists/assert-plant-view-model-exists.service';
@@ -36,6 +37,7 @@ const QUERY_HANDLERS = [
   FindPlantsByCriteriaQueryHandler,
   FindPlantByIdQueryHandler,
   FindPlantsByContainerIdQueryHandler,
+  FindPlantsViewModelByContainerIdQueryHandler,
   PlantViewModelFindByIdQueryHandler,
 ];
 

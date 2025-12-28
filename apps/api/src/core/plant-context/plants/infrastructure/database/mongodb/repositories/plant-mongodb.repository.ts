@@ -142,4 +142,36 @@ export class PlantMongoRepository
     // 01: Delete the plant view model from the collection
     await collection.deleteOne({ id });
   }
+
+  /**
+   * Finds all plant view models by container ID.
+   *
+   * @param containerId - The container ID to search for
+   * @returns Promise that resolves to an array of PlantViewModel instances
+   */
+  async findByContainerId(containerId: string): Promise<PlantViewModel[]> {
+    this.logger.log(`Finding plants by container id: ${containerId}`);
+
+    const collection = this.mongoMasterService.getCollection(
+      this.collectionName,
+    );
+
+    // 01: Find all plants with the given containerId
+    const plants = await collection.find({ containerId }).toArray();
+
+    // 02: Convert MongoDB documents to view models
+    return plants.map((doc) =>
+      this.plantMongoDBMapper.toViewModel({
+        id: doc.id,
+        containerId: doc.containerId,
+        name: doc.name,
+        species: doc.species,
+        plantedDate: doc.plantedDate,
+        notes: doc.notes,
+        status: doc.status,
+        createdAt: doc.createdAt,
+        updatedAt: doc.updatedAt,
+      }),
+    );
+  }
 }

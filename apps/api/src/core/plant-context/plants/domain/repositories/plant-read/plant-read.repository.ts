@@ -4,9 +4,16 @@ import { IBaseReadRepository } from '@/shared/domain/interfaces/base-read-reposi
 export const PLANT_READ_REPOSITORY_TOKEN = Symbol('PlantReadRepository');
 
 /**
- * Type alias for the plant read repository.
- * This repository handles read operations (queries) for plants.
- *
- * @type PlantReadRepository
+ * Read repository interface for Plant view model.
+ * Extends IBaseReadRepository with additional query methods.
  */
-export type PlantReadRepository = IBaseReadRepository<PlantViewModel>;
+export interface PlantReadRepository
+  extends IBaseReadRepository<PlantViewModel> {
+  /**
+   * Finds all plant view models by container ID.
+   *
+   * @param containerId - The container ID to search for
+   * @returns Promise that resolves to an array of PlantViewModel instances
+   */
+  findByContainerId(containerId: string): Promise<PlantViewModel[]>;
+}

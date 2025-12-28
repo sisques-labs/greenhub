@@ -1,3 +1,4 @@
+import { ContainerPlantMongoDbDto } from '@/core/plant-context/containers/infrastructure/database/mongodb/dtos/container-plant-mongodb.dto';
 import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base-mongo.dto';
 
 /**
@@ -11,5 +12,6 @@ import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base
 export type ContainerMongoDbDto = BaseMongoDto & {
   name: string;
   type: string;
+  plants: ContainerPlantMongoDbDto[];
   numberOfPlants: number;
 };
