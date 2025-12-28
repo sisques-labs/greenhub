@@ -1,6 +1,7 @@
 import { ContainerObtainPlantsService } from '@/core/plant-context/containers/application/services/container-obtain-plants/container-obtain-plants.service';
 import { ContainerPlantViewModel } from '@/core/plant-context/containers/domain/view-models/container-plant/container-plant.view-model';
 import { FindPlantsViewModelByContainerIdQuery } from '@/core/plant-context/plants/application/queries/find-plants-view-model-by-container-id/find-plants-view-model-by-container-id.query';
+import { PlantViewModel } from '@/core/plant-context/plants/domain/view-models/plant.view-model';
 import { QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 
@@ -37,8 +38,9 @@ describe('ContainerObtainPlantsService', () => {
       const containerId = '123e4567-e89b-12d3-a456-426614174000';
       const now = new Date();
 
-      const mockPlant1 = new ContainerPlantViewModel({
+      const mockPlantViewModel1 = new PlantViewModel({
         id: '223e4567-e89b-12d3-a456-426614174000',
+        containerId,
         name: 'Aloe Vera',
         species: 'Aloe barbadensis',
         plantedDate: new Date('2024-01-15'),
@@ -48,8 +50,9 @@ describe('ContainerObtainPlantsService', () => {
         updatedAt: now,
       });
 
-      const mockPlant2 = new ContainerPlantViewModel({
+      const mockPlantViewModel2 = new PlantViewModel({
         id: '323e4567-e89b-12d3-a456-426614174000',
+        containerId,
         name: 'Basil',
         species: 'Ocimum basilicum',
         plantedDate: new Date('2024-01-20'),
@@ -59,14 +62,21 @@ describe('ContainerObtainPlantsService', () => {
         updatedAt: now,
       });
 
-      const mockPlants = [mockPlant1, mockPlant2];
+      const mockPlantViewModels = [mockPlantViewModel1, mockPlantViewModel2];
 
-      mockQueryBus.execute.mockResolvedValue(mockPlants);
+      mockQueryBus.execute.mockResolvedValue(mockPlantViewModels);
 
       const result = await service.execute(containerId);
 
-      expect(result).toBe(mockPlants);
       expect(result).toHaveLength(2);
+      expect(result[0]).toBeInstanceOf(ContainerPlantViewModel);
+      expect(result[0].id).toBe('223e4567-e89b-12d3-a456-426614174000');
+      expect(result[0].name).toBe('Aloe Vera');
+      expect(result[0].species).toBe('Aloe barbadensis');
+      expect(result[1]).toBeInstanceOf(ContainerPlantViewModel);
+      expect(result[1].id).toBe('323e4567-e89b-12d3-a456-426614174000');
+      expect(result[1].name).toBe('Basil');
+      expect(result[1].species).toBe('Ocimum basilicum');
       expect(mockQueryBus.execute).toHaveBeenCalledWith(
         expect.any(FindPlantsViewModelByContainerIdQuery),
       );

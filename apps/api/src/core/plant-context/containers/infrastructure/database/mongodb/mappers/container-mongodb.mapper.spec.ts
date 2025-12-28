@@ -172,6 +172,7 @@ describe('ContainerMongoDBMapper', () => {
         id: containerId,
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
+        plants: [],
         numberOfPlants: 5,
         createdAt,
         updatedAt,
