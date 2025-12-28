@@ -1,9 +1,11 @@
+import { PlantContextModule } from '@/core/plant-context/plant-context.module';
+import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 
-const MODULES = [];
+const MODULES = [PlantContextModule];
 
 @Module({
-  imports: [...MODULES],
+  imports: [SharedModule, ...MODULES],
   controllers: [],
   providers: [],
   exports: [],

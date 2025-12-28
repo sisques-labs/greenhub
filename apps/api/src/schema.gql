@@ -2,6 +2,129 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type MutationResponseDto {
+  success: Boolean!
+  message: String
+  id: String
+}
+
+type ContainerPlantResponseDto {
+  """The id of the plant"""
+  id: String!
+
+  """The name of the plant"""
+  name: String!
+
+  """The species of the plant"""
+  species: String!
+
+  """The date when the plant was planted"""
+  plantedDate: DateTime
+
+  """Additional notes about the plant"""
+  notes: String
+
+  """The status of the plant"""
+  status: String!
+
+  """The created at timestamp of the plant"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the plant"""
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ContainerResponseDto {
+  """The id of the container"""
+  id: String!
+
+  """The name of the container"""
+  name: String!
+
+  """The type of the container"""
+  type: String!
+
+  """The plants in the container"""
+  plants: [ContainerPlantResponseDto!]!
+
+  """The number of plants in the container"""
+  numberOfPlants: Float!
+
+  """The created at timestamp of the container"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the container"""
+  updatedAt: DateTime!
+}
+
+type PaginatedContainerResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The containers in the current page"""
+  items: [ContainerResponseDto!]!
+}
+
+type PlantResponseDto {
+  """The id of the plant"""
+  id: String!
+
+  """The container id of the plant"""
+  containerId: String!
+
+  """The name of the plant"""
+  name: String!
+
+  """The species of the plant"""
+  species: String!
+
+  """The date when the plant was planted"""
+  plantedDate: DateTime
+
+  """Additional notes about the plant"""
+  notes: String
+
+  """The status of the plant"""
+  status: String!
+
+  """The created at timestamp of the plant"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the plant"""
+  updatedAt: DateTime!
+}
+
+type PaginatedPlantResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The plants in the current page"""
+  items: [PlantResponseDto!]!
+}
+
 type LoginResponseDto {
   """The access token"""
   accessToken: String!
@@ -13,12 +136,6 @@ type LoginResponseDto {
 type RefreshTokenResponseDto {
   """The new access token"""
   accessToken: String!
-}
-
-type MutationResponseDto {
-  success: Boolean!
-  message: String
-  id: String
 }
 
 type AuthResponseDto {
@@ -52,11 +169,6 @@ type AuthResponseDto {
   """The updated at of the auth"""
   updatedAt: DateTime
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type PaginatedAuthResultDto {
   """The total number of items"""
@@ -352,6 +464,10 @@ type PaginatedUserResultDto {
 type Query {
   hello: String!
   health: String!
+  containersFindByCriteria(input: ContainerFindByCriteriaRequestDto): PaginatedContainerResultDto!
+  containerFindById(input: ContainerFindByIdRequestDto!): ContainerResponseDto
+  plantsFindByCriteria(input: PlantFindByCriteriaRequestDto): PaginatedPlantResultDto!
+  plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
   authProfileMe: AuthUserProfileResponseDto!
   findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
   sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
@@ -367,7 +483,7 @@ type Query {
   userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
 }
 
-input AuthFindByCriteriaRequestDto {
+input ContainerFindByCriteriaRequestDto {
   """The filters to find by"""
   filters: [BaseFilterInput!] = []
 
@@ -421,6 +537,38 @@ input BasePaginationInput {
 
   """The per page to paginate by"""
   perPage: Int!
+}
+
+input ContainerFindByIdRequestDto {
+  """The id of the container to find"""
+  id: String!
+}
+
+input PlantFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input PlantFindByIdRequestDto {
+  """The id of the plant"""
+  id: String!
+}
+
+input AuthFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
 }
 
 input SagaInstanceFindByIdRequestDto {
@@ -503,6 +651,13 @@ input UserFindByIdRequestDto {
 }
 
 type Mutation {
+  createContainer(input: CreateContainerRequestDto!): MutationResponseDto!
+  updateContainer(input: UpdateContainerRequestDto!): MutationResponseDto!
+  deleteContainer(input: DeleteContainerRequestDto!): MutationResponseDto!
+  createPlant(input: CreatePlantRequestDto!): MutationResponseDto!
+  updatePlant(input: UpdatePlantRequestDto!): MutationResponseDto!
+  deletePlant(input: DeletePlantRequestDto!): MutationResponseDto!
+  changePlantStatus(input: PlantChangeStatusRequestDto!): MutationResponseDto!
   loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
   registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
   refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
@@ -521,6 +676,83 @@ type Mutation {
   createUser(input: CreateUserRequestDto!): MutationResponseDto!
   updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
   deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
+}
+
+input CreateContainerRequestDto {
+  """The name of the container"""
+  name: String!
+
+  """The type of the container"""
+  type: String!
+}
+
+input UpdateContainerRequestDto {
+  """The id of the container"""
+  id: String!
+
+  """The name of the container"""
+  name: String
+
+  """The type of the container"""
+  type: String
+}
+
+input DeleteContainerRequestDto {
+  """The id of the container to delete"""
+  id: String!
+}
+
+input CreatePlantRequestDto {
+  """The container id of the plant"""
+  containerId: String!
+
+  """The name of the plant"""
+  name: String!
+
+  """The species of the plant"""
+  species: String!
+
+  """The date when the plant was planted"""
+  plantedDate: DateTime
+
+  """Additional notes about the plant"""
+  notes: String
+
+  """The status of the plant"""
+  status: String
+}
+
+input UpdatePlantRequestDto {
+  """The id of the plant"""
+  id: String!
+
+  """The name of the plant"""
+  name: String
+
+  """The species of the plant"""
+  species: String
+
+  """The date when the plant was planted"""
+  plantedDate: DateTime
+
+  """Additional notes about the plant"""
+  notes: String
+
+  """The status of the plant"""
+  status: String
+}
+
+input DeletePlantRequestDto {
+  """The id of the plant"""
+  id: String!
+}
+
+input PlantChangeStatusRequestDto {
+  """The id of the plant"""
+  id: String!
+
+  """The new status of the plant"""
+  status: String!
 }
 
 input AuthLoginByEmailRequestDto {
