@@ -1,6 +1,6 @@
 import { ContainerObtainPlantsService } from '@/core/plant-context/containers/application/services/container-obtain-plants/container-obtain-plants.service';
 import { ContainerPlantViewModel } from '@/core/plant-context/containers/domain/view-models/container-plant/container-plant.view-model';
-import { FindPlantsByContainerIdQuery } from '@/core/plant-context/plants/application/queries/find-plants-by-container-id/find-plants-by-container-id.query';
+import { FindPlantsViewModelByContainerIdQuery } from '@/core/plant-context/plants/application/queries/find-plants-view-model-by-container-id/find-plants-view-model-by-container-id.query';
 import { QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 
@@ -68,7 +68,7 @@ describe('ContainerObtainPlantsService', () => {
       expect(result).toBe(mockPlants);
       expect(result).toHaveLength(2);
       expect(mockQueryBus.execute).toHaveBeenCalledWith(
-        expect.any(FindPlantsByContainerIdQuery),
+        expect.any(FindPlantsViewModelByContainerIdQuery),
       );
       expect(mockQueryBus.execute).toHaveBeenCalledTimes(1);
     });
@@ -83,7 +83,7 @@ describe('ContainerObtainPlantsService', () => {
       expect(result).toEqual([]);
       expect(result).toHaveLength(0);
       expect(mockQueryBus.execute).toHaveBeenCalledWith(
-        expect.any(FindPlantsByContainerIdQuery),
+        expect.any(FindPlantsViewModelByContainerIdQuery),
       );
       expect(mockQueryBus.execute).toHaveBeenCalledTimes(1);
     });
@@ -97,7 +97,7 @@ describe('ContainerObtainPlantsService', () => {
       await expect(service.execute(containerId)).rejects.toThrow(queryError);
 
       expect(mockQueryBus.execute).toHaveBeenCalledWith(
-        expect.any(FindPlantsByContainerIdQuery),
+        expect.any(FindPlantsViewModelByContainerIdQuery),
       );
       expect(mockQueryBus.execute).toHaveBeenCalledTimes(1);
     });
@@ -110,8 +110,8 @@ describe('ContainerObtainPlantsService', () => {
       await service.execute(containerId);
 
       const queryCall = mockQueryBus.execute.mock.calls[0]?.[0];
-      expect(queryCall).toBeInstanceOf(FindPlantsByContainerIdQuery);
-      if (queryCall instanceof FindPlantsByContainerIdQuery) {
+      expect(queryCall).toBeInstanceOf(FindPlantsViewModelByContainerIdQuery);
+      if (queryCall instanceof FindPlantsViewModelByContainerIdQuery) {
         expect(queryCall.containerId.value).toBe(containerId);
       }
     });

@@ -1,12 +1,12 @@
 'use client';
 
+import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
+import { usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 import { useAuthLogout } from '@/generic/auth/presentation/hooks/use-auth-logout/use-auth-logout';
 import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
 import { useRoutes } from '@/shared/presentation/hooks/use-routes';
 import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
-import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
-import { usePathname } from 'next/navigation';
-import { useMemo } from 'react';
 
 interface AppLayoutWithSidebarProps {
   children: React.ReactNode;

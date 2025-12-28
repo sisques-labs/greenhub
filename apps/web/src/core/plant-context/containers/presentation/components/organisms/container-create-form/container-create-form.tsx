@@ -30,8 +30,8 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import {
-  createContainerCreateSchema,
   ContainerCreateFormValues,
+  createContainerCreateSchema,
 } from '@/core/plant-context/containers/presentation/dtos/schemas/container-create/container-create.schema';
 import { useContainerCreate } from '@/core/plant-context/containers/presentation/hooks/use-container-create/use-container-create';
 
@@ -78,7 +78,7 @@ export function ContainerCreateForm({
           console.error('Container create error:', error);
         },
       );
-    } catch (error) {
+    } catch (_error) {
       // Error is handled by the hook
     }
   };
@@ -92,10 +92,11 @@ export function ContainerCreateForm({
             {t('containers.actions.create.description')}
           </DialogDescription>
         </DialogHeader>
-
+        {/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
         <Form {...(form as any)}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
+              // biome-ignore lint/suspicious/noExplicitAny: <explanation>
               control={form.control as any}
               name="name"
               render={({ field }) => (
@@ -114,6 +115,7 @@ export function ContainerCreateForm({
             />
 
             <FormField
+              // biome-ignore lint/suspicious/noExplicitAny: <explanation>
               control={form.control as any}
               name="type"
               render={({ field }) => (

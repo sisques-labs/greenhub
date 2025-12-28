@@ -1,10 +1,5 @@
 'use client';
 
-import { ContainerCreateForm } from '@/core/plant-context/containers/presentation/components/organisms/container-create-form/container-create-form';
-import { useContainerDelete } from '@/core/plant-context/containers/presentation/hooks/use-container-delete/use-container-delete';
-import { PlantCreateForm } from '@/core/plant-context/plants/presentation/components/organisms/plant-create-form/plant-create-form';
-import { PlantsManagementPageSkeleton } from '@/core/plant-context/plants/presentation/components/organisms/plants-management-page-skeleton/plants-management-page-skeleton';
-import { usePlantDelete } from '@/core/plant-context/plants/presentation/hooks/use-plant-delete/use-plant-delete';
 import type { ContainerResponse, PlantResponse } from '@repo/sdk';
 import { useContainersList, usePlantsList } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -18,6 +13,11 @@ import {
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { ContainerCreateForm } from '@/core/plant-context/containers/presentation/components/organisms/container-create-form/container-create-form';
+import { useContainerDelete } from '@/core/plant-context/containers/presentation/hooks/use-container-delete/use-container-delete';
+import { PlantCreateForm } from '@/core/plant-context/plants/presentation/components/organisms/plant-create-form/plant-create-form';
+import { PlantsManagementPageSkeleton } from '@/core/plant-context/plants/presentation/components/organisms/plants-management-page-skeleton/plants-management-page-skeleton';
+import { usePlantDelete } from '@/core/plant-context/plants/presentation/hooks/use-plant-delete/use-plant-delete';
 
 export function PlantsManagementPage() {
   const t = useTranslations();
@@ -27,11 +27,7 @@ export function PlantsManagementPage() {
     string | undefined
   >();
 
-  const {
-    data: plantsData,
-    loading: isLoadingPlants,
-    refetch: refetchPlants,
-  } = usePlantsList();
+  const { loading: isLoadingPlants, refetch: refetchPlants } = usePlantsList();
   const {
     data: containersData,
     loading: isLoadingContainers,

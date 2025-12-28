@@ -1,5 +1,11 @@
 'use client';
 
+import { ContainerCreateForm } from '@/core/plant-context/containers/presentation/components/organisms/container-create-form/container-create-form';
+import {
+  createPlantCreateSchema,
+  PlantCreateFormValues,
+} from '@/core/plant-context/plants/presentation/dtos/schemas/plant-create/plant-create.schema';
+import { usePlantCreate } from '@/core/plant-context/plants/presentation/hooks/use-plant-create/use-plant-create';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ContainerResponse } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -31,13 +37,6 @@ import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
 import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  createPlantCreateSchema,
-  PlantCreateFormValues,
-} from '@/core/plant-context/plants/presentation/dtos/schemas/plant-create/plant-create.schema';
-import { useContainerCreate } from '@/core/plant-context/containers/presentation/hooks/use-container-create/use-container-create';
-import { usePlantCreate } from '@/core/plant-context/plants/presentation/hooks/use-plant-create/use-plant-create';
-import { ContainerCreateForm } from '@/core/plant-context/containers/presentation/components/organisms/container-create-form/container-create-form';
 
 interface PlantCreateFormProps {
   containers: ContainerResponse[];
@@ -60,10 +59,6 @@ export function PlantCreateForm({
   const [showContainerForm, setShowContainerForm] = useState(false);
   const { handleCreate: handlePlantCreate, isLoading: isCreatingPlant } =
     usePlantCreate();
-  const {
-    handleCreate: handleContainerCreate,
-    isLoading: isCreatingContainer,
-  } = useContainerCreate();
 
   // Create schema with translations
   const createSchema = useMemo(
@@ -100,7 +95,7 @@ export function PlantCreateForm({
         onOpenChange(false);
         onSuccess?.();
       });
-    } catch (error) {
+    } catch (_error) {
       // Error is handled by the hook
     }
   };
@@ -124,9 +119,12 @@ export function PlantCreateForm({
             </DialogDescription>
           </DialogHeader>
 
+          {/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
           <Form {...(form as any)}>
+            {/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 control={form.control as any}
                 name="containerId"
                 render={({ field }) => (
@@ -172,6 +170,7 @@ export function PlantCreateForm({
               />
 
               <FormField
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 control={form.control as any}
                 name="name"
                 render={({ field }) => (
@@ -190,6 +189,7 @@ export function PlantCreateForm({
               />
 
               <FormField
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 control={form.control as any}
                 name="species"
                 render={({ field }) => (
@@ -208,6 +208,7 @@ export function PlantCreateForm({
               />
 
               <FormField
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 control={form.control as any}
                 name="plantedDate"
                 render={({ field }) => (
@@ -237,6 +238,7 @@ export function PlantCreateForm({
               />
 
               <FormField
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 control={form.control as any}
                 name="notes"
                 render={({ field }) => (
@@ -258,6 +260,7 @@ export function PlantCreateForm({
               />
 
               <FormField
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 control={form.control as any}
                 name="status"
                 render={({ field }) => (

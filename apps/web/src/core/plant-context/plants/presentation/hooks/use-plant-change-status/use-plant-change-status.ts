@@ -1,6 +1,5 @@
-import type { ChangePlantStatusInput } from '@repo/sdk';
+import type { ChangePlantStatusInput, PlantStatus } from '@repo/sdk';
 import { usePlants } from '@repo/sdk';
-import type { PlantStatus } from '@repo/sdk';
 
 /**
  * Hook that provides plant change status functionality
