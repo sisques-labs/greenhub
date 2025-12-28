@@ -58,7 +58,6 @@ The module supports the following container types:
 The `ContainerAggregate` represents the core domain entity with the following properties:
 
 - **id**: Unique identifier (UUID)
-- **tenantId**: Tenant identifier for multi-tenancy support
 - **name**: Container name
 - **type**: Container type (POT, GARDEN_BED, HANGING_BASKET, WINDOW_BOX)
 - **location**: Optional location information
@@ -89,7 +88,6 @@ These properties are automatically maintained through event-driven projections w
 The `ContainerTypeormEntity` table structure:
 
 - `id`: UUID (primary key)
-- `tenantId`: UUID (indexed, for multi-tenancy)
 - `name`: VARCHAR
 - `type`: ENUM (POT, GARDEN_BED, HANGING_BASKET, WINDOW_BOX)
 - `location`: VARCHAR (nullable)
@@ -240,17 +238,12 @@ Handles `ContainerDeletedEvent` by deleting the corresponding view model from Mo
 - **PlantContainerChangedContainerEventHandler**: Updates both old and new container view models when a plant's container is changed
 - **PlantUpdatedContainerEventHandler**: Handles plant update events (no-op, as container changes are handled separately)
 
-## Multi-Tenancy
-
-All operations are tenant-aware. The `tenantId` is automatically extracted from the request context and used to filter data. Users can only access containers belonging to their tenant.
-
 ## Authorization
 
 All GraphQL operations require:
 
 - **Authentication**: JWT token via `JwtAuthGuard`
-- **Tenant Context**: Tenant ID via `TenantGuard`
-- **Roles**: `ADMIN` or `USER` role via `RolesGuard` and `TenantRolesGuard`
+- **Roles**: `ADMIN` or `USER` role via `RolesGuard`
 
 ## Testing
 

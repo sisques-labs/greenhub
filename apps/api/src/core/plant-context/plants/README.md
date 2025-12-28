@@ -54,7 +54,6 @@ The module supports the following plant statuses:
 The `PlantAggregate` represents the core domain entity with the following properties:
 
 - **id**: Unique identifier (UUID)
-- **tenantId**: Tenant identifier for multi-tenancy support
 - **containerId**: Reference to the container where the plant is located
 - **name**: Plant name
 - **species**: Plant species
@@ -79,7 +78,6 @@ The `PlantAggregate` represents the core domain entity with the following proper
 The `PlantTypeormEntity` table structure:
 
 - `id`: UUID (primary key)
-- `tenantId`: UUID (indexed, for multi-tenancy)
 - `containerId`: UUID (foreign key to containers)
 - `name`: VARCHAR
 - `species`: VARCHAR
@@ -224,17 +222,12 @@ Handles `PlantDeletedEvent` by deleting the corresponding view model from MongoD
 
 Handles `PlantStatusChangedEvent` by updating the plant view model status in MongoDB.
 
-## Multi-Tenancy
-
-All operations are tenant-aware. The `tenantId` is automatically extracted from the request context and used to filter data. Users can only access plants belonging to their tenant.
-
 ## Authorization
 
 All GraphQL operations require:
 
 - **Authentication**: JWT token via `JwtAuthGuard`
-- **Tenant Context**: Tenant ID via `TenantGuard`
-- **Roles**: `ADMIN` or `USER` role via `RolesGuard` and `TenantRolesGuard`
+- **Roles**: `ADMIN` or `USER` role via `RolesGuard`
 
 ## Testing
 
