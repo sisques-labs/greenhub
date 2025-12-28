@@ -14,7 +14,8 @@
     "feature1": "Feature 1",
     "feature2": "Feature 2",
     "feature3": "Feature 3",
-    "settings": "Settings"
+    "settings": "Settings",
+    "plants": "Plants"
   },
   "authPage": {
     "title": {
@@ -141,6 +142,164 @@
     "validation": {
       "id": {
         "required": "ID is required"
+      }
+    }
+  },
+  "plants": {
+    "title": "Plants Management",
+    "description": "Manage your plants and containers",
+    "tabs": {
+      "plants": "Plants",
+      "containers": "Containers"
+    },
+    "plants": {
+      "title": "Plants",
+      "description": "List of all your plants",
+      "empty": "No plants registered"
+    },
+    "containers": {
+      "title": "Containers",
+      "description": "List of all your containers",
+      "empty": "No containers registered",
+      "noPlants": "This container has no plants",
+      "plants": "Plants",
+      "fields": {
+        "type": "Type",
+        "numberOfPlants": "Number of plants"
+      }
+    },
+    "fields": {
+      "containerId": {
+        "label": "Container",
+        "placeholder": "Select a container"
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Plant name"
+      },
+      "species": {
+        "label": "Species",
+        "placeholder": "Plant species"
+      },
+      "plantedDate": {
+        "label": "Planted Date"
+      },
+      "notes": {
+        "label": "Notes",
+        "placeholder": "Additional notes about the plant"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Select status"
+      }
+    },
+    "status": {
+      "PLANTED": "Planted",
+      "GROWING": "Growing",
+      "HARVESTED": "Harvested",
+      "DEAD": "Dead",
+      "ARCHIVED": "Archived"
+    },
+    "actions": {
+      "create": {
+        "title": "Create Plant",
+        "description": "Add a new plant to your collection",
+        "button": "Create Plant",
+        "submit": "Create",
+        "createContainer": "Create Container"
+      },
+      "createContainer": "Create Container",
+      "delete": {
+        "confirm": "Are you sure you want to delete the plant {name}?"
+      }
+    },
+    "validation": {
+      "containerId": {
+        "required": "Container is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "species": {
+        "required": "Species is required"
+      },
+      "status": {
+        "invalid": "Invalid status"
+      }
+    }
+  },
+  "plant": {
+    "validation": {
+      "containerId": {
+        "required": "Container is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "species": {
+        "required": "Species is required"
+      },
+      "status": {
+        "invalid": "Invalid status"
+      },
+      "id": {
+        "required": "ID is required"
+      }
+    }
+  },
+  "containers": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Container name"
+      },
+      "type": {
+        "label": "Type",
+        "placeholder": "Select type"
+      },
+      "numberOfPlants": {
+        "label": "Number of plants"
+      }
+    },
+    "type": {
+      "POT": "Pot",
+      "GARDEN_BED": "Garden Bed",
+      "HANGING_BASKET": "Hanging Basket",
+      "WINDOW_BOX": "Window Box"
+    },
+    "actions": {
+      "create": {
+        "title": "Create Container",
+        "description": "Add a new container for your plants",
+        "button": "Create Container",
+        "submit": "Create"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete the container {name}?"
+      }
+    },
+    "validation": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "type": {
+        "invalid": "Invalid type"
+      }
+    }
+  },
+  "container": {
+    "validation": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "type": {
+        "invalid": "Invalid type"
       }
     }
   }

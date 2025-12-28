@@ -1,5 +1,14 @@
 'use client';
 
+import { UserResponse } from '@repo/sdk';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/shared/presentation/components/ui/card';
+import { useTranslations } from 'next-intl';
 import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
 import { UserProfileAccountSection } from '@/generic/users/presentation/components/organisms/user-profile-account-section/user-profile-account-section';
 import { UserProfileAuthSection } from '@/generic/users/presentation/components/organisms/user-profile-auth-section/user-profile-auth-section';
@@ -10,15 +19,6 @@ import { UserProfilePageSkeleton } from '@/generic/users/presentation/components
 import { UserUpdateForm } from '@/generic/users/presentation/components/organisms/user-update-form/user-update-form';
 import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
 import { useUserUpdate } from '@/generic/users/presentation/hooks/use-user-update/use-user-update';
-import { UserResponse } from '@repo/sdk';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { useTranslations } from 'next-intl';
 
 export function UserProfilePage() {
   const t = useTranslations();

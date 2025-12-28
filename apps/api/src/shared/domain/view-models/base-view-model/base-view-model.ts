@@ -8,7 +8,7 @@
 export abstract class BaseViewModel {
   protected readonly _id: string;
   protected readonly _createdAt: Date;
-  protected readonly _updatedAt: Date;
+  protected _updatedAt: Date;
 
   constructor(props: { id: string; createdAt: Date; updatedAt: Date }) {
     this._id = props.id;
@@ -41,5 +41,14 @@ export abstract class BaseViewModel {
    */
   public get updatedAt(): Date {
     return this._updatedAt;
+  }
+
+  /**
+   * Set the updated at of the view model.
+   *
+   * @param updatedAt The updated at of the view model.
+   */
+  public set updatedAt(updatedAt: Date) {
+    this._updatedAt = updatedAt;
   }
 }

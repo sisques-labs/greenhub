@@ -1,6 +1,8 @@
 import { AuthClient } from './auth/client/auth-client.js';
 import type { AuthLogoutInput } from './auth/index.js';
+import { ContainerClient } from './containers/client/container-client.js';
 import { HealthClient } from './health/client/health-client.js';
+import { PlantClient } from './plants/client/plant-client.js';
 import { SagaInstanceClient } from './saga-instance/client/saga-instance-client.js';
 import { SagaLogClient } from './saga-log/client/saga-log-client.js';
 import { SagaStepClient } from './saga-step/client/saga-step-client.js';
@@ -9,7 +11,9 @@ import type { GraphQLClientConfig } from './shared/types/index.js';
 import { UserClient } from './users/client/user-client.js';
 
 export * from './auth/index.js';
+export * from './containers/index.js';
 export * from './health/index.js';
+export * from './plants/index.js';
 export * from './saga-instance/index.js';
 export * from './saga-log/index.js';
 export * from './saga-step/index.js';
@@ -34,6 +38,8 @@ export class SDK {
   private client: GraphQLClient;
   private authClient: AuthClient;
   private userClient: UserClient;
+  private plantClient: PlantClient;
+  private containerClient: ContainerClient;
   private healthClient: HealthClient;
   private sagaInstanceClient: SagaInstanceClient;
   private sagaStepClient: SagaStepClient;
@@ -43,6 +49,8 @@ export class SDK {
     this.client = new GraphQLClient(config);
     this.authClient = new AuthClient(this.client);
     this.userClient = new UserClient(this.client);
+    this.plantClient = new PlantClient(this.client);
+    this.containerClient = new ContainerClient(this.client);
     this.healthClient = new HealthClient(this.client);
     this.sagaInstanceClient = new SagaInstanceClient(this.client);
     this.sagaStepClient = new SagaStepClient(this.client);
@@ -144,6 +152,68 @@ export class SDK {
        * Delete a user
        */
       delete: this.userClient.delete.bind(this.userClient),
+    };
+  }
+
+  /**
+   * Plants module
+   */
+  get plants() {
+    return {
+      /**
+       * Find plants by criteria with pagination, filters, and sorting
+       */
+      findByCriteria: this.plantClient.findByCriteria.bind(this.plantClient),
+      /**
+       * Find a plant by ID
+       */
+      findById: this.plantClient.findById.bind(this.plantClient),
+      /**
+       * Create a new plant
+       */
+      create: this.plantClient.create.bind(this.plantClient),
+      /**
+       * Update an existing plant
+       */
+      update: this.plantClient.update.bind(this.plantClient),
+      /**
+       * Delete a plant
+       */
+      delete: this.plantClient.delete.bind(this.plantClient),
+      /**
+       * Change the status of a plant
+       */
+      changeStatus: this.plantClient.changeStatus.bind(this.plantClient),
+    };
+  }
+
+  /**
+   * Containers module
+   */
+  get containers() {
+    return {
+      /**
+       * Find containers by criteria with pagination, filters, and sorting
+       */
+      findByCriteria: this.containerClient.findByCriteria.bind(
+        this.containerClient,
+      ),
+      /**
+       * Find a container by ID
+       */
+      findById: this.containerClient.findById.bind(this.containerClient),
+      /**
+       * Create a new container
+       */
+      create: this.containerClient.create.bind(this.containerClient),
+      /**
+       * Update an existing container
+       */
+      update: this.containerClient.update.bind(this.containerClient),
+      /**
+       * Delete a container
+       */
+      delete: this.containerClient.delete.bind(this.containerClient),
     };
   }
 
