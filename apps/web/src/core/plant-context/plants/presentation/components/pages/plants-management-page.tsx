@@ -79,18 +79,29 @@ export function PlantsManagementPage() {
   }
 
   return (
-    <div className="mx-auto space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="mx-auto space-y-6 sm:px-0">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">{t('plants.title')}</h1>
-          <p className="text-muted-foreground">{t('plants.description')}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            {t('plants.title')}
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            {t('plants.description')}
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Button onClick={() => setShowContainerForm(true)} variant="outline">
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Button
+            onClick={() => setShowContainerForm(true)}
+            variant="outline"
+            className="w-full sm:w-auto"
+          >
             <Plus className="mr-2 h-4 w-4" />
             {t('containers.actions.create.button')}
           </Button>
-          <Button onClick={() => setShowPlantForm(true)}>
+          <Button
+            onClick={() => setShowPlantForm(true)}
+            className="w-full sm:w-auto"
+          >
             <Plus className="mr-2 h-4 w-4" />
             {t('plants.actions.create.button')}
           </Button>
@@ -102,14 +113,14 @@ export function PlantsManagementPage() {
           containersData.items.map((container) => (
             <Card key={container.id} className="flex flex-col">
               <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <CardTitle>{container.name}</CardTitle>
-                    <CardDescription>
+                <div className="flex justify-between items-start gap-2">
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="truncate">{container.name}</CardTitle>
+                    <CardDescription className="truncate">
                       {t('plants.containers.fields.type')}: {container.type}
                     </CardDescription>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 shrink-0">
                     <Button
                       variant="outline"
                       size="icon"
@@ -131,7 +142,7 @@ export function PlantsManagementPage() {
               </CardHeader>
               <CardContent className="flex-1">
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <p className="text-sm font-medium">
                       {t('plants.containers.plants')} (
                       {container.numberOfPlants})
@@ -143,6 +154,7 @@ export function PlantsManagementPage() {
                         setSelectedContainerId(container.id);
                         setShowPlantForm(true);
                       }}
+                      className="w-full sm:w-auto"
                     >
                       <Plus className="mr-2 h-3 w-3" />
                       {t('plants.actions.create.button')}
@@ -153,15 +165,15 @@ export function PlantsManagementPage() {
                       {container.plants.map((plant) => (
                         <Card key={plant.id} className="bg-muted/50">
                           <CardContent className="pt-4">
-                            <div className="flex justify-between items-start">
-                              <div className="flex-1">
-                                <h4 className="font-semibold text-sm">
+                            <div className="flex justify-between items-start gap-2">
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-semibold text-sm truncate">
                                   {plant.name}
                                 </h4>
-                                <p className="text-xs text-muted-foreground mt-1">
+                                <p className="text-xs text-muted-foreground mt-1 truncate">
                                   {plant.species}
                                 </p>
-                                <div className="flex gap-2 mt-2 text-xs text-muted-foreground">
+                                <div className="flex flex-wrap gap-2 mt-2 text-xs text-muted-foreground">
                                   <span className="capitalize">
                                     {plant.status.toLowerCase()}
                                   </span>
@@ -180,7 +192,7 @@ export function PlantsManagementPage() {
                                   </p>
                                 )}
                               </div>
-                              <div className="flex gap-1 ml-2">
+                              <div className="flex gap-1 ml-2 shrink-0">
                                 <Button
                                   variant="ghost"
                                   size="icon"
