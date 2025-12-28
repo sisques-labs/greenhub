@@ -1,0 +1,739 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LoginResponseDto {
+  """The access token"""
+  accessToken: String!
+
+  """The refresh token"""
+  refreshToken: String!
+}
+
+type RefreshTokenResponseDto {
+  """The new access token"""
+  accessToken: String!
+}
+
+type MutationResponseDto {
+  success: Boolean!
+  message: String
+  id: String
+}
+
+type AuthResponseDto {
+  """The id of the auth"""
+  id: String!
+
+  """The user id of the auth"""
+  userId: String!
+
+  """The email of the auth"""
+  email: String
+
+  """The email verified of the auth"""
+  emailVerified: Boolean
+
+  """The last login at of the auth"""
+  lastLoginAt: DateTime
+
+  """The provider of the auth"""
+  provider: String
+
+  """The provider id of the auth"""
+  providerId: String
+
+  """The two factor enabled of the auth"""
+  twoFactorEnabled: Boolean
+
+  """The created at of the auth"""
+  createdAt: DateTime
+
+  """The updated at of the auth"""
+  updatedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type PaginatedAuthResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The auths in the current page"""
+  items: [AuthResponseDto!]!
+}
+
+type AuthUserProfileResponseDto {
+  """The user id"""
+  userId: String!
+
+  """The auth id"""
+  authId: String!
+
+  """The email of the auth"""
+  email: String
+
+  """The email verified status of the auth"""
+  emailVerified: Boolean
+
+  """The last login at of the auth"""
+  lastLoginAt: DateTime
+
+  """The phone number of the auth"""
+  phoneNumber: String
+
+  """The provider of the auth"""
+  provider: String
+
+  """The provider id of the auth"""
+  providerId: String
+
+  """The two factor enabled status of the auth"""
+  twoFactorEnabled: Boolean
+
+  """The user name of the user"""
+  userName: String
+
+  """The first name of the user"""
+  name: String
+
+  """The last name of the user"""
+  lastName: String
+
+  """The bio of the user"""
+  bio: String
+
+  """The avatar url of the user"""
+  avatarUrl: String
+
+  """The role of the user"""
+  role: String
+
+  """The status of the user"""
+  status: String
+
+  """The created at timestamp"""
+  createdAt: DateTime
+
+  """The updated at timestamp"""
+  updatedAt: DateTime
+}
+
+type SagaInstanceResponseDto {
+  """The saga instance ID"""
+  id: String!
+
+  """The saga instance name"""
+  name: String!
+
+  """The saga instance status"""
+  status: SagaInstanceStatusEnum!
+
+  """The saga instance start date"""
+  startDate: DateTime!
+
+  """The saga instance end date"""
+  endDate: DateTime!
+
+  """The saga instance creation date"""
+  createdAt: DateTime!
+
+  """The saga instance update date"""
+  updatedAt: DateTime!
+}
+
+"""The status of the saga"""
+enum SagaInstanceStatusEnum {
+  PENDING
+  STARTED
+  RUNNING
+  COMPLETED
+  FAILED
+  COMPENSATING
+  COMPENSATED
+}
+
+type PaginatedSagaInstanceResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The saga instance items"""
+  items: [SagaInstanceResponseDto!]!
+}
+
+type SagaLogResponseDto {
+  """The saga log ID"""
+  id: String!
+
+  """The saga instance ID"""
+  sagaInstanceId: String!
+
+  """The saga step ID"""
+  sagaStepId: String!
+
+  """The saga log type"""
+  type: SagaLogTypeEnum!
+
+  """The saga log message"""
+  message: String!
+
+  """The saga log creation date"""
+  createdAt: DateTime!
+
+  """The saga log update date"""
+  updatedAt: DateTime!
+}
+
+"""The type of the saga log"""
+enum SagaLogTypeEnum {
+  INFO
+  WARNING
+  ERROR
+  DEBUG
+}
+
+type PaginatedSagaLogResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The saga log items"""
+  items: [SagaLogResponseDto!]!
+}
+
+type SagaStepResponseDto {
+  """The saga step ID"""
+  id: String!
+
+  """The saga instance ID"""
+  sagaInstanceId: String!
+
+  """The saga step name"""
+  name: String!
+
+  """The saga step order"""
+  order: Float!
+
+  """The saga step status"""
+  status: SagaStepStatusEnum!
+
+  """The saga step start date"""
+  startDate: DateTime
+
+  """The saga step end date"""
+  endDate: DateTime
+
+  """The saga step error message"""
+  errorMessage: String
+
+  """The saga step retry count"""
+  retryCount: Float!
+
+  """The saga step max retries"""
+  maxRetries: Float!
+
+  """The saga step payload"""
+  payload: String
+
+  """The saga step result"""
+  result: String
+
+  """The saga step creation date"""
+  createdAt: DateTime!
+
+  """The saga step update date"""
+  updatedAt: DateTime!
+}
+
+"""The status of the saga step"""
+enum SagaStepStatusEnum {
+  PENDING
+  STARTED
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+type PaginatedSagaStepResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The saga step items"""
+  items: [SagaStepResponseDto!]!
+}
+
+type UserResponseDto {
+  """The id of the user"""
+  id: String!
+
+  """The user name of the user"""
+  userName: String
+
+  """The last name of the user"""
+  lastName: String
+
+  """The role of the user"""
+  role: String
+
+  """The status of the user"""
+  status: String
+
+  """The avatar url of the user"""
+  avatarUrl: String
+
+  """The bio of the user"""
+  bio: String
+
+  """The name of the user"""
+  name: String
+
+  """The created at of the user"""
+  createdAt: DateTime
+
+  """The updated at of the user"""
+  updatedAt: DateTime
+}
+
+type PaginatedUserResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The users in the current page"""
+  items: [UserResponseDto!]!
+}
+
+type Query {
+  hello: String!
+  health: String!
+  authProfileMe: AuthUserProfileResponseDto!
+  findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
+  sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
+  sagaInstanceFindByCriteria(input: SagaInstanceFindByCriteriaRequestDto): PaginatedSagaInstanceResultDto!
+  sagaStepFindById(input: SagaStepFindByIdRequestDto!): SagaStepResponseDto
+  sagaStepFindBySagaInstanceId(input: SagaStepFindBySagaInstanceIdRequestDto!): [SagaStepResponseDto!]!
+  sagaStepFindByCriteria(input: SagaStepFindByCriteriaRequestDto): PaginatedSagaStepResultDto!
+  sagaLogFindById(input: SagaLogFindByIdRequestDto!): SagaLogResponseDto
+  sagaLogFindBySagaInstanceId(input: SagaLogFindBySagaInstanceIdRequestDto!): [SagaLogResponseDto!]!
+  sagaLogFindBySagaStepId(input: SagaLogFindBySagaStepIdRequestDto!): [SagaLogResponseDto!]!
+  sagaLogFindByCriteria(input: SagaLogFindByCriteriaRequestDto): PaginatedSagaLogResultDto!
+  usersFindByCriteria(input: UserFindByCriteriaRequestDto): PaginatedUserResultDto!
+  userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
+}
+
+input AuthFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input BaseFilterInput {
+  """The field to filter by"""
+  field: String!
+
+  """The operator to filter by"""
+  operator: FilterOperator!
+
+  """The value to filter by"""
+  value: String!
+}
+
+"""The operator to filter by"""
+enum FilterOperator {
+  EQUALS
+  NOT_EQUALS
+  LIKE
+  IN
+  GREATER_THAN
+  LESS_THAN
+  GREATER_THAN_OR_EQUAL
+  LESS_THAN_OR_EQUAL
+}
+
+input BaseSortInput {
+  """The field to sort by"""
+  field: String!
+
+  """The direction to sort by"""
+  direction: SortDirection!
+}
+
+"""The direction to sort by"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input BasePaginationInput {
+  """The page to paginate by"""
+  page: Int!
+
+  """The per page to paginate by"""
+  perPage: Int!
+}
+
+input SagaInstanceFindByIdRequestDto {
+  """The id of the saga instance"""
+  id: String!
+}
+
+input SagaInstanceFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input SagaStepFindByIdRequestDto {
+  """The id of the saga step"""
+  id: String!
+}
+
+input SagaStepFindBySagaInstanceIdRequestDto {
+  """The saga instance id"""
+  sagaInstanceId: String!
+}
+
+input SagaStepFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input SagaLogFindByIdRequestDto {
+  """The id of the saga log"""
+  id: String!
+}
+
+input SagaLogFindBySagaInstanceIdRequestDto {
+  """The saga instance id"""
+  sagaInstanceId: String!
+}
+
+input SagaLogFindBySagaStepIdRequestDto {
+  """The saga step id"""
+  sagaStepId: String!
+}
+
+input SagaLogFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input UserFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input UserFindByIdRequestDto {
+  """The id of the user"""
+  id: String!
+}
+
+type Mutation {
+  loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
+  registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
+  refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
+  logout(input: UpdateUserRequestDto!): MutationResponseDto!
+  sagaInstanceCreate(input: SagaInstanceCreateRequestDto!): MutationResponseDto!
+  sagaInstanceUpdate(input: SagaInstanceUpdateRequestDto!): MutationResponseDto!
+  sagaInstanceChangeStatus(input: SagaInstanceChangeStatusRequestDto!): MutationResponseDto!
+  sagaInstanceDelete(input: SagaInstanceDeleteRequestDto!): MutationResponseDto!
+  sagaStepCreate(input: SagaStepCreateRequestDto!): MutationResponseDto!
+  sagaStepUpdate(input: SagaStepUpdateRequestDto!): MutationResponseDto!
+  sagaStepChangeStatus(input: SagaStepChangeStatusRequestDto!): MutationResponseDto!
+  sagaStepDelete(input: SagaStepDeleteRequestDto!): MutationResponseDto!
+  sagaLogCreate(input: SagaLogCreateRequestDto!): MutationResponseDto!
+  sagaLogUpdate(input: SagaLogUpdateRequestDto!): MutationResponseDto!
+  sagaLogDelete(input: SagaLogDeleteRequestDto!): MutationResponseDto!
+  createUser(input: CreateUserRequestDto!): MutationResponseDto!
+  updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
+  deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
+}
+
+input AuthLoginByEmailRequestDto {
+  """The email of the auth"""
+  email: String!
+
+  """The password of the auth"""
+  password: String!
+}
+
+input AuthRegisterByEmailRequestDto {
+  """The email of the auth"""
+  email: String!
+
+  """The password of the auth"""
+  password: String!
+}
+
+input AuthRefreshTokenRequestDto {
+  """The refresh token to use for generating a new access token"""
+  refreshToken: String!
+}
+
+input UpdateUserRequestDto {
+  """The unique identifier of the user"""
+  id: String!
+
+  """The name of the user"""
+  name: String
+
+  """The bio of the user"""
+  bio: String
+
+  """The avatar url of the user"""
+  avatarUrl: String
+
+  """The last name of the user"""
+  lastName: String
+
+  """The user name of the user"""
+  userName: String
+
+  """The role of the user"""
+  role: UserRoleEnum
+
+  """The status of the user"""
+  status: UserStatusEnum
+}
+
+"""The role of the user"""
+enum UserRoleEnum {
+  ADMIN
+  USER
+}
+
+"""The status of the user"""
+enum UserStatusEnum {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+input SagaInstanceCreateRequestDto {
+  """The name of the saga instance"""
+  name: String!
+}
+
+input SagaInstanceUpdateRequestDto {
+  """The id of the saga instance"""
+  id: String!
+
+  """The name of the saga instance"""
+  name: String
+
+  """The status of the saga instance"""
+  status: SagaInstanceStatusEnum
+
+  """The start date of the saga instance"""
+  startDate: DateTime
+
+  """The end date of the saga instance"""
+  endDate: DateTime
+}
+
+input SagaInstanceChangeStatusRequestDto {
+  """The id of the saga instance"""
+  id: String!
+
+  """The status of the saga instance"""
+  status: SagaInstanceStatusEnum!
+}
+
+input SagaInstanceDeleteRequestDto {
+  """The id of the saga instance"""
+  id: String!
+}
+
+input SagaStepCreateRequestDto {
+  """The saga instance ID"""
+  sagaInstanceId: String!
+
+  """The name of the saga step"""
+  name: String!
+
+  """The order of the saga step"""
+  order: Float!
+
+  """The payload of the saga step (JSON string)"""
+  payload: String!
+}
+
+input SagaStepUpdateRequestDto {
+  """The id of the saga step"""
+  id: String!
+
+  """The name of the saga step"""
+  name: String
+
+  """The order of the saga step"""
+  order: Float
+
+  """The status of the saga step"""
+  status: SagaStepStatusEnum
+
+  """The start date of the saga step"""
+  startDate: DateTime
+
+  """The end date of the saga step"""
+  endDate: DateTime
+
+  """The error message of the saga step"""
+  errorMessage: String
+
+  """The retry count of the saga step"""
+  retryCount: Float
+
+  """The max retries of the saga step"""
+  maxRetries: Float
+
+  """The payload of the saga step (JSON string)"""
+  payload: String
+
+  """The result of the saga step (JSON string)"""
+  result: String
+}
+
+input SagaStepChangeStatusRequestDto {
+  """The id of the saga step"""
+  id: String!
+
+  """The status of the saga step"""
+  status: SagaStepStatusEnum!
+}
+
+input SagaStepDeleteRequestDto {
+  """The id of the saga step"""
+  id: String!
+}
+
+input SagaLogCreateRequestDto {
+  """The saga instance ID"""
+  sagaInstanceId: String!
+
+  """The saga step ID"""
+  sagaStepId: String!
+
+  """The type of the saga log"""
+  type: SagaLogTypeEnum!
+
+  """The message of the saga log"""
+  message: String!
+}
+
+input SagaLogUpdateRequestDto {
+  """The id of the saga log"""
+  id: String!
+
+  """The type of the saga log"""
+  type: SagaLogTypeEnum
+
+  """The message of the saga log"""
+  message: String
+}
+
+input SagaLogDeleteRequestDto {
+  """The id of the saga log"""
+  id: String!
+}
+
+input CreateUserRequestDto {
+  """The name of the user"""
+  name: String
+
+  """The bio of the user"""
+  bio: String
+
+  """The avatar url of the user"""
+  avatarUrl: String
+
+  """The last name of the user"""
+  lastName: String
+
+  """The user name of the user"""
+  userName: String
+
+  """The role of the user"""
+  role: UserRoleEnum!
+
+  """The status of the user"""
+  status: UserStatusEnum!
+}
+
+input DeleteUserRequestDto {
+  """The unique identifier of the user"""
+  id: String!
+}

@@ -1,0 +1,44 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
+import { HealthAggregate } from '@/support/health/domain/aggregates/health.aggregate';
+import { IHealthCreateViewModelDto } from '@/support/health/domain/dtos/view-models/health-create/health-create.dto';
+import { HealthPrimitives } from '@/support/health/domain/primitives/health.primitives';
+import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
+
+@Injectable()
+export class HealthViewModelFactory
+  implements IReadFactory<HealthViewModel, IHealthCreateViewModelDto>
+{
+  private readonly logger = new Logger(HealthViewModelFactory.name);
+
+  /**
+   * Creates a new health view model from a DTO.
+   * @param data - The data to create the view model from.
+   * @returns The created view model.
+   */
+  public create(data: IHealthCreateViewModelDto): HealthViewModel {
+    this.logger.log(
+      `Creating health view model from DTO: ${JSON.stringify(data)}`,
+    );
+    return new HealthViewModel(data);
+  }
+
+  public fromAggregate(source: HealthAggregate): HealthViewModel {
+    this.logger.log(`Creating health view model from aggregate: ${source}`);
+    return new HealthViewModel({
+      status: source.status.value,
+      writeDatabaseStatus: source.writeDatabaseStatus.value,
+      readDatabaseStatus: source.readDatabaseStatus.value,
+    });
+  }
+  public fromPrimitives(primitives: HealthPrimitives): HealthViewModel {
+    this.logger.log(
+      `Creating health view model from primitives: ${primitives}`,
+    );
+    return new HealthViewModel({
+      status: primitives.status,
+      writeDatabaseStatus: primitives.writeDatabaseStatus,
+      readDatabaseStatus: primitives.readDatabaseStatus,
+    });
+  }
+}

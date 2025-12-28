@@ -1,0 +1,35 @@
+import { Field, ObjectType } from '@nestjs/graphql';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
+
+@ObjectType('SagaLogResponseDto')
+export class SagaLogResponseDto {
+  @Field(() => String, { description: 'The saga log ID' })
+  id: string;
+
+  @Field(() => String, { description: 'The saga instance ID' })
+  sagaInstanceId: string;
+
+  @Field(() => String, { description: 'The saga step ID' })
+  sagaStepId: string;
+
+  @Field(() => SagaLogTypeEnum, { description: 'The saga log type' })
+  type: SagaLogTypeEnum;
+
+  @Field(() => String, { description: 'The saga log message' })
+  message: string;
+
+  @Field(() => Date, { description: 'The saga log creation date' })
+  createdAt: Date;
+
+  @Field(() => Date, { description: 'The saga log update date' })
+  updatedAt: Date;
+}
+
+@ObjectType('PaginatedSagaLogResultDto')
+export class PaginatedSagaLogResultDto extends BasePaginatedResultDto {
+  @Field(() => [SagaLogResponseDto], {
+    description: 'The saga log items',
+  })
+  items: SagaLogResponseDto[];
+}
