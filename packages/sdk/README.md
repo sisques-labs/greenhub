@@ -6,6 +6,8 @@ TypeScript SDK for the project-starter GraphQL API. Compatible with React Native
 
 - 🔐 **Authentication**: Login, register, logout, token refresh, profile management
 - 👥 **User Management**: CRUD operations with filtering, sorting, and pagination
+- 🌱 **Plant Management**: CRUD operations for plants with status management
+- 🪴 **Container Management**: CRUD operations for containers (pots, garden beds, etc.)
 - 📊 **Saga Management**: Complete saga orchestration (instances, steps, logs)
 - 🏥 **Health Checks**: Monitor API status
 - ⚛️ **React Hooks**: Ready-to-use hooks with loading, error, and data states
@@ -336,6 +338,10 @@ function MyComponent() {
 - `useAuth()` - Authentication operations (loginByEmail, registerByEmail, logout, refreshToken, profileMe)
 - `useUsers()` - User operations (findById, findByCriteria, create, update, delete)
 - `useUsersList(input?)` - Auto-fetch users list with pagination and filters
+- `usePlants()` - Plant operations (findById, findByCriteria, create, update, delete, changeStatus)
+- `usePlantsList(input?)` - Auto-fetch plants list with pagination and filters
+- `useContainers()` - Container operations (findById, findByCriteria, create, update, delete)
+- `useContainersList(input?)` - Auto-fetch containers list with pagination and filters
 - `useHealth()` - Health check operations (check)
 - `useSagaInstances()` - Saga instance operations (findById, findByCriteria, create, update, changeStatus, delete)
 - `useSagaInstancesList(input?)` - Auto-fetch saga instances list
