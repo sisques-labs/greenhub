@@ -30,7 +30,6 @@ describe('ContainerMongoDBMapper', () => {
       const updatedAt = new Date('2024-01-02');
       const mongoDoc: ContainerMongoDbDto = {
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
         numberOfPlants: 5,
@@ -40,7 +39,6 @@ describe('ContainerMongoDBMapper', () => {
 
       const mockViewModelDto: IContainerCreateViewModelDto = {
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
         plants: [],
@@ -57,7 +55,6 @@ describe('ContainerMongoDBMapper', () => {
       expect(result).toBe(mockViewModel);
       expect(mockContainerViewModelFactory.create).toHaveBeenCalledWith({
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
         plants: [],
@@ -82,7 +79,6 @@ describe('ContainerMongoDBMapper', () => {
       testCases.forEach((type) => {
         const mongoDoc: ContainerMongoDbDto = {
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Container',
           type,
           numberOfPlants: 0,
@@ -92,7 +88,6 @@ describe('ContainerMongoDBMapper', () => {
 
         const mockViewModelDto: IContainerCreateViewModelDto = {
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Container',
           type,
           plants: [],
@@ -122,7 +117,6 @@ describe('ContainerMongoDBMapper', () => {
       testCases.forEach((numberOfPlants) => {
         const mongoDoc: ContainerMongoDbDto = {
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Garden Bed 1',
           type: ContainerTypeEnum.GARDEN_BED,
           numberOfPlants,
@@ -132,7 +126,6 @@ describe('ContainerMongoDBMapper', () => {
 
         const mockViewModelDto: IContainerCreateViewModelDto = {
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Garden Bed 1',
           type: ContainerTypeEnum.GARDEN_BED,
           plants: [],
@@ -162,7 +155,6 @@ describe('ContainerMongoDBMapper', () => {
 
       const viewModel = new ContainerViewModel({
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
         plants: [],
@@ -175,7 +167,6 @@ describe('ContainerMongoDBMapper', () => {
 
       expect(result).toEqual({
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
         numberOfPlants: 5,
@@ -198,7 +189,6 @@ describe('ContainerMongoDBMapper', () => {
       testCases.forEach((type) => {
         const viewModel = new ContainerViewModel({
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Container',
           type,
           plants: [],
@@ -223,7 +213,6 @@ describe('ContainerMongoDBMapper', () => {
       testCases.forEach((numberOfPlants) => {
         const viewModel = new ContainerViewModel({
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Garden Bed 1',
           type: ContainerTypeEnum.GARDEN_BED,
           plants: [],

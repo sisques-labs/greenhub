@@ -8,13 +8,11 @@ import { ContainerTypeormRepository } from '@/core/plant-context/containers/infr
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { TenantContextService } from '@/shared/infrastructure/services/tenant-context/tenant-context.service';
 import { Repository } from 'typeorm';
 
 describe('ContainerTypeormRepository', () => {
   let repository: ContainerTypeormRepository;
   let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
-  let mockTenantContextService: jest.Mocked<TenantContextService>;
   let mockContainerTypeormMapper: jest.Mocked<ContainerTypeormMapper>;
   let mockTypeormRepository: jest.Mocked<Repository<ContainerTypeormEntity>>;
   let mockFindOne: jest.Mock;
@@ -36,10 +34,6 @@ describe('ContainerTypeormRepository', () => {
       getRepository: jest.fn().mockReturnValue(mockTypeormRepository),
     } as unknown as jest.Mocked<TypeormMasterService>;
 
-    mockTenantContextService = {
-      getTenantIdOrThrow: jest.fn().mockReturnValue('test-tenant-id'),
-    } as unknown as jest.Mocked<TenantContextService>;
-
     mockContainerTypeormMapper = {
       toDomainEntity: jest.fn(),
       toTypeormEntity: jest.fn(),
@@ -47,7 +41,6 @@ describe('ContainerTypeormRepository', () => {
 
     repository = new ContainerTypeormRepository(
       mockTypeormMasterService,
-      mockTenantContextService,
       mockContainerTypeormMapper,
     );
   });

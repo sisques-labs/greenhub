@@ -43,7 +43,6 @@ describe('ContainerGraphQLMapper', () => {
 
       const viewModel = new ContainerViewModel({
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Garden Bed 1',
         type: ContainerTypeEnum.GARDEN_BED,
         plants: [plant1, plant2],
@@ -93,7 +92,6 @@ describe('ContainerGraphQLMapper', () => {
 
       const viewModel = new ContainerViewModel({
         id: containerId,
-        tenantId: 'test-tenant-123',
         name: 'Empty Container',
         type: ContainerTypeEnum.POT,
         plants: [],
@@ -129,7 +127,6 @@ describe('ContainerGraphQLMapper', () => {
       testCases.forEach((type) => {
         const viewModel = new ContainerViewModel({
           id: containerId,
-          tenantId: 'test-tenant-123',
           name: 'Container',
           type,
           plants: [],
@@ -154,7 +151,6 @@ describe('ContainerGraphQLMapper', () => {
       const viewModels: ContainerViewModel[] = [
         new ContainerViewModel({
           id: '123e4567-e89b-12d3-a456-426614174000',
-          tenantId: 'test-tenant-123',
           name: 'Garden Bed 1',
           type: ContainerTypeEnum.GARDEN_BED,
           plants: [],
@@ -164,7 +160,6 @@ describe('ContainerGraphQLMapper', () => {
         }),
         new ContainerViewModel({
           id: '223e4567-e89b-12d3-a456-426614174001',
-          tenantId: 'test-tenant-123',
           name: 'Pot 1',
           type: ContainerTypeEnum.POT,
           plants: [],
@@ -227,7 +222,6 @@ describe('ContainerGraphQLMapper', () => {
       const viewModels: ContainerViewModel[] = [
         new ContainerViewModel({
           id: '123e4567-e89b-12d3-a456-426614174000',
-          tenantId: 'test-tenant-123',
           name: 'Garden Bed 1',
           type: ContainerTypeEnum.GARDEN_BED,
           plants: [],

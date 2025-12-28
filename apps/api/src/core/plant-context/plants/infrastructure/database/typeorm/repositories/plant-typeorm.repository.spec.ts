@@ -8,6 +8,8 @@ import { PlantTypeormEntity } from '@/core/plant-context/plants/infrastructure/d
 import { PlantTypeormMapper } from '@/core/plant-context/plants/infrastructure/database/typeorm/mappers/plant-typeorm.mapper';
 import { PlantTypeormRepository } from '@/core/plant-context/plants/infrastructure/database/typeorm/repositories/plant-typeorm.repository';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/container-uuid/container-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 import { Repository } from 'typeorm';
 
@@ -35,10 +37,6 @@ describe('PlantTypeormRepository', () => {
       getRepository: jest.fn().mockReturnValue(mockTypeormRepository),
     } as unknown as jest.Mocked<TypeormMasterService>;
 
-    mockTenantContextService = {
-      getTenantIdOrThrow: jest.fn().mockReturnValue('test-tenant-id'),
-    } as unknown as jest.Mocked<TenantContextService>;
-
     mockPlantTypeormMapper = {
       toDomainEntity: jest.fn(),
       toTypeormEntity: jest.fn(),
@@ -46,7 +44,6 @@ describe('PlantTypeormRepository', () => {
 
     repository = new PlantTypeormRepository(
       mockTypeormMasterService,
-      mockTenantContextService,
       mockPlantTypeormMapper,
     );
   });

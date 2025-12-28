@@ -99,7 +99,6 @@ export class ContainerViewModel extends BaseViewModel {
         ? updateData.numberOfPlants
         : this._numberOfPlants;
 
-    // TODO: Use the update method from the base class
-    // this._updatedAt = new Date();
+    this._updatedAt = new Date();
   }
 }

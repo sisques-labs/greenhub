@@ -388,7 +388,6 @@ describe('ContainerMongoRepository', () => {
       );
       expect(mockCollection.deleteOne).toHaveBeenCalledWith({
         id: containerId,
-        tenantId: 'test-tenant-123',
       });
       expect(mockCollection.deleteOne).toHaveBeenCalledTimes(1);
     });
@@ -402,7 +401,6 @@ describe('ContainerMongoRepository', () => {
       await expect(repository.delete(containerId)).rejects.toThrow(mongoError);
       expect(mockCollection.deleteOne).toHaveBeenCalledWith({
         id: containerId,
-        tenantId: 'test-tenant-123',
       });
     });
   });

@@ -103,15 +103,6 @@ export class PlantViewModel extends BaseViewModel {
   }
 
   /**
-   * Gets the last update date of the plant entity.
-   *
-   * @returns The date the plant was last updated
-   */
-  public get updatedAt(): Date {
-    return this.updatedAt;
-  }
-
-  /**
    * Updates the plant view model with new data.
    *
    * @param updateData - The partial update view model data for the plant

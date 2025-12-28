@@ -60,7 +60,15 @@ describe('PlantStatusChangedEventHandler', () => {
           eventType: 'PlantStatusChangedEvent',
         },
         {
-          status: PlantStatusEnum.GROWING,
+          id: plantId,
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
+          name: 'Aloe Vera',
+          species: 'Aloe barbadensis',
+          plantedDate: new Date('2024-01-15'),
+          notes: 'Keep in indirect sunlight',
+          status: PlantStatusEnum.PLANTED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       );
 
@@ -92,7 +100,7 @@ describe('PlantStatusChangedEventHandler', () => {
         mockAssertPlantViewModelExistsService.execute,
       ).toHaveBeenCalledTimes(1);
       expect(updateSpy).toHaveBeenCalledWith({
-        status: PlantStatusEnum.GROWING,
+        status: PlantStatusEnum.PLANTED,
       });
       expect(mockPlantReadRepository.save).toHaveBeenCalledWith(
         existingViewModel,
@@ -111,7 +119,15 @@ describe('PlantStatusChangedEventHandler', () => {
           eventType: 'PlantStatusChangedEvent',
         },
         {
-          status: PlantStatusEnum.GROWING,
+          id: plantId,
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
+          name: 'Aloe Vera',
+          species: 'Aloe barbadensis',
+          plantedDate: new Date('2024-01-15'),
+          notes: 'Keep in indirect sunlight',
+          status: PlantStatusEnum.PLANTED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       );
 
@@ -134,7 +150,15 @@ describe('PlantStatusChangedEventHandler', () => {
           eventType: 'PlantStatusChangedEvent',
         },
         {
-          status: PlantStatusEnum.GROWING,
+          id: plantId,
+          containerId: '123e4567-e89b-12d3-a456-426614174000',
+          name: 'Aloe Vera',
+          species: 'Aloe barbadensis',
+          plantedDate: new Date('2024-01-15'),
+          notes: 'Keep in indirect sunlight',
+          status: PlantStatusEnum.PLANTED,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       );
 
