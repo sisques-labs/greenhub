@@ -1,6 +1,6 @@
 import type { GrowingUnitFindByCriteriaInput } from '@repo/sdk';
 import { useGrowingUnits } from '@repo/sdk';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 /**
  * Hook that provides growing units find by criteria functionality
@@ -12,21 +12,25 @@ export function useGrowingUnitsFindByCriteria(
 ) {
   const { findByCriteria } = useGrowingUnits();
   const enabled = options?.enabled !== false;
-  const hasFetchedRef = useRef(false);
+  const inputString = useMemo(() => JSON.stringify(input || {}), [input]);
+  const previousInputRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (enabled && !hasFetchedRef.current) {
-      hasFetchedRef.current = true;
-      findByCriteria.fetch(input);
+    if (enabled) {
+      // Only fetch if input has actually changed
+      if (previousInputRef.current !== inputString) {
+        previousInputRef.current = inputString;
+        findByCriteria.fetch(input);
+      }
     }
-  }, [enabled, input]);
+  }, [enabled, inputString, input, findByCriteria]);
 
   return {
     growingUnits: findByCriteria.data || null,
     isLoading: findByCriteria.loading,
     error: findByCriteria.error,
     refetch: () => {
-      hasFetchedRef.current = false;
+      previousInputRef.current = null;
       findByCriteria.fetch(input);
     },
   };

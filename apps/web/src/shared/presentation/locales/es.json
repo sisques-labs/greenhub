@@ -9,7 +9,8 @@
   "nav": {
     "home": "Inicio",
     "settings": "Configuración",
-    "plants": "Plantas"
+    "plants": "Plantas",
+    "growingUnits": "Unidades de Cultivo"
   },
   "authPage": {
     "title": {
@@ -140,10 +141,47 @@
     }
   },
   "plants": {
-    "title": "Gestión de Plantas",
-    "description": "Gestiona tus plantas y contenedores",
-    "containers": {
-      "empty": "No hay contenedores registrados"
+    "title": "Lista de Plantas",
+    "description": "Gestiona tu colección botánica y monitorea su salud",
+    "empty": "No hay plantas registradas",
+    "search": {
+      "placeholder": "Buscar por nombre, especie o ubicación..."
+    },
+    "filters": {
+      "all": "Todas",
+      "indoor": "Interior",
+      "outdoor": "Exterior",
+      "needsWater": "Necesita Agua",
+      "healthy": "Saludables"
+    },
+    "table": {
+      "columns": {
+        "plant": "PLANTA / ESPECIE",
+        "location": "UBICACIÓN",
+        "status": "ESTADO",
+        "lastWatering": "ÚLTIMO RIEGO",
+        "actions": "ACCIONES"
+      },
+      "lastWatering": {
+        "today": "Hoy",
+        "yesterday": "Ayer",
+        "daysAgo": "Hace {days} días",
+        "weeksAgo": "Hace {weeks} semanas"
+      },
+      "pagination": {
+        "showing": "Mostrando {from} a {to} de {total} plantas"
+      }
+    },
+    "actions": {
+      "create": {
+        "button": "Añadir Planta",
+        "title": "Crear Planta",
+        "description": "Agrega una nueva planta a tu colección",
+        "submit": "Crear"
+      },
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar"
     }
   },
   "plant": {
@@ -234,12 +272,26 @@
     }
   },
   "growingUnit": {
+    "page": {
+      "title": "Unidades de Cultivo",
+      "description": "Visualiza y gestiona tus espacios de cultivo de manera eficiente."
+    },
     "common": {
       "noDimensions": "Sin dimensiones",
       "more": "más"
     },
     "error": {
       "loading": "Error al cargar unidades de cultivo: {message}"
+    },
+    "search": {
+      "placeholder": "Buscar por nombre, tipo o planta..."
+    },
+    "filters": {
+      "all": "Todo",
+      "indoor": "Interior",
+      "outdoor": "Exterior",
+      "pots": "Macetas",
+      "beds": "Bancales"
     },
     "fields": {
       "name": {
@@ -280,12 +332,13 @@
         "placeholder": "Selecciona la unidad"
       },
       "plants": {
-        "label": "Plantas"
+        "label": "Plantas activas"
       },
       "createdAt": {
         "label": "Fecha de creación"
       }
     },
+    "noPlants": "Sin plantas activas",
     "type": {
       "POT": "Maceta",
       "GARDEN_BED": "Cama de jardín",
@@ -303,7 +356,7 @@
       "create": {
         "title": "Crear Unidad de Cultivo",
         "description": "Agrega una nueva unidad de cultivo para tus plantas",
-        "button": "Crear Unidad de Cultivo",
+        "button": "Nueva Unidad",
         "submit": "Crear",
         "loading": "Creando..."
       },

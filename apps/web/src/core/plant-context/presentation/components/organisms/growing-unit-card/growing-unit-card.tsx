@@ -27,9 +27,10 @@ import { useTranslations } from 'next-intl';
 
 interface GrowingUnitCardProps {
   growingUnit: GrowingUnitResponse;
-  onEdit: (growingUnit: GrowingUnitResponse) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (growingUnit: GrowingUnitResponse) => void;
+  onDelete?: (id: string) => void;
   isDeleting?: boolean;
+  showActions?: boolean;
 }
 
 export function GrowingUnitCard({
@@ -37,6 +38,7 @@ export function GrowingUnitCard({
   onEdit,
   onDelete,
   isDeleting = false,
+  showActions = false,
 }: GrowingUnitCardProps) {
   const t = useTranslations();
 
@@ -51,120 +53,120 @@ export function GrowingUnitCard({
     return `${length} × ${width} × ${height} ${unit}`;
   };
 
+  // Determine location based on type (simplified logic - TODO: add location field)
+  const location =
+    growingUnit.type === 'POT' || growingUnit.type === 'WINDOW_BOX'
+      ? 'INTERIOR'
+      : 'EXTERIOR';
+
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="space-y-1">
-            <CardTitle className="text-xl">{growingUnit.name}</CardTitle>
-            <CardDescription>
+        <div className="space-y-2">
+          {/* Image placeholder - TODO: Replace with actual image when available */}
+          <div className="w-full h-32 bg-muted rounded-md mb-2 flex items-center justify-center">
+            <span className="text-muted-foreground text-sm">
               {t(`growingUnit.type.${growingUnit.type}`)}
-            </CardDescription>
+            </span>
           </div>
-          <Badge variant="secondary">
-            {growingUnit.numberOfPlants} / {growingUnit.capacity}
+          <div className="flex items-start justify-between">
+            <div className="space-y-1 flex-1">
+              <CardTitle className="text-lg font-semibold">
+                {growingUnit.name}
+              </CardTitle>
+              <CardDescription className="text-xs uppercase">
+                {t(`growingUnit.type.${growingUnit.type}`)}
+              </CardDescription>
+            </div>
+          </div>
+          <Badge
+            variant={location === 'EXTERIOR' ? 'default' : 'secondary'}
+            className="text-xs"
+          >
+            {location}
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <div className="text-muted-foreground">
-              {t('growingUnit.fields.capacity.label')}
-            </div>
-            <div className="font-medium">{growingUnit.capacity}</div>
-          </div>
-          <div>
-            <div className="text-muted-foreground">
-              {t('growingUnit.fields.remainingCapacity.label')}
-            </div>
-            <div className="font-medium">{growingUnit.remainingCapacity}</div>
-          </div>
-          <div>
-            <div className="text-muted-foreground">
-              {t('growingUnit.fields.volume.label')}
-            </div>
-            <div className="font-medium">{growingUnit.volume}</div>
-          </div>
-          {growingUnit.dimensions && (
-            <div>
-              <div className="text-muted-foreground">
-                {t('growingUnit.fields.dimensions.label')}
-              </div>
-              <div className="font-medium text-xs">{formatDimensions()}</div>
-            </div>
-          )}
-        </div>
-
+      <CardContent className="space-y-3">
         {growingUnit.plants.length > 0 && (
           <div>
             <div className="text-sm font-medium mb-2">
-              {t('growingUnit.fields.plants.label')} (
-              {growingUnit.plants.length})
+              {t('growingUnit.fields.plants.label')}:
             </div>
             <div className="space-y-1">
-              {growingUnit.plants.slice(0, 3).map((plant) => (
-                <div key={plant.id} className="text-sm text-muted-foreground">
-                  • {plant.name || plant.species || t('plant.common.unnamed')}
+              {growingUnit.plants.map((plant, index) => (
+                <div
+                  key={plant.id}
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <div
+                    className="h-2 w-2 rounded-full"
+                    style={{
+                      backgroundColor: `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
+                    }}
+                  />
+                  <span>
+                    {plant.name || plant.species || t('plant.common.unnamed')}
+                  </span>
                 </div>
               ))}
-              {growingUnit.plants.length > 3 && (
-                <div className="text-sm text-muted-foreground">
-                  +{growingUnit.plants.length - 3}{' '}
-                  {t('growingUnit.common.more')}
-                </div>
-              )}
             </div>
           </div>
         )}
-
-        <div className="text-xs text-muted-foreground">
-          {t('growingUnit.fields.createdAt.label')}:{' '}
-          {formatDate(growingUnit.createdAt)}
-        </div>
+        {growingUnit.plants.length === 0 && (
+          <div className="text-sm text-muted-foreground">
+            {t('growingUnit.noPlants')}
+          </div>
+        )}
       </CardContent>
-      <CardFooter className="flex gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onEdit(growingUnit)}
-          className="flex-1"
-        >
-          <PencilIcon className="mr-2 h-4 w-4" />
-          {t('growingUnit.actions.edit')}
-        </Button>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="destructive" size="sm" disabled={isDeleting}>
-              <TrashIcon className="mr-2 h-4 w-4" />
-              {t('growingUnit.actions.delete')}
+      {showActions && (onEdit || onDelete) && (
+        <CardFooter className="flex gap-2">
+          {onEdit && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onEdit(growingUnit)}
+              className="flex-1"
+            >
+              <PencilIcon className="mr-2 h-4 w-4" />
+              {t('growingUnit.actions.edit')}
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                {t('growingUnit.actions.delete.confirm.title')}
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                {t('growingUnit.actions.delete.confirm.description', {
-                  name: growingUnit.name,
-                })}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => onDelete(growingUnit.id)}
-                disabled={isDeleting}
-              >
-                {isDeleting
-                  ? t('growingUnit.actions.delete.loading')
-                  : t('growingUnit.actions.delete.label')}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </CardFooter>
+          )}
+          {onDelete && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm" disabled={isDeleting}>
+                  <TrashIcon className="mr-2 h-4 w-4" />
+                  {t('growingUnit.actions.delete')}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    {t('growingUnit.actions.delete.confirm.title')}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {t('growingUnit.actions.delete.confirm.description', {
+                      name: growingUnit.name,
+                    })}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => onDelete(growingUnit.id)}
+                    disabled={isDeleting}
+                  >
+                    {isDeleting
+                      ? t('growingUnit.actions.delete.loading')
+                      : t('growingUnit.actions.delete.label')}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+        </CardFooter>
+      )}
     </Card>
   );
 }

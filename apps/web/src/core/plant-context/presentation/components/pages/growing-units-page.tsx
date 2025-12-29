@@ -1,34 +1,61 @@
 'use client';
 
+import { GrowingUnitAddCard } from '@/core/plant-context/presentation/components/organisms/growing-unit-add-card/growing-unit-add-card';
 import { GrowingUnitCard } from '@/core/plant-context/presentation/components/organisms/growing-unit-card/growing-unit-card';
 import { GrowingUnitCreateForm } from '@/core/plant-context/presentation/components/organisms/growing-unit-create-form/growing-unit-create-form';
 import { GrowingUnitUpdateForm } from '@/core/plant-context/presentation/components/organisms/growing-unit-update-form/growing-unit-update-form';
+import { GrowingUnitsPageSkeleton } from '@/core/plant-context/presentation/components/organisms/growing-units-page-skeleton/growing-units-page-skeleton';
 import type { GrowingUnitCreateFormValues } from '@/core/plant-context/presentation/dtos/schemas/growing-unit-create/growing-unit-create.schema';
 import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/presentation/dtos/schemas/growing-unit-update/growing-unit-update.schema';
 import { useGrowingUnitCreate } from '@/core/plant-context/presentation/hooks/use-growing-unit-create/use-growing-unit-create';
 import { useGrowingUnitDelete } from '@/core/plant-context/presentation/hooks/use-growing-unit-delete/use-growing-unit-delete';
 import { useGrowingUnitUpdate } from '@/core/plant-context/presentation/hooks/use-growing-unit-update/use-growing-unit-update';
 import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/presentation/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import { PaginatedResults } from '@/shared/presentation/components/ui/paginated-results/paginated-results';
+import {
+  SearchAndFilters,
+  type FilterOption,
+} from '@/shared/presentation/components/ui/search-and-filters/search-and-filters';
 import type { GrowingUnitResponse } from '@repo/sdk';
+import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Button } from '@repo/shared/presentation/components/ui/button';
-import { Skeleton } from '@repo/shared/presentation/components/ui/skeleton';
-import { PlusIcon } from 'lucide-react';
+import {
+  Building2Icon,
+  FlowerIcon,
+  HomeIcon,
+  PackageIcon,
+  PlusIcon,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-export function PlantsManagementPage() {
+export function GrowingUnitsPage() {
   const t = useTranslations();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [selectedGrowingUnit, setSelectedGrowingUnit] =
     useState<GrowingUnitResponse | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('all');
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const paginationInput = useMemo(
+    () => ({
+      pagination: {
+        page: currentPage,
+        perPage: 12,
+      },
+    }),
+    [currentPage],
+  );
 
   const {
     growingUnits,
     isLoading: isLoadingGrowingUnits,
     error: growingUnitsError,
     refetch,
-  } = useGrowingUnitsFindByCriteria();
+  } = useGrowingUnitsFindByCriteria(paginationInput);
 
   const {
     handleCreate,
@@ -48,9 +75,34 @@ export function PlantsManagementPage() {
     error: deleteError,
   } = useGrowingUnitDelete();
 
+  const filterOptions: FilterOption[] = [
+    { value: 'all', label: t('growingUnit.filters.all') },
+    {
+      value: 'indoor',
+      label: t('growingUnit.filters.indoor'),
+      icon: HomeIcon,
+    },
+    {
+      value: 'outdoor',
+      label: t('growingUnit.filters.outdoor'),
+      icon: Building2Icon,
+    },
+    {
+      value: 'pots',
+      label: t('growingUnit.filters.pots'),
+      icon: FlowerIcon,
+    },
+    {
+      value: 'beds',
+      label: t('growingUnit.filters.beds'),
+      icon: PackageIcon,
+    },
+  ];
+
   const handleCreateSubmit = async (values: GrowingUnitCreateFormValues) => {
     await handleCreate(values, () => {
       refetch();
+      setCreateDialogOpen(false);
     });
   };
 
@@ -73,20 +125,12 @@ export function PlantsManagementPage() {
     });
   };
 
+  const handleAddClick = () => {
+    setCreateDialogOpen(true);
+  };
+
   if (isLoadingGrowingUnits) {
-    return (
-      <div className="mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-10 w-32" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <Skeleton key={i} className="h-64 w-full" />
-          ))}
-        </div>
-      </div>
-    );
+    return <GrowingUnitsPageSkeleton />;
   }
 
   if (growingUnitsError) {
@@ -106,48 +150,69 @@ export function PlantsManagementPage() {
   return (
     <div className="mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">{t('plants.title')}</h1>
-          <p className="text-muted-foreground mt-1">
-            {t('plants.description')}
-          </p>
-        </div>
-        <Button onClick={() => setCreateDialogOpen(true)}>
-          <PlusIcon className="mr-2 h-4 w-4" />
-          {t('growingUnit.actions.create.button')}
-        </Button>
-      </div>
+      <PageHeader
+        title={t('growingUnit.page.title')}
+        description={t('growingUnit.page.description')}
+        actions={[
+          <Button key="create" onClick={() => setCreateDialogOpen(true)}>
+            <PlusIcon className="mr-2 h-4 w-4" />
+            {t('growingUnit.actions.create.button')}
+          </Button>,
+        ]}
+      />
+
+      {/* Search and Filters */}
+      <SearchAndFilters
+        searchPlaceholder={t('growingUnit.search.placeholder')}
+        searchValue={searchQuery}
+        onSearchChange={setSearchQuery}
+        filterOptions={filterOptions}
+        selectedFilter={selectedFilter}
+        onFilterChange={setSelectedFilter}
+      />
 
       {/* Growing Units Grid */}
       {growingUnits && growingUnits.items.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {growingUnits.items.map((growingUnit) => (
-            <GrowingUnitCard
-              key={growingUnit.id}
-              growingUnit={growingUnit}
-              onEdit={handleEdit}
-              onDelete={handleDeleteConfirm}
-              isDeleting={isDeleting}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-muted-foreground">
-            {t('plants.containers.empty')}
-          </p>
-        </div>
-      )}
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {growingUnits.items.map((growingUnit) => (
+              <GrowingUnitCard
+                key={growingUnit.id}
+                growingUnit={growingUnit}
+                onEdit={handleEdit}
+                onDelete={handleDeleteConfirm}
+                isDeleting={isDeleting}
+                showActions={true}
+              />
+            ))}
+            <GrowingUnitAddCard onClick={handleAddClick} />
+          </div>
 
-      {/* Pagination Info */}
-      {growingUnits && growingUnits.total > 0 && (
-        <div className="text-sm text-muted-foreground text-center">
-          {t('growingUnit.pagination.info', {
-            page: growingUnits.page,
-            totalPages: growingUnits.totalPages,
-            total: growingUnits.total,
-          })}
+          {/* Pagination */}
+          {growingUnits.totalPages > 1 && (
+            <>
+              <div className="text-sm text-muted-foreground text-center">
+                {t('growingUnit.pagination.info', {
+                  page: growingUnits.page,
+                  totalPages: growingUnits.totalPages,
+                  total: growingUnits.total,
+                })}
+              </div>
+              <PaginatedResults
+                currentPage={growingUnits.page}
+                totalPages={growingUnits.totalPages}
+                onPageChange={(page) => {
+                  setCurrentPage(page);
+                  // Scroll to top when page changes
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            </>
+          )}
+        </>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <GrowingUnitAddCard onClick={handleAddClick} />
         </div>
       )}
 

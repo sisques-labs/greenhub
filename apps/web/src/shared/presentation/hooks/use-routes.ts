@@ -21,6 +21,7 @@ export const useRoutes = () => {
     auth: buildLocalizedUrl('/auth'),
     userProfile: buildLocalizedUrl('/user/profile'),
     plants: buildLocalizedUrl('/plants'),
+    growingUnits: buildLocalizedUrl('/growing-units'),
   } as const;
 
   /**
@@ -48,6 +49,11 @@ export const useRoutes = () => {
               title: t('plants'),
               url: routes.plants,
               isActive: pathname === routes.plants,
+            },
+            {
+              title: t('growingUnits'),
+              url: routes.growingUnits,
+              isActive: pathname === routes.growingUnits,
             },
           ],
         },

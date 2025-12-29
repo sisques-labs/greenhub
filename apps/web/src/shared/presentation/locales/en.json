@@ -9,7 +9,8 @@
   "nav": {
     "home": "Home",
     "settings": "Settings",
-    "plants": "Plants"
+    "plants": "Plants",
+    "growingUnits": "Growing Units"
   },
   "authPage": {
     "title": {
@@ -140,10 +141,47 @@
     }
   },
   "plants": {
-    "title": "Plants Management",
-    "description": "Manage your plants and containers",
-    "containers": {
-      "empty": "No containers registered"
+    "title": "Plant List",
+    "description": "Manage your botanical collection and monitor its health",
+    "empty": "No plants registered",
+    "search": {
+      "placeholder": "Search by name, species or location..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "needsWater": "Needs Water",
+      "healthy": "Healthy"
+    },
+    "table": {
+      "columns": {
+        "plant": "PLANT / SPECIES",
+        "location": "LOCATION",
+        "status": "STATUS",
+        "lastWatering": "LAST WATERING",
+        "actions": "ACTIONS"
+      },
+      "lastWatering": {
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{days} days ago",
+        "weeksAgo": "{weeks} weeks ago"
+      },
+      "pagination": {
+        "showing": "Showing {from} to {to} of {total} plants"
+      }
+    },
+    "actions": {
+      "create": {
+        "button": "Add Plant",
+        "title": "Create Plant",
+        "description": "Add a new plant to your collection",
+        "submit": "Create"
+      },
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
     }
   },
   "plant": {
@@ -234,12 +272,26 @@
     }
   },
   "growingUnit": {
+    "page": {
+      "title": "Growing Units",
+      "description": "Visualize and manage your cultivation spaces efficiently."
+    },
     "common": {
       "noDimensions": "No dimensions",
       "more": "more"
     },
     "error": {
       "loading": "Error loading growing units: {message}"
+    },
+    "search": {
+      "placeholder": "Search by name, type or plant..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "pots": "Pots",
+      "beds": "Beds"
     },
     "fields": {
       "name": {
@@ -280,12 +332,13 @@
         "placeholder": "Select unit"
       },
       "plants": {
-        "label": "Plants"
+        "label": "Active plants"
       },
       "createdAt": {
         "label": "Created at"
       }
     },
+    "noPlants": "No active plants",
     "type": {
       "POT": "Pot",
       "GARDEN_BED": "Garden Bed",

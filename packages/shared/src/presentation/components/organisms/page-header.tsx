@@ -32,13 +32,11 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <div
-      className={`flex  items-center justify-between gap-4 space-y-4 ${className || ''}`}
-    >
-      <div className="flex flex-col justify-center h-full">
-        <h1 className="text-2xl font-semibold">{title}</h1>
+    <div className={`flex items-center justify-between ${className || ''}`}>
+      <div>
+        <h1 className="text-3xl font-bold">{title}</h1>
         {description && (
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-muted-foreground mt-1">{description}</p>
         )}
       </div>
       {actions.length > 0 && (
