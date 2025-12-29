@@ -2,18 +2,12 @@
   "common": {
     "loading": "Cargando...",
     "error": "Error",
-    "success": "Éxito",
-    "noData": "No se encontraron datos",
     "unknown": "Desconocido",
     "cancel": "Cancelar",
     "delete": "Eliminar"
   },
   "nav": {
     "home": "Inicio",
-    "features": "Características",
-    "feature1": "Característica 1",
-    "feature2": "Característica 2",
-    "feature3": "Característica 3",
     "settings": "Configuración",
     "plants": "Plantas"
   },
@@ -148,31 +142,20 @@
   "plants": {
     "title": "Gestión de Plantas",
     "description": "Gestiona tus plantas y contenedores",
-    "tabs": {
-      "plants": "Plantas",
-      "containers": "Contenedores"
-    },
-    "plants": {
-      "title": "Plantas",
-      "description": "Lista de todas tus plantas",
-      "empty": "No hay plantas registradas"
-    },
     "containers": {
-      "title": "Contenedores",
-      "description": "Lista de todos tus contenedores",
-      "empty": "No hay contenedores registrados",
-      "noPlants": "Este contenedor no tiene plantas",
-      "plants": "Plantas",
-      "fields": {
-        "type": "Tipo",
-        "numberOfPlants": "Número de plantas"
-      }
+      "empty": "No hay contenedores registrados"
+    }
+  },
+  "plant": {
+    "common": {
+      "notSet": "No establecido",
+      "unnamed": "Planta sin nombre"
+    },
+    "notFound": "Planta no encontrada",
+    "error": {
+      "loading": "Error al cargar planta: {message}"
     },
     "fields": {
-      "containerId": {
-        "label": "Contenedor",
-        "placeholder": "Selecciona un contenedor"
-      },
       "name": {
         "label": "Nombre",
         "placeholder": "Nombre de la planta"
@@ -191,6 +174,17 @@
       "status": {
         "label": "Estado",
         "placeholder": "Selecciona el estado"
+      },
+      "growingUnitId": {
+        "label": "ID de Unidad de Cultivo"
+      },
+      "sourceGrowingUnitId": {
+        "label": "Unidad de Cultivo Origen",
+        "placeholder": "ID de unidad de cultivo origen"
+      },
+      "targetGrowingUnitId": {
+        "label": "Unidad de Cultivo Destino",
+        "placeholder": "ID de unidad de cultivo destino"
       }
     },
     "status": {
@@ -200,65 +194,96 @@
       "DEAD": "Muerta",
       "ARCHIVED": "Archivada"
     },
-    "actions": {
-      "create": {
-        "title": "Crear Planta",
-        "description": "Agrega una nueva planta a tu colección",
-        "button": "Crear Planta",
-        "submit": "Crear",
-        "createContainer": "Crear Contenedor"
+    "sections": {
+      "info": {
+        "title": "Información de la Planta",
+        "description": "Información detallada sobre la planta"
       },
-      "createContainer": "Crear Contenedor",
-      "delete": {
-        "confirm": "¿Estás seguro de que quieres eliminar la planta {name}?"
+      "update": {
+        "title": "Actualizar Planta",
+        "description": "Actualizar información de la planta"
+      },
+      "transplant": {
+        "title": "Trasplantar Planta",
+        "description": "Mover planta a una unidad de cultivo diferente"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Actualizar Planta",
+        "loading": "Actualizando..."
+      },
+      "transplant": {
+        "label": "Trasplantar",
+        "loading": "Trasplantando..."
       }
     },
     "validation": {
-      "containerId": {
-        "required": "El contenedor es requerido"
-      },
-      "name": {
-        "required": "El nombre es requerido"
-      },
-      "species": {
-        "required": "La especie es requerida"
-      },
-      "status": {
-        "invalid": "Estado inválido"
-      }
-    }
-  },
-  "plant": {
-    "validation": {
-      "containerId": {
-        "required": "El contenedor es requerido"
-      },
-      "name": {
-        "required": "El nombre es requerido"
-      },
-      "species": {
-        "required": "La especie es requerida"
-      },
-      "status": {
-        "invalid": "Estado inválido"
-      },
       "id": {
         "required": "El ID es requerido"
+      },
+      "plantId": {
+        "required": "El ID de la planta es requerido"
+      },
+      "sourceGrowingUnitId": {
+        "required": "El ID de la unidad de cultivo origen es requerido"
+      },
+      "targetGrowingUnitId": {
+        "required": "El ID de la unidad de cultivo destino es requerido"
       }
     }
   },
-  "containers": {
+  "growingUnit": {
+    "common": {
+      "noDimensions": "Sin dimensiones",
+      "more": "más"
+    },
+    "error": {
+      "loading": "Error al cargar unidades de cultivo: {message}"
+    },
     "fields": {
       "name": {
         "label": "Nombre",
-        "placeholder": "Nombre del contenedor"
+        "placeholder": "Nombre de la unidad de cultivo"
       },
       "type": {
         "label": "Tipo",
         "placeholder": "Selecciona el tipo"
       },
-      "numberOfPlants": {
-        "label": "Número de plantas"
+      "capacity": {
+        "label": "Capacidad",
+        "placeholder": "Número de plantas"
+      },
+      "remainingCapacity": {
+        "label": "Capacidad Restante"
+      },
+      "volume": {
+        "label": "Volumen"
+      },
+      "dimensions": {
+        "label": "Dimensiones"
+      },
+      "length": {
+        "label": "Longitud",
+        "placeholder": "Longitud"
+      },
+      "width": {
+        "label": "Ancho",
+        "placeholder": "Ancho"
+      },
+      "height": {
+        "label": "Altura",
+        "placeholder": "Altura"
+      },
+      "unit": {
+        "label": "Unidad",
+        "placeholder": "Selecciona la unidad"
+      },
+      "plants": {
+        "label": "Plantas"
+      },
+      "createdAt": {
+        "label": "Fecha de creación"
       }
     },
     "type": {
@@ -267,16 +292,39 @@
       "HANGING_BASKET": "Cesta colgante",
       "WINDOW_BOX": "Jardín de ventana"
     },
+    "unit": {
+      "MILLIMETER": "Milímetro",
+      "CENTIMETER": "Centímetro",
+      "METER": "Metro",
+      "INCH": "Pulgada",
+      "FOOT": "Pie"
+    },
     "actions": {
       "create": {
-        "title": "Crear Contenedor",
-        "description": "Agrega un nuevo contenedor para tus plantas",
-        "button": "Crear Contenedor",
-        "submit": "Crear"
+        "title": "Crear Unidad de Cultivo",
+        "description": "Agrega una nueva unidad de cultivo para tus plantas",
+        "button": "Crear Unidad de Cultivo",
+        "submit": "Crear",
+        "loading": "Creando..."
       },
+      "update": {
+        "title": "Actualizar Unidad de Cultivo",
+        "description": "Actualizar información de la unidad de cultivo",
+        "submit": "Actualizar",
+        "loading": "Actualizando..."
+      },
+      "edit": "Editar",
       "delete": {
-        "confirm": "¿Estás seguro de que quieres eliminar el contenedor {name}?"
+        "label": "Eliminar",
+        "loading": "Eliminando...",
+        "confirm": {
+          "title": "Eliminar Unidad de Cultivo",
+          "description": "¿Estás seguro de que quieres eliminar la unidad de cultivo {name}? Esta acción no se puede deshacer."
+        }
       }
+    },
+    "pagination": {
+      "info": "Página {page} de {totalPages} ({total} en total)"
     },
     "validation": {
       "id": {
@@ -287,19 +335,9 @@
       },
       "type": {
         "invalid": "Tipo inválido"
-      }
-    }
-  },
-  "container": {
-    "validation": {
-      "id": {
-        "required": "El ID es requerido"
       },
-      "name": {
-        "required": "El nombre es requerido"
-      },
-      "type": {
-        "invalid": "Tipo inválido"
+      "capacity": {
+        "required": "La capacidad es requerida"
       }
     }
   }

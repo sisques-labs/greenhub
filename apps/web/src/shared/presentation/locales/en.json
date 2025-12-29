@@ -2,18 +2,12 @@
   "common": {
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success",
-    "noData": "No data found",
     "unknown": "Unknown",
     "cancel": "Cancel",
     "delete": "Delete"
   },
   "nav": {
     "home": "Home",
-    "features": "Features",
-    "feature1": "Feature 1",
-    "feature2": "Feature 2",
-    "feature3": "Feature 3",
     "settings": "Settings",
     "plants": "Plants"
   },
@@ -148,31 +142,20 @@
   "plants": {
     "title": "Plants Management",
     "description": "Manage your plants and containers",
-    "tabs": {
-      "plants": "Plants",
-      "containers": "Containers"
-    },
-    "plants": {
-      "title": "Plants",
-      "description": "List of all your plants",
-      "empty": "No plants registered"
-    },
     "containers": {
-      "title": "Containers",
-      "description": "List of all your containers",
-      "empty": "No containers registered",
-      "noPlants": "This container has no plants",
-      "plants": "Plants",
-      "fields": {
-        "type": "Type",
-        "numberOfPlants": "Number of plants"
-      }
+      "empty": "No containers registered"
+    }
+  },
+  "plant": {
+    "common": {
+      "notSet": "Not set",
+      "unnamed": "Unnamed plant"
+    },
+    "notFound": "Plant not found",
+    "error": {
+      "loading": "Error loading plant: {message}"
     },
     "fields": {
-      "containerId": {
-        "label": "Container",
-        "placeholder": "Select a container"
-      },
       "name": {
         "label": "Name",
         "placeholder": "Plant name"
@@ -191,6 +174,17 @@
       "status": {
         "label": "Status",
         "placeholder": "Select status"
+      },
+      "growingUnitId": {
+        "label": "Growing Unit ID"
+      },
+      "sourceGrowingUnitId": {
+        "label": "Source Growing Unit",
+        "placeholder": "Source growing unit ID"
+      },
+      "targetGrowingUnitId": {
+        "label": "Target Growing Unit",
+        "placeholder": "Target growing unit ID"
       }
     },
     "status": {
@@ -200,65 +194,96 @@
       "DEAD": "Dead",
       "ARCHIVED": "Archived"
     },
-    "actions": {
-      "create": {
-        "title": "Create Plant",
-        "description": "Add a new plant to your collection",
-        "button": "Create Plant",
-        "submit": "Create",
-        "createContainer": "Create Container"
+    "sections": {
+      "info": {
+        "title": "Plant Information",
+        "description": "Detailed information about the plant"
       },
-      "createContainer": "Create Container",
-      "delete": {
-        "confirm": "Are you sure you want to delete the plant {name}?"
+      "update": {
+        "title": "Update Plant",
+        "description": "Update plant information"
+      },
+      "transplant": {
+        "title": "Transplant Plant",
+        "description": "Move plant to a different growing unit"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Update Plant",
+        "loading": "Updating..."
+      },
+      "transplant": {
+        "label": "Transplant",
+        "loading": "Transplanting..."
       }
     },
     "validation": {
-      "containerId": {
-        "required": "Container is required"
-      },
-      "name": {
-        "required": "Name is required"
-      },
-      "species": {
-        "required": "Species is required"
-      },
-      "status": {
-        "invalid": "Invalid status"
-      }
-    }
-  },
-  "plant": {
-    "validation": {
-      "containerId": {
-        "required": "Container is required"
-      },
-      "name": {
-        "required": "Name is required"
-      },
-      "species": {
-        "required": "Species is required"
-      },
-      "status": {
-        "invalid": "Invalid status"
-      },
       "id": {
         "required": "ID is required"
+      },
+      "plantId": {
+        "required": "Plant ID is required"
+      },
+      "sourceGrowingUnitId": {
+        "required": "Source growing unit ID is required"
+      },
+      "targetGrowingUnitId": {
+        "required": "Target growing unit ID is required"
       }
     }
   },
-  "containers": {
+  "growingUnit": {
+    "common": {
+      "noDimensions": "No dimensions",
+      "more": "more"
+    },
+    "error": {
+      "loading": "Error loading growing units: {message}"
+    },
     "fields": {
       "name": {
         "label": "Name",
-        "placeholder": "Container name"
+        "placeholder": "Growing unit name"
       },
       "type": {
         "label": "Type",
         "placeholder": "Select type"
       },
-      "numberOfPlants": {
-        "label": "Number of plants"
+      "capacity": {
+        "label": "Capacity",
+        "placeholder": "Number of plants"
+      },
+      "remainingCapacity": {
+        "label": "Remaining Capacity"
+      },
+      "volume": {
+        "label": "Volume"
+      },
+      "dimensions": {
+        "label": "Dimensions"
+      },
+      "length": {
+        "label": "Length",
+        "placeholder": "Length"
+      },
+      "width": {
+        "label": "Width",
+        "placeholder": "Width"
+      },
+      "height": {
+        "label": "Height",
+        "placeholder": "Height"
+      },
+      "unit": {
+        "label": "Unit",
+        "placeholder": "Select unit"
+      },
+      "plants": {
+        "label": "Plants"
+      },
+      "createdAt": {
+        "label": "Created at"
       }
     },
     "type": {
@@ -267,16 +292,39 @@
       "HANGING_BASKET": "Hanging Basket",
       "WINDOW_BOX": "Window Box"
     },
+    "unit": {
+      "MILLIMETER": "Millimeter",
+      "CENTIMETER": "Centimeter",
+      "METER": "Meter",
+      "INCH": "Inch",
+      "FOOT": "Foot"
+    },
     "actions": {
       "create": {
-        "title": "Create Container",
-        "description": "Add a new container for your plants",
-        "button": "Create Container",
-        "submit": "Create"
+        "title": "Create Growing Unit",
+        "description": "Add a new growing unit for your plants",
+        "button": "Create Growing Unit",
+        "submit": "Create",
+        "loading": "Creating..."
       },
+      "update": {
+        "title": "Update Growing Unit",
+        "description": "Update growing unit information",
+        "submit": "Update",
+        "loading": "Updating..."
+      },
+      "edit": "Edit",
       "delete": {
-        "confirm": "Are you sure you want to delete the container {name}?"
+        "label": "Delete",
+        "loading": "Deleting...",
+        "confirm": {
+          "title": "Delete Growing Unit",
+          "description": "Are you sure you want to delete the growing unit {name}? This action cannot be undone."
+        }
       }
+    },
+    "pagination": {
+      "info": "Page {page} of {totalPages} ({total} total)"
     },
     "validation": {
       "id": {
@@ -287,19 +335,9 @@
       },
       "type": {
         "invalid": "Invalid type"
-      }
-    }
-  },
-  "container": {
-    "validation": {
-      "id": {
-        "required": "ID is required"
       },
-      "name": {
-        "required": "Name is required"
-      },
-      "type": {
-        "invalid": "Invalid type"
+      "capacity": {
+        "required": "Capacity is required"
       }
     }
   }
