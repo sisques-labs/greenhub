@@ -1,10 +1,10 @@
 import { PlantStatus } from './plant-status.type.js';
 
 export type CreatePlantInput = {
-  containerId: string;
+  growingUnitId: string;
   name: string;
   species: string;
-  plantedDate?: string | null;
+  plantedDate?: Date | null;
   notes?: string | null;
   status?: PlantStatus;
 };
