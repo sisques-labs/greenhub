@@ -1,7 +1,7 @@
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
-import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit-full-capacity.exception';
+import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,

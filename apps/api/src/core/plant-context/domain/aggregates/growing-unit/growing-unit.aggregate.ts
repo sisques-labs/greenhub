@@ -128,7 +128,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
   ) {
     const plantPrimitives = plantToRemove.toPrimitives();
     this._plants = this._plants.filter(
-      (plant) => plant.id !== plantToRemove.id,
+      (plant) => plant.id.value !== plantToRemove.id.value,
     );
     if (generateEvent) {
       this.apply(

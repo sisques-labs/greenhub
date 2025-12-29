@@ -1,5 +1,5 @@
 import { IPlantDto } from '@/core/plant-context/domain/dtos/entities/plant/plant.dto';
-import { PlantPlantedDateMissingException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-planted-date-missing.exception';
+import { PlantPlantedDateMissingException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-planted-date-missing/growing-unit-plant-planted-date-missing.exception';
 import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
