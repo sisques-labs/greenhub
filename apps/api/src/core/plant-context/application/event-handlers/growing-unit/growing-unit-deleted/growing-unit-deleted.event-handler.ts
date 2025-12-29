@@ -1,0 +1,44 @@
+import {
+  GROWING_UNIT_READ_REPOSITORY_TOKEN,
+  IGrowingUnitReadRepository,
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
+import { GrowingUnitDeletedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+/**
+ * Event handler for GrowingUnitDeletedEvent.
+ *
+ * @remarks
+ * This handler deletes the growing unit view model when a growing unit is deleted,
+ * ensuring the read model is synchronized with the write model.
+ */
+@EventsHandler(GrowingUnitDeletedEvent)
+export class GrowingUnitDeletedEventHandler
+  implements IEventHandler<GrowingUnitDeletedEvent>
+{
+  private readonly logger = new Logger(GrowingUnitDeletedEventHandler.name);
+
+  constructor(
+    @Inject(GROWING_UNIT_READ_REPOSITORY_TOKEN)
+    private readonly growingUnitReadRepository: IGrowingUnitReadRepository,
+  ) {}
+
+  /**
+   * Handles the GrowingUnitDeletedEvent event by deleting the growing unit view model.
+   *
+   * @param event - The GrowingUnitDeletedEvent event to handle
+   */
+  async handle(event: GrowingUnitDeletedEvent) {
+    this.logger.log(
+      `Handling growing unit deleted event: ${event.aggregateId}`,
+    );
+
+    this.logger.debug(
+      `Growing unit deleted event data: ${JSON.stringify(event.data)}`,
+    );
+
+    // 01: Delete the growing unit view model
+    await this.growingUnitReadRepository.delete(event.aggregateId);
+  }
+}

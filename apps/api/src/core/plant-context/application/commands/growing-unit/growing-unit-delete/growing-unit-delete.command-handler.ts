@@ -1,0 +1,54 @@
+import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
+import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import {
+  GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
+  IGrowingUnitWriteRepository,
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
+/**
+ * Command handler for deleting a growing unit.
+ *
+ * @remarks
+ * This handler orchestrates the deletion of a growing unit aggregate, removes it from the write repository,
+ * and publishes domain events.
+ */
+@CommandHandler(GrowingUnitDeleteCommand)
+export class GrowingUnitDeleteCommandHandler
+  implements ICommandHandler<GrowingUnitDeleteCommand>
+{
+  private readonly logger = new Logger(GrowingUnitDeleteCommandHandler.name);
+
+  constructor(
+    @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
+    private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
+    private readonly eventBus: EventBus,
+    private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+  ) {}
+
+  /**
+   * Executes the growing unit delete command.
+   *
+   * @param command - The command to execute
+   * @returns void
+   */
+  async execute(command: GrowingUnitDeleteCommand): Promise<void> {
+    this.logger.log(
+      `Executing delete growing unit command by id: ${command.id.value}`,
+    );
+
+    // 01: Find the growing unit by id
+    const existingGrowingUnit =
+      await this.assertGrowingUnitExistsService.execute(command.id.value);
+
+    // 02: Delete the growing unit
+    existingGrowingUnit.delete();
+
+    // 03: Delete the growing unit entity
+    await this.growingUnitWriteRepository.delete(existingGrowingUnit.id.value);
+
+    // 04: Publish all events
+    await this.eventBus.publishAll(existingGrowingUnit.getUncommittedEvents());
+  }
+}
