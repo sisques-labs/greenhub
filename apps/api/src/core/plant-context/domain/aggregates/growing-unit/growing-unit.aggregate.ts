@@ -311,7 +311,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
       return;
     }
 
-    const oldValue = plant.notes.value;
+    const oldValue = plant.notes?.value ?? null;
     plant.changeNotes(notes);
 
     if (generateEvent) {

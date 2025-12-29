@@ -5,6 +5,10 @@ import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import {
+  IPlantWriteRepository,
+  PLANT_WRITE_REPOSITORY_TOKEN,
+} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
@@ -30,12 +34,15 @@ export class PlantRemoveCommandHandler
    * Creates a new instance of {@link PlantRemoveCommandHandler}.
    *
    * @param growingUnitWriteRepository - The write repository for persisting growing unit aggregates.
+   * @param plantWriteRepository - The write repository for persisting plant entities.
    * @param eventBus - The event bus for publishing domain events.
    * @param assertGrowingUnitExistsService - Service that ensures the growing unit exists.
    */
   constructor(
     @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
     private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
+    @Inject(PLANT_WRITE_REPOSITORY_TOKEN)
+    private readonly plantWriteRepository: IPlantWriteRepository,
     private readonly eventBus: EventBus,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
   ) {}
@@ -69,13 +76,16 @@ export class PlantRemoveCommandHandler
       return;
     }
 
-    // 03: Remove the plant from the growing unit aggregate
+    // 03: Delete the plant from the database
+    await this.plantWriteRepository.delete(command.plantId.value);
+
+    // 04: Remove the plant from the growing unit aggregate
     growingUnitAggregate.removePlant(plantEntity);
 
-    // 04: Save the growing unit aggregate
+    // 05: Save the growing unit aggregate
     await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
-    // 05: Publish all events
+    // 06: Publish all events
     await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
     await growingUnitAggregate.commit();
   }

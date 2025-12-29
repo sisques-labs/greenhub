@@ -50,7 +50,7 @@ export class PlantEntity {
   /**
    * Additional notes about the plant (free text).
    */
-  private _notes: PlantNotesValueObject;
+  private _notes: PlantNotesValueObject | null;
 
   /**
    * Current lifecycle status (active, dead, dormant, etc).
@@ -169,9 +169,9 @@ export class PlantEntity {
   }
 
   /**
-   * Gets the plant's notes value object.
+   * Gets the plant's notes value object or null.
    */
-  public get notes(): PlantNotesValueObject {
+  public get notes(): PlantNotesValueObject | null {
     return this._notes;
   }
 
@@ -194,7 +194,7 @@ export class PlantEntity {
       name: this._name.value,
       species: this._species.value,
       plantedDate: this._plantedDate?.value ?? null,
-      notes: this._notes.value,
+      notes: this._notes?.value ?? null,
       status: this._status.value,
     };
   }

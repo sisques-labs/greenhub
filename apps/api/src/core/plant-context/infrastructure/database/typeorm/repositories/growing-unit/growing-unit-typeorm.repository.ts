@@ -34,6 +34,9 @@ export class GrowingUnitTypeormRepository
     this.logger.log(`Finding growing unit by id: ${id}`);
     const growingUnitEntity = await this.repository.findOne({
       where: { id },
+      relations: {
+        plants: true,
+      },
     });
 
     return growingUnitEntity
