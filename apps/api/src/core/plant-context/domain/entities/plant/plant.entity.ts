@@ -105,17 +105,19 @@ export class PlantEntity {
 
   /**
    * Change the date when the plant was planted.
-   * @param newPlantedDate - New planted date as value object.
+   * @param newPlantedDate - New planted date as value object or null.
    */
-  public changePlantedDate(newPlantedDate: PlantPlantedDateValueObject): void {
+  public changePlantedDate(
+    newPlantedDate: PlantPlantedDateValueObject | null,
+  ): void {
     this._plantedDate = newPlantedDate;
   }
 
   /**
    * Change the plant's notes field.
-   * @param newNotes - New notes as value object.
+   * @param newNotes - New notes as value object or null.
    */
-  public changeNotes(newNotes: PlantNotesValueObject): void {
+  public changeNotes(newNotes: PlantNotesValueObject | null): void {
     this._notes = newNotes;
   }
 

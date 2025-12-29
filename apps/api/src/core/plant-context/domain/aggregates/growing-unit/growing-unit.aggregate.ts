@@ -261,12 +261,12 @@ export class GrowingUnitAggregate extends AggregateRoot {
   /**
    * Changes the planted date value object of a plant in this growing unit.
    * @param plantId - The ID of the plant to update.
-   * @param plantedDate - The new planted date value object.
+   * @param plantedDate - The new planted date value object or null.
    * @param generateEvent - Whether to emit the corresponding domain event.
    */
   public changePlantPlantedDate(
     plantId: string,
-    plantedDate: PlantPlantedDateValueObject,
+    plantedDate: PlantPlantedDateValueObject | null,
     generateEvent: boolean = true,
   ) {
     const plant = this.getPlantById(plantId);
@@ -274,7 +274,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
       return;
     }
 
-    const oldValue = plant.plantedDate.value;
+    const oldValue = plant.plantedDate?.value ?? null;
     plant.changePlantedDate(plantedDate);
 
     if (generateEvent) {
@@ -288,7 +288,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
           {
             id: plantId,
             oldValue,
-            newValue: plant.plantedDate.value,
+            newValue: plant.plantedDate?.value ?? null,
           },
         ),
       );
@@ -298,12 +298,12 @@ export class GrowingUnitAggregate extends AggregateRoot {
   /**
    * Changes the notes value object of a plant in this growing unit.
    * @param plantId - The ID of the plant to update.
-   * @param notes - The new notes value object.
+   * @param notes - The new notes value object or null.
    * @param generateEvent - Whether to emit the corresponding domain event.
    */
   public changePlantNotes(
     plantId: string,
-    notes: PlantNotesValueObject,
+    notes: PlantNotesValueObject | null,
     generateEvent: boolean = true,
   ) {
     const plant = this.getPlantById(plantId);
@@ -325,7 +325,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
           {
             id: plantId,
             oldValue,
-            newValue: plant.notes.value,
+            newValue: plant.notes?.value ?? null,
           },
         ),
       );
