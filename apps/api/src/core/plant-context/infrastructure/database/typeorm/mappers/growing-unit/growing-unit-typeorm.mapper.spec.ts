@@ -1,28 +1,47 @@
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
+import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
-import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
-import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { PlantAggregate } from '@/core/plant-context/plants/domain/aggregates/plant.aggregate';
-import { PlantStatusEnum } from '@/core/plant-context/plants/domain/enums/plant-status/plant-status.enum';
-import { PlantAggregateFactory } from '@/core/plant-context/plants/domain/factories/plant-aggregate/plant-aggregate.factory';
-import { PlantTypeormEntity } from '@/core/plant-context/plants/infrastructure/database/typeorm/entities/plant-typeorm.entity';
-import { PlantTypeormMapper } from '@/core/plant-context/plants/infrastructure/database/typeorm/mappers/plant-typeorm.mapper';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { ContainerUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
+import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
+import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper';
+import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
+import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
-describe('PlantTypeormMapper', () => {
-  let mapper: PlantTypeormMapper;
-  let mockPlantAggregateFactory: jest.Mocked<PlantAggregateFactory>;
+describe('GrowingUnitTypeormMapper', () => {
+  let mapper: GrowingUnitTypeormMapper;
+  let mockGrowingUnitAggregateFactory: jest.Mocked<GrowingUnitAggregateFactory>;
+  let mockPlantTypeormMapper: jest.Mocked<PlantTypeormMapper>;
+  let plantEntityFactory: PlantEntityFactory;
 
   beforeEach(() => {
-    mockPlantAggregateFactory = {
+    plantEntityFactory = new PlantEntityFactory();
+
+    mockGrowingUnitAggregateFactory = {
       create: jest.fn(),
       fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<PlantAggregateFactory>;
+    } as unknown as jest.Mocked<GrowingUnitAggregateFactory>;
 
-    mapper = new PlantTypeormMapper(mockPlantAggregateFactory);
+    mockPlantTypeormMapper = {
+      toDomainEntity: jest.fn(),
+      toTypeormEntity: jest.fn(),
+      toTypeormEntityFromPrimitives: jest.fn(),
+    } as unknown as jest.Mocked<PlantTypeormMapper>;
+
+    mapper = new GrowingUnitTypeormMapper(
+      mockGrowingUnitAggregateFactory,
+      mockPlantTypeormMapper,
+    );
   });
 
   afterEach(() => {
@@ -30,212 +49,263 @@ describe('PlantTypeormMapper', () => {
   });
 
   describe('toDomainEntity', () => {
-    it('should convert TypeORM entity to domain entity with all properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
+    it('should convert TypeORM entity to domain aggregate with all properties', () => {
+      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+      const plantId = '223e4567-e89b-12d3-a456-426614174000';
       const now = new Date();
-      const plantedDate = new Date('2024-01-15');
 
-      const typeormEntity = new PlantTypeormEntity();
-      typeormEntity.id = plantId;
-      typeormEntity.name = 'Aloe Vera';
-      typeormEntity.species = 'Aloe barbadensis';
-      typeormEntity.plantedDate = plantedDate;
-      typeormEntity.notes = 'Keep in indirect sunlight';
-      typeormEntity.status = PlantStatusEnum.PLANTED;
+      const plantTypeormEntity = new PlantTypeormEntity();
+      plantTypeormEntity.id = plantId;
+      plantTypeormEntity.growingUnitId = growingUnitId;
+      plantTypeormEntity.name = 'Basil';
+      plantTypeormEntity.species = 'Ocimum basilicum';
+      plantTypeormEntity.plantedDate = null;
+      plantTypeormEntity.notes = null;
+      plantTypeormEntity.status = PlantStatusEnum.PLANTED;
+      plantTypeormEntity.createdAt = now;
+      plantTypeormEntity.updatedAt = now;
+      plantTypeormEntity.deletedAt = null;
+
+      const typeormEntity = new GrowingUnitTypeormEntity();
+      typeormEntity.id = growingUnitId;
+      typeormEntity.name = 'Garden Bed 1';
+      typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
+      typeormEntity.capacity = 10;
+      typeormEntity.length = 2.0;
+      typeormEntity.width = 1.0;
+      typeormEntity.height = 0.5;
+      typeormEntity.unit = LengthUnitEnum.METER;
+      typeormEntity.plants = [plantTypeormEntity];
       typeormEntity.createdAt = now;
       typeormEntity.updatedAt = now;
       typeormEntity.deletedAt = null;
 
-      const mockPlantAggregate = new PlantAggregate(
-        {
-          id: new PlantUuidValueObject(plantId),
-          containerId: new ContainerUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174000',
-          ),
-          name: new PlantNameValueObject('Aloe Vera'),
-          species: new PlantSpeciesValueObject('Aloe barbadensis'),
-          plantedDate: new PlantPlantedDateValueObject(plantedDate),
-          notes: new PlantNotesValueObject('Keep in indirect sunlight'),
-          status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
-
-      mockPlantAggregateFactory.fromPrimitives.mockReturnValue(
-        mockPlantAggregate,
-      );
-
-      const result = mapper.toDomainEntity(typeormEntity);
-
-      expect(result).toBe(mockPlantAggregate);
-      expect(mockPlantAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
-        id: plantId,
-        name: 'Aloe Vera',
-        species: 'Aloe barbadensis',
-        plantedDate: plantedDate,
-        notes: 'Keep in indirect sunlight',
-        status: PlantStatusEnum.PLANTED,
-        createdAt: now,
-        updatedAt: now,
-      });
-      expect(mockPlantAggregateFactory.fromPrimitives).toHaveBeenCalledTimes(1);
-    });
-
-    it('should convert TypeORM entity with null optional properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
-
-      const typeormEntity = new PlantTypeormEntity();
-      typeormEntity.id = plantId;
-      typeormEntity.name = 'Aloe Vera';
-      typeormEntity.species = 'Aloe barbadensis';
-      typeormEntity.plantedDate = null;
-      typeormEntity.notes = null;
-      typeormEntity.status = PlantStatusEnum.GROWING;
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
-
-      const mockPlantAggregate = new PlantAggregate(
-        {
-          id: new PlantUuidValueObject(plantId),
-          containerId: new ContainerUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174000',
-          ),
-          name: new PlantNameValueObject('Aloe Vera'),
-          species: new PlantSpeciesValueObject('Aloe barbadensis'),
-          plantedDate: null,
-          notes: null,
-          status: new PlantStatusValueObject(PlantStatusEnum.GROWING),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
-
-      mockPlantAggregateFactory.fromPrimitives.mockReturnValue(
-        mockPlantAggregate,
-      );
-
-      const result = mapper.toDomainEntity(typeormEntity);
-
-      expect(result).toBe(mockPlantAggregate);
-      expect(mockPlantAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
-        id: plantId,
-        name: 'Aloe Vera',
-        species: 'Aloe barbadensis',
+      const plantEntity = plantEntityFactory.create({
+        id: new PlantUuidValueObject(plantId),
+        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new PlantNameValueObject('Basil'),
+        species: new PlantSpeciesValueObject('Ocimum basilicum'),
         plantedDate: null,
         notes: null,
-        status: PlantStatusEnum.GROWING,
-        createdAt: now,
-        updatedAt: now,
+        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+      });
+
+      const growingUnitAggregate = new GrowingUnitAggregate(
+        {
+          id: new GrowingUnitUuidValueObject(growingUnitId),
+          name: new GrowingUnitNameValueObject('Garden Bed 1'),
+          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+          capacity: new GrowingUnitCapacityValueObject(10),
+          dimensions: new DimensionsValueObject({
+            length: 2.0,
+            width: 1.0,
+            height: 0.5,
+            unit: LengthUnitEnum.METER,
+          }),
+          plants: [plantEntity],
+        },
+        false,
+      );
+
+      mockPlantTypeormMapper.toDomainEntity.mockReturnValue(plantEntity);
+      mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
+        growingUnitAggregate,
+      );
+
+      const result = mapper.toDomainEntity(typeormEntity);
+
+      expect(result).toBe(growingUnitAggregate);
+      expect(mockPlantTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
+        plantTypeormEntity,
+      );
+      expect(
+        mockGrowingUnitAggregateFactory.fromPrimitives,
+      ).toHaveBeenCalledWith({
+        id: growingUnitId,
+        name: 'Garden Bed 1',
+        type: GrowingUnitTypeEnum.GARDEN_BED,
+        capacity: 10,
+        dimensions: {
+          length: 2.0,
+          width: 1.0,
+          height: 0.5,
+          unit: LengthUnitEnum.METER,
+        },
+        plants: [plantEntity.toPrimitives()],
+      });
+    });
+
+    it('should convert TypeORM entity with null dimensions and no plants', () => {
+      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+      const now = new Date();
+
+      const typeormEntity = new GrowingUnitTypeormEntity();
+      typeormEntity.id = growingUnitId;
+      typeormEntity.name = 'Garden Bed 1';
+      typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
+      typeormEntity.capacity = 10;
+      typeormEntity.length = null;
+      typeormEntity.width = null;
+      typeormEntity.height = null;
+      typeormEntity.unit = null;
+      typeormEntity.plants = [];
+      typeormEntity.createdAt = now;
+      typeormEntity.updatedAt = now;
+      typeormEntity.deletedAt = null;
+
+      const growingUnitAggregate = new GrowingUnitAggregate(
+        {
+          id: new GrowingUnitUuidValueObject(growingUnitId),
+          name: new GrowingUnitNameValueObject('Garden Bed 1'),
+          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+          capacity: new GrowingUnitCapacityValueObject(10),
+          dimensions: null,
+          plants: [],
+        },
+        false,
+      );
+
+      mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
+        growingUnitAggregate,
+      );
+
+      const result = mapper.toDomainEntity(typeormEntity);
+
+      expect(result).toBe(growingUnitAggregate);
+      expect(mockPlantTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
+      expect(
+        mockGrowingUnitAggregateFactory.fromPrimitives,
+      ).toHaveBeenCalledWith({
+        id: growingUnitId,
+        name: 'Garden Bed 1',
+        type: GrowingUnitTypeEnum.GARDEN_BED,
+        capacity: 10,
+        dimensions: null,
+        plants: [],
       });
     });
   });
 
   describe('toTypeormEntity', () => {
-    it('should convert domain entity to TypeORM entity with all properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
-      const plantedDate = new Date('2024-01-15');
+    it('should convert domain aggregate to TypeORM entity with all properties', () => {
+      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+      const plantId = '223e4567-e89b-12d3-a456-426614174000';
 
-      const mockPlantAggregate = new PlantAggregate(
+      const plantEntity = plantEntityFactory.create({
+        id: new PlantUuidValueObject(plantId),
+        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new PlantNameValueObject('Basil'),
+        species: new PlantSpeciesValueObject('Ocimum basilicum'),
+        plantedDate: null,
+        notes: null,
+        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+      });
+
+      const growingUnitAggregate = new GrowingUnitAggregate(
         {
-          id: new PlantUuidValueObject(plantId),
-          containerId: new ContainerUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174000',
-          ),
-          name: new PlantNameValueObject('Aloe Vera'),
-          species: new PlantSpeciesValueObject('Aloe barbadensis'),
-          plantedDate: new PlantPlantedDateValueObject(plantedDate),
-          notes: new PlantNotesValueObject('Keep in indirect sunlight'),
-          status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
+          id: new GrowingUnitUuidValueObject(growingUnitId),
+          name: new GrowingUnitNameValueObject('Garden Bed 1'),
+          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+          capacity: new GrowingUnitCapacityValueObject(10),
+          dimensions: new DimensionsValueObject({
+            length: 2.0,
+            width: 1.0,
+            height: 0.5,
+            unit: LengthUnitEnum.METER,
+          }),
+          plants: [plantEntity],
         },
         false,
       );
 
+      const plantTypeormEntity = new PlantTypeormEntity();
+      plantTypeormEntity.id = plantId;
+      plantTypeormEntity.growingUnitId = growingUnitId;
+      plantTypeormEntity.name = 'Basil';
+      plantTypeormEntity.species = 'Ocimum basilicum';
+      plantTypeormEntity.plantedDate = null;
+      plantTypeormEntity.notes = null;
+      plantTypeormEntity.status = PlantStatusEnum.PLANTED;
+
       const toPrimitivesSpy = jest
-        .spyOn(mockPlantAggregate, 'toPrimitives')
+        .spyOn(growingUnitAggregate, 'toPrimitives')
         .mockReturnValue({
-          id: plantId,
-          containerId: '123e4567-e89b-12d3-a456-426614174000',
-          name: 'Aloe Vera',
-          species: 'Aloe barbadensis',
-          plantedDate: plantedDate,
-          notes: 'Keep in indirect sunlight',
-          status: PlantStatusEnum.PLANTED,
-          createdAt: now,
-          updatedAt: now,
+          id: growingUnitId,
+          name: 'Garden Bed 1',
+          type: GrowingUnitTypeEnum.GARDEN_BED,
+          capacity: 10,
+          dimensions: {
+            length: 2.0,
+            width: 1.0,
+            height: 0.5,
+            unit: LengthUnitEnum.METER,
+          },
+          plants: [plantEntity.toPrimitives()],
         });
 
-      const result = mapper.toTypeormEntity(mockPlantAggregate);
+      mockPlantTypeormMapper.toTypeormEntityFromPrimitives.mockReturnValue(
+        plantTypeormEntity,
+      );
 
-      expect(result).toBeInstanceOf(PlantTypeormEntity);
-      expect(result.id).toBe(plantId);
-      expect(result.containerId).toBe('123e4567-e89b-12d3-a456-426614174000');
-      expect(result.name).toBe('Aloe Vera');
-      expect(result.species).toBe('Aloe barbadensis');
-      expect(result.plantedDate).toEqual(plantedDate);
-      expect(result.notes).toBe('Keep in indirect sunlight');
-      expect(result.status).toBe(PlantStatusEnum.PLANTED);
-      expect(result.createdAt).toEqual(now);
-      expect(result.updatedAt).toEqual(now);
-      expect(result.deletedAt).toBeNull();
+      const result = mapper.toTypeormEntity(growingUnitAggregate);
+
+      expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
+      expect(result.id).toBe(growingUnitId);
+      expect(result.name).toBe('Garden Bed 1');
+      expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
+      expect(result.capacity).toBe(10);
+      expect(result.length).toBe(2.0);
+      expect(result.width).toBe(1.0);
+      expect(result.height).toBe(0.5);
+      expect(result.unit).toBe(LengthUnitEnum.METER);
+      expect(result.plants).toHaveLength(1);
+      expect(result.plants[0]).toBe(plantTypeormEntity);
       expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
+      expect(
+        mockPlantTypeormMapper.toTypeormEntityFromPrimitives,
+      ).toHaveBeenCalledWith(plantEntity.toPrimitives());
 
       toPrimitivesSpy.mockRestore();
     });
 
-    it('should convert domain entity with null optional properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+    it('should convert domain aggregate with null dimensions', () => {
+      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
-      const mockPlantAggregate = new PlantAggregate(
+      const growingUnitAggregate = new GrowingUnitAggregate(
         {
-          id: new PlantUuidValueObject(plantId),
-          containerId: new ContainerUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174000',
-          ),
-          name: new PlantNameValueObject('Aloe Vera'),
-          species: new PlantSpeciesValueObject('Aloe barbadensis'),
-          plantedDate: null,
-          notes: null,
-          status: new PlantStatusValueObject(PlantStatusEnum.GROWING),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
+          id: new GrowingUnitUuidValueObject(growingUnitId),
+          name: new GrowingUnitNameValueObject('Garden Bed 1'),
+          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+          capacity: new GrowingUnitCapacityValueObject(10),
+          dimensions: null,
+          plants: [],
         },
         false,
       );
 
       const toPrimitivesSpy = jest
-        .spyOn(mockPlantAggregate, 'toPrimitives')
+        .spyOn(growingUnitAggregate, 'toPrimitives')
         .mockReturnValue({
-          id: plantId,
-          containerId: '123e4567-e89b-12d3-a456-426614174000',
-          name: 'Aloe Vera',
-          species: 'Aloe barbadensis',
-          plantedDate: null,
-          notes: null,
-          status: PlantStatusEnum.GROWING,
-          createdAt: now,
-          updatedAt: now,
+          id: growingUnitId,
+          name: 'Garden Bed 1',
+          type: GrowingUnitTypeEnum.GARDEN_BED,
+          capacity: 10,
+          dimensions: null,
+          plants: [],
         });
 
-      const result = mapper.toTypeormEntity(mockPlantAggregate);
+      const result = mapper.toTypeormEntity(growingUnitAggregate);
 
-      expect(result).toBeInstanceOf(PlantTypeormEntity);
-      expect(result.id).toBe(plantId);
-      expect(result.containerId).toBe('123e4567-e89b-12d3-a456-426614174000');
-      expect(result.name).toBe('Aloe Vera');
-      expect(result.species).toBe('Aloe barbadensis');
-      expect(result.plantedDate).toBeNull();
-      expect(result.notes).toBeNull();
-      expect(result.status).toBe(PlantStatusEnum.GROWING);
-      expect(result.deletedAt).toBeNull();
+      expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
+      expect(result.id).toBe(growingUnitId);
+      expect(result.name).toBe('Garden Bed 1');
+      expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
+      expect(result.capacity).toBe(10);
+      expect(result.length).toBeNull();
+      expect(result.width).toBeNull();
+      expect(result.height).toBeNull();
+      expect(result.unit).toBeNull();
+      expect(result.plants).toHaveLength(0);
 
       toPrimitivesSpy.mockRestore();
     });

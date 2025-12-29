@@ -42,17 +42,19 @@ export class GrowingUnitTypeormMapper {
         this.plantTypeormMapper.toDomainEntity(plant),
       ) ?? [];
 
+    const dimensionsValueObject = DimensionsValueObject.fromNullable({
+      length: growingUnitEntity.length,
+      width: growingUnitEntity.width,
+      height: growingUnitEntity.height,
+      unit: growingUnitEntity.unit,
+    });
+
     return this.growingUnitAggregateFactory.fromPrimitives({
       id: growingUnitEntity.id,
       name: growingUnitEntity.name,
       type: growingUnitEntity.type,
       capacity: growingUnitEntity.capacity,
-      dimensions: DimensionsValueObject.fromNullable({
-        length: growingUnitEntity.length,
-        width: growingUnitEntity.width,
-        height: growingUnitEntity.height,
-        unit: growingUnitEntity.unit,
-      })?.toPrimitives(),
+      dimensions: dimensionsValueObject?.toPrimitives() ?? null,
       plants: plants.map((plant) => plant.toPrimitives()),
     });
   }
