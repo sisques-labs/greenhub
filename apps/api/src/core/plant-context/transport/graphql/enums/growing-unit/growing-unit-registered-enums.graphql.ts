@@ -1,5 +1,5 @@
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { registerEnumType } from '@nestjs/graphql';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 
 /**
  * Registers all GraphQL enums for the growing unit.

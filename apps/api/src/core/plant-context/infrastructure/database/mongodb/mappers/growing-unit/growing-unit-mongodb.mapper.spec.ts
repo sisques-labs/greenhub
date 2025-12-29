@@ -1,7 +1,6 @@
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
-import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto copy';
@@ -14,11 +13,8 @@ describe('GrowingUnitMongoDBMapper', () => {
   let mapper: GrowingUnitMongoDBMapper;
   let mockGrowingUnitViewModelFactory: jest.Mocked<GrowingUnitViewModelFactory>;
   let mockPlantMongoDBMapper: jest.Mocked<PlantMongoDBMapper>;
-  let plantViewModelFactory: PlantViewModelFactory;
 
   beforeEach(() => {
-    plantViewModelFactory = new PlantViewModelFactory();
-
     mockGrowingUnitViewModelFactory = {
       create: jest.fn(),
       fromAggregate: jest.fn(),

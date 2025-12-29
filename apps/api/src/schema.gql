@@ -3,38 +3,56 @@
 # ------------------------------------------------------
 
 type MutationResponseDto {
-  success: Boolean!
-  message: String
-  id: String
+	success: Boolean!
+	message: String
+	id: String
 }
 
 type PlantResponseDto {
-  """The id of the plant"""
-  id: String!
+	"""
+	The id of the plant
+	"""
+	id: String!
 
-  """The id of the growing unit containing the plant"""
-  growingUnitId: String!
+	"""
+	The id of the growing unit containing the plant
+	"""
+	growingUnitId: String!
 
-  """The name of the plant"""
-  name: String!
+	"""
+	The name of the plant
+	"""
+	name: String!
 
-  """The species of the plant"""
-  species: String!
+	"""
+	The species of the plant
+	"""
+	species: String!
 
-  """The date when the plant was planted"""
-  plantedDate: DateTime
+	"""
+	The date when the plant was planted
+	"""
+	plantedDate: DateTime
 
-  """Additional notes about the plant"""
-  notes: String
+	"""
+	Additional notes about the plant
+	"""
+	notes: String
 
-  """The status of the plant"""
-  status: String!
+	"""
+	The status of the plant
+	"""
+	status: String!
 
-  """The created at timestamp of the plant"""
-  createdAt: DateTime!
+	"""
+	The created at timestamp of the plant
+	"""
+	createdAt: DateTime!
 
-  """The updated at timestamp of the plant"""
-  updatedAt: DateTime!
+	"""
+	The updated at timestamp of the plant
+	"""
+	updatedAt: DateTime!
 }
 
 """
@@ -43,950 +61,1464 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type GrowingUnitDimensionsResponseDto {
-  """The length of the growing unit"""
-  length: Float!
+	"""
+	The length of the growing unit
+	"""
+	length: Float!
 
-  """The width of the growing unit"""
-  width: Float!
+	"""
+	The width of the growing unit
+	"""
+	width: Float!
 
-  """The height of the growing unit"""
-  height: Float!
+	"""
+	The height of the growing unit
+	"""
+	height: Float!
 
-  """The unit of measurement for dimensions"""
-  unit: String!
+	"""
+	The unit of measurement for dimensions
+	"""
+	unit: String!
 }
 
 type GrowingUnitResponseDto {
-  """The id of the growing unit"""
-  id: String!
+	"""
+	The id of the growing unit
+	"""
+	id: String!
 
-  """The name of the growing unit"""
-  name: String!
+	"""
+	The name of the growing unit
+	"""
+	name: String!
 
-  """The type of the growing unit"""
-  type: String!
+	"""
+	The type of the growing unit
+	"""
+	type: String!
 
-  """The capacity of the growing unit"""
-  capacity: Float!
+	"""
+	The capacity of the growing unit
+	"""
+	capacity: Float!
 
-  """The dimensions of the growing unit"""
-  dimensions: GrowingUnitDimensionsResponseDto
+	"""
+	The dimensions of the growing unit
+	"""
+	dimensions: GrowingUnitDimensionsResponseDto
 
-  """The plants in the growing unit"""
-  plants: [PlantResponseDto!]!
+	"""
+	The plants in the growing unit
+	"""
+	plants: [PlantResponseDto!]!
 
-  """The number of plants in the growing unit"""
-  numberOfPlants: Float!
+	"""
+	The number of plants in the growing unit
+	"""
+	numberOfPlants: Float!
 
-  """The remaining capacity of the growing unit"""
-  remainingCapacity: Float!
+	"""
+	The remaining capacity of the growing unit
+	"""
+	remainingCapacity: Float!
 
-  """The volume of the growing unit in cubic units"""
-  volume: Float!
+	"""
+	The volume of the growing unit in cubic units
+	"""
+	volume: Float!
 
-  """The created at timestamp of the growing unit"""
-  createdAt: DateTime!
+	"""
+	The created at timestamp of the growing unit
+	"""
+	createdAt: DateTime!
 
-  """The updated at timestamp of the growing unit"""
-  updatedAt: DateTime!
+	"""
+	The updated at timestamp of the growing unit
+	"""
+	updatedAt: DateTime!
 }
 
 type PaginatedGrowingUnitResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The growing units in the current page"""
-  items: [GrowingUnitResponseDto!]!
+	"""
+	The growing units in the current page
+	"""
+	items: [GrowingUnitResponseDto!]!
 }
 
 type LoginResponseDto {
-  """The access token"""
-  accessToken: String!
+	"""
+	The access token
+	"""
+	accessToken: String!
 
-  """The refresh token"""
-  refreshToken: String!
+	"""
+	The refresh token
+	"""
+	refreshToken: String!
 }
 
 type RefreshTokenResponseDto {
-  """The new access token"""
-  accessToken: String!
+	"""
+	The new access token
+	"""
+	accessToken: String!
 }
 
 type AuthResponseDto {
-  """The id of the auth"""
-  id: String!
+	"""
+	The id of the auth
+	"""
+	id: String!
 
-  """The user id of the auth"""
-  userId: String!
+	"""
+	The user id of the auth
+	"""
+	userId: String!
 
-  """The email of the auth"""
-  email: String
+	"""
+	The email of the auth
+	"""
+	email: String
 
-  """The email verified of the auth"""
-  emailVerified: Boolean
+	"""
+	The email verified of the auth
+	"""
+	emailVerified: Boolean
 
-  """The last login at of the auth"""
-  lastLoginAt: DateTime
+	"""
+	The last login at of the auth
+	"""
+	lastLoginAt: DateTime
 
-  """The provider of the auth"""
-  provider: String
+	"""
+	The provider of the auth
+	"""
+	provider: String
 
-  """The provider id of the auth"""
-  providerId: String
+	"""
+	The provider id of the auth
+	"""
+	providerId: String
 
-  """The two factor enabled of the auth"""
-  twoFactorEnabled: Boolean
+	"""
+	The two factor enabled of the auth
+	"""
+	twoFactorEnabled: Boolean
 
-  """The created at of the auth"""
-  createdAt: DateTime
+	"""
+	The created at of the auth
+	"""
+	createdAt: DateTime
 
-  """The updated at of the auth"""
-  updatedAt: DateTime
+	"""
+	The updated at of the auth
+	"""
+	updatedAt: DateTime
 }
 
 type PaginatedAuthResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The auths in the current page"""
-  items: [AuthResponseDto!]!
+	"""
+	The auths in the current page
+	"""
+	items: [AuthResponseDto!]!
 }
 
 type AuthUserProfileResponseDto {
-  """The user id"""
-  userId: String!
+	"""
+	The user id
+	"""
+	userId: String!
 
-  """The auth id"""
-  authId: String!
+	"""
+	The auth id
+	"""
+	authId: String!
 
-  """The email of the auth"""
-  email: String
+	"""
+	The email of the auth
+	"""
+	email: String
 
-  """The email verified status of the auth"""
-  emailVerified: Boolean
+	"""
+	The email verified status of the auth
+	"""
+	emailVerified: Boolean
 
-  """The last login at of the auth"""
-  lastLoginAt: DateTime
+	"""
+	The last login at of the auth
+	"""
+	lastLoginAt: DateTime
 
-  """The phone number of the auth"""
-  phoneNumber: String
+	"""
+	The phone number of the auth
+	"""
+	phoneNumber: String
 
-  """The provider of the auth"""
-  provider: String
+	"""
+	The provider of the auth
+	"""
+	provider: String
 
-  """The provider id of the auth"""
-  providerId: String
+	"""
+	The provider id of the auth
+	"""
+	providerId: String
 
-  """The two factor enabled status of the auth"""
-  twoFactorEnabled: Boolean
+	"""
+	The two factor enabled status of the auth
+	"""
+	twoFactorEnabled: Boolean
 
-  """The user name of the user"""
-  userName: String
+	"""
+	The user name of the user
+	"""
+	userName: String
 
-  """The first name of the user"""
-  name: String
+	"""
+	The first name of the user
+	"""
+	name: String
 
-  """The last name of the user"""
-  lastName: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
 
-  """The bio of the user"""
-  bio: String
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The avatar url of the user"""
-  avatarUrl: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The role of the user"""
-  role: String
+	"""
+	The role of the user
+	"""
+	role: String
 
-  """The status of the user"""
-  status: String
+	"""
+	The status of the user
+	"""
+	status: String
 
-  """The created at timestamp"""
-  createdAt: DateTime
+	"""
+	The created at timestamp
+	"""
+	createdAt: DateTime
 
-  """The updated at timestamp"""
-  updatedAt: DateTime
+	"""
+	The updated at timestamp
+	"""
+	updatedAt: DateTime
 }
 
 type SagaInstanceResponseDto {
-  """The saga instance ID"""
-  id: String!
+	"""
+	The saga instance ID
+	"""
+	id: String!
 
-  """The saga instance name"""
-  name: String!
+	"""
+	The saga instance name
+	"""
+	name: String!
 
-  """The saga instance status"""
-  status: SagaInstanceStatusEnum!
+	"""
+	The saga instance status
+	"""
+	status: SagaInstanceStatusEnum!
 
-  """The saga instance start date"""
-  startDate: DateTime!
+	"""
+	The saga instance start date
+	"""
+	startDate: DateTime!
 
-  """The saga instance end date"""
-  endDate: DateTime!
+	"""
+	The saga instance end date
+	"""
+	endDate: DateTime!
 
-  """The saga instance creation date"""
-  createdAt: DateTime!
+	"""
+	The saga instance creation date
+	"""
+	createdAt: DateTime!
 
-  """The saga instance update date"""
-  updatedAt: DateTime!
+	"""
+	The saga instance update date
+	"""
+	updatedAt: DateTime!
 }
 
-"""The status of the saga"""
+"""
+The status of the saga
+"""
 enum SagaInstanceStatusEnum {
-  PENDING
-  STARTED
-  RUNNING
-  COMPLETED
-  FAILED
-  COMPENSATING
-  COMPENSATED
+	PENDING
+	STARTED
+	RUNNING
+	COMPLETED
+	FAILED
+	COMPENSATING
+	COMPENSATED
 }
 
 type PaginatedSagaInstanceResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The saga instance items"""
-  items: [SagaInstanceResponseDto!]!
+	"""
+	The saga instance items
+	"""
+	items: [SagaInstanceResponseDto!]!
 }
 
 type SagaLogResponseDto {
-  """The saga log ID"""
-  id: String!
+	"""
+	The saga log ID
+	"""
+	id: String!
 
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The saga step ID"""
-  sagaStepId: String!
+	"""
+	The saga step ID
+	"""
+	sagaStepId: String!
 
-  """The saga log type"""
-  type: SagaLogTypeEnum!
+	"""
+	The saga log type
+	"""
+	type: SagaLogTypeEnum!
 
-  """The saga log message"""
-  message: String!
+	"""
+	The saga log message
+	"""
+	message: String!
 
-  """The saga log creation date"""
-  createdAt: DateTime!
+	"""
+	The saga log creation date
+	"""
+	createdAt: DateTime!
 
-  """The saga log update date"""
-  updatedAt: DateTime!
+	"""
+	The saga log update date
+	"""
+	updatedAt: DateTime!
 }
 
-"""The type of the saga log"""
+"""
+The type of the saga log
+"""
 enum SagaLogTypeEnum {
-  INFO
-  WARNING
-  ERROR
-  DEBUG
+	INFO
+	WARNING
+	ERROR
+	DEBUG
 }
 
 type PaginatedSagaLogResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The saga log items"""
-  items: [SagaLogResponseDto!]!
+	"""
+	The saga log items
+	"""
+	items: [SagaLogResponseDto!]!
 }
 
 type SagaStepResponseDto {
-  """The saga step ID"""
-  id: String!
+	"""
+	The saga step ID
+	"""
+	id: String!
 
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The saga step name"""
-  name: String!
+	"""
+	The saga step name
+	"""
+	name: String!
 
-  """The saga step order"""
-  order: Float!
+	"""
+	The saga step order
+	"""
+	order: Float!
 
-  """The saga step status"""
-  status: SagaStepStatusEnum!
+	"""
+	The saga step status
+	"""
+	status: SagaStepStatusEnum!
 
-  """The saga step start date"""
-  startDate: DateTime
+	"""
+	The saga step start date
+	"""
+	startDate: DateTime
 
-  """The saga step end date"""
-  endDate: DateTime
+	"""
+	The saga step end date
+	"""
+	endDate: DateTime
 
-  """The saga step error message"""
-  errorMessage: String
+	"""
+	The saga step error message
+	"""
+	errorMessage: String
 
-  """The saga step retry count"""
-  retryCount: Float!
+	"""
+	The saga step retry count
+	"""
+	retryCount: Float!
 
-  """The saga step max retries"""
-  maxRetries: Float!
+	"""
+	The saga step max retries
+	"""
+	maxRetries: Float!
 
-  """The saga step payload"""
-  payload: String
+	"""
+	The saga step payload
+	"""
+	payload: String
 
-  """The saga step result"""
-  result: String
+	"""
+	The saga step result
+	"""
+	result: String
 
-  """The saga step creation date"""
-  createdAt: DateTime!
+	"""
+	The saga step creation date
+	"""
+	createdAt: DateTime!
 
-  """The saga step update date"""
-  updatedAt: DateTime!
+	"""
+	The saga step update date
+	"""
+	updatedAt: DateTime!
 }
 
-"""The status of the saga step"""
+"""
+The status of the saga step
+"""
 enum SagaStepStatusEnum {
-  PENDING
-  STARTED
-  RUNNING
-  COMPLETED
-  FAILED
+	PENDING
+	STARTED
+	RUNNING
+	COMPLETED
+	FAILED
 }
 
 type PaginatedSagaStepResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The saga step items"""
-  items: [SagaStepResponseDto!]!
+	"""
+	The saga step items
+	"""
+	items: [SagaStepResponseDto!]!
 }
 
 type UserResponseDto {
-  """The id of the user"""
-  id: String!
+	"""
+	The id of the user
+	"""
+	id: String!
 
-  """The user name of the user"""
-  userName: String
+	"""
+	The user name of the user
+	"""
+	userName: String
 
-  """The last name of the user"""
-  lastName: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
 
-  """The role of the user"""
-  role: String
+	"""
+	The role of the user
+	"""
+	role: String
 
-  """The status of the user"""
-  status: String
+	"""
+	The status of the user
+	"""
+	status: String
 
-  """The avatar url of the user"""
-  avatarUrl: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The bio of the user"""
-  bio: String
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The name of the user"""
-  name: String
+	"""
+	The name of the user
+	"""
+	name: String
 
-  """The created at of the user"""
-  createdAt: DateTime
+	"""
+	The created at of the user
+	"""
+	createdAt: DateTime
 
-  """The updated at of the user"""
-  updatedAt: DateTime
+	"""
+	The updated at of the user
+	"""
+	updatedAt: DateTime
 }
 
 type PaginatedUserResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The users in the current page"""
-  items: [UserResponseDto!]!
+	"""
+	The users in the current page
+	"""
+	items: [UserResponseDto!]!
 }
 
 type Query {
-  hello: String!
-  health: String!
-  growingUnitsFindByCriteria(input: GrowingUnitFindByCriteriaRequestDto): PaginatedGrowingUnitResultDto!
-  growingUnitFindById(input: GrowingUnitFindByIdRequestDto!): GrowingUnitResponseDto
-  plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
-  authProfileMe: AuthUserProfileResponseDto!
-  findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
-  sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
-  sagaInstanceFindByCriteria(input: SagaInstanceFindByCriteriaRequestDto): PaginatedSagaInstanceResultDto!
-  sagaStepFindById(input: SagaStepFindByIdRequestDto!): SagaStepResponseDto
-  sagaStepFindBySagaInstanceId(input: SagaStepFindBySagaInstanceIdRequestDto!): [SagaStepResponseDto!]!
-  sagaStepFindByCriteria(input: SagaStepFindByCriteriaRequestDto): PaginatedSagaStepResultDto!
-  sagaLogFindById(input: SagaLogFindByIdRequestDto!): SagaLogResponseDto
-  sagaLogFindBySagaInstanceId(input: SagaLogFindBySagaInstanceIdRequestDto!): [SagaLogResponseDto!]!
-  sagaLogFindBySagaStepId(input: SagaLogFindBySagaStepIdRequestDto!): [SagaLogResponseDto!]!
-  sagaLogFindByCriteria(input: SagaLogFindByCriteriaRequestDto): PaginatedSagaLogResultDto!
-  usersFindByCriteria(input: UserFindByCriteriaRequestDto): PaginatedUserResultDto!
-  userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
+	hello: String!
+	health: String!
+	growingUnitsFindByCriteria(
+		input: GrowingUnitFindByCriteriaRequestDto
+	): PaginatedGrowingUnitResultDto!
+	growingUnitFindById(
+		input: GrowingUnitFindByIdRequestDto!
+	): GrowingUnitResponseDto
+	plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
+	authProfileMe: AuthUserProfileResponseDto!
+	findAuthsByCriteria(
+		input: AuthFindByCriteriaRequestDto
+	): PaginatedAuthResultDto!
+	sagaInstanceFindById(
+		input: SagaInstanceFindByIdRequestDto!
+	): SagaInstanceResponseDto
+	sagaInstanceFindByCriteria(
+		input: SagaInstanceFindByCriteriaRequestDto
+	): PaginatedSagaInstanceResultDto!
+	sagaStepFindById(input: SagaStepFindByIdRequestDto!): SagaStepResponseDto
+	sagaStepFindBySagaInstanceId(
+		input: SagaStepFindBySagaInstanceIdRequestDto!
+	): [SagaStepResponseDto!]!
+	sagaStepFindByCriteria(
+		input: SagaStepFindByCriteriaRequestDto
+	): PaginatedSagaStepResultDto!
+	sagaLogFindById(input: SagaLogFindByIdRequestDto!): SagaLogResponseDto
+	sagaLogFindBySagaInstanceId(
+		input: SagaLogFindBySagaInstanceIdRequestDto!
+	): [SagaLogResponseDto!]!
+	sagaLogFindBySagaStepId(
+		input: SagaLogFindBySagaStepIdRequestDto!
+	): [SagaLogResponseDto!]!
+	sagaLogFindByCriteria(
+		input: SagaLogFindByCriteriaRequestDto
+	): PaginatedSagaLogResultDto!
+	usersFindByCriteria(
+		input: UserFindByCriteriaRequestDto
+	): PaginatedUserResultDto!
+	userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
 }
 
 input GrowingUnitFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input BaseFilterInput {
-  """The field to filter by"""
-  field: String!
+	"""
+	The field to filter by
+	"""
+	field: String!
 
-  """The operator to filter by"""
-  operator: FilterOperator!
+	"""
+	The operator to filter by
+	"""
+	operator: FilterOperator!
 
-  """The value to filter by"""
-  value: String!
+	"""
+	The value to filter by
+	"""
+	value: String!
 }
 
-"""The operator to filter by"""
+"""
+The operator to filter by
+"""
 enum FilterOperator {
-  EQUALS
-  NOT_EQUALS
-  LIKE
-  IN
-  GREATER_THAN
-  LESS_THAN
-  GREATER_THAN_OR_EQUAL
-  LESS_THAN_OR_EQUAL
+	EQUALS
+	NOT_EQUALS
+	LIKE
+	IN
+	GREATER_THAN
+	LESS_THAN
+	GREATER_THAN_OR_EQUAL
+	LESS_THAN_OR_EQUAL
 }
 
 input BaseSortInput {
-  """The field to sort by"""
-  field: String!
+	"""
+	The field to sort by
+	"""
+	field: String!
 
-  """The direction to sort by"""
-  direction: SortDirection!
+	"""
+	The direction to sort by
+	"""
+	direction: SortDirection!
 }
 
-"""The direction to sort by"""
+"""
+The direction to sort by
+"""
 enum SortDirection {
-  ASC
-  DESC
+	ASC
+	DESC
 }
 
 input BasePaginationInput {
-  """The page to paginate by"""
-  page: Int!
+	"""
+	The page to paginate by
+	"""
+	page: Int!
 
-  """The per page to paginate by"""
-  perPage: Int!
+	"""
+	The per page to paginate by
+	"""
+	perPage: Int!
 }
 
 input GrowingUnitFindByIdRequestDto {
-  """The id of the growing unit to find"""
-  id: String!
+	"""
+	The id of the growing unit to find
+	"""
+	id: String!
 }
 
 input PlantFindByIdRequestDto {
-  """The id of the plant to find"""
-  id: String!
+	"""
+	The id of the plant to find
+	"""
+	id: String!
 }
 
 input AuthFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input SagaInstanceFindByIdRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 }
 
 input SagaInstanceFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input SagaStepFindByIdRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 }
 
 input SagaStepFindBySagaInstanceIdRequestDto {
-  """The saga instance id"""
-  sagaInstanceId: String!
+	"""
+	The saga instance id
+	"""
+	sagaInstanceId: String!
 }
 
 input SagaStepFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input SagaLogFindByIdRequestDto {
-  """The id of the saga log"""
-  id: String!
+	"""
+	The id of the saga log
+	"""
+	id: String!
 }
 
 input SagaLogFindBySagaInstanceIdRequestDto {
-  """The saga instance id"""
-  sagaInstanceId: String!
+	"""
+	The saga instance id
+	"""
+	sagaInstanceId: String!
 }
 
 input SagaLogFindBySagaStepIdRequestDto {
-  """The saga step id"""
-  sagaStepId: String!
+	"""
+	The saga step id
+	"""
+	sagaStepId: String!
 }
 
 input SagaLogFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input UserFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input UserFindByIdRequestDto {
-  """The id of the user"""
-  id: String!
+	"""
+	The id of the user
+	"""
+	id: String!
 }
 
 type Mutation {
-  growingUnitCreate(input: GrowingUnitCreateRequestDto!): MutationResponseDto!
-  growingUnitUpdate(input: GrowingUnitUpdateRequestDto!): MutationResponseDto!
-  growingUnitDelete(input: GrowingUnitDeleteRequestDto!): MutationResponseDto!
-  plantAdd(input: PlantAddRequestDto!): MutationResponseDto!
-  plantUpdate(input: PlantUpdateRequestDto!): MutationResponseDto!
-  plantRemove(input: PlantRemoveRequestDto!): MutationResponseDto!
-  loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
-  registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
-  refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
-  logout(input: UpdateUserRequestDto!): MutationResponseDto!
-  sagaInstanceCreate(input: SagaInstanceCreateRequestDto!): MutationResponseDto!
-  sagaInstanceUpdate(input: SagaInstanceUpdateRequestDto!): MutationResponseDto!
-  sagaInstanceChangeStatus(input: SagaInstanceChangeStatusRequestDto!): MutationResponseDto!
-  sagaInstanceDelete(input: SagaInstanceDeleteRequestDto!): MutationResponseDto!
-  sagaStepCreate(input: SagaStepCreateRequestDto!): MutationResponseDto!
-  sagaStepUpdate(input: SagaStepUpdateRequestDto!): MutationResponseDto!
-  sagaStepChangeStatus(input: SagaStepChangeStatusRequestDto!): MutationResponseDto!
-  sagaStepDelete(input: SagaStepDeleteRequestDto!): MutationResponseDto!
-  sagaLogCreate(input: SagaLogCreateRequestDto!): MutationResponseDto!
-  sagaLogUpdate(input: SagaLogUpdateRequestDto!): MutationResponseDto!
-  sagaLogDelete(input: SagaLogDeleteRequestDto!): MutationResponseDto!
-  createUser(input: CreateUserRequestDto!): MutationResponseDto!
-  updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
-  deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
+	growingUnitCreate(input: GrowingUnitCreateRequestDto!): MutationResponseDto!
+	growingUnitUpdate(input: GrowingUnitUpdateRequestDto!): MutationResponseDto!
+	growingUnitDelete(input: GrowingUnitDeleteRequestDto!): MutationResponseDto!
+	plantAdd(input: PlantAddRequestDto!): MutationResponseDto!
+	plantUpdate(input: PlantUpdateRequestDto!): MutationResponseDto!
+	plantRemove(input: PlantRemoveRequestDto!): MutationResponseDto!
+	loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
+	registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
+	refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
+	logout(input: UpdateUserRequestDto!): MutationResponseDto!
+	sagaInstanceCreate(input: SagaInstanceCreateRequestDto!): MutationResponseDto!
+	sagaInstanceUpdate(input: SagaInstanceUpdateRequestDto!): MutationResponseDto!
+	sagaInstanceChangeStatus(
+		input: SagaInstanceChangeStatusRequestDto!
+	): MutationResponseDto!
+	sagaInstanceDelete(input: SagaInstanceDeleteRequestDto!): MutationResponseDto!
+	sagaStepCreate(input: SagaStepCreateRequestDto!): MutationResponseDto!
+	sagaStepUpdate(input: SagaStepUpdateRequestDto!): MutationResponseDto!
+	sagaStepChangeStatus(
+		input: SagaStepChangeStatusRequestDto!
+	): MutationResponseDto!
+	sagaStepDelete(input: SagaStepDeleteRequestDto!): MutationResponseDto!
+	sagaLogCreate(input: SagaLogCreateRequestDto!): MutationResponseDto!
+	sagaLogUpdate(input: SagaLogUpdateRequestDto!): MutationResponseDto!
+	sagaLogDelete(input: SagaLogDeleteRequestDto!): MutationResponseDto!
+	createUser(input: CreateUserRequestDto!): MutationResponseDto!
+	updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
+	deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
 }
 
 input GrowingUnitCreateRequestDto {
-  """The name of the growing unit"""
-  name: String!
+	"""
+	The name of the growing unit
+	"""
+	name: String!
 
-  """The type of the growing unit"""
-  type: GrowingUnitTypeEnum!
+	"""
+	The type of the growing unit
+	"""
+	type: GrowingUnitTypeEnum!
 
-  """The capacity of the growing unit"""
-  capacity: Float!
+	"""
+	The capacity of the growing unit
+	"""
+	capacity: Float!
 
-  """The length of the growing unit"""
-  length: Float
+	"""
+	The length of the growing unit
+	"""
+	length: Float
 
-  """The width of the growing unit"""
-  width: Float
+	"""
+	The width of the growing unit
+	"""
+	width: Float
 
-  """The height of the growing unit"""
-  height: Float
+	"""
+	The height of the growing unit
+	"""
+	height: Float
 
-  """The unit of measurement for dimensions"""
-  unit: LengthUnitEnum
+	"""
+	The unit of measurement for dimensions
+	"""
+	unit: LengthUnitEnum
 }
 
-"""The type of the growing unit"""
+"""
+The type of the growing unit
+"""
 enum GrowingUnitTypeEnum {
-  POT
-  GARDEN_BED
-  HANGING_BASKET
-  WINDOW_BOX
+	POT
+	GARDEN_BED
+	HANGING_BASKET
+	WINDOW_BOX
 }
 
-"""The unit of the length"""
+"""
+The unit of the length
+"""
 enum LengthUnitEnum {
-  MILLIMETER
-  CENTIMETER
-  METER
-  INCH
-  FOOT
+	MILLIMETER
+	CENTIMETER
+	METER
+	INCH
+	FOOT
 }
 
 input GrowingUnitUpdateRequestDto {
-  """The id of the growing unit"""
-  id: String!
+	"""
+	The id of the growing unit
+	"""
+	id: String!
 
-  """The name of the growing unit"""
-  name: String
+	"""
+	The name of the growing unit
+	"""
+	name: String
 
-  """The type of the growing unit"""
-  type: String
+	"""
+	The type of the growing unit
+	"""
+	type: String
 
-  """The capacity of the growing unit"""
-  capacity: Float
+	"""
+	The capacity of the growing unit
+	"""
+	capacity: Float
 
-  """The length of the growing unit"""
-  length: Float
+	"""
+	The length of the growing unit
+	"""
+	length: Float
 
-  """The width of the growing unit"""
-  width: Float
+	"""
+	The width of the growing unit
+	"""
+	width: Float
 
-  """The height of the growing unit"""
-  height: Float
+	"""
+	The height of the growing unit
+	"""
+	height: Float
 
-  """The unit of measurement for dimensions"""
-  unit: LengthUnitEnum
+	"""
+	The unit of measurement for dimensions
+	"""
+	unit: LengthUnitEnum
 }
 
 input GrowingUnitDeleteRequestDto {
-  """The id of the growing unit to delete"""
-  id: String!
+	"""
+	The id of the growing unit to delete
+	"""
+	id: String!
 }
 
 input PlantAddRequestDto {
-  """The id of the growing unit to add the plant to"""
-  growingUnitId: String!
+	"""
+	The id of the growing unit to add the plant to
+	"""
+	growingUnitId: String!
 
-  """The name of the plant"""
-  name: String!
+	"""
+	The name of the plant
+	"""
+	name: String!
 
-  """The species of the plant"""
-  species: String!
+	"""
+	The species of the plant
+	"""
+	species: String!
 
-  """The date when the plant was planted"""
-  plantedDate: DateTime
+	"""
+	The date when the plant was planted
+	"""
+	plantedDate: DateTime
 
-  """Additional notes about the plant"""
-  notes: String
+	"""
+	Additional notes about the plant
+	"""
+	notes: String
 
-  """The status of the plant. Defaults to PLANTED if not provided"""
-  status: PlantStatusEnum
+	"""
+	The status of the plant. Defaults to PLANTED if not provided
+	"""
+	status: PlantStatusEnum
 }
 
-"""The status of the plant"""
+"""
+The status of the plant
+"""
 enum PlantStatusEnum {
-  PLANTED
-  GROWING
-  HARVESTED
-  DEAD
-  ARCHIVED
+	PLANTED
+	GROWING
+	HARVESTED
+	DEAD
+	ARCHIVED
 }
 
 input PlantUpdateRequestDto {
-  """The id of the plant to update"""
-  id: String!
+	"""
+	The id of the plant to update
+	"""
+	id: String!
 
-  """The name of the plant"""
-  name: String
+	"""
+	The name of the plant
+	"""
+	name: String
 
-  """The species of the plant"""
-  species: String
+	"""
+	The species of the plant
+	"""
+	species: String
 
-  """The date when the plant was planted. Can be null to clear the date"""
-  plantedDate: DateTime
+	"""
+	The date when the plant was planted. Can be null to clear the date
+	"""
+	plantedDate: DateTime
 
-  """Additional notes about the plant. Can be null to clear notes"""
-  notes: String
+	"""
+	Additional notes about the plant. Can be null to clear notes
+	"""
+	notes: String
 
-  """The status of the plant. Defaults to PLANTED if not provided"""
-  status: PlantStatusEnum
+	"""
+	The status of the plant. Defaults to PLANTED if not provided
+	"""
+	status: PlantStatusEnum
 }
 
 input PlantRemoveRequestDto {
-  """The id of the growing unit to remove the plant from"""
-  growingUnitId: String!
+	"""
+	The id of the growing unit to remove the plant from
+	"""
+	growingUnitId: String!
 
-  """The id of the plant to remove"""
-  plantId: String!
+	"""
+	The id of the plant to remove
+	"""
+	plantId: String!
 }
 
 input AuthLoginByEmailRequestDto {
-  """The email of the auth"""
-  email: String!
+	"""
+	The email of the auth
+	"""
+	email: String!
 
-  """The password of the auth"""
-  password: String!
+	"""
+	The password of the auth
+	"""
+	password: String!
 }
 
 input AuthRegisterByEmailRequestDto {
-  """The email of the auth"""
-  email: String!
+	"""
+	The email of the auth
+	"""
+	email: String!
 
-  """The password of the auth"""
-  password: String!
+	"""
+	The password of the auth
+	"""
+	password: String!
 }
 
 input AuthRefreshTokenRequestDto {
-  """The refresh token to use for generating a new access token"""
-  refreshToken: String!
+	"""
+	The refresh token to use for generating a new access token
+	"""
+	refreshToken: String!
 }
 
 input UpdateUserRequestDto {
-  """The unique identifier of the user"""
-  id: String!
+	"""
+	The unique identifier of the user
+	"""
+	id: String!
 
-  """The name of the user"""
-  name: String
+	"""
+	The name of the user
+	"""
+	name: String
 
-  """The bio of the user"""
-  bio: String
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The avatar url of the user"""
-  avatarUrl: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The last name of the user"""
-  lastName: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
 
-  """The user name of the user"""
-  userName: String
+	"""
+	The user name of the user
+	"""
+	userName: String
 
-  """The role of the user"""
-  role: UserRoleEnum
+	"""
+	The role of the user
+	"""
+	role: UserRoleEnum
 
-  """The status of the user"""
-  status: UserStatusEnum
+	"""
+	The status of the user
+	"""
+	status: UserStatusEnum
 }
 
-"""The role of the user"""
+"""
+The role of the user
+"""
 enum UserRoleEnum {
-  ADMIN
-  USER
+	ADMIN
+	USER
 }
 
-"""The status of the user"""
+"""
+The status of the user
+"""
 enum UserStatusEnum {
-  ACTIVE
-  INACTIVE
-  BLOCKED
+	ACTIVE
+	INACTIVE
+	BLOCKED
 }
 
 input SagaInstanceCreateRequestDto {
-  """The name of the saga instance"""
-  name: String!
+	"""
+	The name of the saga instance
+	"""
+	name: String!
 }
 
 input SagaInstanceUpdateRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 
-  """The name of the saga instance"""
-  name: String
+	"""
+	The name of the saga instance
+	"""
+	name: String
 
-  """The status of the saga instance"""
-  status: SagaInstanceStatusEnum
+	"""
+	The status of the saga instance
+	"""
+	status: SagaInstanceStatusEnum
 
-  """The start date of the saga instance"""
-  startDate: DateTime
+	"""
+	The start date of the saga instance
+	"""
+	startDate: DateTime
 
-  """The end date of the saga instance"""
-  endDate: DateTime
+	"""
+	The end date of the saga instance
+	"""
+	endDate: DateTime
 }
 
 input SagaInstanceChangeStatusRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 
-  """The status of the saga instance"""
-  status: SagaInstanceStatusEnum!
+	"""
+	The status of the saga instance
+	"""
+	status: SagaInstanceStatusEnum!
 }
 
 input SagaInstanceDeleteRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 }
 
 input SagaStepCreateRequestDto {
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The name of the saga step"""
-  name: String!
+	"""
+	The name of the saga step
+	"""
+	name: String!
 
-  """The order of the saga step"""
-  order: Float!
+	"""
+	The order of the saga step
+	"""
+	order: Float!
 
-  """The payload of the saga step (JSON string)"""
-  payload: String!
+	"""
+	The payload of the saga step (JSON string)
+	"""
+	payload: String!
 }
 
 input SagaStepUpdateRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 
-  """The name of the saga step"""
-  name: String
+	"""
+	The name of the saga step
+	"""
+	name: String
 
-  """The order of the saga step"""
-  order: Float
+	"""
+	The order of the saga step
+	"""
+	order: Float
 
-  """The status of the saga step"""
-  status: SagaStepStatusEnum
+	"""
+	The status of the saga step
+	"""
+	status: SagaStepStatusEnum
 
-  """The start date of the saga step"""
-  startDate: DateTime
+	"""
+	The start date of the saga step
+	"""
+	startDate: DateTime
 
-  """The end date of the saga step"""
-  endDate: DateTime
+	"""
+	The end date of the saga step
+	"""
+	endDate: DateTime
 
-  """The error message of the saga step"""
-  errorMessage: String
+	"""
+	The error message of the saga step
+	"""
+	errorMessage: String
 
-  """The retry count of the saga step"""
-  retryCount: Float
+	"""
+	The retry count of the saga step
+	"""
+	retryCount: Float
 
-  """The max retries of the saga step"""
-  maxRetries: Float
+	"""
+	The max retries of the saga step
+	"""
+	maxRetries: Float
 
-  """The payload of the saga step (JSON string)"""
-  payload: String
+	"""
+	The payload of the saga step (JSON string)
+	"""
+	payload: String
 
-  """The result of the saga step (JSON string)"""
-  result: String
+	"""
+	The result of the saga step (JSON string)
+	"""
+	result: String
 }
 
 input SagaStepChangeStatusRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 
-  """The status of the saga step"""
-  status: SagaStepStatusEnum!
+	"""
+	The status of the saga step
+	"""
+	status: SagaStepStatusEnum!
 }
 
 input SagaStepDeleteRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 }
 
 input SagaLogCreateRequestDto {
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The saga step ID"""
-  sagaStepId: String!
+	"""
+	The saga step ID
+	"""
+	sagaStepId: String!
 
-  """The type of the saga log"""
-  type: SagaLogTypeEnum!
+	"""
+	The type of the saga log
+	"""
+	type: SagaLogTypeEnum!
 
-  """The message of the saga log"""
-  message: String!
+	"""
+	The message of the saga log
+	"""
+	message: String!
 }
 
 input SagaLogUpdateRequestDto {
-  """The id of the saga log"""
-  id: String!
+	"""
+	The id of the saga log
+	"""
+	id: String!
 
-  """The type of the saga log"""
-  type: SagaLogTypeEnum
+	"""
+	The type of the saga log
+	"""
+	type: SagaLogTypeEnum
 
-  """The message of the saga log"""
-  message: String
+	"""
+	The message of the saga log
+	"""
+	message: String
 }
 
 input SagaLogDeleteRequestDto {
-  """The id of the saga log"""
-  id: String!
+	"""
+	The id of the saga log
+	"""
+	id: String!
 }
 
 input CreateUserRequestDto {
-  """The name of the user"""
-  name: String
+	"""
+	The name of the user
+	"""
+	name: String
 
-  """The bio of the user"""
-  bio: String
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The avatar url of the user"""
-  avatarUrl: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The last name of the user"""
-  lastName: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
 
-  """The user name of the user"""
-  userName: String
+	"""
+	The user name of the user
+	"""
+	userName: String
 
-  """The role of the user"""
-  role: UserRoleEnum!
+	"""
+	The role of the user
+	"""
+	role: UserRoleEnum!
 
-  """The status of the user"""
-  status: UserStatusEnum!
+	"""
+	The status of the user
+	"""
+	status: UserStatusEnum!
 }
 
 input DeleteUserRequestDto {
-  """The unique identifier of the user"""
-  id: String!
+	"""
+	The unique identifier of the user
+	"""
+	id: String!
 }

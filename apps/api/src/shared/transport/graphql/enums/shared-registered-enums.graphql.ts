@@ -1,5 +1,5 @@
-import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { registerEnumType } from '@nestjs/graphql';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
 /**
  * Registers all GraphQL enums for the growing unit.

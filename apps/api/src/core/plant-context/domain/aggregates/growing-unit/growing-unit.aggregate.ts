@@ -1,3 +1,4 @@
+import { AggregateRoot } from '@nestjs/cqrs';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit.primitives';
@@ -25,7 +26,6 @@ import { GrowingUnitPlantSpeciesChangedEvent } from '@/shared/domain/events/feat
 import { GrowingUnitPlantStatusChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
-import { AggregateRoot } from '@nestjs/cqrs';
 
 /**
  * The aggregate root representing a growing unit, which manages a collection of plants

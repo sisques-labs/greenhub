@@ -1,6 +1,6 @@
-import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { IPlantViewModelDto } from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 
 describe('PlantViewModel', () => {
   let viewModelDto: IPlantViewModelDto;

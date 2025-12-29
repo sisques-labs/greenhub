@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { GrowingUnitPlantStatusChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event-handler';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
@@ -13,7 +14,6 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { GrowingUnitPlantStatusChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
-import { Test } from '@nestjs/testing';
 
 describe('GrowingUnitPlantStatusChangedEventHandler', () => {
   let handler: GrowingUnitPlantStatusChangedEventHandler;

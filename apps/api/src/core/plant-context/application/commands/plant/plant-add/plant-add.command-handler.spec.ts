@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
 import { PlantAddCommandHandler } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command-handler';
 import { IPlantAddCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-add/plant-add-command.dto';
@@ -17,7 +18,6 @@ import { PlantStatusValueObject } from '@/core/plant-context/domain/value-object
 import { GrowingUnitPlantAddedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('PlantAddCommandHandler', () => {
   let handler: PlantAddCommandHandler;

@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
@@ -9,8 +11,6 @@ import {
   IPlantWriteRepository,
   PLANT_WRITE_REPOSITORY_TOKEN,
 } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link PlantRemoveCommand} to remove a plant from a growing unit.

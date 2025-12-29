@@ -1,7 +1,7 @@
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { QueryBus } from '@nestjs/cqrs';
 import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
 import { GrowingUnitViewModelFindByIdQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { GrowingUnitFindByCriteriaRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-criteria.request.dto';
 import { GrowingUnitFindByIdRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-id.request.dto';
 import {
@@ -10,8 +10,8 @@ import {
 } from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
 import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
 import { GrowingUnitQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-queries.resolver';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { QueryBus } from '@nestjs/cqrs';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 describe('GrowingUnitQueriesResolver', () => {
   let resolver: GrowingUnitQueriesResolver;

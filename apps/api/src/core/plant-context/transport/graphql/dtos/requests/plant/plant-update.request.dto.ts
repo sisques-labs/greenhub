@@ -1,4 +1,3 @@
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsEnum,
@@ -7,6 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 
 @InputType('PlantUpdateRequestDto')
 export class PlantUpdateRequestDto {

@@ -1,3 +1,4 @@
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { GrowingUnitNotFoundException } from '@/core/plant-context/application/exceptions/growing-unit/growing-unit-not-found/growing-unit-not-found.exception';
 import {
   GROWING_UNIT_READ_REPOSITORY_TOKEN,
@@ -5,7 +6,6 @@ import {
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
-import { Inject, Injectable, Logger } from '@nestjs/common';
 
 /**
  * Service responsible for asserting that a growing unit view model exists in the read repository.

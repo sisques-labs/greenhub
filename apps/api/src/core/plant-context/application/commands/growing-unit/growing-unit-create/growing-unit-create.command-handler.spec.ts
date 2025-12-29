@@ -3,6 +3,7 @@ import { GrowingUnitCreateCommand } from '@/core/plant-context/application/comma
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
 import { IGrowingUnitCreateCommandDto } from '@/core/plant-context/application/dtos/commands/growing-unit/growing-unit-create/growing-unit-create-command.dto';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
@@ -11,11 +12,10 @@ import {
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { GrowingUnitCreatedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-created/growing-unit-created.event';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
-import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
 describe('GrowingUnitCreateCommandHandler', () => {
   let handler: GrowingUnitCreateCommandHandler;

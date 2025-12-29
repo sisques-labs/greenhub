@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
 import { PlantUpdateCommandHandler } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command-handler';
 import { IPlantUpdateCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-update/plant-update-command.dto';
@@ -19,7 +20,6 @@ import { PlantStatusValueObject } from '@/core/plant-context/domain/value-object
 import { GrowingUnitPlantNameChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-name-changed/growing-unit-plant-name-changed.event';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('PlantUpdateCommandHandler', () => {
   let handler: PlantUpdateCommandHandler;

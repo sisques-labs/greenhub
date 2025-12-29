@@ -1,14 +1,14 @@
+import { Test } from '@nestjs/testing';
 import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
 import { GrowingUnitFindByCriteriaQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import {
   GROWING_UNIT_READ_REPOSITORY_TOKEN,
   IGrowingUnitReadRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { Test } from '@nestjs/testing';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 describe('GrowingUnitFindByCriteriaQueryHandler', () => {
   let handler: GrowingUnitFindByCriteriaQueryHandler;

@@ -1,5 +1,6 @@
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { IPlantDto } from '@/core/plant-context/domain/dtos/entities/plant/plant.dto';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantPlantedDateMissingException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-planted-date-missing/growing-unit-plant-planted-date-missing.exception';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
@@ -8,7 +9,6 @@ import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objec
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 
 describe('PlantEntity', () => {
   let plantId: PlantUuidValueObject;

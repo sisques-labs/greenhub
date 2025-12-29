@@ -1,3 +1,4 @@
+import { Repository } from 'typeorm';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
@@ -10,7 +11,6 @@ import { PlantTypeormRepository } from '@/core/plant-context/infrastructure/data
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { Repository } from 'typeorm';
 
 describe('PlantTypeormRepository', () => {
   let repository: PlantTypeormRepository;

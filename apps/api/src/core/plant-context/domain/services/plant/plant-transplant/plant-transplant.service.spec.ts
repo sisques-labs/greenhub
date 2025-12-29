@@ -2,8 +2,8 @@ import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/gro
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { GrowingUnitPlantNotFoundException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-not-found/growing-unit-plant-not-found.exception';
 import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
+import { GrowingUnitPlantNotFoundException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-not-found/growing-unit-plant-not-found.exception';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';

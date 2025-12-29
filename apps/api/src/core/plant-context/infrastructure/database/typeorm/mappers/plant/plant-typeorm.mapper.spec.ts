@@ -1,4 +1,3 @@
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
@@ -125,7 +124,6 @@ describe('PlantTypeormMapper', () => {
     it('should convert domain entity to TypeORM entity with all properties', () => {
       const plantId = '123e4567-e89b-12d3-a456-426614174000';
       const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
       const plantedDate = new Date('2024-01-15');
 
       const plantEntity = plantEntityFactory.create({

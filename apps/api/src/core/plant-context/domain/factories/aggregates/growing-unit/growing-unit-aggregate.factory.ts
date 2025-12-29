@@ -1,3 +1,4 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
@@ -8,7 +9,6 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
-import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Factory responsible for creating {@link GrowingUnitAggregate} entities.

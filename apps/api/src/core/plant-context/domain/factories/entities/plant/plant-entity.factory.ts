@@ -1,3 +1,4 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { IPlantDto } from '@/core/plant-context/domain/dtos/entities/plant/plant.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
@@ -9,7 +10,6 @@ import { PlantStatusValueObject } from '@/core/plant-context/domain/value-object
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
-import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Factory responsible for creating {@link PlantEntity} domain entities.

@@ -1,16 +1,13 @@
 import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
+import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 
 describe('PlantMongoDBMapper', () => {
   let mapper: PlantMongoDBMapper;
   let mockPlantViewModelFactory: jest.Mocked<PlantViewModelFactory>;
-  let plantViewModelFactory: PlantViewModelFactory;
 
   beforeEach(() => {
-    plantViewModelFactory = new PlantViewModelFactory();
-
     mockPlantViewModelFactory = {
       create: jest.fn(),
       fromEntity: jest.fn(),

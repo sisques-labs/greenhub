@@ -1,6 +1,6 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
 import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
-import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType('GrowingUnitDimensionsResponseDto')
 export class GrowingUnitDimensionsResponseDto {
