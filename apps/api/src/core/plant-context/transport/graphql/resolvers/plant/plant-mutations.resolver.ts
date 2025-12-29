@@ -1,8 +1,10 @@
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
+import { PlantTransplantCommand } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command';
 import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
 import { PlantAddRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto';
 import { PlantRemoveRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto';
+import { PlantTransplantRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-transplant.request.dto';
 import { PlantUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto';
 import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
@@ -119,6 +121,35 @@ export class PlantMutationsResolver {
     return this.mutationResponseGraphQLMapper.toResponseDto({
       success: true,
       message: 'Plant removed successfully',
+      id: input.plantId,
+    });
+  }
+
+  /**
+   * Transplants a plant from one growing unit to another.
+   *
+   * @param input - Input containing the source growing unit ID, target growing unit ID, and plant ID
+   * @returns A promise resolving to a mutation response with the transplanted plant ID
+   */
+  @Mutation(() => MutationResponseDto)
+  async plantTransplant(
+    @Args('input') input: PlantTransplantRequestDto,
+  ): Promise<MutationResponseDto> {
+    this.logger.log(`Transplanting plant with input: ${JSON.stringify(input)}`);
+
+    // 01: Send the command to the command bus
+    await this.commandBus.execute(
+      new PlantTransplantCommand({
+        sourceGrowingUnitId: input.sourceGrowingUnitId,
+        targetGrowingUnitId: input.targetGrowingUnitId,
+        plantId: input.plantId,
+      }),
+    );
+
+    // 02: Return success response
+    return this.mutationResponseGraphQLMapper.toResponseDto({
+      success: true,
+      message: 'Plant transplanted successfully',
       id: input.plantId,
     });
   }
