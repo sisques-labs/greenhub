@@ -31,7 +31,12 @@ export class GrowingUnitUpdateCommand {
       ? new GrowingUnitCapacityValueObject(props.capacity)
       : undefined;
     this.dimensions = props.dimensions
-      ? new DimensionsValueObject(props.dimensions)
+      ? new DimensionsValueObject({
+          length: props.dimensions.length,
+          width: props.dimensions.width,
+          height: props.dimensions.height,
+          unit: props.dimensions.unit,
+        })
       : undefined;
   }
 }

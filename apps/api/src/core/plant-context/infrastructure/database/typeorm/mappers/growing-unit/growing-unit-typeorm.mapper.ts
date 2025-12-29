@@ -4,6 +4,7 @@ import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factori
 import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
 import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
+import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { Injectable, Logger } from '@nestjs/common';
 
 /**
@@ -36,21 +37,22 @@ export class GrowingUnitTypeormMapper {
       `Converting TypeORM entity to domain entity with id ${growingUnitEntity.id}`,
     );
 
-    const plants = growingUnitEntity.plants.map((plant) =>
-      this.plantTypeormMapper.toDomainEntity(plant),
-    );
+    const plants =
+      growingUnitEntity.plants?.map((plant) =>
+        this.plantTypeormMapper.toDomainEntity(plant),
+      ) ?? [];
 
     return this.growingUnitAggregateFactory.fromPrimitives({
       id: growingUnitEntity.id,
       name: growingUnitEntity.name,
       type: growingUnitEntity.type,
       capacity: growingUnitEntity.capacity,
-      dimensions: {
+      dimensions: DimensionsValueObject.fromNullable({
         length: growingUnitEntity.length,
         width: growingUnitEntity.width,
         height: growingUnitEntity.height,
         unit: growingUnitEntity.unit,
-      },
+      })?.toPrimitives(),
       plants: plants.map((plant) => plant.toPrimitives()),
     });
   }
@@ -74,12 +76,13 @@ export class GrowingUnitTypeormMapper {
     entity.name = primitives.name;
     entity.type = primitives.type as GrowingUnitTypeEnum;
     entity.capacity = primitives.capacity;
-    entity.length = primitives.dimensions.length;
-    entity.width = primitives.dimensions.width;
-    entity.height = primitives.dimensions.height;
-    entity.unit = primitives.dimensions.unit as LengthUnitEnum;
-    entity.plants = growingUnit.plants.map((plant) =>
-      this.plantTypeormMapper.toTypeormEntity(plant),
+    entity.length = primitives.dimensions?.length ?? null;
+    entity.width = primitives.dimensions?.width ?? null;
+    entity.height = primitives.dimensions?.height ?? null;
+    entity.unit =
+      (primitives.dimensions?.unit as LengthUnitEnum | null) ?? null;
+    entity.plants = primitives.plants.map((plant) =>
+      this.plantTypeormMapper.toTypeormEntityFromPrimitives(plant),
     );
 
     return entity;

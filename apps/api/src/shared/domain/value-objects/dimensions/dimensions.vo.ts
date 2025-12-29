@@ -39,11 +39,91 @@ export class DimensionsValueObject {
       precision?: number;
     } = {},
   ) {
+    this.validateRequiredFields(dimensions);
     this._length = this.parseValue(dimensions.length, 'length');
     this._width = this.parseValue(dimensions.width, 'width');
     this._height = this.parseValue(dimensions.height, 'height');
     this._unit = new LengthUnitValueObject(dimensions.unit);
     this.validate();
+  }
+
+  /**
+   * Creates a DimensionsValueObject from nullable values.
+   * If all required fields are present, returns a new instance.
+   * If any field is missing, returns null (or throws exception if throwOnInvalid is true).
+   *
+   * @param dimensions - The dimensions data (fields may be null/undefined)
+   * @param options - Options for validation and behavior
+   * @param options.throwOnInvalid - If true, throws exception instead of returning null (default: false)
+   * @param options.min - Minimum value for dimensions
+   * @param options.max - Maximum value for dimensions
+   * @param options.allowDecimals - Whether to allow decimal values
+   * @param options.precision - Maximum number of decimal places
+   * @returns A new DimensionsValueObject if all fields are present, null otherwise
+   * @throws {InvalidDimensionsException} If throwOnInvalid is true and fields are missing
+   */
+  public static fromNullable(
+    dimensions: {
+      length: number | string | null | undefined;
+      width: number | string | null | undefined;
+      height: number | string | null | undefined;
+      unit: string | null | undefined;
+    },
+    options: {
+      throwOnInvalid?: boolean;
+      min?: number;
+      max?: number;
+      allowDecimals?: boolean;
+      precision?: number;
+    } = {},
+  ): DimensionsValueObject | null {
+    const hasAllFields =
+      dimensions.length !== null &&
+      dimensions.length !== undefined &&
+      dimensions.width !== null &&
+      dimensions.width !== undefined &&
+      dimensions.height !== null &&
+      dimensions.height !== undefined &&
+      dimensions.unit !== null &&
+      dimensions.unit !== undefined &&
+      dimensions.unit.trim() !== '';
+
+    if (!hasAllFields) {
+      if (options.throwOnInvalid) {
+        const missingFields: string[] = [];
+        if (dimensions.length === null || dimensions.length === undefined) {
+          missingFields.push('length');
+        }
+        if (dimensions.width === null || dimensions.width === undefined) {
+          missingFields.push('width');
+        }
+        if (dimensions.height === null || dimensions.height === undefined) {
+          missingFields.push('height');
+        }
+        if (!dimensions.unit || dimensions.unit.trim() === '') {
+          missingFields.push('unit');
+        }
+        throw new InvalidDimensionsException(
+          `Missing required fields: ${missingFields.join(', ')}`,
+        );
+      }
+      return null;
+    }
+
+    return new DimensionsValueObject(
+      {
+        length: dimensions.length!,
+        width: dimensions.width!,
+        height: dimensions.height!,
+        unit: dimensions.unit!,
+      },
+      {
+        min: options.min,
+        max: options.max,
+        allowDecimals: options.allowDecimals,
+        precision: options.precision,
+      },
+    );
   }
 
   /**
@@ -201,6 +281,29 @@ export class DimensionsValueObject {
       height: this._height,
       unit: this._unit.value,
     };
+  }
+
+  private validateRequiredFields(dimensions: {
+    length: number | string;
+    width: number | string;
+    height: number | string;
+    unit: string;
+  }): void {
+    if (dimensions.length === null || dimensions.length === undefined) {
+      throw new InvalidDimensionsException('Length is required');
+    }
+
+    if (dimensions.width === null || dimensions.width === undefined) {
+      throw new InvalidDimensionsException('Width is required');
+    }
+
+    if (dimensions.height === null || dimensions.height === undefined) {
+      throw new InvalidDimensionsException('Height is required');
+    }
+
+    if (!dimensions.unit || dimensions.unit.trim() === '') {
+      throw new InvalidDimensionsException('Unit is required');
+    }
   }
 
   private parseValue(value: number | string, dimensionName: string): number {

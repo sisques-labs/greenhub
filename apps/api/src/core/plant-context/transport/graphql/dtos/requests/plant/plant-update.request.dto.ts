@@ -47,7 +47,7 @@ export class PlantUpdateRequestDto {
   @IsOptional()
   notes?: string | null;
 
-  @Field(() => String, {
+  @Field(() => PlantStatusEnum, {
     nullable: true,
     description: 'The status of the plant. Defaults to PLANTED if not provided',
   })

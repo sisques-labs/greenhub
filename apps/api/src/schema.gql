@@ -653,7 +653,7 @@ input GrowingUnitCreateRequestDto {
   name: String!
 
   """The type of the growing unit"""
-  type: String!
+  type: GrowingUnitTypeEnum!
 
   """The capacity of the growing unit"""
   capacity: Float!
@@ -668,7 +668,24 @@ input GrowingUnitCreateRequestDto {
   height: Float
 
   """The unit of measurement for dimensions"""
-  unit: String
+  unit: LengthUnitEnum
+}
+
+"""The type of the growing unit"""
+enum GrowingUnitTypeEnum {
+  POT
+  GARDEN_BED
+  HANGING_BASKET
+  WINDOW_BOX
+}
+
+"""The unit of the length"""
+enum LengthUnitEnum {
+  MILLIMETER
+  CENTIMETER
+  METER
+  INCH
+  FOOT
 }
 
 input GrowingUnitUpdateRequestDto {
@@ -694,7 +711,7 @@ input GrowingUnitUpdateRequestDto {
   height: Float
 
   """The unit of measurement for dimensions"""
-  unit: String
+  unit: LengthUnitEnum
 }
 
 input GrowingUnitDeleteRequestDto {
@@ -719,7 +736,16 @@ input PlantAddRequestDto {
   notes: String
 
   """The status of the plant. Defaults to PLANTED if not provided"""
-  status: String
+  status: PlantStatusEnum
+}
+
+"""The status of the plant"""
+enum PlantStatusEnum {
+  PLANTED
+  GROWING
+  HARVESTED
+  DEAD
+  ARCHIVED
 }
 
 input PlantUpdateRequestDto {
@@ -739,7 +765,7 @@ input PlantUpdateRequestDto {
   notes: String
 
   """The status of the plant. Defaults to PLANTED if not provided"""
-  status: String
+  status: PlantStatusEnum
 }
 
 input PlantRemoveRequestDto {

@@ -53,6 +53,10 @@ import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+// Import enums for GraphQL
+import '@/core/plant-context/transport/graphql/enums/growing-unit/growing-unit-registered-enums.graphql';
+import '@/core/plant-context/transport/graphql/enums/plant/plant-registered-enums.graphql';
+
 const RESOLVERS = [
   // Growing Unit resolvers
   GrowingUnitMutationsResolver,

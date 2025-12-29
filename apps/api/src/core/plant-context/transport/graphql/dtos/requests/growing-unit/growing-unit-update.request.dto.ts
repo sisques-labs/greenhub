@@ -1,4 +1,5 @@
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsEnum,
@@ -67,11 +68,11 @@ export class GrowingUnitUpdateRequestDto {
   @IsOptional()
   height?: number;
 
-  @Field(() => String, {
+  @Field(() => LengthUnitEnum, {
     nullable: true,
     description: 'The unit of measurement for dimensions',
   })
-  @IsString()
+  @IsEnum(LengthUnitEnum)
   @IsOptional()
-  unit?: string;
+  unit?: LengthUnitEnum;
 }

@@ -6,7 +6,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('growing-units')
 export class GrowingUnitTypeormEntity extends BaseTypeormEntity {
-  @Column({ type: 'uuid' })
+  @Column({ type: 'varchar' })
   name: string;
 
   @Column({ type: 'enum', enum: GrowingUnitTypeEnum })
@@ -15,17 +15,17 @@ export class GrowingUnitTypeormEntity extends BaseTypeormEntity {
   @Column({ type: 'integer' })
   capacity: number;
 
-  @Column({ type: 'float' })
-  length: number;
+  @Column({ type: 'float', nullable: true })
+  length: number | null;
 
-  @Column({ type: 'float' })
-  width: number;
+  @Column({ type: 'float', nullable: true })
+  width: number | null;
 
-  @Column({ type: 'float' })
-  height: number;
+  @Column({ type: 'float', nullable: true })
+  height: number | null;
 
-  @Column({ type: 'enum', enum: LengthUnitEnum })
-  unit: LengthUnitEnum;
+  @Column({ type: 'enum', enum: LengthUnitEnum, nullable: true })
+  unit: LengthUnitEnum | null;
 
   @OneToMany(() => PlantTypeormEntity, (plant) => plant.growingUnit, {
     cascade: true,
