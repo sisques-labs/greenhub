@@ -8,9 +8,9 @@ export interface PageHeaderProps {
    */
   title: string;
   /**
-   * Optional description text below the title
+   * Optional description text or components below the title
    */
-  description?: string;
+  description?: React.ReactNode;
   /**
    * Array of action buttons or elements to display on the right side
    */
@@ -36,7 +36,13 @@ export function PageHeader({
       <div>
         <h1 className="text-3xl font-bold">{title}</h1>
         {description && (
-          <p className="text-muted-foreground mt-1">{description}</p>
+          <div className="mt-1">
+            {typeof description === 'string' ? (
+              <p className="text-muted-foreground">{description}</p>
+            ) : (
+              description
+            )}
+          </div>
         )}
       </div>
       {actions.length > 0 && (

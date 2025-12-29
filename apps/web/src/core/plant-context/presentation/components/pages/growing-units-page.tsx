@@ -11,6 +11,7 @@ import { useGrowingUnitCreate } from '@/core/plant-context/presentation/hooks/us
 import { useGrowingUnitDelete } from '@/core/plant-context/presentation/hooks/use-growing-unit-delete/use-growing-unit-delete';
 import { useGrowingUnitUpdate } from '@/core/plant-context/presentation/hooks/use-growing-unit-update/use-growing-unit-update';
 import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/presentation/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import { useGrowingUnitsPageStore } from '@/core/plant-context/presentation/stores/growing-units-page-store';
 import { PaginatedResults } from '@/shared/presentation/components/ui/paginated-results/paginated-results';
 import {
   SearchAndFilters,
@@ -27,18 +28,24 @@ import {
   PlusIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 export function GrowingUnitsPage() {
   const t = useTranslations();
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
-  const [selectedGrowingUnit, setSelectedGrowingUnit] =
-    useState<GrowingUnitResponse | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('all');
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    createDialogOpen,
+    setCreateDialogOpen,
+    updateDialogOpen,
+    setUpdateDialogOpen,
+    selectedGrowingUnit,
+    setSelectedGrowingUnit,
+    searchQuery,
+    setSearchQuery,
+    selectedFilter,
+    setSelectedFilter,
+    currentPage,
+    setCurrentPage,
+  } = useGrowingUnitsPageStore();
 
   const paginationInput = useMemo(
     () => ({
@@ -154,7 +161,7 @@ export function GrowingUnitsPage() {
         title={t('growingUnit.page.title')}
         description={t('growingUnit.page.description')}
         actions={[
-          <Button key="create" onClick={() => setCreateDialogOpen(true)}>
+          <Button key="create" onClick={handleAddClick}>
             <PlusIcon className="mr-2 h-4 w-4" />
             {t('growingUnit.actions.create.button')}
           </Button>,
@@ -176,14 +183,7 @@ export function GrowingUnitsPage() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {growingUnits.items.map((growingUnit) => (
-              <GrowingUnitCard
-                key={growingUnit.id}
-                growingUnit={growingUnit}
-                onEdit={handleEdit}
-                onDelete={handleDeleteConfirm}
-                isDeleting={isDeleting}
-                showActions={true}
-              />
+              <GrowingUnitCard key={growingUnit.id} growingUnit={growingUnit} />
             ))}
             <GrowingUnitAddCard onClick={handleAddClick} />
           </div>

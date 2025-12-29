@@ -137,6 +137,18 @@
     "validation": {
       "id": {
         "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "species": {
+        "required": "Species is required"
+      },
+      "status": {
+        "invalid": "Invalid status"
+      },
+      "growingUnitId": {
+        "required": "Growing unit ID is required"
       }
     }
   },
@@ -177,7 +189,8 @@
         "button": "Add Plant",
         "title": "Create Plant",
         "description": "Add a new plant to your collection",
-        "submit": "Create"
+        "submit": "Create",
+        "loading": "Creating..."
       },
       "view": "View",
       "edit": "Edit",
@@ -339,6 +352,64 @@
       }
     },
     "noPlants": "No active plants",
+    "detail": {
+      "notFound": "Growing unit not found",
+      "error": {
+        "loading": "Error loading growing unit: {message}"
+      },
+      "breadcrumbs": {
+        "home": "Home",
+        "growingUnits": "My Units"
+      },
+      "status": {
+        "active": "ACTIVE",
+        "inactive": "INACTIVE"
+      },
+      "location": {
+        "label": "Location",
+        "indoor": "Indoor",
+        "outdoor": "Outdoor"
+      },
+      "summary": {
+        "substrate": {
+          "label": "Substrate",
+          "value": "Universal Soil"
+        },
+        "exposure": {
+          "label": "Exposure",
+          "directSun": "Direct Sun",
+          "partialSun": "Partial Sun",
+          "shade": "Shade"
+        },
+        "lastWatering": {
+          "label": "Last Watering",
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "never": "Never"
+        },
+        "occupancy": {
+          "label": "Occupancy"
+        }
+      },
+      "plants": {
+        "title": "Plants in cultivation",
+        "viewAll": "View all",
+        "variety": "Variety",
+        "planted": "PLANTED",
+        "days": "days",
+        "manage": "Manage"
+      },
+      "history": {
+        "title": "Recent History",
+        "viewAll": "View all history",
+        "today": "TODAY",
+        "yesterday": "YESTERDAY"
+      },
+      "actions": {
+        "editUnit": "Edit Unit",
+        "addPlant": "Add Plant"
+      }
+    },
     "type": {
       "POT": "Pot",
       "GARDEN_BED": "Garden Bed",

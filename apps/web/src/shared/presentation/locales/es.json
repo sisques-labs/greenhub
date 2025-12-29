@@ -137,6 +137,18 @@
     "validation": {
       "id": {
         "required": "El ID es requerido"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "species": {
+        "required": "La especie es requerida"
+      },
+      "status": {
+        "invalid": "Estado inválido"
+      },
+      "growingUnitId": {
+        "required": "El ID de la unidad de cultivo es requerido"
       }
     }
   },
@@ -177,7 +189,8 @@
         "button": "Añadir Planta",
         "title": "Crear Planta",
         "description": "Agrega una nueva planta a tu colección",
-        "submit": "Crear"
+        "submit": "Crear",
+        "loading": "Creando..."
       },
       "view": "Ver",
       "edit": "Editar",
@@ -339,6 +352,64 @@
       }
     },
     "noPlants": "Sin plantas activas",
+    "detail": {
+      "notFound": "Unidad de cultivo no encontrada",
+      "error": {
+        "loading": "Error al cargar unidad de cultivo: {message}"
+      },
+      "breadcrumbs": {
+        "home": "Inicio",
+        "growingUnits": "Mis Unidades"
+      },
+      "status": {
+        "active": "ACTIVA",
+        "inactive": "INACTIVA"
+      },
+      "location": {
+        "label": "Ubicación",
+        "indoor": "Interior",
+        "outdoor": "Exterior"
+      },
+      "summary": {
+        "substrate": {
+          "label": "Sustrato",
+          "value": "Tierra Universal"
+        },
+        "exposure": {
+          "label": "Exposición",
+          "directSun": "Sol Directo",
+          "partialSun": "Sol Parcial",
+          "shade": "Sombra"
+        },
+        "lastWatering": {
+          "label": "Último Riego",
+          "today": "Hoy",
+          "yesterday": "Ayer",
+          "never": "Nunca"
+        },
+        "occupancy": {
+          "label": "Ocupación"
+        }
+      },
+      "plants": {
+        "title": "Plantas en cultivo",
+        "viewAll": "Ver todas",
+        "variety": "Variedad",
+        "planted": "PLANTADO",
+        "days": "días",
+        "manage": "Gestionar"
+      },
+      "history": {
+        "title": "Historial Reciente",
+        "viewAll": "Ver todo el historial",
+        "today": "HOY",
+        "yesterday": "AYER"
+      },
+      "actions": {
+        "editUnit": "Editar Unidad",
+        "addPlant": "Agregar Planta"
+      }
+    },
     "type": {
       "POT": "Maceta",
       "GARDEN_BED": "Cama de jardín",

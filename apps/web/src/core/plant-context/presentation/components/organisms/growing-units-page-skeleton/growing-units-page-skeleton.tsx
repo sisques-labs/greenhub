@@ -17,33 +17,37 @@ import { Skeleton } from '@repo/shared/presentation/components/ui/skeleton';
 function GrowingUnitCardSkeleton() {
   return (
     <Card>
-      <CardHeader>
-        <div className="space-y-2">
-          {/* Image placeholder */}
-          <Skeleton className="w-full h-32 rounded-md" />
-          <div className="flex items-start justify-between">
-            <div className="space-y-1 flex-1">
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-4 w-24" />
-            </div>
+      <CardHeader className="p-0">
+        {/* Image skeleton */}
+        <div className="relative w-full">
+          <Skeleton className="w-full h-48 rounded-t-lg" />
+          {/* Badge skeleton overlay */}
+          <div className="absolute top-2 right-2">
+            <Skeleton className="h-5 w-20 rounded-full" />
           </div>
-          <Skeleton className="h-5 w-20 rounded-full" />
+        </div>
+
+        <div className="p-4 space-y-2">
+          <div>
+            <Skeleton className="h-6 w-32 mb-2" />
+            <Skeleton className="h-4 w-24" />
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="pt-0 px-4 pb-4">
         <div>
           <Skeleton className="h-4 w-28 mb-2" />
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Skeleton className="h-2 w-2 rounded-full" />
+              <Skeleton className="h-1.5 w-1.5 rounded-full" />
               <Skeleton className="h-4 w-24" />
             </div>
             <div className="flex items-center gap-2">
-              <Skeleton className="h-2 w-2 rounded-full" />
+              <Skeleton className="h-1.5 w-1.5 rounded-full" />
               <Skeleton className="h-4 w-20" />
             </div>
             <div className="flex items-center gap-2">
-              <Skeleton className="h-2 w-2 rounded-full" />
+              <Skeleton className="h-1.5 w-1.5 rounded-full" />
               <Skeleton className="h-4 w-28" />
             </div>
           </div>
