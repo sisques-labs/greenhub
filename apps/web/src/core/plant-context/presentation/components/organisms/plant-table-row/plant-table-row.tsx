@@ -23,11 +23,17 @@ import { useRouter } from 'next/navigation';
 
 interface PlantTableRowProps {
   plant: PlantResponse;
+  growingUnitName?: string;
   onEdit?: (plant: PlantResponse) => void;
   onDelete?: (id: string) => void;
 }
 
-export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
+export function PlantTableRow({
+  plant,
+  growingUnitName,
+  onEdit,
+  onDelete,
+}: PlantTableRowProps) {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
@@ -62,8 +68,19 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
     .toUpperCase()
     .slice(0, 2);
 
+  const handleRowClick = () => {
+    router.push(`/${locale}/plants/${plant.id}`);
+  };
+
+  const handleActionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <TableRow>
+    <TableRow
+      className="cursor-pointer hover:bg-muted/50 transition-colors"
+      onClick={handleRowClick}
+    >
       <TableCell>
         <Avatar className="h-10 w-10">
           <AvatarImage src={undefined} alt={plant.name || plant.species} />
@@ -84,7 +101,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
         <div className="flex items-center gap-2">
           {getLocationIcon()}
           <span className="text-sm">
-            {plant.growingUnitId || t('common.unknown')}
+            {growingUnitName || plant.growingUnitId || t('common.unknown')}
           </span>
         </div>
       </TableCell>
@@ -94,7 +111,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
           {formatDate(plant.updatedAt)}
         </span>
       </TableCell>
-      <TableCell>
+      <TableCell onClick={handleActionClick}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-accent">

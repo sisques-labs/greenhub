@@ -2,6 +2,7 @@
 
 import { GrowingUnitUpdateForm } from '@/core/plant-context/presentation/components/organisms/growing-unit-update-form/growing-unit-update-form';
 import { PlantCreateForm } from '@/core/plant-context/presentation/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/core/plant-context/presentation/components/organisms/plant-table-row/plant-table-row';
 import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/presentation/dtos/schemas/growing-unit-update/growing-unit-update.schema';
 import type { PlantCreateFormValues } from '@/core/plant-context/presentation/dtos/schemas/plant-create/plant-create.schema';
 import { useGrowingUnitFindById } from '@/core/plant-context/presentation/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
@@ -19,6 +20,13 @@ import {
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
 import { Skeleton } from '@repo/shared/presentation/components/ui/skeleton';
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@repo/shared/presentation/components/ui/table';
 import {
   DropletsIcon,
   Grid3x3Icon,
@@ -230,50 +238,32 @@ export function GrowingUnitDetailPage() {
         </CardHeader>
         <CardContent>
           {growingUnit.plants.length > 0 ? (
-            <div className="space-y-4">
-              {growingUnit.plants.map((plant) => (
-                <div
-                  key={plant.id}
-                  className="flex items-center gap-4 p-4 border rounded-lg"
-                >
-                  <div className="h-16 w-16 bg-muted rounded-md flex items-center justify-center">
-                    <span className="text-xs text-muted-foreground">
-                      {plant.name?.charAt(0) || '?'}
-                    </span>
-                  </div>
-                  <div className="flex-1 space-y-1">
-                    <div className="font-semibold">{plant.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {t('growingUnit.detail.plants.variety')}: {plant.species}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {t('growingUnit.detail.plants.planted')}{' '}
-                      {plant.plantedDate
-                        ? new Date(plant.plantedDate).toLocaleDateString()
-                        : '-'}
-                      {' • '}
-                      {plant.plantedDate
-                        ? Math.floor(
-                            (new Date().getTime() -
-                              new Date(plant.plantedDate).getTime()) /
-                              (1000 * 60 * 60 * 24),
-                          )
-                        : 0}{' '}
-                      {t('growingUnit.detail.plants.days')}
-                    </div>
-                  </div>
-                  <Badge variant="outline">{plant.status}</Badge>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      router.push(`${routes.plants}/${plant.id}`);
-                    }}
-                  >
-                    {t('growingUnit.detail.plants.manage')}
-                  </Button>
-                </div>
-              ))}
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[80px]">IMG</TableHead>
+                    <TableHead>{t('plants.table.columns.plant')}</TableHead>
+                    <TableHead>{t('plants.table.columns.location')}</TableHead>
+                    <TableHead>{t('plants.table.columns.status')}</TableHead>
+                    <TableHead>
+                      {t('plants.table.columns.lastWatering')}
+                    </TableHead>
+                    <TableHead className="w-[80px]">
+                      {t('plants.table.columns.actions')}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {growingUnit.plants.map((plant) => (
+                    <PlantTableRow
+                      key={plant.id}
+                      plant={plant}
+                      growingUnitName={growingUnit.name}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">

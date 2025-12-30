@@ -156,6 +156,10 @@
     "title": "Lista de Plantas",
     "description": "Gestiona tu colección botánica y monitorea su salud",
     "empty": "No hay plantas registradas",
+    "empty.filtered": "No hay plantas que coincidan con los filtros actuales",
+    "growingUnit": {
+      "plantCount": "{count} de {total} plantas"
+    },
     "search": {
       "placeholder": "Buscar por nombre, especie o ubicación..."
     },

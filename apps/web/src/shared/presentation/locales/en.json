@@ -156,6 +156,10 @@
     "title": "Plant List",
     "description": "Manage your botanical collection and monitor its health",
     "empty": "No plants registered",
+    "empty.filtered": "No plants match the current filters",
+    "growingUnit": {
+      "plantCount": "{count} of {total} plants"
+    },
     "search": {
       "placeholder": "Search by name, species or location..."
     },

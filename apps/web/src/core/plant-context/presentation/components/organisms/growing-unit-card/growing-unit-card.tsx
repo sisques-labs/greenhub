@@ -48,12 +48,12 @@ export function GrowingUnitCard({
 
   return (
     <Card
-      className="cursor-pointer hover:shadow-lg transition-shadow"
+      className="cursor-pointer hover:shadow-lg transition-shadow overflow-hidden !pt-0"
       onClick={handleCardClick}
     >
-      <CardHeader className="p-0">
+      <CardHeader className="!p-0 !m-0">
         {/* Image with badge overlay */}
-        <div className="relative w-full h-48 bg-muted rounded-t-lg overflow-hidden">
+        <div className="relative w-full h-48 bg-muted">
           {/* Image placeholder - TODO: Replace with actual image when available */}
           <div className="w-full h-full flex items-center justify-center">
             <span className="text-muted-foreground text-sm">
