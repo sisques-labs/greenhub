@@ -6,7 +6,7 @@ import { usePlantsPage } from '@/core/plant-context/presentation/hooks/use-plant
 import {
   SearchAndFilters,
   type FilterOption,
-} from '@/shared/presentation/components/ui/search-and-filters/search-and-filters';
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
 import { Button } from '@repo/shared/presentation/components/ui/button';

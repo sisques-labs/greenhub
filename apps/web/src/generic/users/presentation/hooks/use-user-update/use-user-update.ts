@@ -1,7 +1,7 @@
+import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
+import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
 import type { UpdateUserInput, UserRole, UserStatus } from '@repo/sdk';
 import { useUsers } from '@repo/sdk';
-import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
-import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
 
 /**
  * Hook that provides user update functionality

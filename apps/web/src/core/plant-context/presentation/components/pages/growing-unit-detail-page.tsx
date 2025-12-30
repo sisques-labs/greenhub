@@ -9,7 +9,7 @@ import { useGrowingUnitFindById } from '@/core/plant-context/presentation/hooks/
 import { useGrowingUnitUpdate } from '@/core/plant-context/presentation/hooks/use-growing-unit-update/use-growing-unit-update';
 import { usePlantAdd } from '@/core/plant-context/presentation/hooks/use-plant-add/use-plant-add';
 import { useGrowingUnitDetailPageStore } from '@/core/plant-context/presentation/stores/growing-unit-detail-page-store';
-import { useAppRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import { Button } from '@repo/shared/presentation/components/ui/button';

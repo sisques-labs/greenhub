@@ -12,11 +12,11 @@ import { useGrowingUnitDelete } from '@/core/plant-context/presentation/hooks/us
 import { useGrowingUnitUpdate } from '@/core/plant-context/presentation/hooks/use-growing-unit-update/use-growing-unit-update';
 import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/presentation/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import { useGrowingUnitsPageStore } from '@/core/plant-context/presentation/stores/growing-units-page-store';
-import { PaginatedResults } from '@/shared/presentation/components/ui/paginated-results/paginated-results';
+import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
 import {
   SearchAndFilters,
   type FilterOption,
-} from '@/shared/presentation/components/ui/search-and-filters/search-and-filters';
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
 import type { GrowingUnitResponse } from '@repo/sdk';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Button } from '@repo/shared/presentation/components/ui/button';

@@ -3,7 +3,7 @@
 import {
   PageHeaderSkeleton,
   SearchAndFiltersSkeleton,
-} from '@/shared/presentation/components/ui/page-skeleton/page-skeleton';
+} from '@/shared/components/ui/page-skeleton/page-skeleton';
 import {
   Card,
   CardContent,

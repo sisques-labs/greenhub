@@ -3,8 +3,8 @@
 import {
   FilterButtons,
   type FilterOption,
-} from '@/shared/presentation/components/ui/filter-buttons/filter-buttons';
-import { SearchBar } from '@/shared/presentation/components/ui/search-bar/search-bar';
+} from '@/shared/components/ui/filter-buttons/filter-buttons';
+import { SearchBar } from '@/shared/components/ui/search-bar/search-bar';
 
 export type { FilterOption };
 

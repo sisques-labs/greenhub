@@ -1,6 +1,6 @@
 import { AuthLoginService } from '@/generic/auth/application/services/auth-login/auth-login.service';
 import { AuthLoginByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
-import { useAppRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { useAuth } from '@repo/sdk';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';

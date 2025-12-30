@@ -1,4 +1,4 @@
-import { useAppRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { useAuth } from '@repo/sdk';
 import { useRouter } from 'next/navigation';
 
