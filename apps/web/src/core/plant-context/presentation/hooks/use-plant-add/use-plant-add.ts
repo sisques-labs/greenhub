@@ -1,5 +1,5 @@
 import type { PlantCreateFormValues } from '@/core/plant-context/presentation/dtos/schemas/plant-create/plant-create.schema';
-import type { PlantAddInput } from '@repo/sdk';
+import type { PlantAddInput, PlantStatus } from '@repo/sdk';
 import { useGrowingUnits } from '@repo/sdk';
 
 /**
@@ -21,7 +21,7 @@ export function usePlantAdd() {
         species: values.species,
         plantedDate: values.plantedDate,
         notes: values.notes,
-        status: values.status,
+        status: values.status as PlantStatus,
         growingUnitId: values.growingUnitId,
       };
 

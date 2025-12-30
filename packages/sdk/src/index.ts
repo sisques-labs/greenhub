@@ -32,6 +32,8 @@ export type {
   PaginationInput,
   SortDirection,
 } from './shared/types/index.js';
+// Re-export enums from shared
+export { LENGTH_UNIT } from './shared/types/length-unit.enum.js';
 export * from './users/index.js';
 
 export class SDK {

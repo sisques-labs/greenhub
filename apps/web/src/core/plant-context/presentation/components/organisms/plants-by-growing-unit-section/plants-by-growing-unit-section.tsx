@@ -1,7 +1,11 @@
 'use client';
 
 import { PlantTableRow } from '@/core/plant-context/presentation/components/organisms/plant-table-row/plant-table-row';
-import type { GrowingUnitResponse, PlantResponse } from '@repo/sdk';
+import {
+  PLANT_STATUS,
+  type GrowingUnitResponse,
+  type PlantResponse,
+} from '@repo/sdk';
 import {
   Table,
   TableBody,
@@ -51,7 +55,10 @@ export function PlantsByGrowingUnitSection({
           // TODO: Implement needs water filter when status logic is available
           break;
         case 'healthy':
-          plants = plants.filter((plant) => plant.status === 'HEALTHY');
+          // TODO: Implement healthy filter when health status logic is available
+          plants = plants.filter(
+            (plant) => plant.status === PLANT_STATUS.GROWING,
+          );
           break;
         default:
           break;

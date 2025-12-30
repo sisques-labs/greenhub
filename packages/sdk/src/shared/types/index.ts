@@ -42,6 +42,9 @@ export type BaseFilter = {
   value: string;
 };
 
+// Enums
+export * from './length-unit.enum.js';
+
 export type BaseSort = {
   field: string;
   direction: SortDirection;

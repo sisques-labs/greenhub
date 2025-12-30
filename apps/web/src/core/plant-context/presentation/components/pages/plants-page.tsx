@@ -7,7 +7,7 @@ import {
   SearchAndFilters,
   type FilterOption,
 } from '@/shared/presentation/components/ui/search-and-filters/search-and-filters';
-import type { PlantResponse } from '@repo/sdk';
+import { PLANT_STATUS, type PlantResponse } from '@repo/sdk';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
@@ -108,7 +108,10 @@ export function PlantsPage() {
       if (selectedFilter !== 'all') {
         switch (selectedFilter) {
           case 'healthy':
-            filtered = filtered.filter((plant) => plant.status === 'HEALTHY');
+            // TODO: Implement healthy filter when health status logic is available
+            filtered = filtered.filter(
+              (plant) => plant.status === PLANT_STATUS.GROWING,
+            );
             break;
           // TODO: Add more filter cases when needed
           default:

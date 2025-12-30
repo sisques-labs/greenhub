@@ -1,5 +1,9 @@
 import type { GrowingUnitCreateFormValues } from '@/core/plant-context/presentation/dtos/schemas/growing-unit-create/growing-unit-create.schema';
-import type { CreateGrowingUnitInput } from '@repo/sdk';
+import type {
+  CreateGrowingUnitInput,
+  GrowingUnitType,
+  LengthUnit,
+} from '@repo/sdk';
 import { useGrowingUnits } from '@repo/sdk';
 
 /**
@@ -17,12 +21,12 @@ export function useGrowingUnitCreate() {
     try {
       const input: CreateGrowingUnitInput = {
         name: values.name,
-        type: values.type,
+        type: values.type as GrowingUnitType,
         capacity: values.capacity,
         length: values.length,
         width: values.width,
         height: values.height,
-        unit: values.unit,
+        unit: values.unit as LengthUnit,
       };
 
       const result = await create.mutate(input);

@@ -1,3 +1,4 @@
+import { GROWING_UNIT_TYPE, LENGTH_UNIT } from '@repo/sdk';
 import { z } from 'zod';
 
 /**
@@ -15,11 +16,17 @@ export function createGrowingUnitCreateSchema(
     name: z
       .string()
       .min(1, translations('growingUnit.validation.name.required')),
-    type: z.enum(['POT', 'GARDEN_BED', 'HANGING_BASKET', 'WINDOW_BOX'], {
-      errorMap: () => ({
-        message: translations('growingUnit.validation.type.invalid'),
-      }),
-    }),
+    type: z
+      .string()
+      .refine(
+        (value) =>
+          Object.values(GROWING_UNIT_TYPE as Record<string, string>).includes(
+            value,
+          ),
+        {
+          message: translations('growingUnit.validation.type.invalid'),
+        },
+      ),
     capacity: z
       .number()
       .min(1, translations('growingUnit.validation.capacity.required')),
@@ -27,7 +34,14 @@ export function createGrowingUnitCreateSchema(
     width: z.number().optional(),
     height: z.number().optional(),
     unit: z
-      .enum(['MILLIMETER', 'CENTIMETER', 'METER', 'INCH', 'FOOT'])
+      .string()
+      .refine(
+        (value) =>
+          Object.values(LENGTH_UNIT as Record<string, string>).includes(value),
+        {
+          message: translations('growingUnit.validation.unit.invalid'),
+        },
+      )
       .optional(),
   });
 }
