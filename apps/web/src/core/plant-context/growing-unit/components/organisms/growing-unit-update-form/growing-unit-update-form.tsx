@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  createGrowingUnitUpdateSchema,
-  GrowingUnitUpdateFormValues,
-} from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { GrowingUnitResponse } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -34,6 +30,10 @@ import {
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import {
+  createGrowingUnitUpdateSchema,
+  GrowingUnitUpdateFormValues,
+} from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
 
 interface GrowingUnitUpdateFormProps {
   growingUnit: GrowingUnitResponse | null;

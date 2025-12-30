@@ -19,7 +19,7 @@ import {
 import { HomeIcon, MoreVerticalIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
+import { getPlantStatusBadge } from '@/core/plant-context/presentation/utils/plant-status.utils';
 
 interface PlantTableRowProps {
   plant: PlantResponse;

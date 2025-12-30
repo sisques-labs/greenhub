@@ -18,7 +18,6 @@ import {
   FlowerIcon,
   XCircleIcon,
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 interface OverviewPlantsSectionProps {
   overview: OverviewResponse | null;
@@ -33,7 +32,7 @@ export function OverviewPlantsSection({
   overview,
   isLoading = false,
 }: OverviewPlantsSectionProps) {
-  const t = useTranslations('dashboard');
+  // TODO: Add translations
 
   if (isLoading || !overview) {
     return (

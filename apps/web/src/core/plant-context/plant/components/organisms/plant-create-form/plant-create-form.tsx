@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  createPlantCreateSchema,
-  PlantCreateFormValues,
-} from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PLANT_STATUS } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -35,6 +31,10 @@ import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import {
+  createPlantCreateSchema,
+  PlantCreateFormValues,
+} from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
 
 interface PlantCreateFormProps {
   open: boolean;

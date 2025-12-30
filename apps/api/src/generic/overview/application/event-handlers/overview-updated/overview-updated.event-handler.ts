@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import {
   IOverviewReadRepository,
@@ -17,8 +19,6 @@ import { GrowingUnitPlantNotesChangedEvent } from '@/shared/domain/events/featur
 import { GrowingUnitPlantPlantedDateChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-planted-date-changed/growing-unit-plant-planted-date-changed.event';
 import { GrowingUnitPlantSpeciesChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-species-changed/growing-unit-plant-species-changed.event';
 import { GrowingUnitPlantStatusChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event';
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 /**
  * Event handler that updates the overview view model when plant context events occur.

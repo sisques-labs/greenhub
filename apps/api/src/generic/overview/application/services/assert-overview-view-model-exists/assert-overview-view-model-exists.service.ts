@@ -1,3 +1,4 @@
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { OverviewNotFoundException } from '@/generic/overview/application/exceptions/overview-not-found/overview-not-found.exception';
 import {
   IOverviewReadRepository,
@@ -5,7 +6,6 @@ import {
 } from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
-import { Inject, Injectable, Logger } from '@nestjs/common';
 
 /**
  * Service responsible for asserting that an overview view model exists in the read repository.

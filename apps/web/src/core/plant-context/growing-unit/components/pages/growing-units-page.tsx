@@ -1,5 +1,17 @@
 'use client';
 
+import type { GrowingUnitResponse } from '@repo/sdk';
+import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
+import { Button } from '@repo/shared/presentation/components/ui/button';
+import {
+  Building2Icon,
+  FlowerIcon,
+  HomeIcon,
+  PackageIcon,
+  PlusIcon,
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { GrowingUnitAddCard } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-add-card/growing-unit-add-card';
 import { GrowingUnitCard } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-card/growing-unit-card';
 import { GrowingUnitCreateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-create-form/growing-unit-create-form';
@@ -14,21 +26,9 @@ import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit
 import { useGrowingUnitsPageStore } from '@/core/plant-context/growing-unit/stores/growing-units-page-store';
 import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
 import {
-  SearchAndFilters,
   type FilterOption,
+  SearchAndFilters,
 } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import type { GrowingUnitResponse } from '@repo/sdk';
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import {
-  Building2Icon,
-  FlowerIcon,
-  HomeIcon,
-  PackageIcon,
-  PlusIcon,
-} from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
 
 export function GrowingUnitsPage() {
   const t = useTranslations();

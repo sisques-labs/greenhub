@@ -1,3 +1,5 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
 import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { OverviewCalculateAggregatedMetricsService } from '@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service';
@@ -11,8 +13,6 @@ import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/o
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { OverviewUuidValueObject } from '@/shared/domain/value-objects/identifiers/overview-uuid/overview-uuid.vo';
-import { Injectable, Logger } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
 
 /**
  * Service responsible for calculating overview metrics from plant context data.

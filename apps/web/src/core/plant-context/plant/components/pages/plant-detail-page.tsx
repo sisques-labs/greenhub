@@ -1,7 +1,5 @@
 'use client';
 
-import { usePlantFindById } from '@/core/plant-context/plant/hooks/use-plant-find-by-id/use-plant-find-by-id';
-import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
 import {
   TimelineSequence,
   type TimelineSequenceGroup,
@@ -36,9 +34,11 @@ import {
   ThermometerIcon,
   TrashIcon,
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import { usePlantFindById } from '@/core/plant-context/plant/hooks/use-plant-find-by-id/use-plant-find-by-id';
+import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
 
 export function PlantDetailPage() {
   const t = useTranslations();

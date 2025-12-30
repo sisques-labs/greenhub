@@ -1,21 +1,20 @@
 'use client';
 
+import type { OverviewResponse } from '@repo/sdk';
+import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
-  Grid3x3Icon,
-  CircleIcon,
-  SquareIcon,
   BoxIcon,
+  CircleIcon,
+  Grid3x3Icon,
   PackageIcon,
+  SquareIcon,
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import type { OverviewResponse } from '@repo/sdk';
 
 interface OverviewGrowingUnitsSectionProps {
   overview: OverviewResponse | null;
@@ -30,7 +29,7 @@ export function OverviewGrowingUnitsSection({
   overview,
   isLoading = false,
 }: OverviewGrowingUnitsSectionProps) {
-  const t = useTranslations('dashboard');
+  // TODO: Add translations
 
   if (isLoading || !overview) {
     return (

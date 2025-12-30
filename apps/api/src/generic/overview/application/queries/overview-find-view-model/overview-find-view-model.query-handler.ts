@@ -1,11 +1,11 @@
 import { Inject, Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { OverviewFindViewModelQuery } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query';
 import {
   IOverviewReadRepository,
   OVERVIEW_READ_REPOSITORY_TOKEN,
 } from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
-import { OverviewFindViewModelQuery } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query';
 
 /**
  * Handles the {@link OverviewFindViewModelQuery} query.

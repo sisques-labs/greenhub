@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  createUserUpdateSchema,
-  UserUpdateFormValues,
-} from '@/generic/users/dtos/schemas/user-update/user-update.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { UserResponse } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -20,6 +16,10 @@ import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import {
+  createUserUpdateSchema,
+  UserUpdateFormValues,
+} from '@/generic/users/dtos/schemas/user-update/user-update.schema';
 
 interface UserUpdateFormProps {
   user: UserResponse;

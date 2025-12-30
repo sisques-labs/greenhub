@@ -1,9 +1,9 @@
-import { AuthRegisterService } from '@/generic/auth/application/services/auth-register/auth-register.service';
-import type { AuthRegisterByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-register-by-email/auth-register-by-email.schema';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { useAuth } from '@repo/sdk';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
+import { AuthRegisterService } from '@/generic/auth/application/services/auth-register/auth-register.service';
+import type { AuthRegisterByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-register-by-email/auth-register-by-email.schema';
+import { useAppRoutes } from '@/shared/hooks/use-routes';
 
 /**
  * Hook that provides registration functionality using the AuthRegisterService

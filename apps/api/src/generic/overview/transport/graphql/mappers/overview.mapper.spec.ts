@@ -1,5 +1,5 @@
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 import { OverviewResponseDto } from '@/generic/overview/transport/graphql/dtos/responses/overview.response.dto';
 import { OverviewGraphQLMapper } from '@/generic/overview/transport/graphql/mappers/overview.mapper';
 

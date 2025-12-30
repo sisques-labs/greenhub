@@ -1,5 +1,7 @@
 'use client';
 
+import type { OverviewResponse } from '@repo/sdk';
+import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
   Card,
   CardContent,
@@ -7,15 +9,13 @@ import {
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
 import { Progress } from '@repo/shared/presentation/components/ui/progress';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
-  PackageIcon,
   AlertTriangleIcon,
   CheckCircleIcon,
+  PackageIcon,
   TrendingUpIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { OverviewResponse } from '@repo/sdk';
 
 interface OverviewCapacitySectionProps {
   overview: OverviewResponse | null;

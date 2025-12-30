@@ -1,7 +1,7 @@
-import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import { PLANT_STATUS, type PlantResponse } from '@repo/sdk';
 import { paginate } from '@repo/shared/presentation/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
+import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 
 const PLANTS_PER_PAGE = 10;
 

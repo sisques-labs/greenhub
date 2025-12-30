@@ -1,9 +1,8 @@
 'use client';
 
-import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
 import {
-  PLANT_STATUS,
   type GrowingUnitResponse,
+  PLANT_STATUS,
   type PlantResponse,
 } from '@repo/sdk';
 import {
@@ -15,6 +14,7 @@ import {
 } from '@repo/shared/presentation/components/ui/table';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
 
 interface PlantsByGrowingUnitSectionProps {
   growingUnit: GrowingUnitResponse;

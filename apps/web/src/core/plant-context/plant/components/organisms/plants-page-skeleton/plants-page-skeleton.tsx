@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  PageHeaderSkeleton,
-  SearchAndFiltersSkeleton,
-} from '@/shared/components/ui/page-skeleton/page-skeleton';
 import { Skeleton } from '@repo/shared/presentation/components/ui/skeleton';
 import {
   Table,
@@ -13,6 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from '@repo/shared/presentation/components/ui/table';
+import {
+  PageHeaderSkeleton,
+  SearchAndFiltersSkeleton,
+} from '@/shared/components/ui/page-skeleton/page-skeleton';
 
 /**
  * Skeleton component for the plants list page

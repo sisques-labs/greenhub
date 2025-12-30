@@ -27,15 +27,15 @@ import {
 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { GrowingUnitUpdateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-update-form/growing-unit-update-form';
-import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
-import { useGrowingUnitFindById } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
-import { useGrowingUnitUpdate } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-update/use-growing-unit-update';
-import { useGrowingUnitDetailPageStore } from '@/core/plant-context/growing-unit/stores/growing-unit-detail-page-store';
-import { PlantCreateForm } from '@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
-import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
-import { usePlantAdd } from '@/core/plant-context/plant/hooks/use-plant-add/use-plant-add';
+import { GrowingUnitUpdateForm } from '@/core/plant-context/presentation/components/organisms/growing-unit-update-form/growing-unit-update-form';
+import { PlantCreateForm } from '@/core/plant-context/presentation/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/core/plant-context/presentation/components/organisms/plant-table-row/plant-table-row';
+import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/presentation/dtos/schemas/growing-unit-update/growing-unit-update.schema';
+import type { PlantCreateFormValues } from '@/core/plant-context/presentation/dtos/schemas/plant-create/plant-create.schema';
+import { useGrowingUnitFindById } from '@/core/plant-context/presentation/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
+import { useGrowingUnitUpdate } from '@/core/plant-context/presentation/hooks/use-growing-unit-update/use-growing-unit-update';
+import { usePlantAdd } from '@/core/plant-context/presentation/hooks/use-plant-add/use-plant-add';
+import { useGrowingUnitDetailPageStore } from '@/core/plant-context/presentation/stores/growing-unit-detail-page-store';
 import { useAppRoutes } from '@/shared/hooks/use-routes';
 
 export function GrowingUnitDetailPage() {

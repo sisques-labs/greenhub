@@ -1,5 +1,6 @@
 'use client';
 
+import type { OverviewResponse } from '@repo/sdk';
 import {
   Card,
   CardContent,
@@ -7,14 +8,13 @@ import {
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
 import {
+  AlertTriangleIcon,
   FlowerIcon,
   Grid3x3Icon,
   PackageIcon,
-  AlertTriangleIcon,
   TrendingUpIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { OverviewResponse } from '@repo/sdk';
 
 interface OverviewStatsCardsProps {
   overview: OverviewResponse | null;

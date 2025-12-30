@@ -1,19 +1,19 @@
+import { QueryBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import { OverviewCalculateAggregatedMetricsService } from '@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service';
 import { OverviewCalculateCapacityMetricsService } from '@/generic/overview/application/services/overview-calculate-capacity-metrics/overview-calculate-capacity-metrics.service';
 import { OverviewCalculateDimensionsMetricsService } from '@/generic/overview/application/services/overview-calculate-dimensions-metrics/overview-calculate-dimensions-metrics.service';
 import { OverviewCalculateGrowingUnitMetricsService } from '@/generic/overview/application/services/overview-calculate-growing-unit-metrics/overview-calculate-growing-unit-metrics.service';
 import { OverviewCalculatePlantMetricsService } from '@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service';
-import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
-import { QueryBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
 
 describe('OverviewCalculateService', () => {
   let service: OverviewCalculateService;
@@ -23,10 +23,8 @@ describe('OverviewCalculateService', () => {
   let mockCalculateCapacityMetricsService: jest.Mocked<OverviewCalculateCapacityMetricsService>;
   let mockCalculateDimensionsMetricsService: jest.Mocked<OverviewCalculateDimensionsMetricsService>;
   let mockCalculateAggregatedMetricsService: jest.Mocked<OverviewCalculateAggregatedMetricsService>;
-  let factory: OverviewViewModelFactory;
 
   beforeEach(async () => {
-    factory = new OverviewViewModelFactory();
     mockQueryBus = {
       execute: jest.fn(),
     } as unknown as jest.Mocked<QueryBus>;

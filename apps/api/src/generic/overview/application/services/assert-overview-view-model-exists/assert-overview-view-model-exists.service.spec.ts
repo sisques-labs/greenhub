@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
 import { OverviewNotFoundException } from '@/generic/overview/application/exceptions/overview-not-found/overview-not-found.exception';
 import { AssertOverviewViewModelExistsService } from '@/generic/overview/application/services/assert-overview-view-model-exists/assert-overview-view-model-exists.service';
-import {
-  OVERVIEW_READ_REPOSITORY_TOKEN,
-  IOverviewReadRepository,
-} from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
 import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import {
+  IOverviewReadRepository,
+  OVERVIEW_READ_REPOSITORY_TOKEN,
+} from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 
 describe('AssertOverviewViewModelExistsService', () => {
