@@ -17,61 +17,61 @@ import { useAppRoutes } from '@/shared/hooks/use-routes';
  * Main dashboard that displays comprehensive overview of the entire system
  */
 export function DashboardPage() {
-  const t = useTranslations('dashboard');
-  const { routes } = useAppRoutes();
-  const { overview, isLoading, error } = useDashboardPage();
+	const t = useTranslations('dashboard');
+	const { routes } = useAppRoutes();
+	const { overview, isLoading, error } = useDashboardPage();
 
-  if (error) {
-    return (
-      <div className="mx-auto py-8">
-        <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
-          <p className="text-destructive text-lg font-medium">
-            {t('error.loading', {
-              message: (error as Error).message,
-            })}
-          </p>
-          <Button onClick={() => window.location.reload()} variant="outline">
-            <RefreshCwIcon className="mr-2 h-4 w-4" />
-            Retry
-          </Button>
-        </div>
-      </div>
-    );
-  }
+	if (error) {
+		return (
+			<div className="mx-auto py-8">
+				<div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+					<p className="text-destructive text-lg font-medium">
+						{t('error.loading', {
+							message: (error as Error).message,
+						})}
+					</p>
+					<Button onClick={() => window.location.reload()} variant="outline">
+						<RefreshCwIcon className="mr-2 h-4 w-4" />
+						Retry
+					</Button>
+				</div>
+			</div>
+		);
+	}
 
-  return (
-    <div className="mx-auto space-y-6">
-      {/* Header */}
-      <PageHeader
-        title={t('page.title')}
-        description={t('page.description')}
-        actions={[
-          <Button key="add-plant" asChild>
-            <Link href={routes.plants}>
-              <PlusIcon className="mr-2 h-4 w-4" />
-              {t('page.addPlantButton')}
-            </Link>
-          </Button>,
-        ]}
-      />
+	return (
+		<div className="mx-auto space-y-6">
+			{/* Header */}
+			<PageHeader
+				title={t('page.title')}
+				description={t('page.description')}
+				actions={[
+					<Button key="add-plant" asChild>
+						<Link href={routes.plants}>
+							<PlusIcon className="mr-2 h-4 w-4" />
+							{t('page.addPlantButton')}
+						</Link>
+					</Button>,
+				]}
+			/>
 
-      {/* Main Statistics Cards */}
-      <OverviewStatsCards overview={overview} isLoading={isLoading} />
+			{/* Main Statistics Cards */}
+			<OverviewStatsCards overview={overview} isLoading={isLoading} />
 
-      {/* Plants Overview Section */}
-      <OverviewPlantsSection overview={overview} isLoading={isLoading} />
+			{/* Plants Overview Section */}
+			<OverviewPlantsSection overview={overview} isLoading={isLoading} />
 
-      {/* Main Content Grid */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Capacity Overview */}
-        <OverviewCapacitySection overview={overview} isLoading={isLoading} />
+			{/* Main Content Grid */}
+			<div className="grid gap-6 lg:grid-cols-2">
+				{/* Capacity Overview */}
+				<OverviewCapacitySection overview={overview} isLoading={isLoading} />
 
-        {/* Growing Units Overview */}
-        <OverviewGrowingUnitsSection
-          overview={overview}
-          isLoading={isLoading}
-        />
-      </div>
-    </div>
-  );
+				{/* Growing Units Overview */}
+				<OverviewGrowingUnitsSection
+					overview={overview}
+					isLoading={isLoading}
+				/>
+			</div>
+		</div>
+	);
 }

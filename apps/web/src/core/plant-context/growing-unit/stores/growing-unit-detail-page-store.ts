@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
 interface GrowingUnitDetailPageStore {
-  // Dialog states
-  updateDialogOpen: boolean;
-  setUpdateDialogOpen: (open: boolean) => void;
-  createPlantDialogOpen: boolean;
-  setCreatePlantDialogOpen: (open: boolean) => void;
+	// Dialog states
+	updateDialogOpen: boolean;
+	setUpdateDialogOpen: (open: boolean) => void;
+	createPlantDialogOpen: boolean;
+	setCreatePlantDialogOpen: (open: boolean) => void;
 }
 
 /**
@@ -13,10 +13,10 @@ interface GrowingUnitDetailPageStore {
  * Centralizes UI state management for the growing unit detail page
  */
 export const useGrowingUnitDetailPageStore = create<GrowingUnitDetailPageStore>(
-  (set) => ({
-    updateDialogOpen: false,
-    setUpdateDialogOpen: (open) => set({ updateDialogOpen: open }),
-    createPlantDialogOpen: false,
-    setCreatePlantDialogOpen: (open) => set({ createPlantDialogOpen: open }),
-  }),
+	(set) => ({
+		updateDialogOpen: false,
+		setUpdateDialogOpen: (open) => set({ updateDialogOpen: open }),
+		createPlantDialogOpen: false,
+		setCreatePlantDialogOpen: (open) => set({ createPlantDialogOpen: open }),
+	}),
 );

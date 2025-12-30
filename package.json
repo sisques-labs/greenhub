@@ -5,13 +5,14 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md,json,css,scss,mdx}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,md,json,css,scss,mdx}\"",
+    "format": "biome format --write .",
+    "format:check": "biome format --check .",
     "check-types": "turbo run check-types",
     "prepare": "husky",
     "reset": "node scripts/reset-projects.js"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.10",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "prettier": "^3.6.2",

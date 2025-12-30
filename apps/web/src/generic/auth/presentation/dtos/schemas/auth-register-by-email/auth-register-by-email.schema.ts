@@ -8,28 +8,28 @@ import { z } from 'zod';
  * @returns Zod schema for registration form validation
  */
 export function createAuthRegisterByEmailSchema(
-  translations: (key: string) => string,
+	translations: (key: string) => string,
 ) {
-  return z
-    .object({
-      email: z
-        .string()
-        .min(1, translations('authPage.validation.email.required'))
-        .email(translations('authPage.validation.email.invalid')),
-      password: z
-        .string()
-        .min(1, translations('authPage.validation.password.required'))
-        .min(8, translations('authPage.validation.password.minLength')),
-      confirmPassword: z
-        .string()
-        .min(1, translations('authPage.validation.confirmPassword.required')),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: translations('authPage.validation.confirmPassword.mismatch'),
-      path: ['confirmPassword'],
-    });
+	return z
+		.object({
+			email: z
+				.string()
+				.min(1, translations('authPage.validation.email.required'))
+				.email(translations('authPage.validation.email.invalid')),
+			password: z
+				.string()
+				.min(1, translations('authPage.validation.password.required'))
+				.min(8, translations('authPage.validation.password.minLength')),
+			confirmPassword: z
+				.string()
+				.min(1, translations('authPage.validation.confirmPassword.required')),
+		})
+		.refine((data) => data.password === data.confirmPassword, {
+			message: translations('authPage.validation.confirmPassword.mismatch'),
+			path: ['confirmPassword'],
+		});
 }
 
 export type AuthRegisterByEmailFormValues = z.infer<
-  ReturnType<typeof createAuthRegisterByEmailSchema>
+	ReturnType<typeof createAuthRegisterByEmailSchema>
 >;

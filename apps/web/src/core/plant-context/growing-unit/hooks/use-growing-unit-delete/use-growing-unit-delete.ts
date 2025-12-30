@@ -6,33 +6,33 @@ import { useGrowingUnits } from '@repo/sdk';
  * Uses SDK directly since backend handles all validation
  */
 export function useGrowingUnitDelete() {
-  const { delete: remove } = useGrowingUnits();
+	const { delete: remove } = useGrowingUnits();
 
-  const handleDelete = async (
-    id: string,
-    onSuccess?: () => void,
-    onError?: (error: Error) => void,
-  ) => {
-    try {
-      const input: DeleteGrowingUnitInput = { id };
+	const handleDelete = async (
+		id: string,
+		onSuccess?: () => void,
+		onError?: (error: Error) => void,
+	) => {
+		try {
+			const input: DeleteGrowingUnitInput = { id };
 
-      const result = await remove.mutate(input);
+			const result = await remove.mutate(input);
 
-      if (result?.success) {
-        onSuccess?.();
-      }
-    } catch (error) {
-      const deleteError =
-        error instanceof Error
-          ? error
-          : new Error('Growing unit delete failed');
-      onError?.(deleteError);
-    }
-  };
+			if (result?.success) {
+				onSuccess?.();
+			}
+		} catch (error) {
+			const deleteError =
+				error instanceof Error
+					? error
+					: new Error('Growing unit delete failed');
+			onError?.(deleteError);
+		}
+	};
 
-  return {
-    handleDelete,
-    isLoading: remove.loading,
-    error: remove.error,
-  };
+	return {
+		handleDelete,
+		isLoading: remove.loading,
+		error: remove.error,
+	};
 }

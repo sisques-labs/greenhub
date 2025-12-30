@@ -9,24 +9,24 @@ import { z } from 'zod';
  * @returns Zod schema for growing unit update form validation
  */
 export function createGrowingUnitUpdateSchema(
-  translations: (key: string) => string,
+	translations: (key: string) => string,
 ) {
-  return z.object({
-    id: z.string().min(1, translations('growingUnit.validation.id.required')),
-    name: z.string().optional(),
-    type: z
-      .enum(['POT', 'GARDEN_BED', 'HANGING_BASKET', 'WINDOW_BOX'])
-      .optional(),
-    capacity: z.number().optional(),
-    length: z.number().optional(),
-    width: z.number().optional(),
-    height: z.number().optional(),
-    unit: z
-      .enum(['MILLIMETER', 'CENTIMETER', 'METER', 'INCH', 'FOOT'])
-      .optional(),
-  });
+	return z.object({
+		id: z.string().min(1, translations('growingUnit.validation.id.required')),
+		name: z.string().optional(),
+		type: z
+			.enum(['POT', 'GARDEN_BED', 'HANGING_BASKET', 'WINDOW_BOX'])
+			.optional(),
+		capacity: z.number().optional(),
+		length: z.number().optional(),
+		width: z.number().optional(),
+		height: z.number().optional(),
+		unit: z
+			.enum(['MILLIMETER', 'CENTIMETER', 'METER', 'INCH', 'FOOT'])
+			.optional(),
+	});
 }
 
 export type GrowingUnitUpdateFormValues = z.infer<
-  ReturnType<typeof createGrowingUnitUpdateSchema>
+	ReturnType<typeof createGrowingUnitUpdateSchema>
 >;

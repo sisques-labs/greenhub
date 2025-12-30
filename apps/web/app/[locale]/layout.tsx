@@ -8,55 +8,55 @@ import Providers from '@/shared/providers/providers';
 import '../globals.css';
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+	variable: '--font-geist-sans',
+	subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+	variable: '--font-geist-mono',
+	subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: 'Sisques Labs',
-  description: 'Sisques Labs Web App',
+	title: 'Sisques Labs',
+	description: 'Sisques Labs Web App',
 };
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+	return routing.locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({
-  children,
-  params,
+	children,
+	params,
 }: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+	children: React.ReactNode;
+	params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = await params;
+	const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
-  // biome-ignore lint/suspicious/noExplicitAny: next-intl routing.locales type is readonly array and doesn't match string type
-  if (!routing.locales.includes(locale as any)) {
-    notFound();
-  }
+	// Ensure that the incoming `locale` is valid
+	// biome-ignore lint/suspicious/noExplicitAny: next-intl routing.locales type is readonly array and doesn't match string type
+	if (!routing.locales.includes(locale as any)) {
+		notFound();
+	}
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
+	// Providing all messages to the client
+	// side is the easiest way to get started
+	const messages = await getMessages();
 
-  return (
-    <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers
-          apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4100'}
-          messages={messages}
-        >
-          <AppLayoutWithSidebar>{children}</AppLayoutWithSidebar>
-        </Providers>
-      </body>
-    </html>
-  );
+	return (
+		<html lang={locale} suppressHydrationWarning>
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+			>
+				<Providers
+					apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4100'}
+					messages={messages}
+				>
+					<AppLayoutWithSidebar>{children}</AppLayoutWithSidebar>
+				</Providers>
+			</body>
+		</html>
+	);
 }

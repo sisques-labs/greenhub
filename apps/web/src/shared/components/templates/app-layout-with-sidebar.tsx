@@ -9,72 +9,72 @@ import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
 
 interface AppLayoutWithSidebarProps {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 /**
  * Layout component that wraps pages with sidebar, excluding auth routes
  */
 export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
-  const pathname = usePathname();
-  const { getSidebarData, routes } = useAppRoutes();
+	const pathname = usePathname();
+	const { getSidebarData, routes } = useAppRoutes();
 
-  // Check if current route is auth (should not show sidebar)
-  const isAuthRoute = useMemo(() => {
-    return pathname?.includes('/auth') ?? false;
-  }, [pathname]);
+	// Check if current route is auth (should not show sidebar)
+	const isAuthRoute = useMemo(() => {
+		return pathname?.includes('/auth') ?? false;
+	}, [pathname]);
 
-  // Get sidebar navigation data
-  const sidebarNavData = getSidebarData();
+	// Get sidebar navigation data
+	const sidebarNavData = getSidebarData();
 
-  // Initialize profile loading (this will sync to store)
-  useAuthProfileMe();
+	// Initialize profile loading (this will sync to store)
+	useAuthProfileMe();
 
-  // Get user profile from store (for sidebar)
-  const profile = useSidebarUserStore((state) => state.profile);
+	// Get user profile from store (for sidebar)
+	const profile = useSidebarUserStore((state) => state.profile);
 
-  // Get logout handler
-  const { handleLogout } = useAuthLogout();
+	// Get logout handler
+	const { handleLogout } = useAuthLogout();
 
-  // Prepare sidebar data with header and footer
-  const sidebarData = useMemo(() => {
-    return {
-      ...sidebarNavData,
-      header: {
-        appName: process.env.NEXT_PUBLIC_APP_NAME || 'App Name',
-        logoSrc: '/favicon.ico',
-        url: routes.home,
-      },
-      footer: {
-        avatarSrc: profile?.avatarUrl || undefined,
-        avatarFallback:
-          profile?.name?.charAt(0) || profile?.userName?.charAt(0) || 'U',
-        name: profile?.name || profile?.userName || 'User',
-        profileUrl: routes.userProfile,
-      },
-    };
-  }, [sidebarNavData, profile, routes]);
+	// Prepare sidebar data with header and footer
+	const sidebarData = useMemo(() => {
+		return {
+			...sidebarNavData,
+			header: {
+				appName: process.env.NEXT_PUBLIC_APP_NAME || 'App Name',
+				logoSrc: '/favicon.ico',
+				url: routes.home,
+			},
+			footer: {
+				avatarSrc: profile?.avatarUrl || undefined,
+				avatarFallback:
+					profile?.name?.charAt(0) || profile?.userName?.charAt(0) || 'U',
+				name: profile?.name || profile?.userName || 'User',
+				profileUrl: routes.userProfile,
+			},
+		};
+	}, [sidebarNavData, profile, routes]);
 
-  // Handle logout with user ID
-  const onLogout = useMemo(() => {
-    if (!profile?.userId) return undefined;
-    return () => handleLogout(profile.userId);
-  }, [profile, handleLogout]);
+	// Handle logout with user ID
+	const onLogout = useMemo(() => {
+		if (!profile?.userId) return undefined;
+		return () => handleLogout(profile.userId);
+	}, [profile, handleLogout]);
 
-  // If auth route, render children without sidebar
-  if (isAuthRoute) {
-    return <>{children}</>;
-  }
+	// If auth route, render children without sidebar
+	if (isAuthRoute) {
+		return <>{children}</>;
+	}
 
-  // Otherwise, render with sidebar
-  return (
-    <PageWithSidebarTemplate
-      sidebarProps={{
-        data: sidebarData,
-        onLogout,
-      }}
-    >
-      {children}
-    </PageWithSidebarTemplate>
-  );
+	// Otherwise, render with sidebar
+	return (
+		<PageWithSidebarTemplate
+			sidebarProps={{
+				data: sidebarData,
+				onLogout,
+			}}
+		>
+			{children}
+		</PageWithSidebarTemplate>
+	);
 }

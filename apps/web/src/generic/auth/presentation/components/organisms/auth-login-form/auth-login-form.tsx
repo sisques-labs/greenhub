@@ -10,64 +10,64 @@ import { AuthErrorMessage } from '@/generic/auth/presentation/components/molecul
 import { AuthPasswordField } from '@/generic/auth/presentation/components/molecules/auth-password-field/auth-password-field';
 import { AuthSubmitButton } from '@/generic/auth/presentation/components/molecules/auth-submit-button/auth-submit-button';
 import {
-  AuthLoginByEmailFormValues,
-  createAuthLoginByEmailSchema,
+	AuthLoginByEmailFormValues,
+	createAuthLoginByEmailSchema,
 } from '@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
 import { useAuthPageStore } from '@/generic/auth/presentation/stores/auth-page-store';
 
 interface AuthLoginFormProps {
-  onSubmit: (values: AuthLoginByEmailFormValues) => Promise<void>;
-  isLoading: boolean;
-  error: Error | null;
+	onSubmit: (values: AuthLoginByEmailFormValues) => Promise<void>;
+	isLoading: boolean;
+	error: Error | null;
 }
 
 export function AuthLoginForm({
-  onSubmit,
-  isLoading,
-  error,
+	onSubmit,
+	isLoading,
+	error,
 }: AuthLoginFormProps) {
-  const t = useTranslations();
-  const { email, password, setEmail, setPassword } = useAuthPageStore();
+	const t = useTranslations();
+	const { email, password, setEmail, setPassword } = useAuthPageStore();
 
-  // Create schema with translations
-  const loginSchema = useMemo(
-    () => createAuthLoginByEmailSchema((key: string) => t(key)),
-    [t],
-  );
+	// Create schema with translations
+	const loginSchema = useMemo(
+		() => createAuthLoginByEmailSchema((key: string) => t(key)),
+		[t],
+	);
 
-  // Login form - initialized with store values
-  const form = useForm<AuthLoginByEmailFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: email,
-      password: password,
-    },
-  });
+	// Login form - initialized with store values
+	const form = useForm<AuthLoginByEmailFormValues>({
+		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			email: email,
+			password: password,
+		},
+	});
 
-  return (
-    // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-    <Form {...(form as any)}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <AuthEmailField
-          control={form.control}
-          name="email"
-          disabled={isLoading}
-          onEmailChange={setEmail}
-        />
-        <AuthPasswordField
-          control={form.control}
-          name="password"
-          disabled={isLoading}
-          placeholder="login"
-          onPasswordChange={setPassword}
-        />
-        <AuthErrorMessage error={error} />
-        <AuthSubmitButton
-          isLoading={isLoading}
-          disabled={isLoading}
-          mode="login"
-        />
-      </form>
-    </Form>
-  );
+	return (
+		// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
+		<Form {...(form as any)}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+				<AuthEmailField
+					control={form.control}
+					name="email"
+					disabled={isLoading}
+					onEmailChange={setEmail}
+				/>
+				<AuthPasswordField
+					control={form.control}
+					name="password"
+					disabled={isLoading}
+					placeholder="login"
+					onPasswordChange={setPassword}
+				/>
+				<AuthErrorMessage error={error} />
+				<AuthSubmitButton
+					isLoading={isLoading}
+					disabled={isLoading}
+					mode="login"
+				/>
+			</form>
+		</Form>
+	);
 }

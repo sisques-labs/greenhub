@@ -10,29 +10,29 @@ import { z } from 'zod';
  * @returns Zod schema for plant create form validation
  */
 export function createPlantCreateSchema(translations: (key: string) => string) {
-  return z.object({
-    name: z.string().min(1, translations('plant.validation.name.required')),
-    species: z
-      .string()
-      .min(1, translations('plant.validation.species.required')),
-    plantedDate: z.date().optional(),
-    notes: z.string().optional(),
-    status: z
-      .string()
-      .refine(
-        (value) =>
-          Object.values(PLANT_STATUS as Record<string, string>).includes(value),
-        {
-          message: translations('plant.validation.status.invalid'),
-        },
-      )
-      .optional(),
-    growingUnitId: z
-      .string()
-      .min(1, translations('plant.validation.growingUnitId.required')),
-  });
+	return z.object({
+		name: z.string().min(1, translations('plant.validation.name.required')),
+		species: z
+			.string()
+			.min(1, translations('plant.validation.species.required')),
+		plantedDate: z.date().optional(),
+		notes: z.string().optional(),
+		status: z
+			.string()
+			.refine(
+				(value) =>
+					Object.values(PLANT_STATUS as Record<string, string>).includes(value),
+				{
+					message: translations('plant.validation.status.invalid'),
+				},
+			)
+			.optional(),
+		growingUnitId: z
+			.string()
+			.min(1, translations('plant.validation.growingUnitId.required')),
+	});
 }
 
 export type PlantCreateFormValues = z.infer<
-  ReturnType<typeof createPlantCreateSchema>
+	ReturnType<typeof createPlantCreateSchema>
 >;

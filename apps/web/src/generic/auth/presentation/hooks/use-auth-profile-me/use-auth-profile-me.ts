@@ -8,29 +8,29 @@ import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
  * Synchronizes profile with sidebar user store
  */
 export function useAuthProfileMe(options?: { autoFetch?: boolean }) {
-  const { profileMe } = useAuth();
-  const autoFetch = options?.autoFetch ?? true;
-  const { setProfile } = useSidebarUserStore();
+	const { profileMe } = useAuth();
+	const autoFetch = options?.autoFetch ?? true;
+	const { setProfile } = useSidebarUserStore();
 
-  // Sync profile to store when it changes
-  useEffect(() => {
-    if (profileMe.data) {
-      setProfile(profileMe.data);
-    }
-  }, [profileMe.data, setProfile]);
+	// Sync profile to store when it changes
+	useEffect(() => {
+		if (profileMe.data) {
+			setProfile(profileMe.data);
+		}
+	}, [profileMe.data, setProfile]);
 
-  useEffect(() => {
-    if (autoFetch) {
-      profileMe.fetch();
-    }
-  }, [autoFetch]);
+	useEffect(() => {
+		if (autoFetch) {
+			profileMe.fetch();
+		}
+	}, [autoFetch]);
 
-  return {
-    profile: profileMe.data || null,
-    isLoading: profileMe.loading,
-    error: profileMe.error,
-    refetch: () => {
-      profileMe.fetch();
-    },
-  };
+	return {
+		profile: profileMe.data || null,
+		isLoading: profileMe.loading,
+		error: profileMe.error,
+		refetch: () => {
+			profileMe.fetch();
+		},
+	};
 }

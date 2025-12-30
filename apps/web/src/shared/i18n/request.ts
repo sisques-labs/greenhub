@@ -2,16 +2,16 @@ import { getRequestConfig } from 'next-intl/server';
 import { routing } from '@/shared/i18n/routing';
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  // This typically corresponds to the `[locale]` segment
-  let locale = await requestLocale;
+	// This typically corresponds to the `[locale]` segment
+	let locale = await requestLocale;
 
-  // Ensure that the incoming locale is valid
-  if (!locale || !routing.locales.includes(locale as 'en' | 'es')) {
-    locale = routing.defaultLocale;
-  }
+	// Ensure that the incoming locale is valid
+	if (!locale || !routing.locales.includes(locale as 'en' | 'es')) {
+		locale = routing.defaultLocale;
+	}
 
-  return {
-    locale: locale as string,
-    messages: (await import(`@/shared/locales/${locale}.json`)).default,
-  };
+	return {
+		locale: locale as string,
+		messages: (await import(`@/shared/locales/${locale}.json`)).default,
+	};
 });
