@@ -41,7 +41,7 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
     return {
       ...sidebarNavData,
       header: {
-        appName: 'App Name', // TODO: Get from config or env
+        appName: process.env.NEXT_PUBLIC_APP_NAME || 'App Name',
         logoSrc: '/favicon.ico',
         url: routes.home,
       },
