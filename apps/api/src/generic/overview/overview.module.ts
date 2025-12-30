@@ -1,4 +1,3 @@
-import { PlantContextModule } from '@/core/plant-context/plant-context.module';
 import { OverviewUpdatedEventHandler } from '@/generic/overview/application/event-handlers/overview-updated/overview-updated.event-handler';
 import { OverviewFindViewModelQueryHandler } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query-handler';
 import { AssertOverviewViewModelExistsService } from '@/generic/overview/application/services/assert-overview-view-model-exists/assert-overview-view-model-exists.service';
@@ -9,8 +8,10 @@ import { OverviewCalculateGrowingUnitMetricsService } from '@/generic/overview/a
 import { OverviewCalculatePlantMetricsService } from '@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service';
 import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { OVERVIEW_READ_REPOSITORY_TOKEN } from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
+import { OverviewMongoDBMapper } from '@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper';
+import { OverviewMongoRepository } from '@/generic/overview/infrastructure/database/mongodb/repositories/overview-mongodb.repository';
 import { SharedModule } from '@/shared/shared.module';
-import { MathModule } from '@/support/math/math.module';
 import { Module } from '@nestjs/common';
 
 const QUERY_HANDLERS = [OverviewFindViewModelQueryHandler];
@@ -29,10 +30,25 @@ const EVENT_HANDLERS = [OverviewUpdatedEventHandler];
 
 const FACTORIES = [OverviewViewModelFactory];
 
+const MAPPERS = [OverviewMongoDBMapper];
+
+const REPOSITORIES = [
+  {
+    provide: OVERVIEW_READ_REPOSITORY_TOKEN,
+    useClass: OverviewMongoRepository,
+  },
+];
+
 @Module({
-  imports: [SharedModule, PlantContextModule, MathModule],
+  imports: [SharedModule],
   controllers: [],
-  providers: [...QUERY_HANDLERS, ...EVENT_HANDLERS, ...SERVICES, ...FACTORIES],
-  exports: [...SERVICES],
+  providers: [
+    ...QUERY_HANDLERS,
+    ...EVENT_HANDLERS,
+    ...SERVICES,
+    ...FACTORIES,
+    ...MAPPERS,
+    ...REPOSITORIES,
+  ],
 })
 export class OverviewModule {}
