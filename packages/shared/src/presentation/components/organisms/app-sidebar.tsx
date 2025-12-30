@@ -30,7 +30,7 @@ export function AppSidebar({ data, onLogout, ...props }: AppSidebarProps) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild size="lg" variant="outline">
+            <SidebarMenuButton asChild size="lg">
               <a href={data.header.url || '#'}>
                 {data.header.logoSrc && (
                   <img
