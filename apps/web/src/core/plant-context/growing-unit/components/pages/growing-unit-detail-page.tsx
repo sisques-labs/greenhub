@@ -25,7 +25,7 @@ import {
 	PlusIcon,
 	SunIcon,
 } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { GrowingUnitUpdateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-update-form/growing-unit-update-form';
 import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
@@ -36,12 +36,9 @@ import { PlantCreateForm } from '@/core/plant-context/plant/components/organisms
 import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
 import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
 import { usePlantAdd } from '@/core/plant-context/plant/hooks/use-plant-add/use-plant-add';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
 
 export function GrowingUnitDetailPage() {
 	const t = useTranslations();
-	const router = useRouter();
-	const { routes } = useAppRoutes();
 	const params = useParams();
 	const id = params?.id as string;
 

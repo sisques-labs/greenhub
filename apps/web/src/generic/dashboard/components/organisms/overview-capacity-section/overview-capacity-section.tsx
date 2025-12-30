@@ -30,7 +30,7 @@ export function OverviewCapacitySection({
 	overview,
 	isLoading = false,
 }: OverviewCapacitySectionProps) {
-	const t = useTranslations('dashboard');
+	const _t = useTranslations('dashboard');
 
 	if (isLoading || !overview) {
 		return (
@@ -57,7 +57,7 @@ export function OverviewCapacitySection({
 		return 'text-green-600';
 	};
 
-	const getOccupancyBgColor = (percentage: number) => {
+	const _getOccupancyBgColor = (percentage: number) => {
 		if (percentage >= 90) return 'bg-red-500';
 		if (percentage >= 80) return 'bg-orange-500';
 		if (percentage >= 50) return 'bg-yellow-500';

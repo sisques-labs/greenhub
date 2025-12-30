@@ -23,7 +23,7 @@ export function useAuthProfileMe(options?: { autoFetch?: boolean }) {
 		if (autoFetch) {
 			profileMe.fetch();
 		}
-	}, [autoFetch]);
+	}, [autoFetch, profileMe.fetch]);
 
 	return {
 		profile: profileMe.data || null,

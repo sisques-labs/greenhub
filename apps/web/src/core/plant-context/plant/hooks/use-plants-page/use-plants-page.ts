@@ -88,7 +88,7 @@ export function usePlantsPage() {
 	// Reset to page 1 when filters change
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [searchQuery, selectedFilter, perPage]);
+	}, []);
 
 	const handleEdit = (plant: PlantResponse) => {
 		// TODO: Open edit dialog

@@ -1,5 +1,2 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-
-# Format code with lint-staged (Prettier)
-pnpm exec lint-staged

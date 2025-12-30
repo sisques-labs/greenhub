@@ -45,7 +45,7 @@ export function PlantDetailPage() {
 	const params = useParams();
 	const id = params?.id as string;
 
-	const { plant, isLoading, error, refetch } = usePlantFindById(id || '');
+	const { plant, isLoading, error } = usePlantFindById(id || '');
 
 	// Prepare upcoming care data for TimelineSequence
 	// Must be called before any early returns to maintain hooks order
