@@ -41,11 +41,11 @@ export function PlantsPage() {
   const paginationInput = useMemo(
     () => ({
       pagination: {
-        page: 1,
-        perPage: 100, // Get all growing units to show all plants
+        page: currentPage,
+        perPage,
       },
     }),
-    [],
+    [perPage],
   );
 
   const { growingUnits, isLoading, error } =
@@ -82,16 +82,6 @@ export function PlantsPage() {
   const handleDelete = (id: string) => {
     // TODO: Open delete confirmation
   };
-
-  // Create a map of growingUnitId -> growingUnitName
-  const growingUnitNameMap = useMemo(() => {
-    if (!growingUnits) return new Map<string, string>();
-    const map = new Map<string, string>();
-    growingUnits.items.forEach((unit) => {
-      map.set(unit.id, unit.name);
-    });
-    return map;
-  }, [growingUnits]);
 
   // Flatten all plants from all growing units and apply filters
   const allFilteredPlants = useMemo(() => {

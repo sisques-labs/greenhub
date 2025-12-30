@@ -73,14 +73,14 @@ export function TableLayout({
   };
 
   const renderPagination = () => {
-    if (totalPages <= 1) return null;
-
+    // Always show pagination, even if there's only one page or no pages
+    const effectiveTotalPages = Math.max(1, totalPages);
     const pages: (number | 'ellipsis')[] = [];
     const maxVisible = 7;
 
-    if (totalPages <= maxVisible) {
+    if (effectiveTotalPages <= maxVisible) {
       // Show all pages
-      for (let i = 1; i <= totalPages; i++) {
+      for (let i = 1; i <= effectiveTotalPages; i++) {
         pages.push(i);
       }
     } else {
@@ -92,17 +92,17 @@ export function TableLayout({
       }
 
       const start = Math.max(2, page - 1);
-      const end = Math.min(totalPages - 1, page + 1);
+      const end = Math.min(effectiveTotalPages - 1, page + 1);
 
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
 
-      if (page < totalPages - 2) {
+      if (page < effectiveTotalPages - 2) {
         pages.push('ellipsis');
       }
 
-      pages.push(totalPages);
+      pages.push(effectiveTotalPages);
     }
 
     return (
@@ -137,7 +137,8 @@ export function TableLayout({
               size="default"
               onClick={() => handlePageChange(page + 1)}
               className={cn(
-                page === totalPages && 'pointer-events-none opacity-50',
+                page === effectiveTotalPages &&
+                  'pointer-events-none opacity-50',
               )}
             />
           </PaginationItem>
@@ -176,44 +177,42 @@ export function TableLayout({
       {children}
 
       {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between gap-4">
-          {/* Per Page Selector */}
-          {onPerPageChange && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                Items per page:
-              </span>
-              <Select
-                value={perPage.toString()}
-                onValueChange={(value) => {
-                  const newPerPage = parseInt(value, 10);
-                  if (onPerPageChange) {
-                    onPerPageChange(newPerPage);
-                  }
-                  // Reset to page 1 when changing per page
-                  if (onPageChange) {
-                    onPageChange(1);
-                  }
-                }}
-              >
-                <SelectTrigger className="w-[100px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="25">25</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+      <div className="flex items-center justify-between gap-4">
+        {/* Per Page Selector */}
+        {onPerPageChange && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">
+              Items per page:
+            </span>
+            <Select
+              value={perPage.toString()}
+              onValueChange={(value) => {
+                const newPerPage = parseInt(value, 10);
+                if (onPerPageChange) {
+                  onPerPageChange(newPerPage);
+                }
+                // Reset to page 1 when changing per page
+                if (onPageChange) {
+                  onPageChange(1);
+                }
+              }}
+            >
+              <SelectTrigger className="w-[100px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="25">25</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
-          {/* Pagination */}
-          <div className="ml-auto">{renderPagination()}</div>
-        </div>
-      )}
+        {/* Pagination */}
+        <div className="ml-auto">{renderPagination()}</div>
+      </div>
     </div>
   );
 }
