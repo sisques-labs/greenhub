@@ -2,6 +2,7 @@ import {
   AppSidebar,
   AppSidebarProps,
 } from '@repo/shared/presentation/components/organisms/app-sidebar';
+import { DesktopHeader } from '@repo/shared/presentation/components/organisms/desktop-header/desktop-header';
 import { MobileHeader } from '@repo/shared/presentation/components/organisms/mobile-header/mobile-header';
 import PageTemplate from '@repo/shared/presentation/components/templates/page-template';
 import {
@@ -28,6 +29,7 @@ const PageWithSidebarTemplate = ({
           logoSrc={sidebarProps.data.header.logoSrc}
           logoUrl={sidebarProps.data.header.url}
         />
+        <DesktopHeader />
         <PageTemplate>{children}</PageTemplate>
       </SidebarInset>
     </SidebarProvider>
