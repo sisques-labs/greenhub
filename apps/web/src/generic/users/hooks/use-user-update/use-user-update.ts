@@ -1,4 +1,4 @@
-import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
+import type { UserUpdateFormValues } from '@/generic/users/dtos/schemas/user-update/user-update.schema';
 import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
 import type { UpdateUserInput, UserRole, UserStatus } from '@repo/sdk';
 import { useUsers } from '@repo/sdk';
