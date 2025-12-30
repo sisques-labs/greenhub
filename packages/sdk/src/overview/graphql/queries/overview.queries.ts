@@ -1,6 +1,6 @@
 export const OVERVIEW_FIND_QUERY = `
-  query FindOverview {
-    findOverview {
+  query OverviewFind {
+    overviewFind {
       id
       totalPlants
       totalActivePlants

@@ -12,11 +12,11 @@ export class OverviewClient {
    */
   async find(): Promise<OverviewResponse | null> {
     const result = await this.client.request<{
-      findOverview: OverviewResponse | null;
+      overviewFind: OverviewResponse | null;
     }>({
       query: OVERVIEW_FIND_QUERY,
     });
 
-    return result.findOverview;
+    return result.overviewFind;
   }
 }

@@ -1,42 +1,39 @@
 'use client';
 
-import { DashboardStatsCards } from '@/generic/dashboard/components/organisms/dashboard-stats-cards/dashboard-stats-cards';
-import { GrowingUnitsStatusSection } from '@/generic/dashboard/components/organisms/growing-units-status-section/growing-units-status-section';
-import { RecentAlertsSection } from '@/generic/dashboard/components/organisms/recent-alerts-section/recent-alerts-section';
-import { TodayTasksSection } from '@/generic/dashboard/components/organisms/today-tasks-section/today-tasks-section';
+import { OverviewCapacitySection } from '@/generic/dashboard/components/organisms/overview-capacity-section/overview-capacity-section';
+import { OverviewGrowingUnitsSection } from '@/generic/dashboard/components/organisms/overview-growing-units-section/overview-growing-units-section';
+import { OverviewPlantsSection } from '@/generic/dashboard/components/organisms/overview-plants-section/overview-plants-section';
+import { OverviewStatsCards } from '@/generic/dashboard/components/organisms/overview-stats-cards/overview-stats-cards';
 import { useDashboardPage } from '@/generic/dashboard/hooks/use-dashboard-page/use-dashboard-page';
 import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Button } from '@repo/shared/presentation/components/ui/button';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 /**
  * Dashboard page component
- * Main dashboard that displays overview of plants, growing units, alerts, and tasks
+ * Main dashboard that displays comprehensive overview of the entire system
  */
 export function DashboardPage() {
   const t = useTranslations('dashboard');
   const { routes } = useAppRoutes();
-  const {
-    stats,
-    recentGrowingUnits,
-    recentAlerts,
-    todayTasks,
-    isLoading,
-    error,
-  } = useDashboardPage();
+  const { overview, isLoading, error } = useDashboardPage();
 
   if (error) {
     return (
       <div className="mx-auto py-8">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-destructive">
+        <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+          <p className="text-destructive text-lg font-medium">
             {t('error.loading', {
               message: (error as Error).message,
             })}
           </p>
+          <Button onClick={() => window.location.reload()} variant="outline">
+            <RefreshCwIcon className="mr-2 h-4 w-4" />
+            Retry
+          </Button>
         </div>
       </div>
     );
@@ -58,30 +55,22 @@ export function DashboardPage() {
         ]}
       />
 
-      {/* Statistics Cards */}
-      <DashboardStatsCards
-        totalPlants={stats.totalPlants}
-        activeUnits={stats.activeUnits}
-        readyForHarvest={stats.readyForHarvest}
-        criticalAlerts={stats.criticalAlerts}
-        isLoading={isLoading}
-      />
+      {/* Main Statistics Cards */}
+      <OverviewStatsCards overview={overview} isLoading={isLoading} />
+
+      {/* Plants Overview Section */}
+      <OverviewPlantsSection overview={overview} isLoading={isLoading} />
 
       {/* Main Content Grid */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Growing Units Status */}
-        <div className="lg:col-span-2">
-          <GrowingUnitsStatusSection
-            growingUnits={recentGrowingUnits}
-            isLoading={isLoading}
-          />
-        </div>
+        {/* Capacity Overview */}
+        <OverviewCapacitySection overview={overview} isLoading={isLoading} />
 
-        {/* Recent Alerts */}
-        <RecentAlertsSection alerts={recentAlerts} isLoading={isLoading} />
-
-        {/* Today's Tasks */}
-        <TodayTasksSection tasks={todayTasks} isLoading={isLoading} />
+        {/* Growing Units Overview */}
+        <OverviewGrowingUnitsSection
+          overview={overview}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
