@@ -444,6 +444,107 @@ type PaginatedUserResultDto {
   items: [UserResponseDto!]!
 }
 
+type OverviewResponseDto {
+  """The id of the overview"""
+  id: String!
+
+  """The total number of plants"""
+  totalPlants: Float!
+
+  """The total number of active plants (not dead, not archived)"""
+  totalActivePlants: Float!
+
+  """The average number of plants per growing unit"""
+  averagePlantsPerGrowingUnit: Float!
+
+  """The number of plants with PLANTED status"""
+  plantsPlanted: Float!
+
+  """The number of plants with GROWING status"""
+  plantsGrowing: Float!
+
+  """The number of plants with HARVESTED status"""
+  plantsHarvested: Float!
+
+  """The number of plants with DEAD status"""
+  plantsDead: Float!
+
+  """The number of plants with ARCHIVED status"""
+  plantsArchived: Float!
+
+  """The number of plants without a planted date"""
+  plantsWithoutPlantedDate: Float!
+
+  """The number of plants with notes"""
+  plantsWithNotes: Float!
+
+  """The number of plants created in the last 7 days"""
+  recentPlants: Float!
+
+  """The total number of growing units"""
+  totalGrowingUnits: Float!
+
+  """The number of growing units with at least 1 plant"""
+  activeGrowingUnits: Float!
+
+  """The number of growing units without plants"""
+  emptyGrowingUnits: Float!
+
+  """The number of growing units of type POT"""
+  growingUnitsPot: Float!
+
+  """The number of growing units of type GARDEN_BED"""
+  growingUnitsGardenBed: Float!
+
+  """The number of growing units of type HANGING_BASKET"""
+  growingUnitsHangingBasket: Float!
+
+  """The number of growing units of type WINDOW_BOX"""
+  growingUnitsWindowBox: Float!
+
+  """The total capacity across all growing units"""
+  totalCapacity: Float!
+
+  """The total capacity used across all growing units"""
+  totalCapacityUsed: Float!
+
+  """The average occupancy percentage across all growing units"""
+  averageOccupancy: Float!
+
+  """The number of growing units at limit (>= 80% occupancy)"""
+  growingUnitsAtLimit: Float!
+
+  """The number of growing units at full capacity (100% occupancy)"""
+  growingUnitsFull: Float!
+
+  """The total remaining capacity across all growing units"""
+  totalRemainingCapacity: Float!
+
+  """The number of growing units with dimensions"""
+  growingUnitsWithDimensions: Float!
+
+  """The total volume of growing units with dimensions"""
+  totalVolume: Float!
+
+  """The average volume of growing units with dimensions"""
+  averageVolume: Float!
+
+  """The minimum number of plants per growing unit"""
+  minPlantsPerGrowingUnit: Float!
+
+  """The maximum number of plants per growing unit"""
+  maxPlantsPerGrowingUnit: Float!
+
+  """The median number of plants per growing unit"""
+  medianPlantsPerGrowingUnit: Float!
+
+  """The created at timestamp of the overview"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the overview"""
+  updatedAt: DateTime!
+}
+
 type HealthResponseDto {
   """The status of the check"""
   status: String!
@@ -475,6 +576,7 @@ type Query {
   sagaLogFindByCriteria(input: SagaLogFindByCriteriaRequestDto): PaginatedSagaLogResultDto!
   usersFindByCriteria(input: UserFindByCriteriaRequestDto): PaginatedUserResultDto!
   userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
+  overviewFind: OverviewResponseDto
 }
 
 input GrowingUnitFindByCriteriaRequestDto {

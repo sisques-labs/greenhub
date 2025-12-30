@@ -33,7 +33,7 @@ export class OverviewQueriesResolver {
    * @returns A promise resolving to the overview if found, null otherwise
    */
   @Query(() => OverviewResponseDto, { nullable: true })
-  async findOverview(): Promise<OverviewResponseDto | null> {
+  async overviewFind(): Promise<OverviewResponseDto | null> {
     this.logger.log('Finding overview');
 
     // 01: Execute query
