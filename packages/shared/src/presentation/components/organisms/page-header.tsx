@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@repo/shared/presentation/lib/utils';
 import * as React from 'react';
 
 export interface PageHeaderProps {
@@ -24,6 +25,7 @@ export interface PageHeaderProps {
 /**
  * PageHeader component
  * Displays a page title, optional description, and action buttons
+ * Responsive: stacks vertically on mobile, horizontal on desktop
  */
 export function PageHeader({
   title,
@@ -32,13 +34,20 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <div className={`flex items-center justify-between ${className || ''}`}>
-      <div>
-        <h1 className="text-3xl font-bold">{title}</h1>
+    <div
+      className={cn(
+        'flex flex-col gap-4 md:flex-row md:items-center md:justify-between',
+        className,
+      )}
+    >
+      <div className="flex-1">
+        <h1 className="text-2xl font-bold md:text-3xl">{title}</h1>
         {description && (
           <div className="mt-1">
             {typeof description === 'string' ? (
-              <p className="text-muted-foreground">{description}</p>
+              <p className="text-sm text-muted-foreground md:text-base">
+                {description}
+              </p>
             ) : (
               description
             )}
@@ -46,7 +55,7 @@ export function PageHeader({
         )}
       </div>
       {actions.length > 0 && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           {actions.map((action, index) => (
             <React.Fragment key={index}>{action}</React.Fragment>
           ))}
