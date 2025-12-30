@@ -1,10 +1,9 @@
-import { useAuth } from '@repo/sdk';
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
-import { useMemo } from 'react';
 import { AuthRegisterService } from '@/generic/auth/application/services/auth-register/auth-register.service';
 import type { AuthRegisterByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-register-by-email/auth-register-by-email.schema';
-import { useRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAppRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAuth } from '@repo/sdk';
+import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 /**
  * Hook that provides registration functionality using the AuthRegisterService
@@ -13,8 +12,7 @@ import { useRoutes } from '@/shared/presentation/hooks/use-routes';
  */
 export function useAuthRegister() {
   const router = useRouter();
-  const locale = useLocale();
-  const { routes } = useRoutes();
+  const { routes } = useAppRoutes();
   const { registerByEmail, loginByEmail } = useAuth();
 
   // Create service instance with SDK register client
@@ -45,13 +43,13 @@ export function useAuthRegister() {
 
           // 02: If login is successful, redirect to dashboard
           if (loginResult && loginResult.accessToken) {
-            router.push(`/${locale}${routes.home}`);
+            router.push(`${routes.home}`);
           }
         } catch (error) {
           // If auto-login fails, still redirect to auth page
           // The user can manually log in with their credentials
           console.error('Auto-login after registration error:', error);
-          router.push(`/${locale}${routes.auth}`);
+          router.push(`${routes.auth}`);
         }
       },
       onError: (error) => {

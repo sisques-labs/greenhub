@@ -1,8 +1,8 @@
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
-import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
-export const useRoutes = () => {
+export const useAppRoutes = () => {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('nav');

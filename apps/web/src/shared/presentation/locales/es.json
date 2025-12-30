@@ -282,6 +282,107 @@
       "targetGrowingUnitId": {
         "required": "El ID de la unidad de cultivo destino es requerido"
       }
+    },
+    "detail": {
+      "image": {
+        "placeholder": "Imagen de la planta"
+      },
+      "location": {
+        "indoor": "INTERIOR",
+        "outdoor": "EXTERIOR"
+      },
+      "actions": {
+        "registerWatering": "Registrar Riego",
+        "fertilize": "Fertilizar"
+      },
+      "metrics": {
+        "title": "Requisitos de Cuidado",
+        "watering": {
+          "label": "RIEGO",
+          "every7Days": "Cada 7 días"
+        },
+        "light": {
+          "label": "LUZ",
+          "indirect": "Indirecta"
+        },
+        "temperature": {
+          "label": "TEMP"
+        },
+        "humidity": {
+          "label": "HUMEDAD",
+          "high": "Alta"
+        }
+      },
+      "currentStatus": {
+        "lastWatering": {
+          "label": "Último Riego",
+          "onTime": "A tiempo",
+          "daysAgo": "Hace {days} días",
+          "next": "Próximo",
+          "tomorrow": "Mañana"
+        },
+        "lastFertilization": {
+          "label": "Última Fertilización",
+          "pending": "Pendiente",
+          "monthAgo": "Hace {months} mes{months, plural, =1 {} other {es}}",
+          "suggested": "Sugerido",
+          "today": "Hoy"
+        },
+        "plantingDate": {
+          "label": "Fecha de Plantación",
+          "age": "Edad"
+        }
+      },
+      "age": {
+        "yearsMonths": "{years} año {months} meses",
+        "years": "{years} año",
+        "months": "{months} meses",
+        "days": "{days} días"
+      },
+      "personalNotes": {
+        "title": "Notas Personales",
+        "edit": "Editar Notas",
+        "empty": "Aún no hay notas personales. ¡Agrega algunas notas sobre tu rutina de cuidado de plantas!"
+      },
+      "upcomingCare": {
+        "title": "Próximos Cuidados",
+        "tomorrow": "MAÑANA",
+        "lightWatering": "Riego Ligero",
+        "in5Days": "EN 5 DÍAS",
+        "cleanLeaves": "Limpiar Hojas",
+        "duringDay": "Durante el día",
+        "in2Weeks": "EN 2 SEMANAS",
+        "fertilization": "Fertilización",
+        "spring": "Primavera"
+      },
+      "recentHistory": {
+        "title": "Historial Reciente",
+        "viewAll": "Ver todo",
+        "today": "Hoy",
+        "watering": "Riego",
+        "wateringDetails": "250ml de agua filtrada",
+        "pruning": "Poda",
+        "pruningDetails": "Hojas amarillas inferiores",
+        "fertilization": "Fertilización",
+        "fertilizationDetails": "Fertilizante líquido NPK 20-20-20",
+        "completed": "Completado",
+        "table": {
+          "date": "FECHA",
+          "action": "ACCIÓN",
+          "details": "DETALLES",
+          "status": "ESTADO"
+        }
+      },
+      "progressGallery": {
+        "title": "Galería de Progreso",
+        "more": "más"
+      },
+      "wiki": {
+        "title": "Wiki Planta",
+        "didYouKnow": "Sabías que...",
+        "description": "La Monstera Deliciosa también es conocida como 'Costilla de Adán' debido a la forma única de sus hojas que desarrollan agujeros naturales (fenestraciones) a medida que maduran.",
+        "readMore": "LEER MÁS"
+      }
     }
   },
   "growingUnit": {

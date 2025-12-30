@@ -5,6 +5,7 @@ import {
   PlantCreateFormValues,
 } from '@/core/plant-context/presentation/dtos/schemas/plant-create/plant-create.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { PLANT_STATUS } from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
   Dialog,
@@ -68,7 +69,7 @@ export function PlantCreateForm({
       species: '',
       plantedDate: new Date(),
       notes: '',
-      status: 'PLANTED',
+      status: PLANT_STATUS.PLANTED,
       growingUnitId: growingUnitId,
     },
   });
@@ -81,7 +82,7 @@ export function PlantCreateForm({
         species: '',
         plantedDate: new Date(),
         notes: '',
-        status: 'PLANTED',
+        status: PLANT_STATUS.PLANTED,
         growingUnitId: growingUnitId,
       });
       onOpenChange(false);
@@ -195,19 +196,19 @@ export function PlantCreateForm({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="PLANTED">
+                        <SelectItem value={PLANT_STATUS.PLANTED}>
                           {t('plant.status.PLANTED')}
                         </SelectItem>
-                        <SelectItem value="GROWING">
+                        <SelectItem value={PLANT_STATUS.GROWING}>
                           {t('plant.status.GROWING')}
                         </SelectItem>
-                        <SelectItem value="HARVESTED">
+                        <SelectItem value={PLANT_STATUS.HARVESTED}>
                           {t('plant.status.HARVESTED')}
                         </SelectItem>
-                        <SelectItem value="DEAD">
+                        <SelectItem value={PLANT_STATUS.DEAD}>
                           {t('plant.status.DEAD')}
                         </SelectItem>
-                        <SelectItem value="ARCHIVED">
+                        <SelectItem value={PLANT_STATUS.ARCHIVED}>
                           {t('plant.status.ARCHIVED')}
                         </SelectItem>
                       </SelectContent>

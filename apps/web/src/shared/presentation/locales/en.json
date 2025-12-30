@@ -282,6 +282,107 @@
       "targetGrowingUnitId": {
         "required": "Target growing unit ID is required"
       }
+    },
+    "detail": {
+      "image": {
+        "placeholder": "Plant image placeholder"
+      },
+      "location": {
+        "indoor": "INDOOR",
+        "outdoor": "OUTDOOR"
+      },
+      "actions": {
+        "registerWatering": "Register Watering",
+        "fertilize": "Fertilize"
+      },
+      "metrics": {
+        "title": "Care Requirements",
+        "watering": {
+          "label": "WATERING",
+          "every7Days": "Every 7 days"
+        },
+        "light": {
+          "label": "LIGHT",
+          "indirect": "Indirect"
+        },
+        "temperature": {
+          "label": "TEMP"
+        },
+        "humidity": {
+          "label": "HUMIDITY",
+          "high": "High"
+        }
+      },
+      "currentStatus": {
+        "lastWatering": {
+          "label": "Last Watering",
+          "onTime": "On time",
+          "daysAgo": "Days ago",
+          "next": "Next",
+          "tomorrow": "Tomorrow"
+        },
+        "lastFertilization": {
+          "label": "Last Fertilization",
+          "pending": "Pending",
+          "monthAgo": "{months} month ago",
+          "suggested": "Suggested",
+          "today": "Today"
+        },
+        "plantingDate": {
+          "label": "Planting Date",
+          "age": "Age"
+        }
+      },
+      "age": {
+        "yearsMonths": "{years} year {months} months",
+        "years": "{years} year",
+        "months": "{months} months",
+        "days": "{days} days"
+      },
+      "personalNotes": {
+        "title": "Personal Notes",
+        "edit": "Edit Notes",
+        "empty": "No personal notes yet. Add some notes about your plant care routine!"
+      },
+      "upcomingCare": {
+        "title": "Upcoming Care",
+        "tomorrow": "TOMORROW",
+        "lightWatering": "Light Watering",
+        "in5Days": "IN 5 DAYS",
+        "cleanLeaves": "Clean Leaves",
+        "duringDay": "During the day",
+        "in2Weeks": "IN 2 WEEKS",
+        "fertilization": "Fertilization",
+        "spring": "Spring"
+      },
+      "recentHistory": {
+        "title": "Recent History",
+        "viewAll": "View all",
+        "today": "Today",
+        "watering": "Watering",
+        "wateringDetails": "250ml filtered water",
+        "pruning": "Pruning",
+        "pruningDetails": "Lower yellow leaves",
+        "fertilization": "Fertilization",
+        "fertilizationDetails": "Liquid fertilizer NPK 20-20-20",
+        "completed": "Completed",
+        "table": {
+          "date": "DATE",
+          "action": "ACTION",
+          "details": "DETAILS",
+          "status": "STATUS"
+        }
+      },
+      "progressGallery": {
+        "title": "Progress Gallery",
+        "more": "more"
+      },
+      "wiki": {
+        "title": "Plant Wiki",
+        "didYouKnow": "Did you know...",
+        "description": "Monstera Deliciosa is also known as 'Adam's Rib' due to the unique shape of its leaves that develop natural holes (fenestrations) as they mature.",
+        "readMore": "READ MORE"
+      }
     }
   },
   "growingUnit": {

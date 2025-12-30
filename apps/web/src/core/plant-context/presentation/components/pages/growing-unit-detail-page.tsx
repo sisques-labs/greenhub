@@ -8,6 +8,7 @@ import { useGrowingUnitFindById } from '@/core/plant-context/presentation/hooks/
 import { useGrowingUnitUpdate } from '@/core/plant-context/presentation/hooks/use-growing-unit-update/use-growing-unit-update';
 import { usePlantAdd } from '@/core/plant-context/presentation/hooks/use-plant-add/use-plant-add';
 import { useGrowingUnitDetailPageStore } from '@/core/plant-context/presentation/stores/growing-unit-detail-page-store';
+import { useAppRoutes } from '@/shared/presentation/hooks/use-routes';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -27,10 +28,12 @@ import {
   SunIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 export function GrowingUnitDetailPage() {
   const t = useTranslations();
+  const router = useRouter();
+  const { routes } = useAppRoutes();
   const params = useParams();
   const id = params?.id as string;
 
@@ -260,7 +263,13 @@ export function GrowingUnitDetailPage() {
                     </div>
                   </div>
                   <Badge variant="outline">{plant.status}</Badge>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      router.push(`${routes.plants}/${plant.id}`);
+                    }}
+                  >
                     {t('growingUnit.detail.plants.manage')}
                   </Button>
                 </div>

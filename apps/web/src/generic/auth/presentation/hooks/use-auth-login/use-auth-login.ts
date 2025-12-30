@@ -1,10 +1,9 @@
-import { useAuth } from '@repo/sdk';
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
-import { useMemo } from 'react';
 import { AuthLoginService } from '@/generic/auth/application/services/auth-login/auth-login.service';
 import { AuthLoginByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
-import { useRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAppRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useAuth } from '@repo/sdk';
+import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 /**
  * Hook that provides login functionality using the AuthLoginService
@@ -12,8 +11,7 @@ import { useRoutes } from '@/shared/presentation/hooks/use-routes';
  */
 export function useAuthLogin() {
   const router = useRouter();
-  const locale = useLocale();
-  const { routes } = useRoutes();
+  const { routes } = useAppRoutes();
   const { loginByEmail } = useAuth();
 
   // Create service instance with SDK login client
@@ -32,7 +30,7 @@ export function useAuthLogin() {
     await loginService.execute({
       credentials: values,
       onSuccess: () => {
-        router.push(`/${locale}${routes.home}`);
+        router.push(`${routes.home}`);
       },
       onError: (error) => {
         // Error handling is delegated to the SDK hook state

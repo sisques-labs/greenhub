@@ -1,12 +1,12 @@
 'use client';
 
+import { getPlantStatusBadge } from '@/core/plant-context/presentation/utils/plant-status.utils';
 import type { PlantResponse } from '@repo/sdk';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@repo/shared/presentation/components/ui/avatar';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,44 +50,6 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
     return plantDate.toLocaleDateString();
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusTranslations: Record<
-      string,
-      {
-        label: string;
-        variant: 'default' | 'secondary' | 'destructive' | 'outline';
-      }
-    > = {
-      PLANTED: {
-        label: t('plant.status.PLANTED'),
-        variant: 'outline',
-      },
-      GROWING: {
-        label: t('plant.status.GROWING'),
-        variant: 'default',
-      },
-      HARVESTED: {
-        label: t('plant.status.HARVESTED'),
-        variant: 'secondary',
-      },
-      DEAD: {
-        label: t('plant.status.DEAD'),
-        variant: 'destructive',
-      },
-      ARCHIVED: {
-        label: t('plant.status.ARCHIVED'),
-        variant: 'outline',
-      },
-    };
-
-    const statusConfig = statusTranslations[status] || {
-      label: status,
-      variant: 'outline' as const,
-    };
-
-    return <Badge variant={statusConfig.variant}>{statusConfig.label}</Badge>;
-  };
-
   const getLocationIcon = () => {
     // TODO: This should come from plant data when available
     return <HomeIcon className="h-4 w-4" />;
@@ -126,7 +88,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
           </span>
         </div>
       </TableCell>
-      <TableCell>{getStatusBadge(plant.status)}</TableCell>
+      <TableCell>{getPlantStatusBadge(plant.status, t)}</TableCell>
       <TableCell>
         <span className="text-sm text-muted-foreground">
           {formatDate(plant.updatedAt)}
@@ -141,7 +103,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem
-              onClick={() => router.push(`/${locale}/plants?id=${plant.id}`)}
+              onClick={() => router.push(`/${locale}/plants/${plant.id}`)}
             >
               {t('plants.actions.view')}
             </DropdownMenuItem>

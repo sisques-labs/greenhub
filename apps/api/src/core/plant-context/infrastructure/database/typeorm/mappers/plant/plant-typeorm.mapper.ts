@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
 import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Mapper for converting between PlantEntity domain entities and PlantTypeormEntity database entities.
@@ -35,7 +35,9 @@ export class PlantTypeormMapper {
       growingUnitId: plantEntity.growingUnitId,
       name: plantEntity.name,
       species: plantEntity.species,
-      plantedDate: plantEntity.plantedDate,
+      plantedDate: plantEntity.plantedDate
+        ? new Date(plantEntity.plantedDate)
+        : null,
       notes: plantEntity.notes,
       status: plantEntity.status,
     });
