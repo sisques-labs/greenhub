@@ -2,6 +2,7 @@ import { AuthClient } from './auth/client/auth-client.js';
 import type { AuthLogoutInput } from './auth/index.js';
 import { GrowingUnitClient } from './growing-unit/client/growing-unit-client.js';
 import { HealthClient } from './health/client/health-client.js';
+import { OverviewClient } from './overview/client/overview-client.js';
 import { PlantClient } from './plants/client/plant-client.js';
 import { SagaInstanceClient } from './saga-instance/client/saga-instance-client.js';
 import { SagaLogClient } from './saga-log/client/saga-log-client.js';
@@ -13,6 +14,7 @@ import { UserClient } from './users/client/user-client.js';
 export * from './auth/index.js';
 export * from './growing-unit/index.js';
 export * from './health/index.js';
+export * from './overview/index.js';
 export * from './plants/index.js';
 export * from './saga-instance/index.js';
 export * from './saga-log/index.js';
@@ -43,6 +45,7 @@ export class SDK {
   private plantClient: PlantClient;
   private growingUnitClient: GrowingUnitClient;
   private healthClient: HealthClient;
+  private overviewClient: OverviewClient;
   private sagaInstanceClient: SagaInstanceClient;
   private sagaStepClient: SagaStepClient;
   private sagaLogClient: SagaLogClient;
@@ -54,6 +57,7 @@ export class SDK {
     this.plantClient = new PlantClient(this.client);
     this.growingUnitClient = new GrowingUnitClient(this.client);
     this.healthClient = new HealthClient(this.client);
+    this.overviewClient = new OverviewClient(this.client);
     this.sagaInstanceClient = new SagaInstanceClient(this.client);
     this.sagaStepClient = new SagaStepClient(this.client);
     this.sagaLogClient = new SagaLogClient(this.client);
@@ -226,6 +230,18 @@ export class SDK {
        * Check the health status of the API
        */
       check: this.healthClient.check.bind(this.healthClient),
+    };
+  }
+
+  /**
+   * Overview module
+   */
+  get overview() {
+    return {
+      /**
+       * Find the overview with all system metrics
+       */
+      find: this.overviewClient.find.bind(this.overviewClient),
     };
   }
 
