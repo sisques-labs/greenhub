@@ -12,6 +12,47 @@
     "plants": "Plants",
     "growingUnits": "Growing Units"
   },
+  "dashboard": {
+    "page": {
+      "title": "Control Panel",
+      "description": "Welcome back, here's today's summary.",
+      "addPlantButton": "Add Plant"
+    },
+    "error": {
+      "loading": "Error loading dashboard: {message}"
+    },
+    "stats": {
+      "totalPlants": {
+        "title": "Total Plants"
+      },
+      "activeUnits": {
+        "title": "Active Units"
+      },
+      "readyForHarvest": {
+        "title": "Ready for Harvest"
+      },
+      "criticalAlerts": {
+        "title": "Critical Alerts"
+      },
+      "changeSuffix": "vs last month"
+    },
+    "growingUnitsStatus": {
+      "title": "Status of Cultivation Units",
+      "seeAll": "See all",
+      "empty": "No growing units available"
+    },
+    "recentAlerts": {
+      "title": "Recent Alerts",
+      "empty": "No recent alerts"
+    },
+    "todayTasks": {
+      "title": "Today's Tasks",
+      "assignedTo": "Assigned to",
+      "completed": "Completed",
+      "seeAll": "See all tasks",
+      "empty": "No tasks scheduled for today"
+    }
+  },
   "authPage": {
     "title": {
       "login": "Welcome back",

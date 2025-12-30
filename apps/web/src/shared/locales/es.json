@@ -12,6 +12,47 @@
     "plants": "Plantas",
     "growingUnits": "Unidades de Cultivo"
   },
+  "dashboard": {
+    "page": {
+      "title": "Panel de Control",
+      "description": "Bienvenido de nuevo, aquí tienes el resumen de hoy.",
+      "addPlantButton": "Añadir Planta"
+    },
+    "error": {
+      "loading": "Error al cargar el dashboard: {message}"
+    },
+    "stats": {
+      "totalPlants": {
+        "title": "Total Plantas"
+      },
+      "activeUnits": {
+        "title": "Unidades Activas"
+      },
+      "readyForHarvest": {
+        "title": "Listas para Cosecha"
+      },
+      "criticalAlerts": {
+        "title": "Alertas Críticas"
+      },
+      "changeSuffix": "vs mes anterior"
+    },
+    "growingUnitsStatus": {
+      "title": "Estado de Unidades de Cultivo",
+      "seeAll": "Ver todas",
+      "empty": "No hay unidades de cultivo disponibles"
+    },
+    "recentAlerts": {
+      "title": "Alertas Recientes",
+      "empty": "No hay alertas recientes"
+    },
+    "todayTasks": {
+      "title": "Tareas de Hoy",
+      "assignedTo": "Asignado a",
+      "completed": "Completado",
+      "seeAll": "Ver todas las tareas",
+      "empty": "No hay tareas programadas para hoy"
+    }
+  },
   "authPage": {
     "title": {
       "login": "Bienvenido de nuevo",
