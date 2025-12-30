@@ -11,6 +11,8 @@ import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/vi
 import { OVERVIEW_READ_REPOSITORY_TOKEN } from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
 import { OverviewMongoDBMapper } from '@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper';
 import { OverviewMongoRepository } from '@/generic/overview/infrastructure/database/mongodb/repositories/overview-mongodb.repository';
+import { OverviewGraphQLMapper } from '@/generic/overview/transport/graphql/mappers/overview.mapper';
+import { OverviewQueriesResolver } from '@/generic/overview/transport/graphql/resolvers/overview-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 
@@ -30,7 +32,7 @@ const EVENT_HANDLERS = [OverviewUpdatedEventHandler];
 
 const FACTORIES = [OverviewViewModelFactory];
 
-const MAPPERS = [OverviewMongoDBMapper];
+const MAPPERS = [OverviewMongoDBMapper, OverviewGraphQLMapper];
 
 const REPOSITORIES = [
   {
@@ -38,6 +40,8 @@ const REPOSITORIES = [
     useClass: OverviewMongoRepository,
   },
 ];
+
+const RESOLVERS = [OverviewQueriesResolver];
 
 @Module({
   imports: [SharedModule],
@@ -49,6 +53,7 @@ const REPOSITORIES = [
     ...FACTORIES,
     ...MAPPERS,
     ...REPOSITORIES,
+    ...RESOLVERS,
   ],
 })
 export class OverviewModule {}
