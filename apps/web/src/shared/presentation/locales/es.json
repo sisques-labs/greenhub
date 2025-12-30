@@ -199,6 +199,9 @@
       "view": "Ver",
       "edit": "Editar",
       "delete": "Eliminar"
+    },
+    "pagination": {
+      "info": "Página {page} de {totalPages} ({total} en total)"
     }
   },
   "plant": {

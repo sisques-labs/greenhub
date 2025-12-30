@@ -1,6 +1,6 @@
 'use client';
 
-import { PlantsByGrowingUnitSection } from '@/core/plant-context/presentation/components/organisms/plants-by-growing-unit-section/plants-by-growing-unit-section';
+import { PlantTableRow } from '@/core/plant-context/presentation/components/organisms/plant-table-row/plant-table-row';
 import { PlantsPageSkeleton } from '@/core/plant-context/presentation/components/organisms/plants-page-skeleton/plants-page-skeleton';
 import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/presentation/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import {
@@ -9,7 +9,15 @@ import {
 } from '@/shared/presentation/components/ui/search-and-filters/search-and-filters';
 import { PLANT_STATUS, type PlantResponse } from '@repo/sdk';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
+import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
 import { Button } from '@repo/shared/presentation/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@repo/shared/presentation/components/ui/table';
 import {
   Building2Icon,
   CheckCircleIcon,
@@ -18,12 +26,16 @@ import {
   PlusIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+const PLANTS_PER_PAGE = 10;
 
 export function PlantsPage() {
   const t = useTranslations();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
 
   // Fetch growing units with their plants
   const paginationInput = useMemo(
@@ -71,57 +83,71 @@ export function PlantsPage() {
     // TODO: Open delete confirmation
   };
 
-  // Calculate total plants across all growing units
-  const totalPlants = useMemo(() => {
-    if (!growingUnits) return 0;
-    return growingUnits.items.reduce(
-      (sum, unit) => sum + (unit.plants?.length || 0),
-      0,
-    );
+  // Create a map of growingUnitId -> growingUnitName
+  const growingUnitNameMap = useMemo(() => {
+    if (!growingUnits) return new Map<string, string>();
+    const map = new Map<string, string>();
+    growingUnits.items.forEach((unit) => {
+      map.set(unit.id, unit.name);
+    });
+    return map;
   }, [growingUnits]);
 
-  // Filter growing units that have plants after applying filters
-  const growingUnitsWithPlants = useMemo(() => {
+  // Flatten all plants from all growing units and apply filters
+  const allFilteredPlants = useMemo(() => {
     if (!growingUnits) return [];
 
-    return growingUnits.items.filter((unit) => {
+    // Flatten all plants with their growing unit info
+    const allPlants: Array<PlantResponse & { growingUnitName?: string }> = [];
+    growingUnits.items.forEach((unit) => {
       const plants = unit.plants || [];
-
-      // If no search query and all filter, show all units with plants
-      if (!searchQuery && selectedFilter === 'all') {
-        return plants.length > 0;
-      }
-
-      // Apply filters
-      let filtered = plants;
-
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        filtered = filtered.filter(
-          (plant) =>
-            plant.name?.toLowerCase().includes(query) ||
-            plant.species?.toLowerCase().includes(query) ||
-            unit.name?.toLowerCase().includes(query),
-        );
-      }
-
-      if (selectedFilter !== 'all') {
-        switch (selectedFilter) {
-          case 'healthy':
-            // TODO: Implement healthy filter when health status logic is available
-            filtered = filtered.filter(
-              (plant) => plant.status === PLANT_STATUS.GROWING,
-            );
-            break;
-          // TODO: Add more filter cases when needed
-          default:
-            break;
-        }
-      }
-
-      return filtered.length > 0;
+      plants.forEach((plant) => {
+        allPlants.push({
+          ...plant,
+          growingUnitName: unit.name,
+        });
+      });
     });
+
+    // Apply search filter
+    let filtered = allPlants;
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (plant) =>
+          plant.name?.toLowerCase().includes(query) ||
+          plant.species?.toLowerCase().includes(query) ||
+          plant.growingUnitName?.toLowerCase().includes(query),
+      );
+    }
+
+    // Apply status filter
+    if (selectedFilter !== 'all') {
+      switch (selectedFilter) {
+        case 'healthy':
+          filtered = filtered.filter(
+            (plant) => plant.status === PLANT_STATUS.GROWING,
+          );
+          break;
+        // TODO: Add more filter cases when needed
+        default:
+          break;
+      }
+    }
+
+    return filtered;
   }, [growingUnits, searchQuery, selectedFilter]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(allFilteredPlants.length / perPage);
+  const startIndex = (currentPage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const paginatedPlants = allFilteredPlants.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedFilter, perPage]);
 
   if (isLoading) {
     return <PlantsPageSkeleton />;
@@ -163,29 +189,59 @@ export function PlantsPage() {
         onFilterChange={setSelectedFilter}
       />
 
-      {/* Plants grouped by Growing Unit */}
-      {growingUnitsWithPlants.length > 0 ? (
-        <div className="space-y-8">
-          {growingUnitsWithPlants.map((growingUnit) => (
-            <PlantsByGrowingUnitSection
-              key={growingUnit.id}
-              growingUnit={growingUnit}
-              searchQuery={searchQuery}
-              selectedFilter={selectedFilter}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
-      ) : totalPlants > 0 ? (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-muted-foreground">{t('plants.empty.filtered')}</p>
-        </div>
-      ) : (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-muted-foreground">{t('plants.empty')}</p>
-        </div>
-      )}
+      {/* Plants Table with Pagination */}
+      <TableLayout
+        page={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          // Scroll to top when page changes
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        perPage={perPage}
+        onPerPageChange={setPerPage}
+      >
+        {allFilteredPlants.length > 0 ? (
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[80px]">IMG</TableHead>
+                  <TableHead>{t('plants.table.columns.plant')}</TableHead>
+                  <TableHead>{t('plants.table.columns.location')}</TableHead>
+                  <TableHead>{t('plants.table.columns.status')}</TableHead>
+                  <TableHead>
+                    {t('plants.table.columns.lastWatering')}
+                  </TableHead>
+                  <TableHead className="w-[80px]">
+                    {t('plants.table.columns.actions')}
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedPlants.map((plant) => (
+                  <PlantTableRow
+                    key={plant.id}
+                    plant={plant}
+                    growingUnitName={plant.growingUnitName}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center min-h-[400px]">
+            <p className="text-muted-foreground">
+              {growingUnits &&
+              growingUnits.items.some((unit) => (unit.plants?.length || 0) > 0)
+                ? t('plants.empty.filtered')
+                : t('plants.empty')}
+            </p>
+          </div>
+        )}
+      </TableLayout>
     </div>
   );
 }
