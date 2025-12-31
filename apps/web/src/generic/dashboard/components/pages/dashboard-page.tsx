@@ -1,16 +1,15 @@
 'use client';
 
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { PlusIcon, RefreshCwIcon } from 'lucide-react';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 import { OverviewCapacitySection } from '@/generic/dashboard/components/organisms/overview-capacity-section/overview-capacity-section';
 import { OverviewGrowingUnitsSection } from '@/generic/dashboard/components/organisms/overview-growing-units-section/overview-growing-units-section';
 import { OverviewPlantsSection } from '@/generic/dashboard/components/organisms/overview-plants-section/overview-plants-section';
 import { OverviewStatsCards } from '@/generic/dashboard/components/organisms/overview-stats-cards/overview-stats-cards';
 import { useDashboardPage } from '@/generic/dashboard/hooks/use-dashboard-page/use-dashboard-page';
 import { useAppRoutes } from '@/shared/hooks/use-routes';
+import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
+import { Button } from '@repo/shared/presentation/components/ui/button';
+import { RefreshCwIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 /**
  * Dashboard page component
@@ -45,14 +44,6 @@ export function DashboardPage() {
 			<PageHeader
 				title={t('page.title')}
 				description={t('page.description')}
-				actions={[
-					<Button key="add-plant" asChild>
-						<Link href={routes.plants}>
-							<PlusIcon className="mr-2 h-4 w-4" />
-							{t('page.addPlantButton')}
-						</Link>
-					</Button>,
-				]}
 			/>
 
 			{/* Main Statistics Cards */}
