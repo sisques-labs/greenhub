@@ -76,8 +76,8 @@ describe('SagaStepAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaStepCreatedEvent);
 
       const event = events[0] as SagaStepCreatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaStepAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaStepAggregate.name);
       expect(event.eventType).toBe(SagaStepCreatedEvent.name);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });
@@ -420,8 +420,8 @@ describe('SagaStepAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaStepUpdatedEvent);
 
       const event = events[0] as SagaStepUpdatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaStepAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaStepAggregate.name);
       expect(event.eventType).toBe(SagaStepUpdatedEvent.name);
       expect(event.data.name).toBe('Updated Name');
     });
@@ -448,8 +448,8 @@ describe('SagaStepAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaStepDeletedEvent);
 
       const event = events[0] as SagaStepDeletedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaStepAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaStepAggregate.name);
       expect(event.eventType).toBe(SagaStepDeletedEvent.name);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });
@@ -519,7 +519,7 @@ describe('SagaStepAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaStepStatusChangedEvent);
 
       const event = events[0] as SagaStepStatusChangedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
       expect(event.data.status).toBe(SagaStepStatusEnum.COMPLETED);
     });
   });
@@ -588,7 +588,7 @@ describe('SagaStepAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaStepStatusChangedEvent);
 
       const event = events[0] as SagaStepStatusChangedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
       expect(event.data.status).toBe(SagaStepStatusEnum.FAILED);
       expect(event.data.errorMessage).toBe('Error message');
     });
@@ -886,7 +886,7 @@ describe('SagaStepAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaStepUpdatedEvent);
 
       const event = events[0] as SagaStepUpdatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
       expect(event.data.retryCount).toBe(1);
     });
 

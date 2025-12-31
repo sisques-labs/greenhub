@@ -55,8 +55,10 @@ describe('AuthCreatedEventHandler', () => {
 
       const event = new AuthCreatedEvent(
         {
-          aggregateId: authId,
-          aggregateType: 'AuthAggregate',
+          aggregateRootId: authId,
+          aggregateRootType: 'AuthAggregate',
+          entityId: authId,
+          entityType: 'AuthAggregate',
           eventType: 'AuthCreatedEvent',
         },
         authPrimitives,

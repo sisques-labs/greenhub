@@ -58,8 +58,8 @@ describe('SagaLogAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaLogCreatedEvent);
 
       const event = events[0] as SagaLogCreatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaLogAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaLogAggregate.name);
       expect(event.eventType).toBe(SagaLogCreatedEvent.name);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });
@@ -187,8 +187,8 @@ describe('SagaLogAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaLogUpdatedEvent);
 
       const event = events[0] as SagaLogUpdatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaLogAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaLogAggregate.name);
       expect(event.eventType).toBe(SagaLogUpdatedEvent.name);
     });
 
@@ -215,8 +215,8 @@ describe('SagaLogAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaLogDeletedEvent);
 
       const event = events[0] as SagaLogDeletedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaLogAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaLogAggregate.name);
       expect(event.eventType).toBe(SagaLogDeletedEvent.name);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });

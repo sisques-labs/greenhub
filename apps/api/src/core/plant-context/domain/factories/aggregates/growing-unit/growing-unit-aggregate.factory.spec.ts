@@ -63,7 +63,7 @@ describe('GrowingUnitAggregateFactory', () => {
       expect(aggregate.dimensions).toBeNull();
     });
 
-    it('should generate event by default', () => {
+    it('should create aggregate without events by default', () => {
       const dto: IGrowingUnitDto = {
         id: new GrowingUnitUuidValueObject(),
         name: new GrowingUnitNameValueObject('Garden Bed 1'),
@@ -75,26 +75,11 @@ describe('GrowingUnitAggregateFactory', () => {
 
       const aggregate = factory.create(dto);
 
+      // Note: GrowingUnitAggregate constructor does not generate events
       const events = aggregate.getUncommittedEvents();
-      expect(events.length).toBeGreaterThan(0);
+      expect(events.length).toBe(0);
     });
 
-    it('should not generate event when generateEvent is false', () => {
-      const dto: IGrowingUnitDto = {
-        id: new GrowingUnitUuidValueObject(),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      };
-
-      const aggregate = factory.create(dto);
-
-      // Note: GrowingUnitAggregateFactory.create() always generates events
-      const events = aggregate.getUncommittedEvents();
-      expect(events.length).toBeGreaterThanOrEqual(0);
-    });
   });
 
   describe('fromPrimitives', () => {

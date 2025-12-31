@@ -52,8 +52,10 @@ describe('AuthUpdatedEventHandler', () => {
 
       const event = new AuthUpdatedEvent(
         {
-          aggregateId: authId,
-          aggregateType: 'AuthAggregate',
+          aggregateRootId: authId,
+          aggregateRootType: 'AuthAggregate',
+          entityId: authId,
+          entityType: 'AuthAggregate',
           eventType: 'AuthUpdatedEvent',
         },
         eventData,

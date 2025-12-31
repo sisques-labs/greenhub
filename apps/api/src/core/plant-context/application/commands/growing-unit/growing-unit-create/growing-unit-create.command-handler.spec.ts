@@ -1,4 +1,4 @@
-import { EventBus } from '@nestjs/cqrs';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitCreateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command';
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
 import { IGrowingUnitCreateCommandDto } from '@/core/plant-context/application/dtos/commands/growing-unit/growing-unit-create/growing-unit-create-command.dto';
@@ -20,7 +20,7 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 describe('GrowingUnitCreateCommandHandler', () => {
   let handler: GrowingUnitCreateCommandHandler;
   let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
   let mockGrowingUnitAggregateFactory: jest.Mocked<GrowingUnitAggregateFactory>;
 
   beforeEach(() => {
@@ -30,10 +30,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
       delete: jest.fn(),
     } as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
 
     mockGrowingUnitAggregateFactory = {
       create: jest.fn(),
@@ -42,8 +41,8 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
     handler = new GrowingUnitCreateCommandHandler(
       mockGrowingUnitWriteRepository,
-      mockEventBus,
       mockGrowingUnitAggregateFactory,
+      mockPublishIntegrationEventsService,
     );
   });
 
@@ -78,12 +77,11 @@ describe('GrowingUnitCreateCommandHandler', () => {
           }),
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
       mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       const result = await handler.execute(command);
 
@@ -100,10 +98,10 @@ describe('GrowingUnitCreateCommandHandler', () => {
         mockGrowingUnit,
       );
       expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledTimes(1);
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(
         mockGrowingUnit.getUncommittedEvents(),
       );
-      expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledTimes(1);
     });
 
     it('should create growing unit without dimensions', async () => {
@@ -123,12 +121,11 @@ describe('GrowingUnitCreateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
       mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       const result = await handler.execute(command);
 
@@ -160,19 +157,18 @@ describe('GrowingUnitCreateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
       mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       await handler.execute(command);
 
       const uncommittedEvents = mockGrowingUnit.getUncommittedEvents();
       expect(uncommittedEvents).toHaveLength(1);
       expect(uncommittedEvents[0]).toBeInstanceOf(GrowingUnitCreatedEvent);
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(uncommittedEvents);
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(uncommittedEvents);
     });
 
     it('should save growing unit before publishing events', async () => {
@@ -192,18 +188,17 @@ describe('GrowingUnitCreateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
       mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       await handler.execute(command);
 
       const saveOrder =
         mockGrowingUnitWriteRepository.save.mock.invocationCallOrder[0];
-      const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+      const publishOrder = mockPublishIntegrationEventsService.execute.mock.invocationCallOrder[0];
       expect(saveOrder).toBeLessThan(publishOrder);
     });
 
@@ -225,12 +220,11 @@ describe('GrowingUnitCreateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
       mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       const result = await handler.execute(command);
 

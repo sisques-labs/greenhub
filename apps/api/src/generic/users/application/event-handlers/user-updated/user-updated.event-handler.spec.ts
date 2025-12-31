@@ -45,8 +45,10 @@ describe('UserUpdatedEventHandler', () => {
 
       const event = new UserUpdatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserUpdatedEvent',
         },
         updateData,
@@ -98,8 +100,10 @@ describe('UserUpdatedEventHandler', () => {
 
       const event = new UserUpdatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserUpdatedEvent',
         },
         updateData,
@@ -125,8 +129,10 @@ describe('UserUpdatedEventHandler', () => {
 
       const event = new UserUpdatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserUpdatedEvent',
         },
         updateData,
@@ -173,8 +179,10 @@ describe('UserUpdatedEventHandler', () => {
 
       const event = new UserUpdatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserUpdatedEvent',
         },
         updateData,
@@ -218,8 +226,10 @@ describe('UserUpdatedEventHandler', () => {
 
       const event = new UserUpdatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserUpdatedEvent',
         },
         updateData,
@@ -247,7 +257,7 @@ describe('UserUpdatedEventHandler', () => {
 
       await handler.handle(event);
 
-      expect(event.aggregateId).toBe(userId);
+      expect(event.aggregateRootId).toBe(userId);
       expect(
         mockAssertUserViewModelExsistsService.execute,
       ).toHaveBeenCalledWith(userId);
@@ -261,8 +271,10 @@ describe('UserUpdatedEventHandler', () => {
 
       const event = new UserUpdatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserUpdatedEvent',
         },
         updateData,

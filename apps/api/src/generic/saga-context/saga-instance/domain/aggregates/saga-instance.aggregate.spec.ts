@@ -53,8 +53,8 @@ describe('SagaInstanceAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaInstanceCreatedEvent);
 
       const event = events[0] as SagaInstanceCreatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaInstanceAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaInstanceAggregate.name);
       expect(event.eventType).toBe(SagaInstanceCreatedEvent.name);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });
@@ -208,8 +208,8 @@ describe('SagaInstanceAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaInstanceDeletedEvent);
 
       const event = events[0] as SagaInstanceDeletedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(SagaInstanceAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(SagaInstanceAggregate.name);
       expect(event.eventType).toBe(SagaInstanceDeletedEvent.name);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });

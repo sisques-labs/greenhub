@@ -47,8 +47,10 @@ describe('UserDeletedEventHandler', () => {
 
       const event = new UserDeletedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserDeletedEvent',
         },
         userPrimitives,
@@ -99,8 +101,10 @@ describe('UserDeletedEventHandler', () => {
 
       const event = new UserDeletedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserDeletedEvent',
         },
         userPrimitives,
@@ -138,8 +142,10 @@ describe('UserDeletedEventHandler', () => {
 
       const event = new UserDeletedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserDeletedEvent',
         },
         userPrimitives,
@@ -165,7 +171,7 @@ describe('UserDeletedEventHandler', () => {
 
       await handler.handle(event);
 
-      expect(event.aggregateId).toBe(userId);
+      expect(event.aggregateRootId).toBe(userId);
       expect(mockUserReadRepository.findById).toHaveBeenCalledWith(userId);
       expect(mockUserReadRepository.delete).toHaveBeenCalledWith(userId);
     });
@@ -189,8 +195,10 @@ describe('UserDeletedEventHandler', () => {
 
       const event = new UserDeletedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserDeletedEvent',
         },
         userPrimitives,
@@ -242,8 +250,10 @@ describe('UserDeletedEventHandler', () => {
 
       const event = new UserDeletedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserDeletedEvent',
         },
         userPrimitives,
@@ -294,8 +304,10 @@ describe('UserDeletedEventHandler', () => {
 
       const event = new UserDeletedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserDeletedEvent',
         },
         userPrimitives,

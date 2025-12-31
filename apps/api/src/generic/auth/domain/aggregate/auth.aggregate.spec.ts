@@ -62,8 +62,8 @@ describe('AuthAggregate', () => {
       expect(events[0]).toBeInstanceOf(AuthCreatedEvent);
 
       const event = events[0] as AuthCreatedEvent;
-      expect(event.aggregateId).toBe(dto.id.value);
-      expect(event.aggregateType).toBe(AuthAggregate.name);
+      expect(event.aggregateRootId).toBe(dto.id.value);
+      expect(event.aggregateRootType).toBe(AuthAggregate.name);
       expect(event.eventType).toBe(AuthCreatedEvent.name);
       expect(event.data.id).toBe(dto.id.value);
       expect(event.data.userId).toBe(dto.userId.value);

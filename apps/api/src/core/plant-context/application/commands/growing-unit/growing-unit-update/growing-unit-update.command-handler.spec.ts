@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
 import { GrowingUnitUpdateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command-handler';
 import { IGrowingUnitUpdateCommandDto } from '@/core/plant-context/application/dtos/commands/growing-unit/growing-unit-update/growing-unit-update-command.dto';
@@ -20,8 +21,9 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 describe('GrowingUnitUpdateCommandHandler', () => {
   let handler: GrowingUnitUpdateCommandHandler;
   let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
+  let mockEventBus: jest.Mocked<EventBus>;
 
   beforeEach(() => {
     mockGrowingUnitWriteRepository = {
@@ -30,19 +32,24 @@ describe('GrowingUnitUpdateCommandHandler', () => {
       delete: jest.fn(),
     } as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
 
     mockAssertGrowingUnitExistsService = {
       execute: jest.fn(),
     } as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
+    mockEventBus = {
+      publishAll: jest.fn(),
+      publish: jest.fn(),
+    } as unknown as jest.Mocked<EventBus>;
+
     handler = new GrowingUnitUpdateCommandHandler(
       mockGrowingUnitWriteRepository,
-      mockEventBus,
+      mockPublishIntegrationEventsService,
       mockAssertGrowingUnitExistsService,
+      mockEventBus,
     );
   });
 

@@ -55,8 +55,10 @@ describe('AuthRegisteredByEmailEventHandler', () => {
 
       const event = new AuthRegisteredByEmailEvent(
         {
-          aggregateId: authId,
-          aggregateType: 'AuthAggregate',
+          aggregateRootId: authId,
+          aggregateRootType: 'AuthAggregate',
+          entityId: authId,
+          entityType: 'AuthAggregate',
           eventType: 'AuthRegisteredByEmailEvent',
         },
         authPrimitives,

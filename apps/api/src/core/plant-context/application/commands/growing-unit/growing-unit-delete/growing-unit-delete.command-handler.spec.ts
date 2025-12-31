@@ -80,9 +80,9 @@ describe('GrowingUnitDeleteCommandHandler', () => {
       expect(mockGrowingUnitWriteRepository.delete).toHaveBeenCalledWith(
         growingUnitId,
       );
-      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(
-        mockGrowingUnit.getUncommittedEvents(),
-      );
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
+      const callArgs = mockPublishIntegrationEventsService.execute.mock.calls[0][0];
+      expect(callArgs).toBeInstanceOf(GrowingUnitDeletedEvent);
     });
 
     it('should publish GrowingUnitDeletedEvent when growing unit is deleted', async () => {
@@ -111,10 +111,9 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 
       await handler.execute(command);
 
-      const uncommittedEvents = mockGrowingUnit.getUncommittedEvents();
-      expect(uncommittedEvents).toHaveLength(1);
-      expect(uncommittedEvents[0]).toBeInstanceOf(GrowingUnitDeletedEvent);
-      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(uncommittedEvents);
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
+      const callArgs = mockPublishIntegrationEventsService.execute.mock.calls[0][0];
+      expect(callArgs).toBeInstanceOf(GrowingUnitDeletedEvent);
     });
 
     it('should delete growing unit before publishing events', async () => {

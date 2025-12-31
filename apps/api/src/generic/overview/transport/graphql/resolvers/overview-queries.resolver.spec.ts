@@ -33,7 +33,7 @@ describe('OverviewQueriesResolver', () => {
     jest.clearAllMocks();
   });
 
-  describe('findOverview', () => {
+  describe('overviewFind', () => {
     it('should return overview when found', async () => {
       const overviewId = 'overview';
       const createdAt = new Date('2024-01-01');
@@ -114,7 +114,7 @@ describe('OverviewQueriesResolver', () => {
       mockQueryBus.execute.mockResolvedValue(viewModel);
       mockOverviewGraphQLMapper.toResponseDto.mockReturnValue(responseDto);
 
-      const result = await resolver.findOverview();
+      const result = await resolver.overviewFind();
 
       expect(result).toBe(responseDto);
       expect(mockQueryBus.execute).toHaveBeenCalledWith(
@@ -130,7 +130,7 @@ describe('OverviewQueriesResolver', () => {
     it('should return null when overview not found', async () => {
       mockQueryBus.execute.mockResolvedValue(null);
 
-      const result = await resolver.findOverview();
+      const result = await resolver.overviewFind();
 
       expect(result).toBeNull();
       expect(mockQueryBus.execute).toHaveBeenCalledWith(

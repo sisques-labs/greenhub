@@ -10,12 +10,12 @@ import { GrowingUnitNameChangedEvent } from '@/core/plant-context/domain/events/
 import { GrowingUnitTypeChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-type-changed/growing-unit-type-changed.event';
 import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
 import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
-import { GrowingUnitPlantGrowingUnitChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-growing-unit-changed/plant-growing-unit-changed.event';
-import { GrowingUnitPlantNameChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-name-changed/plant-name-changed.event';
-import { GrowingUnitPlantNotesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-notes-changed/plant-notes-changed.event';
-import { GrowingUnitPlantPlantedDateChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-planted-date-changed/plant-planted-date-changed.event';
-import { GrowingUnitPlantSpeciesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-species-changed/plant-species-changed.event';
-import { GrowingUnitPlantStatusChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-status-changed/plant-status-changed.event';
+import { PlantGrowingUnitChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-growing-unit-changed/plant-growing-unit-changed.event';
+import { PlantNameChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-name-changed/plant-name-changed.event';
+import { PlantNotesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-notes-changed/plant-notes-changed.event';
+import { PlantPlantedDateChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-planted-date-changed/plant-planted-date-changed.event';
+import { PlantSpeciesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-species-changed/plant-species-changed.event';
+import { PlantStatusChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-status-changed/plant-status-changed.event';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
@@ -86,7 +86,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should not generate event when generateEvent is false', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const events = aggregate.getUncommittedEvents();
 
       expect(events).toHaveLength(0);
@@ -95,7 +95,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('addPlant', () => {
     it('should add a plant to the growing unit', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -113,7 +113,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should generate GrowingUnitPlantAddedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -132,7 +132,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should not generate event when generateEvent is false', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -152,7 +152,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('removePlant', () => {
     it('should remove a plant from the growing unit', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant1 = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -181,7 +181,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should generate GrowingUnitPlantRemovedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -201,7 +201,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should not remove plant if it does not exist', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -220,7 +220,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('changePlantStatus', () => {
     it('should change plant status', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -242,8 +242,8 @@ describe('GrowingUnitAggregate', () => {
       expect(updatedPlant?.status.value).toBe(PlantStatusEnum.GROWING);
     });
 
-    it('should generate GrowingUnitPlantStatusChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+    it('should generate PlantStatusChangedEvent by default', () => {
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -262,11 +262,11 @@ describe('GrowingUnitAggregate', () => {
 
       const events = aggregate.getUncommittedEvents();
       expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitPlantStatusChangedEvent);
+      expect(events[0]).toBeInstanceOf(PlantStatusChangedEvent);
     });
 
     it('should not change status if plant does not exist', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changePlantStatus(
         'non-existent-id',
@@ -281,7 +281,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('changePlantName', () => {
     it('should change plant name', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -303,8 +303,8 @@ describe('GrowingUnitAggregate', () => {
       expect(updatedPlant?.name.value).toBe('Sweet Basil');
     });
 
-    it('should generate GrowingUnitPlantNameChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+    it('should generate PlantNameChangedEvent by default', () => {
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -323,13 +323,13 @@ describe('GrowingUnitAggregate', () => {
 
       const events = aggregate.getUncommittedEvents();
       expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitPlantNameChangedEvent);
+      expect(events[0]).toBeInstanceOf(PlantNameChangedEvent);
     });
   });
 
   describe('changePlantSpecies', () => {
     it('should change plant species', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -351,8 +351,8 @@ describe('GrowingUnitAggregate', () => {
       expect(updatedPlant?.species.value).toBe('Ocimum tenuiflorum');
     });
 
-    it('should generate GrowingUnitPlantSpeciesChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+    it('should generate PlantSpeciesChangedEvent by default', () => {
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -371,13 +371,13 @@ describe('GrowingUnitAggregate', () => {
 
       const events = aggregate.getUncommittedEvents();
       expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitPlantSpeciesChangedEvent);
+      expect(events[0]).toBeInstanceOf(PlantSpeciesChangedEvent);
     });
   });
 
   describe('changePlantPlantedDate', () => {
     it('should change plant planted date', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -400,8 +400,8 @@ describe('GrowingUnitAggregate', () => {
       expect(updatedPlant?.plantedDate?.value).toEqual(newDate);
     });
 
-    it('should generate GrowingUnitPlantPlantedDateChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+    it('should generate PlantPlantedDateChangedEvent by default', () => {
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -420,13 +420,13 @@ describe('GrowingUnitAggregate', () => {
 
       const events = aggregate.getUncommittedEvents();
       expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitPlantPlantedDateChangedEvent);
+      expect(events[0]).toBeInstanceOf(PlantPlantedDateChangedEvent);
     });
   });
 
   describe('changePlantNotes', () => {
     it('should change plant notes', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -448,8 +448,8 @@ describe('GrowingUnitAggregate', () => {
       expect(updatedPlant?.notes?.value).toBe('Keep in indirect sunlight');
     });
 
-    it('should generate GrowingUnitPlantNotesChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+    it('should generate PlantNotesChangedEvent by default', () => {
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -468,13 +468,13 @@ describe('GrowingUnitAggregate', () => {
 
       const events = aggregate.getUncommittedEvents();
       expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitPlantNotesChangedEvent);
+      expect(events[0]).toBeInstanceOf(PlantNotesChangedEvent);
     });
   });
 
   describe('changePlantGrowingUnit', () => {
     it('should change plant growing unit', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const newGrowingUnitId = new GrowingUnitUuidValueObject();
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
@@ -493,8 +493,8 @@ describe('GrowingUnitAggregate', () => {
       expect(updatedPlant?.growingUnitId.value).toBe(newGrowingUnitId.value);
     });
 
-    it('should generate GrowingUnitPlantGrowingUnitChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+    it('should generate PlantGrowingUnitChangedEvent by default', () => {
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const newGrowingUnitId = new GrowingUnitUuidValueObject();
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
@@ -511,13 +511,13 @@ describe('GrowingUnitAggregate', () => {
 
       const events = aggregate.getUncommittedEvents();
       expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitPlantGrowingUnitChangedEvent);
+      expect(events[0]).toBeInstanceOf(PlantGrowingUnitChangedEvent);
     });
   });
 
   describe('changeName', () => {
     it('should change growing unit name', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changeName(
         new GrowingUnitNameValueObject('Garden Bed 2'),
@@ -528,7 +528,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should generate GrowingUnitNameChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changeName(new GrowingUnitNameValueObject('Garden Bed 2'));
 
@@ -540,7 +540,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('changeType', () => {
     it('should change growing unit type', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changeType(
         new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
@@ -551,7 +551,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should generate GrowingUnitTypeChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changeType(
         new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
@@ -565,7 +565,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('changeCapacity', () => {
     it('should change growing unit capacity', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changeCapacity(new GrowingUnitCapacityValueObject(20), false);
 
@@ -573,7 +573,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should generate GrowingUnitCapacityChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.changeCapacity(new GrowingUnitCapacityValueObject(20));
 
@@ -585,7 +585,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('changeDimensions', () => {
     it('should change growing unit dimensions', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const newDimensions = new DimensionsValueObject({
         length: 200,
         width: 100,
@@ -601,7 +601,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should generate GrowingUnitDimensionsChangedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const newDimensions = new DimensionsValueObject({
         length: 200,
         width: 100,
@@ -619,7 +619,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('delete', () => {
     it('should generate GrowingUnitDeletedEvent by default', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.delete();
 
@@ -629,7 +629,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should not generate event when generateEvent is false', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       aggregate.delete(false);
 
@@ -640,7 +640,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('getPlantById', () => {
     it('should return plant when found', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,
@@ -659,7 +659,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should return null when plant not found', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       const foundPlant = aggregate.getPlantById('non-existent-id');
       expect(foundPlant).toBeNull();
@@ -668,13 +668,13 @@ describe('GrowingUnitAggregate', () => {
 
   describe('hasCapacity', () => {
     it('should return true when there is capacity', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       expect(aggregate.hasCapacity()).toBe(true);
     });
 
     it('should return false when at capacity', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       // Add 10 plants to reach capacity
       for (let i = 0; i < 10; i++) {
@@ -696,7 +696,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('getRemainingCapacity', () => {
     it('should return correct remaining capacity', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       expect(aggregate.getRemainingCapacity()).toBe(10);
 
@@ -715,7 +715,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should return 0 when at capacity', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
       // Add 10 plants to reach capacity
       for (let i = 0; i < 10; i++) {
@@ -737,7 +737,7 @@ describe('GrowingUnitAggregate', () => {
 
   describe('toPrimitives', () => {
     it('should convert aggregate to primitives', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const primitives = aggregate.toPrimitives();
 
       expect(primitives.id).toBe(growingUnitId.value);
@@ -749,7 +749,7 @@ describe('GrowingUnitAggregate', () => {
     });
 
     it('should include plants in primitives', () => {
-      const aggregate = new GrowingUnitAggregate(growingUnitDto, false);
+      const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(),
         growingUnitId: growingUnitId,

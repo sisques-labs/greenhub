@@ -38,8 +38,10 @@ describe('AuthRegistrationSaga', () => {
 
     return new AuthRegistrationRequestedEvent(
       {
-        aggregateId: authId,
-        aggregateType: AuthAggregate.name,
+        aggregateRootId: authId,
+        aggregateRootType: AuthAggregate.name,
+        entityId: authId,
+        entityType: AuthAggregate.name,
         eventType: AuthRegistrationRequestedEvent.name,
       },
       eventData,

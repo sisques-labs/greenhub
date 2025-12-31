@@ -54,8 +54,10 @@ describe('UserCreatedEventHandler', () => {
 
       const event = new UserCreatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserCreatedEvent',
         },
         userPrimitives,
@@ -104,8 +106,10 @@ describe('UserCreatedEventHandler', () => {
 
       const event = new UserCreatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserCreatedEvent',
         },
         userPrimitives,
@@ -152,8 +156,10 @@ describe('UserCreatedEventHandler', () => {
 
       const event = new UserCreatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserCreatedEvent',
         },
         userPrimitives,
@@ -200,8 +206,10 @@ describe('UserCreatedEventHandler', () => {
 
       const event = new UserCreatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserCreatedEvent',
         },
         userPrimitives,
@@ -225,7 +233,7 @@ describe('UserCreatedEventHandler', () => {
 
       await handler.handle(event);
 
-      expect(event.aggregateId).toBe(userId);
+      expect(event.aggregateRootId).toBe(userId);
       expect(event.data.id).toBe(userId);
     });
 
@@ -246,8 +254,10 @@ describe('UserCreatedEventHandler', () => {
 
       const event = new UserCreatedEvent(
         {
-          aggregateId: userId,
-          aggregateType: 'UserAggregate',
+          aggregateRootId: userId,
+          aggregateRootType: 'UserAggregate',
+          entityId: userId,
+          entityType: 'UserAggregate',
           eventType: 'UserCreatedEvent',
         },
         userPrimitives,
