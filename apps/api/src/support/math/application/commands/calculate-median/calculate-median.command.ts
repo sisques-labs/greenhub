@@ -16,3 +16,4 @@ export class CalculateMedianCommand {
 		this.decimals = props.decimals ?? 2;
 	}
 }
+

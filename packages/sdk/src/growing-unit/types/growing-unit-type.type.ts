@@ -3,3 +3,4 @@ export type GrowingUnitType =
   | 'GARDEN_BED'
   | 'HANGING_BASKET'
   | 'WINDOW_BOX';
+

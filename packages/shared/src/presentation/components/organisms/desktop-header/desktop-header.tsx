@@ -31,3 +31,4 @@ export function DesktopHeader({ className }: DesktopHeaderProps) {
     </header>
   );
 }
+

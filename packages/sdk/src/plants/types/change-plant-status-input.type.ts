@@ -4,3 +4,4 @@ export type ChangePlantStatusInput = {
   id: string;
   status: PlantStatus;
 };
+

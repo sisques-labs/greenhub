@@ -46,3 +46,4 @@ describe('OverviewUuidValueObject', () => {
 		expect(typeof overviewUuid.isNil()).toBe('boolean');
 	});
 });
+
