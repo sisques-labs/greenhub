@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 /**
  * Interface for a single navigation item in the sidebar
  */
@@ -14,6 +16,10 @@ export interface SidebarNavItem {
    * Whether this item is currently active
    */
   isActive?: boolean;
+  /**
+   * Optional icon component for the navigation item
+   */
+  icon?: LucideIcon;
 }
 
 /**
