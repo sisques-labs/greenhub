@@ -10,70 +10,70 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 
 describe('GrowingUnitFindByIdQueryHandler', () => {
-  let handler: GrowingUnitFindByIdQueryHandler;
-  let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
+	let handler: GrowingUnitFindByIdQueryHandler;
+	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
 
-  beforeEach(() => {
-    mockAssertGrowingUnitExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
+	beforeEach(() => {
+		mockAssertGrowingUnitExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
-    handler = new GrowingUnitFindByIdQueryHandler(
-      mockAssertGrowingUnitExistsService,
-    );
-  });
+		handler = new GrowingUnitFindByIdQueryHandler(
+			mockAssertGrowingUnitExistsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return growing unit aggregate when found', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto: IGrowingUnitFindByIdQueryDto = {
-        id: growingUnitId,
-      };
+	describe('execute', () => {
+		it('should return growing unit aggregate when found', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto: IGrowingUnitFindByIdQueryDto = {
+				id: growingUnitId,
+			};
 
-      const query = new GrowingUnitFindByIdQuery(queryDto);
-      const mockGrowingUnit = new GrowingUnitAggregate({
-        id: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      });
+			const query = new GrowingUnitFindByIdQuery(queryDto);
+			const mockGrowingUnit = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
 
-      mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
-        mockGrowingUnit,
-      );
+			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
+				mockGrowingUnit,
+			);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockGrowingUnit);
-      expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
-        growingUnitId,
-      );
-      expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledTimes(
-        1,
-      );
-    });
+			expect(result).toBe(mockGrowingUnit);
+			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledTimes(
+				1,
+			);
+		});
 
-    it('should throw exception when growing unit does not exist', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto: IGrowingUnitFindByIdQueryDto = {
-        id: growingUnitId,
-      };
+		it('should throw exception when growing unit does not exist', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto: IGrowingUnitFindByIdQueryDto = {
+				id: growingUnitId,
+			};
 
-      const query = new GrowingUnitFindByIdQuery(queryDto);
-      const error = new Error('Growing unit not found');
+			const query = new GrowingUnitFindByIdQuery(queryDto);
+			const error = new Error('Growing unit not found');
 
-      mockAssertGrowingUnitExistsService.execute.mockRejectedValue(error);
+			mockAssertGrowingUnitExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(query)).rejects.toThrow(error);
-      expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
-        growingUnitId,
-      );
-    });
-  });
+			await expect(handler.execute(query)).rejects.toThrow(error);
+			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+		});
+	});
 });

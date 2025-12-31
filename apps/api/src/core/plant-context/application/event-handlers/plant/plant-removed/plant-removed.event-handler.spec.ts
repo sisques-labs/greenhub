@@ -4,7 +4,6 @@ import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
@@ -68,27 +67,6 @@ describe('PlantDeletedEventHandler', () => {
 	describe('handle', () => {
 		it('should delete growing unit view model when plant is deleted', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-			const event = new GrowingUnitPlantRemovedEvent(
-				{
-					aggregateRootId: growingUnitId,
-					aggregateRootType: 'GrowingUnitAggregate',
-					entityId: '223e4567-e89b-12d3-a456-426614174000',
-					entityType: 'Plant',
-					eventType: 'PlantDeletedEvent',
-				},
-				{
-					growingUnitId,
-					plant: {
-						id: '223e4567-e89b-12d3-a456-426614174000',
-						growingUnitId,
-						name: 'Basil',
-						species: 'Ocimum basilicum',
-						plantedDate: null,
-						notes: null,
-						status: 'PLANTED',
-					},
-				},
-			);
 
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
