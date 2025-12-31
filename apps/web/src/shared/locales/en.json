@@ -34,7 +34,9 @@
     "home": "Home",
     "settings": "Settings",
     "plants": "Plants",
-    "growingUnits": "Growing Units"
+    "growingUnits": "Growing Units",
+    "search": "Search",
+    "searchPlaceholder": "Search..."
   },
   "dashboard": {
     "page": {

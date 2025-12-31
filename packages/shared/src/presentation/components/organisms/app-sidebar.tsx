@@ -21,6 +21,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui';
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   data: SidebarData;
   onLogout?: () => void;
+  /**
+   * The label text for the search input (for screen readers)
+   */
+  searchLabel?: string;
+  /**
+   * The placeholder text for the search input
+   */
+  searchPlaceholder?: string;
 }
 
 // Icon mapping for navigation items
@@ -31,7 +39,13 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   settings: Settings,
 };
 
-export function AppSidebar({ data, onLogout, ...props }: AppSidebarProps) {
+export function AppSidebar({
+  data,
+  onLogout,
+  searchLabel,
+  searchPlaceholder,
+  ...props
+}: AppSidebarProps) {
   return (
     <Sidebar {...props} variant="sidebar" className="border-r border-sidebar-border/50">
       <SidebarHeader className="border-b border-sidebar-border/50 bg-gradient-to-b from-sidebar/50 to-sidebar/30 backdrop-blur-sm">
@@ -57,7 +71,7 @@ export function AppSidebar({ data, onLogout, ...props }: AppSidebarProps) {
           </SidebarMenuItem>
         </SidebarMenu>
         <div className="px-2 pb-2">
-          <SearchForm />
+          <SearchForm searchLabel={searchLabel} searchPlaceholder={searchPlaceholder} />
         </div>
       </SidebarHeader>
       <SidebarContent className="gap-1">

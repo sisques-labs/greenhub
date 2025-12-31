@@ -34,7 +34,9 @@
     "home": "Inicio",
     "settings": "Configuración",
     "plants": "Plantas",
-    "growingUnits": "Unidades de Cultivo"
+    "growingUnits": "Unidades de Cultivo",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar..."
   },
   "dashboard": {
     "page": {

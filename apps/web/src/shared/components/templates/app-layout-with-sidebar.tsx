@@ -2,6 +2,7 @@
 
 import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useAuthLogout } from '@/generic/auth/presentation/hooks/use-auth-logout/use-auth-logout';
 import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
@@ -18,6 +19,7 @@ interface AppLayoutWithSidebarProps {
 export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
 	const pathname = usePathname();
 	const { getSidebarData, routes } = useAppRoutes();
+	const t = useTranslations('nav');
 
 	// Check if current route is auth (should not show sidebar)
 	const isAuthRoute = useMemo(() => {
@@ -72,6 +74,8 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
 			sidebarProps={{
 				data: sidebarData,
 				onLogout,
+				searchLabel: t('search'),
+				searchPlaceholder: t('searchPlaceholder'),
 			}}
 		>
 			{children}
