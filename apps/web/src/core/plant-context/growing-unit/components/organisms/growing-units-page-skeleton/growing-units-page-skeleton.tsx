@@ -16,8 +16,8 @@ import {
  */
 function GrowingUnitCardSkeleton() {
 	return (
-		<Card>
-			<CardHeader className="p-0">
+		<Card className="!pt-0 overflow-hidden">
+			<CardHeader className="!p-0 !m-0">
 				{/* Image skeleton */}
 				<div className="relative w-full">
 					<Skeleton className="w-full h-48 rounded-t-lg" />
