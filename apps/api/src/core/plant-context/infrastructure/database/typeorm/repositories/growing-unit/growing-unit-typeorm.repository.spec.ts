@@ -85,7 +85,6 @@ describe('GrowingUnitTypeormRepository', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockFindOne.mockResolvedValue(typeormEntity);
@@ -144,7 +143,6 @@ describe('GrowingUnitTypeormRepository', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       const typeormEntity = new GrowingUnitTypeormEntity();

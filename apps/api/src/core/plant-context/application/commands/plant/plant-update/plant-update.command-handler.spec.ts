@@ -98,7 +98,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -156,7 +155,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -202,7 +200,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -262,7 +259,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -312,7 +308,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -361,7 +356,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -415,7 +409,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -468,7 +461,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);
@@ -517,7 +509,6 @@ describe('PlantUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        true,
       );
 
       mockGrowingUnit.addPlant(mockPlant, false);

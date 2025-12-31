@@ -88,7 +88,6 @@ describe('PlantAddCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       const plantEntityFactory = new PlantEntityFactory();
@@ -153,7 +152,6 @@ describe('PlantAddCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       // Add a plant to reach capacity
@@ -201,7 +199,6 @@ describe('PlantAddCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       const plantEntityFactory = new PlantEntityFactory();

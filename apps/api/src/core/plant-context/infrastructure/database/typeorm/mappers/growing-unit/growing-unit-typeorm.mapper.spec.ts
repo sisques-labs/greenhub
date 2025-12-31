@@ -104,7 +104,6 @@ describe('GrowingUnitTypeormMapper', () => {
           }),
           plants: [plantEntity],
         },
-        false,
       );
 
       mockPlantTypeormMapper.toDomainEntity.mockReturnValue(plantEntity);
@@ -162,7 +161,6 @@ describe('GrowingUnitTypeormMapper', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
@@ -215,7 +213,6 @@ describe('GrowingUnitTypeormMapper', () => {
           }),
           plants: [plantEntity],
         },
-        false,
       );
 
       const plantTypeormEntity = new PlantTypeormEntity();
@@ -280,7 +277,6 @@ describe('GrowingUnitTypeormMapper', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       const toPrimitivesSpy = jest
