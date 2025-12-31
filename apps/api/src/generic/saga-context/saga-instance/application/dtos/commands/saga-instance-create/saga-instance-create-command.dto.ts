@@ -7,5 +7,5 @@
  * @property {string} startDate - The start date of the saga instance. Must be provided.
  */
 export interface ISagaInstanceCreateCommandDto {
-  name: string;
+	name: string;
 }

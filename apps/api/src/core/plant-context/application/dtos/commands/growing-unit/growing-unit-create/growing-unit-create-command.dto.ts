@@ -11,11 +11,11 @@
  * @property {string} [unit] - The unit of measurement for dimensions. Optional.
  */
 export interface IGrowingUnitCreateCommandDto {
-  name: string;
-  type: string;
-  capacity: number;
-  length?: number;
-  width?: number;
-  height?: number;
-  unit?: string;
+	name: string;
+	type: string;
+	capacity: number;
+	length?: number;
+	width?: number;
+	height?: number;
+	unit?: string;
 }

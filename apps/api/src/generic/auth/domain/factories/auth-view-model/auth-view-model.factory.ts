@@ -10,78 +10,78 @@ import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface'
  */
 @Injectable()
 export class AuthViewModelFactory
-  implements
-    IReadFactory<
-      AuthViewModel,
-      IAuthCreateViewModelDto,
-      AuthAggregate,
-      AuthPrimitives
-    >
+	implements
+		IReadFactory<
+			AuthViewModel,
+			IAuthCreateViewModelDto,
+			AuthAggregate,
+			AuthPrimitives
+		>
 {
-  private readonly logger = new Logger(AuthViewModelFactory.name);
+	private readonly logger = new Logger(AuthViewModelFactory.name);
 
-  /**
-   * Creates a new auth view model from a DTO.
-   * @param data - The data to create the view model from.
-   * @returns The created view model.
-   */
-  public create(data: IAuthCreateViewModelDto): AuthViewModel {
-    this.logger.log(
-      `Creating auth view model from DTO: ${JSON.stringify(data)}`,
-    );
+	/**
+	 * Creates a new auth view model from a DTO.
+	 * @param data - The data to create the view model from.
+	 * @returns The created view model.
+	 */
+	public create(data: IAuthCreateViewModelDto): AuthViewModel {
+		this.logger.log(
+			`Creating auth view model from DTO: ${JSON.stringify(data)}`,
+		);
 
-    return new AuthViewModel(data);
-  }
-  /**
-   * Creates a new auth view model from a auth primitives.
-   *
-   * @param authPrimitives - The auth primitive to create the view model from.
-   * @returns The auth view model.
-   */
-  public fromPrimitives(authPrimitives: AuthPrimitives): AuthViewModel {
-    this.logger.log(
-      `Creating auth view model from primitives: ${JSON.stringify(authPrimitives)}`,
-    );
+		return new AuthViewModel(data);
+	}
+	/**
+	 * Creates a new auth view model from a auth primitives.
+	 *
+	 * @param authPrimitives - The auth primitive to create the view model from.
+	 * @returns The auth view model.
+	 */
+	public fromPrimitives(authPrimitives: AuthPrimitives): AuthViewModel {
+		this.logger.log(
+			`Creating auth view model from primitives: ${JSON.stringify(authPrimitives)}`,
+		);
 
-    return new AuthViewModel({
-      id: authPrimitives.id,
-      userId: authPrimitives.userId,
-      email: authPrimitives.email,
-      emailVerified: authPrimitives.emailVerified,
-      phoneNumber: authPrimitives.phoneNumber,
-      lastLoginAt: authPrimitives.lastLoginAt,
-      password: authPrimitives.password,
-      provider: authPrimitives.provider,
-      providerId: authPrimitives.providerId,
-      twoFactorEnabled: authPrimitives.twoFactorEnabled,
-      createdAt: authPrimitives.createdAt,
-      updatedAt: authPrimitives.updatedAt,
-    });
-  }
-  /**
-   * Creates a new auth view model from a auth aggregate.
-   *
-   * @param authAggregate - The auth aggregate to create the view model from.
-   * @returns The auth view model.
-   */
-  public fromAggregate(authAggregate: AuthAggregate): AuthViewModel {
-    this.logger.log(
-      `Creating auth view model from aggregate: ${authAggregate}`,
-    );
+		return new AuthViewModel({
+			id: authPrimitives.id,
+			userId: authPrimitives.userId,
+			email: authPrimitives.email,
+			emailVerified: authPrimitives.emailVerified,
+			phoneNumber: authPrimitives.phoneNumber,
+			lastLoginAt: authPrimitives.lastLoginAt,
+			password: authPrimitives.password,
+			provider: authPrimitives.provider,
+			providerId: authPrimitives.providerId,
+			twoFactorEnabled: authPrimitives.twoFactorEnabled,
+			createdAt: authPrimitives.createdAt,
+			updatedAt: authPrimitives.updatedAt,
+		});
+	}
+	/**
+	 * Creates a new auth view model from a auth aggregate.
+	 *
+	 * @param authAggregate - The auth aggregate to create the view model from.
+	 * @returns The auth view model.
+	 */
+	public fromAggregate(authAggregate: AuthAggregate): AuthViewModel {
+		this.logger.log(
+			`Creating auth view model from aggregate: ${authAggregate}`,
+		);
 
-    return new AuthViewModel({
-      id: authAggregate.id.value,
-      userId: authAggregate.userId.value,
-      email: authAggregate.email?.value ?? null,
-      emailVerified: authAggregate.emailVerified.value,
-      phoneNumber: authAggregate.phoneNumber?.value ?? null,
-      lastLoginAt: authAggregate.lastLoginAt?.value ?? null,
-      password: authAggregate.password?.value ?? null,
-      provider: authAggregate.provider.value,
-      providerId: authAggregate.providerId?.value ?? null,
-      twoFactorEnabled: authAggregate.twoFactorEnabled.value,
-      createdAt: authAggregate.createdAt.value,
-      updatedAt: authAggregate.updatedAt.value,
-    });
-  }
+		return new AuthViewModel({
+			id: authAggregate.id.value,
+			userId: authAggregate.userId.value,
+			email: authAggregate.email?.value ?? null,
+			emailVerified: authAggregate.emailVerified.value,
+			phoneNumber: authAggregate.phoneNumber?.value ?? null,
+			lastLoginAt: authAggregate.lastLoginAt?.value ?? null,
+			password: authAggregate.password?.value ?? null,
+			provider: authAggregate.provider.value,
+			providerId: authAggregate.providerId?.value ?? null,
+			twoFactorEnabled: authAggregate.twoFactorEnabled.value,
+			createdAt: authAggregate.createdAt.value,
+			updatedAt: authAggregate.updatedAt.value,
+		});
+	}
 }

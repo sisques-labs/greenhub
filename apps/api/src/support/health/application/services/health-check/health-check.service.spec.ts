@@ -6,61 +6,61 @@ import { HealthViewModelFactory } from '@/support/health/domain/factories/health
 import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
 
 describe('HealthCheckService', () => {
-  let service: HealthCheckService;
-  let mockHealthViewModelFactory: jest.Mocked<HealthViewModelFactory>;
-  let mockHealthWriteDatabaseCheckService: jest.Mocked<HealthWriteDatabaseCheckService>;
-  let mockHealthReadDatabaseCheckService: jest.Mocked<HealthReadDatabaseCheckService>;
+	let service: HealthCheckService;
+	let mockHealthViewModelFactory: jest.Mocked<HealthViewModelFactory>;
+	let mockHealthWriteDatabaseCheckService: jest.Mocked<HealthWriteDatabaseCheckService>;
+	let mockHealthReadDatabaseCheckService: jest.Mocked<HealthReadDatabaseCheckService>;
 
-  beforeEach(() => {
-    mockHealthViewModelFactory = {
-      create: jest.fn(),
-      fromAggregate: jest.fn(),
-      fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<HealthViewModelFactory>;
+	beforeEach(() => {
+		mockHealthViewModelFactory = {
+			create: jest.fn(),
+			fromAggregate: jest.fn(),
+			fromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<HealthViewModelFactory>;
 
-    mockHealthWriteDatabaseCheckService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<HealthWriteDatabaseCheckService>;
+		mockHealthWriteDatabaseCheckService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<HealthWriteDatabaseCheckService>;
 
-    mockHealthReadDatabaseCheckService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<HealthReadDatabaseCheckService>;
+		mockHealthReadDatabaseCheckService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<HealthReadDatabaseCheckService>;
 
-    service = new HealthCheckService(
-      mockHealthViewModelFactory,
-      mockHealthWriteDatabaseCheckService,
-      mockHealthReadDatabaseCheckService,
-    );
-  });
+		service = new HealthCheckService(
+			mockHealthViewModelFactory,
+			mockHealthWriteDatabaseCheckService,
+			mockHealthReadDatabaseCheckService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  it('should create health view model with OK status', async () => {
-    const expectedViewModel = new HealthViewModel({
-      status: HealthStatusEnum.OK,
-      writeDatabaseStatus: HealthStatusEnum.OK,
-      readDatabaseStatus: HealthStatusEnum.OK,
-    });
+	it('should create health view model with OK status', async () => {
+		const expectedViewModel = new HealthViewModel({
+			status: HealthStatusEnum.OK,
+			writeDatabaseStatus: HealthStatusEnum.OK,
+			readDatabaseStatus: HealthStatusEnum.OK,
+		});
 
-    mockHealthWriteDatabaseCheckService.execute.mockResolvedValue(
-      HealthStatusEnum.OK,
-    );
-    mockHealthReadDatabaseCheckService.execute.mockResolvedValue(
-      HealthStatusEnum.OK,
-    );
-    mockHealthViewModelFactory.create.mockReturnValue(expectedViewModel);
+		mockHealthWriteDatabaseCheckService.execute.mockResolvedValue(
+			HealthStatusEnum.OK,
+		);
+		mockHealthReadDatabaseCheckService.execute.mockResolvedValue(
+			HealthStatusEnum.OK,
+		);
+		mockHealthViewModelFactory.create.mockReturnValue(expectedViewModel);
 
-    const result = await service.execute();
+		const result = await service.execute();
 
-    expect(mockHealthWriteDatabaseCheckService.execute).toHaveBeenCalled();
-    expect(mockHealthReadDatabaseCheckService.execute).toHaveBeenCalled();
-    expect(mockHealthViewModelFactory.create).toHaveBeenCalledWith({
-      status: HealthStatusEnum.OK,
-      writeDatabaseStatus: HealthStatusEnum.OK,
-      readDatabaseStatus: HealthStatusEnum.OK,
-    });
-    expect(result).toBe(expectedViewModel);
-  });
+		expect(mockHealthWriteDatabaseCheckService.execute).toHaveBeenCalled();
+		expect(mockHealthReadDatabaseCheckService.execute).toHaveBeenCalled();
+		expect(mockHealthViewModelFactory.create).toHaveBeenCalledWith({
+			status: HealthStatusEnum.OK,
+			writeDatabaseStatus: HealthStatusEnum.OK,
+			readDatabaseStatus: HealthStatusEnum.OK,
+		});
+		expect(result).toBe(expectedViewModel);
+	});
 });

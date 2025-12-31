@@ -1,5 +1,5 @@
 export type BaseMongoDto = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
+	id: string;
+	createdAt: Date;
+	updatedAt: Date;
 };

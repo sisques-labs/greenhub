@@ -11,30 +11,30 @@ import { CalculatePercentageService } from '@/support/math/application/services/
  */
 @CommandHandler(CalculatePercentageCommand)
 export class CalculatePercentageCommandHandler
-  implements ICommandHandler<CalculatePercentageCommand>
+	implements ICommandHandler<CalculatePercentageCommand>
 {
-  private readonly logger = new Logger(CalculatePercentageCommandHandler.name);
+	private readonly logger = new Logger(CalculatePercentageCommandHandler.name);
 
-  constructor(
-    private readonly calculatePercentageService: CalculatePercentageService,
-  ) {}
+	constructor(
+		private readonly calculatePercentageService: CalculatePercentageService,
+	) {}
 
-  /**
-   * Executes the calculate percentage command
-   *
-   * @param command - The command to execute
-   * @returns The calculated percentage
-   */
-  async execute(command: CalculatePercentageCommand): Promise<number> {
-    this.logger.log(
-      `Executing calculate percentage command: ${command.value} / ${command.total}`,
-    );
+	/**
+	 * Executes the calculate percentage command
+	 *
+	 * @param command - The command to execute
+	 * @returns The calculated percentage
+	 */
+	async execute(command: CalculatePercentageCommand): Promise<number> {
+		this.logger.log(
+			`Executing calculate percentage command: ${command.value} / ${command.total}`,
+		);
 
-    // 01: Calculate the percentage
-    return this.calculatePercentageService.execute(
-      command.value,
-      command.total,
-      command.decimals,
-    );
-  }
+		// 01: Calculate the percentage
+		return this.calculatePercentageService.execute(
+			command.value,
+			command.total,
+			command.decimals,
+		);
+	}
 }

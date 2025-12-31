@@ -20,33 +20,33 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class PlantQueriesResolver {
-  private readonly logger = new Logger(PlantQueriesResolver.name);
+	private readonly logger = new Logger(PlantQueriesResolver.name);
 
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly plantGraphQLMapper: PlantGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly queryBus: QueryBus,
+		private readonly plantGraphQLMapper: PlantGraphQLMapper,
+	) {}
 
-  /**
-   * Finds a plant by its unique identifier.
-   *
-   * @param input - Input containing the plant ID
-   * @returns A promise resolving to the plant if found, null otherwise
-   */
-  @Query(() => PlantResponseDto, { nullable: true })
-  async plantFindById(
-    @Args('input') input: PlantFindByIdRequestDto,
-  ): Promise<PlantResponseDto | null> {
-    this.logger.log(`Finding plant by id: ${input.id}`);
+	/**
+	 * Finds a plant by its unique identifier.
+	 *
+	 * @param input - Input containing the plant ID
+	 * @returns A promise resolving to the plant if found, null otherwise
+	 */
+	@Query(() => PlantResponseDto, { nullable: true })
+	async plantFindById(
+		@Args('input') input: PlantFindByIdRequestDto,
+	): Promise<PlantResponseDto | null> {
+		this.logger.log(`Finding plant by id: ${input.id}`);
 
-    // 01: Execute query
-    const result = await this.queryBus.execute(
-      new PlantFindByIdQuery({ id: input.id }),
-    );
+		// 01: Execute query
+		const result = await this.queryBus.execute(
+			new PlantFindByIdQuery({ id: input.id }),
+		);
 
-    // 02: Convert to response DTO
-    return result
-      ? this.plantGraphQLMapper.toResponseDtoFromEntity(result)
-      : null;
-  }
+		// 02: Convert to response DTO
+		return result
+			? this.plantGraphQLMapper.toResponseDtoFromEntity(result)
+			: null;
+	}
 }

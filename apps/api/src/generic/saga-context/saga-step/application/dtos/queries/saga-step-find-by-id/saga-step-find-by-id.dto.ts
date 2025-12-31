@@ -1,3 +1,3 @@
 export interface ISagaStepFindByIdQueryDto {
-  id: string;
+	id: string;
 }

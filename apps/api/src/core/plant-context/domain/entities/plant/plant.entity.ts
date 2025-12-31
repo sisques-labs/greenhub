@@ -22,182 +22,182 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  * - Query methods (getAge, toPrimitives, etc) provide value-oriented or presentation data.
  */
 export class PlantEntity {
-  /**
-   * Plant unique identifier (value object).
-   */
-  private readonly _id: PlantUuidValueObject;
+	/**
+	 * Plant unique identifier (value object).
+	 */
+	private readonly _id: PlantUuidValueObject;
 
-  /**
-   * Foreign key: UUID of the growing unit where the plant is located.
-   */
-  private _growingUnitId: GrowingUnitUuidValueObject;
+	/**
+	 * Foreign key: UUID of the growing unit where the plant is located.
+	 */
+	private _growingUnitId: GrowingUnitUuidValueObject;
 
-  /**
-   * Name of the plant.
-   */
-  private _name: PlantNameValueObject;
+	/**
+	 * Name of the plant.
+	 */
+	private _name: PlantNameValueObject;
 
-  /**
-   * Species of the plant.
-   */
-  private _species: PlantSpeciesValueObject;
+	/**
+	 * Species of the plant.
+	 */
+	private _species: PlantSpeciesValueObject;
 
-  /**
-   * The date this plant was planted, if known.
-   */
-  private _plantedDate: PlantPlantedDateValueObject | null;
+	/**
+	 * The date this plant was planted, if known.
+	 */
+	private _plantedDate: PlantPlantedDateValueObject | null;
 
-  /**
-   * Additional notes about the plant (free text).
-   */
-  private _notes: PlantNotesValueObject | null;
+	/**
+	 * Additional notes about the plant (free text).
+	 */
+	private _notes: PlantNotesValueObject | null;
 
-  /**
-   * Current lifecycle status (active, dead, dormant, etc).
-   */
-  private _status: PlantStatusValueObject;
+	/**
+	 * Current lifecycle status (active, dead, dormant, etc).
+	 */
+	private _status: PlantStatusValueObject;
 
-  /**
-   * Instantiate a new PlantEntity from its value objects.
-   * @param props - Plant entity properties as defined by `IPlantDto`.
-   */
-  constructor(props: IPlantDto) {
-    this._id = props.id;
-    this._growingUnitId = props.growingUnitId;
-    this._name = props.name;
-    this._species = props.species;
-    this._plantedDate = props.plantedDate;
-    this._notes = props.notes;
-    this._status = props.status;
-  }
+	/**
+	 * Instantiate a new PlantEntity from its value objects.
+	 * @param props - Plant entity properties as defined by `IPlantDto`.
+	 */
+	constructor(props: IPlantDto) {
+		this._id = props.id;
+		this._growingUnitId = props.growingUnitId;
+		this._name = props.name;
+		this._species = props.species;
+		this._plantedDate = props.plantedDate;
+		this._notes = props.notes;
+		this._status = props.status;
+	}
 
-  /**
-   * Change the current plant status.
-   * @param status - New status value object.
-   */
-  public changeStatus(status: PlantStatusValueObject): void {
-    this._status = status;
-  }
+	/**
+	 * Change the current plant status.
+	 * @param status - New status value object.
+	 */
+	public changeStatus(status: PlantStatusValueObject): void {
+		this._status = status;
+	}
 
-  /**
-   * Change the growing unit to which this plant belongs.
-   * @param newGrowingUnitId - The new growing unit's value object.
-   */
-  public changeGrowingUnit(newGrowingUnitId: GrowingUnitUuidValueObject): void {
-    this._growingUnitId = newGrowingUnitId;
-  }
+	/**
+	 * Change the growing unit to which this plant belongs.
+	 * @param newGrowingUnitId - The new growing unit's value object.
+	 */
+	public changeGrowingUnit(newGrowingUnitId: GrowingUnitUuidValueObject): void {
+		this._growingUnitId = newGrowingUnitId;
+	}
 
-  /**
-   * Change the plant's name.
-   * @param newName - New name as a value object.
-   */
-  public changeName(newName: PlantNameValueObject): void {
-    this._name = newName;
-  }
+	/**
+	 * Change the plant's name.
+	 * @param newName - New name as a value object.
+	 */
+	public changeName(newName: PlantNameValueObject): void {
+		this._name = newName;
+	}
 
-  /**
-   * Change the plant's species.
-   * @param newSpecies - New species as a value object.
-   */
-  public changeSpecies(newSpecies: PlantSpeciesValueObject): void {
-    this._species = newSpecies;
-  }
+	/**
+	 * Change the plant's species.
+	 * @param newSpecies - New species as a value object.
+	 */
+	public changeSpecies(newSpecies: PlantSpeciesValueObject): void {
+		this._species = newSpecies;
+	}
 
-  /**
-   * Change the date when the plant was planted.
-   * @param newPlantedDate - New planted date as value object or null.
-   */
-  public changePlantedDate(
-    newPlantedDate: PlantPlantedDateValueObject | null,
-  ): void {
-    this._plantedDate = newPlantedDate;
-  }
+	/**
+	 * Change the date when the plant was planted.
+	 * @param newPlantedDate - New planted date as value object or null.
+	 */
+	public changePlantedDate(
+		newPlantedDate: PlantPlantedDateValueObject | null,
+	): void {
+		this._plantedDate = newPlantedDate;
+	}
 
-  /**
-   * Change the plant's notes field.
-   * @param newNotes - New notes as value object or null.
-   */
-  public changeNotes(newNotes: PlantNotesValueObject | null): void {
-    this._notes = newNotes;
-  }
+	/**
+	 * Change the plant's notes field.
+	 * @param newNotes - New notes as value object or null.
+	 */
+	public changeNotes(newNotes: PlantNotesValueObject | null): void {
+		this._notes = newNotes;
+	}
 
-  /**
-   * Get the duration since the plant was planted, in milliseconds.
-   * Throws if no planted date is set.
-   *
-   * @returns Number of milliseconds since planted.
-   * @throws {@link PlantPlantedDateMissingException}
-   */
-  public getAge(): number {
-    if (!this._plantedDate) {
-      throw new PlantPlantedDateMissingException(this._id.value);
-    }
-    return new Date().getTime() - this._plantedDate.value.getTime();
-  }
+	/**
+	 * Get the duration since the plant was planted, in milliseconds.
+	 * Throws if no planted date is set.
+	 *
+	 * @returns Number of milliseconds since planted.
+	 * @throws {@link PlantPlantedDateMissingException}
+	 */
+	public getAge(): number {
+		if (!this._plantedDate) {
+			throw new PlantPlantedDateMissingException(this._id.value);
+		}
+		return new Date().getTime() - this._plantedDate.value.getTime();
+	}
 
-  /**
-   * Gets the plant's unique identifier.
-   */
-  public get id(): PlantUuidValueObject {
-    return this._id;
-  }
+	/**
+	 * Gets the plant's unique identifier.
+	 */
+	public get id(): PlantUuidValueObject {
+		return this._id;
+	}
 
-  /**
-   * Gets the identifier of the plant's growing unit.
-   */
-  public get growingUnitId(): GrowingUnitUuidValueObject {
-    return this._growingUnitId;
-  }
+	/**
+	 * Gets the identifier of the plant's growing unit.
+	 */
+	public get growingUnitId(): GrowingUnitUuidValueObject {
+		return this._growingUnitId;
+	}
 
-  /**
-   * Gets the plant's name value object.
-   */
-  public get name(): PlantNameValueObject {
-    return this._name;
-  }
+	/**
+	 * Gets the plant's name value object.
+	 */
+	public get name(): PlantNameValueObject {
+		return this._name;
+	}
 
-  /**
-   * Gets the plant's species value object.
-   */
-  public get species(): PlantSpeciesValueObject {
-    return this._species;
-  }
+	/**
+	 * Gets the plant's species value object.
+	 */
+	public get species(): PlantSpeciesValueObject {
+		return this._species;
+	}
 
-  /**
-   * Gets the plant's planted date value object or null.
-   */
-  public get plantedDate(): PlantPlantedDateValueObject | null {
-    return this._plantedDate;
-  }
+	/**
+	 * Gets the plant's planted date value object or null.
+	 */
+	public get plantedDate(): PlantPlantedDateValueObject | null {
+		return this._plantedDate;
+	}
 
-  /**
-   * Gets the plant's notes value object or null.
-   */
-  public get notes(): PlantNotesValueObject | null {
-    return this._notes;
-  }
+	/**
+	 * Gets the plant's notes value object or null.
+	 */
+	public get notes(): PlantNotesValueObject | null {
+		return this._notes;
+	}
 
-  /**
-   * Gets the plant's current status value object.
-   */
-  public get status(): PlantStatusValueObject {
-    return this._status;
-  }
+	/**
+	 * Gets the plant's current status value object.
+	 */
+	public get status(): PlantStatusValueObject {
+		return this._status;
+	}
 
-  /**
-   * Convert the entity to a plain primitive object structure.
-   *
-   * @returns An object containing all primitive properties of the plant.
-   */
-  public toPrimitives(): PlantPrimitives {
-    return {
-      id: this._id.value,
-      growingUnitId: this._growingUnitId.value,
-      name: this._name.value,
-      species: this._species.value,
-      plantedDate: this._plantedDate?.value ?? null,
-      notes: this._notes?.value ?? null,
-      status: this._status.value,
-    };
-  }
+	/**
+	 * Convert the entity to a plain primitive object structure.
+	 *
+	 * @returns An object containing all primitive properties of the plant.
+	 */
+	public toPrimitives(): PlantPrimitives {
+		return {
+			id: this._id.value,
+			growingUnitId: this._growingUnitId.value,
+			name: this._name.value,
+			species: this._species.value,
+			plantedDate: this._plantedDate?.value ?? null,
+			notes: this._notes?.value ?? null,
+			status: this._status.value,
+		};
+	}
 }

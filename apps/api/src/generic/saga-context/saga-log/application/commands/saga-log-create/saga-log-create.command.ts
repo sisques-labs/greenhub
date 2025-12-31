@@ -6,17 +6,17 @@ import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifier
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class SagaLogCreateCommand {
-  readonly id: SagaLogUuidValueObject;
-  readonly sagaInstanceId: SagaInstanceUuidValueObject;
-  readonly sagaStepId: SagaStepUuidValueObject;
-  readonly type: SagaLogTypeValueObject;
-  readonly message: SagaLogMessageValueObject;
+	readonly id: SagaLogUuidValueObject;
+	readonly sagaInstanceId: SagaInstanceUuidValueObject;
+	readonly sagaStepId: SagaStepUuidValueObject;
+	readonly type: SagaLogTypeValueObject;
+	readonly message: SagaLogMessageValueObject;
 
-  constructor(props: ISagaLogCreateCommandDto) {
-    this.id = new SagaLogUuidValueObject();
-    this.sagaInstanceId = new SagaInstanceUuidValueObject(props.sagaInstanceId);
-    this.sagaStepId = new SagaStepUuidValueObject(props.sagaStepId);
-    this.type = new SagaLogTypeValueObject(props.type);
-    this.message = new SagaLogMessageValueObject(props.message);
-  }
+	constructor(props: ISagaLogCreateCommandDto) {
+		this.id = new SagaLogUuidValueObject();
+		this.sagaInstanceId = new SagaInstanceUuidValueObject(props.sagaInstanceId);
+		this.sagaStepId = new SagaStepUuidValueObject(props.sagaStepId);
+		this.type = new SagaLogTypeValueObject(props.type);
+		this.message = new SagaLogMessageValueObject(props.message);
+	}
 }

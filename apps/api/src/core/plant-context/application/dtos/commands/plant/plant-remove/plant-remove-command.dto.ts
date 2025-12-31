@@ -6,6 +6,6 @@
  * @property {string} plantId - The id of the plant to remove
  */
 export interface IPlantRemoveCommandDto {
-  growingUnitId: string;
-  plantId: string;
+	growingUnitId: string;
+	plantId: string;
 }

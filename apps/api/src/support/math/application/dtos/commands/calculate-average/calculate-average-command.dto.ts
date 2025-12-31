@@ -6,6 +6,6 @@
  * @property {number} [decimals] - Number of decimal places (default: 2)
  */
 export interface ICalculateAverageCommandDto {
-  values: number[];
-  decimals?: number;
+	values: number[];
+	decimals?: number;
 }

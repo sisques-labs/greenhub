@@ -14,106 +14,106 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
 import { AuthUpdateCommand } from './auth-update.command';
 
 describe('AuthUpdateCommandHandler', () => {
-  let handler: AuthUpdateCommandHandler;
-  let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockAssertAuthExistsService: jest.Mocked<AssertAuthExistsService>;
+	let handler: AuthUpdateCommandHandler;
+	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockAssertAuthExistsService: jest.Mocked<AssertAuthExistsService>;
 
-  beforeEach(() => {
-    mockAuthWriteRepository = {
-      findById: jest.fn(),
-      findByEmail: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<AuthWriteRepository>;
+	beforeEach(() => {
+		mockAuthWriteRepository = {
+			findById: jest.fn(),
+			findByEmail: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<AuthWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockAssertAuthExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertAuthExistsService>;
+		mockAssertAuthExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertAuthExistsService>;
 
-    handler = new AuthUpdateCommandHandler(
-      mockAuthWriteRepository,
-      mockEventBus,
-      mockAssertAuthExistsService,
-    );
-  });
+		handler = new AuthUpdateCommandHandler(
+			mockAuthWriteRepository,
+			mockEventBus,
+			mockAssertAuthExistsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should update auth successfully when auth exists', async () => {
-      const authId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+	describe('execute', () => {
+		it('should update auth successfully when auth exists', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const command = new AuthUpdateCommand({
-        id: authId,
-        email: 'updated@example.com',
-      });
+			const command = new AuthUpdateCommand({
+				id: authId,
+				email: 'updated@example.com',
+			});
 
-      const existingAuth = new AuthAggregate(
-        {
-          id: new AuthUuidValueObject(authId),
-          userId: new UserUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174001',
-          ),
-          email: new AuthEmailValueObject('old@example.com'),
-          emailVerified: new AuthEmailVerifiedValueObject(false),
-          lastLoginAt: null,
-          password: null,
-          phoneNumber: null,
-          provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
-          providerId: null,
-          twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const existingAuth = new AuthAggregate(
+				{
+					id: new AuthUuidValueObject(authId),
+					userId: new UserUuidValueObject(
+						'123e4567-e89b-12d3-a456-426614174001',
+					),
+					email: new AuthEmailValueObject('old@example.com'),
+					emailVerified: new AuthEmailVerifiedValueObject(false),
+					lastLoginAt: null,
+					password: null,
+					phoneNumber: null,
+					provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
+					providerId: null,
+					twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      const updateSpy = jest.spyOn(existingAuth, 'update');
-      const commitSpy = jest.spyOn(existingAuth, 'commit');
-      const getUncommittedEventsSpy = jest
-        .spyOn(existingAuth, 'getUncommittedEvents')
-        .mockReturnValue([]);
+			const updateSpy = jest.spyOn(existingAuth, 'update');
+			const commitSpy = jest.spyOn(existingAuth, 'commit');
+			const getUncommittedEventsSpy = jest
+				.spyOn(existingAuth, 'getUncommittedEvents')
+				.mockReturnValue([]);
 
-      mockAssertAuthExistsService.execute.mockResolvedValue(existingAuth);
-      mockAuthWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertAuthExistsService.execute.mockResolvedValue(existingAuth);
+			mockAuthWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockAssertAuthExistsService.execute).toHaveBeenCalledWith(authId);
-      expect(updateSpy).toHaveBeenCalled();
-      expect(mockAuthWriteRepository.save).toHaveBeenCalledWith(existingAuth);
-      expect(mockEventBus.publishAll).toHaveBeenCalled();
-      expect(commitSpy).toHaveBeenCalled();
+			expect(mockAssertAuthExistsService.execute).toHaveBeenCalledWith(authId);
+			expect(updateSpy).toHaveBeenCalled();
+			expect(mockAuthWriteRepository.save).toHaveBeenCalledWith(existingAuth);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(commitSpy).toHaveBeenCalled();
 
-      updateSpy.mockRestore();
-      commitSpy.mockRestore();
-      getUncommittedEventsSpy.mockRestore();
-    });
+			updateSpy.mockRestore();
+			commitSpy.mockRestore();
+			getUncommittedEventsSpy.mockRestore();
+		});
 
-    it('should throw exception when auth does not exist', async () => {
-      const authId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should throw exception when auth does not exist', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
 
-      const command = new AuthUpdateCommand({
-        id: authId,
-        email: 'updated@example.com',
-      });
+			const command = new AuthUpdateCommand({
+				id: authId,
+				email: 'updated@example.com',
+			});
 
-      const error = new Error('Auth not found');
-      mockAssertAuthExistsService.execute.mockRejectedValue(error);
+			const error = new Error('Auth not found');
+			mockAssertAuthExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(command)).rejects.toThrow(error);
-      expect(mockAuthWriteRepository.save).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
-    });
-  });
+			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockAuthWriteRepository.save).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+		});
+	});
 });

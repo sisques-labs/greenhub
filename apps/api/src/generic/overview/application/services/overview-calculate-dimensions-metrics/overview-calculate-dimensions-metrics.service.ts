@@ -14,67 +14,67 @@ import { CalculateAverageCommand } from '@/support/math/application/commands/cal
  */
 @Injectable()
 export class OverviewCalculateDimensionsMetricsService
-  implements
-    IBaseService<
-      GrowingUnitViewModel[],
-      Pick<
-        IOverviewViewModelDto,
-        'growingUnitsWithDimensions' | 'totalVolume' | 'averageVolume'
-      >
-    >
+	implements
+		IBaseService<
+			GrowingUnitViewModel[],
+			Pick<
+				IOverviewViewModelDto,
+				'growingUnitsWithDimensions' | 'totalVolume' | 'averageVolume'
+			>
+		>
 {
-  private readonly logger = new Logger(
-    OverviewCalculateDimensionsMetricsService.name,
-  );
+	private readonly logger = new Logger(
+		OverviewCalculateDimensionsMetricsService.name,
+	);
 
-  constructor(private readonly commandBus: CommandBus) {}
+	constructor(private readonly commandBus: CommandBus) {}
 
-  /**
-   * Calculates dimensions-related metrics from an array of growing units.
-   *
-   * @param growingUnits - Array of growing unit view models
-   * @returns Object containing all dimensions metrics
-   */
-  async execute(
-    growingUnits: GrowingUnitViewModel[],
-  ): Promise<
-    Pick<
-      IOverviewViewModelDto,
-      'growingUnitsWithDimensions' | 'totalVolume' | 'averageVolume'
-    >
-  > {
-    this.logger.log(
-      `Calculating dimensions metrics for ${growingUnits.length} growing units`,
-    );
+	/**
+	 * Calculates dimensions-related metrics from an array of growing units.
+	 *
+	 * @param growingUnits - Array of growing unit view models
+	 * @returns Object containing all dimensions metrics
+	 */
+	async execute(
+		growingUnits: GrowingUnitViewModel[],
+	): Promise<
+		Pick<
+			IOverviewViewModelDto,
+			'growingUnitsWithDimensions' | 'totalVolume' | 'averageVolume'
+		>
+	> {
+		this.logger.log(
+			`Calculating dimensions metrics for ${growingUnits.length} growing units`,
+		);
 
-    // Filter growing units with dimensions
-    const growingUnitsWithDimensions = growingUnits.filter(
-      (gu) => gu.dimensions !== null,
-    );
+		// Filter growing units with dimensions
+		const growingUnitsWithDimensions = growingUnits.filter(
+			(gu) => gu.dimensions !== null,
+		);
 
-    const growingUnitsWithDimensionsCount = growingUnitsWithDimensions.length;
+		const growingUnitsWithDimensionsCount = growingUnitsWithDimensions.length;
 
-    // Calculate total volume
-    const totalVolume = growingUnitsWithDimensions.reduce(
-      (sum, gu) => sum + gu.volume,
-      0,
-    );
+		// Calculate total volume
+		const totalVolume = growingUnitsWithDimensions.reduce(
+			(sum, gu) => sum + gu.volume,
+			0,
+		);
 
-    // Calculate average volume using math command
-    const averageVolume =
-      growingUnitsWithDimensionsCount > 0
-        ? await this.commandBus.execute(
-            new CalculateAverageCommand({
-              values: growingUnitsWithDimensions.map((gu) => gu.volume),
-              decimals: 2,
-            }),
-          )
-        : 0;
+		// Calculate average volume using math command
+		const averageVolume =
+			growingUnitsWithDimensionsCount > 0
+				? await this.commandBus.execute(
+						new CalculateAverageCommand({
+							values: growingUnitsWithDimensions.map((gu) => gu.volume),
+							decimals: 2,
+						}),
+					)
+				: 0;
 
-    return {
-      growingUnitsWithDimensions: growingUnitsWithDimensionsCount,
-      totalVolume,
-      averageVolume,
-    };
-  }
+		return {
+			growingUnitsWithDimensions: growingUnitsWithDimensionsCount,
+			totalVolume,
+			averageVolume,
+		};
+	}
 }

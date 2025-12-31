@@ -12,18 +12,18 @@
  * - {@link LengthUnitEnum.FOOT}: Foot (ft)
  */
 export enum LengthUnitEnum {
-  /** Millimeter (mm) */
-  MILLIMETER = 'MILLIMETER',
+	/** Millimeter (mm) */
+	MILLIMETER = 'MILLIMETER',
 
-  /** Centimeter (cm) */
-  CENTIMETER = 'CENTIMETER',
+	/** Centimeter (cm) */
+	CENTIMETER = 'CENTIMETER',
 
-  /** Meter (m) */
-  METER = 'METER',
+	/** Meter (m) */
+	METER = 'METER',
 
-  /** Inch (in) */
-  INCH = 'INCH',
+	/** Inch (in) */
+	INCH = 'INCH',
 
-  /** Foot (ft) */
-  FOOT = 'FOOT',
+	/** Foot (ft) */
+	FOOT = 'FOOT',
 }

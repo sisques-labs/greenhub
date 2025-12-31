@@ -8,11 +8,11 @@ import { ICalculateAverageCommandDto } from '@/support/math/application/dtos/com
  * from an array of numbers.
  */
 export class CalculateAverageCommand {
-  readonly values: readonly number[];
-  readonly decimals: number;
+	readonly values: readonly number[];
+	readonly decimals: number;
 
-  constructor(props: ICalculateAverageCommandDto) {
-    this.values = props.values;
-    this.decimals = props.decimals ?? 2;
-  }
+	constructor(props: ICalculateAverageCommandDto) {
+		this.values = props.values;
+		this.decimals = props.decimals ?? 2;
+	}
 }

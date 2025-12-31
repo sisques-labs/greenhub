@@ -5,6 +5,6 @@
  * @property {string} id - The unique identifier of the plant to find.
  */
 export interface IPlantFindByIdQueryDto {
-  /** The unique identifier of the plant to find. */
-  id: string;
+	/** The unique identifier of the plant to find. */
+	id: string;
 }

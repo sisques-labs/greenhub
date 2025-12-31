@@ -11,10 +11,10 @@ import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dt
  * @see IPlantDto for entity data structure
  */
 export interface IPlantViewModelDto extends IBaseViewModelDto {
-  growingUnitId: string;
-  name: string;
-  species: string;
-  plantedDate: Date | null;
-  notes: string | null;
-  status: string;
+	growingUnitId: string;
+	name: string;
+	species: string;
+	plantedDate: Date | null;
+	notes: string | null;
+	status: string;
 }

@@ -4,19 +4,19 @@ import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/dom
 
 @InputType('SagaInstanceChangeStatusRequestDto')
 export class SagaInstanceChangeStatusRequestDto {
-  @Field(() => String, {
-    description: 'The id of the saga instance',
-    nullable: false,
-  })
-  @IsUUID()
-  @IsNotEmpty()
-  id: string;
+	@Field(() => String, {
+		description: 'The id of the saga instance',
+		nullable: false,
+	})
+	@IsUUID()
+	@IsNotEmpty()
+	id: string;
 
-  @Field(() => SagaInstanceStatusEnum, {
-    description: 'The status of the saga instance',
-    nullable: false,
-  })
-  @IsEnum(SagaInstanceStatusEnum)
-  @IsNotEmpty()
-  status: SagaInstanceStatusEnum;
+	@Field(() => SagaInstanceStatusEnum, {
+		description: 'The status of the saga instance',
+		nullable: false,
+	})
+	@IsEnum(SagaInstanceStatusEnum)
+	@IsNotEmpty()
+	status: SagaInstanceStatusEnum;
 }

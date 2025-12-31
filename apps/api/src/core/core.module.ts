@@ -5,9 +5,9 @@ import { SharedModule } from '@/shared/shared.module';
 const MODULES = [PlantContextModule];
 
 @Module({
-  imports: [SharedModule, ...MODULES],
-  controllers: [],
-  providers: [],
-  exports: [],
+	imports: [SharedModule, ...MODULES],
+	controllers: [],
+	providers: [],
+	exports: [],
 })
 export class CoreModule {}

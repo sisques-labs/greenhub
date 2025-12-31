@@ -3,13 +3,13 @@ import { BaseEvent } from '@/shared/domain/events/base-event.interface';
 import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 export class GrowingUnitPlantAddedEvent extends BaseEvent<IGrowingUnitPlantEventData> {
-  /**
-   * Constructor
-   *
-   * @param metadata - The metadata of the event
-   * @param data - The data of the event
-   */
-  constructor(metadata: IEventMetadata, data: IGrowingUnitPlantEventData) {
-    super(metadata, data);
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(metadata: IEventMetadata, data: IGrowingUnitPlantEventData) {
+		super(metadata, data);
+	}
 }

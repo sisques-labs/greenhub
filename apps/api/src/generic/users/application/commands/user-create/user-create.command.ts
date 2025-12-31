@@ -11,38 +11,38 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
 export class UserCreateCommand {
-  readonly id: UserUuidValueObject;
-  readonly avatarUrl: UserAvatarUrlValueObject | null;
-  readonly bio: UserBioValueObject | null;
-  readonly lastName: UserLastNameValueObject | null;
-  readonly name: UserNameValueObject | null;
-  readonly role?: UserRoleValueObject;
-  readonly status?: UserStatusValueObject;
-  readonly userName: UserUserNameValueObject | null;
+	readonly id: UserUuidValueObject;
+	readonly avatarUrl: UserAvatarUrlValueObject | null;
+	readonly bio: UserBioValueObject | null;
+	readonly lastName: UserLastNameValueObject | null;
+	readonly name: UserNameValueObject | null;
+	readonly role?: UserRoleValueObject;
+	readonly status?: UserStatusValueObject;
+	readonly userName: UserUserNameValueObject | null;
 
-  constructor(props: IUserCreateCommandDto) {
-    this.id = new UserUuidValueObject();
+	constructor(props: IUserCreateCommandDto) {
+		this.id = new UserUuidValueObject();
 
-    this.avatarUrl = props.avatarUrl
-      ? new UserAvatarUrlValueObject(props.avatarUrl)
-      : null;
+		this.avatarUrl = props.avatarUrl
+			? new UserAvatarUrlValueObject(props.avatarUrl)
+			: null;
 
-    this.bio = props.bio ? new UserBioValueObject(props.bio) : null;
+		this.bio = props.bio ? new UserBioValueObject(props.bio) : null;
 
-    this.lastName = props.lastName
-      ? new UserLastNameValueObject(props.lastName)
-      : null;
+		this.lastName = props.lastName
+			? new UserLastNameValueObject(props.lastName)
+			: null;
 
-    this.name = props.name ? new UserNameValueObject(props.name) : null;
+		this.name = props.name ? new UserNameValueObject(props.name) : null;
 
-    this.role = new UserRoleValueObject(
-      props.role !== undefined ? props.role : UserRoleEnum.USER,
-    );
+		this.role = new UserRoleValueObject(
+			props.role !== undefined ? props.role : UserRoleEnum.USER,
+		);
 
-    this.status = new UserStatusValueObject(UserStatusEnum.ACTIVE);
+		this.status = new UserStatusValueObject(UserStatusEnum.ACTIVE);
 
-    this.userName = props.userName
-      ? new UserUserNameValueObject(props.userName)
-      : null;
-  }
+		this.userName = props.userName
+			? new UserUserNameValueObject(props.userName)
+			: null;
+	}
 }

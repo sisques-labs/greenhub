@@ -15,193 +15,193 @@ import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
 describe('AssertUserExsistsService', () => {
-  let service: AssertUserExsistsService;
-  let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
+	let service: AssertUserExsistsService;
+	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
 
-  beforeEach(() => {
-    mockUserWriteRepository = {
-      findById: jest.fn(),
-      findByUserName: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    };
+	beforeEach(() => {
+		mockUserWriteRepository = {
+			findById: jest.fn(),
+			findByUserName: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		};
 
-    service = new AssertUserExsistsService(mockUserWriteRepository);
-  });
+		service = new AssertUserExsistsService(mockUserWriteRepository);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return user aggregate when user exists', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const mockUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+	describe('execute', () => {
+		it('should return user aggregate when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const mockUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockUserWriteRepository.findById.mockResolvedValue(mockUser);
+			mockUserWriteRepository.findById.mockResolvedValue(mockUser);
 
-      const result = await service.execute(userId);
+			const result = await service.execute(userId);
 
-      expect(result).toBe(mockUser);
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockUser);
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw UserNotFoundException when user does not exist', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should throw UserNotFoundException when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockUserWriteRepository.findById.mockResolvedValue(null);
+			mockUserWriteRepository.findById.mockResolvedValue(null);
 
-      await expect(service.execute(userId)).rejects.toThrow(
-        UserNotFoundException,
-      );
-      await expect(service.execute(userId)).rejects.toThrow(
-        `User with id ${userId} not found`,
-      );
+			await expect(service.execute(userId)).rejects.toThrow(
+				UserNotFoundException,
+			);
+			await expect(service.execute(userId)).rejects.toThrow(
+				`User with id ${userId} not found`,
+			);
 
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(2);
-    });
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(2);
+		});
 
-    it('should call repository with correct id', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const mockUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+		it('should call repository with correct id', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const mockUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockUserWriteRepository.findById.mockResolvedValue(mockUser);
+			mockUserWriteRepository.findById.mockResolvedValue(mockUser);
 
-      await service.execute(userId);
+			await service.execute(userId);
 
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
-    });
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
+		});
 
-    it('should return user aggregate with all properties when user exists', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const mockUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          name: new UserNameValueObject('John'),
-          lastName: new UserLastNameValueObject('Doe'),
-          bio: new UserBioValueObject('Software developer'),
-          avatarUrl: new UserAvatarUrlValueObject(
-            'https://example.com/avatar.jpg',
-          ),
-          role: new UserRoleValueObject(UserRoleEnum.ADMIN),
-          status: new UserStatusValueObject(UserStatusEnum.INACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+		it('should return user aggregate with all properties when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const mockUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					name: new UserNameValueObject('John'),
+					lastName: new UserLastNameValueObject('Doe'),
+					bio: new UserBioValueObject('Software developer'),
+					avatarUrl: new UserAvatarUrlValueObject(
+						'https://example.com/avatar.jpg',
+					),
+					role: new UserRoleValueObject(UserRoleEnum.ADMIN),
+					status: new UserStatusValueObject(UserStatusEnum.INACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockUserWriteRepository.findById.mockResolvedValue(mockUser);
+			mockUserWriteRepository.findById.mockResolvedValue(mockUser);
 
-      const result = await service.execute(userId);
+			const result = await service.execute(userId);
 
-      expect(result).toBe(mockUser);
-      expect(result.id.value).toBe(userId);
-      expect(result.userName.value).toBe('johndoe');
-      expect(result.name?.value).toBe('John');
-      expect(result.lastName?.value).toBe('Doe');
-      expect(result.bio?.value).toBe('Software developer');
-      expect(result.avatarUrl?.value).toBe('https://example.com/avatar.jpg');
-      expect(result.role.value).toBe(UserRoleEnum.ADMIN);
-      expect(result.status.value).toBe(UserStatusEnum.INACTIVE);
-    });
+			expect(result).toBe(mockUser);
+			expect(result.id.value).toBe(userId);
+			expect(result.userName.value).toBe('johndoe');
+			expect(result.name?.value).toBe('John');
+			expect(result.lastName?.value).toBe('Doe');
+			expect(result.bio?.value).toBe('Software developer');
+			expect(result.avatarUrl?.value).toBe('https://example.com/avatar.jpg');
+			expect(result.role.value).toBe(UserRoleEnum.ADMIN);
+			expect(result.status.value).toBe(UserStatusEnum.INACTIVE);
+		});
 
-    it('should return user aggregate with minimal properties when user exists', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const mockUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+		it('should return user aggregate with minimal properties when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const mockUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockUserWriteRepository.findById.mockResolvedValue(mockUser);
+			mockUserWriteRepository.findById.mockResolvedValue(mockUser);
 
-      const result = await service.execute(userId);
+			const result = await service.execute(userId);
 
-      expect(result).toBe(mockUser);
-      expect(result.id.value).toBe(userId);
-      expect(result.userName.value).toBe('johndoe');
-      expect(result.name).toBeUndefined();
-      expect(result.lastName).toBeUndefined();
-      expect(result.bio).toBeUndefined();
-      expect(result.avatarUrl).toBeUndefined();
-      expect(result.role.value).toBe(UserRoleEnum.USER);
-      expect(result.status.value).toBe(UserStatusEnum.ACTIVE);
-    });
+			expect(result).toBe(mockUser);
+			expect(result.id.value).toBe(userId);
+			expect(result.userName.value).toBe('johndoe');
+			expect(result.name).toBeUndefined();
+			expect(result.lastName).toBeUndefined();
+			expect(result.bio).toBeUndefined();
+			expect(result.avatarUrl).toBeUndefined();
+			expect(result.role.value).toBe(UserRoleEnum.USER);
+			expect(result.status.value).toBe(UserStatusEnum.ACTIVE);
+		});
 
-    it('should handle repository errors correctly', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const repositoryError = new Error('Database connection error');
+		it('should handle repository errors correctly', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const repositoryError = new Error('Database connection error');
 
-      mockUserWriteRepository.findById.mockRejectedValue(repositoryError);
+			mockUserWriteRepository.findById.mockRejectedValue(repositoryError);
 
-      await expect(service.execute(userId)).rejects.toThrow(repositoryError);
+			await expect(service.execute(userId)).rejects.toThrow(repositoryError);
 
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
-      expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
-    });
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledWith(userId);
+			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
+		});
 
-    it('should return user aggregate with different roles and statuses', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const testCases = [
-        { role: UserRoleEnum.USER, status: UserStatusEnum.ACTIVE },
-        { role: UserRoleEnum.ADMIN, status: UserStatusEnum.ACTIVE },
-        { role: UserRoleEnum.USER, status: UserStatusEnum.INACTIVE },
-        { role: UserRoleEnum.ADMIN, status: UserStatusEnum.INACTIVE },
-      ];
+		it('should return user aggregate with different roles and statuses', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const testCases = [
+				{ role: UserRoleEnum.USER, status: UserStatusEnum.ACTIVE },
+				{ role: UserRoleEnum.ADMIN, status: UserStatusEnum.ACTIVE },
+				{ role: UserRoleEnum.USER, status: UserStatusEnum.INACTIVE },
+				{ role: UserRoleEnum.ADMIN, status: UserStatusEnum.INACTIVE },
+			];
 
-      for (const testCase of testCases) {
-        const mockUser = new UserAggregate(
-          {
-            id: new UserUuidValueObject(userId),
-            userName: new UserUserNameValueObject('johndoe'),
-            role: new UserRoleValueObject(testCase.role),
-            status: new UserStatusValueObject(testCase.status),
-            createdAt: new DateValueObject(new Date()),
-            updatedAt: new DateValueObject(new Date()),
-          },
-          false,
-        );
+			for (const testCase of testCases) {
+				const mockUser = new UserAggregate(
+					{
+						id: new UserUuidValueObject(userId),
+						userName: new UserUserNameValueObject('johndoe'),
+						role: new UserRoleValueObject(testCase.role),
+						status: new UserStatusValueObject(testCase.status),
+						createdAt: new DateValueObject(new Date()),
+						updatedAt: new DateValueObject(new Date()),
+					},
+					false,
+				);
 
-        mockUserWriteRepository.findById.mockResolvedValue(mockUser);
+				mockUserWriteRepository.findById.mockResolvedValue(mockUser);
 
-        const result = await service.execute(userId);
+				const result = await service.execute(userId);
 
-        expect(result.role.value).toBe(testCase.role);
-        expect(result.status.value).toBe(testCase.status);
+				expect(result.role.value).toBe(testCase.role);
+				expect(result.status.value).toBe(testCase.status);
 
-        jest.clearAllMocks();
-      }
-    });
-  });
+				jest.clearAllMocks();
+			}
+		});
+	});
 });

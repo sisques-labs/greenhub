@@ -5,5 +5,5 @@
  * @property {string} id - The id of the saga step to delete.
  */
 export interface ISagaStepDeleteCommandDto {
-  id: string;
+	id: string;
 }

@@ -6,30 +6,34 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 
 @Entity('growing-units')
 export class GrowingUnitTypeormEntity extends BaseTypeormEntity {
-  @Column({ type: 'varchar' })
-  name: string;
+	@Column({ type: 'varchar' })
+	name: string;
 
-  @Column({ type: 'enum', enum: GrowingUnitTypeEnum })
-  type: GrowingUnitTypeEnum;
+	@Column({ type: 'enum', enum: GrowingUnitTypeEnum })
+	type: GrowingUnitTypeEnum;
 
-  @Column({ type: 'integer' })
-  capacity: number;
+	@Column({ type: 'integer' })
+	capacity: number;
 
-  @Column({ type: 'float', nullable: true })
-  length: number | null;
+	@Column({ type: 'float', nullable: true })
+	length: number | null;
 
-  @Column({ type: 'float', nullable: true })
-  width: number | null;
+	@Column({ type: 'float', nullable: true })
+	width: number | null;
 
-  @Column({ type: 'float', nullable: true })
-  height: number | null;
+	@Column({ type: 'float', nullable: true })
+	height: number | null;
 
-  @Column({ type: 'enum', enum: LengthUnitEnum, nullable: true })
-  unit: LengthUnitEnum | null;
+	@Column({ type: 'enum', enum: LengthUnitEnum, nullable: true })
+	unit: LengthUnitEnum | null;
 
-  @OneToMany(() => PlantTypeormEntity, (plant) => plant.growingUnit, {
-    cascade: true,
-    orphanedRowAction: 'delete',
-  })
-  plants: PlantTypeormEntity[];
+	@OneToMany(
+		() => PlantTypeormEntity,
+		(plant) => plant.growingUnit,
+		{
+			cascade: true,
+			orphanedRowAction: 'delete',
+		},
+	)
+	plants: PlantTypeormEntity[];
 }

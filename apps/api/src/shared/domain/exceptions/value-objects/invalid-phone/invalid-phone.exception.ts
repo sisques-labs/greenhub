@@ -5,9 +5,9 @@ import { BaseDomainException } from '@/shared/domain/exceptions/base-domain.exce
  * This exception is thrown when a phone number value is invalid.
  */
 export class InvalidPhoneException extends BaseDomainException {
-  public readonly domain: string = 'ValueObject';
+	public readonly domain: string = 'ValueObject';
 
-  constructor(message: string) {
-    super(message);
-  }
+	constructor(message: string) {
+		super(message);
+	}
 }

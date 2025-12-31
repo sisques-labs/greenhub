@@ -16,275 +16,275 @@ import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
 describe('UserDeleteCommandHandler', () => {
-  let handler: UserDeleteCommandHandler;
-  let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockAssertUserExsistsService: jest.Mocked<AssertUserExsistsService>;
+	let handler: UserDeleteCommandHandler;
+	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockAssertUserExsistsService: jest.Mocked<AssertUserExsistsService>;
 
-  beforeEach(() => {
-    mockUserWriteRepository = {
-      findById: jest.fn(),
-      findByUserName: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    };
+	beforeEach(() => {
+		mockUserWriteRepository = {
+			findById: jest.fn(),
+			findByUserName: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		};
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockAssertUserExsistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertUserExsistsService>;
+		mockAssertUserExsistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertUserExsistsService>;
 
-    handler = new UserDeleteCommandHandler(
-      mockUserWriteRepository,
-      mockEventBus,
-      mockAssertUserExsistsService,
-    );
-  });
+		handler = new UserDeleteCommandHandler(
+			mockUserWriteRepository,
+			mockEventBus,
+			mockAssertUserExsistsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should delete user successfully when user exists', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+	describe('execute', () => {
+		it('should delete user successfully when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const existingUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new UserDeleteCommand(commandDto);
+			const existingUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      const deleteSpy = jest.spyOn(existingUser, 'delete');
-      mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
-      mockUserWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			const deleteSpy = jest.spyOn(existingUser, 'delete');
+			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
+			mockUserWriteRepository.delete.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(userId);
-      expect(mockAssertUserExsistsService.execute).toHaveBeenCalledTimes(1);
-      expect(deleteSpy).toHaveBeenCalled();
-      expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(userId);
-      expect(mockUserWriteRepository.delete).toHaveBeenCalledTimes(1);
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(
-        existingUser.getUncommittedEvents(),
-      );
-      expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(userId);
+			expect(mockAssertUserExsistsService.execute).toHaveBeenCalledTimes(1);
+			expect(deleteSpy).toHaveBeenCalled();
+			expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(userId);
+			expect(mockUserWriteRepository.delete).toHaveBeenCalledTimes(1);
+			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+				existingUser.getUncommittedEvents(),
+			);
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
 
-      deleteSpy.mockRestore();
-    });
+			deleteSpy.mockRestore();
+		});
 
-    it('should throw exception when user does not exist', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+		it('should throw exception when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const error = new UserNotFoundException(userId);
+			const command = new UserDeleteCommand(commandDto);
+			const error = new UserNotFoundException(userId);
 
-      mockAssertUserExsistsService.execute.mockRejectedValue(error);
+			mockAssertUserExsistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(command)).rejects.toThrow(error);
-      expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(userId);
-      expect(mockUserWriteRepository.delete).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
-    });
+			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(userId);
+			expect(mockUserWriteRepository.delete).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+		});
 
-    it('should publish UserDeletedEvent when user is deleted', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+		it('should publish UserDeletedEvent when user is deleted', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const existingUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new UserDeleteCommand(commandDto);
+			const existingUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      // Verify that delete() generates an event when called directly
-      existingUser.delete();
-      const eventsAfterDelete = existingUser.getUncommittedEvents();
-      expect(eventsAfterDelete).toHaveLength(1);
-      expect(eventsAfterDelete[0]).toBeInstanceOf(UserDeletedEvent);
+			// Verify that delete() generates an event when called directly
+			existingUser.delete();
+			const eventsAfterDelete = existingUser.getUncommittedEvents();
+			expect(eventsAfterDelete).toHaveLength(1);
+			expect(eventsAfterDelete[0]).toBeInstanceOf(UserDeletedEvent);
 
-      // Now test the handler
-      const existingUserForHandler = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			// Now test the handler
+			const existingUserForHandler = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertUserExsistsService.execute.mockResolvedValue(
-        existingUserForHandler,
-      );
-      mockUserWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertUserExsistsService.execute.mockResolvedValue(
+				existingUserForHandler,
+			);
+			mockUserWriteRepository.delete.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      // Verify that publishAll was called (the handler should call it with events)
-      expect(mockEventBus.publishAll).toHaveBeenCalled();
-      expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
-      // Note: We can't verify the events here because commit() clears them
-      // But we verified above that delete() generates the event correctly
-    });
+			// Verify that publishAll was called (the handler should call it with events)
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			// Note: We can't verify the events here because commit() clears them
+			// But we verified above that delete() generates the event correctly
+		});
 
-    it('should delete from repository after calling delete on aggregate', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+		it('should delete from repository after calling delete on aggregate', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const existingUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new UserDeleteCommand(commandDto);
+			const existingUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
-      mockUserWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
+			mockUserWriteRepository.delete.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      const deleteSpy = jest.spyOn(existingUser, 'delete');
-      await handler.execute(command);
+			const deleteSpy = jest.spyOn(existingUser, 'delete');
+			await handler.execute(command);
 
-      expect(deleteSpy).toHaveBeenCalled();
-      expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(userId);
+			expect(deleteSpy).toHaveBeenCalled();
+			expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(userId);
 
-      deleteSpy.mockRestore();
-    });
+			deleteSpy.mockRestore();
+		});
 
-    it('should publish events before committing', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+		it('should publish events before committing', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const existingUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new UserDeleteCommand(commandDto);
+			const existingUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      const commitSpy = jest.spyOn(existingUser, 'commit');
+			const commitSpy = jest.spyOn(existingUser, 'commit');
 
-      mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
-      mockUserWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
+			mockUserWriteRepository.delete.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
-      const commitOrder = commitSpy.mock.invocationCallOrder[0];
-      expect(publishOrder).toBeLessThan(commitOrder);
-    });
+			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			const commitOrder = commitSpy.mock.invocationCallOrder[0];
+			expect(publishOrder).toBeLessThan(commitOrder);
+		});
 
-    it('should delete from repository before publishing events', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+		it('should delete from repository before publishing events', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const existingUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new UserDeleteCommand(commandDto);
+			const existingUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
-      mockUserWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
+			mockUserWriteRepository.delete.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      const deleteOrder =
-        mockUserWriteRepository.delete.mock.invocationCallOrder[0];
-      const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
-      expect(deleteOrder).toBeLessThan(publishOrder);
-    });
+			const deleteOrder =
+				mockUserWriteRepository.delete.mock.invocationCallOrder[0];
+			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			expect(deleteOrder).toBeLessThan(publishOrder);
+		});
 
-    it('should use correct user id from command', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IUserDeleteCommandDto = {
-        id: userId,
-      };
+		it('should use correct user id from command', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IUserDeleteCommandDto = {
+				id: userId,
+			};
 
-      const command = new UserDeleteCommand(commandDto);
-      const existingUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new UserDeleteCommand(commandDto);
+			const existingUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
-      mockUserWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
+			mockUserWriteRepository.delete.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(
-        command.id,
-      );
-      expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(
-        existingUser.id.value,
-      );
-    });
-  });
+			expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(
+				command.id,
+			);
+			expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(
+				existingUser.id.value,
+			);
+		});
+	});
 });

@@ -25,118 +25,118 @@ import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/
  */
 @Injectable()
 export class GrowingUnitViewModelFactory
-  implements
-    IReadFactory<
-      GrowingUnitViewModel,
-      IGrowingUnitViewModelDto,
-      GrowingUnitAggregate,
-      GrowingUnitPrimitives
-    >
+	implements
+		IReadFactory<
+			GrowingUnitViewModel,
+			IGrowingUnitViewModelDto,
+			GrowingUnitAggregate,
+			GrowingUnitPrimitives
+		>
 {
-  private readonly logger = new Logger(GrowingUnitViewModelFactory.name);
+	private readonly logger = new Logger(GrowingUnitViewModelFactory.name);
 
-  /**
-   * Instantiates a new GrowingUnitViewModelFactory.
-   *
-   * @param plantViewModelFactory - A factory used to create view models for plants.
-   */
-  constructor(private readonly plantViewModelFactory: PlantViewModelFactory) {}
+	/**
+	 * Instantiates a new GrowingUnitViewModelFactory.
+	 *
+	 * @param plantViewModelFactory - A factory used to create view models for plants.
+	 */
+	constructor(private readonly plantViewModelFactory: PlantViewModelFactory) {}
 
-  /**
-   * Converts an {@link IGrowingUnitViewModelDto} into a {@link GrowingUnitViewModel}.
-   *
-   * @param data - Data transfer object containing growing unit creation properties.
-   * @returns A new {@link GrowingUnitViewModel} instance created from the provided DTO.
-   *
-   * @example
-   * ```typescript
-   * const dto: IGrowingUnitViewModelDto = {...};
-   * const viewModel = factory.create(dto);
-   * ```
-   */
-  public create(data: IGrowingUnitViewModelDto): GrowingUnitViewModel {
-    this.logger.log(
-      `Creating growing unit view model from DTO: ${JSON.stringify(data)}`,
-    );
-    return new GrowingUnitViewModel(data);
-  }
+	/**
+	 * Converts an {@link IGrowingUnitViewModelDto} into a {@link GrowingUnitViewModel}.
+	 *
+	 * @param data - Data transfer object containing growing unit creation properties.
+	 * @returns A new {@link GrowingUnitViewModel} instance created from the provided DTO.
+	 *
+	 * @example
+	 * ```typescript
+	 * const dto: IGrowingUnitViewModelDto = {...};
+	 * const viewModel = factory.create(dto);
+	 * ```
+	 */
+	public create(data: IGrowingUnitViewModelDto): GrowingUnitViewModel {
+		this.logger.log(
+			`Creating growing unit view model from DTO: ${JSON.stringify(data)}`,
+		);
+		return new GrowingUnitViewModel(data);
+	}
 
-  /**
-   * Creates a {@link GrowingUnitViewModel} from {@link GrowingUnitPrimitives}.
-   *
-   * @param growingUnitPrimitives - The basic primitive data describing the growing unit.
-   * @returns The constructed {@link GrowingUnitViewModel} instance.
-   *
-   * @example
-   * ```typescript
-   * const primitives: GrowingUnitPrimitives = {...};
-   * const viewModel = factory.fromPrimitives(primitives);
-   * ```
-   */
-  public fromPrimitives(
-    growingUnitPrimitives: GrowingUnitPrimitives,
-  ): GrowingUnitViewModel {
-    this.logger.log(
-      `Creating growing unit view model from primitives: ${growingUnitPrimitives}`,
-    );
+	/**
+	 * Creates a {@link GrowingUnitViewModel} from {@link GrowingUnitPrimitives}.
+	 *
+	 * @param growingUnitPrimitives - The basic primitive data describing the growing unit.
+	 * @returns The constructed {@link GrowingUnitViewModel} instance.
+	 *
+	 * @example
+	 * ```typescript
+	 * const primitives: GrowingUnitPrimitives = {...};
+	 * const viewModel = factory.fromPrimitives(primitives);
+	 * ```
+	 */
+	public fromPrimitives(
+		growingUnitPrimitives: GrowingUnitPrimitives,
+	): GrowingUnitViewModel {
+		this.logger.log(
+			`Creating growing unit view model from primitives: ${growingUnitPrimitives}`,
+		);
 
-    const now = new Date();
+		const now = new Date();
 
-    return new GrowingUnitViewModel({
-      id: growingUnitPrimitives.id,
-      name: growingUnitPrimitives.name,
-      type: growingUnitPrimitives.type,
-      capacity: growingUnitPrimitives.capacity,
-      dimensions: growingUnitPrimitives.dimensions,
-      plants: growingUnitPrimitives.plants.map((plant) =>
-        this.plantViewModelFactory.fromPrimitives(plant),
-      ),
-      remainingCapacity: 0,
-      numberOfPlants: growingUnitPrimitives.plants.length,
-      volume: growingUnitPrimitives.dimensions
-        ? new DimensionsValueObject(
-            growingUnitPrimitives.dimensions,
-          ).getVolume()
-        : 0,
-      createdAt: now,
-      updatedAt: now,
-    });
-  }
+		return new GrowingUnitViewModel({
+			id: growingUnitPrimitives.id,
+			name: growingUnitPrimitives.name,
+			type: growingUnitPrimitives.type,
+			capacity: growingUnitPrimitives.capacity,
+			dimensions: growingUnitPrimitives.dimensions,
+			plants: growingUnitPrimitives.plants.map((plant) =>
+				this.plantViewModelFactory.fromPrimitives(plant),
+			),
+			remainingCapacity: 0,
+			numberOfPlants: growingUnitPrimitives.plants.length,
+			volume: growingUnitPrimitives.dimensions
+				? new DimensionsValueObject(
+						growingUnitPrimitives.dimensions,
+					).getVolume()
+				: 0,
+			createdAt: now,
+			updatedAt: now,
+		});
+	}
 
-  /**
-   * Converts a {@link GrowingUnitAggregate} into a {@link GrowingUnitViewModel}.
-   *
-   * @param growingUnitAggregate - The aggregate root containing the growing unit's domain properties and behaviors.
-   * @returns The populated {@link GrowingUnitViewModel} instance.
-   *
-   * @example
-   * ```typescript
-   * const viewModel = factory.fromAggregate(growingUnitAggregate);
-   * ```
-   */
-  public fromAggregate(
-    growingUnitAggregate: GrowingUnitAggregate,
-  ): GrowingUnitViewModel {
-    this.logger.log(
-      `Creating growing unit view model from aggregate: ${growingUnitAggregate}`,
-    );
+	/**
+	 * Converts a {@link GrowingUnitAggregate} into a {@link GrowingUnitViewModel}.
+	 *
+	 * @param growingUnitAggregate - The aggregate root containing the growing unit's domain properties and behaviors.
+	 * @returns The populated {@link GrowingUnitViewModel} instance.
+	 *
+	 * @example
+	 * ```typescript
+	 * const viewModel = factory.fromAggregate(growingUnitAggregate);
+	 * ```
+	 */
+	public fromAggregate(
+		growingUnitAggregate: GrowingUnitAggregate,
+	): GrowingUnitViewModel {
+		this.logger.log(
+			`Creating growing unit view model from aggregate: ${growingUnitAggregate}`,
+		);
 
-    const now = new Date();
+		const now = new Date();
 
-    return new GrowingUnitViewModel({
-      id: growingUnitAggregate.id.value,
-      name: growingUnitAggregate.name.value,
-      type: growingUnitAggregate.type.value,
-      capacity: growingUnitAggregate.capacity.value,
-      dimensions: growingUnitAggregate.dimensions?.toPrimitives() ?? null,
-      plants: growingUnitAggregate.plants.map((plant) =>
-        this.plantViewModelFactory.fromAggregate(plant),
-      ),
-      remainingCapacity: growingUnitAggregate.getRemainingCapacity(),
-      numberOfPlants: growingUnitAggregate.plants.length,
-      volume: growingUnitAggregate.dimensions?.getVolume() ?? 0,
-      createdAt: now,
-      updatedAt: now,
-    });
-  }
+		return new GrowingUnitViewModel({
+			id: growingUnitAggregate.id.value,
+			name: growingUnitAggregate.name.value,
+			type: growingUnitAggregate.type.value,
+			capacity: growingUnitAggregate.capacity.value,
+			dimensions: growingUnitAggregate.dimensions?.toPrimitives() ?? null,
+			plants: growingUnitAggregate.plants.map((plant) =>
+				this.plantViewModelFactory.fromAggregate(plant),
+			),
+			remainingCapacity: growingUnitAggregate.getRemainingCapacity(),
+			numberOfPlants: growingUnitAggregate.plants.length,
+			volume: growingUnitAggregate.dimensions?.getVolume() ?? 0,
+			createdAt: now,
+			updatedAt: now,
+		});
+	}
 }

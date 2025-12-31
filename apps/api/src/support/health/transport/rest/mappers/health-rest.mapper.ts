@@ -4,23 +4,23 @@ import { PaginatedHealthResultDto } from '@/support/health/transport/graphql/dto
 import { HealthRestResponseDto } from '@/support/health/transport/rest/dtos/responses/health.response.dto';
 
 export class HealthRestMapper {
-  toResponseDto(health: HealthViewModel): HealthRestResponseDto {
-    return {
-      status: health.status,
-      writeDatabaseStatus: health.writeDatabaseStatus,
-      readDatabaseStatus: health.readDatabaseStatus,
-    };
-  }
+	toResponseDto(health: HealthViewModel): HealthRestResponseDto {
+		return {
+			status: health.status,
+			writeDatabaseStatus: health.writeDatabaseStatus,
+			readDatabaseStatus: health.readDatabaseStatus,
+		};
+	}
 
-  toPaginatedResponseDto(
-    paginatedResult: PaginatedResult<HealthViewModel>,
-  ): PaginatedHealthResultDto {
-    return {
-      items: paginatedResult.items.map((health) => this.toResponseDto(health)),
-      total: paginatedResult.total,
-      page: paginatedResult.page,
-      perPage: paginatedResult.perPage,
-      totalPages: paginatedResult.totalPages,
-    };
-  }
+	toPaginatedResponseDto(
+		paginatedResult: PaginatedResult<HealthViewModel>,
+	): PaginatedHealthResultDto {
+		return {
+			items: paginatedResult.items.map((health) => this.toResponseDto(health)),
+			total: paginatedResult.total,
+			page: paginatedResult.page,
+			perPage: paginatedResult.perPage,
+			totalPages: paginatedResult.totalPages,
+		};
+	}
 }

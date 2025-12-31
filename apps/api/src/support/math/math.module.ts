@@ -10,23 +10,23 @@ import { CalculatePercentageService } from '@/support/math/application/services/
 import { RoundNumberService } from '@/support/math/application/services/round-number/round-number.service';
 
 const SERVICES = [
-  CalculatePercentageService,
-  CalculateAverageService,
-  CalculateMedianService,
-  RoundNumberService,
+	CalculatePercentageService,
+	CalculateAverageService,
+	CalculateMedianService,
+	RoundNumberService,
 ];
 
 const COMMAND_HANDLERS = [
-  CalculatePercentageCommandHandler,
-  CalculateAverageCommandHandler,
-  CalculateMedianCommandHandler,
-  RoundNumberCommandHandler,
+	CalculatePercentageCommandHandler,
+	CalculateAverageCommandHandler,
+	CalculateMedianCommandHandler,
+	RoundNumberCommandHandler,
 ];
 
 @Module({
-  imports: [CqrsModule],
-  controllers: [],
-  providers: [...SERVICES, ...COMMAND_HANDLERS],
-  exports: [...SERVICES, ...COMMAND_HANDLERS],
+	imports: [CqrsModule],
+	controllers: [],
+	providers: [...SERVICES, ...COMMAND_HANDLERS],
+	exports: [...SERVICES, ...COMMAND_HANDLERS],
 })
 export class MathModule {}

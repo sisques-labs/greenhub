@@ -20,46 +20,46 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
  * TODO: Move SagaInstanceStatusEnum, SagaStepStatusEnum, and SagaLogTypeEnum to their respective saga modules
  */
 const registeredEnums = [
-  // Shared enums
-  {
-    enum: FilterOperator,
-    name: 'FilterOperator',
-    description: 'The operator to filter by',
-  },
-  {
-    enum: SortDirection,
-    name: 'SortDirection',
-    description: 'The direction to sort by',
-  },
-  // User module enums (TODO: Move to user module)
-  {
-    enum: UserRoleEnum,
-    name: 'UserRoleEnum',
-    description: 'The role of the user',
-  },
-  {
-    enum: UserStatusEnum,
-    name: 'UserStatusEnum',
-    description: 'The status of the user',
-  },
-  // Saga module enums (TODO: Move to saga modules)
-  {
-    enum: SagaInstanceStatusEnum,
-    name: 'SagaInstanceStatusEnum',
-    description: 'The status of the saga',
-  },
-  {
-    enum: SagaStepStatusEnum,
-    name: 'SagaStepStatusEnum',
-    description: 'The status of the saga step',
-  },
-  {
-    enum: SagaLogTypeEnum,
-    name: 'SagaLogTypeEnum',
-    description: 'The type of the saga log',
-  },
+	// Shared enums
+	{
+		enum: FilterOperator,
+		name: 'FilterOperator',
+		description: 'The operator to filter by',
+	},
+	{
+		enum: SortDirection,
+		name: 'SortDirection',
+		description: 'The direction to sort by',
+	},
+	// User module enums (TODO: Move to user module)
+	{
+		enum: UserRoleEnum,
+		name: 'UserRoleEnum',
+		description: 'The role of the user',
+	},
+	{
+		enum: UserStatusEnum,
+		name: 'UserStatusEnum',
+		description: 'The status of the user',
+	},
+	// Saga module enums (TODO: Move to saga modules)
+	{
+		enum: SagaInstanceStatusEnum,
+		name: 'SagaInstanceStatusEnum',
+		description: 'The status of the saga',
+	},
+	{
+		enum: SagaStepStatusEnum,
+		name: 'SagaStepStatusEnum',
+		description: 'The status of the saga step',
+	},
+	{
+		enum: SagaLogTypeEnum,
+		name: 'SagaLogTypeEnum',
+		description: 'The type of the saga log',
+	},
 ];
 
 for (const { enum: enumType, name, description } of registeredEnums) {
-  registerEnumType(enumType, { name, description });
+	registerEnumType(enumType, { name, description });
 }

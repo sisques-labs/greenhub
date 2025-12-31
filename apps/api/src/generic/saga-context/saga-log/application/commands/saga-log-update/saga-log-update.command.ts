@@ -4,18 +4,18 @@ import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/v
 import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
 
 export class SagaLogUpdateCommand {
-  readonly id: SagaLogUuidValueObject;
-  readonly type?: SagaLogTypeValueObject;
-  readonly message?: SagaLogMessageValueObject;
+	readonly id: SagaLogUuidValueObject;
+	readonly type?: SagaLogTypeValueObject;
+	readonly message?: SagaLogMessageValueObject;
 
-  constructor(props: ISagaLogUpdateCommandDto) {
-    this.id = new SagaLogUuidValueObject(props.id);
+	constructor(props: ISagaLogUpdateCommandDto) {
+		this.id = new SagaLogUuidValueObject(props.id);
 
-    if (props.type !== undefined) {
-      this.type = new SagaLogTypeValueObject(props.type);
-    }
-    if (props.message !== undefined) {
-      this.message = new SagaLogMessageValueObject(props.message);
-    }
-  }
+		if (props.type !== undefined) {
+			this.type = new SagaLogTypeValueObject(props.type);
+		}
+		if (props.message !== undefined) {
+			this.message = new SagaLogMessageValueObject(props.message);
+		}
+	}
 }

@@ -6,30 +6,30 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 @Entity('users')
 @Index(['userName'])
 export class UserTypeormEntity extends BaseTypeormEntity {
-  @Column({ type: 'varchar', nullable: true, unique: true })
-  userName: string | null;
+	@Column({ type: 'varchar', nullable: true, unique: true })
+	userName: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
-  name: string | null;
+	@Column({ type: 'varchar', nullable: true })
+	name: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
-  lastName: string | null;
+	@Column({ type: 'varchar', nullable: true })
+	lastName: string | null;
 
-  @Column({ type: 'text', nullable: true })
-  bio: string | null;
+	@Column({ type: 'text', nullable: true })
+	bio: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
-  avatarUrl: string | null;
+	@Column({ type: 'varchar', nullable: true })
+	avatarUrl: string | null;
 
-  @Column({
-    type: 'enum',
-    enum: UserRoleEnum,
-  })
-  role: UserRoleEnum;
+	@Column({
+		type: 'enum',
+		enum: UserRoleEnum,
+	})
+	role: UserRoleEnum;
 
-  @Column({
-    type: 'enum',
-    enum: UserStatusEnum,
-  })
-  status: UserStatusEnum;
+	@Column({
+		type: 'enum',
+		enum: UserStatusEnum,
+	})
+	status: UserStatusEnum;
 }

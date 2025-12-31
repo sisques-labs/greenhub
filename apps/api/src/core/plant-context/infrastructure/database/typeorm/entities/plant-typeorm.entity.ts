@@ -5,35 +5,35 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 
 @Entity('plants')
 export class PlantTypeormEntity extends BaseTypeormEntity {
-  @Column({ type: 'uuid' })
-  @Index()
-  growingUnitId: string;
+	@Column({ type: 'uuid' })
+	@Index()
+	growingUnitId: string;
 
-  @ManyToOne(
-    () => GrowingUnitTypeormEntity,
-    (growingUnit) => growingUnit.plants,
-    {
-      onDelete: 'CASCADE',
-    },
-  )
-  @JoinColumn({ name: 'growingUnitId' })
-  growingUnit: GrowingUnitTypeormEntity;
+	@ManyToOne(
+		() => GrowingUnitTypeormEntity,
+		(growingUnit) => growingUnit.plants,
+		{
+			onDelete: 'CASCADE',
+		},
+	)
+	@JoinColumn({ name: 'growingUnitId' })
+	growingUnit: GrowingUnitTypeormEntity;
 
-  @Column({ type: 'varchar' })
-  name: string;
+	@Column({ type: 'varchar' })
+	name: string;
 
-  @Column({ type: 'varchar' })
-  species: string;
+	@Column({ type: 'varchar' })
+	species: string;
 
-  @Column({ type: 'date', nullable: true })
-  plantedDate: Date | null;
+	@Column({ type: 'date', nullable: true })
+	plantedDate: Date | null;
 
-  @Column({ type: 'text', nullable: true })
-  notes: string | null;
+	@Column({ type: 'text', nullable: true })
+	notes: string | null;
 
-  @Column({
-    type: 'enum',
-    enum: PlantStatusEnum,
-  })
-  status: PlantStatusEnum;
+	@Column({
+		type: 'enum',
+		enum: PlantStatusEnum,
+	})
+	status: PlantStatusEnum;
 }

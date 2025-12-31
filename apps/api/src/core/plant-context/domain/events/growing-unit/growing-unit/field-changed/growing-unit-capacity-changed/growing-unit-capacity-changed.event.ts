@@ -3,15 +3,15 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
 import { IFieldChangedEventData } from '@/shared/domain/interfaces/updated-field.interface';
 
 export class GrowingUnitCapacityChangedEvent extends BaseEvent<
-  IFieldChangedEventData<number>
+	IFieldChangedEventData<number>
 > {
-  /**
-   * Constructor
-   *
-   * @param metadata - The metadata of the event
-   * @param data - The data of the event
-   */
-  constructor(metadata: IEventMetadata, data: IFieldChangedEventData<number>) {
-    super(metadata, data);
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(metadata: IEventMetadata, data: IFieldChangedEventData<number>) {
+		super(metadata, data);
+	}
 }

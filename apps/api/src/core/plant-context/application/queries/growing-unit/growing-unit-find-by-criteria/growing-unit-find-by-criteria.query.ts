@@ -8,17 +8,17 @@ import { Criteria } from '@/shared/domain/entities/criteria';
  * @public
  */
 export class GrowingUnitFindByCriteriaQuery {
-  /**
-   * The criteria used for searching and filtering growing units.
-   */
-  public readonly criteria: Criteria;
+	/**
+	 * The criteria used for searching and filtering growing units.
+	 */
+	public readonly criteria: Criteria;
 
-  /**
-   * Constructs a new {@link FindGrowingUnitsByCriteriaQuery} instance.
-   *
-   * @param criteria - The criteria to use for finding growing units.
-   */
-  constructor(criteria: Criteria) {
-    this.criteria = criteria;
-  }
+	/**
+	 * Constructs a new {@link FindGrowingUnitsByCriteriaQuery} instance.
+	 *
+	 * @param criteria - The criteria to use for finding growing units.
+	 */
+	constructor(criteria: Criteria) {
+		this.criteria = criteria;
+	}
 }

@@ -8,11 +8,11 @@ import { IRoundNumberCommandDto } from '@/support/math/application/dtos/commands
  * to specified decimal places.
  */
 export class RoundNumberCommand {
-  readonly value: number;
-  readonly decimals: number;
+	readonly value: number;
+	readonly decimals: number;
 
-  constructor(props: IRoundNumberCommandDto) {
-    this.value = props.value;
-    this.decimals = props.decimals ?? 2;
-  }
+	constructor(props: IRoundNumberCommandDto) {
+		this.value = props.value;
+		this.decimals = props.decimals ?? 2;
+	}
 }

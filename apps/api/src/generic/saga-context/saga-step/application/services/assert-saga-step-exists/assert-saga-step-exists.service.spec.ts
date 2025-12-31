@@ -4,8 +4,8 @@ import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/ap
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
 import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
-  SAGA_STEP_WRITE_REPOSITORY_TOKEN,
-  SagaStepWriteRepository,
+	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
+	SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
 import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
 import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
@@ -19,102 +19,102 @@ import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/ident
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('AssertSagaStepExistsService', () => {
-  let service: AssertSagaStepExistsService;
-  let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
+	let service: AssertSagaStepExistsService;
+	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
 
-  beforeEach(async () => {
-    mockSagaStepWriteRepository = {
-      findById: jest.fn(),
-      findBySagaInstanceId: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<SagaStepWriteRepository>;
+	beforeEach(async () => {
+		mockSagaStepWriteRepository = {
+			findById: jest.fn(),
+			findBySagaInstanceId: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<SagaStepWriteRepository>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        AssertSagaStepExistsService,
-        {
-          provide: SAGA_STEP_WRITE_REPOSITORY_TOKEN,
-          useValue: mockSagaStepWriteRepository,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				AssertSagaStepExistsService,
+				{
+					provide: SAGA_STEP_WRITE_REPOSITORY_TOKEN,
+					useValue: mockSagaStepWriteRepository,
+				},
+			],
+		}).compile();
 
-    service = module.get<AssertSagaStepExistsService>(
-      AssertSagaStepExistsService,
-    );
-  });
+		service = module.get<AssertSagaStepExistsService>(
+			AssertSagaStepExistsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaStepAggregate = (): SagaStepAggregate => {
-    const now = new Date();
-    return new SagaStepAggregate(
-      {
-        id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        sagaInstanceId: new SagaInstanceUuidValueObject(
-          '223e4567-e89b-12d3-a456-426614174000',
-        ),
-        name: new SagaStepNameValueObject('Test Step'),
-        order: new SagaStepOrderValueObject(1),
-        status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
-        startDate: null,
-        endDate: null,
-        errorMessage: null,
-        retryCount: new SagaStepRetryCountValueObject(0),
-        maxRetries: new SagaStepMaxRetriesValueObject(3),
-        payload: new SagaStepPayloadValueObject({}),
-        result: new SagaStepResultValueObject({}),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaStepAggregate = (): SagaStepAggregate => {
+		const now = new Date();
+		return new SagaStepAggregate(
+			{
+				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				sagaInstanceId: new SagaInstanceUuidValueObject(
+					'223e4567-e89b-12d3-a456-426614174000',
+				),
+				name: new SagaStepNameValueObject('Test Step'),
+				order: new SagaStepOrderValueObject(1),
+				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
+				startDate: null,
+				endDate: null,
+				errorMessage: null,
+				retryCount: new SagaStepRetryCountValueObject(0),
+				maxRetries: new SagaStepMaxRetriesValueObject(3),
+				payload: new SagaStepPayloadValueObject({}),
+				result: new SagaStepResultValueObject({}),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should return saga step when it exists', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const existingSagaStep = createSagaStepAggregate();
+	describe('execute', () => {
+		it('should return saga step when it exists', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const existingSagaStep = createSagaStepAggregate();
 
-      mockSagaStepWriteRepository.findById.mockResolvedValue(existingSagaStep);
+			mockSagaStepWriteRepository.findById.mockResolvedValue(existingSagaStep);
 
-      const result = await service.execute(sagaStepId);
+			const result = await service.execute(sagaStepId);
 
-      expect(result).toBe(existingSagaStep);
-      expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledWith(
-        sagaStepId,
-      );
-      expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(existingSagaStep);
+			expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledWith(
+				sagaStepId,
+			);
+			expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw SagaStepNotFoundException when saga step does not exist', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should throw SagaStepNotFoundException when saga step does not exist', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockSagaStepWriteRepository.findById.mockResolvedValue(null);
+			mockSagaStepWriteRepository.findById.mockResolvedValue(null);
 
-      await expect(service.execute(sagaStepId)).rejects.toThrow(
-        SagaStepNotFoundException,
-      );
-      expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledWith(
-        sagaStepId,
-      );
-    });
+			await expect(service.execute(sagaStepId)).rejects.toThrow(
+				SagaStepNotFoundException,
+			);
+			expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledWith(
+				sagaStepId,
+			);
+		});
 
-    it('should throw SagaStepNotFoundException with correct message', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should throw SagaStepNotFoundException with correct message', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockSagaStepWriteRepository.findById.mockResolvedValue(null);
+			mockSagaStepWriteRepository.findById.mockResolvedValue(null);
 
-      try {
-        await service.execute(sagaStepId);
-        fail('Should have thrown SagaStepNotFoundException');
-      } catch (error) {
-        expect(error).toBeInstanceOf(SagaStepNotFoundException);
-        expect(error.message).toContain(sagaStepId);
-      }
-    });
-  });
+			try {
+				await service.execute(sagaStepId);
+				fail('Should have thrown SagaStepNotFoundException');
+			} catch (error) {
+				expect(error).toBeInstanceOf(SagaStepNotFoundException);
+				expect(error.message).toContain(sagaStepId);
+			}
+		});
+	});
 });

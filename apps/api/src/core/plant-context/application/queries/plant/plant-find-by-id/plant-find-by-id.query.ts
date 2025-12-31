@@ -10,21 +10,21 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  * @public
  */
 export class PlantFindByIdQuery {
-  /**
-   * The unique identifier of the plant as a value object.
-   */
-  readonly id: PlantUuidValueObject;
+	/**
+	 * The unique identifier of the plant as a value object.
+	 */
+	readonly id: PlantUuidValueObject;
 
-  /**
-   * Creates an instance of {@link PlantFindByIdQuery}.
-   *
-   * @param props - The data transfer object containing the plant ID.
-   */
-  constructor(props: IPlantFindByIdQueryDto) {
-    /**
-     * The plant ID provided in the query DTO,
-     * wrapped as a {@link PlantUuidValueObject}.
-     */
-    this.id = new PlantUuidValueObject(props.id);
-  }
+	/**
+	 * Creates an instance of {@link PlantFindByIdQuery}.
+	 *
+	 * @param props - The data transfer object containing the plant ID.
+	 */
+	constructor(props: IPlantFindByIdQueryDto) {
+		/**
+		 * The plant ID provided in the query DTO,
+		 * wrapped as a {@link PlantUuidValueObject}.
+		 */
+		this.id = new PlantUuidValueObject(props.id);
+	}
 }

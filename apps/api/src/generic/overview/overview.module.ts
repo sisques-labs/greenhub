@@ -19,13 +19,13 @@ import { SharedModule } from '@/shared/shared.module';
 const QUERY_HANDLERS = [OverviewFindViewModelQueryHandler];
 
 const SERVICES = [
-  AssertOverviewViewModelExistsService,
-  OverviewCalculateService,
-  OverviewCalculatePlantMetricsService,
-  OverviewCalculateGrowingUnitMetricsService,
-  OverviewCalculateCapacityMetricsService,
-  OverviewCalculateDimensionsMetricsService,
-  OverviewCalculateAggregatedMetricsService,
+	AssertOverviewViewModelExistsService,
+	OverviewCalculateService,
+	OverviewCalculatePlantMetricsService,
+	OverviewCalculateGrowingUnitMetricsService,
+	OverviewCalculateCapacityMetricsService,
+	OverviewCalculateDimensionsMetricsService,
+	OverviewCalculateAggregatedMetricsService,
 ];
 
 const EVENT_HANDLERS = [OverviewUpdatedEventHandler];
@@ -35,25 +35,25 @@ const FACTORIES = [OverviewViewModelFactory];
 const MAPPERS = [OverviewMongoDBMapper, OverviewGraphQLMapper];
 
 const REPOSITORIES = [
-  {
-    provide: OVERVIEW_READ_REPOSITORY_TOKEN,
-    useClass: OverviewMongoRepository,
-  },
+	{
+		provide: OVERVIEW_READ_REPOSITORY_TOKEN,
+		useClass: OverviewMongoRepository,
+	},
 ];
 
 const RESOLVERS = [OverviewQueriesResolver];
 
 @Module({
-  imports: [SharedModule],
-  controllers: [],
-  providers: [
-    ...QUERY_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...SERVICES,
-    ...FACTORIES,
-    ...MAPPERS,
-    ...REPOSITORIES,
-    ...RESOLVERS,
-  ],
+	imports: [SharedModule],
+	controllers: [],
+	providers: [
+		...QUERY_HANDLERS,
+		...EVENT_HANDLERS,
+		...SERVICES,
+		...FACTORIES,
+		...MAPPERS,
+		...REPOSITORIES,
+		...RESOLVERS,
+	],
 })
 export class OverviewModule {}

@@ -3,11 +3,11 @@ import { IsNotEmpty, IsUUID } from 'class-validator';
 
 @InputType('SagaInstanceDeleteRequestDto')
 export class SagaInstanceDeleteRequestDto {
-  @Field(() => String, {
-    description: 'The id of the saga instance',
-    nullable: false,
-  })
-  @IsUUID()
-  @IsNotEmpty()
-  id: string;
+	@Field(() => String, {
+		description: 'The id of the saga instance',
+		nullable: false,
+	})
+	@IsUUID()
+	@IsNotEmpty()
+	id: string;
 }

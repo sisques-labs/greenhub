@@ -7,8 +7,8 @@ import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
  * Extracts the authenticated user from the request
  */
 export const CurrentUser = createParamDecorator(
-  (data: unknown, context: ExecutionContext): AuthAggregate => {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req.user;
-  },
+	(data: unknown, context: ExecutionContext): AuthAggregate => {
+		const ctx = GqlExecutionContext.create(context);
+		return ctx.getContext().req.user;
+	},
 );

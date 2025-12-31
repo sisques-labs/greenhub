@@ -16,8 +16,8 @@ import { ISagaStepCreateViewModelDto } from '@/generic/saga-context/saga-step/do
  * @property {any} result - The result of the saga step.
  */
 export type ISagaStepUpdateViewModelDto = Partial<
-  Omit<
-    ISagaStepCreateViewModelDto,
-    'id' | 'sagaInstanceId' | 'createdAt' | 'updatedAt'
-  >
+	Omit<
+		ISagaStepCreateViewModelDto,
+		'id' | 'sagaInstanceId' | 'createdAt' | 'updatedAt'
+	>
 >;

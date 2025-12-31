@@ -5,5 +5,5 @@
  * @property {string} id - The id of the saga instance to delete.
  */
 export interface ISagaInstanceDeleteCommandDto {
-  id: string;
+	id: string;
 }

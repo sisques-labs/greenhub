@@ -12,56 +12,56 @@ import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/doma
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class SagaStepUpdateCommand {
-  readonly id: SagaStepUuidValueObject;
-  readonly name?: SagaStepNameValueObject;
-  readonly order?: SagaStepOrderValueObject;
-  readonly status?: SagaStepStatusValueObject;
-  readonly startDate?: SagaStepStartDateValueObject | null;
-  readonly endDate?: SagaStepEndDateValueObject | null;
-  readonly errorMessage?: SagaStepErrorMessageValueObject | null;
-  readonly retryCount?: SagaStepRetryCountValueObject;
-  readonly maxRetries?: SagaStepMaxRetriesValueObject;
-  readonly payload?: SagaStepPayloadValueObject;
-  readonly result?: SagaStepResultValueObject;
+	readonly id: SagaStepUuidValueObject;
+	readonly name?: SagaStepNameValueObject;
+	readonly order?: SagaStepOrderValueObject;
+	readonly status?: SagaStepStatusValueObject;
+	readonly startDate?: SagaStepStartDateValueObject | null;
+	readonly endDate?: SagaStepEndDateValueObject | null;
+	readonly errorMessage?: SagaStepErrorMessageValueObject | null;
+	readonly retryCount?: SagaStepRetryCountValueObject;
+	readonly maxRetries?: SagaStepMaxRetriesValueObject;
+	readonly payload?: SagaStepPayloadValueObject;
+	readonly result?: SagaStepResultValueObject;
 
-  constructor(props: ISagaStepUpdateCommandDto) {
-    this.id = new SagaStepUuidValueObject(props.id);
+	constructor(props: ISagaStepUpdateCommandDto) {
+		this.id = new SagaStepUuidValueObject(props.id);
 
-    if (props.name !== undefined) {
-      this.name = new SagaStepNameValueObject(props.name);
-    }
-    if (props.order !== undefined) {
-      this.order = new SagaStepOrderValueObject(props.order);
-    }
-    if (props.status !== undefined) {
-      this.status = new SagaStepStatusValueObject(props.status);
-    }
-    if (props.startDate !== undefined) {
-      this.startDate = props.startDate
-        ? new SagaStepStartDateValueObject(props.startDate)
-        : null;
-    }
-    if (props.endDate !== undefined) {
-      this.endDate = props.endDate
-        ? new SagaStepEndDateValueObject(props.endDate)
-        : null;
-    }
-    if (props.errorMessage !== undefined) {
-      this.errorMessage = props.errorMessage
-        ? new SagaStepErrorMessageValueObject(props.errorMessage)
-        : null;
-    }
-    if (props.retryCount !== undefined) {
-      this.retryCount = new SagaStepRetryCountValueObject(props.retryCount);
-    }
-    if (props.maxRetries !== undefined) {
-      this.maxRetries = new SagaStepMaxRetriesValueObject(props.maxRetries);
-    }
-    if (props.payload !== undefined) {
-      this.payload = new SagaStepPayloadValueObject(props.payload);
-    }
-    if (props.result !== undefined) {
-      this.result = new SagaStepResultValueObject(props.result);
-    }
-  }
+		if (props.name !== undefined) {
+			this.name = new SagaStepNameValueObject(props.name);
+		}
+		if (props.order !== undefined) {
+			this.order = new SagaStepOrderValueObject(props.order);
+		}
+		if (props.status !== undefined) {
+			this.status = new SagaStepStatusValueObject(props.status);
+		}
+		if (props.startDate !== undefined) {
+			this.startDate = props.startDate
+				? new SagaStepStartDateValueObject(props.startDate)
+				: null;
+		}
+		if (props.endDate !== undefined) {
+			this.endDate = props.endDate
+				? new SagaStepEndDateValueObject(props.endDate)
+				: null;
+		}
+		if (props.errorMessage !== undefined) {
+			this.errorMessage = props.errorMessage
+				? new SagaStepErrorMessageValueObject(props.errorMessage)
+				: null;
+		}
+		if (props.retryCount !== undefined) {
+			this.retryCount = new SagaStepRetryCountValueObject(props.retryCount);
+		}
+		if (props.maxRetries !== undefined) {
+			this.maxRetries = new SagaStepMaxRetriesValueObject(props.maxRetries);
+		}
+		if (props.payload !== undefined) {
+			this.payload = new SagaStepPayloadValueObject(props.payload);
+		}
+		if (props.result !== undefined) {
+			this.result = new SagaStepResultValueObject(props.result);
+		}
+	}
 }

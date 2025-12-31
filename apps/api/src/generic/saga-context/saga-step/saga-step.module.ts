@@ -33,68 +33,68 @@ import { SharedModule } from '@/shared/shared.module';
 const RESOLVERS = [SagaStepQueryResolver, SagaStepMutationsResolver];
 
 const SERVICES = [
-  AssertSagaStepExistsService,
-  AssertSagaStepNotExistsService,
-  AssertSagaStepViewModelExistsService,
+	AssertSagaStepExistsService,
+	AssertSagaStepNotExistsService,
+	AssertSagaStepViewModelExistsService,
 ];
 
 const QUERY_HANDLERS = [
-  FindSagaStepsByCriteriaQueryHandler,
-  FindSagaStepByIdQueryHandler,
-  FindSagaStepsBySagaInstanceIdQueryHandler,
+	FindSagaStepsByCriteriaQueryHandler,
+	FindSagaStepByIdQueryHandler,
+	FindSagaStepsBySagaInstanceIdQueryHandler,
 
-  // View models
-  FindSagaStepViewModelByIdQueryHandler,
-  FindSagaStepViewModelsBySagaInstanceIdQueryHandler,
+	// View models
+	FindSagaStepViewModelByIdQueryHandler,
+	FindSagaStepViewModelsBySagaInstanceIdQueryHandler,
 ];
 
 const COMMAND_HANDLERS = [
-  SagaStepCreateCommandHandler,
-  SagaStepUpdateCommandHandler,
-  SagaStepDeleteCommandHandler,
-  SagaStepChangeStatusCommandHandler,
+	SagaStepCreateCommandHandler,
+	SagaStepUpdateCommandHandler,
+	SagaStepDeleteCommandHandler,
+	SagaStepChangeStatusCommandHandler,
 ];
 
 const EVENT_HANDLERS = [
-  SagaStepCreatedEventHandler,
-  SagaStepUpdatedEventHandler,
-  SagaStepDeletedEventHandler,
-  SagaStepStatusChangedEventHandler,
+	SagaStepCreatedEventHandler,
+	SagaStepUpdatedEventHandler,
+	SagaStepDeletedEventHandler,
+	SagaStepStatusChangedEventHandler,
 ];
 
 const FACTORIES = [SagaStepAggregateFactory, SagaStepViewModelFactory];
 
 const MAPPERS = [
-  SagaStepTypeormMapper,
-  SagaStepMongoDBMapper,
-  SagaStepGraphQLMapper,
+	SagaStepTypeormMapper,
+	SagaStepMongoDBMapper,
+	SagaStepGraphQLMapper,
 ];
 
 const REPOSITORIES = [
-  {
-    provide: SAGA_STEP_WRITE_REPOSITORY_TOKEN,
-    useClass: SagaStepTypeormRepository,
-  },
-  {
-    provide: SAGA_STEP_READ_REPOSITORY_TOKEN,
-    useClass: SagaStepMongoRepository,
-  },
+	{
+		provide: SAGA_STEP_WRITE_REPOSITORY_TOKEN,
+		useClass: SagaStepTypeormRepository,
+	},
+	{
+		provide: SAGA_STEP_READ_REPOSITORY_TOKEN,
+		useClass: SagaStepMongoRepository,
+	},
 ];
 
 const ENTITIES = [SagaStepTypeormEntity];
 
 @Module({
-  imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-  ],
+	imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+	],
 })
 export class SagaStepModule {}

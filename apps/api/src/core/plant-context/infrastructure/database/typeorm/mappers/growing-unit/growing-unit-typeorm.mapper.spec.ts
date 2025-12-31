@@ -19,291 +19,283 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('GrowingUnitTypeormMapper', () => {
-  let mapper: GrowingUnitTypeormMapper;
-  let mockGrowingUnitAggregateFactory: jest.Mocked<GrowingUnitAggregateFactory>;
-  let mockPlantTypeormMapper: jest.Mocked<PlantTypeormMapper>;
-  let plantEntityFactory: PlantEntityFactory;
+	let mapper: GrowingUnitTypeormMapper;
+	let mockGrowingUnitAggregateFactory: jest.Mocked<GrowingUnitAggregateFactory>;
+	let mockPlantTypeormMapper: jest.Mocked<PlantTypeormMapper>;
+	let plantEntityFactory: PlantEntityFactory;
 
-  beforeEach(() => {
-    plantEntityFactory = new PlantEntityFactory();
+	beforeEach(() => {
+		plantEntityFactory = new PlantEntityFactory();
 
-    mockGrowingUnitAggregateFactory = {
-      create: jest.fn(),
-      fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<GrowingUnitAggregateFactory>;
+		mockGrowingUnitAggregateFactory = {
+			create: jest.fn(),
+			fromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<GrowingUnitAggregateFactory>;
 
-    mockPlantTypeormMapper = {
-      toDomainEntity: jest.fn(),
-      toTypeormEntity: jest.fn(),
-      toTypeormEntityFromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<PlantTypeormMapper>;
+		mockPlantTypeormMapper = {
+			toDomainEntity: jest.fn(),
+			toTypeormEntity: jest.fn(),
+			toTypeormEntityFromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<PlantTypeormMapper>;
 
-    mapper = new GrowingUnitTypeormMapper(
-      mockGrowingUnitAggregateFactory,
-      mockPlantTypeormMapper,
-    );
-  });
+		mapper = new GrowingUnitTypeormMapper(
+			mockGrowingUnitAggregateFactory,
+			mockPlantTypeormMapper,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('toDomainEntity', () => {
-    it('should convert TypeORM entity to domain aggregate with all properties', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+	describe('toDomainEntity', () => {
+		it('should convert TypeORM entity to domain aggregate with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const plantTypeormEntity = new PlantTypeormEntity();
-      plantTypeormEntity.id = plantId;
-      plantTypeormEntity.growingUnitId = growingUnitId;
-      plantTypeormEntity.name = 'Basil';
-      plantTypeormEntity.species = 'Ocimum basilicum';
-      plantTypeormEntity.plantedDate = null;
-      plantTypeormEntity.notes = null;
-      plantTypeormEntity.status = PlantStatusEnum.PLANTED;
-      plantTypeormEntity.createdAt = now;
-      plantTypeormEntity.updatedAt = now;
-      plantTypeormEntity.deletedAt = null;
+			const plantTypeormEntity = new PlantTypeormEntity();
+			plantTypeormEntity.id = plantId;
+			plantTypeormEntity.growingUnitId = growingUnitId;
+			plantTypeormEntity.name = 'Basil';
+			plantTypeormEntity.species = 'Ocimum basilicum';
+			plantTypeormEntity.plantedDate = null;
+			plantTypeormEntity.notes = null;
+			plantTypeormEntity.status = PlantStatusEnum.PLANTED;
+			plantTypeormEntity.createdAt = now;
+			plantTypeormEntity.updatedAt = now;
+			plantTypeormEntity.deletedAt = null;
 
-      const typeormEntity = new GrowingUnitTypeormEntity();
-      typeormEntity.id = growingUnitId;
-      typeormEntity.name = 'Garden Bed 1';
-      typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
-      typeormEntity.capacity = 10;
-      typeormEntity.length = 2.0;
-      typeormEntity.width = 1.0;
-      typeormEntity.height = 0.5;
-      typeormEntity.unit = LengthUnitEnum.METER;
-      typeormEntity.plants = [plantTypeormEntity];
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new GrowingUnitTypeormEntity();
+			typeormEntity.id = growingUnitId;
+			typeormEntity.name = 'Garden Bed 1';
+			typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
+			typeormEntity.capacity = 10;
+			typeormEntity.length = 2.0;
+			typeormEntity.width = 1.0;
+			typeormEntity.height = 0.5;
+			typeormEntity.unit = LengthUnitEnum.METER;
+			typeormEntity.plants = [plantTypeormEntity];
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      const growingUnitAggregate = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: new DimensionsValueObject({
-            length: 2.0,
-            width: 1.0,
-            height: 0.5,
-            unit: LengthUnitEnum.METER,
-          }),
-          plants: [plantEntity],
-        },
-      );
+			const growingUnitAggregate = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: new DimensionsValueObject({
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				}),
+				plants: [plantEntity],
+			});
 
-      mockPlantTypeormMapper.toDomainEntity.mockReturnValue(plantEntity);
-      mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
-        growingUnitAggregate,
-      );
+			mockPlantTypeormMapper.toDomainEntity.mockReturnValue(plantEntity);
+			mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
+				growingUnitAggregate,
+			);
 
-      const result = mapper.toDomainEntity(typeormEntity);
+			const result = mapper.toDomainEntity(typeormEntity);
 
-      expect(result).toBe(growingUnitAggregate);
-      expect(mockPlantTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
-        plantTypeormEntity,
-      );
-      expect(
-        mockGrowingUnitAggregateFactory.fromPrimitives,
-      ).toHaveBeenCalledWith({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 2.0,
-          width: 1.0,
-          height: 0.5,
-          unit: LengthUnitEnum.METER,
-        },
-        plants: [plantEntity.toPrimitives()],
-      });
-    });
+			expect(result).toBe(growingUnitAggregate);
+			expect(mockPlantTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
+				plantTypeormEntity,
+			);
+			expect(
+				mockGrowingUnitAggregateFactory.fromPrimitives,
+			).toHaveBeenCalledWith({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				},
+				plants: [plantEntity.toPrimitives()],
+			});
+		});
 
-    it('should convert TypeORM entity with null dimensions and no plants', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+		it('should convert TypeORM entity with null dimensions and no plants', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const typeormEntity = new GrowingUnitTypeormEntity();
-      typeormEntity.id = growingUnitId;
-      typeormEntity.name = 'Garden Bed 1';
-      typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
-      typeormEntity.capacity = 10;
-      typeormEntity.length = null;
-      typeormEntity.width = null;
-      typeormEntity.height = null;
-      typeormEntity.unit = null;
-      typeormEntity.plants = [];
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new GrowingUnitTypeormEntity();
+			typeormEntity.id = growingUnitId;
+			typeormEntity.name = 'Garden Bed 1';
+			typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
+			typeormEntity.capacity = 10;
+			typeormEntity.length = null;
+			typeormEntity.width = null;
+			typeormEntity.height = null;
+			typeormEntity.unit = null;
+			typeormEntity.plants = [];
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const growingUnitAggregate = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
-      );
+			const growingUnitAggregate = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
 
-      mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
-        growingUnitAggregate,
-      );
+			mockGrowingUnitAggregateFactory.fromPrimitives.mockReturnValue(
+				growingUnitAggregate,
+			);
 
-      const result = mapper.toDomainEntity(typeormEntity);
+			const result = mapper.toDomainEntity(typeormEntity);
 
-      expect(result).toBe(growingUnitAggregate);
-      expect(mockPlantTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
-      expect(
-        mockGrowingUnitAggregateFactory.fromPrimitives,
-      ).toHaveBeenCalledWith({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-      });
-    });
-  });
+			expect(result).toBe(growingUnitAggregate);
+			expect(mockPlantTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
+			expect(
+				mockGrowingUnitAggregateFactory.fromPrimitives,
+			).toHaveBeenCalledWith({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+			});
+		});
+	});
 
-  describe('toTypeormEntity', () => {
-    it('should convert domain aggregate to TypeORM entity with all properties', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
+	describe('toTypeormEntity', () => {
+		it('should convert domain aggregate to TypeORM entity with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      const growingUnitAggregate = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: new DimensionsValueObject({
-            length: 2.0,
-            width: 1.0,
-            height: 0.5,
-            unit: LengthUnitEnum.METER,
-          }),
-          plants: [plantEntity],
-        },
-      );
+			const growingUnitAggregate = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: new DimensionsValueObject({
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				}),
+				plants: [plantEntity],
+			});
 
-      const plantTypeormEntity = new PlantTypeormEntity();
-      plantTypeormEntity.id = plantId;
-      plantTypeormEntity.growingUnitId = growingUnitId;
-      plantTypeormEntity.name = 'Basil';
-      plantTypeormEntity.species = 'Ocimum basilicum';
-      plantTypeormEntity.plantedDate = null;
-      plantTypeormEntity.notes = null;
-      plantTypeormEntity.status = PlantStatusEnum.PLANTED;
+			const plantTypeormEntity = new PlantTypeormEntity();
+			plantTypeormEntity.id = plantId;
+			plantTypeormEntity.growingUnitId = growingUnitId;
+			plantTypeormEntity.name = 'Basil';
+			plantTypeormEntity.species = 'Ocimum basilicum';
+			plantTypeormEntity.plantedDate = null;
+			plantTypeormEntity.notes = null;
+			plantTypeormEntity.status = PlantStatusEnum.PLANTED;
 
-      const toPrimitivesSpy = jest
-        .spyOn(growingUnitAggregate, 'toPrimitives')
-        .mockReturnValue({
-          id: growingUnitId,
-          name: 'Garden Bed 1',
-          type: GrowingUnitTypeEnum.GARDEN_BED,
-          capacity: 10,
-          dimensions: {
-            length: 2.0,
-            width: 1.0,
-            height: 0.5,
-            unit: LengthUnitEnum.METER,
-          },
-          plants: [plantEntity.toPrimitives()],
-        });
+			const toPrimitivesSpy = jest
+				.spyOn(growingUnitAggregate, 'toPrimitives')
+				.mockReturnValue({
+					id: growingUnitId,
+					name: 'Garden Bed 1',
+					type: GrowingUnitTypeEnum.GARDEN_BED,
+					capacity: 10,
+					dimensions: {
+						length: 2.0,
+						width: 1.0,
+						height: 0.5,
+						unit: LengthUnitEnum.METER,
+					},
+					plants: [plantEntity.toPrimitives()],
+				});
 
-      mockPlantTypeormMapper.toTypeormEntityFromPrimitives.mockReturnValue(
-        plantTypeormEntity,
-      );
+			mockPlantTypeormMapper.toTypeormEntityFromPrimitives.mockReturnValue(
+				plantTypeormEntity,
+			);
 
-      const result = mapper.toTypeormEntity(growingUnitAggregate);
+			const result = mapper.toTypeormEntity(growingUnitAggregate);
 
-      expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
-      expect(result.id).toBe(growingUnitId);
-      expect(result.name).toBe('Garden Bed 1');
-      expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
-      expect(result.capacity).toBe(10);
-      expect(result.length).toBe(2.0);
-      expect(result.width).toBe(1.0);
-      expect(result.height).toBe(0.5);
-      expect(result.unit).toBe(LengthUnitEnum.METER);
-      expect(result.plants).toHaveLength(1);
-      expect(result.plants[0]).toBe(plantTypeormEntity);
-      expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
-      expect(
-        mockPlantTypeormMapper.toTypeormEntityFromPrimitives,
-      ).toHaveBeenCalledWith(plantEntity.toPrimitives());
+			expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
+			expect(result.id).toBe(growingUnitId);
+			expect(result.name).toBe('Garden Bed 1');
+			expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
+			expect(result.capacity).toBe(10);
+			expect(result.length).toBe(2.0);
+			expect(result.width).toBe(1.0);
+			expect(result.height).toBe(0.5);
+			expect(result.unit).toBe(LengthUnitEnum.METER);
+			expect(result.plants).toHaveLength(1);
+			expect(result.plants[0]).toBe(plantTypeormEntity);
+			expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
+			expect(
+				mockPlantTypeormMapper.toTypeormEntityFromPrimitives,
+			).toHaveBeenCalledWith(plantEntity.toPrimitives());
 
-      toPrimitivesSpy.mockRestore();
-    });
+			toPrimitivesSpy.mockRestore();
+		});
 
-    it('should convert domain aggregate with null dimensions', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should convert domain aggregate with null dimensions', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
-      const growingUnitAggregate = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
-      );
+			const growingUnitAggregate = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
 
-      const toPrimitivesSpy = jest
-        .spyOn(growingUnitAggregate, 'toPrimitives')
-        .mockReturnValue({
-          id: growingUnitId,
-          name: 'Garden Bed 1',
-          type: GrowingUnitTypeEnum.GARDEN_BED,
-          capacity: 10,
-          dimensions: null,
-          plants: [],
-        });
+			const toPrimitivesSpy = jest
+				.spyOn(growingUnitAggregate, 'toPrimitives')
+				.mockReturnValue({
+					id: growingUnitId,
+					name: 'Garden Bed 1',
+					type: GrowingUnitTypeEnum.GARDEN_BED,
+					capacity: 10,
+					dimensions: null,
+					plants: [],
+				});
 
-      const result = mapper.toTypeormEntity(growingUnitAggregate);
+			const result = mapper.toTypeormEntity(growingUnitAggregate);
 
-      expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
-      expect(result.id).toBe(growingUnitId);
-      expect(result.name).toBe('Garden Bed 1');
-      expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
-      expect(result.capacity).toBe(10);
-      expect(result.length).toBeNull();
-      expect(result.width).toBeNull();
-      expect(result.height).toBeNull();
-      expect(result.unit).toBeNull();
-      expect(result.plants).toHaveLength(0);
+			expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
+			expect(result.id).toBe(growingUnitId);
+			expect(result.name).toBe('Garden Bed 1');
+			expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
+			expect(result.capacity).toBe(10);
+			expect(result.length).toBeNull();
+			expect(result.width).toBeNull();
+			expect(result.height).toBeNull();
+			expect(result.unit).toBeNull();
+			expect(result.plants).toHaveLength(0);
 
-      toPrimitivesSpy.mockRestore();
-    });
-  });
+			toPrimitivesSpy.mockRestore();
+		});
+	});
 });

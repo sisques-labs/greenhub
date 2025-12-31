@@ -10,11 +10,11 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  * converting primitives to value objects.
  */
 export class PlantRemoveCommand {
-  readonly growingUnitId: GrowingUnitUuidValueObject;
-  readonly plantId: PlantUuidValueObject;
+	readonly growingUnitId: GrowingUnitUuidValueObject;
+	readonly plantId: PlantUuidValueObject;
 
-  constructor(props: IPlantRemoveCommandDto) {
-    this.growingUnitId = new GrowingUnitUuidValueObject(props.growingUnitId);
-    this.plantId = new PlantUuidValueObject(props.plantId);
-  }
+	constructor(props: IPlantRemoveCommandDto) {
+		this.growingUnitId = new GrowingUnitUuidValueObject(props.growingUnitId);
+		this.plantId = new PlantUuidValueObject(props.plantId);
+	}
 }

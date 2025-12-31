@@ -1,3 +1,3 @@
 export interface ISagaInstanceFindByIdQueryDto {
-  id: string;
+	id: string;
 }

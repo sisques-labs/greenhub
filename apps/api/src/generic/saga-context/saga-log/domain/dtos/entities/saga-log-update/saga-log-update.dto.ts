@@ -8,5 +8,5 @@ import { ISagaLogCreateDto } from '@/generic/saga-context/saga-log/domain/dtos/e
  * @extends Partial<Omit<ISagaLogCreateDto, 'id' | 'sagaInstanceId' | 'sagaStepId'>>
  */
 export type ISagaLogUpdateDto = Partial<
-  Omit<ISagaLogCreateDto, 'id' | 'sagaInstanceId' | 'sagaStepId'>
+	Omit<ISagaLogCreateDto, 'id' | 'sagaInstanceId' | 'sagaStepId'>
 >;

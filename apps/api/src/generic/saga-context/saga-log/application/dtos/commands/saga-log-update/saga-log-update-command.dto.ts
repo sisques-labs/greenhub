@@ -7,7 +7,7 @@
  * @property {string} message - The message of the saga log. Optional.
  */
 export interface ISagaLogUpdateCommandDto {
-  id: string;
-  type?: string;
-  message?: string;
+	id: string;
+	type?: string;
+	message?: string;
 }

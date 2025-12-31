@@ -16,37 +16,37 @@ import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/gro
  */
 @QueryHandler(GrowingUnitFindByIdQuery)
 export class GrowingUnitFindByIdQueryHandler
-  implements IQueryHandler<GrowingUnitFindByIdQuery>
+	implements IQueryHandler<GrowingUnitFindByIdQuery>
 {
-  /**
-   * Logger instance for logging handler actions.
-   */
-  private readonly logger = new Logger(GrowingUnitFindByIdQueryHandler.name);
+	/**
+	 * Logger instance for logging handler actions.
+	 */
+	private readonly logger = new Logger(GrowingUnitFindByIdQueryHandler.name);
 
-  /**
-   * Creates a new instance of the GrowingUnitFindByIdQueryHandler class.
-   *
-   * @param assertGrowingUnitExistsService - Service responsible for verifying and retrieving growing unit aggregates.
-   */
-  constructor(
-    private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
-  ) {}
+	/**
+	 * Creates a new instance of the GrowingUnitFindByIdQueryHandler class.
+	 *
+	 * @param assertGrowingUnitExistsService - Service responsible for verifying and retrieving growing unit aggregates.
+	 */
+	constructor(
+		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+	) {}
 
-  /**
-   * Executes the {@link GrowingUnitFindByIdQuery} to retrieve a growing unit by its ID.
-   *
-   * @param query - The {@link GrowingUnitFindByIdQuery} containing the ID of the growing unit.
-   * @returns A promise that resolves to the {@link GrowingUnitAggregate} if found.
-   * @throws Will rethrow any errors encountered during service execution.
-   */
-  async execute(
-    query: GrowingUnitFindByIdQuery,
-  ): Promise<GrowingUnitAggregate> {
-    this.logger.log(
-      `Executing growing unit find by id query: ${query.id.value}`,
-    );
+	/**
+	 * Executes the {@link GrowingUnitFindByIdQuery} to retrieve a growing unit by its ID.
+	 *
+	 * @param query - The {@link GrowingUnitFindByIdQuery} containing the ID of the growing unit.
+	 * @returns A promise that resolves to the {@link GrowingUnitAggregate} if found.
+	 * @throws Will rethrow any errors encountered during service execution.
+	 */
+	async execute(
+		query: GrowingUnitFindByIdQuery,
+	): Promise<GrowingUnitAggregate> {
+		this.logger.log(
+			`Executing growing unit find by id query: ${query.id.value}`,
+		);
 
-    // 01: Find the growing unit by id using the assertion service
-    return await this.assertGrowingUnitExistsService.execute(query.id.value);
-  }
+		// 01: Find the growing unit by id using the assertion service
+		return await this.assertGrowingUnitExistsService.execute(query.id.value);
+	}
 }

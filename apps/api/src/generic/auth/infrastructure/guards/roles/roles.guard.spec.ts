@@ -8,123 +8,123 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 jest.mock('@nestjs/graphql');
 
 describe('RolesGuard', () => {
-  let guard: RolesGuard;
-  let mockReflector: jest.Mocked<Reflector>;
-  let mockContext: ExecutionContext;
-  let mockGqlContext: any;
-  let mockRequest: any;
+	let guard: RolesGuard;
+	let mockReflector: jest.Mocked<Reflector>;
+	let mockContext: ExecutionContext;
+	let mockGqlContext: any;
+	let mockRequest: any;
 
-  beforeEach(() => {
-    mockRequest = {
-      user: null,
-    };
+	beforeEach(() => {
+		mockRequest = {
+			user: null,
+		};
 
-    mockGqlContext = {
-      getContext: jest.fn().mockReturnValue({
-        req: mockRequest,
-      }),
-    };
+		mockGqlContext = {
+			getContext: jest.fn().mockReturnValue({
+				req: mockRequest,
+			}),
+		};
 
-    (GqlExecutionContext.create as jest.Mock) = jest
-      .fn()
-      .mockReturnValue(mockGqlContext);
+		(GqlExecutionContext.create as jest.Mock) = jest
+			.fn()
+			.mockReturnValue(mockGqlContext);
 
-    mockContext = {
-      switchToHttp: jest.fn(),
-      getClass: jest.fn(),
-      getHandler: jest.fn(),
-      getArgs: jest.fn(),
-      getArgByIndex: jest.fn(),
-      switchToRpc: jest.fn(),
-      switchToWs: jest.fn(),
-      getType: jest.fn(),
-    } as unknown as ExecutionContext;
+		mockContext = {
+			switchToHttp: jest.fn(),
+			getClass: jest.fn(),
+			getHandler: jest.fn(),
+			getArgs: jest.fn(),
+			getArgByIndex: jest.fn(),
+			switchToRpc: jest.fn(),
+			switchToWs: jest.fn(),
+			getType: jest.fn(),
+		} as unknown as ExecutionContext;
 
-    mockReflector = {
-      getAllAndOverride: jest.fn(),
-    } as unknown as jest.Mocked<Reflector>;
+		mockReflector = {
+			getAllAndOverride: jest.fn(),
+		} as unknown as jest.Mocked<Reflector>;
 
-    guard = new RolesGuard(mockReflector);
-  });
+		guard = new RolesGuard(mockReflector);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('canActivate', () => {
-    it('should allow access when no roles are required', () => {
-      mockReflector.getAllAndOverride.mockReturnValue(undefined);
+	describe('canActivate', () => {
+		it('should allow access when no roles are required', () => {
+			mockReflector.getAllAndOverride.mockReturnValue(undefined);
 
-      const result = guard.canActivate(mockContext);
+			const result = guard.canActivate(mockContext);
 
-      expect(result).toBe(true);
-      expect(mockReflector.getAllAndOverride).toHaveBeenCalledWith(ROLES_KEY, [
-        mockContext.getHandler(),
-        mockContext.getClass(),
-      ]);
-    });
+			expect(result).toBe(true);
+			expect(mockReflector.getAllAndOverride).toHaveBeenCalledWith(ROLES_KEY, [
+				mockContext.getHandler(),
+				mockContext.getClass(),
+			]);
+		});
 
-    it('should allow access when user has required role', () => {
-      const requiredRoles = [UserRoleEnum.ADMIN];
-      mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
-      mockRequest.user = { role: UserRoleEnum.ADMIN };
+		it('should allow access when user has required role', () => {
+			const requiredRoles = [UserRoleEnum.ADMIN];
+			mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
+			mockRequest.user = { role: UserRoleEnum.ADMIN };
 
-      const result = guard.canActivate(mockContext);
+			const result = guard.canActivate(mockContext);
 
-      expect(result).toBe(true);
-    });
+			expect(result).toBe(true);
+		});
 
-    it('should allow access when user has one of multiple required roles', () => {
-      const requiredRoles = [UserRoleEnum.ADMIN, UserRoleEnum.USER];
-      mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
-      mockRequest.user = { role: UserRoleEnum.USER };
+		it('should allow access when user has one of multiple required roles', () => {
+			const requiredRoles = [UserRoleEnum.ADMIN, UserRoleEnum.USER];
+			mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
+			mockRequest.user = { role: UserRoleEnum.USER };
 
-      const result = guard.canActivate(mockContext);
+			const result = guard.canActivate(mockContext);
 
-      expect(result).toBe(true);
-    });
+			expect(result).toBe(true);
+		});
 
-    it('should throw ForbiddenException when user is not authenticated', () => {
-      const requiredRoles = [UserRoleEnum.ADMIN];
-      mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
-      mockRequest.user = null;
+		it('should throw ForbiddenException when user is not authenticated', () => {
+			const requiredRoles = [UserRoleEnum.ADMIN];
+			mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
+			mockRequest.user = null;
 
-      expect(() => guard.canActivate(mockContext)).toThrow(ForbiddenException);
-      expect(() => guard.canActivate(mockContext)).toThrow(
-        'User not authenticated',
-      );
-    });
+			expect(() => guard.canActivate(mockContext)).toThrow(ForbiddenException);
+			expect(() => guard.canActivate(mockContext)).toThrow(
+				'User not authenticated',
+			);
+		});
 
-    it('should throw ForbiddenException when user role is not found', () => {
-      const requiredRoles = [UserRoleEnum.ADMIN];
-      mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
-      mockRequest.user = {};
+		it('should throw ForbiddenException when user role is not found', () => {
+			const requiredRoles = [UserRoleEnum.ADMIN];
+			mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
+			mockRequest.user = {};
 
-      expect(() => guard.canActivate(mockContext)).toThrow(ForbiddenException);
-      expect(() => guard.canActivate(mockContext)).toThrow(
-        'User role not found',
-      );
-    });
+			expect(() => guard.canActivate(mockContext)).toThrow(ForbiddenException);
+			expect(() => guard.canActivate(mockContext)).toThrow(
+				'User role not found',
+			);
+		});
 
-    it('should throw ForbiddenException when user does not have required role', () => {
-      const requiredRoles = [UserRoleEnum.ADMIN];
-      mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
-      mockRequest.user = { role: UserRoleEnum.USER };
+		it('should throw ForbiddenException when user does not have required role', () => {
+			const requiredRoles = [UserRoleEnum.ADMIN];
+			mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
+			mockRequest.user = { role: UserRoleEnum.USER };
 
-      expect(() => guard.canActivate(mockContext)).toThrow(ForbiddenException);
-      expect(() => guard.canActivate(mockContext)).toThrow(
-        'Insufficient permissions. Required roles: ADMIN',
-      );
-    });
+			expect(() => guard.canActivate(mockContext)).toThrow(ForbiddenException);
+			expect(() => guard.canActivate(mockContext)).toThrow(
+				'Insufficient permissions. Required roles: ADMIN',
+			);
+		});
 
-    it('should throw ForbiddenException with multiple required roles in message', () => {
-      const requiredRoles = [UserRoleEnum.ADMIN, UserRoleEnum.USER];
-      mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
-      mockRequest.user = { role: UserRoleEnum.USER };
+		it('should throw ForbiddenException with multiple required roles in message', () => {
+			const requiredRoles = [UserRoleEnum.ADMIN, UserRoleEnum.USER];
+			mockReflector.getAllAndOverride.mockReturnValue(requiredRoles);
+			mockRequest.user = { role: UserRoleEnum.USER };
 
-      // User has USER role which is in requiredRoles, so should pass
-      const result = guard.canActivate(mockContext);
-      expect(result).toBe(true);
-    });
-  });
+			// User has USER role which is in requiredRoles, so should pass
+			const result = guard.canActivate(mockContext);
+			expect(result).toBe(true);
+		});
+	});
 });

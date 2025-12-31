@@ -8,10 +8,10 @@ import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base
  * It matches the structure of PlantViewModel for consistency.
  */
 export type PlantMongoDbDto = BaseMongoDto & {
-  growingUnitId: string;
-  name: string;
-  species: string;
-  plantedDate: Date | null;
-  notes: string | null;
-  status: string;
+	growingUnitId: string;
+	name: string;
+	species: string;
+	plantedDate: Date | null;
+	notes: string | null;
+	status: string;
 };

@@ -5,5 +5,5 @@
  * @property {string} id - The id of the overview view model to find.
  */
 export interface IOverviewViewModelFindByIdQueryDto {
-  id: string;
+	id: string;
 }

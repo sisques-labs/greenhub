@@ -17,201 +17,201 @@ import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 
 describe('GrowingUnitViewModelFactory', () => {
-  let factory: GrowingUnitViewModelFactory;
-  let plantViewModelFactory: PlantViewModelFactory;
-  let plantEntityFactory: PlantEntityFactory;
-  let growingUnitAggregateFactory: GrowingUnitAggregateFactory;
+	let factory: GrowingUnitViewModelFactory;
+	let plantViewModelFactory: PlantViewModelFactory;
+	let plantEntityFactory: PlantEntityFactory;
+	let growingUnitAggregateFactory: GrowingUnitAggregateFactory;
 
-  beforeEach(() => {
-    plantViewModelFactory = new PlantViewModelFactory();
-    plantEntityFactory = new PlantEntityFactory();
-    growingUnitAggregateFactory = new GrowingUnitAggregateFactory(
-      plantEntityFactory,
-    );
-    factory = new GrowingUnitViewModelFactory(plantViewModelFactory);
-  });
+	beforeEach(() => {
+		plantViewModelFactory = new PlantViewModelFactory();
+		plantEntityFactory = new PlantEntityFactory();
+		growingUnitAggregateFactory = new GrowingUnitAggregateFactory(
+			plantEntityFactory,
+		);
+		factory = new GrowingUnitViewModelFactory(plantViewModelFactory);
+	});
 
-  describe('create', () => {
-    it('should create a GrowingUnitViewModel from DTO', () => {
-      const dto: IGrowingUnitViewModelDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 100,
-          width: 50,
-          height: 30,
-          unit: LengthUnitEnum.CENTIMETER,
-        },
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 150000,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+	describe('create', () => {
+		it('should create a GrowingUnitViewModel from DTO', () => {
+			const dto: IGrowingUnitViewModelDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 100,
+					width: 50,
+					height: 30,
+					unit: LengthUnitEnum.CENTIMETER,
+				},
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 150000,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const viewModel = factory.create(dto);
+			const viewModel = factory.create(dto);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.id).toBe(dto.id);
-      expect(viewModel.name).toBe(dto.name);
-      expect(viewModel.type).toBe(dto.type);
-      expect(viewModel.capacity).toBe(dto.capacity);
-    });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.id).toBe(dto.id);
+			expect(viewModel.name).toBe(dto.name);
+			expect(viewModel.type).toBe(dto.type);
+			expect(viewModel.capacity).toBe(dto.capacity);
+		});
 
-    it('should create a GrowingUnitViewModel from DTO without dimensions', () => {
-      const dto: IGrowingUnitViewModelDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+		it('should create a GrowingUnitViewModel from DTO without dimensions', () => {
+			const dto: IGrowingUnitViewModelDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const viewModel = factory.create(dto);
+			const viewModel = factory.create(dto);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.dimensions).toBeNull();
-    });
-  });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.dimensions).toBeNull();
+		});
+	});
 
-  describe('fromPrimitives', () => {
-    it('should create a GrowingUnitViewModel from primitives', () => {
-      const primitives: GrowingUnitPrimitives = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 100,
-          width: 50,
-          height: 30,
-          unit: LengthUnitEnum.CENTIMETER,
-        },
-        plants: [],
-      };
+	describe('fromPrimitives', () => {
+		it('should create a GrowingUnitViewModel from primitives', () => {
+			const primitives: GrowingUnitPrimitives = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 100,
+					width: 50,
+					height: 30,
+					unit: LengthUnitEnum.CENTIMETER,
+				},
+				plants: [],
+			};
 
-      const viewModel = factory.fromPrimitives(primitives);
+			const viewModel = factory.fromPrimitives(primitives);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.id).toBe(primitives.id);
-      expect(viewModel.name).toBe(primitives.name);
-      expect(viewModel.type).toBe(primitives.type);
-      expect(viewModel.capacity).toBe(primitives.capacity);
-    });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.id).toBe(primitives.id);
+			expect(viewModel.name).toBe(primitives.name);
+			expect(viewModel.type).toBe(primitives.type);
+			expect(viewModel.capacity).toBe(primitives.capacity);
+		});
 
-    it('should create a GrowingUnitViewModel from primitives without dimensions', () => {
-      const primitives: GrowingUnitPrimitives = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-      };
+		it('should create a GrowingUnitViewModel from primitives without dimensions', () => {
+			const primitives: GrowingUnitPrimitives = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+			};
 
-      const viewModel = factory.fromPrimitives(primitives);
+			const viewModel = factory.fromPrimitives(primitives);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.dimensions).toBeNull();
-      expect(viewModel.volume).toBe(0);
-    });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.dimensions).toBeNull();
+			expect(viewModel.volume).toBe(0);
+		});
 
-    it('should create a GrowingUnitViewModel from primitives with plants', () => {
-      const plantPrimitives: PlantPrimitives = {
-        id: '223e4567-e89b-12d3-a456-426614174000',
-        growingUnitId: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: new Date('2024-01-15'),
-        notes: 'Keep in indirect sunlight',
-        status: PlantStatusEnum.PLANTED,
-      };
+		it('should create a GrowingUnitViewModel from primitives with plants', () => {
+			const plantPrimitives: PlantPrimitives = {
+				id: '223e4567-e89b-12d3-a456-426614174000',
+				growingUnitId: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: new Date('2024-01-15'),
+				notes: 'Keep in indirect sunlight',
+				status: PlantStatusEnum.PLANTED,
+			};
 
-      const primitives: GrowingUnitPrimitives = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [plantPrimitives],
-      };
+			const primitives: GrowingUnitPrimitives = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [plantPrimitives],
+			};
 
-      const viewModel = factory.fromPrimitives(primitives);
+			const viewModel = factory.fromPrimitives(primitives);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.plants).toHaveLength(1);
-      expect(viewModel.numberOfPlants).toBe(1);
-    });
-  });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.plants).toHaveLength(1);
+			expect(viewModel.numberOfPlants).toBe(1);
+		});
+	});
 
-  describe('fromAggregate', () => {
-    it('should create a GrowingUnitViewModel from aggregate', () => {
-      const dto: IGrowingUnitDto = {
-        id: new GrowingUnitUuidValueObject(),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: new DimensionsValueObject({
-          length: 100,
-          width: 50,
-          height: 30,
-          unit: LengthUnitEnum.CENTIMETER,
-        }),
-        plants: [],
-      };
+	describe('fromAggregate', () => {
+		it('should create a GrowingUnitViewModel from aggregate', () => {
+			const dto: IGrowingUnitDto = {
+				id: new GrowingUnitUuidValueObject(),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: new DimensionsValueObject({
+					length: 100,
+					width: 50,
+					height: 30,
+					unit: LengthUnitEnum.CENTIMETER,
+				}),
+				plants: [],
+			};
 
-      const aggregate = growingUnitAggregateFactory.create(dto);
-      const viewModel = factory.fromAggregate(aggregate);
+			const aggregate = growingUnitAggregateFactory.create(dto);
+			const viewModel = factory.fromAggregate(aggregate);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.id).toBe(aggregate.id.value);
-      expect(viewModel.name).toBe(aggregate.name.value);
-      expect(viewModel.type).toBe(aggregate.type.value);
-      expect(viewModel.capacity).toBe(aggregate.capacity.value);
-    });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.id).toBe(aggregate.id.value);
+			expect(viewModel.name).toBe(aggregate.name.value);
+			expect(viewModel.type).toBe(aggregate.type.value);
+			expect(viewModel.capacity).toBe(aggregate.capacity.value);
+		});
 
-    it('should create a GrowingUnitViewModel from aggregate without dimensions', () => {
-      const dto: IGrowingUnitDto = {
-        id: new GrowingUnitUuidValueObject(),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      };
+		it('should create a GrowingUnitViewModel from aggregate without dimensions', () => {
+			const dto: IGrowingUnitDto = {
+				id: new GrowingUnitUuidValueObject(),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			};
 
-      const aggregate = growingUnitAggregateFactory.create(dto);
-      const viewModel = factory.fromAggregate(aggregate);
+			const aggregate = growingUnitAggregateFactory.create(dto);
+			const viewModel = factory.fromAggregate(aggregate);
 
-      expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
-      expect(viewModel.dimensions).toBeNull();
-      expect(viewModel.volume).toBe(0);
-    });
+			expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
+			expect(viewModel.dimensions).toBeNull();
+			expect(viewModel.volume).toBe(0);
+		});
 
-    it('should calculate remaining capacity correctly', () => {
-      const dto: IGrowingUnitDto = {
-        id: new GrowingUnitUuidValueObject(),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      };
+		it('should calculate remaining capacity correctly', () => {
+			const dto: IGrowingUnitDto = {
+				id: new GrowingUnitUuidValueObject(),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			};
 
-      const aggregate = growingUnitAggregateFactory.create(dto);
-      const viewModel = factory.fromAggregate(aggregate);
+			const aggregate = growingUnitAggregateFactory.create(dto);
+			const viewModel = factory.fromAggregate(aggregate);
 
-      expect(viewModel.remainingCapacity).toBe(10);
-      expect(viewModel.numberOfPlants).toBe(0);
-    });
-  });
+			expect(viewModel.remainingCapacity).toBe(10);
+			expect(viewModel.numberOfPlants).toBe(0);
+		});
+	});
 });

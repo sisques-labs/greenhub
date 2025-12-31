@@ -14,31 +14,31 @@ import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/ident
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class SagaStepCreateCommand {
-  readonly id: SagaStepUuidValueObject;
-  readonly sagaInstanceId: SagaInstanceUuidValueObject;
-  readonly name: SagaStepNameValueObject;
-  readonly order: SagaStepOrderValueObject;
-  readonly status: SagaStepStatusValueObject;
-  readonly startDate: SagaStepStartDateValueObject | null;
-  readonly endDate: SagaStepEndDateValueObject | null;
-  readonly errorMessage: SagaStepErrorMessageValueObject | null;
-  readonly retryCount: SagaStepRetryCountValueObject;
-  readonly maxRetries: SagaStepMaxRetriesValueObject;
-  readonly payload: SagaStepPayloadValueObject;
-  readonly result: SagaStepResultValueObject | null;
+	readonly id: SagaStepUuidValueObject;
+	readonly sagaInstanceId: SagaInstanceUuidValueObject;
+	readonly name: SagaStepNameValueObject;
+	readonly order: SagaStepOrderValueObject;
+	readonly status: SagaStepStatusValueObject;
+	readonly startDate: SagaStepStartDateValueObject | null;
+	readonly endDate: SagaStepEndDateValueObject | null;
+	readonly errorMessage: SagaStepErrorMessageValueObject | null;
+	readonly retryCount: SagaStepRetryCountValueObject;
+	readonly maxRetries: SagaStepMaxRetriesValueObject;
+	readonly payload: SagaStepPayloadValueObject;
+	readonly result: SagaStepResultValueObject | null;
 
-  constructor(props: ISagaStepCreateCommandDto) {
-    this.id = new SagaStepUuidValueObject();
-    this.sagaInstanceId = new SagaInstanceUuidValueObject(props.sagaInstanceId);
-    this.name = new SagaStepNameValueObject(props.name);
-    this.order = new SagaStepOrderValueObject(props.order);
-    this.status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
-    this.startDate = null;
-    this.endDate = null;
-    this.errorMessage = null;
-    this.retryCount = new SagaStepRetryCountValueObject(0);
-    this.maxRetries = new SagaStepMaxRetriesValueObject(3);
-    this.payload = new SagaStepPayloadValueObject(props.payload);
-    this.result = null;
-  }
+	constructor(props: ISagaStepCreateCommandDto) {
+		this.id = new SagaStepUuidValueObject();
+		this.sagaInstanceId = new SagaInstanceUuidValueObject(props.sagaInstanceId);
+		this.name = new SagaStepNameValueObject(props.name);
+		this.order = new SagaStepOrderValueObject(props.order);
+		this.status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
+		this.startDate = null;
+		this.endDate = null;
+		this.errorMessage = null;
+		this.retryCount = new SagaStepRetryCountValueObject(0);
+		this.maxRetries = new SagaStepMaxRetriesValueObject(3);
+		this.payload = new SagaStepPayloadValueObject(props.payload);
+		this.result = null;
+	}
 }

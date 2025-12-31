@@ -12,51 +12,51 @@ import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/re
  */
 @Injectable()
 export class PlantGraphQLMapper {
-  private readonly logger = new Logger(PlantGraphQLMapper.name);
+	private readonly logger = new Logger(PlantGraphQLMapper.name);
 
-  /**
-   * Converts a plant entity to a GraphQL response DTO.
-   *
-   * @param plant - The plant entity to convert
-   * @returns The GraphQL response DTO
-   */
-  toResponseDtoFromEntity(plant: PlantEntity): PlantResponseDto {
-    this.logger.log(`Mapping plant entity to response dto: ${plant.id.value}`);
+	/**
+	 * Converts a plant entity to a GraphQL response DTO.
+	 *
+	 * @param plant - The plant entity to convert
+	 * @returns The GraphQL response DTO
+	 */
+	toResponseDtoFromEntity(plant: PlantEntity): PlantResponseDto {
+		this.logger.log(`Mapping plant entity to response dto: ${plant.id.value}`);
 
-    const now = new Date();
+		const now = new Date();
 
-    return {
-      id: plant.id.value,
-      growingUnitId: plant.growingUnitId.value,
-      name: plant.name.value,
-      species: plant.species.value,
-      plantedDate: plant.plantedDate?.value ?? null,
-      notes: plant.notes?.value ?? null,
-      status: plant.status.value,
-      createdAt: now,
-      updatedAt: now,
-    };
-  }
+		return {
+			id: plant.id.value,
+			growingUnitId: plant.growingUnitId.value,
+			name: plant.name.value,
+			species: plant.species.value,
+			plantedDate: plant.plantedDate?.value ?? null,
+			notes: plant.notes?.value ?? null,
+			status: plant.status.value,
+			createdAt: now,
+			updatedAt: now,
+		};
+	}
 
-  /**
-   * Converts a plant view model to a GraphQL response DTO.
-   *
-   * @param plant - The plant view model to convert
-   * @returns The GraphQL response DTO
-   */
-  toResponseDtoFromViewModel(plant: PlantViewModel): PlantResponseDto {
-    this.logger.log(`Mapping plant view model to response dto: ${plant.id}`);
+	/**
+	 * Converts a plant view model to a GraphQL response DTO.
+	 *
+	 * @param plant - The plant view model to convert
+	 * @returns The GraphQL response DTO
+	 */
+	toResponseDtoFromViewModel(plant: PlantViewModel): PlantResponseDto {
+		this.logger.log(`Mapping plant view model to response dto: ${plant.id}`);
 
-    return {
-      id: plant.id,
-      growingUnitId: plant.growingUnitId,
-      name: plant.name,
-      species: plant.species,
-      plantedDate: plant.plantedDate,
-      notes: plant.notes,
-      status: plant.status,
-      createdAt: plant.createdAt,
-      updatedAt: plant.updatedAt,
-    };
-  }
+		return {
+			id: plant.id,
+			growingUnitId: plant.growingUnitId,
+			name: plant.name,
+			species: plant.species,
+			plantedDate: plant.plantedDate,
+			notes: plant.notes,
+			status: plant.status,
+			createdAt: plant.createdAt,
+			updatedAt: plant.updatedAt,
+		};
+	}
 }

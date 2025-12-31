@@ -9,8 +9,8 @@
  * @public
  */
 export interface IGrowingUnitDeleteCommandDto {
-  /**
-   * The unique identifier of the growing unit to be deleted.
-   */
-  id: string;
+	/**
+	 * The unique identifier of the growing unit to be deleted.
+	 */
+	id: string;
 }

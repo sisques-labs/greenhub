@@ -1,3 +1,5 @@
+import { Logger } from '@nestjs/common';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';
 import { AssertAuthEmailNotExistsService } from '@/generic/auth/application/services/assert-auth-email-not-exists/assert-auth-email-not-exists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
@@ -6,67 +8,65 @@ import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth
 import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthRegisterByEmailCommand } from './auth-register-by-email.command';
 
 @CommandHandler(AuthRegisterByEmailCommand)
 export class AuthRegisterByEmailCommandHandler
-  implements ICommandHandler<AuthRegisterByEmailCommand>
+	implements ICommandHandler<AuthRegisterByEmailCommand>
 {
-  private readonly logger = new Logger(AuthRegisterByEmailCommandHandler.name);
+	private readonly logger = new Logger(AuthRegisterByEmailCommandHandler.name);
 
-  constructor(
-    private readonly assertAuthEmailNotExistsService: AssertAuthEmailNotExistsService,
-    private readonly authRegistrationSaga: AuthRegistrationSaga,
-  ) {}
+	constructor(
+		private readonly assertAuthEmailNotExistsService: AssertAuthEmailNotExistsService,
+		private readonly authRegistrationSaga: AuthRegistrationSaga,
+	) {}
 
-  /**
-   * Executes the auth register command
-   *
-   * @param command - The command to execute
-   * @returns The created auth id
-   */
-  async execute(command: AuthRegisterByEmailCommand): Promise<string> {
-    this.logger.log(
-      `Executing auth register command by email: ${command.email.value}`,
-    );
-    // 01: Assert the auth email not exists
-    await this.assertAuthEmailNotExistsService.execute(command.email.value);
+	/**
+	 * Executes the auth register command
+	 *
+	 * @param command - The command to execute
+	 * @returns The created auth id
+	 */
+	async execute(command: AuthRegisterByEmailCommand): Promise<string> {
+		this.logger.log(
+			`Executing auth register command by email: ${command.email.value}`,
+		);
+		// 01: Assert the auth email not exists
+		await this.assertAuthEmailNotExistsService.execute(command.email.value);
 
-    const now = new Date();
-    const eventData: IAuthEventData = {
-      id: new AuthUuidValueObject().value,
-      userId: new UserUuidValueObject().value,
-      email: command.email.value,
-      emailVerified: false,
-      phoneNumber: null,
-      lastLoginAt: null,
-      password: command.password.value,
-      provider: AuthProviderEnum.LOCAL,
-      providerId: null,
-      twoFactorEnabled: false,
-      createdAt: now,
-      updatedAt: now,
-    };
+		const now = new Date();
+		const eventData: IAuthEventData = {
+			id: new AuthUuidValueObject().value,
+			userId: new UserUuidValueObject().value,
+			email: command.email.value,
+			emailVerified: false,
+			phoneNumber: null,
+			lastLoginAt: null,
+			password: command.password.value,
+			provider: AuthProviderEnum.LOCAL,
+			providerId: null,
+			twoFactorEnabled: false,
+			createdAt: now,
+			updatedAt: now,
+		};
 
-    const registrationEvent = new AuthRegistrationRequestedEvent(
-      {
-        aggregateRootId: eventData.id,
-        aggregateRootType: AuthAggregate.name,
-        entityId: eventData.id,
-        entityType: AuthAggregate.name,
-        eventType: AuthRegistrationRequestedEvent.name,
-      },
-      eventData,
-    );
+		const registrationEvent = new AuthRegistrationRequestedEvent(
+			{
+				aggregateRootId: eventData.id,
+				aggregateRootType: AuthAggregate.name,
+				entityId: eventData.id,
+				entityType: AuthAggregate.name,
+				eventType: AuthRegistrationRequestedEvent.name,
+			},
+			eventData,
+		);
 
-    // 03: Execute the saga synchronously to wait for completion
-    // This ensures the client gets immediate feedback on success/failure
-    // The saga will handle all the registration steps (create user, auth, etc.)
-    await this.authRegistrationSaga.handle(registrationEvent);
+		// 03: Execute the saga synchronously to wait for completion
+		// This ensures the client gets immediate feedback on success/failure
+		// The saga will handle all the registration steps (create user, auth, etc.)
+		await this.authRegistrationSaga.handle(registrationEvent);
 
-    // 05: Return the auth id
-    return eventData.id;
-  }
+		// 05: Return the auth id
+		return eventData.id;
+	}
 }

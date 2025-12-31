@@ -6,6 +6,6 @@
  * @property {number} [decimals] - Number of decimal places (default: 2)
  */
 export interface IRoundNumberCommandDto {
-  value: number;
-  decimals?: number;
+	value: number;
+	decimals?: number;
 }

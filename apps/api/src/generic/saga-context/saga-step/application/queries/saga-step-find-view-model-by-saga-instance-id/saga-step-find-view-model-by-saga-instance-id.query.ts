@@ -2,9 +2,9 @@ import { ISagaStepFindViewModelBySagaInstanceIdQueryDto } from '@/generic/saga-c
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class FindSagaStepViewModelsBySagaInstanceIdQuery {
-  readonly sagaInstanceId: SagaInstanceUuidValueObject;
+	readonly sagaInstanceId: SagaInstanceUuidValueObject;
 
-  constructor(props: ISagaStepFindViewModelBySagaInstanceIdQueryDto) {
-    this.sagaInstanceId = new SagaInstanceUuidValueObject(props.sagaInstanceId);
-  }
+	constructor(props: ISagaStepFindViewModelBySagaInstanceIdQueryDto) {
+		this.sagaInstanceId = new SagaInstanceUuidValueObject(props.sagaInstanceId);
+	}
 }

@@ -5,9 +5,9 @@ import { StringValueObject } from '@/shared/domain/value-objects/string/string.v
  * It extends the StringValueObject to leverage common string functionalities.
  */
 export class SagaStepErrorMessageValueObject extends StringValueObject {
-  constructor(value: string) {
-    super(value, {
-      allowEmpty: true,
-    });
-  }
+	constructor(value: string) {
+		super(value, {
+			allowEmpty: true,
+		});
+	}
 }

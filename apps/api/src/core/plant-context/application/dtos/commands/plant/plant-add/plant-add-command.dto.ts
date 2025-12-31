@@ -10,10 +10,10 @@
  * @property {string} [status] - The status of the plant. Defaults to PLANTED if not provided.
  */
 export interface IPlantAddCommandDto {
-  growingUnitId: string;
-  name: string;
-  species: string;
-  plantedDate?: Date | null;
-  notes?: string | null;
-  status?: string;
+	growingUnitId: string;
+	name: string;
+	species: string;
+	plantedDate?: Date | null;
+	notes?: string | null;
+	status?: string;
 }

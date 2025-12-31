@@ -4,34 +4,34 @@ import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/response
 
 @ObjectType('SagaInstanceResponseDto')
 export class SagaInstanceResponseDto {
-  @Field(() => String, { description: 'The saga instance ID' })
-  id: string;
+	@Field(() => String, { description: 'The saga instance ID' })
+	id: string;
 
-  @Field(() => String, { description: 'The saga instance name' })
-  name: string;
+	@Field(() => String, { description: 'The saga instance name' })
+	name: string;
 
-  @Field(() => SagaInstanceStatusEnum, {
-    description: 'The saga instance status',
-  })
-  status: SagaInstanceStatusEnum;
+	@Field(() => SagaInstanceStatusEnum, {
+		description: 'The saga instance status',
+	})
+	status: SagaInstanceStatusEnum;
 
-  @Field(() => Date, { description: 'The saga instance start date' })
-  startDate: Date;
+	@Field(() => Date, { description: 'The saga instance start date' })
+	startDate: Date;
 
-  @Field(() => Date, { description: 'The saga instance end date' })
-  endDate: Date;
+	@Field(() => Date, { description: 'The saga instance end date' })
+	endDate: Date;
 
-  @Field(() => Date, { description: 'The saga instance creation date' })
-  createdAt: Date;
+	@Field(() => Date, { description: 'The saga instance creation date' })
+	createdAt: Date;
 
-  @Field(() => Date, { description: 'The saga instance update date' })
-  updatedAt: Date;
+	@Field(() => Date, { description: 'The saga instance update date' })
+	updatedAt: Date;
 }
 
 @ObjectType('PaginatedSagaInstanceResultDto')
 export class PaginatedSagaInstanceResultDto extends BasePaginatedResultDto {
-  @Field(() => [SagaInstanceResponseDto], {
-    description: 'The saga instance items',
-  })
-  items: SagaInstanceResponseDto[];
+	@Field(() => [SagaInstanceResponseDto], {
+		description: 'The saga instance items',
+	})
+	items: SagaInstanceResponseDto[];
 }

@@ -16,16 +16,16 @@
  * @property {boolean} twoFactorEnabled - The two factor enabled of the auth.
  */
 export interface IAuthCreateViewModelDto {
-  id: string;
-  userId: string;
-  email: string | null;
-  emailVerified: boolean;
-  lastLoginAt: Date | null;
-  password: string | null;
-  phoneNumber: string | null;
-  provider: string;
-  providerId: string | null;
-  twoFactorEnabled: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+	id: string;
+	userId: string;
+	email: string | null;
+	emailVerified: boolean;
+	lastLoginAt: Date | null;
+	password: string | null;
+	phoneNumber: string | null;
+	provider: string;
+	providerId: string | null;
+	twoFactorEnabled: boolean;
+	createdAt: Date;
+	updatedAt: Date;
 }

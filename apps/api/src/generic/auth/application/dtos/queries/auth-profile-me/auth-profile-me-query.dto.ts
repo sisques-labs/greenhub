@@ -5,5 +5,5 @@
  * @property {string} userId - The id of the user to find (extracted from JWT).
  */
 export interface IAuthProfileMeQueryDto {
-  userId: string;
+	userId: string;
 }

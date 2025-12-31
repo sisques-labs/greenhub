@@ -16,25 +16,25 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  * converting primitives to value objects.
  */
 export class PlantAddCommand {
-  readonly id: PlantUuidValueObject;
-  readonly growingUnitId: GrowingUnitUuidValueObject;
-  readonly name: PlantNameValueObject;
-  readonly species: PlantSpeciesValueObject;
-  readonly plantedDate: PlantPlantedDateValueObject | null;
-  readonly notes: PlantNotesValueObject | null;
-  readonly status: PlantStatusValueObject;
+	readonly id: PlantUuidValueObject;
+	readonly growingUnitId: GrowingUnitUuidValueObject;
+	readonly name: PlantNameValueObject;
+	readonly species: PlantSpeciesValueObject;
+	readonly plantedDate: PlantPlantedDateValueObject | null;
+	readonly notes: PlantNotesValueObject | null;
+	readonly status: PlantStatusValueObject;
 
-  constructor(props: IPlantAddCommandDto) {
-    this.id = new PlantUuidValueObject();
-    this.growingUnitId = new GrowingUnitUuidValueObject(props.growingUnitId);
-    this.name = new PlantNameValueObject(props.name);
-    this.species = new PlantSpeciesValueObject(props.species);
-    this.plantedDate = props.plantedDate
-      ? new PlantPlantedDateValueObject(props.plantedDate)
-      : null;
-    this.notes = props.notes ? new PlantNotesValueObject(props.notes) : null;
-    this.status = new PlantStatusValueObject(
-      props.status !== undefined ? props.status : PlantStatusEnum.PLANTED,
-    );
-  }
+	constructor(props: IPlantAddCommandDto) {
+		this.id = new PlantUuidValueObject();
+		this.growingUnitId = new GrowingUnitUuidValueObject(props.growingUnitId);
+		this.name = new PlantNameValueObject(props.name);
+		this.species = new PlantSpeciesValueObject(props.species);
+		this.plantedDate = props.plantedDate
+			? new PlantPlantedDateValueObject(props.plantedDate)
+			: null;
+		this.notes = props.notes ? new PlantNotesValueObject(props.notes) : null;
+		this.status = new PlantStatusValueObject(
+			props.status !== undefined ? props.status : PlantStatusEnum.PLANTED,
+		);
+	}
 }

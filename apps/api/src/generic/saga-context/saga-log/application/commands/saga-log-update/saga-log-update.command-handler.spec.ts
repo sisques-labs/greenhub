@@ -6,8 +6,8 @@ import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/appl
 import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import {
-  SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-  SagaLogWriteRepository,
+	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+	SagaLogWriteRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
 import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
 import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
@@ -18,183 +18,183 @@ import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifier
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('SagaLogUpdateCommandHandler', () => {
-  let handler: SagaLogUpdateCommandHandler;
-  let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
+	let handler: SagaLogUpdateCommandHandler;
+	let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
 
-  beforeEach(async () => {
-    mockSagaLogWriteRepository = {
-      findById: jest.fn(),
-      findBySagaInstanceId: jest.fn(),
-      findBySagaStepId: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<SagaLogWriteRepository>;
+	beforeEach(async () => {
+		mockSagaLogWriteRepository = {
+			findById: jest.fn(),
+			findBySagaInstanceId: jest.fn(),
+			findBySagaStepId: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<SagaLogWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockAssertSagaLogExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaLogExistsService>;
+		mockAssertSagaLogExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaLogExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        SagaLogUpdateCommandHandler,
-        {
-          provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-          useValue: mockSagaLogWriteRepository,
-        },
-        {
-          provide: EventBus,
-          useValue: mockEventBus,
-        },
-        {
-          provide: AssertSagaLogExistsService,
-          useValue: mockAssertSagaLogExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				SagaLogUpdateCommandHandler,
+				{
+					provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+					useValue: mockSagaLogWriteRepository,
+				},
+				{
+					provide: EventBus,
+					useValue: mockEventBus,
+				},
+				{
+					provide: AssertSagaLogExistsService,
+					useValue: mockAssertSagaLogExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<SagaLogUpdateCommandHandler>(
-      SagaLogUpdateCommandHandler,
-    );
-  });
+		handler = module.get<SagaLogUpdateCommandHandler>(
+			SagaLogUpdateCommandHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaLogAggregate = (): SagaLogAggregate => {
-    const now = new Date();
-    return new SagaLogAggregate(
-      {
-        id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        sagaInstanceId: new SagaInstanceUuidValueObject(
-          '223e4567-e89b-12d3-a456-426614174000',
-        ),
-        sagaStepId: new SagaStepUuidValueObject(
-          '323e4567-e89b-12d3-a456-426614174000',
-        ),
-        type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-        message: new SagaLogMessageValueObject('Original message'),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaLogAggregate = (): SagaLogAggregate => {
+		const now = new Date();
+		return new SagaLogAggregate(
+			{
+				id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				sagaInstanceId: new SagaInstanceUuidValueObject(
+					'223e4567-e89b-12d3-a456-426614174000',
+				),
+				sagaStepId: new SagaStepUuidValueObject(
+					'323e4567-e89b-12d3-a456-426614174000',
+				),
+				type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
+				message: new SagaLogMessageValueObject('Original message'),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should update saga log successfully when saga log exists', async () => {
-      const existingSagaLog = createSagaLogAggregate();
+	describe('execute', () => {
+		it('should update saga log successfully when saga log exists', async () => {
+			const existingSagaLog = createSagaLogAggregate();
 
-      const updateCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        type: SagaLogTypeEnum.ERROR,
-        message: 'Updated message',
-      };
+			const updateCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				type: SagaLogTypeEnum.ERROR,
+				message: 'Updated message',
+			};
 
-      const command = new SagaLogUpdateCommand(updateCommandDto);
+			const command = new SagaLogUpdateCommand(updateCommandDto);
 
-      const updateSpy = jest.spyOn(existingSagaLog, 'update');
-      const commitSpy = jest.spyOn(existingSagaLog, 'commit');
+			const updateSpy = jest.spyOn(existingSagaLog, 'update');
+			const commitSpy = jest.spyOn(existingSagaLog, 'commit');
 
-      mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
-      mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
+			mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
-        command.id.value,
-      );
-      expect(updateSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: command.type,
-          message: command.message,
-        }),
-      );
-      expect(mockSagaLogWriteRepository.save).toHaveBeenCalledWith(
-        existingSagaLog,
-      );
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(
-        existingSagaLog.getUncommittedEvents(),
-      );
-      expect(commitSpy).toHaveBeenCalled();
-    });
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
+				command.id.value,
+			);
+			expect(updateSpy).toHaveBeenCalledWith(
+				expect.objectContaining({
+					type: command.type,
+					message: command.message,
+				}),
+			);
+			expect(mockSagaLogWriteRepository.save).toHaveBeenCalledWith(
+				existingSagaLog,
+			);
+			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+				existingSagaLog.getUncommittedEvents(),
+			);
+			expect(commitSpy).toHaveBeenCalled();
+		});
 
-    it('should extract update data excluding id, sagaInstanceId and sagaStepId', async () => {
-      const existingSagaLog = createSagaLogAggregate();
+		it('should extract update data excluding id, sagaInstanceId and sagaStepId', async () => {
+			const existingSagaLog = createSagaLogAggregate();
 
-      const updateCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        type: SagaLogTypeEnum.WARNING,
-      };
+			const updateCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				type: SagaLogTypeEnum.WARNING,
+			};
 
-      const command = new SagaLogUpdateCommand(updateCommandDto);
+			const command = new SagaLogUpdateCommand(updateCommandDto);
 
-      const extractUpdateDataSpy = jest.spyOn(
-        handler as any,
-        'extractUpdateData',
-      );
+			const extractUpdateDataSpy = jest.spyOn(
+				handler as any,
+				'extractUpdateData',
+			);
 
-      mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
-      mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
+			mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(extractUpdateDataSpy).toHaveBeenCalledWith(command, [
-        'id',
-        'sagaInstanceId',
-        'sagaStepId',
-      ]);
-    });
+			expect(extractUpdateDataSpy).toHaveBeenCalledWith(command, [
+				'id',
+				'sagaInstanceId',
+				'sagaStepId',
+			]);
+		});
 
-    it('should publish SagaLogUpdatedEvent after updating', async () => {
-      const existingSagaLog = createSagaLogAggregate();
+		it('should publish SagaLogUpdatedEvent after updating', async () => {
+			const existingSagaLog = createSagaLogAggregate();
 
-      const updateCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        type: SagaLogTypeEnum.DEBUG,
-      };
+			const updateCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				type: SagaLogTypeEnum.DEBUG,
+			};
 
-      const command = new SagaLogUpdateCommand(updateCommandDto);
+			const command = new SagaLogUpdateCommand(updateCommandDto);
 
-      mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
-      mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
+			mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      const publishedEvents = existingSagaLog.getUncommittedEvents();
-      expect(Array.isArray(publishedEvents)).toBe(true);
-      if (publishedEvents.length > 0) {
-        expect(publishedEvents[0]).toBeInstanceOf(SagaLogUpdatedEvent);
-      }
-    });
+			const publishedEvents = existingSagaLog.getUncommittedEvents();
+			expect(Array.isArray(publishedEvents)).toBe(true);
+			if (publishedEvents.length > 0) {
+				expect(publishedEvents[0]).toBeInstanceOf(SagaLogUpdatedEvent);
+			}
+		});
 
-    it('should throw error when saga log does not exist', async () => {
-      const updateCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        type: SagaLogTypeEnum.ERROR,
-      };
+		it('should throw error when saga log does not exist', async () => {
+			const updateCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				type: SagaLogTypeEnum.ERROR,
+			};
 
-      const command = new SagaLogUpdateCommand(updateCommandDto);
-      const error = new Error('Saga log not found');
+			const command = new SagaLogUpdateCommand(updateCommandDto);
+			const error = new Error('Saga log not found');
 
-      mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
+			mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(command)).rejects.toThrow(error);
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
-        command.id.value,
-      );
-      expect(mockSagaLogWriteRepository.save).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
-    });
-  });
+			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
+				command.id.value,
+			);
+			expect(mockSagaLogWriteRepository.save).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+		});
+	});
 });

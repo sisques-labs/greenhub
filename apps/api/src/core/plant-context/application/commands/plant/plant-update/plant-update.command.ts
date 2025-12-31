@@ -14,25 +14,25 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  * converting primitives to value objects.
  */
 export class PlantUpdateCommand {
-  readonly id: PlantUuidValueObject;
-  readonly name?: PlantNameValueObject;
-  readonly species?: PlantSpeciesValueObject;
-  readonly plantedDate?: PlantPlantedDateValueObject | null;
-  readonly notes?: PlantNotesValueObject | null;
-  readonly status?: PlantStatusValueObject;
+	readonly id: PlantUuidValueObject;
+	readonly name?: PlantNameValueObject;
+	readonly species?: PlantSpeciesValueObject;
+	readonly plantedDate?: PlantPlantedDateValueObject | null;
+	readonly notes?: PlantNotesValueObject | null;
+	readonly status?: PlantStatusValueObject;
 
-  constructor(props: IPlantUpdateCommandDto) {
-    this.id = new PlantUuidValueObject(props.id);
-    this.name = props.name ? new PlantNameValueObject(props.name) : undefined;
-    this.species = props.species
-      ? new PlantSpeciesValueObject(props.species)
-      : undefined;
-    this.plantedDate = props.plantedDate
-      ? new PlantPlantedDateValueObject(props.plantedDate)
-      : null;
-    this.notes = props.notes ? new PlantNotesValueObject(props.notes) : null;
-    this.status = props.status
-      ? new PlantStatusValueObject(props.status)
-      : undefined;
-  }
+	constructor(props: IPlantUpdateCommandDto) {
+		this.id = new PlantUuidValueObject(props.id);
+		this.name = props.name ? new PlantNameValueObject(props.name) : undefined;
+		this.species = props.species
+			? new PlantSpeciesValueObject(props.species)
+			: undefined;
+		this.plantedDate = props.plantedDate
+			? new PlantPlantedDateValueObject(props.plantedDate)
+			: null;
+		this.notes = props.notes ? new PlantNotesValueObject(props.notes) : null;
+		this.status = props.status
+			? new PlantStatusValueObject(props.status)
+			: undefined;
+	}
 }

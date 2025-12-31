@@ -5,5 +5,5 @@
  * @property {string} userId - The user id of the auth to find.
  */
 export interface IAuthViewModelFindByUserIdQueryDto {
-  userId: string;
+	userId: string;
 }

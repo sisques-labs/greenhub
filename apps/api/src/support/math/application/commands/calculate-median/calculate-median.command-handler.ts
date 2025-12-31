@@ -11,29 +11,29 @@ import { CalculateMedianService } from '@/support/math/application/services/calc
  */
 @CommandHandler(CalculateMedianCommand)
 export class CalculateMedianCommandHandler
-  implements ICommandHandler<CalculateMedianCommand>
+	implements ICommandHandler<CalculateMedianCommand>
 {
-  private readonly logger = new Logger(CalculateMedianCommandHandler.name);
+	private readonly logger = new Logger(CalculateMedianCommandHandler.name);
 
-  constructor(
-    private readonly calculateMedianService: CalculateMedianService,
-  ) {}
+	constructor(
+		private readonly calculateMedianService: CalculateMedianService,
+	) {}
 
-  /**
-   * Executes the calculate median command
-   *
-   * @param command - The command to execute
-   * @returns The calculated median
-   */
-  async execute(command: CalculateMedianCommand): Promise<number> {
-    this.logger.log(
-      `Executing calculate median command for ${command.values.length} values`,
-    );
+	/**
+	 * Executes the calculate median command
+	 *
+	 * @param command - The command to execute
+	 * @returns The calculated median
+	 */
+	async execute(command: CalculateMedianCommand): Promise<number> {
+		this.logger.log(
+			`Executing calculate median command for ${command.values.length} values`,
+		);
 
-    // 01: Calculate the median
-    return this.calculateMedianService.execute(
-      [...command.values],
-      command.decimals,
-    );
-  }
+		// 01: Calculate the median
+		return this.calculateMedianService.execute(
+			[...command.values],
+			command.decimals,
+		);
+	}
 }

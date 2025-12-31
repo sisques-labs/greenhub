@@ -1,3 +1,5 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
 import { GrowingUnitDeleteCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command-handler';
 import { GrowingUnitUpdateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command-handler';
@@ -8,6 +10,10 @@ import { PlantUpdateCommandHandler } from '@/core/plant-context/application/comm
 import { GrowingUnitCreatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-created/growing-unit-created.event-handler';
 import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
 import { GrowingUnitUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-updated/growing-unit-updated.event-handler';
+// Import enums for GraphQL
+import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
+import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-removed/plant-removed.event-handler';
+import { PlantUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-updated/plant-updated.event-handler';
 import { GrowingUnitFindByCriteriaQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler';
 import { GrowingUnitFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-id/growing-unit-find-by-id.query-handler';
 import { GrowingUnitViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler';
@@ -39,127 +45,120 @@ import { GrowingUnitQueriesResolver } from '@/core/plant-context/transport/graph
 import { PlantMutationsResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-mutations.resolver';
 import { PlantQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-
-// Import enums for GraphQL
-import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
-import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-removed/plant-removed.event-handler';
-import { PlantUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-updated/plant-updated.event-handler';
 import '@/core/plant-context/transport/graphql/enums/growing-unit/growing-unit-registered-enums.graphql';
 import '@/core/plant-context/transport/graphql/enums/plant/plant-registered-enums.graphql';
 
 const RESOLVERS = [
-  // Growing Unit resolvers
-  GrowingUnitMutationsResolver,
-  GrowingUnitQueriesResolver,
+	// Growing Unit resolvers
+	GrowingUnitMutationsResolver,
+	GrowingUnitQueriesResolver,
 
-  // Plant resolvers
-  PlantMutationsResolver,
-  PlantQueriesResolver,
+	// Plant resolvers
+	PlantMutationsResolver,
+	PlantQueriesResolver,
 ];
 
 const DOMAIN_SERVICES = [
-  // Plant services
-  PlantTransplantService,
+	// Plant services
+	PlantTransplantService,
 ];
 
 const APPLICATION_SERVICES = [
-  // Growing Unit services
-  AssertGrowingUnitExistsService,
-  AssertGrowingUnitViewModelExistsService,
+	// Growing Unit services
+	AssertGrowingUnitExistsService,
+	AssertGrowingUnitViewModelExistsService,
 
-  // Plant services
-  AssertPlantExistsService,
+	// Plant services
+	AssertPlantExistsService,
 ];
 
 const QUERY_HANDLERS = [
-  // Growing Unit query handlers
-  GrowingUnitFindByCriteriaQueryHandler,
-  GrowingUnitFindByIdQueryHandler,
-  GrowingUnitViewModelFindByIdQueryHandler,
+	// Growing Unit query handlers
+	GrowingUnitFindByCriteriaQueryHandler,
+	GrowingUnitFindByIdQueryHandler,
+	GrowingUnitViewModelFindByIdQueryHandler,
 
-  // Plant query handlers
-  PlantFindByIdQueryHandler,
+	// Plant query handlers
+	PlantFindByIdQueryHandler,
 ];
 
 const COMMAND_HANDLERS = [
-  // Growing Unit command handlers
-  GrowingUnitCreateCommandHandler,
-  GrowingUnitUpdateCommandHandler,
-  GrowingUnitDeleteCommandHandler,
+	// Growing Unit command handlers
+	GrowingUnitCreateCommandHandler,
+	GrowingUnitUpdateCommandHandler,
+	GrowingUnitDeleteCommandHandler,
 
-  // Plant command handlers
-  PlantAddCommandHandler,
-  PlantUpdateCommandHandler,
-  PlantRemoveCommandHandler,
-  PlantTransplantCommandHandler,
+	// Plant command handlers
+	PlantAddCommandHandler,
+	PlantUpdateCommandHandler,
+	PlantRemoveCommandHandler,
+	PlantTransplantCommandHandler,
 ];
 
 const EVENT_HANDLERS = [
-  // Growing Unit event handlers
-  GrowingUnitCreatedEventHandler,
-  GrowingUnitDeletedEventHandler,
-  GrowingUnitUpdatedEventHandler,
+	// Growing Unit event handlers
+	GrowingUnitCreatedEventHandler,
+	GrowingUnitDeletedEventHandler,
+	GrowingUnitUpdatedEventHandler,
 
-  // Plant event handlers
-  PlantCreatedEventHandler,
-  PlantDeletedEventHandler,
-  PlantUpdatedEventHandler,
+	// Plant event handlers
+	PlantCreatedEventHandler,
+	PlantDeletedEventHandler,
+	PlantUpdatedEventHandler,
 ];
 
 const FACTORIES = [
-  // Growing unit factories
-  GrowingUnitAggregateFactory,
-  GrowingUnitViewModelFactory,
+	// Growing unit factories
+	GrowingUnitAggregateFactory,
+	GrowingUnitViewModelFactory,
 
-  // Plant factories
-  PlantEntityFactory,
-  PlantViewModelFactory,
+	// Plant factories
+	PlantEntityFactory,
+	PlantViewModelFactory,
 ];
 
 const MAPPERS = [
-  // Growing unit mappers
-  GrowingUnitTypeormMapper,
-  GrowingUnitMongoDBMapper,
-  GrowingUnitGraphQLMapper,
+	// Growing unit mappers
+	GrowingUnitTypeormMapper,
+	GrowingUnitMongoDBMapper,
+	GrowingUnitGraphQLMapper,
 
-  // Plant mappers
-  PlantTypeormMapper,
-  PlantMongoDBMapper,
-  PlantGraphQLMapper,
+	// Plant mappers
+	PlantTypeormMapper,
+	PlantMongoDBMapper,
+	PlantGraphQLMapper,
 ];
 
 const REPOSITORIES = [
-  {
-    provide: GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
-    useClass: GrowingUnitTypeormRepository,
-  },
-  {
-    provide: GROWING_UNIT_READ_REPOSITORY_TOKEN,
-    useClass: GrowingUnitMongoRepository,
-  },
-  {
-    provide: PLANT_WRITE_REPOSITORY_TOKEN,
-    useClass: PlantTypeormRepository,
-  },
+	{
+		provide: GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
+		useClass: GrowingUnitTypeormRepository,
+	},
+	{
+		provide: GROWING_UNIT_READ_REPOSITORY_TOKEN,
+		useClass: GrowingUnitMongoRepository,
+	},
+	{
+		provide: PLANT_WRITE_REPOSITORY_TOKEN,
+		useClass: PlantTypeormRepository,
+	},
 ];
 
 const ENTITIES = [GrowingUnitTypeormEntity, PlantTypeormEntity];
 
 @Module({
-  imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...DOMAIN_SERVICES,
-    ...APPLICATION_SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-  ],
+	imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...DOMAIN_SERVICES,
+		...APPLICATION_SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+	],
 })
 export class PlantContextModule {}

@@ -11,68 +11,68 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantFindByIdQueryHandler', () => {
-  let handler: PlantFindByIdQueryHandler;
-  let mockAssertPlantExistsService: jest.Mocked<AssertPlantExistsService>;
-  let plantEntityFactory: PlantEntityFactory;
+	let handler: PlantFindByIdQueryHandler;
+	let mockAssertPlantExistsService: jest.Mocked<AssertPlantExistsService>;
+	let plantEntityFactory: PlantEntityFactory;
 
-  beforeEach(() => {
-    plantEntityFactory = new PlantEntityFactory();
-    mockAssertPlantExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertPlantExistsService>;
+	beforeEach(() => {
+		plantEntityFactory = new PlantEntityFactory();
+		mockAssertPlantExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertPlantExistsService>;
 
-    handler = new PlantFindByIdQueryHandler(mockAssertPlantExistsService);
-  });
+		handler = new PlantFindByIdQueryHandler(mockAssertPlantExistsService);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return plant entity when found', async () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const queryDto: IPlantFindByIdQueryDto = {
-        id: plantId,
-      };
+	describe('execute', () => {
+		it('should return plant entity when found', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const queryDto: IPlantFindByIdQueryDto = {
+				id: plantId,
+			};
 
-      const query = new PlantFindByIdQuery(queryDto);
-      const mockPlant = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const query = new PlantFindByIdQuery(queryDto);
+			const mockPlant = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockPlant);
-      expect(mockAssertPlantExistsService.execute).toHaveBeenCalledWith(
-        plantId,
-      );
-      expect(mockAssertPlantExistsService.execute).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockPlant);
+			expect(mockAssertPlantExistsService.execute).toHaveBeenCalledWith(
+				plantId,
+			);
+			expect(mockAssertPlantExistsService.execute).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw exception when plant does not exist', async () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto: IPlantFindByIdQueryDto = {
-        id: plantId,
-      };
+		it('should throw exception when plant does not exist', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto: IPlantFindByIdQueryDto = {
+				id: plantId,
+			};
 
-      const query = new PlantFindByIdQuery(queryDto);
-      const error = new Error('Plant not found');
+			const query = new PlantFindByIdQuery(queryDto);
+			const error = new Error('Plant not found');
 
-      mockAssertPlantExistsService.execute.mockRejectedValue(error);
+			mockAssertPlantExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(query)).rejects.toThrow(error);
-      expect(mockAssertPlantExistsService.execute).toHaveBeenCalledWith(
-        plantId,
-      );
-    });
-  });
+			await expect(handler.execute(query)).rejects.toThrow(error);
+			expect(mockAssertPlantExistsService.execute).toHaveBeenCalledWith(
+				plantId,
+			);
+		});
+	});
 });

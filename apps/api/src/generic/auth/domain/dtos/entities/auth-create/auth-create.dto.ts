@@ -28,14 +28,14 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
  * @property {DateValueObject} updatedAt - The updated at of the auth.
  */
 export interface IAuthCreateDto extends IBaseAggregateDto {
-  id: AuthUuidValueObject;
-  userId: UserUuidValueObject;
-  email: AuthEmailValueObject | null;
-  emailVerified: AuthEmailVerifiedValueObject;
-  lastLoginAt: AuthLastLoginAtValueObject | null;
-  password: AuthPasswordValueObject | null;
-  phoneNumber: AuthPhoneNumberValueObject | null;
-  provider: AuthProviderValueObject;
-  providerId: AuthProviderIdValueObject | null;
-  twoFactorEnabled: AuthTwoFactorEnabledValueObject;
+	id: AuthUuidValueObject;
+	userId: UserUuidValueObject;
+	email: AuthEmailValueObject | null;
+	emailVerified: AuthEmailVerifiedValueObject;
+	lastLoginAt: AuthLastLoginAtValueObject | null;
+	password: AuthPasswordValueObject | null;
+	phoneNumber: AuthPhoneNumberValueObject | null;
+	provider: AuthProviderValueObject;
+	providerId: AuthProviderIdValueObject | null;
+	twoFactorEnabled: AuthTwoFactorEnabledValueObject;
 }

@@ -45,49 +45,49 @@ import { SharedModule } from '@/shared/shared.module';
 const RESOLVERS = [AuthQueryResolver, AuthMutationsResolver];
 
 const SERVICES = [
-  AssertAuthEmailExistsService,
-  AssertAuthEmailNotExistsService,
-  AssertAuthViewModelExistsByUserIdService,
-  AssertAuthViewModelExistsService,
-  AssertAuthExistsService,
-  JwtAuthService,
+	AssertAuthEmailExistsService,
+	AssertAuthEmailNotExistsService,
+	AssertAuthViewModelExistsByUserIdService,
+	AssertAuthViewModelExistsService,
+	AssertAuthExistsService,
+	JwtAuthService,
 ];
 
 const QUERY_HANDLERS = [
-  AuthProfileMeQueryHandler,
-  FindAuthsByCriteriaQueryHandler,
+	AuthProfileMeQueryHandler,
+	FindAuthsByCriteriaQueryHandler,
 ];
 
 const QUERY_HANDLERS_VIEW_MODELS = [AuthViewModelFindByUserIdQueryHandler];
 
 const COMMAND_HANDLERS = [
-  AuthCreateCommandHandler,
-  AuthDeleteCommandHandler,
-  AuthLoginByEmailCommandHandler,
-  AuthRefreshTokenCommandHandler,
-  AuthRegisterByEmailCommandHandler,
+	AuthCreateCommandHandler,
+	AuthDeleteCommandHandler,
+	AuthLoginByEmailCommandHandler,
+	AuthRefreshTokenCommandHandler,
+	AuthRegisterByEmailCommandHandler,
 ];
 
 const EVENT_HANDLERS = [
-  AuthCreatedEventHandler,
-  AuthLoggedInByEmailEventHandler,
-  AuthRegisteredByEmailEventHandler,
-  AuthUpdatedEventHandler,
+	AuthCreatedEventHandler,
+	AuthLoggedInByEmailEventHandler,
+	AuthRegisteredByEmailEventHandler,
+	AuthUpdatedEventHandler,
 ];
 
 const SAGAS = [AuthRegistrationSaga];
 
 const FACTORIES = [
-  AuthAggregateFactory,
-  AuthViewModelFactory,
-  AuthUserProfileViewModelFactory,
+	AuthAggregateFactory,
+	AuthViewModelFactory,
+	AuthUserProfileViewModelFactory,
 ];
 
 const MAPPERS = [
-  AuthTypeormMapper,
-  AuthMongoDBMapper,
-  AuthGraphQLMapper,
-  AuthUserProfileGraphQLMapper,
+	AuthTypeormMapper,
+	AuthMongoDBMapper,
+	AuthGraphQLMapper,
+	AuthUserProfileGraphQLMapper,
 ];
 
 const STRATEGIES = [JwtStrategy];
@@ -95,52 +95,52 @@ const STRATEGIES = [JwtStrategy];
 const GUARDS = [JwtAuthGuard, RolesGuard, OwnerGuard];
 
 const REPOSITORIES = [
-  {
-    provide: AUTH_WRITE_REPOSITORY_TOKEN,
-    useClass: AuthTypeormRepository,
-  },
-  {
-    provide: AUTH_READ_REPOSITORY_TOKEN,
-    useClass: AuthMongoRepository,
-  },
+	{
+		provide: AUTH_WRITE_REPOSITORY_TOKEN,
+		useClass: AuthTypeormRepository,
+	},
+	{
+		provide: AUTH_READ_REPOSITORY_TOKEN,
+		useClass: AuthMongoRepository,
+	},
 ];
 
 const ENTITIES = [AuthTypeormEntity];
 
 @Global()
 @Module({
-  imports: [
-    SharedModule,
-    TypeOrmModule.forFeature(ENTITIES),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        secret:
-          configService.get<string>('JWT_ACCESS_SECRET') || 'access-secret',
-        signOptions: {
-          expiresIn: (configService.get<string>('JWT_ACCESS_EXPIRATION') ||
-            '15m') as any,
-        },
-      }),
-      inject: [ConfigService],
-    }),
-  ],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...QUERY_HANDLERS_VIEW_MODELS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...SAGAS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-    ...STRATEGIES,
-    ...GUARDS,
-  ],
-  exports: [...SERVICES, ...GUARDS],
+	imports: [
+		SharedModule,
+		TypeOrmModule.forFeature(ENTITIES),
+		PassportModule.register({ defaultStrategy: 'jwt' }),
+		JwtModule.registerAsync({
+			imports: [ConfigModule],
+			useFactory: async (configService: ConfigService) => ({
+				secret:
+					configService.get<string>('JWT_ACCESS_SECRET') || 'access-secret',
+				signOptions: {
+					expiresIn: (configService.get<string>('JWT_ACCESS_EXPIRATION') ||
+						'15m') as any,
+				},
+			}),
+			inject: [ConfigService],
+		}),
+	],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...QUERY_HANDLERS_VIEW_MODELS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...SAGAS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+		...STRATEGIES,
+		...GUARDS,
+	],
+	exports: [...SERVICES, ...GUARDS],
 })
 export class AuthModule {}

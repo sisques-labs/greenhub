@@ -10,17 +10,17 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
  * This query encapsulates the required data for retrieving a growing unit view model based on its ID.
  */
 export class GrowingUnitViewModelFindByIdQuery {
-  /**
-   * Unique identifier for the growing unit.
-   */
-  readonly id: GrowingUnitUuidValueObject;
+	/**
+	 * Unique identifier for the growing unit.
+	 */
+	readonly id: GrowingUnitUuidValueObject;
 
-  /**
-   * Creates an instance of GrowingUnitViewModelFindByIdQuery.
-   *
-   * @param props - The data transfer object containing the growing unit's ID.
-   */
-  constructor(props: IGrowingUnitViewModelFindByIdQueryDto) {
-    this.id = new GrowingUnitUuidValueObject(props.id);
-  }
+	/**
+	 * Creates an instance of GrowingUnitViewModelFindByIdQuery.
+	 *
+	 * @param props - The data transfer object containing the growing unit's ID.
+	 */
+	constructor(props: IGrowingUnitViewModelFindByIdQueryDto) {
+		this.id = new GrowingUnitUuidValueObject(props.id);
+	}
 }

@@ -17,22 +17,22 @@ import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/o
  */
 @Injectable()
 export class OverviewViewModelFactory {
-  private readonly logger = new Logger(OverviewViewModelFactory.name);
+	private readonly logger = new Logger(OverviewViewModelFactory.name);
 
-  /**
-   * Creates a new {@link OverviewViewModel} instance from an {@link IOverviewViewModelDto}.
-   *
-   * @param data - The DTO containing overview statistics and metrics.
-   * @returns The corresponding {@link OverviewViewModel} instance.
-   *
-   * @example
-   * const dto: IOverviewViewModelDto = {...};
-   * const viewModel = factory.create(dto);
-   */
-  public create(data: IOverviewViewModelDto): OverviewViewModel {
-    this.logger.log(
-      `Creating overview view model from DTO: ${JSON.stringify(data)}`,
-    );
-    return new OverviewViewModel(data);
-  }
+	/**
+	 * Creates a new {@link OverviewViewModel} instance from an {@link IOverviewViewModelDto}.
+	 *
+	 * @param data - The DTO containing overview statistics and metrics.
+	 * @returns The corresponding {@link OverviewViewModel} instance.
+	 *
+	 * @example
+	 * const dto: IOverviewViewModelDto = {...};
+	 * const viewModel = factory.create(dto);
+	 */
+	public create(data: IOverviewViewModelDto): OverviewViewModel {
+		this.logger.log(
+			`Creating overview view model from DTO: ${JSON.stringify(data)}`,
+		);
+		return new OverviewViewModel(data);
+	}
 }

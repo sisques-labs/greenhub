@@ -30,205 +30,205 @@ import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mapper
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class GrowingUnitMutationsResolver {
-  private readonly logger = new Logger(GrowingUnitMutationsResolver.name);
+	private readonly logger = new Logger(GrowingUnitMutationsResolver.name);
 
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly commandBus: CommandBus,
+		private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
+	) {}
 
-  /**
-   * Creates a new growing unit.
-   *
-   * @param input - Input containing growing unit data
-   * @returns A promise resolving to a mutation response with the created growing unit ID
-   */
-  @Mutation(() => MutationResponseDto)
-  async growingUnitCreate(
-    @Args('input') input: GrowingUnitCreateRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(
-      `Creating growing unit with input: ${JSON.stringify(input)}`,
-    );
+	/**
+	 * Creates a new growing unit.
+	 *
+	 * @param input - Input containing growing unit data
+	 * @returns A promise resolving to a mutation response with the created growing unit ID
+	 */
+	@Mutation(() => MutationResponseDto)
+	async growingUnitCreate(
+		@Args('input') input: GrowingUnitCreateRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(
+			`Creating growing unit with input: ${JSON.stringify(input)}`,
+		);
 
-    // 01: Send the command to the command bus
-    const createdGrowingUnitId = await this.commandBus.execute(
-      new GrowingUnitCreateCommand({
-        name: input.name,
-        type: input.type,
-        capacity: input.capacity,
-        length: input.length,
-        width: input.width,
-        height: input.height,
-        unit: input.unit,
-      }),
-    );
+		// 01: Send the command to the command bus
+		const createdGrowingUnitId = await this.commandBus.execute(
+			new GrowingUnitCreateCommand({
+				name: input.name,
+				type: input.type,
+				capacity: input.capacity,
+				length: input.length,
+				width: input.width,
+				height: input.height,
+				unit: input.unit,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Growing unit created successfully',
-      id: createdGrowingUnitId,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Growing unit created successfully',
+			id: createdGrowingUnitId,
+		});
+	}
 
-  /**
-   * Updates an existing growing unit.
-   *
-   * @param input - Input containing growing unit ID and fields to update
-   * @returns A promise resolving to a mutation response with the updated growing unit ID
-   */
-  @Mutation(() => MutationResponseDto)
-  async growingUnitUpdate(
-    @Args('input') input: GrowingUnitUpdateRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(
-      `Updating growing unit with input: ${JSON.stringify(input)}`,
-    );
+	/**
+	 * Updates an existing growing unit.
+	 *
+	 * @param input - Input containing growing unit ID and fields to update
+	 * @returns A promise resolving to a mutation response with the updated growing unit ID
+	 */
+	@Mutation(() => MutationResponseDto)
+	async growingUnitUpdate(
+		@Args('input') input: GrowingUnitUpdateRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(
+			`Updating growing unit with input: ${JSON.stringify(input)}`,
+		);
 
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(
-      new GrowingUnitUpdateCommand({
-        id: input.id,
-        name: input.name,
-        type: input.type,
-        capacity: input.capacity,
-        dimensions:
-          input.length && input.width && input.height && input.unit
-            ? {
-                length: input.length,
-                width: input.width,
-                height: input.height,
-                unit: input.unit,
-              }
-            : null,
-      }),
-    );
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(
+			new GrowingUnitUpdateCommand({
+				id: input.id,
+				name: input.name,
+				type: input.type,
+				capacity: input.capacity,
+				dimensions:
+					input.length && input.width && input.height && input.unit
+						? {
+								length: input.length,
+								width: input.width,
+								height: input.height,
+								unit: input.unit,
+							}
+						: null,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Growing unit updated successfully',
-      id: input.id,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Growing unit updated successfully',
+			id: input.id,
+		});
+	}
 
-  /**
-   * Deletes a growing unit.
-   *
-   * @param input - Input containing the growing unit ID to delete
-   * @returns A promise resolving to a mutation response with the deleted growing unit ID
-   */
-  @Mutation(() => MutationResponseDto)
-  async growingUnitDelete(
-    @Args('input') input: GrowingUnitDeleteRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(
-      `Deleting growing unit with input: ${JSON.stringify(input)}`,
-    );
+	/**
+	 * Deletes a growing unit.
+	 *
+	 * @param input - Input containing the growing unit ID to delete
+	 * @returns A promise resolving to a mutation response with the deleted growing unit ID
+	 */
+	@Mutation(() => MutationResponseDto)
+	async growingUnitDelete(
+		@Args('input') input: GrowingUnitDeleteRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(
+			`Deleting growing unit with input: ${JSON.stringify(input)}`,
+		);
 
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(
-      new GrowingUnitDeleteCommand({ id: input.id }),
-    );
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(
+			new GrowingUnitDeleteCommand({ id: input.id }),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Growing unit deleted successfully',
-      id: input.id,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Growing unit deleted successfully',
+			id: input.id,
+		});
+	}
 
-  /**
-   * Adds a new plant to a growing unit.
-   *
-   * @param input - Input containing plant data and growing unit ID
-   * @returns A promise resolving to a mutation response with the created plant ID
-   */
-  @Mutation(() => MutationResponseDto)
-  async plantAdd(
-    @Args('input') input: PlantAddRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Adding plant with input: ${JSON.stringify(input)}`);
+	/**
+	 * Adds a new plant to a growing unit.
+	 *
+	 * @param input - Input containing plant data and growing unit ID
+	 * @returns A promise resolving to a mutation response with the created plant ID
+	 */
+	@Mutation(() => MutationResponseDto)
+	async plantAdd(
+		@Args('input') input: PlantAddRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Adding plant with input: ${JSON.stringify(input)}`);
 
-    // 01: Send the command to the command bus
-    const createdPlantId = await this.commandBus.execute(
-      new PlantAddCommand({
-        growingUnitId: input.growingUnitId,
-        name: input.name,
-        species: input.species,
-        plantedDate: input.plantedDate,
-        notes: input.notes,
-        status: input.status,
-      }),
-    );
+		// 01: Send the command to the command bus
+		const createdPlantId = await this.commandBus.execute(
+			new PlantAddCommand({
+				growingUnitId: input.growingUnitId,
+				name: input.name,
+				species: input.species,
+				plantedDate: input.plantedDate,
+				notes: input.notes,
+				status: input.status,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Plant added successfully',
-      id: createdPlantId,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Plant added successfully',
+			id: createdPlantId,
+		});
+	}
 
-  /**
-   * Updates an existing plant.
-   *
-   * @param input - Input containing plant ID and fields to update
-   * @returns A promise resolving to a mutation response with the updated plant ID
-   */
-  @Mutation(() => MutationResponseDto)
-  async plantUpdate(
-    @Args('input') input: PlantUpdateRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Updating plant with input: ${JSON.stringify(input)}`);
+	/**
+	 * Updates an existing plant.
+	 *
+	 * @param input - Input containing plant ID and fields to update
+	 * @returns A promise resolving to a mutation response with the updated plant ID
+	 */
+	@Mutation(() => MutationResponseDto)
+	async plantUpdate(
+		@Args('input') input: PlantUpdateRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Updating plant with input: ${JSON.stringify(input)}`);
 
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(
-      new PlantUpdateCommand({
-        id: input.id,
-        name: input.name,
-        species: input.species,
-        plantedDate: input.plantedDate,
-        notes: input.notes,
-        status: input.status,
-      }),
-    );
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(
+			new PlantUpdateCommand({
+				id: input.id,
+				name: input.name,
+				species: input.species,
+				plantedDate: input.plantedDate,
+				notes: input.notes,
+				status: input.status,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Plant updated successfully',
-      id: input.id,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Plant updated successfully',
+			id: input.id,
+		});
+	}
 
-  /**
-   * Removes a plant from a growing unit.
-   *
-   * @param input - Input containing the growing unit ID and plant ID to remove
-   * @returns A promise resolving to a mutation response with the removed plant ID
-   */
-  @Mutation(() => MutationResponseDto)
-  async plantRemove(
-    @Args('input') input: PlantRemoveRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Removing plant with input: ${JSON.stringify(input)}`);
+	/**
+	 * Removes a plant from a growing unit.
+	 *
+	 * @param input - Input containing the growing unit ID and plant ID to remove
+	 * @returns A promise resolving to a mutation response with the removed plant ID
+	 */
+	@Mutation(() => MutationResponseDto)
+	async plantRemove(
+		@Args('input') input: PlantRemoveRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Removing plant with input: ${JSON.stringify(input)}`);
 
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(
-      new PlantRemoveCommand({
-        growingUnitId: input.growingUnitId,
-        plantId: input.plantId,
-      }),
-    );
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(
+			new PlantRemoveCommand({
+				growingUnitId: input.growingUnitId,
+				plantId: input.plantId,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Plant removed successfully',
-      id: input.plantId,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Plant removed successfully',
+			id: input.plantId,
+		});
+	}
 }

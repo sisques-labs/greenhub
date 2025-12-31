@@ -2,34 +2,34 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SagaStepNotFoundException } from '@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception';
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
 import {
-  SAGA_STEP_WRITE_REPOSITORY_TOKEN,
-  SagaStepWriteRepository,
+	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
+	SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 
 @Injectable()
 export class AssertSagaStepExistsService
-  implements IBaseService<string, SagaStepAggregate>
+	implements IBaseService<string, SagaStepAggregate>
 {
-  private readonly logger = new Logger(AssertSagaStepExistsService.name);
+	private readonly logger = new Logger(AssertSagaStepExistsService.name);
 
-  constructor(
-    @Inject(SAGA_STEP_WRITE_REPOSITORY_TOKEN)
-    private readonly sagaStepWriteRepository: SagaStepWriteRepository,
-  ) {}
+	constructor(
+		@Inject(SAGA_STEP_WRITE_REPOSITORY_TOKEN)
+		private readonly sagaStepWriteRepository: SagaStepWriteRepository,
+	) {}
 
-  async execute(id: string): Promise<SagaStepAggregate> {
-    this.logger.log(`Asserting saga step exists by id: ${id}`);
+	async execute(id: string): Promise<SagaStepAggregate> {
+		this.logger.log(`Asserting saga step exists by id: ${id}`);
 
-    // 01: Find the saga step by id
-    const existingSagaStep = await this.sagaStepWriteRepository.findById(id);
+		// 01: Find the saga step by id
+		const existingSagaStep = await this.sagaStepWriteRepository.findById(id);
 
-    // 02: If the saga step does not exist, throw an error
-    if (!existingSagaStep) {
-      this.logger.error(`Saga step not found by id: ${id}`);
-      throw new SagaStepNotFoundException(id);
-    }
+		// 02: If the saga step does not exist, throw an error
+		if (!existingSagaStep) {
+			this.logger.error(`Saga step not found by id: ${id}`);
+			throw new SagaStepNotFoundException(id);
+		}
 
-    return existingSagaStep;
-  }
+		return existingSagaStep;
+	}
 }

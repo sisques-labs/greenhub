@@ -29,27 +29,27 @@ import { SharedModule } from '@/shared/shared.module';
 const RESOLVERS = [UserQueryResolver, UserMutationsResolver];
 
 const SERVICES = [
-  AssertUserExsistsService,
-  AssertUserUsernameIsUniqueService,
-  AssertUserViewModelExsistsService,
+	AssertUserExsistsService,
+	AssertUserUsernameIsUniqueService,
+	AssertUserViewModelExsistsService,
 ];
 
 const QUERY_HANDLERS = [
-  FindUsersByCriteriaQueryHandler,
-  UserFindByIdQueryHandler,
-  UserViewModelFindByIdQueryHandler,
+	FindUsersByCriteriaQueryHandler,
+	UserFindByIdQueryHandler,
+	UserViewModelFindByIdQueryHandler,
 ];
 
 const COMMAND_HANDLERS = [
-  UserCreateCommandHandler,
-  UserUpdateCommandHandler,
-  UserDeleteCommandHandler,
+	UserCreateCommandHandler,
+	UserUpdateCommandHandler,
+	UserDeleteCommandHandler,
 ];
 
 const EVENT_HANDLERS = [
-  UserCreatedEventHandler,
-  UserUpdatedEventHandler,
-  UserDeletedEventHandler,
+	UserCreatedEventHandler,
+	UserUpdatedEventHandler,
+	UserDeletedEventHandler,
 ];
 
 const FACTORIES = [UserAggregateFactory, UserViewModelFactory];
@@ -57,30 +57,30 @@ const FACTORIES = [UserAggregateFactory, UserViewModelFactory];
 const MAPPERS = [UserTypeOrmMapper, UserMongoDBMapper, UserGraphQLMapper];
 
 const REPOSITORIES = [
-  {
-    provide: USER_WRITE_REPOSITORY_TOKEN,
-    useClass: UserTypeormRepository,
-  },
-  {
-    provide: USER_READ_REPOSITORY_TOKEN,
-    useClass: UserMongoRepository,
-  },
+	{
+		provide: USER_WRITE_REPOSITORY_TOKEN,
+		useClass: UserTypeormRepository,
+	},
+	{
+		provide: USER_READ_REPOSITORY_TOKEN,
+		useClass: UserMongoRepository,
+	},
 ];
 
 const ENTITIES = [UserTypeormEntity];
 
 @Module({
-  imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-  ],
+	imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+	],
 })
 export class UserModule {}

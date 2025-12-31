@@ -2,9 +2,9 @@ import { ISagaInstanceFindByIdQueryDto } from '@/generic/saga-context/saga-insta
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class FindSagaInstanceByIdQuery {
-  readonly id: SagaInstanceUuidValueObject;
+	readonly id: SagaInstanceUuidValueObject;
 
-  constructor(props: ISagaInstanceFindByIdQueryDto) {
-    this.id = new SagaInstanceUuidValueObject(props.id);
-  }
+	constructor(props: ISagaInstanceFindByIdQueryDto) {
+		this.id = new SagaInstanceUuidValueObject(props.id);
+	}
 }

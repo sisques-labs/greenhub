@@ -4,19 +4,19 @@ import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enum
 
 @InputType('SagaStepChangeStatusRequestDto')
 export class SagaStepChangeStatusRequestDto {
-  @Field(() => String, {
-    description: 'The id of the saga step',
-    nullable: false,
-  })
-  @IsUUID()
-  @IsNotEmpty()
-  id: string;
+	@Field(() => String, {
+		description: 'The id of the saga step',
+		nullable: false,
+	})
+	@IsUUID()
+	@IsNotEmpty()
+	id: string;
 
-  @Field(() => SagaStepStatusEnum, {
-    description: 'The status of the saga step',
-    nullable: false,
-  })
-  @IsEnum(SagaStepStatusEnum)
-  @IsNotEmpty()
-  status: SagaStepStatusEnum;
+	@Field(() => SagaStepStatusEnum, {
+		description: 'The status of the saga step',
+		nullable: false,
+	})
+	@IsEnum(SagaStepStatusEnum)
+	@IsNotEmpty()
+	status: SagaStepStatusEnum;
 }

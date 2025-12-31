@@ -6,6 +6,6 @@
  * @property {string} [password] - The password of the auth (required for LOCAL provider).
  */
 export interface IAuthRegisterByEmailCommandDto {
-  email: string;
-  password: string;
+	email: string;
+	password: string;
 }

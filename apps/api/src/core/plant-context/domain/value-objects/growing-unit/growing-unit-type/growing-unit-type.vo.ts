@@ -13,14 +13,14 @@ import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
  * const growingUnitType = new GrowingUnitTypeValueObject(ContainerTypeEnum.POT);
  */
 export class GrowingUnitTypeValueObject extends EnumValueObject<
-  typeof GrowingUnitTypeEnum
+	typeof GrowingUnitTypeEnum
 > {
-  /**
-   * Returns the enum object associated with the growing unit type.
-   *
-   * @returns The {@link GrowingUnitTypeEnum} used for this value object.
-   */
-  protected get enumObject(): typeof GrowingUnitTypeEnum {
-    return GrowingUnitTypeEnum;
-  }
+	/**
+	 * Returns the enum object associated with the growing unit type.
+	 *
+	 * @returns The {@link GrowingUnitTypeEnum} used for this value object.
+	 */
+	protected get enumObject(): typeof GrowingUnitTypeEnum {
+		return GrowingUnitTypeEnum;
+	}
 }

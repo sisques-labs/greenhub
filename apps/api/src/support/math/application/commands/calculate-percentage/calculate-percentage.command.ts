@@ -8,13 +8,13 @@ import { ICalculatePercentageCommandDto } from '@/support/math/application/dtos/
  * from a value and total.
  */
 export class CalculatePercentageCommand {
-  readonly value: number;
-  readonly total: number;
-  readonly decimals: number;
+	readonly value: number;
+	readonly total: number;
+	readonly decimals: number;
 
-  constructor(props: ICalculatePercentageCommandDto) {
-    this.value = props.value;
-    this.total = props.total;
-    this.decimals = props.decimals ?? 2;
-  }
+	constructor(props: ICalculatePercentageCommandDto) {
+		this.value = props.value;
+		this.total = props.total;
+		this.decimals = props.decimals ?? 2;
+	}
 }

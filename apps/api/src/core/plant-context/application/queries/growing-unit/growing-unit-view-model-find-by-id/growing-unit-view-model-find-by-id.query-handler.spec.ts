@@ -7,78 +7,78 @@ import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-u
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 
 describe('GrowingUnitViewModelFindByIdQueryHandler', () => {
-  let handler: GrowingUnitViewModelFindByIdQueryHandler;
-  let mockAssertGrowingUnitViewModelExistsService: jest.Mocked<AssertGrowingUnitViewModelExistsService>;
+	let handler: GrowingUnitViewModelFindByIdQueryHandler;
+	let mockAssertGrowingUnitViewModelExistsService: jest.Mocked<AssertGrowingUnitViewModelExistsService>;
 
-  beforeEach(() => {
-    mockAssertGrowingUnitViewModelExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertGrowingUnitViewModelExistsService>;
+	beforeEach(() => {
+		mockAssertGrowingUnitViewModelExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertGrowingUnitViewModelExistsService>;
 
-    handler = new GrowingUnitViewModelFindByIdQueryHandler(
-      mockAssertGrowingUnitViewModelExistsService,
-    );
-  });
+		handler = new GrowingUnitViewModelFindByIdQueryHandler(
+			mockAssertGrowingUnitViewModelExistsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return growing unit view model when found', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto: IGrowingUnitViewModelFindByIdQueryDto = {
-        id: growingUnitId,
-      };
+	describe('execute', () => {
+		it('should return growing unit view model when found', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto: IGrowingUnitViewModelFindByIdQueryDto = {
+				id: growingUnitId,
+			};
 
-      const query = new GrowingUnitViewModelFindByIdQuery(queryDto);
-      const now = new Date();
-      const mockViewModel = new GrowingUnitViewModel({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        numberOfPlants: 0,
-        remainingCapacity: 10,
-        volume: 0,
-        createdAt: now,
-        updatedAt: now,
-      });
+			const query = new GrowingUnitViewModelFindByIdQuery(queryDto);
+			const now = new Date();
+			const mockViewModel = new GrowingUnitViewModel({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				numberOfPlants: 0,
+				remainingCapacity: 10,
+				volume: 0,
+				createdAt: now,
+				updatedAt: now,
+			});
 
-      mockAssertGrowingUnitViewModelExistsService.execute.mockResolvedValue(
-        mockViewModel,
-      );
+			mockAssertGrowingUnitViewModelExistsService.execute.mockResolvedValue(
+				mockViewModel,
+			);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockViewModel);
-      expect(
-        mockAssertGrowingUnitViewModelExistsService.execute,
-      ).toHaveBeenCalledWith(growingUnitId);
-      expect(
-        mockAssertGrowingUnitViewModelExistsService.execute,
-      ).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockViewModel);
+			expect(
+				mockAssertGrowingUnitViewModelExistsService.execute,
+			).toHaveBeenCalledWith(growingUnitId);
+			expect(
+				mockAssertGrowingUnitViewModelExistsService.execute,
+			).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw GrowingUnitNotFoundException when growing unit does not exist', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto: IGrowingUnitViewModelFindByIdQueryDto = {
-        id: growingUnitId,
-      };
+		it('should throw GrowingUnitNotFoundException when growing unit does not exist', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto: IGrowingUnitViewModelFindByIdQueryDto = {
+				id: growingUnitId,
+			};
 
-      const query = new GrowingUnitViewModelFindByIdQuery(queryDto);
-      const error = new GrowingUnitNotFoundException(growingUnitId);
+			const query = new GrowingUnitViewModelFindByIdQuery(queryDto);
+			const error = new GrowingUnitNotFoundException(growingUnitId);
 
-      mockAssertGrowingUnitViewModelExistsService.execute.mockRejectedValue(
-        error,
-      );
+			mockAssertGrowingUnitViewModelExistsService.execute.mockRejectedValue(
+				error,
+			);
 
-      await expect(handler.execute(query)).rejects.toThrow(error);
-      expect(
-        mockAssertGrowingUnitViewModelExistsService.execute,
-      ).toHaveBeenCalledWith(growingUnitId);
-    });
-  });
+			await expect(handler.execute(query)).rejects.toThrow(error);
+			expect(
+				mockAssertGrowingUnitViewModelExistsService.execute,
+			).toHaveBeenCalledWith(growingUnitId);
+		});
+	});
 });

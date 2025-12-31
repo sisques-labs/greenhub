@@ -5,8 +5,8 @@ import { BaseDomainException } from '@/shared/domain/exceptions/base-domain.exce
  * Exception thrown when a timezone value is invalid
  */
 export class InvalidTimezoneException extends BaseDomainException {
-  constructor(message: string) {
-    super(message);
-    this.name = InvalidTimezoneException.name;
-  }
+	constructor(message: string) {
+		super(message);
+		this.name = InvalidTimezoneException.name;
+	}
 }

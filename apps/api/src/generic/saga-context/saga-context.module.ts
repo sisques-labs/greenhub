@@ -7,9 +7,9 @@ import { SharedModule } from '@/shared/shared.module';
 const MODULES = [SagaInstanceModule, SagaStepModule, SagaLogModule];
 
 @Module({
-  imports: [SharedModule, ...MODULES],
-  controllers: [],
-  providers: [],
-  exports: [...MODULES],
+	imports: [SharedModule, ...MODULES],
+	controllers: [],
+	providers: [],
+	exports: [...MODULES],
 })
 export class SagaContextModule {}

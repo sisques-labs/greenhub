@@ -18,187 +18,187 @@ import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/ser
  */
 @Injectable()
 export class GrowingUnitMongoRepository
-  extends BaseMongoMasterRepository
-  implements IGrowingUnitReadRepository
+	extends BaseMongoMasterRepository
+	implements IGrowingUnitReadRepository
 {
-  private readonly collectionName = 'growing-units';
+	private readonly collectionName = 'growing-units';
 
-  constructor(
-    mongoMasterService: MongoMasterService,
-    private readonly growingUnitMongoDBMapper: GrowingUnitMongoDBMapper,
-    private readonly plantMongoDBMapper: PlantMongoDBMapper,
-  ) {
-    super(mongoMasterService);
-    this.logger = new Logger(GrowingUnitMongoRepository.name);
-  }
+	constructor(
+		mongoMasterService: MongoMasterService,
+		private readonly growingUnitMongoDBMapper: GrowingUnitMongoDBMapper,
+		private readonly plantMongoDBMapper: PlantMongoDBMapper,
+	) {
+		super(mongoMasterService);
+		this.logger = new Logger(GrowingUnitMongoRepository.name);
+	}
 
-  /**
-   * Finds a growing unit view model by id.
-   *
-   * @param id - The id of the growing unit to find
-   * @returns The growing unit view model if found, null otherwise
-   */
-  async findById(id: string): Promise<GrowingUnitViewModel | null> {
-    this.logger.log(`Finding growing unit by id: ${id}`);
+	/**
+	 * Finds a growing unit view model by id.
+	 *
+	 * @param id - The id of the growing unit to find
+	 * @returns The growing unit view model if found, null otherwise
+	 */
+	async findById(id: string): Promise<GrowingUnitViewModel | null> {
+		this.logger.log(`Finding growing unit by id: ${id}`);
 
-    const collection = this.mongoMasterService.getCollection(
-      this.collectionName,
-    );
-    const growingUnitMongoDbDto = await collection.findOne({ id });
+		const collection = this.mongoMasterService.getCollection(
+			this.collectionName,
+		);
+		const growingUnitMongoDbDto = await collection.findOne({ id });
 
-    return growingUnitMongoDbDto
-      ? this.growingUnitMongoDBMapper.toViewModel({
-          id: growingUnitMongoDbDto.id,
-          name: growingUnitMongoDbDto.name,
-          type: growingUnitMongoDbDto.type,
-          capacity: growingUnitMongoDbDto.capacity,
-          dimensions: growingUnitMongoDbDto.dimensions,
-          plants: growingUnitMongoDbDto.plants.map((plant) =>
-            this.plantMongoDBMapper.toViewModel(plant),
-          ),
-          remainingCapacity: growingUnitMongoDbDto.remainingCapacity,
-          numberOfPlants: growingUnitMongoDbDto.numberOfPlants,
-          volume: growingUnitMongoDbDto.volume,
-          createdAt: growingUnitMongoDbDto.createdAt,
-          updatedAt: growingUnitMongoDbDto.updatedAt,
-        })
-      : null;
-  }
+		return growingUnitMongoDbDto
+			? this.growingUnitMongoDBMapper.toViewModel({
+					id: growingUnitMongoDbDto.id,
+					name: growingUnitMongoDbDto.name,
+					type: growingUnitMongoDbDto.type,
+					capacity: growingUnitMongoDbDto.capacity,
+					dimensions: growingUnitMongoDbDto.dimensions,
+					plants: growingUnitMongoDbDto.plants.map((plant) =>
+						this.plantMongoDBMapper.toViewModel(plant),
+					),
+					remainingCapacity: growingUnitMongoDbDto.remainingCapacity,
+					numberOfPlants: growingUnitMongoDbDto.numberOfPlants,
+					volume: growingUnitMongoDbDto.volume,
+					createdAt: growingUnitMongoDbDto.createdAt,
+					updatedAt: growingUnitMongoDbDto.updatedAt,
+				})
+			: null;
+	}
 
-  /**
-   * Finds growing unit view models by criteria.
-   *
-   * @param criteria - The criteria to find growing units by
-   * @returns The growing units found with pagination
-   */
-  async findByCriteria(
-    criteria: Criteria,
-  ): Promise<PaginatedResult<GrowingUnitViewModel>> {
-    this.logger.log(
-      `Finding growing units by criteria: ${JSON.stringify(criteria)}`,
-    );
+	/**
+	 * Finds growing unit view models by criteria.
+	 *
+	 * @param criteria - The criteria to find growing units by
+	 * @returns The growing units found with pagination
+	 */
+	async findByCriteria(
+		criteria: Criteria,
+	): Promise<PaginatedResult<GrowingUnitViewModel>> {
+		this.logger.log(
+			`Finding growing units by criteria: ${JSON.stringify(criteria)}`,
+		);
 
-    const collection = this.mongoMasterService.getCollection(
-      this.collectionName,
-    );
+		const collection = this.mongoMasterService.getCollection(
+			this.collectionName,
+		);
 
-    // 01: Build MongoDB query from criteria
-    const mongoQuery = this.buildMongoQuery(criteria);
-    const sortQuery = this.buildSortQuery(criteria);
+		// 01: Build MongoDB query from criteria
+		const mongoQuery = this.buildMongoQuery(criteria);
+		const sortQuery = this.buildSortQuery(criteria);
 
-    // 02: Calculate pagination
-    const { page, limit, skip } = await this.calculatePagination(criteria);
+		// 02: Calculate pagination
+		const { page, limit, skip } = await this.calculatePagination(criteria);
 
-    // 03: Execute query with pagination
-    const [items, total] = await this.executeQueryWithPagination(
-      collection,
-      mongoQuery,
-      sortQuery,
-      skip,
-      limit,
-    );
+		// 03: Execute query with pagination
+		const [items, total] = await this.executeQueryWithPagination(
+			collection,
+			mongoQuery,
+			sortQuery,
+			skip,
+			limit,
+		);
 
-    // 04: Convert MongoDB documents to domain entities
-    const growingUnits = items.map((doc) =>
-      this.growingUnitMongoDBMapper.toViewModel({
-        id: doc.id,
-        name: doc.name,
-        type: doc.type,
-        capacity: doc.capacity,
-        dimensions: doc.dimensions,
-        plants: doc.plants.map((plant) =>
-          this.plantMongoDBMapper.toViewModel(plant),
-        ),
-        remainingCapacity: doc.remainingCapacity,
-        numberOfPlants: doc.numberOfPlants,
-        volume: doc.volume,
-        createdAt: doc.createdAt,
-        updatedAt: doc.updatedAt,
-      }),
-    );
+		// 04: Convert MongoDB documents to domain entities
+		const growingUnits = items.map((doc) =>
+			this.growingUnitMongoDBMapper.toViewModel({
+				id: doc.id,
+				name: doc.name,
+				type: doc.type,
+				capacity: doc.capacity,
+				dimensions: doc.dimensions,
+				plants: doc.plants.map((plant) =>
+					this.plantMongoDBMapper.toViewModel(plant),
+				),
+				remainingCapacity: doc.remainingCapacity,
+				numberOfPlants: doc.numberOfPlants,
+				volume: doc.volume,
+				createdAt: doc.createdAt,
+				updatedAt: doc.updatedAt,
+			}),
+		);
 
-    return new PaginatedResult<GrowingUnitViewModel>(
-      growingUnits,
-      total,
-      page,
-      limit,
-    );
-  }
+		return new PaginatedResult<GrowingUnitViewModel>(
+			growingUnits,
+			total,
+			page,
+			limit,
+		);
+	}
 
-  /**
-   * Saves a growing unit view model (upsert operation).
-   *
-   * @param growingUnitViewModel - The growing unit view model to save
-   */
-  async save(growingUnitViewModel: GrowingUnitViewModel): Promise<void> {
-    this.logger.log(
-      `Saving growing unit view model with id: ${growingUnitViewModel.id}`,
-    );
+	/**
+	 * Saves a growing unit view model (upsert operation).
+	 *
+	 * @param growingUnitViewModel - The growing unit view model to save
+	 */
+	async save(growingUnitViewModel: GrowingUnitViewModel): Promise<void> {
+		this.logger.log(
+			`Saving growing unit view model with id: ${growingUnitViewModel.id}`,
+		);
 
-    const collection = this.mongoMasterService.getCollection(
-      this.collectionName,
-    );
-    const mongoData =
-      this.growingUnitMongoDBMapper.toMongoData(growingUnitViewModel);
+		const collection = this.mongoMasterService.getCollection(
+			this.collectionName,
+		);
+		const mongoData =
+			this.growingUnitMongoDBMapper.toMongoData(growingUnitViewModel);
 
-    // 01: Use upsert to either insert or update the growing unit view model
-    await collection.replaceOne({ id: growingUnitViewModel.id }, mongoData, {
-      upsert: true,
-    });
-  }
+		// 01: Use upsert to either insert or update the growing unit view model
+		await collection.replaceOne({ id: growingUnitViewModel.id }, mongoData, {
+			upsert: true,
+		});
+	}
 
-  /**
-   * Deletes a growing unit view model by id.
-   *
-   * @param id - The id of the growing unit view model to delete
-   * @returns Promise that resolves when the growing unit is deleted
-   */
-  async delete(id: string): Promise<void> {
-    this.logger.log(`Deleting growing unit view model by id: ${id}`);
+	/**
+	 * Deletes a growing unit view model by id.
+	 *
+	 * @param id - The id of the growing unit view model to delete
+	 * @returns Promise that resolves when the growing unit is deleted
+	 */
+	async delete(id: string): Promise<void> {
+		this.logger.log(`Deleting growing unit view model by id: ${id}`);
 
-    const collection = this.mongoMasterService.getCollection(
-      this.collectionName,
-    );
+		const collection = this.mongoMasterService.getCollection(
+			this.collectionName,
+		);
 
-    // 01: Delete the growing unit view model from the collection
-    await collection.deleteOne({ id });
-  }
+		// 01: Delete the growing unit view model from the collection
+		await collection.deleteOne({ id });
+	}
 
-  /**
-   * Finds all growing units by container ID.
-   *
-   * @param containerId - The container ID to search for growing units by
-   * @returns Promise that resolves to an array of GrowingUnitViewModel instances
-   */
-  async findByContainerId(
-    containerId: string,
-  ): Promise<GrowingUnitViewModel[]> {
-    this.logger.log(`Finding growing units by container id: ${containerId}`);
+	/**
+	 * Finds all growing units by container ID.
+	 *
+	 * @param containerId - The container ID to search for growing units by
+	 * @returns Promise that resolves to an array of GrowingUnitViewModel instances
+	 */
+	async findByContainerId(
+		containerId: string,
+	): Promise<GrowingUnitViewModel[]> {
+		this.logger.log(`Finding growing units by container id: ${containerId}`);
 
-    const collection = this.mongoMasterService.getCollection(
-      this.collectionName,
-    );
+		const collection = this.mongoMasterService.getCollection(
+			this.collectionName,
+		);
 
-    // 01: Find all growing units with the given containerId
-    const growingUnits = await collection.find({ containerId }).toArray();
+		// 01: Find all growing units with the given containerId
+		const growingUnits = await collection.find({ containerId }).toArray();
 
-    // 02: Convert MongoDB documents to view models
-    return growingUnits.map((doc) =>
-      this.growingUnitMongoDBMapper.toViewModel({
-        id: doc.id,
-        name: doc.name,
-        type: doc.type,
-        capacity: doc.capacity,
-        dimensions: doc.dimensions,
-        plants: doc.plants.map((plant) =>
-          this.plantMongoDBMapper.toViewModel(plant),
-        ),
-        remainingCapacity: doc.remainingCapacity,
-        numberOfPlants: doc.numberOfPlants,
-        volume: doc.volume,
-        createdAt: doc.createdAt,
-        updatedAt: doc.updatedAt,
-      }),
-    );
-  }
+		// 02: Convert MongoDB documents to view models
+		return growingUnits.map((doc) =>
+			this.growingUnitMongoDBMapper.toViewModel({
+				id: doc.id,
+				name: doc.name,
+				type: doc.type,
+				capacity: doc.capacity,
+				dimensions: doc.dimensions,
+				plants: doc.plants.map((plant) =>
+					this.plantMongoDBMapper.toViewModel(plant),
+				),
+				remainingCapacity: doc.remainingCapacity,
+				numberOfPlants: doc.numberOfPlants,
+				volume: doc.volume,
+				createdAt: doc.createdAt,
+				updatedAt: doc.updatedAt,
+			}),
+		);
+	}
 }

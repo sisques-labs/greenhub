@@ -1,10 +1,10 @@
-import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
-import {
-  GROWING_UNIT_READ_REPOSITORY_TOKEN,
-  IGrowingUnitReadRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
+import {
+	GROWING_UNIT_READ_REPOSITORY_TOKEN,
+	IGrowingUnitReadRepository,
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 
 /**
  * Event handler for GrowingUnitDeletedEvent.
@@ -15,28 +15,28 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
  */
 @EventsHandler(GrowingUnitDeletedEvent)
 export class GrowingUnitDeletedEventHandler
-  implements IEventHandler<GrowingUnitDeletedEvent>
+	implements IEventHandler<GrowingUnitDeletedEvent>
 {
-  private readonly logger = new Logger(GrowingUnitDeletedEventHandler.name);
+	private readonly logger = new Logger(GrowingUnitDeletedEventHandler.name);
 
-  constructor(
-    @Inject(GROWING_UNIT_READ_REPOSITORY_TOKEN)
-    private readonly growingUnitReadRepository: IGrowingUnitReadRepository,
-  ) {}
+	constructor(
+		@Inject(GROWING_UNIT_READ_REPOSITORY_TOKEN)
+		private readonly growingUnitReadRepository: IGrowingUnitReadRepository,
+	) {}
 
-  /**
-   * Handles the GrowingUnitDeletedEvent event by deleting the growing unit view model.
-   *
-   * @param event - The GrowingUnitDeletedEvent event to handle
-   */
-  async handle(event: GrowingUnitDeletedEvent) {
-    this.logger.log(`Handling growing unit deleted event: ${event.entityId}`);
+	/**
+	 * Handles the GrowingUnitDeletedEvent event by deleting the growing unit view model.
+	 *
+	 * @param event - The GrowingUnitDeletedEvent event to handle
+	 */
+	async handle(event: GrowingUnitDeletedEvent) {
+		this.logger.log(`Handling growing unit deleted event: ${event.entityId}`);
 
-    this.logger.debug(
-      `Growing unit deleted event data: ${JSON.stringify(event.data)}`,
-    );
+		this.logger.debug(
+			`Growing unit deleted event data: ${JSON.stringify(event.data)}`,
+		);
 
-    // 01: Delete the growing unit view model
-    await this.growingUnitReadRepository.delete(event.entityId);
-  }
+		// 01: Delete the growing unit view model
+		await this.growingUnitReadRepository.delete(event.entityId);
+	}
 }

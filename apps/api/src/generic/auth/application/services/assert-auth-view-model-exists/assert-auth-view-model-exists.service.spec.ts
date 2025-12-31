@@ -5,61 +5,61 @@ import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 
 describe('AssertAuthViewModelExsistsService', () => {
-  let service: AssertAuthViewModelExistsService;
-  let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
+	let service: AssertAuthViewModelExistsService;
+	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 
-  beforeEach(() => {
-    mockAuthReadRepository = {
-      findById: jest.fn(),
-      findByCriteria: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<AuthReadRepository>;
+	beforeEach(() => {
+		mockAuthReadRepository = {
+			findById: jest.fn(),
+			findByCriteria: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<AuthReadRepository>;
 
-    service = new AssertAuthViewModelExistsService(mockAuthReadRepository);
-  });
+		service = new AssertAuthViewModelExistsService(mockAuthReadRepository);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return auth view model when auth exists by id', async () => {
-      const authId = '123e4567-e89b-12d3-a456-426614174000';
-      const mockAuthViewModel = new AuthViewModel({
-        id: authId,
-        userId: '123e4567-e89b-12d3-a456-426614174001',
-        email: 'test@example.com',
-        emailVerified: false,
-        lastLoginAt: null,
-        password: null,
-        phoneNumber: null,
-        provider: AuthProviderEnum.LOCAL,
-        providerId: null,
-        twoFactorEnabled: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+	describe('execute', () => {
+		it('should return auth view model when auth exists by id', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const mockAuthViewModel = new AuthViewModel({
+				id: authId,
+				userId: '123e4567-e89b-12d3-a456-426614174001',
+				email: 'test@example.com',
+				emailVerified: false,
+				lastLoginAt: null,
+				password: null,
+				phoneNumber: null,
+				provider: AuthProviderEnum.LOCAL,
+				providerId: null,
+				twoFactorEnabled: false,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			});
 
-      mockAuthReadRepository.findById.mockResolvedValue(mockAuthViewModel);
+			mockAuthReadRepository.findById.mockResolvedValue(mockAuthViewModel);
 
-      const result = await service.execute(authId);
+			const result = await service.execute(authId);
 
-      expect(result).toBe(mockAuthViewModel);
-      expect(mockAuthReadRepository.findById).toHaveBeenCalledWith(authId);
-      expect(mockAuthReadRepository.findById).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockAuthViewModel);
+			expect(mockAuthReadRepository.findById).toHaveBeenCalledWith(authId);
+			expect(mockAuthReadRepository.findById).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw AuthNotFoundException when auth view model does not exist', async () => {
-      const authId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should throw AuthNotFoundException when auth view model does not exist', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockAuthReadRepository.findById.mockResolvedValue(null);
+			mockAuthReadRepository.findById.mockResolvedValue(null);
 
-      await expect(service.execute(authId)).rejects.toThrow(
-        AuthNotFoundException,
-      );
-      expect(mockAuthReadRepository.findById).toHaveBeenCalledWith(authId);
-      expect(mockAuthReadRepository.findById).toHaveBeenCalledTimes(1);
-    });
-  });
+			await expect(service.execute(authId)).rejects.toThrow(
+				AuthNotFoundException,
+			);
+			expect(mockAuthReadRepository.findById).toHaveBeenCalledWith(authId);
+			expect(mockAuthReadRepository.findById).toHaveBeenCalledTimes(1);
+		});
+	});
 });

@@ -8,11 +8,11 @@ import { ICalculateMedianCommandDto } from '@/support/math/application/dtos/comm
  * from an array of numbers.
  */
 export class CalculateMedianCommand {
-  readonly values: readonly number[];
-  readonly decimals: number;
+	readonly values: readonly number[];
+	readonly decimals: number;
 
-  constructor(props: ICalculateMedianCommandDto) {
-    this.values = props.values;
-    this.decimals = props.decimals ?? 2;
-  }
+	constructor(props: ICalculateMedianCommandDto) {
+		this.values = props.values;
+		this.decimals = props.decimals ?? 2;
+	}
 }

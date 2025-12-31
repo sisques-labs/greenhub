@@ -8,7 +8,7 @@ import { BaseApplicationException } from '@/shared/application/exceptions/base-a
  * in the system, typically during query or update operations.
  */
 export class GrowingUnitNotFoundException extends BaseApplicationException {
-  constructor(growingUnitId: string) {
-    super(`Growing unit with id ${growingUnitId} not found`);
-  }
+	constructor(growingUnitId: string) {
+		super(`Growing unit with id ${growingUnitId} not found`);
+	}
 }

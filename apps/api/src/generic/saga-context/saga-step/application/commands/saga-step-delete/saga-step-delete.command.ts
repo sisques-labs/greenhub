@@ -2,9 +2,9 @@ import { ISagaStepDeleteCommandDto } from '@/generic/saga-context/saga-step/appl
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class SagaStepDeleteCommand {
-  readonly id: SagaStepUuidValueObject;
+	readonly id: SagaStepUuidValueObject;
 
-  constructor(props: ISagaStepDeleteCommandDto) {
-    this.id = new SagaStepUuidValueObject(props.id);
-  }
+	constructor(props: ISagaStepDeleteCommandDto) {
+		this.id = new SagaStepUuidValueObject(props.id);
+	}
 }

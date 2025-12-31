@@ -23,130 +23,130 @@ import { OverviewUuidValueObject } from '@/shared/domain/value-objects/identifie
  */
 @Injectable()
 export class OverviewCalculateService
-  implements IBaseService<string, OverviewViewModel>
+	implements IBaseService<string, OverviewViewModel>
 {
-  private readonly logger = new Logger(OverviewCalculateService.name);
-  private readonly BATCH_SIZE = 500;
+	private readonly logger = new Logger(OverviewCalculateService.name);
+	private readonly BATCH_SIZE = 500;
 
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly overviewViewModelFactory: OverviewViewModelFactory,
-    private readonly calculatePlantMetricsService: OverviewCalculatePlantMetricsService,
-    private readonly calculateGrowingUnitMetricsService: OverviewCalculateGrowingUnitMetricsService,
-    private readonly calculateCapacityMetricsService: OverviewCalculateCapacityMetricsService,
-    private readonly calculateDimensionsMetricsService: OverviewCalculateDimensionsMetricsService,
-    private readonly calculateAggregatedMetricsService: OverviewCalculateAggregatedMetricsService,
-  ) {}
+	constructor(
+		private readonly queryBus: QueryBus,
+		private readonly overviewViewModelFactory: OverviewViewModelFactory,
+		private readonly calculatePlantMetricsService: OverviewCalculatePlantMetricsService,
+		private readonly calculateGrowingUnitMetricsService: OverviewCalculateGrowingUnitMetricsService,
+		private readonly calculateCapacityMetricsService: OverviewCalculateCapacityMetricsService,
+		private readonly calculateDimensionsMetricsService: OverviewCalculateDimensionsMetricsService,
+		private readonly calculateAggregatedMetricsService: OverviewCalculateAggregatedMetricsService,
+	) {}
 
-  /**
-   * Calculates and returns an overview view model with all metrics computed.
-   *
-   * @param overviewId - Optional ID for the overview (defaults to generated UUID)
-   * @returns The calculated overview view model
-   */
-  async execute(overviewId?: string): Promise<OverviewViewModel> {
-    this.logger.log('Calculating overview metrics');
+	/**
+	 * Calculates and returns an overview view model with all metrics computed.
+	 *
+	 * @param overviewId - Optional ID for the overview (defaults to generated UUID)
+	 * @returns The calculated overview view model
+	 */
+	async execute(overviewId?: string): Promise<OverviewViewModel> {
+		this.logger.log('Calculating overview metrics');
 
-    // 01: Get all growing units in batches
-    const growingUnits = await this.getAllGrowingUnitsInBatches(
-      this.BATCH_SIZE,
-    );
-    this.logger.log(`Found ${growingUnits.length} total growing units`);
+		// 01: Get all growing units in batches
+		const growingUnits = await this.getAllGrowingUnitsInBatches(
+			this.BATCH_SIZE,
+		);
+		this.logger.log(`Found ${growingUnits.length} total growing units`);
 
-    // 02: Extract all plants from growing units
-    const allPlants = growingUnits.flatMap((gu) => gu.plants);
-    this.logger.log(`Found ${allPlants.length} total plants`);
+		// 02: Extract all plants from growing units
+		const allPlants = growingUnits.flatMap((gu) => gu.plants);
+		this.logger.log(`Found ${allPlants.length} total plants`);
 
-    // 03: Calculate plant metrics
-    const plantMetrics =
-      await this.calculatePlantMetricsService.execute(allPlants);
+		// 03: Calculate plant metrics
+		const plantMetrics =
+			await this.calculatePlantMetricsService.execute(allPlants);
 
-    // 04: Calculate growing unit metrics
-    const growingUnitMetrics =
-      await this.calculateGrowingUnitMetricsService.execute(growingUnits);
+		// 04: Calculate growing unit metrics
+		const growingUnitMetrics =
+			await this.calculateGrowingUnitMetricsService.execute(growingUnits);
 
-    // 05: Calculate capacity metrics
-    const capacityMetrics =
-      await this.calculateCapacityMetricsService.execute(growingUnits);
+		// 05: Calculate capacity metrics
+		const capacityMetrics =
+			await this.calculateCapacityMetricsService.execute(growingUnits);
 
-    // 06: Calculate dimensions metrics
-    const dimensionsMetrics =
-      await this.calculateDimensionsMetricsService.execute(growingUnits);
+		// 06: Calculate dimensions metrics
+		const dimensionsMetrics =
+			await this.calculateDimensionsMetricsService.execute(growingUnits);
 
-    // 07: Calculate aggregated metrics
-    const aggregatedMetrics =
-      await this.calculateAggregatedMetricsService.execute(growingUnits);
+		// 07: Calculate aggregated metrics
+		const aggregatedMetrics =
+			await this.calculateAggregatedMetricsService.execute(growingUnits);
 
-    // 08: Create overview view model DTO
-    const now = new Date();
-    const overviewDto: IOverviewViewModelDto = {
-      id: overviewId || new OverviewUuidValueObject().value,
-      ...plantMetrics,
-      ...growingUnitMetrics,
-      ...capacityMetrics,
-      ...dimensionsMetrics,
-      ...aggregatedMetrics, // This includes averagePlantsPerGrowingUnit
-      createdAt: now,
-      updatedAt: now,
-    };
+		// 08: Create overview view model DTO
+		const now = new Date();
+		const overviewDto: IOverviewViewModelDto = {
+			id: overviewId || new OverviewUuidValueObject().value,
+			...plantMetrics,
+			...growingUnitMetrics,
+			...capacityMetrics,
+			...dimensionsMetrics,
+			...aggregatedMetrics, // This includes averagePlantsPerGrowingUnit
+			createdAt: now,
+			updatedAt: now,
+		};
 
-    // 09: Create and return overview view model
-    return this.overviewViewModelFactory.create(overviewDto);
-  }
+		// 09: Create and return overview view model
+		return this.overviewViewModelFactory.create(overviewDto);
+	}
 
-  /**
-   * Gets all growing units in batches to avoid loading everything into memory at once.
-   *
-   * @returns Array of all growing units
-   */
-  private async getAllGrowingUnitsInBatches(
-    batchSize: number,
-  ): Promise<GrowingUnitViewModel[]> {
-    const allGrowingUnits: GrowingUnitViewModel[] = [];
+	/**
+	 * Gets all growing units in batches to avoid loading everything into memory at once.
+	 *
+	 * @returns Array of all growing units
+	 */
+	private async getAllGrowingUnitsInBatches(
+		batchSize: number,
+	): Promise<GrowingUnitViewModel[]> {
+		const allGrowingUnits: GrowingUnitViewModel[] = [];
 
-    // 01: Get first page to know total pages
-    const firstPageResult = await this.queryBus.execute(
-      new GrowingUnitFindByCriteriaQuery(
-        new Criteria([], [], { page: 1, perPage: batchSize }),
-      ),
-    );
+		// 01: Get first page to know total pages
+		const firstPageResult = await this.queryBus.execute(
+			new GrowingUnitFindByCriteriaQuery(
+				new Criteria([], [], { page: 1, perPage: batchSize }),
+			),
+		);
 
-    allGrowingUnits.push(...firstPageResult.items);
-    this.logger.log(
-      `Fetched page 1/${firstPageResult.totalPages} (${firstPageResult.items.length} items)`,
-    );
+		allGrowingUnits.push(...firstPageResult.items);
+		this.logger.log(
+			`Fetched page 1/${firstPageResult.totalPages} (${firstPageResult.items.length} items)`,
+		);
 
-    // 02: If there are more pages, fetch them in parallel batches
-    if (firstPageResult.totalPages > 1) {
-      const remainingPages = Array.from(
-        { length: firstPageResult.totalPages - 1 },
-        (_, i) => i + 2,
-      );
+		// 02: If there are more pages, fetch them in parallel batches
+		if (firstPageResult.totalPages > 1) {
+			const remainingPages = Array.from(
+				{ length: firstPageResult.totalPages - 1 },
+				(_, i) => i + 2,
+			);
 
-      // Fetch remaining pages in parallel
-      const pageResults = await Promise.all(
-        remainingPages.map((page) =>
-          this.queryBus.execute(
-            new GrowingUnitFindByCriteriaQuery(
-              new Criteria([], [], { page, perPage: batchSize }),
-            ),
-          ),
-        ),
-      );
+			// Fetch remaining pages in parallel
+			const pageResults = await Promise.all(
+				remainingPages.map((page) =>
+					this.queryBus.execute(
+						new GrowingUnitFindByCriteriaQuery(
+							new Criteria([], [], { page, perPage: batchSize }),
+						),
+					),
+				),
+			);
 
-      // Accumulate all items
-      pageResults.forEach((result, index) => {
-        allGrowingUnits.push(...result.items);
-        this.logger.log(
-          `Fetched page ${remainingPages[index]}/${firstPageResult.totalPages} (${result.items.length} items)`,
-        );
-      });
-    }
+			// Accumulate all items
+			pageResults.forEach((result, index) => {
+				allGrowingUnits.push(...result.items);
+				this.logger.log(
+					`Fetched page ${remainingPages[index]}/${firstPageResult.totalPages} (${result.items.length} items)`,
+				);
+			});
+		}
 
-    this.logger.log(
-      `Total growing units fetched: ${allGrowingUnits.length} from ${firstPageResult.totalPages} pages`,
-    );
+		this.logger.log(
+			`Total growing units fetched: ${allGrowingUnits.length} from ${firstPageResult.totalPages} pages`,
+		);
 
-    return allGrowingUnits;
-  }
+		return allGrowingUnits;
+	}
 }

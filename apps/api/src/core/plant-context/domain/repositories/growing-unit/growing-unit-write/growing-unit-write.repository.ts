@@ -2,7 +2,7 @@ import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/gro
 import { IBaseWriteRepository } from '@/shared/domain/interfaces/base-write-repository.interface';
 
 export const GROWING_UNIT_WRITE_REPOSITORY_TOKEN = Symbol(
-  'GrowingUnitWriteRepository',
+	'GrowingUnitWriteRepository',
 );
 
 /**
@@ -10,4 +10,4 @@ export const GROWING_UNIT_WRITE_REPOSITORY_TOKEN = Symbol(
  * Extends IBaseWriteRepository with additional query methods.
  */
 export type IGrowingUnitWriteRepository =
-  IBaseWriteRepository<GrowingUnitAggregate>;
+	IBaseWriteRepository<GrowingUnitAggregate>;

@@ -21,62 +21,62 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
  */
 @Injectable()
 export class UserAggregateFactory
-  implements IWriteFactory<UserAggregate, IUserCreateDto>
+	implements IWriteFactory<UserAggregate, IUserCreateDto>
 {
-  /**
-   * Creates a new UserAggregate entity using the provided properties.
-   *
-   * @param data - The user create data.
-   * @param data.id - The user id.
-   * @param data.name - The user name.
-   * @param data.bio - The user bio.
-   * @param data.avatarUrl - The user avatar url.
-   * @param data.lastName - The user last name.
-   * @param data.role - The user role.
-   * @param data.status - The user status.
-   * @param data.userName - The user user name.
-   * @param generateEvent - Whether to generate a creation event (default: true).
-   * @returns {UserAggregate} - The created user aggregate entity.
-   */
-  public create(
-    data: IUserCreateDto,
-    generateEvent: boolean = true,
-  ): UserAggregate {
-    return new UserAggregate(data, generateEvent);
-  }
+	/**
+	 * Creates a new UserAggregate entity using the provided properties.
+	 *
+	 * @param data - The user create data.
+	 * @param data.id - The user id.
+	 * @param data.name - The user name.
+	 * @param data.bio - The user bio.
+	 * @param data.avatarUrl - The user avatar url.
+	 * @param data.lastName - The user last name.
+	 * @param data.role - The user role.
+	 * @param data.status - The user status.
+	 * @param data.userName - The user user name.
+	 * @param generateEvent - Whether to generate a creation event (default: true).
+	 * @returns {UserAggregate} - The created user aggregate entity.
+	 */
+	public create(
+		data: IUserCreateDto,
+		generateEvent: boolean = true,
+	): UserAggregate {
+		return new UserAggregate(data, generateEvent);
+	}
 
-  /**
-   * Creates a new UserAggregate entity from primitive data.
-   *
-   * @param data - The user primitive data.
-   * @param data.id - The user id.
-   * @param data.name - The user name.
-   * @param data.bio - The user bio.
-   * @param data.avatarUrl - The user avatar url.
-   * @param data.lastName - The user last name.
-   * @param data.role - The user role.
-   * @param data.status - The user status.
-   * @param data.userName - The user user name.
-   * @returns The created user aggregate entity.
-   */
-  public fromPrimitives(data: UserPrimitives): UserAggregate {
-    return new UserAggregate({
-      id: new UserUuidValueObject(data.id),
-      name: data.name ? new UserNameValueObject(data.name) : null,
-      bio: data.bio ? new UserBioValueObject(data.bio) : null,
-      avatarUrl: data.avatarUrl
-        ? new UserAvatarUrlValueObject(data.avatarUrl)
-        : null,
-      lastName: data.lastName
-        ? new UserLastNameValueObject(data.lastName)
-        : null,
-      role: new UserRoleValueObject(data.role),
-      status: new UserStatusValueObject(data.status),
-      userName: data.userName
-        ? new UserUserNameValueObject(data.userName)
-        : null,
-      createdAt: new DateValueObject(data.createdAt),
-      updatedAt: new DateValueObject(data.updatedAt),
-    });
-  }
+	/**
+	 * Creates a new UserAggregate entity from primitive data.
+	 *
+	 * @param data - The user primitive data.
+	 * @param data.id - The user id.
+	 * @param data.name - The user name.
+	 * @param data.bio - The user bio.
+	 * @param data.avatarUrl - The user avatar url.
+	 * @param data.lastName - The user last name.
+	 * @param data.role - The user role.
+	 * @param data.status - The user status.
+	 * @param data.userName - The user user name.
+	 * @returns The created user aggregate entity.
+	 */
+	public fromPrimitives(data: UserPrimitives): UserAggregate {
+		return new UserAggregate({
+			id: new UserUuidValueObject(data.id),
+			name: data.name ? new UserNameValueObject(data.name) : null,
+			bio: data.bio ? new UserBioValueObject(data.bio) : null,
+			avatarUrl: data.avatarUrl
+				? new UserAvatarUrlValueObject(data.avatarUrl)
+				: null,
+			lastName: data.lastName
+				? new UserLastNameValueObject(data.lastName)
+				: null,
+			role: new UserRoleValueObject(data.role),
+			status: new UserStatusValueObject(data.status),
+			userName: data.userName
+				? new UserUserNameValueObject(data.userName)
+				: null,
+			createdAt: new DateValueObject(data.createdAt),
+			updatedAt: new DateValueObject(data.updatedAt),
+		});
+	}
 }

@@ -5,6 +5,6 @@
  * @property {string} id - The unique identifier of the plant view model to find.
  */
 export interface IPlantViewModelFindByIdQueryDto {
-  /** The unique identifier of the plant view model to find. */
-  id: string;
+	/** The unique identifier of the plant view model to find. */
+	id: string;
 }

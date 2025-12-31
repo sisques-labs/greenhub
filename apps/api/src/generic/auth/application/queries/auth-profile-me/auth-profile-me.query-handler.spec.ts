@@ -11,119 +11,119 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 
 describe('AuthProfileMeQueryHandler', () => {
-  let handler: AuthProfileMeQueryHandler;
-  let mockQueryBus: jest.Mocked<QueryBus>;
-  let mockAssertAuthViewModelExistsByUserIdService: jest.Mocked<AssertAuthViewModelExistsByUserIdService>;
-  let mockAuthUserProfileViewModelFactory: jest.Mocked<AuthUserProfileViewModelFactory>;
+	let handler: AuthProfileMeQueryHandler;
+	let mockQueryBus: jest.Mocked<QueryBus>;
+	let mockAssertAuthViewModelExistsByUserIdService: jest.Mocked<AssertAuthViewModelExistsByUserIdService>;
+	let mockAuthUserProfileViewModelFactory: jest.Mocked<AuthUserProfileViewModelFactory>;
 
-  beforeEach(() => {
-    mockQueryBus = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<QueryBus>;
+	beforeEach(() => {
+		mockQueryBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<QueryBus>;
 
-    mockAssertAuthViewModelExistsByUserIdService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertAuthViewModelExistsByUserIdService>;
+		mockAssertAuthViewModelExistsByUserIdService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertAuthViewModelExistsByUserIdService>;
 
-    mockAuthUserProfileViewModelFactory = {
-      create: jest.fn(),
-    } as unknown as jest.Mocked<AuthUserProfileViewModelFactory>;
+		mockAuthUserProfileViewModelFactory = {
+			create: jest.fn(),
+		} as unknown as jest.Mocked<AuthUserProfileViewModelFactory>;
 
-    handler = new AuthProfileMeQueryHandler(
-      mockQueryBus,
-      mockAssertAuthViewModelExistsByUserIdService,
-      mockAuthUserProfileViewModelFactory,
-    );
-  });
+		handler = new AuthProfileMeQueryHandler(
+			mockQueryBus,
+			mockAssertAuthViewModelExistsByUserIdService,
+			mockAuthUserProfileViewModelFactory,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return auth user profile view model when both user and auth exist', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174001';
-      const query = new AuthProfileMeQuery({ userId });
+	describe('execute', () => {
+		it('should return auth user profile view model when both user and auth exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
+			const query = new AuthProfileMeQuery({ userId });
 
-      const now = new Date();
-      const authUpdatedAt = new Date(now.getTime() + 1000);
-      const userUpdatedAt = new Date(now.getTime() + 2000);
+			const now = new Date();
+			const authUpdatedAt = new Date(now.getTime() + 1000);
+			const userUpdatedAt = new Date(now.getTime() + 2000);
 
-      const mockAuthViewModel = new AuthViewModel({
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        userId: userId,
-        email: 'test@example.com',
-        emailVerified: true,
-        lastLoginAt: now,
-        password: null,
-        phoneNumber: '+1234567890',
-        provider: AuthProviderEnum.LOCAL,
-        providerId: null,
-        twoFactorEnabled: false,
-        createdAt: now,
-        updatedAt: authUpdatedAt,
-      });
+			const mockAuthViewModel = new AuthViewModel({
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				userId: userId,
+				email: 'test@example.com',
+				emailVerified: true,
+				lastLoginAt: now,
+				password: null,
+				phoneNumber: '+1234567890',
+				provider: AuthProviderEnum.LOCAL,
+				providerId: null,
+				twoFactorEnabled: false,
+				createdAt: now,
+				updatedAt: authUpdatedAt,
+			});
 
-      const mockUserViewModel = new UserViewModel({
-        id: userId,
-        userName: 'testuser',
-        name: 'Test',
-        lastName: 'User',
-        bio: 'Test bio',
-        avatarUrl: 'https://example.com/avatar.jpg',
-        role: UserRoleEnum.USER,
-        status: UserStatusEnum.ACTIVE,
-        createdAt: now,
-        updatedAt: userUpdatedAt,
-      });
+			const mockUserViewModel = new UserViewModel({
+				id: userId,
+				userName: 'testuser',
+				name: 'Test',
+				lastName: 'User',
+				bio: 'Test bio',
+				avatarUrl: 'https://example.com/avatar.jpg',
+				role: UserRoleEnum.USER,
+				status: UserStatusEnum.ACTIVE,
+				createdAt: now,
+				updatedAt: userUpdatedAt,
+			});
 
-      const mockAuthUserProfileViewModel = new AuthUserProfileViewModel({
-        userId: userId,
-        authId: mockAuthViewModel.id,
-        email: mockAuthViewModel.email,
-        emailVerified: mockAuthViewModel.emailVerified,
-        lastLoginAt: mockAuthViewModel.lastLoginAt,
-        phoneNumber: mockAuthViewModel.phoneNumber,
-        provider: mockAuthViewModel.provider,
-        providerId: mockAuthViewModel.providerId,
-        twoFactorEnabled: mockAuthViewModel.twoFactorEnabled,
-        userName: mockUserViewModel.userName || '',
-        name: mockUserViewModel.name,
-        lastName: mockUserViewModel.lastName,
-        bio: mockUserViewModel.bio,
-        avatarUrl: mockUserViewModel.avatarUrl,
-        role: mockUserViewModel.role,
-        status: mockUserViewModel.status,
-        createdAt: mockAuthViewModel.createdAt,
-        updatedAt:
-          authUpdatedAt > userUpdatedAt ? authUpdatedAt : userUpdatedAt,
-      });
+			const mockAuthUserProfileViewModel = new AuthUserProfileViewModel({
+				userId: userId,
+				authId: mockAuthViewModel.id,
+				email: mockAuthViewModel.email,
+				emailVerified: mockAuthViewModel.emailVerified,
+				lastLoginAt: mockAuthViewModel.lastLoginAt,
+				phoneNumber: mockAuthViewModel.phoneNumber,
+				provider: mockAuthViewModel.provider,
+				providerId: mockAuthViewModel.providerId,
+				twoFactorEnabled: mockAuthViewModel.twoFactorEnabled,
+				userName: mockUserViewModel.userName || '',
+				name: mockUserViewModel.name,
+				lastName: mockUserViewModel.lastName,
+				bio: mockUserViewModel.bio,
+				avatarUrl: mockUserViewModel.avatarUrl,
+				role: mockUserViewModel.role,
+				status: mockUserViewModel.status,
+				createdAt: mockAuthViewModel.createdAt,
+				updatedAt:
+					authUpdatedAt > userUpdatedAt ? authUpdatedAt : userUpdatedAt,
+			});
 
-      mockQueryBus.execute.mockResolvedValueOnce(mockUserViewModel);
-      mockAssertAuthViewModelExistsByUserIdService.execute.mockResolvedValue(
-        mockAuthViewModel,
-      );
-      mockAuthUserProfileViewModelFactory.create.mockReturnValue(
-        mockAuthUserProfileViewModel,
-      );
+			mockQueryBus.execute.mockResolvedValueOnce(mockUserViewModel);
+			mockAssertAuthViewModelExistsByUserIdService.execute.mockResolvedValue(
+				mockAuthViewModel,
+			);
+			mockAuthUserProfileViewModelFactory.create.mockReturnValue(
+				mockAuthUserProfileViewModel,
+			);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockAuthUserProfileViewModel);
-      expect(mockQueryBus.execute).toHaveBeenCalledTimes(1);
-      expect(
-        mockAssertAuthViewModelExistsByUserIdService.execute,
-      ).toHaveBeenCalledWith(userId);
-      expect(
-        mockAssertAuthViewModelExistsByUserIdService.execute,
-      ).toHaveBeenCalledTimes(1);
-      expect(mockAuthUserProfileViewModelFactory.create).toHaveBeenCalledWith(
-        mockAuthViewModel,
-        mockUserViewModel,
-      );
-      expect(mockAuthUserProfileViewModelFactory.create).toHaveBeenCalledTimes(
-        1,
-      );
-    });
-  });
+			expect(result).toBe(mockAuthUserProfileViewModel);
+			expect(mockQueryBus.execute).toHaveBeenCalledTimes(1);
+			expect(
+				mockAssertAuthViewModelExistsByUserIdService.execute,
+			).toHaveBeenCalledWith(userId);
+			expect(
+				mockAssertAuthViewModelExistsByUserIdService.execute,
+			).toHaveBeenCalledTimes(1);
+			expect(mockAuthUserProfileViewModelFactory.create).toHaveBeenCalledWith(
+				mockAuthViewModel,
+				mockUserViewModel,
+			);
+			expect(mockAuthUserProfileViewModelFactory.create).toHaveBeenCalledTimes(
+				1,
+			);
+		});
+	});
 });

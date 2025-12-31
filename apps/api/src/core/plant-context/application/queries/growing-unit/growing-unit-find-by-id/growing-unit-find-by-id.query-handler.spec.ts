@@ -35,15 +35,13 @@ describe('GrowingUnitFindByIdQueryHandler', () => {
       };
 
       const query = new GrowingUnitFindByIdQuery(queryDto);
-      const mockGrowingUnit = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
+      const mockGrowingUnit = new GrowingUnitAggregate({
+        id: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new GrowingUnitNameValueObject('Garden Bed 1'),
+        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+        capacity: new GrowingUnitCapacityValueObject(10),
+        dimensions: null,
+        plants: [],
       });
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(

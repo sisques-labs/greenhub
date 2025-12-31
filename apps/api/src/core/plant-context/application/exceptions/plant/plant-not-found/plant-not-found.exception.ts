@@ -8,7 +8,7 @@ import { BaseApplicationException } from '@/shared/application/exceptions/base-a
  * in the system, typically during query or update operations.
  */
 export class PlantNotFoundException extends BaseApplicationException {
-  constructor(plantId: string) {
-    super(`Plant with id ${plantId} not found`);
-  }
+	constructor(plantId: string) {
+		super(`Plant with id ${plantId} not found`);
+	}
 }

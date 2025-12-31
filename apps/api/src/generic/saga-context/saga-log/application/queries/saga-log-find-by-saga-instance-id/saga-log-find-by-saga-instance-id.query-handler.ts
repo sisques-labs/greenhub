@@ -2,40 +2,40 @@ import { Inject, Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
 import {
-  SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-  SagaLogWriteRepository,
+	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+	SagaLogWriteRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
 import { FindSagaLogsBySagaInstanceIdQuery } from './saga-log-find-by-saga-instance-id.query';
 
 @QueryHandler(FindSagaLogsBySagaInstanceIdQuery)
 export class FindSagaLogsBySagaInstanceIdQueryHandler
-  implements IQueryHandler<FindSagaLogsBySagaInstanceIdQuery>
+	implements IQueryHandler<FindSagaLogsBySagaInstanceIdQuery>
 {
-  private readonly logger = new Logger(
-    FindSagaLogsBySagaInstanceIdQueryHandler.name,
-  );
+	private readonly logger = new Logger(
+		FindSagaLogsBySagaInstanceIdQueryHandler.name,
+	);
 
-  constructor(
-    @Inject(SAGA_LOG_WRITE_REPOSITORY_TOKEN)
-    private readonly sagaLogWriteRepository: SagaLogWriteRepository,
-  ) {}
+	constructor(
+		@Inject(SAGA_LOG_WRITE_REPOSITORY_TOKEN)
+		private readonly sagaLogWriteRepository: SagaLogWriteRepository,
+	) {}
 
-  /**
-   * Executes the FindSagaLogsBySagaInstanceIdQuery query.
-   *
-   * @param query - The FindSagaLogsBySagaInstanceIdQuery query to execute.
-   * @returns Array of SagaLogAggregates.
-   */
-  async execute(
-    query: FindSagaLogsBySagaInstanceIdQuery,
-  ): Promise<SagaLogAggregate[]> {
-    this.logger.log(
-      `Executing find saga logs by saga instance id query: ${query.sagaInstanceId.value}`,
-    );
+	/**
+	 * Executes the FindSagaLogsBySagaInstanceIdQuery query.
+	 *
+	 * @param query - The FindSagaLogsBySagaInstanceIdQuery query to execute.
+	 * @returns Array of SagaLogAggregates.
+	 */
+	async execute(
+		query: FindSagaLogsBySagaInstanceIdQuery,
+	): Promise<SagaLogAggregate[]> {
+		this.logger.log(
+			`Executing find saga logs by saga instance id query: ${query.sagaInstanceId.value}`,
+		);
 
-    // 01: Find the saga logs by saga instance id
-    return this.sagaLogWriteRepository.findBySagaInstanceId(
-      query.sagaInstanceId.value,
-    );
-  }
+		// 01: Find the saga logs by saga instance id
+		return this.sagaLogWriteRepository.findBySagaInstanceId(
+			query.sagaInstanceId.value,
+		);
+	}
 }

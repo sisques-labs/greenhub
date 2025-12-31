@@ -7,14 +7,14 @@
  * @property {string} [type] - The type of the growing unit. Optional.
  */
 export interface IGrowingUnitUpdateCommandDto {
-  id: string;
-  name?: string;
-  type?: string;
-  capacity?: number;
-  dimensions?: {
-    length: number;
-    width: number;
-    height: number;
-    unit: string;
-  } | null;
+	id: string;
+	name?: string;
+	type?: string;
+	capacity?: number;
+	dimensions?: {
+		length: number;
+		width: number;
+		height: number;
+		unit: string;
+	} | null;
 }

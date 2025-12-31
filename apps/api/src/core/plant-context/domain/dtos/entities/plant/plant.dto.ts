@@ -17,11 +17,11 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  * @public
  */
 export interface IPlantDto {
-  id: PlantUuidValueObject;
-  growingUnitId: GrowingUnitUuidValueObject;
-  name: PlantNameValueObject;
-  species: PlantSpeciesValueObject;
-  plantedDate: PlantPlantedDateValueObject | null;
-  notes: PlantNotesValueObject | null;
-  status: PlantStatusValueObject;
+	id: PlantUuidValueObject;
+	growingUnitId: GrowingUnitUuidValueObject;
+	name: PlantNameValueObject;
+	species: PlantSpeciesValueObject;
+	plantedDate: PlantPlantedDateValueObject | null;
+	notes: PlantNotesValueObject | null;
+	status: PlantStatusValueObject;
 }

@@ -13,30 +13,30 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
  * converting primitives to value objects.
  */
 export class GrowingUnitUpdateCommand {
-  readonly id: GrowingUnitUuidValueObject;
-  readonly name?: GrowingUnitNameValueObject;
-  readonly type?: GrowingUnitTypeValueObject;
-  readonly capacity?: GrowingUnitCapacityValueObject;
-  readonly dimensions?: DimensionsValueObject;
+	readonly id: GrowingUnitUuidValueObject;
+	readonly name?: GrowingUnitNameValueObject;
+	readonly type?: GrowingUnitTypeValueObject;
+	readonly capacity?: GrowingUnitCapacityValueObject;
+	readonly dimensions?: DimensionsValueObject;
 
-  constructor(props: IGrowingUnitUpdateCommandDto) {
-    this.id = new GrowingUnitUuidValueObject(props.id);
-    this.name = props.name
-      ? new GrowingUnitNameValueObject(props.name)
-      : undefined;
-    this.type = props.type
-      ? new GrowingUnitTypeValueObject(props.type)
-      : undefined;
-    this.capacity = props.capacity
-      ? new GrowingUnitCapacityValueObject(props.capacity)
-      : undefined;
-    this.dimensions = props.dimensions
-      ? new DimensionsValueObject({
-          length: props.dimensions.length,
-          width: props.dimensions.width,
-          height: props.dimensions.height,
-          unit: props.dimensions.unit,
-        })
-      : undefined;
-  }
+	constructor(props: IGrowingUnitUpdateCommandDto) {
+		this.id = new GrowingUnitUuidValueObject(props.id);
+		this.name = props.name
+			? new GrowingUnitNameValueObject(props.name)
+			: undefined;
+		this.type = props.type
+			? new GrowingUnitTypeValueObject(props.type)
+			: undefined;
+		this.capacity = props.capacity
+			? new GrowingUnitCapacityValueObject(props.capacity)
+			: undefined;
+		this.dimensions = props.dimensions
+			? new DimensionsValueObject({
+					length: props.dimensions.length,
+					width: props.dimensions.width,
+					height: props.dimensions.height,
+					unit: props.dimensions.unit,
+				})
+			: undefined;
+	}
 }

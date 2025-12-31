@@ -5,7 +5,7 @@ import { BaseApplicationException } from '@/shared/application/exceptions/base-a
  * Thrown when password hashing operation fails
  */
 export class PasswordHashingFailedException extends BaseApplicationException {
-  constructor() {
-    super('Password hashing failed');
-  }
+	constructor() {
+		super('Password hashing failed');
+	}
 }

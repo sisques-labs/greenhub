@@ -3,18 +3,18 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
 import { IFieldChangedEventData } from '@/shared/domain/interfaces/updated-field.interface';
 
 export class PlantNotesChangedEvent extends BaseEvent<
-  IFieldChangedEventData<string | null>
+	IFieldChangedEventData<string | null>
 > {
-  /**
-   * Constructor
-   *
-   * @param metadata - The metadata of the event
-   * @param data - The data of the event
-   */
-  constructor(
-    metadata: IEventMetadata,
-    data: IFieldChangedEventData<string | null>,
-  ) {
-    super(metadata, data);
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(
+		metadata: IEventMetadata,
+		data: IFieldChangedEventData<string | null>,
+	) {
+		super(metadata, data);
+	}
 }

@@ -1,8 +1,8 @@
 import {
-  CanActivate,
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
+	CanActivate,
+	ExecutionContext,
+	ForbiddenException,
+	Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
@@ -15,47 +15,47 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
  */
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+	constructor(private reflector: Reflector) {}
 
-  canActivate(context: ExecutionContext): boolean {
-    // Get required roles from metadata
-    const requiredRoles = this.reflector.getAllAndOverride<UserRoleEnum[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()],
-    );
+	canActivate(context: ExecutionContext): boolean {
+		// Get required roles from metadata
+		const requiredRoles = this.reflector.getAllAndOverride<UserRoleEnum[]>(
+			ROLES_KEY,
+			[context.getHandler(), context.getClass()],
+		);
 
-    // If no roles are required, allow access
-    if (!requiredRoles) {
-      return true;
-    }
+		// If no roles are required, allow access
+		if (!requiredRoles) {
+			return true;
+		}
 
-    // Get GraphQL context
-    const ctx = GqlExecutionContext.create(context);
-    const request = ctx.getContext().req;
+		// Get GraphQL context
+		const ctx = GqlExecutionContext.create(context);
+		const request = ctx.getContext().req;
 
-    // Get user from request (attached by JwtStrategy)
-    const user = request.user;
+		// Get user from request (attached by JwtStrategy)
+		const user = request.user;
 
-    if (!user) {
-      throw new ForbiddenException('User not authenticated');
-    }
+		if (!user) {
+			throw new ForbiddenException('User not authenticated');
+		}
 
-    // Get user role from JWT payload (added by JwtStrategy)
-    const userRole = (user as any).role;
+		// Get user role from JWT payload (added by JwtStrategy)
+		const userRole = (user as any).role;
 
-    if (!userRole) {
-      throw new ForbiddenException('User role not found');
-    }
+		if (!userRole) {
+			throw new ForbiddenException('User role not found');
+		}
 
-    // Check if user has required role
-    const hasRole = requiredRoles.includes(userRole as UserRoleEnum);
+		// Check if user has required role
+		const hasRole = requiredRoles.includes(userRole as UserRoleEnum);
 
-    if (!hasRole) {
-      throw new ForbiddenException(
-        'Insufficient permissions. Required roles: ' + requiredRoles.join(', '),
-      );
-    }
+		if (!hasRole) {
+			throw new ForbiddenException(
+				'Insufficient permissions. Required roles: ' + requiredRoles.join(', '),
+			);
+		}
 
-    return true;
-  }
+		return true;
+	}
 }

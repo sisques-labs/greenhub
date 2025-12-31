@@ -11,120 +11,120 @@ import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifier
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('SagaLogTypeormMapper', () => {
-  let mapper: SagaLogTypeormMapper;
-  let mockSagaLogAggregateFactory: jest.Mocked<SagaLogAggregateFactory>;
+	let mapper: SagaLogTypeormMapper;
+	let mockSagaLogAggregateFactory: jest.Mocked<SagaLogAggregateFactory>;
 
-  beforeEach(() => {
-    mockSagaLogAggregateFactory = {
-      create: jest.fn(),
-      fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<SagaLogAggregateFactory>;
+	beforeEach(() => {
+		mockSagaLogAggregateFactory = {
+			create: jest.fn(),
+			fromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<SagaLogAggregateFactory>;
 
-    mapper = new SagaLogTypeormMapper(mockSagaLogAggregateFactory);
-  });
+		mapper = new SagaLogTypeormMapper(mockSagaLogAggregateFactory);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('toDomainEntity', () => {
-    it('should convert TypeORM entity to domain entity with all properties', () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
-      const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+	describe('toDomainEntity', () => {
+		it('should convert TypeORM entity to domain entity with all properties', () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const typeormEntity = new SagaLogTypeormEntity();
-      typeormEntity.id = sagaLogId;
-      typeormEntity.sagaInstanceId = sagaInstanceId;
-      typeormEntity.sagaStepId = sagaStepId;
-      typeormEntity.type = SagaLogTypeEnum.INFO;
-      typeormEntity.message = 'Test message';
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new SagaLogTypeormEntity();
+			typeormEntity.id = sagaLogId;
+			typeormEntity.sagaInstanceId = sagaInstanceId;
+			typeormEntity.sagaStepId = sagaStepId;
+			typeormEntity.type = SagaLogTypeEnum.INFO;
+			typeormEntity.message = 'Test message';
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const mockSagaLogAggregate = new SagaLogAggregate(
-        {
-          id: new SagaLogUuidValueObject(sagaLogId),
-          sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-          sagaStepId: new SagaStepUuidValueObject(sagaStepId),
-          type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-          message: new SagaLogMessageValueObject('Test message'),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const mockSagaLogAggregate = new SagaLogAggregate(
+				{
+					id: new SagaLogUuidValueObject(sagaLogId),
+					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
+					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
+					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
+					message: new SagaLogMessageValueObject('Test message'),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      mockSagaLogAggregateFactory.fromPrimitives.mockReturnValue(
-        mockSagaLogAggregate,
-      );
+			mockSagaLogAggregateFactory.fromPrimitives.mockReturnValue(
+				mockSagaLogAggregate,
+			);
 
-      const result = mapper.toDomainEntity(typeormEntity);
+			const result = mapper.toDomainEntity(typeormEntity);
 
-      expect(result).toBe(mockSagaLogAggregate);
-      expect(mockSagaLogAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
-        id: sagaLogId,
-        sagaInstanceId: sagaInstanceId,
-        sagaStepId: sagaStepId,
-        type: SagaLogTypeEnum.INFO,
-        message: 'Test message',
-        createdAt: now,
-        updatedAt: now,
-      });
-      expect(mockSagaLogAggregateFactory.fromPrimitives).toHaveBeenCalledTimes(
-        1,
-      );
-    });
-  });
+			expect(result).toBe(mockSagaLogAggregate);
+			expect(mockSagaLogAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
+				id: sagaLogId,
+				sagaInstanceId: sagaInstanceId,
+				sagaStepId: sagaStepId,
+				type: SagaLogTypeEnum.INFO,
+				message: 'Test message',
+				createdAt: now,
+				updatedAt: now,
+			});
+			expect(mockSagaLogAggregateFactory.fromPrimitives).toHaveBeenCalledTimes(
+				1,
+			);
+		});
+	});
 
-  describe('toTypeormEntity', () => {
-    it('should convert domain entity to TypeORM entity with all properties', () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
-      const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+	describe('toTypeormEntity', () => {
+		it('should convert domain entity to TypeORM entity with all properties', () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const mockSagaLogAggregate = new SagaLogAggregate(
-        {
-          id: new SagaLogUuidValueObject(sagaLogId),
-          sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-          sagaStepId: new SagaStepUuidValueObject(sagaStepId),
-          type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-          message: new SagaLogMessageValueObject('Test message'),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const mockSagaLogAggregate = new SagaLogAggregate(
+				{
+					id: new SagaLogUuidValueObject(sagaLogId),
+					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
+					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
+					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
+					message: new SagaLogMessageValueObject('Test message'),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      const toPrimitivesSpy = jest
-        .spyOn(mockSagaLogAggregate, 'toPrimitives')
-        .mockReturnValue({
-          id: sagaLogId,
-          sagaInstanceId: sagaInstanceId,
-          sagaStepId: sagaStepId,
-          type: SagaLogTypeEnum.INFO,
-          message: 'Test message',
-          createdAt: now,
-          updatedAt: now,
-        });
+			const toPrimitivesSpy = jest
+				.spyOn(mockSagaLogAggregate, 'toPrimitives')
+				.mockReturnValue({
+					id: sagaLogId,
+					sagaInstanceId: sagaInstanceId,
+					sagaStepId: sagaStepId,
+					type: SagaLogTypeEnum.INFO,
+					message: 'Test message',
+					createdAt: now,
+					updatedAt: now,
+				});
 
-      const result = mapper.toTypeormEntity(mockSagaLogAggregate);
+			const result = mapper.toTypeormEntity(mockSagaLogAggregate);
 
-      expect(result).toBeInstanceOf(SagaLogTypeormEntity);
-      expect(result.id).toBe(sagaLogId);
-      expect(result.sagaInstanceId).toBe(sagaInstanceId);
-      expect(result.sagaStepId).toBe(sagaStepId);
-      expect(result.type).toBe(SagaLogTypeEnum.INFO);
-      expect(result.message).toBe('Test message');
-      expect(result.createdAt).toEqual(now);
-      expect(result.updatedAt).toEqual(now);
-      expect(result.deletedAt).toBeNull();
-      expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
+			expect(result).toBeInstanceOf(SagaLogTypeormEntity);
+			expect(result.id).toBe(sagaLogId);
+			expect(result.sagaInstanceId).toBe(sagaInstanceId);
+			expect(result.sagaStepId).toBe(sagaStepId);
+			expect(result.type).toBe(SagaLogTypeEnum.INFO);
+			expect(result.message).toBe('Test message');
+			expect(result.createdAt).toEqual(now);
+			expect(result.updatedAt).toEqual(now);
+			expect(result.deletedAt).toBeNull();
+			expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
 
-      toPrimitivesSpy.mockRestore();
-    });
-  });
+			toPrimitivesSpy.mockRestore();
+		});
+	});
 });

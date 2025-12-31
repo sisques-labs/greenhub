@@ -3,9 +3,9 @@ import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggrega
 export const SAGA_LOG_WRITE_REPOSITORY_TOKEN = Symbol('SagaLogWriteRepository');
 
 export interface SagaLogWriteRepository {
-  findById(id: string): Promise<SagaLogAggregate | null>;
-  findBySagaInstanceId(sagaInstanceId: string): Promise<SagaLogAggregate[]>;
-  findBySagaStepId(sagaStepId: string): Promise<SagaLogAggregate[]>;
-  save(sagaLog: SagaLogAggregate): Promise<SagaLogAggregate>;
-  delete(id: string): Promise<boolean>;
+	findById(id: string): Promise<SagaLogAggregate | null>;
+	findBySagaInstanceId(sagaInstanceId: string): Promise<SagaLogAggregate[]>;
+	findBySagaStepId(sagaStepId: string): Promise<SagaLogAggregate[]>;
+	save(sagaLog: SagaLogAggregate): Promise<SagaLogAggregate>;
+	delete(id: string): Promise<boolean>;
 }

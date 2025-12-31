@@ -14,21 +14,21 @@ import { SupportModule } from '@/support/generic.module';
 const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];
 
 @Module({
-  imports: [
-    CqrsModule.forRoot(),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
-    }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: true,
-      introspection: true,
-      context: ({ req }) => ({ req }),
-    }),
-    ...MODULES,
-  ],
-  providers: [AppResolver],
+	imports: [
+		CqrsModule.forRoot(),
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: '.env',
+		}),
+		GraphQLModule.forRoot<ApolloDriverConfig>({
+			driver: ApolloDriver,
+			autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+			playground: true,
+			introspection: true,
+			context: ({ req }) => ({ req }),
+		}),
+		...MODULES,
+	],
+	providers: [AppResolver],
 })
 export class AppModule {}

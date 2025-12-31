@@ -12,5 +12,5 @@ import { ISagaInstanceCreateViewModelDto } from '@/generic/saga-context/saga-ins
  * @property {Date} updatedAt - Timestamp when the saga instance was last updated.
  */
 export type ISagaInstanceUpdateViewModelDto = Partial<
-  Omit<ISagaInstanceCreateViewModelDto, 'id' | 'createdAt' | 'updatedAt'>
+	Omit<ISagaInstanceCreateViewModelDto, 'id' | 'createdAt' | 'updatedAt'>
 >;

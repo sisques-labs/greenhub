@@ -17,264 +17,260 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantTransplantService', () => {
-  let service: PlantTransplantService;
-  let sourceGrowingUnit: GrowingUnitAggregate;
-  let targetGrowingUnit: GrowingUnitAggregate;
-  let plant: PlantEntity;
-  const plantId = '123e4567-e89b-12d3-a456-426614174000';
-  const sourceGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-  const targetGrowingUnitId = '323e4567-e89b-12d3-a456-426614174000';
+	let service: PlantTransplantService;
+	let sourceGrowingUnit: GrowingUnitAggregate;
+	let targetGrowingUnit: GrowingUnitAggregate;
+	let plant: PlantEntity;
+	const plantId = '123e4567-e89b-12d3-a456-426614174000';
+	const sourceGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+	const targetGrowingUnitId = '323e4567-e89b-12d3-a456-426614174000';
 
-  beforeEach(() => {
-    service = new PlantTransplantService();
+	beforeEach(() => {
+		service = new PlantTransplantService();
 
-    // Create source growing unit with capacity for 5 plants
-    sourceGrowingUnit = new GrowingUnitAggregate(
-      {
-        id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
-        name: new GrowingUnitNameValueObject('Source Unit'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
-        capacity: new GrowingUnitCapacityValueObject(5),
-        dimensions: null,
-        plants: [],
-      },
-    );
+		// Create source growing unit with capacity for 5 plants
+		sourceGrowingUnit = new GrowingUnitAggregate({
+			id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+			name: new GrowingUnitNameValueObject('Source Unit'),
+			type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
+			capacity: new GrowingUnitCapacityValueObject(5),
+			dimensions: null,
+			plants: [],
+		});
 
-    // Create target growing unit with capacity for 3 plants
-    targetGrowingUnit = new GrowingUnitAggregate(
-      {
-        id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-        name: new GrowingUnitNameValueObject('Target Unit'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
-        capacity: new GrowingUnitCapacityValueObject(3),
-        dimensions: null,
-        plants: [],
-      },
-    );
+		// Create target growing unit with capacity for 3 plants
+		targetGrowingUnit = new GrowingUnitAggregate({
+			id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+			name: new GrowingUnitNameValueObject('Target Unit'),
+			type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
+			capacity: new GrowingUnitCapacityValueObject(3),
+			dimensions: null,
+			plants: [],
+		});
 
-    // Create a plant
-    plant = new PlantEntity({
-      id: new PlantUuidValueObject(plantId),
-      growingUnitId: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
-      name: new PlantNameValueObject('Aloe Vera'),
-      species: new PlantSpeciesValueObject('Aloe barbadensis'),
-      plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
-      notes: new PlantNotesValueObject('Keep in indirect sunlight'),
-      status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-    });
+		// Create a plant
+		plant = new PlantEntity({
+			id: new PlantUuidValueObject(plantId),
+			growingUnitId: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+			name: new PlantNameValueObject('Aloe Vera'),
+			species: new PlantSpeciesValueObject('Aloe barbadensis'),
+			plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
+			notes: new PlantNotesValueObject('Keep in indirect sunlight'),
+			status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+		});
 
-    // Add plant to source growing unit
-    sourceGrowingUnit.addPlant(plant, false);
-  });
+		// Add plant to source growing unit
+		sourceGrowingUnit.addPlant(plant, false);
+	});
 
-  describe('execute', () => {
-    it('should successfully transplant a plant from source to target growing unit', async () => {
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+	describe('execute', () => {
+		it('should successfully transplant a plant from source to target growing unit', async () => {
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      const result = await service.execute(input);
+			const result = await service.execute(input);
 
-      expect(result).toBeInstanceOf(PlantEntity);
-      expect(result.id.value).toBe(plantId);
-      expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
+			expect(result).toBeInstanceOf(PlantEntity);
+			expect(result.id.value).toBe(plantId);
+			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
 
-      // Verify plant was removed from source
-      const plantInSource = sourceGrowingUnit.getPlantById(plantId);
-      expect(plantInSource).toBeNull();
+			// Verify plant was removed from source
+			const plantInSource = sourceGrowingUnit.getPlantById(plantId);
+			expect(plantInSource).toBeNull();
 
-      // Verify plant was added to target
-      const plantInTarget = targetGrowingUnit.getPlantById(plantId);
-      expect(plantInTarget).not.toBeNull();
-      expect(plantInTarget?.id.value).toBe(plantId);
-    });
+			// Verify plant was added to target
+			const plantInTarget = targetGrowingUnit.getPlantById(plantId);
+			expect(plantInTarget).not.toBeNull();
+			expect(plantInTarget?.id.value).toBe(plantId);
+		});
 
-    it('should update plant growingUnitId after transplant', async () => {
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+		it('should update plant growingUnitId after transplant', async () => {
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      const result = await service.execute(input);
+			const result = await service.execute(input);
 
-      expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
-      expect(result.growingUnitId.value).not.toBe(sourceGrowingUnitId);
-    });
+			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
+			expect(result.growingUnitId.value).not.toBe(sourceGrowingUnitId);
+		});
 
-    it('should throw GrowingUnitPlantNotFoundException when plant is not found in source', async () => {
-      const nonExistentPlantId = '999e4567-e89b-12d3-a456-426614174000';
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId: nonExistentPlantId,
-      };
+		it('should throw GrowingUnitPlantNotFoundException when plant is not found in source', async () => {
+			const nonExistentPlantId = '999e4567-e89b-12d3-a456-426614174000';
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId: nonExistentPlantId,
+			};
 
-      await expect(service.execute(input)).rejects.toThrow(
-        GrowingUnitPlantNotFoundException,
-      );
-      await expect(service.execute(input)).rejects.toThrow(
-        `Plant ${nonExistentPlantId} not found in growing unit ${sourceGrowingUnitId}`,
-      );
-    });
+			await expect(service.execute(input)).rejects.toThrow(
+				GrowingUnitPlantNotFoundException,
+			);
+			await expect(service.execute(input)).rejects.toThrow(
+				`Plant ${nonExistentPlantId} not found in growing unit ${sourceGrowingUnitId}`,
+			);
+		});
 
-    it('should throw GrowingUnitFullCapacityException when target has no capacity', async () => {
-      // Fill target growing unit to capacity
-      for (let i = 0; i < 3; i++) {
-        const testPlant = new PlantEntity({
-          id: new PlantUuidValueObject(
-            `${i}23e4567-e89b-12d3-a456-426614174000`,
-          ),
-          growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-          name: new PlantNameValueObject(`Test Plant ${i}`),
-          species: new PlantSpeciesValueObject('Test Species'),
-          plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
-          notes: null,
-          status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-        });
-        targetGrowingUnit.addPlant(testPlant, false);
-      }
+		it('should throw GrowingUnitFullCapacityException when target has no capacity', async () => {
+			// Fill target growing unit to capacity
+			for (let i = 0; i < 3; i++) {
+				const testPlant = new PlantEntity({
+					id: new PlantUuidValueObject(
+						`${i}23e4567-e89b-12d3-a456-426614174000`,
+					),
+					growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+					name: new PlantNameValueObject(`Test Plant ${i}`),
+					species: new PlantSpeciesValueObject('Test Species'),
+					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
+					notes: null,
+					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+				});
+				targetGrowingUnit.addPlant(testPlant, false);
+			}
 
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      await expect(service.execute(input)).rejects.toThrow(
-        GrowingUnitFullCapacityException,
-      );
-      await expect(service.execute(input)).rejects.toThrow(
-        `Growing unit ${targetGrowingUnitId} is at full capacity`,
-      );
-    });
+			await expect(service.execute(input)).rejects.toThrow(
+				GrowingUnitFullCapacityException,
+			);
+			await expect(service.execute(input)).rejects.toThrow(
+				`Growing unit ${targetGrowingUnitId} is at full capacity`,
+			);
+		});
 
-    it('should successfully transplant when target has available capacity', async () => {
-      // Add 2 plants to target (capacity is 3, so 1 slot remains)
-      for (let i = 0; i < 2; i++) {
-        const testPlant = new PlantEntity({
-          id: new PlantUuidValueObject(
-            `${i}23e4567-e89b-12d3-a456-426614174000`,
-          ),
-          growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-          name: new PlantNameValueObject(`Test Plant ${i}`),
-          species: new PlantSpeciesValueObject('Test Species'),
-          plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
-          notes: null,
-          status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-        });
-        targetGrowingUnit.addPlant(testPlant, false);
-      }
+		it('should successfully transplant when target has available capacity', async () => {
+			// Add 2 plants to target (capacity is 3, so 1 slot remains)
+			for (let i = 0; i < 2; i++) {
+				const testPlant = new PlantEntity({
+					id: new PlantUuidValueObject(
+						`${i}23e4567-e89b-12d3-a456-426614174000`,
+					),
+					growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+					name: new PlantNameValueObject(`Test Plant ${i}`),
+					species: new PlantSpeciesValueObject('Test Species'),
+					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
+					notes: null,
+					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+				});
+				targetGrowingUnit.addPlant(testPlant, false);
+			}
 
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      const result = await service.execute(input);
+			const result = await service.execute(input);
 
-      expect(result).toBeInstanceOf(PlantEntity);
-      expect(result.id.value).toBe(plantId);
-      expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
+			expect(result).toBeInstanceOf(PlantEntity);
+			expect(result.id.value).toBe(plantId);
+			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
 
-      // Verify plant is in target
-      const plantInTarget = targetGrowingUnit.getPlantById(plantId);
-      expect(plantInTarget).not.toBeNull();
-    });
+			// Verify plant is in target
+			const plantInTarget = targetGrowingUnit.getPlantById(plantId);
+			expect(plantInTarget).not.toBeNull();
+		});
 
-    it('should preserve plant properties after transplant', async () => {
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+		it('should preserve plant properties after transplant', async () => {
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      const result = await service.execute(input);
+			const result = await service.execute(input);
 
-      expect(result.name.value).toBe('Aloe Vera');
-      expect(result.species.value).toBe('Aloe barbadensis');
-      expect(result.status.value).toBe(PlantStatusEnum.PLANTED);
-      expect(result.plantedDate?.value).toEqual(new Date('2024-01-15'));
-      expect(result.notes?.value).toBe('Keep in indirect sunlight');
-    });
+			expect(result.name.value).toBe('Aloe Vera');
+			expect(result.species.value).toBe('Aloe barbadensis');
+			expect(result.status.value).toBe(PlantStatusEnum.PLANTED);
+			expect(result.plantedDate?.value).toEqual(new Date('2024-01-15'));
+			expect(result.notes?.value).toBe('Keep in indirect sunlight');
+		});
 
-    it('should handle transplant when source has multiple plants', async () => {
-      // Add additional plants to source (using different UUIDs to avoid conflicts)
-      const additionalPlantIds = [
-        '523e4567-e89b-12d3-a456-426614174000',
-        '623e4567-e89b-12d3-a456-426614174000',
-      ];
+		it('should handle transplant when source has multiple plants', async () => {
+			// Add additional plants to source (using different UUIDs to avoid conflicts)
+			const additionalPlantIds = [
+				'523e4567-e89b-12d3-a456-426614174000',
+				'623e4567-e89b-12d3-a456-426614174000',
+			];
 
-      for (let i = 0; i < additionalPlantIds.length; i++) {
-        const testPlant = new PlantEntity({
-          id: new PlantUuidValueObject(additionalPlantIds[i]),
-          growingUnitId: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
-          name: new PlantNameValueObject(`Test Plant ${i + 1}`),
-          species: new PlantSpeciesValueObject('Test Species'),
-          plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
-          notes: null,
-          status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-        });
-        sourceGrowingUnit.addPlant(testPlant, false);
-      }
+			for (let i = 0; i < additionalPlantIds.length; i++) {
+				const testPlant = new PlantEntity({
+					id: new PlantUuidValueObject(additionalPlantIds[i]),
+					growingUnitId: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+					name: new PlantNameValueObject(`Test Plant ${i + 1}`),
+					species: new PlantSpeciesValueObject('Test Species'),
+					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
+					notes: null,
+					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+				});
+				sourceGrowingUnit.addPlant(testPlant, false);
+			}
 
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      const result = await service.execute(input);
+			const result = await service.execute(input);
 
-      expect(result.id.value).toBe(plantId);
-      expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
+			expect(result.id.value).toBe(plantId);
+			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
 
-      // Verify other plants remain in source
-      const remainingPlants = sourceGrowingUnit.plants;
-      expect(remainingPlants.length).toBe(2);
-      expect(remainingPlants.some((p) => p.id.value === plantId)).toBe(false);
-      // Verify the additional plants are still there
-      expect(
-        remainingPlants.some((p) => p.id.value === additionalPlantIds[0]),
-      ).toBe(true);
-      expect(
-        remainingPlants.some((p) => p.id.value === additionalPlantIds[1]),
-      ).toBe(true);
-    });
+			// Verify other plants remain in source
+			const remainingPlants = sourceGrowingUnit.plants;
+			expect(remainingPlants.length).toBe(2);
+			expect(remainingPlants.some((p) => p.id.value === plantId)).toBe(false);
+			// Verify the additional plants are still there
+			expect(
+				remainingPlants.some((p) => p.id.value === additionalPlantIds[0]),
+			).toBe(true);
+			expect(
+				remainingPlants.some((p) => p.id.value === additionalPlantIds[1]),
+			).toBe(true);
+		});
 
-    it('should handle transplant when target already has plants', async () => {
-      // Add a plant to target
-      const existingPlant = new PlantEntity({
-        id: new PlantUuidValueObject('423e4567-e89b-12d3-a456-426614174000'),
-        growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-        name: new PlantNameValueObject('Existing Plant'),
-        species: new PlantSpeciesValueObject('Existing Species'),
-        plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
-      targetGrowingUnit.addPlant(existingPlant, false);
+		it('should handle transplant when target already has plants', async () => {
+			// Add a plant to target
+			const existingPlant = new PlantEntity({
+				id: new PlantUuidValueObject('423e4567-e89b-12d3-a456-426614174000'),
+				growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+				name: new PlantNameValueObject('Existing Plant'),
+				species: new PlantSpeciesValueObject('Existing Species'),
+				plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
+			targetGrowingUnit.addPlant(existingPlant, false);
 
-      const input = {
-        sourceGrowingUnit,
-        targetGrowingUnit,
-        plantId,
-      };
+			const input = {
+				sourceGrowingUnit,
+				targetGrowingUnit,
+				plantId,
+			};
 
-      const result = await service.execute(input);
+			const result = await service.execute(input);
 
-      expect(result.id.value).toBe(plantId);
+			expect(result.id.value).toBe(plantId);
 
-      // Verify both plants are in target
-      const plantsInTarget = targetGrowingUnit.plants;
-      expect(plantsInTarget.length).toBe(2);
-      expect(plantsInTarget.some((p) => p.id.value === plantId)).toBe(true);
-      expect(
-        plantsInTarget.some((p) => p.id.value === existingPlant.id.value),
-      ).toBe(true);
-    });
-  });
+			// Verify both plants are in target
+			const plantsInTarget = targetGrowingUnit.plants;
+			expect(plantsInTarget.length).toBe(2);
+			expect(plantsInTarget.some((p) => p.id.value === plantId)).toBe(true);
+			expect(
+				plantsInTarget.some((p) => p.id.value === existingPlant.id.value),
+			).toBe(true);
+		});
+	});
 });

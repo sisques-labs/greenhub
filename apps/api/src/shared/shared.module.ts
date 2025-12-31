@@ -26,29 +26,29 @@ const REPOSITORIES = [];
 
 @Global()
 @Module({
-  imports: [MongoModule, TypeOrmModule],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...FACTORIES,
-    ...MAPPERS,
-    ...REPOSITORIES,
-  ],
-  exports: [
-    MongoModule,
-    TypeOrmModule,
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...FACTORIES,
-    ...MAPPERS,
-    ...REPOSITORIES,
-  ],
+	imports: [MongoModule, TypeOrmModule],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...FACTORIES,
+		...MAPPERS,
+		...REPOSITORIES,
+	],
+	exports: [
+		MongoModule,
+		TypeOrmModule,
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...FACTORIES,
+		...MAPPERS,
+		...REPOSITORIES,
+	],
 })
 export class SharedModule {}

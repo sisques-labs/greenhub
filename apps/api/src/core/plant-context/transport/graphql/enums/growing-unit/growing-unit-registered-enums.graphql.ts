@@ -6,17 +6,17 @@ import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-u
  * This file should be imported in the growing unit to ensure enums are registered before GraphQL schema generation.
  */
 const registeredGrowingUnitEnums = [
-  {
-    enum: GrowingUnitTypeEnum,
-    name: 'GrowingUnitTypeEnum',
-    description: 'The type of the growing unit',
-  },
+	{
+		enum: GrowingUnitTypeEnum,
+		name: 'GrowingUnitTypeEnum',
+		description: 'The type of the growing unit',
+	},
 ];
 
 for (const {
-  enum: enumType,
-  name,
-  description,
+	enum: enumType,
+	name,
+	description,
 } of registeredGrowingUnitEnums) {
-  registerEnumType(enumType, { name, description });
+	registerEnumType(enumType, { name, description });
 }

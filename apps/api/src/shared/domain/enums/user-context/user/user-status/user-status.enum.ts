@@ -5,7 +5,7 @@
  * BLOCKED: The user is blocked and cannot login to the system.
  */
 export enum UserStatusEnum {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
-  BLOCKED = 'BLOCKED',
+	ACTIVE = 'ACTIVE',
+	INACTIVE = 'INACTIVE',
+	BLOCKED = 'BLOCKED',
 }

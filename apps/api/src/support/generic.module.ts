@@ -5,9 +5,9 @@ import { MathModule } from './math/math.module';
 
 const SUPPORT_MODULES = [HealthModule, LoggingModule, MathModule];
 @Module({
-  imports: [...SUPPORT_MODULES],
-  controllers: [],
-  providers: [],
-  exports: [...SUPPORT_MODULES],
+	imports: [...SUPPORT_MODULES],
+	controllers: [],
+	providers: [],
+	exports: [...SUPPORT_MODULES],
 })
 export class SupportModule {}

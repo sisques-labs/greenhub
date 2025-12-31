@@ -5,7 +5,7 @@
  * @template T - The type of the field value
  */
 export interface IFieldChangedEventData<T> {
-  id: string;
-  oldValue: T;
-  newValue: T;
+	id: string;
+	oldValue: T;
+	newValue: T;
 }

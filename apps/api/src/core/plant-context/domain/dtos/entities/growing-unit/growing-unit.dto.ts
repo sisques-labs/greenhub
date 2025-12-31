@@ -16,10 +16,10 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
  * @public
  */
 export interface IGrowingUnitDto {
-  id: GrowingUnitUuidValueObject;
-  name: GrowingUnitNameValueObject;
-  type: GrowingUnitTypeValueObject;
-  capacity: GrowingUnitCapacityValueObject;
-  dimensions?: DimensionsValueObject | null;
-  plants: PlantEntity[];
+	id: GrowingUnitUuidValueObject;
+	name: GrowingUnitNameValueObject;
+	type: GrowingUnitTypeValueObject;
+	capacity: GrowingUnitCapacityValueObject;
+	dimensions?: DimensionsValueObject | null;
+	plants: PlantEntity[];
 }

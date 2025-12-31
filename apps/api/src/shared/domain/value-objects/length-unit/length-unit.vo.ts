@@ -12,9 +12,9 @@ import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
  * ```
  */
 export class LengthUnitValueObject extends EnumValueObject<
-  typeof LengthUnitEnum
+	typeof LengthUnitEnum
 > {
-  protected get enumObject(): typeof LengthUnitEnum {
-    return LengthUnitEnum;
-  }
+	protected get enumObject(): typeof LengthUnitEnum {
+		return LengthUnitEnum;
+	}
 }

@@ -8,8 +8,8 @@
  * @property {string} message - The message of the saga log. Must be provided.
  */
 export interface ISagaLogCreateCommandDto {
-  sagaInstanceId: string;
-  sagaStepId: string;
-  type: string;
-  message: string;
+	sagaInstanceId: string;
+	sagaStepId: string;
+	type: string;
+	message: string;
 }

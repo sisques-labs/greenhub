@@ -6,13 +6,13 @@ import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.en
  * This file should be imported in the growing unit to ensure enums are registered before GraphQL schema generation.
  */
 const registeredSharedEnums = [
-  {
-    enum: LengthUnitEnum,
-    name: 'LengthUnitEnum',
-    description: 'The unit of the length',
-  },
+	{
+		enum: LengthUnitEnum,
+		name: 'LengthUnitEnum',
+		description: 'The unit of the length',
+	},
 ];
 
 for (const { enum: enumType, name, description } of registeredSharedEnums) {
-  registerEnumType(enumType, { name, description });
+	registerEnumType(enumType, { name, description });
 }

@@ -3,7 +3,7 @@ import { BaseEvent } from '@/shared/domain/events/base-event.interface';
 import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 export class AuthRegistrationRequestedEvent extends BaseEvent<IAuthEventData> {
-  constructor(metadata: IEventMetadata, data: IAuthEventData) {
-    super(metadata, data);
-  }
+	constructor(metadata: IEventMetadata, data: IAuthEventData) {
+		super(metadata, data);
+	}
 }

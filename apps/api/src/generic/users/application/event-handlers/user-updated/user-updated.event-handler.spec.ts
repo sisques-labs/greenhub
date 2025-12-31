@@ -9,310 +9,310 @@ import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user
 import { UserUpdatedEventHandler } from './user-updated.event-handler';
 
 describe('UserUpdatedEventHandler', () => {
-  let handler: UserUpdatedEventHandler;
-  let mockUserReadRepository: jest.Mocked<UserReadRepository>;
-  let mockAssertUserViewModelExsistsService: jest.Mocked<AssertUserViewModelExsistsService>;
+	let handler: UserUpdatedEventHandler;
+	let mockUserReadRepository: jest.Mocked<UserReadRepository>;
+	let mockAssertUserViewModelExsistsService: jest.Mocked<AssertUserViewModelExsistsService>;
 
-  beforeEach(() => {
-    mockUserReadRepository = {
-      findById: jest.fn(),
-      findByCriteria: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    };
+	beforeEach(() => {
+		mockUserReadRepository = {
+			findById: jest.fn(),
+			findByCriteria: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		};
 
-    mockAssertUserViewModelExsistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertUserViewModelExsistsService>;
+		mockAssertUserViewModelExsistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertUserViewModelExsistsService>;
 
-    handler = new UserUpdatedEventHandler(
-      mockUserReadRepository,
-      mockAssertUserViewModelExsistsService,
-    );
-  });
+		handler = new UserUpdatedEventHandler(
+			mockUserReadRepository,
+			mockAssertUserViewModelExsistsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('handle', () => {
-    it('should update and save user view model when event is handled', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const updateData = {
-        name: 'Jane',
-        lastName: 'Smith',
-      };
+	describe('handle', () => {
+		it('should update and save user view model when event is handled', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const updateData = {
+				name: 'Jane',
+				lastName: 'Smith',
+			};
 
-      const event = new UserUpdatedEvent(
-        {
-          aggregateRootId: userId,
-          aggregateRootType: 'UserAggregate',
-          entityId: userId,
-          entityType: 'UserAggregate',
-          eventType: 'UserUpdatedEvent',
-        },
-        updateData,
-      );
+			const event = new UserUpdatedEvent(
+				{
+					aggregateRootId: userId,
+					aggregateRootType: 'UserAggregate',
+					entityId: userId,
+					entityType: 'UserAggregate',
+					eventType: 'UserUpdatedEvent',
+				},
+				updateData,
+			);
 
-      const existingViewModelDto: IUserCreateViewModelDto = {
-        id: userId,
-        userName: 'johndoe',
-        name: 'John',
-        lastName: 'Doe',
-        role: UserRoleEnum.USER,
-        status: UserStatusEnum.ACTIVE,
-        bio: null,
-        avatarUrl: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+			const existingViewModelDto: IUserCreateViewModelDto = {
+				id: userId,
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
+				role: UserRoleEnum.USER,
+				status: UserStatusEnum.ACTIVE,
+				bio: null,
+				avatarUrl: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const existingViewModel = new UserViewModel(existingViewModelDto);
+			const existingViewModel = new UserViewModel(existingViewModelDto);
 
-      const updateSpy = jest.spyOn(existingViewModel, 'update');
-      mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
-        existingViewModel,
-      );
-      mockUserReadRepository.save.mockResolvedValue(undefined);
+			const updateSpy = jest.spyOn(existingViewModel, 'update');
+			mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
+				existingViewModel,
+			);
+			mockUserReadRepository.save.mockResolvedValue(undefined);
 
-      await handler.handle(event);
+			await handler.handle(event);
 
-      expect(
-        mockAssertUserViewModelExsistsService.execute,
-      ).toHaveBeenCalledWith(userId);
-      expect(
-        mockAssertUserViewModelExsistsService.execute,
-      ).toHaveBeenCalledTimes(1);
-      expect(updateSpy).toHaveBeenCalledWith(updateData);
-      expect(mockUserReadRepository.save).toHaveBeenCalledWith(
-        existingViewModel,
-      );
-      expect(mockUserReadRepository.save).toHaveBeenCalledTimes(1);
+			expect(
+				mockAssertUserViewModelExsistsService.execute,
+			).toHaveBeenCalledWith(userId);
+			expect(
+				mockAssertUserViewModelExsistsService.execute,
+			).toHaveBeenCalledTimes(1);
+			expect(updateSpy).toHaveBeenCalledWith(updateData);
+			expect(mockUserReadRepository.save).toHaveBeenCalledWith(
+				existingViewModel,
+			);
+			expect(mockUserReadRepository.save).toHaveBeenCalledTimes(1);
 
-      updateSpy.mockRestore();
-    });
+			updateSpy.mockRestore();
+		});
 
-    it('should throw exception when user view model does not exist', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const updateData = {
-        name: 'Jane',
-      };
+		it('should throw exception when user view model does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const updateData = {
+				name: 'Jane',
+			};
 
-      const event = new UserUpdatedEvent(
-        {
-          aggregateRootId: userId,
-          aggregateRootType: 'UserAggregate',
-          entityId: userId,
-          entityType: 'UserAggregate',
-          eventType: 'UserUpdatedEvent',
-        },
-        updateData,
-      );
+			const event = new UserUpdatedEvent(
+				{
+					aggregateRootId: userId,
+					aggregateRootType: 'UserAggregate',
+					entityId: userId,
+					entityType: 'UserAggregate',
+					eventType: 'UserUpdatedEvent',
+				},
+				updateData,
+			);
 
-      const error = new UserNotFoundException(userId);
+			const error = new UserNotFoundException(userId);
 
-      mockAssertUserViewModelExsistsService.execute.mockRejectedValue(error);
+			mockAssertUserViewModelExsistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.handle(event)).rejects.toThrow(error);
-      expect(
-        mockAssertUserViewModelExsistsService.execute,
-      ).toHaveBeenCalledWith(userId);
-      expect(mockUserReadRepository.save).not.toHaveBeenCalled();
-    });
+			await expect(handler.handle(event)).rejects.toThrow(error);
+			expect(
+				mockAssertUserViewModelExsistsService.execute,
+			).toHaveBeenCalledWith(userId);
+			expect(mockUserReadRepository.save).not.toHaveBeenCalled();
+		});
 
-    it('should update only provided fields in view model', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const updateData = {
-        bio: 'Updated bio',
-        avatarUrl: 'https://example.com/new-avatar.jpg',
-      };
+		it('should update only provided fields in view model', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const updateData = {
+				bio: 'Updated bio',
+				avatarUrl: 'https://example.com/new-avatar.jpg',
+			};
 
-      const event = new UserUpdatedEvent(
-        {
-          aggregateRootId: userId,
-          aggregateRootType: 'UserAggregate',
-          entityId: userId,
-          entityType: 'UserAggregate',
-          eventType: 'UserUpdatedEvent',
-        },
-        updateData,
-      );
+			const event = new UserUpdatedEvent(
+				{
+					aggregateRootId: userId,
+					aggregateRootType: 'UserAggregate',
+					entityId: userId,
+					entityType: 'UserAggregate',
+					eventType: 'UserUpdatedEvent',
+				},
+				updateData,
+			);
 
-      const existingViewModelDto: IUserCreateViewModelDto = {
-        id: userId,
-        userName: 'johndoe',
-        name: 'John',
-        lastName: 'Doe',
-        role: UserRoleEnum.USER,
-        status: UserStatusEnum.ACTIVE,
-        bio: null,
-        avatarUrl: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+			const existingViewModelDto: IUserCreateViewModelDto = {
+				id: userId,
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
+				role: UserRoleEnum.USER,
+				status: UserStatusEnum.ACTIVE,
+				bio: null,
+				avatarUrl: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const existingViewModel = new UserViewModel(existingViewModelDto);
+			const existingViewModel = new UserViewModel(existingViewModelDto);
 
-      const updateSpy = jest.spyOn(existingViewModel, 'update');
-      mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
-        existingViewModel,
-      );
-      mockUserReadRepository.save.mockResolvedValue(undefined);
+			const updateSpy = jest.spyOn(existingViewModel, 'update');
+			mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
+				existingViewModel,
+			);
+			mockUserReadRepository.save.mockResolvedValue(undefined);
 
-      await handler.handle(event);
+			await handler.handle(event);
 
-      expect(updateSpy).toHaveBeenCalledWith(updateData);
-      expect(existingViewModel.bio).toBe('Updated bio');
-      expect(existingViewModel.avatarUrl).toBe(
-        'https://example.com/new-avatar.jpg',
-      );
+			expect(updateSpy).toHaveBeenCalledWith(updateData);
+			expect(existingViewModel.bio).toBe('Updated bio');
+			expect(existingViewModel.avatarUrl).toBe(
+				'https://example.com/new-avatar.jpg',
+			);
 
-      updateSpy.mockRestore();
-    });
+			updateSpy.mockRestore();
+		});
 
-    it('should update role and status when provided', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const updateData = {
-        role: UserRoleEnum.ADMIN,
-        status: UserStatusEnum.INACTIVE,
-      };
+		it('should update role and status when provided', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const updateData = {
+				role: UserRoleEnum.ADMIN,
+				status: UserStatusEnum.INACTIVE,
+			};
 
-      const event = new UserUpdatedEvent(
-        {
-          aggregateRootId: userId,
-          aggregateRootType: 'UserAggregate',
-          entityId: userId,
-          entityType: 'UserAggregate',
-          eventType: 'UserUpdatedEvent',
-        },
-        updateData,
-      );
+			const event = new UserUpdatedEvent(
+				{
+					aggregateRootId: userId,
+					aggregateRootType: 'UserAggregate',
+					entityId: userId,
+					entityType: 'UserAggregate',
+					eventType: 'UserUpdatedEvent',
+				},
+				updateData,
+			);
 
-      const existingViewModelDto: IUserCreateViewModelDto = {
-        id: userId,
-        userName: 'johndoe',
-        name: 'John',
-        lastName: 'Doe',
-        role: UserRoleEnum.USER,
-        status: UserStatusEnum.ACTIVE,
-        bio: null,
-        avatarUrl: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+			const existingViewModelDto: IUserCreateViewModelDto = {
+				id: userId,
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
+				role: UserRoleEnum.USER,
+				status: UserStatusEnum.ACTIVE,
+				bio: null,
+				avatarUrl: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const existingViewModel = new UserViewModel(existingViewModelDto);
+			const existingViewModel = new UserViewModel(existingViewModelDto);
 
-      const updateSpy = jest.spyOn(existingViewModel, 'update');
-      mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
-        existingViewModel,
-      );
-      mockUserReadRepository.save.mockResolvedValue(undefined);
+			const updateSpy = jest.spyOn(existingViewModel, 'update');
+			mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
+				existingViewModel,
+			);
+			mockUserReadRepository.save.mockResolvedValue(undefined);
 
-      await handler.handle(event);
+			await handler.handle(event);
 
-      expect(updateSpy).toHaveBeenCalledWith(updateData);
-      expect(existingViewModel.role).toBe(UserRoleEnum.ADMIN);
-      expect(existingViewModel.status).toBe(UserStatusEnum.INACTIVE);
+			expect(updateSpy).toHaveBeenCalledWith(updateData);
+			expect(existingViewModel.role).toBe(UserRoleEnum.ADMIN);
+			expect(existingViewModel.status).toBe(UserStatusEnum.INACTIVE);
 
-      updateSpy.mockRestore();
-    });
+			updateSpy.mockRestore();
+		});
 
-    it('should use correct aggregate id from event metadata', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const updateData = {
-        name: 'Jane',
-      };
+		it('should use correct aggregate id from event metadata', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const updateData = {
+				name: 'Jane',
+			};
 
-      const event = new UserUpdatedEvent(
-        {
-          aggregateRootId: userId,
-          aggregateRootType: 'UserAggregate',
-          entityId: userId,
-          entityType: 'UserAggregate',
-          eventType: 'UserUpdatedEvent',
-        },
-        updateData,
-      );
+			const event = new UserUpdatedEvent(
+				{
+					aggregateRootId: userId,
+					aggregateRootType: 'UserAggregate',
+					entityId: userId,
+					entityType: 'UserAggregate',
+					eventType: 'UserUpdatedEvent',
+				},
+				updateData,
+			);
 
-      const existingViewModelDto: IUserCreateViewModelDto = {
-        id: userId,
-        userName: 'johndoe',
-        name: 'John',
-        lastName: 'Doe',
-        role: UserRoleEnum.USER,
-        status: UserStatusEnum.ACTIVE,
-        bio: null,
-        avatarUrl: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+			const existingViewModelDto: IUserCreateViewModelDto = {
+				id: userId,
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
+				role: UserRoleEnum.USER,
+				status: UserStatusEnum.ACTIVE,
+				bio: null,
+				avatarUrl: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const existingViewModel = new UserViewModel(existingViewModelDto);
+			const existingViewModel = new UserViewModel(existingViewModelDto);
 
-      mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
-        existingViewModel,
-      );
-      mockUserReadRepository.save.mockResolvedValue(undefined);
+			mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
+				existingViewModel,
+			);
+			mockUserReadRepository.save.mockResolvedValue(undefined);
 
-      await handler.handle(event);
+			await handler.handle(event);
 
-      expect(event.aggregateRootId).toBe(userId);
-      expect(
-        mockAssertUserViewModelExsistsService.execute,
-      ).toHaveBeenCalledWith(userId);
-    });
+			expect(event.aggregateRootId).toBe(userId);
+			expect(
+				mockAssertUserViewModelExsistsService.execute,
+			).toHaveBeenCalledWith(userId);
+		});
 
-    it('should save view model after updating it', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const updateData = {
-        name: 'Jane',
-      };
+		it('should save view model after updating it', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const updateData = {
+				name: 'Jane',
+			};
 
-      const event = new UserUpdatedEvent(
-        {
-          aggregateRootId: userId,
-          aggregateRootType: 'UserAggregate',
-          entityId: userId,
-          entityType: 'UserAggregate',
-          eventType: 'UserUpdatedEvent',
-        },
-        updateData,
-      );
+			const event = new UserUpdatedEvent(
+				{
+					aggregateRootId: userId,
+					aggregateRootType: 'UserAggregate',
+					entityId: userId,
+					entityType: 'UserAggregate',
+					eventType: 'UserUpdatedEvent',
+				},
+				updateData,
+			);
 
-      const existingViewModelDto: IUserCreateViewModelDto = {
-        id: userId,
-        userName: 'johndoe',
-        name: 'John',
-        lastName: 'Doe',
-        role: UserRoleEnum.USER,
-        status: UserStatusEnum.ACTIVE,
-        bio: null,
-        avatarUrl: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+			const existingViewModelDto: IUserCreateViewModelDto = {
+				id: userId,
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
+				role: UserRoleEnum.USER,
+				status: UserStatusEnum.ACTIVE,
+				bio: null,
+				avatarUrl: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      const existingViewModel = new UserViewModel(existingViewModelDto);
+			const existingViewModel = new UserViewModel(existingViewModelDto);
 
-      const updateSpy = jest.spyOn(existingViewModel, 'update');
-      mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
-        existingViewModel,
-      );
-      mockUserReadRepository.save.mockResolvedValue(undefined);
+			const updateSpy = jest.spyOn(existingViewModel, 'update');
+			mockAssertUserViewModelExsistsService.execute.mockResolvedValue(
+				existingViewModel,
+			);
+			mockUserReadRepository.save.mockResolvedValue(undefined);
 
-      await handler.handle(event);
+			await handler.handle(event);
 
-      const assertOrder =
-        mockAssertUserViewModelExsistsService.execute.mock
-          .invocationCallOrder[0];
-      const updateOrder = updateSpy.mock.invocationCallOrder[0];
-      const saveOrder = mockUserReadRepository.save.mock.invocationCallOrder[0];
+			const assertOrder =
+				mockAssertUserViewModelExsistsService.execute.mock
+					.invocationCallOrder[0];
+			const updateOrder = updateSpy.mock.invocationCallOrder[0];
+			const saveOrder = mockUserReadRepository.save.mock.invocationCallOrder[0];
 
-      expect(assertOrder).toBeLessThan(updateOrder);
-      expect(updateOrder).toBeLessThan(saveOrder);
+			expect(assertOrder).toBeLessThan(updateOrder);
+			expect(updateOrder).toBeLessThan(saveOrder);
 
-      updateSpy.mockRestore();
-    });
-  });
+			updateSpy.mockRestore();
+		});
+	});
 });

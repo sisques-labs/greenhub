@@ -9,46 +9,46 @@ import { HealthViewModel } from '@/support/health/domain/view-models/health.view
 
 @Injectable()
 export class HealthCheckService
-  implements IBaseService<HealthCheckQuery, HealthViewModel>
+	implements IBaseService<HealthCheckQuery, HealthViewModel>
 {
-  private readonly logger = new Logger(HealthCheckService.name);
+	private readonly logger = new Logger(HealthCheckService.name);
 
-  constructor(
-    private readonly healthViewModelFactory: HealthViewModelFactory,
-    private readonly healthWriteDatabaseCheckService: HealthWriteDatabaseCheckService,
-    private readonly healthReadDatabaseCheckService: HealthReadDatabaseCheckService,
-  ) {}
+	constructor(
+		private readonly healthViewModelFactory: HealthViewModelFactory,
+		private readonly healthWriteDatabaseCheckService: HealthWriteDatabaseCheckService,
+		private readonly healthReadDatabaseCheckService: HealthReadDatabaseCheckService,
+	) {}
 
-  /**
-   * Executes the health check operation.
-   *
-   * Logs the health check process and returns a HealthViewModel
-   * indicating the current status of the application.
-   *
-   * @returns {Promise<HealthViewModel>} The view model representing the health status.
-   */
-  async execute(): Promise<HealthViewModel> {
-    this.logger.log('Checking health');
+	/**
+	 * Executes the health check operation.
+	 *
+	 * Logs the health check process and returns a HealthViewModel
+	 * indicating the current status of the application.
+	 *
+	 * @returns {Promise<HealthViewModel>} The view model representing the health status.
+	 */
+	async execute(): Promise<HealthViewModel> {
+		this.logger.log('Checking health');
 
-    // 01: Check write database connection
-    const writeDatabaseStatus =
-      await this.healthWriteDatabaseCheckService.execute();
+		// 01: Check write database connection
+		const writeDatabaseStatus =
+			await this.healthWriteDatabaseCheckService.execute();
 
-    // 02: Check read database connection
-    const readDatabaseStatus =
-      await this.healthReadDatabaseCheckService.execute();
+		// 02: Check read database connection
+		const readDatabaseStatus =
+			await this.healthReadDatabaseCheckService.execute();
 
-    // 03: Determine overall status based on database checks
-    const overallStatus =
-      writeDatabaseStatus === HealthStatusEnum.OK &&
-      readDatabaseStatus === HealthStatusEnum.OK
-        ? HealthStatusEnum.OK
-        : HealthStatusEnum.ERROR;
+		// 03: Determine overall status based on database checks
+		const overallStatus =
+			writeDatabaseStatus === HealthStatusEnum.OK &&
+			readDatabaseStatus === HealthStatusEnum.OK
+				? HealthStatusEnum.OK
+				: HealthStatusEnum.ERROR;
 
-    return this.healthViewModelFactory.create({
-      status: overallStatus,
-      writeDatabaseStatus,
-      readDatabaseStatus,
-    });
-  }
+		return this.healthViewModelFactory.create({
+			status: overallStatus,
+			writeDatabaseStatus,
+			readDatabaseStatus,
+		});
+	}
 }

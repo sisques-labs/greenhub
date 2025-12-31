@@ -3,11 +3,11 @@ import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-insta
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class SagaInstanceChangeStatusCommand {
-  readonly id: SagaInstanceUuidValueObject;
-  readonly status: SagaInstanceStatusValueObject;
+	readonly id: SagaInstanceUuidValueObject;
+	readonly status: SagaInstanceStatusValueObject;
 
-  constructor(props: ISagaInstanceChangeStatusCommandDto) {
-    this.id = new SagaInstanceUuidValueObject(props.id);
-    this.status = new SagaInstanceStatusValueObject(props.status);
-  }
+	constructor(props: ISagaInstanceChangeStatusCommandDto) {
+		this.id = new SagaInstanceUuidValueObject(props.id);
+		this.status = new SagaInstanceStatusValueObject(props.status);
+	}
 }

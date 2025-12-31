@@ -20,28 +20,28 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class OverviewQueriesResolver {
-  private readonly logger = new Logger(OverviewQueriesResolver.name);
+	private readonly logger = new Logger(OverviewQueriesResolver.name);
 
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly overviewGraphQLMapper: OverviewGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly queryBus: QueryBus,
+		private readonly overviewGraphQLMapper: OverviewGraphQLMapper,
+	) {}
 
-  /**
-   * Finds the overview with all system metrics.
-   *
-   * @returns A promise resolving to the overview if found, null otherwise
-   */
-  @Query(() => OverviewResponseDto, { nullable: true })
-  async overviewFind(): Promise<OverviewResponseDto | null> {
-    this.logger.log('Finding overview');
+	/**
+	 * Finds the overview with all system metrics.
+	 *
+	 * @returns A promise resolving to the overview if found, null otherwise
+	 */
+	@Query(() => OverviewResponseDto, { nullable: true })
+	async overviewFind(): Promise<OverviewResponseDto | null> {
+		this.logger.log('Finding overview');
 
-    // 01: Execute query
-    const result = await this.queryBus.execute(
-      new OverviewFindViewModelQuery(),
-    );
+		// 01: Execute query
+		const result = await this.queryBus.execute(
+			new OverviewFindViewModelQuery(),
+		);
 
-    // 02: Convert to response DTO
-    return result ? this.overviewGraphQLMapper.toResponseDto(result) : null;
-  }
+		// 02: Convert to response DTO
+		return result ? this.overviewGraphQLMapper.toResponseDto(result) : null;
+	}
 }

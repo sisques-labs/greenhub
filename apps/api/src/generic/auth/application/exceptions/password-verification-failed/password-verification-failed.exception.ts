@@ -5,7 +5,7 @@ import { BaseApplicationException } from '@/shared/application/exceptions/base-a
  * Thrown when password verification operation fails
  */
 export class PasswordVerificationFailedException extends BaseApplicationException {
-  constructor() {
-    super('Password verification failed');
-  }
+	constructor() {
+		super('Password verification failed');
+	}
 }

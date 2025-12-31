@@ -17,76 +17,76 @@ import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/
  */
 @Injectable()
 export class GrowingUnitTypeormMapper {
-  private readonly logger = new Logger(GrowingUnitTypeormMapper.name);
+	private readonly logger = new Logger(GrowingUnitTypeormMapper.name);
 
-  constructor(
-    private readonly growingUnitAggregateFactory: GrowingUnitAggregateFactory,
-    private readonly plantTypeormMapper: PlantTypeormMapper,
-  ) {}
+	constructor(
+		private readonly growingUnitAggregateFactory: GrowingUnitAggregateFactory,
+		private readonly plantTypeormMapper: PlantTypeormMapper,
+	) {}
 
-  /**
-   * Converts a TypeORM entity to a growing unit aggregate.
-   *
-   * @param growingUnitEntity - The TypeORM entity to convert
-   * @returns The growing unit aggregate
-   */
-  toDomainEntity(
-    growingUnitEntity: GrowingUnitTypeormEntity,
-  ): GrowingUnitAggregate {
-    this.logger.log(
-      `Converting TypeORM entity to domain entity with id ${growingUnitEntity.id}`,
-    );
+	/**
+	 * Converts a TypeORM entity to a growing unit aggregate.
+	 *
+	 * @param growingUnitEntity - The TypeORM entity to convert
+	 * @returns The growing unit aggregate
+	 */
+	toDomainEntity(
+		growingUnitEntity: GrowingUnitTypeormEntity,
+	): GrowingUnitAggregate {
+		this.logger.log(
+			`Converting TypeORM entity to domain entity with id ${growingUnitEntity.id}`,
+		);
 
-    const plants =
-      growingUnitEntity.plants?.map((plant) =>
-        this.plantTypeormMapper.toDomainEntity(plant),
-      ) ?? [];
+		const plants =
+			growingUnitEntity.plants?.map((plant) =>
+				this.plantTypeormMapper.toDomainEntity(plant),
+			) ?? [];
 
-    const dimensionsValueObject = DimensionsValueObject.fromNullable({
-      length: growingUnitEntity.length,
-      width: growingUnitEntity.width,
-      height: growingUnitEntity.height,
-      unit: growingUnitEntity.unit,
-    });
+		const dimensionsValueObject = DimensionsValueObject.fromNullable({
+			length: growingUnitEntity.length,
+			width: growingUnitEntity.width,
+			height: growingUnitEntity.height,
+			unit: growingUnitEntity.unit,
+		});
 
-    return this.growingUnitAggregateFactory.fromPrimitives({
-      id: growingUnitEntity.id,
-      name: growingUnitEntity.name,
-      type: growingUnitEntity.type,
-      capacity: growingUnitEntity.capacity,
-      dimensions: dimensionsValueObject?.toPrimitives() ?? null,
-      plants: plants.map((plant) => plant.toPrimitives()),
-    });
-  }
+		return this.growingUnitAggregateFactory.fromPrimitives({
+			id: growingUnitEntity.id,
+			name: growingUnitEntity.name,
+			type: growingUnitEntity.type,
+			capacity: growingUnitEntity.capacity,
+			dimensions: dimensionsValueObject?.toPrimitives() ?? null,
+			plants: plants.map((plant) => plant.toPrimitives()),
+		});
+	}
 
-  /**
-   * Converts a plant aggregate to a TypeORM entity.
-   *
-   * @param growingUnit - The growing unit aggregate to convert
-   * @returns The TypeORM entity
-   */
-  toTypeormEntity(growingUnit: GrowingUnitAggregate): GrowingUnitTypeormEntity {
-    this.logger.log(
-      `Converting domain entity with id ${growingUnit.id.value} to TypeORM entity`,
-    );
+	/**
+	 * Converts a plant aggregate to a TypeORM entity.
+	 *
+	 * @param growingUnit - The growing unit aggregate to convert
+	 * @returns The TypeORM entity
+	 */
+	toTypeormEntity(growingUnit: GrowingUnitAggregate): GrowingUnitTypeormEntity {
+		this.logger.log(
+			`Converting domain entity with id ${growingUnit.id.value} to TypeORM entity`,
+		);
 
-    const primitives = growingUnit.toPrimitives();
+		const primitives = growingUnit.toPrimitives();
 
-    const entity = new GrowingUnitTypeormEntity();
+		const entity = new GrowingUnitTypeormEntity();
 
-    entity.id = primitives.id;
-    entity.name = primitives.name;
-    entity.type = primitives.type as GrowingUnitTypeEnum;
-    entity.capacity = primitives.capacity;
-    entity.length = primitives.dimensions?.length ?? null;
-    entity.width = primitives.dimensions?.width ?? null;
-    entity.height = primitives.dimensions?.height ?? null;
-    entity.unit =
-      (primitives.dimensions?.unit as LengthUnitEnum | null) ?? null;
-    entity.plants = primitives.plants.map((plant) =>
-      this.plantTypeormMapper.toTypeormEntityFromPrimitives(plant),
-    );
+		entity.id = primitives.id;
+		entity.name = primitives.name;
+		entity.type = primitives.type as GrowingUnitTypeEnum;
+		entity.capacity = primitives.capacity;
+		entity.length = primitives.dimensions?.length ?? null;
+		entity.width = primitives.dimensions?.width ?? null;
+		entity.height = primitives.dimensions?.height ?? null;
+		entity.unit =
+			(primitives.dimensions?.unit as LengthUnitEnum | null) ?? null;
+		entity.plants = primitives.plants.map((plant) =>
+			this.plantTypeormMapper.toTypeormEntityFromPrimitives(plant),
+		);
 
-    return entity;
-  }
+		return entity;
+	}
 }

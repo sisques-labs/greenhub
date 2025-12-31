@@ -6,49 +6,49 @@
  * across the application.
  */
 export abstract class BaseViewModel {
-  protected readonly _id: string;
-  protected readonly _createdAt: Date;
-  protected _updatedAt: Date;
+	protected readonly _id: string;
+	protected readonly _createdAt: Date;
+	protected _updatedAt: Date;
 
-  constructor(props: { id: string; createdAt: Date; updatedAt: Date }) {
-    this._id = props.id;
-    this._createdAt = props.createdAt;
-    this._updatedAt = props.updatedAt;
-  }
+	constructor(props: { id: string; createdAt: Date; updatedAt: Date }) {
+		this._id = props.id;
+		this._createdAt = props.createdAt;
+		this._updatedAt = props.updatedAt;
+	}
 
-  /**
-   * Get the id of the view model.
-   *
-   * @returns The id of the view model.
-   */
-  public get id(): string {
-    return this._id;
-  }
+	/**
+	 * Get the id of the view model.
+	 *
+	 * @returns The id of the view model.
+	 */
+	public get id(): string {
+		return this._id;
+	}
 
-  /**
-   * Get the created at of the view model.
-   *
-   * @returns The created at of the view model.
-   */
-  public get createdAt(): Date {
-    return this._createdAt;
-  }
+	/**
+	 * Get the created at of the view model.
+	 *
+	 * @returns The created at of the view model.
+	 */
+	public get createdAt(): Date {
+		return this._createdAt;
+	}
 
-  /**
-   * Get the updated at of the view model.
-   *
-   * @returns The updated at of the view model.
-   */
-  public get updatedAt(): Date {
-    return this._updatedAt;
-  }
+	/**
+	 * Get the updated at of the view model.
+	 *
+	 * @returns The updated at of the view model.
+	 */
+	public get updatedAt(): Date {
+		return this._updatedAt;
+	}
 
-  /**
-   * Set the updated at of the view model.
-   *
-   * @param updatedAt The updated at of the view model.
-   */
-  public set updatedAt(updatedAt: Date) {
-    this._updatedAt = updatedAt;
-  }
+	/**
+	 * Set the updated at of the view model.
+	 *
+	 * @param updatedAt The updated at of the view model.
+	 */
+	public set updatedAt(updatedAt: Date) {
+		this._updatedAt = updatedAt;
+	}
 }

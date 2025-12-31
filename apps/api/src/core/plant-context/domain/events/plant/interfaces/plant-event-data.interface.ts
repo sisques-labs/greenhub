@@ -14,24 +14,24 @@
  * @property status - Current status of the plant.
  */
 export interface IPlantEventData {
-  /** Unique identifier for the plant. */
-  id: string;
+	/** Unique identifier for the plant. */
+	id: string;
 
-  /** Unique identifier for the growing unit containing this plant. */
-  growingUnitId: string;
+	/** Unique identifier for the growing unit containing this plant. */
+	growingUnitId: string;
 
-  /** Name of the plant. */
-  name: string;
+	/** Name of the plant. */
+	name: string;
 
-  /** Species of the plant. */
-  species: string;
+	/** Species of the plant. */
+	species: string;
 
-  /** Date when the plant was planted (nullable). */
-  plantedDate: Date | null;
+	/** Date when the plant was planted (nullable). */
+	plantedDate: Date | null;
 
-  /** Additional notes about the plant (nullable). */
-  notes: string | null;
+	/** Additional notes about the plant (nullable). */
+	notes: string | null;
 
-  /** Current status of the plant. */
-  status: string;
+	/** Current status of the plant. */
+	status: string;
 }

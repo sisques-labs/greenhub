@@ -6,8 +6,8 @@ import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/appl
 import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import {
-  SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-  SagaLogWriteRepository,
+	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+	SagaLogWriteRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
 import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
 import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
@@ -18,146 +18,146 @@ import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifier
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('SagaLogDeleteCommandHandler', () => {
-  let handler: SagaLogDeleteCommandHandler;
-  let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
+	let handler: SagaLogDeleteCommandHandler;
+	let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
 
-  beforeEach(async () => {
-    mockSagaLogWriteRepository = {
-      findById: jest.fn(),
-      findBySagaInstanceId: jest.fn(),
-      findBySagaStepId: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<SagaLogWriteRepository>;
+	beforeEach(async () => {
+		mockSagaLogWriteRepository = {
+			findById: jest.fn(),
+			findBySagaInstanceId: jest.fn(),
+			findBySagaStepId: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<SagaLogWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockAssertSagaLogExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaLogExistsService>;
+		mockAssertSagaLogExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaLogExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        SagaLogDeleteCommandHandler,
-        {
-          provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-          useValue: mockSagaLogWriteRepository,
-        },
-        {
-          provide: EventBus,
-          useValue: mockEventBus,
-        },
-        {
-          provide: AssertSagaLogExistsService,
-          useValue: mockAssertSagaLogExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				SagaLogDeleteCommandHandler,
+				{
+					provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+					useValue: mockSagaLogWriteRepository,
+				},
+				{
+					provide: EventBus,
+					useValue: mockEventBus,
+				},
+				{
+					provide: AssertSagaLogExistsService,
+					useValue: mockAssertSagaLogExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<SagaLogDeleteCommandHandler>(
-      SagaLogDeleteCommandHandler,
-    );
-  });
+		handler = module.get<SagaLogDeleteCommandHandler>(
+			SagaLogDeleteCommandHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaLogAggregate = (): SagaLogAggregate => {
-    const now = new Date();
-    return new SagaLogAggregate(
-      {
-        id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        sagaInstanceId: new SagaInstanceUuidValueObject(
-          '223e4567-e89b-12d3-a456-426614174000',
-        ),
-        sagaStepId: new SagaStepUuidValueObject(
-          '323e4567-e89b-12d3-a456-426614174000',
-        ),
-        type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-        message: new SagaLogMessageValueObject('Test log message'),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaLogAggregate = (): SagaLogAggregate => {
+		const now = new Date();
+		return new SagaLogAggregate(
+			{
+				id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				sagaInstanceId: new SagaInstanceUuidValueObject(
+					'223e4567-e89b-12d3-a456-426614174000',
+				),
+				sagaStepId: new SagaStepUuidValueObject(
+					'323e4567-e89b-12d3-a456-426614174000',
+				),
+				type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
+				message: new SagaLogMessageValueObject('Test log message'),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should delete saga log successfully when saga log exists', async () => {
-      const existingSagaLog = createSagaLogAggregate();
-      const deleteCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-      };
+	describe('execute', () => {
+		it('should delete saga log successfully when saga log exists', async () => {
+			const existingSagaLog = createSagaLogAggregate();
+			const deleteCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+			};
 
-      const command = new SagaLogDeleteCommand(deleteCommandDto);
-      const deleteSpy = jest.spyOn(existingSagaLog, 'delete');
-      const commitSpy = jest.spyOn(existingSagaLog, 'commit');
+			const command = new SagaLogDeleteCommand(deleteCommandDto);
+			const deleteSpy = jest.spyOn(existingSagaLog, 'delete');
+			const commitSpy = jest.spyOn(existingSagaLog, 'commit');
 
-      mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
-      mockSagaLogWriteRepository.delete.mockResolvedValue(true);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
+			mockSagaLogWriteRepository.delete.mockResolvedValue(true);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
-        command.id.value,
-      );
-      expect(deleteSpy).toHaveBeenCalled();
-      expect(mockSagaLogWriteRepository.delete).toHaveBeenCalledWith(
-        existingSagaLog.id.value,
-      );
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(
-        existingSagaLog.getUncommittedEvents(),
-      );
-      expect(commitSpy).toHaveBeenCalled();
-    });
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
+				command.id.value,
+			);
+			expect(deleteSpy).toHaveBeenCalled();
+			expect(mockSagaLogWriteRepository.delete).toHaveBeenCalledWith(
+				existingSagaLog.id.value,
+			);
+			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+				existingSagaLog.getUncommittedEvents(),
+			);
+			expect(commitSpy).toHaveBeenCalled();
+		});
 
-    it('should throw error when saga log does not exist', async () => {
-      const deleteCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-      };
+		it('should throw error when saga log does not exist', async () => {
+			const deleteCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+			};
 
-      const command = new SagaLogDeleteCommand(deleteCommandDto);
-      const error = new Error('Saga log not found');
+			const command = new SagaLogDeleteCommand(deleteCommandDto);
+			const error = new Error('Saga log not found');
 
-      mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
+			mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(command)).rejects.toThrow(error);
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
-        command.id.value,
-      );
-      expect(mockSagaLogWriteRepository.delete).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
-    });
+			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
+				command.id.value,
+			);
+			expect(mockSagaLogWriteRepository.delete).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+		});
 
-    it('should publish SagaLogDeletedEvent after deleting', async () => {
-      const existingSagaLog = createSagaLogAggregate();
-      const deleteCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-      };
+		it('should publish SagaLogDeletedEvent after deleting', async () => {
+			const existingSagaLog = createSagaLogAggregate();
+			const deleteCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+			};
 
-      const command = new SagaLogDeleteCommand(deleteCommandDto);
+			const command = new SagaLogDeleteCommand(deleteCommandDto);
 
-      mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
-      mockSagaLogWriteRepository.delete.mockResolvedValue(true);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
+			mockSagaLogWriteRepository.delete.mockResolvedValue(true);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockEventBus.publishAll).toHaveBeenCalled();
-      const publishedEvents = existingSagaLog.getUncommittedEvents();
-      expect(Array.isArray(publishedEvents)).toBe(true);
-      if (publishedEvents.length > 0) {
-        expect(
-          publishedEvents.some((e) => e instanceof SagaLogDeletedEvent),
-        ).toBe(true);
-      }
-    });
-  });
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			const publishedEvents = existingSagaLog.getUncommittedEvents();
+			expect(Array.isArray(publishedEvents)).toBe(true);
+			if (publishedEvents.length > 0) {
+				expect(
+					publishedEvents.some((e) => e instanceof SagaLogDeletedEvent),
+				).toBe(true);
+			}
+		});
+	});
 });

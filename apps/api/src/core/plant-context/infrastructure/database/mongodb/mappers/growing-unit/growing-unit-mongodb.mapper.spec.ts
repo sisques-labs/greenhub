@@ -10,350 +10,350 @@ import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
 describe('GrowingUnitMongoDBMapper', () => {
-  let mapper: GrowingUnitMongoDBMapper;
-  let mockGrowingUnitViewModelFactory: jest.Mocked<GrowingUnitViewModelFactory>;
-  let mockPlantMongoDBMapper: jest.Mocked<PlantMongoDBMapper>;
+	let mapper: GrowingUnitMongoDBMapper;
+	let mockGrowingUnitViewModelFactory: jest.Mocked<GrowingUnitViewModelFactory>;
+	let mockPlantMongoDBMapper: jest.Mocked<PlantMongoDBMapper>;
 
-  beforeEach(() => {
-    mockGrowingUnitViewModelFactory = {
-      create: jest.fn(),
-      fromAggregate: jest.fn(),
-      fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<GrowingUnitViewModelFactory>;
+	beforeEach(() => {
+		mockGrowingUnitViewModelFactory = {
+			create: jest.fn(),
+			fromAggregate: jest.fn(),
+			fromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<GrowingUnitViewModelFactory>;
 
-    mockPlantMongoDBMapper = {
-      toViewModel: jest.fn(),
-      toMongoData: jest.fn(),
-    } as unknown as jest.Mocked<PlantMongoDBMapper>;
+		mockPlantMongoDBMapper = {
+			toViewModel: jest.fn(),
+			toMongoData: jest.fn(),
+		} as unknown as jest.Mocked<PlantMongoDBMapper>;
 
-    mapper = new GrowingUnitMongoDBMapper(
-      mockGrowingUnitViewModelFactory,
-      mockPlantMongoDBMapper,
-    );
-  });
+		mapper = new GrowingUnitMongoDBMapper(
+			mockGrowingUnitViewModelFactory,
+			mockPlantMongoDBMapper,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('toViewModel', () => {
-    it('should convert MongoDB document to view model with all properties', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
-      const createdAt = new Date('2024-01-01');
-      const updatedAt = new Date('2024-01-02');
+	describe('toViewModel', () => {
+		it('should convert MongoDB document to view model with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
-      const plantMongoDoc: PlantMongoDbDto = {
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.PLANTED,
-        createdAt,
-        updatedAt,
-      };
+			const plantMongoDoc: PlantMongoDbDto = {
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.PLANTED,
+				createdAt,
+				updatedAt,
+			};
 
-      const mongoDoc: GrowingUnitMongoDbDto = {
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 2.0,
-          width: 1.0,
-          height: 0.5,
-          unit: LengthUnitEnum.METER,
-        },
-        plants: [plantMongoDoc],
-        remainingCapacity: 9,
-        numberOfPlants: 1,
-        volume: 1.0,
-        createdAt,
-        updatedAt,
-      };
+			const mongoDoc: GrowingUnitMongoDbDto = {
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				},
+				plants: [plantMongoDoc],
+				remainingCapacity: 9,
+				numberOfPlants: 1,
+				volume: 1.0,
+				createdAt,
+				updatedAt,
+			};
 
-      const plantViewModel = new PlantViewModel({
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.PLANTED,
-        createdAt,
-        updatedAt,
-      });
+			const plantViewModel = new PlantViewModel({
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.PLANTED,
+				createdAt,
+				updatedAt,
+			});
 
-      const viewModel = new GrowingUnitViewModel({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 2.0,
-          width: 1.0,
-          height: 0.5,
-          unit: LengthUnitEnum.METER,
-        },
-        plants: [plantViewModel],
-        remainingCapacity: 9,
-        numberOfPlants: 1,
-        volume: 1.0,
-        createdAt,
-        updatedAt,
-      });
+			const viewModel = new GrowingUnitViewModel({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				},
+				plants: [plantViewModel],
+				remainingCapacity: 9,
+				numberOfPlants: 1,
+				volume: 1.0,
+				createdAt,
+				updatedAt,
+			});
 
-      mockPlantMongoDBMapper.toViewModel.mockReturnValue(plantViewModel);
-      mockGrowingUnitViewModelFactory.create.mockReturnValue(viewModel);
+			mockPlantMongoDBMapper.toViewModel.mockReturnValue(plantViewModel);
+			mockGrowingUnitViewModelFactory.create.mockReturnValue(viewModel);
 
-      const result = mapper.toViewModel(mongoDoc);
+			const result = mapper.toViewModel(mongoDoc);
 
-      expect(result).toBe(viewModel);
-      expect(mockPlantMongoDBMapper.toViewModel).toHaveBeenCalledWith(
-        plantMongoDoc,
-      );
-      expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 2.0,
-          width: 1.0,
-          height: 0.5,
-          unit: LengthUnitEnum.METER,
-        },
-        plants: [plantViewModel],
-        remainingCapacity: 9,
-        numberOfPlants: 1,
-        volume: 1.0,
-        createdAt,
-        updatedAt,
-      });
-    });
+			expect(result).toBe(viewModel);
+			expect(mockPlantMongoDBMapper.toViewModel).toHaveBeenCalledWith(
+				plantMongoDoc,
+			);
+			expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				},
+				plants: [plantViewModel],
+				remainingCapacity: 9,
+				numberOfPlants: 1,
+				volume: 1.0,
+				createdAt,
+				updatedAt,
+			});
+		});
 
-    it('should convert MongoDB document with null dimensions and no plants', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const createdAt = new Date('2024-01-01');
-      const updatedAt = new Date('2024-01-02');
+		it('should convert MongoDB document with null dimensions and no plants', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
-      const mongoDoc: GrowingUnitMongoDbDto = {
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt,
-        updatedAt,
-      };
+			const mongoDoc: GrowingUnitMongoDbDto = {
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt,
+				updatedAt,
+			};
 
-      const viewModel = new GrowingUnitViewModel({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt,
-        updatedAt,
-      });
+			const viewModel = new GrowingUnitViewModel({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt,
+				updatedAt,
+			});
 
-      mockGrowingUnitViewModelFactory.create.mockReturnValue(viewModel);
+			mockGrowingUnitViewModelFactory.create.mockReturnValue(viewModel);
 
-      const result = mapper.toViewModel(mongoDoc);
+			const result = mapper.toViewModel(mongoDoc);
 
-      expect(result).toBe(viewModel);
-      expect(mockPlantMongoDBMapper.toViewModel).not.toHaveBeenCalled();
-      expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt,
-        updatedAt,
-      });
-    });
+			expect(result).toBe(viewModel);
+			expect(mockPlantMongoDBMapper.toViewModel).not.toHaveBeenCalled();
+			expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt,
+				updatedAt,
+			});
+		});
 
-    it('should handle date conversion when createdAt/updatedAt are strings', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const createdAt = '2024-01-01T00:00:00.000Z';
-      const updatedAt = '2024-01-02T00:00:00.000Z';
+		it('should handle date conversion when createdAt/updatedAt are strings', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = '2024-01-01T00:00:00.000Z';
+			const updatedAt = '2024-01-02T00:00:00.000Z';
 
-      const mongoDoc: any = {
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt,
-        updatedAt,
-      };
+			const mongoDoc: any = {
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt,
+				updatedAt,
+			};
 
-      const viewModel = new GrowingUnitViewModel({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt: new Date(createdAt),
-        updatedAt: new Date(updatedAt),
-      });
+			const viewModel = new GrowingUnitViewModel({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt: new Date(createdAt),
+				updatedAt: new Date(updatedAt),
+			});
 
-      mockGrowingUnitViewModelFactory.create.mockReturnValue(viewModel);
+			mockGrowingUnitViewModelFactory.create.mockReturnValue(viewModel);
 
-      const result = mapper.toViewModel(mongoDoc);
+			const result = mapper.toViewModel(mongoDoc);
 
-      expect(result).toBe(viewModel);
-      expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt: expect.any(Date),
-        updatedAt: expect.any(Date),
-      });
-    });
-  });
+			expect(result).toBe(viewModel);
+			expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt: expect.any(Date),
+				updatedAt: expect.any(Date),
+			});
+		});
+	});
 
-  describe('toMongoData', () => {
-    it('should convert view model to MongoDB document with all properties', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
-      const createdAt = new Date('2024-01-01');
-      const updatedAt = new Date('2024-01-02');
+	describe('toMongoData', () => {
+		it('should convert view model to MongoDB document with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
-      const plantViewModel = new PlantViewModel({
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.PLANTED,
-        createdAt,
-        updatedAt,
-      });
+			const plantViewModel = new PlantViewModel({
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.PLANTED,
+				createdAt,
+				updatedAt,
+			});
 
-      const viewModel = new GrowingUnitViewModel({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 2.0,
-          width: 1.0,
-          height: 0.5,
-          unit: LengthUnitEnum.METER,
-        },
-        plants: [plantViewModel],
-        remainingCapacity: 9,
-        numberOfPlants: 1,
-        volume: 1.0,
-        createdAt,
-        updatedAt,
-      });
+			const viewModel = new GrowingUnitViewModel({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				},
+				plants: [plantViewModel],
+				remainingCapacity: 9,
+				numberOfPlants: 1,
+				volume: 1.0,
+				createdAt,
+				updatedAt,
+			});
 
-      const plantMongoData: PlantMongoDbDto = {
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.PLANTED,
-        createdAt,
-        updatedAt,
-      };
+			const plantMongoData: PlantMongoDbDto = {
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.PLANTED,
+				createdAt,
+				updatedAt,
+			};
 
-      mockPlantMongoDBMapper.toMongoData.mockReturnValue(plantMongoData);
+			mockPlantMongoDBMapper.toMongoData.mockReturnValue(plantMongoData);
 
-      const result = mapper.toMongoData(viewModel);
+			const result = mapper.toMongoData(viewModel);
 
-      expect(result).toEqual({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: {
-          length: 2.0,
-          width: 1.0,
-          height: 0.5,
-          unit: LengthUnitEnum.METER,
-        },
-        plants: [plantMongoData],
-        remainingCapacity: 9,
-        numberOfPlants: 1,
-        volume: 1.0,
-        createdAt,
-        updatedAt,
-      });
-      expect(mockPlantMongoDBMapper.toMongoData).toHaveBeenCalledWith(
-        plantViewModel,
-      );
-    });
+			expect(result).toEqual({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: {
+					length: 2.0,
+					width: 1.0,
+					height: 0.5,
+					unit: LengthUnitEnum.METER,
+				},
+				plants: [plantMongoData],
+				remainingCapacity: 9,
+				numberOfPlants: 1,
+				volume: 1.0,
+				createdAt,
+				updatedAt,
+			});
+			expect(mockPlantMongoDBMapper.toMongoData).toHaveBeenCalledWith(
+				plantViewModel,
+			);
+		});
 
-    it('should convert view model with null dimensions and no plants', () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const createdAt = new Date('2024-01-01');
-      const updatedAt = new Date('2024-01-02');
+		it('should convert view model with null dimensions and no plants', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
-      const viewModel = new GrowingUnitViewModel({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt,
-        updatedAt,
-      });
+			const viewModel = new GrowingUnitViewModel({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt,
+				updatedAt,
+			});
 
-      const result = mapper.toMongoData(viewModel);
+			const result = mapper.toMongoData(viewModel);
 
-      expect(result).toEqual({
-        id: growingUnitId,
-        name: 'Garden Bed 1',
-        type: GrowingUnitTypeEnum.GARDEN_BED,
-        capacity: 10,
-        dimensions: null,
-        plants: [],
-        remainingCapacity: 10,
-        numberOfPlants: 0,
-        volume: 0,
-        createdAt,
-        updatedAt,
-      });
-      expect(mockPlantMongoDBMapper.toMongoData).not.toHaveBeenCalled();
-    });
-  });
+			expect(result).toEqual({
+				id: growingUnitId,
+				name: 'Garden Bed 1',
+				type: GrowingUnitTypeEnum.GARDEN_BED,
+				capacity: 10,
+				dimensions: null,
+				plants: [],
+				remainingCapacity: 10,
+				numberOfPlants: 0,
+				volume: 0,
+				createdAt,
+				updatedAt,
+			});
+			expect(mockPlantMongoDBMapper.toMongoData).not.toHaveBeenCalled();
+		});
+	});
 });

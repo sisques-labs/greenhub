@@ -8,9 +8,9 @@ import { ISagaInstanceCreateCommandDto } from '@/generic/saga-context/saga-insta
  * @extends Partial<ISagaInstanceCreateCommandDto>
  */
 export interface ISagaInstanceUpdateCommandDto
-  extends Partial<Omit<ISagaInstanceCreateCommandDto, 'id'>> {
-  id: string;
-  status?: string;
-  startDate?: Date | null;
-  endDate?: Date | null;
+	extends Partial<Omit<ISagaInstanceCreateCommandDto, 'id'>> {
+	id: string;
+	status?: string;
+	startDate?: Date | null;
+	endDate?: Date | null;
 }

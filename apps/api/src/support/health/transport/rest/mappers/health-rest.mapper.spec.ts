@@ -3,44 +3,44 @@ import { HealthViewModel } from '@/support/health/domain/view-models/health.view
 import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health-rest.mapper';
 
 describe('HealthRestMapper', () => {
-  let mapper: HealthRestMapper;
+	let mapper: HealthRestMapper;
 
-  beforeEach(() => {
-    mapper = new HealthRestMapper();
-  });
+	beforeEach(() => {
+		mapper = new HealthRestMapper();
+	});
 
-  it('should map view model to rest response dto', () => {
-    const viewModel = new HealthViewModel({
-      status: 'OK',
-      writeDatabaseStatus: 'OK',
-      readDatabaseStatus: 'OK',
-    });
+	it('should map view model to rest response dto', () => {
+		const viewModel = new HealthViewModel({
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
+		});
 
-    const dto = mapper.toResponseDto(viewModel);
+		const dto = mapper.toResponseDto(viewModel);
 
-    expect(dto).toEqual({
-      status: 'OK',
-      writeDatabaseStatus: 'OK',
-      readDatabaseStatus: 'OK',
-    });
-  });
+		expect(dto).toEqual({
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
+		});
+	});
 
-  it('should map paginated result to response dto', () => {
-    const viewModel = new HealthViewModel({
-      status: 'OK',
-      writeDatabaseStatus: 'OK',
-      readDatabaseStatus: 'OK',
-    });
-    const paginated = new PaginatedResult([viewModel], 1, 1, 10);
+	it('should map paginated result to response dto', () => {
+		const viewModel = new HealthViewModel({
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
+		});
+		const paginated = new PaginatedResult([viewModel], 1, 1, 10);
 
-    const dto = mapper.toPaginatedResponseDto(paginated);
+		const dto = mapper.toPaginatedResponseDto(paginated);
 
-    expect(dto.items).toEqual([
-      { status: 'OK', writeDatabaseStatus: 'OK', readDatabaseStatus: 'OK' },
-    ]);
-    expect(dto.total).toBe(1);
-    expect(dto.page).toBe(1);
-    expect(dto.perPage).toBe(10);
-    expect(dto.totalPages).toBe(paginated.totalPages);
-  });
+		expect(dto.items).toEqual([
+			{ status: 'OK', writeDatabaseStatus: 'OK', readDatabaseStatus: 'OK' },
+		]);
+		expect(dto.total).toBe(1);
+		expect(dto.page).toBe(1);
+		expect(dto.perPage).toBe(10);
+		expect(dto.totalPages).toBe(paginated.totalPages);
+	});
 });

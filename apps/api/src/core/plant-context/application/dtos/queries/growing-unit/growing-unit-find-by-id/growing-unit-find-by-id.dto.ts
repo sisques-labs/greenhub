@@ -5,6 +5,6 @@
  * @property {string} id - The unique identifier of the growing unit to find.
  */
 export interface IGrowingUnitFindByIdQueryDto {
-  /** The unique identifier of the growing unit to find. */
-  id: string;
+	/** The unique identifier of the growing unit to find. */
+	id: string;
 }

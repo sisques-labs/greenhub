@@ -16,14 +16,14 @@
  * @property {Date} updatedAt - Timestamp when the user was last updated.
  */
 export interface IUserCreateViewModelDto {
-  id: string;
-  avatarUrl: string | null;
-  bio: string | null;
-  lastName: string | null;
-  name: string | null;
-  role: string;
-  status: string;
-  userName: string;
-  createdAt: Date;
-  updatedAt: Date;
+	id: string;
+	avatarUrl: string | null;
+	bio: string | null;
+	lastName: string | null;
+	name: string | null;
+	role: string;
+	status: string;
+	userName: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

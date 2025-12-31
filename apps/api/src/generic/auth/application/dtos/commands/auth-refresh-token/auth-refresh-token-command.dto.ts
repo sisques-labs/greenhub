@@ -5,5 +5,5 @@
  * @property {string} refreshToken - The refresh token to use for generating a new access token.
  */
 export interface IAuthRefreshTokenCommandDto {
-  refreshToken: string;
+	refreshToken: string;
 }

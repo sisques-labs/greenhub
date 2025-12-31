@@ -6,8 +6,8 @@ import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/ap
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
 import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
-  SAGA_STEP_WRITE_REPOSITORY_TOKEN,
-  SagaStepWriteRepository,
+	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
+	SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
 import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
 import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
@@ -22,235 +22,235 @@ import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/ident
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('SagaStepChangeStatusCommandHandler', () => {
-  let handler: SagaStepChangeStatusCommandHandler;
-  let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
+	let handler: SagaStepChangeStatusCommandHandler;
+	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
 
-  beforeEach(async () => {
-    mockSagaStepWriteRepository = {
-      findById: jest.fn(),
-      findBySagaInstanceId: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<SagaStepWriteRepository>;
+	beforeEach(async () => {
+		mockSagaStepWriteRepository = {
+			findById: jest.fn(),
+			findBySagaInstanceId: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<SagaStepWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockAssertSagaStepExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaStepExistsService>;
+		mockAssertSagaStepExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaStepExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        SagaStepChangeStatusCommandHandler,
-        {
-          provide: SAGA_STEP_WRITE_REPOSITORY_TOKEN,
-          useValue: mockSagaStepWriteRepository,
-        },
-        {
-          provide: EventBus,
-          useValue: mockEventBus,
-        },
-        {
-          provide: AssertSagaStepExistsService,
-          useValue: mockAssertSagaStepExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				SagaStepChangeStatusCommandHandler,
+				{
+					provide: SAGA_STEP_WRITE_REPOSITORY_TOKEN,
+					useValue: mockSagaStepWriteRepository,
+				},
+				{
+					provide: EventBus,
+					useValue: mockEventBus,
+				},
+				{
+					provide: AssertSagaStepExistsService,
+					useValue: mockAssertSagaStepExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<SagaStepChangeStatusCommandHandler>(
-      SagaStepChangeStatusCommandHandler,
-    );
-  });
+		handler = module.get<SagaStepChangeStatusCommandHandler>(
+			SagaStepChangeStatusCommandHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaStepAggregate = (): SagaStepAggregate => {
-    const now = new Date();
-    return new SagaStepAggregate(
-      {
-        id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        sagaInstanceId: new SagaInstanceUuidValueObject(
-          '223e4567-e89b-12d3-a456-426614174000',
-        ),
-        name: new SagaStepNameValueObject('Test Step'),
-        order: new SagaStepOrderValueObject(1),
-        status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
-        startDate: null,
-        endDate: null,
-        errorMessage: null,
-        retryCount: new SagaStepRetryCountValueObject(0),
-        maxRetries: new SagaStepMaxRetriesValueObject(3),
-        payload: new SagaStepPayloadValueObject({}),
-        result: new SagaStepResultValueObject({}),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaStepAggregate = (): SagaStepAggregate => {
+		const now = new Date();
+		return new SagaStepAggregate(
+			{
+				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				sagaInstanceId: new SagaInstanceUuidValueObject(
+					'223e4567-e89b-12d3-a456-426614174000',
+				),
+				name: new SagaStepNameValueObject('Test Step'),
+				order: new SagaStepOrderValueObject(1),
+				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
+				startDate: null,
+				endDate: null,
+				errorMessage: null,
+				retryCount: new SagaStepRetryCountValueObject(0),
+				maxRetries: new SagaStepMaxRetriesValueObject(3),
+				payload: new SagaStepPayloadValueObject({}),
+				result: new SagaStepResultValueObject({}),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should change status to PENDING successfully', async () => {
-      const existingSagaStep = createSagaStepAggregate();
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.PENDING,
-      };
+	describe('execute', () => {
+		it('should change status to PENDING successfully', async () => {
+			const existingSagaStep = createSagaStepAggregate();
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.PENDING,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
-      const markAsPendingSpy = jest.spyOn(existingSagaStep, 'markAsPending');
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const markAsPendingSpy = jest.spyOn(existingSagaStep, 'markAsPending');
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(
-        existingSagaStep,
-      );
-      mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(
+				existingSagaStep,
+			);
+			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(markAsPendingSpy).toHaveBeenCalled();
-      expect(mockSagaStepWriteRepository.save).toHaveBeenCalledWith(
-        existingSagaStep,
-      );
-    });
+			expect(markAsPendingSpy).toHaveBeenCalled();
+			expect(mockSagaStepWriteRepository.save).toHaveBeenCalledWith(
+				existingSagaStep,
+			);
+		});
 
-    it('should change status to STARTED successfully', async () => {
-      const existingSagaStep = createSagaStepAggregate();
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.STARTED,
-      };
+		it('should change status to STARTED successfully', async () => {
+			const existingSagaStep = createSagaStepAggregate();
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.STARTED,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
-      const markAsStartedSpy = jest.spyOn(existingSagaStep, 'markAsStarted');
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const markAsStartedSpy = jest.spyOn(existingSagaStep, 'markAsStarted');
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(
-        existingSagaStep,
-      );
-      mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(
+				existingSagaStep,
+			);
+			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(markAsStartedSpy).toHaveBeenCalled();
-    });
+			expect(markAsStartedSpy).toHaveBeenCalled();
+		});
 
-    it('should change status to RUNNING successfully', async () => {
-      const existingSagaStep = createSagaStepAggregate();
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.RUNNING,
-      };
+		it('should change status to RUNNING successfully', async () => {
+			const existingSagaStep = createSagaStepAggregate();
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.RUNNING,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
-      const markAsRunningSpy = jest.spyOn(existingSagaStep, 'markAsRunning');
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const markAsRunningSpy = jest.spyOn(existingSagaStep, 'markAsRunning');
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(
-        existingSagaStep,
-      );
-      mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(
+				existingSagaStep,
+			);
+			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(markAsRunningSpy).toHaveBeenCalled();
-    });
+			expect(markAsRunningSpy).toHaveBeenCalled();
+		});
 
-    it('should change status to COMPLETED successfully', async () => {
-      const existingSagaStep = createSagaStepAggregate();
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.COMPLETED,
-      };
+		it('should change status to COMPLETED successfully', async () => {
+			const existingSagaStep = createSagaStepAggregate();
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.COMPLETED,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
-      const markAsCompletedSpy = jest.spyOn(
-        existingSagaStep,
-        'markAsCompleted',
-      );
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const markAsCompletedSpy = jest.spyOn(
+				existingSagaStep,
+				'markAsCompleted',
+			);
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(
-        existingSagaStep,
-      );
-      mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(
+				existingSagaStep,
+			);
+			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(markAsCompletedSpy).toHaveBeenCalled();
-    });
+			expect(markAsCompletedSpy).toHaveBeenCalled();
+		});
 
-    it('should change status to FAILED successfully', async () => {
-      const existingSagaStep = createSagaStepAggregate();
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.FAILED,
-      };
+		it('should change status to FAILED successfully', async () => {
+			const existingSagaStep = createSagaStepAggregate();
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.FAILED,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
-      const markAsFailedSpy = jest.spyOn(existingSagaStep, 'markAsFailed');
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const markAsFailedSpy = jest.spyOn(existingSagaStep, 'markAsFailed');
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(
-        existingSagaStep,
-      );
-      mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(
+				existingSagaStep,
+			);
+			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(markAsFailedSpy).toHaveBeenCalled();
-    });
+			expect(markAsFailedSpy).toHaveBeenCalled();
+		});
 
-    it('should throw error when saga step does not exist', async () => {
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.PENDING,
-      };
+		it('should throw error when saga step does not exist', async () => {
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.PENDING,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
-      const error = new Error('Saga step not found');
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const error = new Error('Saga step not found');
 
-      mockAssertSagaStepExistsService.execute.mockRejectedValue(error);
+			mockAssertSagaStepExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(command)).rejects.toThrow(error);
-      expect(mockSagaStepWriteRepository.save).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
-    });
+			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockSagaStepWriteRepository.save).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+		});
 
-    it('should publish SagaStepStatusChangedEvent after changing status', async () => {
-      const existingSagaStep = createSagaStepAggregate();
-      const changeStatusCommandDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        status: SagaStepStatusEnum.COMPLETED,
-      };
+		it('should publish SagaStepStatusChangedEvent after changing status', async () => {
+			const existingSagaStep = createSagaStepAggregate();
+			const changeStatusCommandDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				status: SagaStepStatusEnum.COMPLETED,
+			};
 
-      const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
+			const command = new SagaStepChangeStatusCommand(changeStatusCommandDto);
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(
-        existingSagaStep,
-      );
-      mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(
+				existingSagaStep,
+			);
+			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockEventBus.publishAll).toHaveBeenCalled();
-      const publishedEvents = mockEventBus.publishAll.mock.calls[0][0];
-      if (publishedEvents.length > 0) {
-        expect(
-          publishedEvents.some((e) => e instanceof SagaStepStatusChangedEvent),
-        ).toBe(true);
-      }
-    });
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			const publishedEvents = mockEventBus.publishAll.mock.calls[0][0];
+			if (publishedEvents.length > 0) {
+				expect(
+					publishedEvents.some((e) => e instanceof SagaStepStatusChangedEvent),
+				).toBe(true);
+			}
+		});
 
-    // Note: The command constructor validates the status enum, so we can't test unknown status
-    // The validation happens at the command level, not the handler level
-  });
+		// Note: The command constructor validates the status enum, so we can't test unknown status
+		// The validation happens at the command level, not the handler level
+	});
 });

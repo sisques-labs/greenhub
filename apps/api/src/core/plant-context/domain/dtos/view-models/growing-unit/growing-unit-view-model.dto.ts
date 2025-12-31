@@ -12,19 +12,19 @@ import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dt
  * @see IGrowingUnitDto for entity data structure
  */
 export interface IGrowingUnitViewModelDto extends IBaseViewModelDto {
-  name: string;
-  type: string;
-  capacity: number;
-  dimensions: {
-    length: number;
-    width: number;
-    height: number;
-    unit: string;
-  } | null;
-  plants: PlantViewModel[];
+	name: string;
+	type: string;
+	capacity: number;
+	dimensions: {
+		length: number;
+		width: number;
+		height: number;
+		unit: string;
+	} | null;
+	plants: PlantViewModel[];
 
-  // Calculated properties
-  remainingCapacity: number;
-  numberOfPlants: number;
-  volume: number;
+	// Calculated properties
+	remainingCapacity: number;
+	numberOfPlants: number;
+	volume: number;
 }

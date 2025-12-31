@@ -6,18 +6,18 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 @Index(['sagaInstanceId'])
 @Index(['sagaStepId'])
 export class SagaLogTypeormEntity extends BaseTypeormEntity {
-  @Column({ type: 'varchar' })
-  sagaInstanceId: string;
+	@Column({ type: 'varchar' })
+	sagaInstanceId: string;
 
-  @Column({ type: 'varchar' })
-  sagaStepId: string;
+	@Column({ type: 'varchar' })
+	sagaStepId: string;
 
-  @Column({
-    type: 'enum',
-    enum: SagaLogTypeEnum,
-  })
-  type: SagaLogTypeEnum;
+	@Column({
+		type: 'enum',
+		enum: SagaLogTypeEnum,
+	})
+	type: SagaLogTypeEnum;
 
-  @Column({ type: 'text' })
-  message: string;
+	@Column({ type: 'text' })
+	message: string;
 }

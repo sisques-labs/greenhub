@@ -16,26 +16,26 @@ import { IPlantEventData } from '@/core/plant-context/domain/events/plant/interf
  * @property plants - Array of plant event data representing the plants currently in this unit.
  */
 export interface IGrowingUnitEventData {
-  /** Unique identifier for the growing unit. */
-  id: string;
+	/** Unique identifier for the growing unit. */
+	id: string;
 
-  /** Name of the growing unit. */
-  name: string;
+	/** Name of the growing unit. */
+	name: string;
 
-  /** Type/category of the growing unit (e.g., greenhouse, hydroponic, etc.). */
-  type: string;
+	/** Type/category of the growing unit (e.g., greenhouse, hydroponic, etc.). */
+	type: string;
 
-  /** Maximum capacity the growing unit can handle (e.g., number of plants). */
-  capacity: number;
+	/** Maximum capacity the growing unit can handle (e.g., number of plants). */
+	capacity: number;
 
-  /** Dimensions of the growing unit. */
-  dimensions: {
-    length: number;
-    width: number;
-    height: number;
-    unit: string;
-  } | null;
+	/** Dimensions of the growing unit. */
+	dimensions: {
+		length: number;
+		width: number;
+		height: number;
+		unit: string;
+	} | null;
 
-  /** Plants currently in this growing unit. */
-  plants: IPlantEventData[];
+	/** Plants currently in this growing unit. */
+	plants: IPlantEventData[];
 }

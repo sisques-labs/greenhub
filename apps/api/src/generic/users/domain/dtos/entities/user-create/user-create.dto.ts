@@ -24,12 +24,12 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
  * @property {DateValueObject} updatedAt - The date and time the user was last updated.
  */
 export interface IUserCreateDto extends IBaseAggregateDto {
-  id: UserUuidValueObject;
-  avatarUrl?: UserAvatarUrlValueObject | null;
-  bio?: UserBioValueObject | null;
-  lastName?: UserLastNameValueObject | null;
-  name?: UserNameValueObject | null;
-  role?: UserRoleValueObject;
-  status?: UserStatusValueObject;
-  userName?: UserUserNameValueObject | null;
+	id: UserUuidValueObject;
+	avatarUrl?: UserAvatarUrlValueObject | null;
+	bio?: UserBioValueObject | null;
+	lastName?: UserLastNameValueObject | null;
+	name?: UserNameValueObject | null;
+	role?: UserRoleValueObject;
+	status?: UserStatusValueObject;
+	userName?: UserUserNameValueObject | null;
 }

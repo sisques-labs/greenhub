@@ -8,6 +8,6 @@ import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
  * @property {DateValueObject} updatedAt - The updated at date value object.
  */
 export interface IBaseAggregateDto {
-  createdAt: DateValueObject;
-  updatedAt: DateValueObject;
+	createdAt: DateValueObject;
+	updatedAt: DateValueObject;
 }

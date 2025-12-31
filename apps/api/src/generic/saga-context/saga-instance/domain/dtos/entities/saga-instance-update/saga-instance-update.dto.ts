@@ -8,5 +8,5 @@ import { ISagaInstanceCreateDto } from '@/generic/saga-context/saga-instance/dom
  * @extends Partial<Omit<ISagaInstanceCreateDto, 'id'>>
  */
 export type ISagaInstanceUpdateDto = Partial<
-  Omit<ISagaInstanceCreateDto, 'id'>
+	Omit<ISagaInstanceCreateDto, 'id'>
 >;

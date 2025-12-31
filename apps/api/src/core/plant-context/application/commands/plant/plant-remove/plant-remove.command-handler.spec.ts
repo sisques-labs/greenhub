@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
 import { PlantRemoveCommandHandler } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command-handler';
 import { IPlantRemoveCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-remove/plant-remove-command.dto';
@@ -18,193 +19,192 @@ import { PlantStatusValueObject } from '@/core/plant-context/domain/value-object
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('PlantRemoveCommandHandler', () => {
-  let handler: PlantRemoveCommandHandler;
-  let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-  let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
-  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
-  let plantEntityFactory: PlantEntityFactory;
+	let handler: PlantRemoveCommandHandler;
+	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
+	let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
+	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
+	let plantEntityFactory: PlantEntityFactory;
 
-  beforeEach(() => {
-    plantEntityFactory = new PlantEntityFactory();
-    mockGrowingUnitWriteRepository = {
-      findById: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
+	beforeEach(() => {
+		plantEntityFactory = new PlantEntityFactory();
+		mockGrowingUnitWriteRepository = {
+			findById: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-    mockPlantWriteRepository = {
-      findById: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<IPlantWriteRepository>;
+		mockPlantWriteRepository = {
+			findById: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<IPlantWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockAssertGrowingUnitExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
+		mockAssertGrowingUnitExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
-    mockPublishIntegrationEventsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
+		mockPublishIntegrationEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishIntegrationEventsService>;
 
-    handler = new PlantRemoveCommandHandler(
-      mockGrowingUnitWriteRepository,
-      mockPlantWriteRepository,
-      mockEventBus,
-      mockAssertGrowingUnitExistsService,
-      mockPublishIntegrationEventsService,
-    );
-  });
+		handler = new PlantRemoveCommandHandler(
+			mockGrowingUnitWriteRepository,
+			mockPlantWriteRepository,
+			mockEventBus,
+			mockAssertGrowingUnitExistsService,
+			mockPublishIntegrationEventsService,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should remove plant from growing unit successfully', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IPlantRemoveCommandDto = {
-        growingUnitId,
-        plantId,
-      };
+	describe('execute', () => {
+		it('should remove plant from growing unit successfully', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IPlantRemoveCommandDto = {
+				growingUnitId,
+				plantId,
+			};
 
-      const command = new PlantRemoveCommand(commandDto);
-      const mockGrowingUnit = new GrowingUnitAggregate({
-        id: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      });
+			const command = new PlantRemoveCommand(commandDto);
+			const mockGrowingUnit = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
 
-      const plant = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plant = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      mockGrowingUnit.addPlant(plant, false);
+			mockGrowingUnit.addPlant(plant, false);
 
-      mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
-        mockGrowingUnit,
-      );
-      mockPlantWriteRepository.delete.mockResolvedValue(undefined);
-      mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
+				mockGrowingUnit,
+			);
+			mockPlantWriteRepository.delete.mockResolvedValue(undefined);
+			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
-        growingUnitId,
-      );
-      expect(mockPlantWriteRepository.delete).toHaveBeenCalledWith(plantId);
-      expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
-        mockGrowingUnit,
-      );
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(
-        mockGrowingUnit.getUncommittedEvents(),
-      );
-    });
+			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantWriteRepository.delete).toHaveBeenCalledWith(plantId);
+			expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
+				mockGrowingUnit,
+			);
+			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+				mockGrowingUnit.getUncommittedEvents(),
+			);
+		});
 
-    it('should not throw error when plant does not exist in growing unit', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IPlantRemoveCommandDto = {
-        growingUnitId,
-        plantId,
-      };
+		it('should not throw error when plant does not exist in growing unit', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IPlantRemoveCommandDto = {
+				growingUnitId,
+				plantId,
+			};
 
-      const command = new PlantRemoveCommand(commandDto);
-      const mockGrowingUnit = new GrowingUnitAggregate({
-        id: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      });
+			const command = new PlantRemoveCommand(commandDto);
+			const mockGrowingUnit = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
 
-      mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
-        mockGrowingUnit,
-      );
+			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
+				mockGrowingUnit,
+			);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockPlantWriteRepository.delete).not.toHaveBeenCalled();
-      expect(mockGrowingUnitWriteRepository.save).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
-    });
+			expect(mockPlantWriteRepository.delete).not.toHaveBeenCalled();
+			expect(mockGrowingUnitWriteRepository.save).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+		});
 
-    it('should publish GrowingUnitPlantRemovedEvent when plant is removed', async () => {
-      const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-      const plantId = '223e4567-e89b-12d3-a456-426614174000';
-      const commandDto: IPlantRemoveCommandDto = {
-        growingUnitId,
-        plantId,
-      };
+		it('should publish GrowingUnitPlantRemovedEvent when plant is removed', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const commandDto: IPlantRemoveCommandDto = {
+				growingUnitId,
+				plantId,
+			};
 
-      const command = new PlantRemoveCommand(commandDto);
-      const mockGrowingUnit = new GrowingUnitAggregate({
-        id: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new GrowingUnitNameValueObject('Garden Bed 1'),
-        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-        capacity: new GrowingUnitCapacityValueObject(10),
-        dimensions: null,
-        plants: [],
-      });
+			const command = new PlantRemoveCommand(commandDto);
+			const mockGrowingUnit = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
 
-      const plant = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plant = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      mockGrowingUnit.addPlant(plant, false);
+			mockGrowingUnit.addPlant(plant, false);
 
-      mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
-        mockGrowingUnit,
-      );
-      mockPlantWriteRepository.delete.mockResolvedValue(undefined);
+			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
+				mockGrowingUnit,
+			);
+			mockPlantWriteRepository.delete.mockResolvedValue(undefined);
 
-      // Make save return the same object to preserve events
-      mockGrowingUnitWriteRepository.save.mockImplementation(
-        async (aggregate) => aggregate,
-      );
+			// Make save return the same object to preserve events
+			mockGrowingUnitWriteRepository.save.mockImplementation(
+				async (aggregate) => aggregate,
+			);
 
-      // Capture the events that are passed to publishAll
-      let capturedEvents: any[] = [];
-      mockEventBus.publishAll.mockImplementation(async (events) => {
-        capturedEvents = Array.isArray(events) ? [...events] : [];
-        return undefined;
-      });
+			// Capture the events that are passed to publishAll
+			let capturedEvents: any[] = [];
+			mockEventBus.publishAll.mockImplementation(async (events) => {
+				capturedEvents = Array.isArray(events) ? [...events] : [];
+				return undefined;
+			});
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
-      expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
-      const removedEvent = capturedEvents.find(
-        (e) => e instanceof GrowingUnitPlantRemovedEvent,
-      );
-      expect(removedEvent).toBeInstanceOf(GrowingUnitPlantRemovedEvent);
-    });
-  });
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
+			const removedEvent = capturedEvents.find(
+				(e) => e instanceof GrowingUnitPlantRemovedEvent,
+			);
+			expect(removedEvent).toBeInstanceOf(GrowingUnitPlantRemovedEvent);
+		});
+	});
 });

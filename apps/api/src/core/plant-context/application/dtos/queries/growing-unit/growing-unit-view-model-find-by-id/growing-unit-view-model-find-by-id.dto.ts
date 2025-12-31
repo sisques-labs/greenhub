@@ -5,6 +5,6 @@
  * @property {string} id - The unique identifier of the growing unit view model to find.
  */
 export interface IGrowingUnitViewModelFindByIdQueryDto {
-  /** The unique identifier of the growing unit view model to find. */
-  id: string;
+	/** The unique identifier of the growing unit view model to find. */
+	id: string;
 }

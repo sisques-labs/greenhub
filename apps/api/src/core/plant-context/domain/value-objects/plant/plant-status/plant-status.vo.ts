@@ -13,14 +13,14 @@ import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
  * const status = new PlantStatusValueObject(PlantStatusEnum.Alive);
  */
 export class PlantStatusValueObject extends EnumValueObject<
-  typeof PlantStatusEnum
+	typeof PlantStatusEnum
 > {
-  /**
-   * Returns the enum object associated with the plant status.
-   *
-   * @returns The {@link PlantStatusEnum} used for this value object.
-   */
-  protected get enumObject(): typeof PlantStatusEnum {
-    return PlantStatusEnum;
-  }
+	/**
+	 * Returns the enum object associated with the plant status.
+	 *
+	 * @returns The {@link PlantStatusEnum} used for this value object.
+	 */
+	protected get enumObject(): typeof PlantStatusEnum {
+		return PlantStatusEnum;
+	}
 }

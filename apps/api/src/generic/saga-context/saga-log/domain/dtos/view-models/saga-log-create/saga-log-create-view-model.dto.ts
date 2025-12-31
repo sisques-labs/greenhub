@@ -13,11 +13,11 @@
  * @property {Date} updatedAt - Timestamp when the saga log was last updated.
  */
 export interface ISagaLogCreateViewModelDto {
-  id: string;
-  sagaInstanceId: string;
-  sagaStepId: string;
-  type: string;
-  message: string;
-  createdAt: Date;
-  updatedAt: Date;
+	id: string;
+	sagaInstanceId: string;
+	sagaStepId: string;
+	type: string;
+	message: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

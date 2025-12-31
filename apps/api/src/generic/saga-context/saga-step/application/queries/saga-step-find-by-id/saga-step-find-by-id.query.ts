@@ -2,9 +2,9 @@ import { ISagaStepFindByIdQueryDto } from '@/generic/saga-context/saga-step/appl
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class FindSagaStepByIdQuery {
-  readonly id: SagaStepUuidValueObject;
+	readonly id: SagaStepUuidValueObject;
 
-  constructor(props: ISagaStepFindByIdQueryDto) {
-    this.id = new SagaStepUuidValueObject(props.id);
-  }
+	constructor(props: ISagaStepFindByIdQueryDto) {
+		this.id = new SagaStepUuidValueObject(props.id);
+	}
 }

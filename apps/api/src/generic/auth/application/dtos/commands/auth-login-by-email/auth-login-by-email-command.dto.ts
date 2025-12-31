@@ -6,6 +6,6 @@
  * @property {string} password - The password of the auth.
  */
 export interface IAuthLoginByEmailCommandDto {
-  email: string;
-  password: string;
+	email: string;
+	password: string;
 }

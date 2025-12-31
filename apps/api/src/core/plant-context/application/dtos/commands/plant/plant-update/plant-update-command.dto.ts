@@ -10,10 +10,10 @@
  * @property {string} [status] - The status of the plant
  */
 export interface IPlantUpdateCommandDto {
-  id: string;
-  name?: string;
-  species?: string;
-  plantedDate?: Date | null;
-  notes?: string | null;
-  status?: string;
+	id: string;
+	name?: string;
+	species?: string;
+	plantedDate?: Date | null;
+	notes?: string | null;
+	status?: string;
 }

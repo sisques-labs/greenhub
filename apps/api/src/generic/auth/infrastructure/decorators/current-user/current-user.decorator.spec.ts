@@ -14,88 +14,88 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
 jest.mock('@nestjs/graphql');
 
 describe('CurrentUser', () => {
-  let mockContext: ExecutionContext;
-  let mockGqlContext: any;
-  let mockRequest: any;
+	let mockContext: ExecutionContext;
+	let mockGqlContext: any;
+	let mockRequest: any;
 
-  // Helper function to simulate the decorator factory logic
-  const executeDecoratorFactory = (
-    data: unknown,
-    context: ExecutionContext,
-  ) => {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req.user;
-  };
+	// Helper function to simulate the decorator factory logic
+	const executeDecoratorFactory = (
+		data: unknown,
+		context: ExecutionContext,
+	) => {
+		const ctx = GqlExecutionContext.create(context);
+		return ctx.getContext().req.user;
+	};
 
-  beforeEach(() => {
-    mockRequest = {
-      user: null,
-    };
+	beforeEach(() => {
+		mockRequest = {
+			user: null,
+		};
 
-    mockGqlContext = {
-      getContext: jest.fn().mockReturnValue({
-        req: mockRequest,
-      }),
-    };
+		mockGqlContext = {
+			getContext: jest.fn().mockReturnValue({
+				req: mockRequest,
+			}),
+		};
 
-    (GqlExecutionContext.create as jest.Mock) = jest
-      .fn()
-      .mockReturnValue(mockGqlContext);
+		(GqlExecutionContext.create as jest.Mock) = jest
+			.fn()
+			.mockReturnValue(mockGqlContext);
 
-    mockContext = {
-      switchToHttp: jest.fn(),
-      getClass: jest.fn(),
-      getHandler: jest.fn(),
-      getArgs: jest.fn(),
-      getArgByIndex: jest.fn(),
-      switchToRpc: jest.fn(),
-      switchToWs: jest.fn(),
-      getType: jest.fn(),
-    } as unknown as ExecutionContext;
-  });
+		mockContext = {
+			switchToHttp: jest.fn(),
+			getClass: jest.fn(),
+			getHandler: jest.fn(),
+			getArgs: jest.fn(),
+			getArgByIndex: jest.fn(),
+			switchToRpc: jest.fn(),
+			switchToWs: jest.fn(),
+			getType: jest.fn(),
+		} as unknown as ExecutionContext;
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  it('should be a function decorator', () => {
-    expect(typeof CurrentUser).toBe('function');
-  });
+	it('should be a function decorator', () => {
+		expect(typeof CurrentUser).toBe('function');
+	});
 
-  it('should extract user from GraphQL context request', () => {
-    const now = new Date();
-    const mockUser = new AuthAggregate(
-      {
-        id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        userId: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174001'),
-        email: new AuthEmailValueObject('test@example.com'),
-        emailVerified: new AuthEmailVerifiedValueObject(false),
-        lastLoginAt: null,
-        password: null,
-        phoneNumber: null,
-        provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
-        providerId: null,
-        twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
+	it('should extract user from GraphQL context request', () => {
+		const now = new Date();
+		const mockUser = new AuthAggregate(
+			{
+				id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				userId: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174001'),
+				email: new AuthEmailValueObject('test@example.com'),
+				emailVerified: new AuthEmailVerifiedValueObject(false),
+				lastLoginAt: null,
+				password: null,
+				phoneNumber: null,
+				provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
+				providerId: null,
+				twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
 
-    mockRequest.user = mockUser;
+		mockRequest.user = mockUser;
 
-    const result = executeDecoratorFactory(null, mockContext);
+		const result = executeDecoratorFactory(null, mockContext);
 
-    expect(GqlExecutionContext.create).toHaveBeenCalledWith(mockContext);
-    expect(mockGqlContext.getContext).toHaveBeenCalled();
-    expect(result).toBe(mockUser);
-  });
+		expect(GqlExecutionContext.create).toHaveBeenCalledWith(mockContext);
+		expect(mockGqlContext.getContext).toHaveBeenCalled();
+		expect(result).toBe(mockUser);
+	});
 
-  it('should return undefined when user is not in request', () => {
-    mockRequest.user = undefined;
+	it('should return undefined when user is not in request', () => {
+		mockRequest.user = undefined;
 
-    const result = executeDecoratorFactory(null, mockContext);
+		const result = executeDecoratorFactory(null, mockContext);
 
-    expect(result).toBeUndefined();
-  });
+		expect(result).toBeUndefined();
+	});
 });

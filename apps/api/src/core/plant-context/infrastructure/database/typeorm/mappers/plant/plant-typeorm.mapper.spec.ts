@@ -11,251 +11,251 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantTypeormMapper', () => {
-  let mapper: PlantTypeormMapper;
-  let mockPlantEntityFactory: jest.Mocked<PlantEntityFactory>;
-  let plantEntityFactory: PlantEntityFactory;
+	let mapper: PlantTypeormMapper;
+	let mockPlantEntityFactory: jest.Mocked<PlantEntityFactory>;
+	let plantEntityFactory: PlantEntityFactory;
 
-  beforeEach(() => {
-    plantEntityFactory = new PlantEntityFactory();
+	beforeEach(() => {
+		plantEntityFactory = new PlantEntityFactory();
 
-    mockPlantEntityFactory = {
-      create: jest.fn(),
-      fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<PlantEntityFactory>;
+		mockPlantEntityFactory = {
+			create: jest.fn(),
+			fromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<PlantEntityFactory>;
 
-    mapper = new PlantTypeormMapper(mockPlantEntityFactory);
-  });
+		mapper = new PlantTypeormMapper(mockPlantEntityFactory);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('toDomainEntity', () => {
-    it('should convert TypeORM entity to domain entity with all properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
-      const plantedDate = new Date('2024-01-15');
+	describe('toDomainEntity', () => {
+		it('should convert TypeORM entity to domain entity with all properties', () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
+			const plantedDate = new Date('2024-01-15');
 
-      const typeormEntity = new PlantTypeormEntity();
-      typeormEntity.id = plantId;
-      typeormEntity.growingUnitId = growingUnitId;
-      typeormEntity.name = 'Basil';
-      typeormEntity.species = 'Ocimum basilicum';
-      typeormEntity.plantedDate = plantedDate;
-      typeormEntity.notes = 'Keep in indirect sunlight';
-      typeormEntity.status = PlantStatusEnum.PLANTED;
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new PlantTypeormEntity();
+			typeormEntity.id = plantId;
+			typeormEntity.growingUnitId = growingUnitId;
+			typeormEntity.name = 'Basil';
+			typeormEntity.species = 'Ocimum basilicum';
+			typeormEntity.plantedDate = plantedDate;
+			typeormEntity.notes = 'Keep in indirect sunlight';
+			typeormEntity.status = PlantStatusEnum.PLANTED;
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: new PlantPlantedDateValueObject(plantedDate),
-        notes: new PlantNotesValueObject('Keep in indirect sunlight'),
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: new PlantPlantedDateValueObject(plantedDate),
+				notes: new PlantNotesValueObject('Keep in indirect sunlight'),
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      mockPlantEntityFactory.fromPrimitives.mockReturnValue(plantEntity);
+			mockPlantEntityFactory.fromPrimitives.mockReturnValue(plantEntity);
 
-      const result = mapper.toDomainEntity(typeormEntity);
+			const result = mapper.toDomainEntity(typeormEntity);
 
-      expect(result).toBe(plantEntity);
-      expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledWith({
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: plantedDate,
-        notes: 'Keep in indirect sunlight',
-        status: PlantStatusEnum.PLANTED,
-      });
-      expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(plantEntity);
+			expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledWith({
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: plantedDate,
+				notes: 'Keep in indirect sunlight',
+				status: PlantStatusEnum.PLANTED,
+			});
+			expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledTimes(1);
+		});
 
-    it('should convert TypeORM entity with null optional properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+		it('should convert TypeORM entity with null optional properties', () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const typeormEntity = new PlantTypeormEntity();
-      typeormEntity.id = plantId;
-      typeormEntity.growingUnitId = growingUnitId;
-      typeormEntity.name = 'Basil';
-      typeormEntity.species = 'Ocimum basilicum';
-      typeormEntity.plantedDate = null;
-      typeormEntity.notes = null;
-      typeormEntity.status = PlantStatusEnum.GROWING;
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new PlantTypeormEntity();
+			typeormEntity.id = plantId;
+			typeormEntity.growingUnitId = growingUnitId;
+			typeormEntity.name = 'Basil';
+			typeormEntity.species = 'Ocimum basilicum';
+			typeormEntity.plantedDate = null;
+			typeormEntity.notes = null;
+			typeormEntity.status = PlantStatusEnum.GROWING;
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.GROWING),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.GROWING),
+			});
 
-      mockPlantEntityFactory.fromPrimitives.mockReturnValue(plantEntity);
+			mockPlantEntityFactory.fromPrimitives.mockReturnValue(plantEntity);
 
-      const result = mapper.toDomainEntity(typeormEntity);
+			const result = mapper.toDomainEntity(typeormEntity);
 
-      expect(result).toBe(plantEntity);
-      expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledWith({
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.GROWING,
-      });
-    });
-  });
+			expect(result).toBe(plantEntity);
+			expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledWith({
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.GROWING,
+			});
+		});
+	});
 
-  describe('toTypeormEntity', () => {
-    it('should convert domain entity to TypeORM entity with all properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const plantedDate = new Date('2024-01-15');
+	describe('toTypeormEntity', () => {
+		it('should convert domain entity to TypeORM entity with all properties', () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const plantedDate = new Date('2024-01-15');
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: new PlantPlantedDateValueObject(plantedDate),
-        notes: new PlantNotesValueObject('Keep in indirect sunlight'),
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: new PlantPlantedDateValueObject(plantedDate),
+				notes: new PlantNotesValueObject('Keep in indirect sunlight'),
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      const toPrimitivesSpy = jest
-        .spyOn(plantEntity, 'toPrimitives')
-        .mockReturnValue({
-          id: plantId,
-          growingUnitId: growingUnitId,
-          name: 'Basil',
-          species: 'Ocimum basilicum',
-          plantedDate: plantedDate,
-          notes: 'Keep in indirect sunlight',
-          status: PlantStatusEnum.PLANTED,
-        });
+			const toPrimitivesSpy = jest
+				.spyOn(plantEntity, 'toPrimitives')
+				.mockReturnValue({
+					id: plantId,
+					growingUnitId: growingUnitId,
+					name: 'Basil',
+					species: 'Ocimum basilicum',
+					plantedDate: plantedDate,
+					notes: 'Keep in indirect sunlight',
+					status: PlantStatusEnum.PLANTED,
+				});
 
-      const result = mapper.toTypeormEntity(plantEntity);
+			const result = mapper.toTypeormEntity(plantEntity);
 
-      expect(result).toBeInstanceOf(PlantTypeormEntity);
-      expect(result.id).toBe(plantId);
-      expect(result.growingUnitId).toBe(growingUnitId);
-      expect(result.name).toBe('Basil');
-      expect(result.species).toBe('Ocimum basilicum');
-      expect(result.plantedDate).toEqual(plantedDate);
-      expect(result.notes).toBe('Keep in indirect sunlight');
-      expect(result.status).toBe(PlantStatusEnum.PLANTED);
-      expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
+			expect(result).toBeInstanceOf(PlantTypeormEntity);
+			expect(result.id).toBe(plantId);
+			expect(result.growingUnitId).toBe(growingUnitId);
+			expect(result.name).toBe('Basil');
+			expect(result.species).toBe('Ocimum basilicum');
+			expect(result.plantedDate).toEqual(plantedDate);
+			expect(result.notes).toBe('Keep in indirect sunlight');
+			expect(result.status).toBe(PlantStatusEnum.PLANTED);
+			expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
 
-      toPrimitivesSpy.mockRestore();
-    });
+			toPrimitivesSpy.mockRestore();
+		});
 
-    it('should convert domain entity with null optional properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+		it('should convert domain entity with null optional properties', () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.GROWING),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.GROWING),
+			});
 
-      const toPrimitivesSpy = jest
-        .spyOn(plantEntity, 'toPrimitives')
-        .mockReturnValue({
-          id: plantId,
-          growingUnitId: growingUnitId,
-          name: 'Basil',
-          species: 'Ocimum basilicum',
-          plantedDate: null,
-          notes: null,
-          status: PlantStatusEnum.GROWING,
-        });
+			const toPrimitivesSpy = jest
+				.spyOn(plantEntity, 'toPrimitives')
+				.mockReturnValue({
+					id: plantId,
+					growingUnitId: growingUnitId,
+					name: 'Basil',
+					species: 'Ocimum basilicum',
+					plantedDate: null,
+					notes: null,
+					status: PlantStatusEnum.GROWING,
+				});
 
-      const result = mapper.toTypeormEntity(plantEntity);
+			const result = mapper.toTypeormEntity(plantEntity);
 
-      expect(result).toBeInstanceOf(PlantTypeormEntity);
-      expect(result.id).toBe(plantId);
-      expect(result.growingUnitId).toBe(growingUnitId);
-      expect(result.name).toBe('Basil');
-      expect(result.species).toBe('Ocimum basilicum');
-      expect(result.plantedDate).toBeNull();
-      expect(result.notes).toBeNull();
-      expect(result.status).toBe(PlantStatusEnum.GROWING);
+			expect(result).toBeInstanceOf(PlantTypeormEntity);
+			expect(result.id).toBe(plantId);
+			expect(result.growingUnitId).toBe(growingUnitId);
+			expect(result.name).toBe('Basil');
+			expect(result.species).toBe('Ocimum basilicum');
+			expect(result.plantedDate).toBeNull();
+			expect(result.notes).toBeNull();
+			expect(result.status).toBe(PlantStatusEnum.GROWING);
 
-      toPrimitivesSpy.mockRestore();
-    });
-  });
+			toPrimitivesSpy.mockRestore();
+		});
+	});
 
-  describe('toTypeormEntityFromPrimitives', () => {
-    it('should convert primitives to TypeORM entity', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const plantedDate = new Date('2024-01-15');
+	describe('toTypeormEntityFromPrimitives', () => {
+		it('should convert primitives to TypeORM entity', () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const plantedDate = new Date('2024-01-15');
 
-      const primitives = {
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: plantedDate,
-        notes: 'Keep in indirect sunlight',
-        status: PlantStatusEnum.PLANTED,
-      };
+			const primitives = {
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: plantedDate,
+				notes: 'Keep in indirect sunlight',
+				status: PlantStatusEnum.PLANTED,
+			};
 
-      const result = mapper.toTypeormEntityFromPrimitives(primitives);
+			const result = mapper.toTypeormEntityFromPrimitives(primitives);
 
-      expect(result).toBeInstanceOf(PlantTypeormEntity);
-      expect(result.id).toBe(plantId);
-      expect(result.growingUnitId).toBe(growingUnitId);
-      expect(result.name).toBe('Basil');
-      expect(result.species).toBe('Ocimum basilicum');
-      expect(result.plantedDate).toEqual(plantedDate);
-      expect(result.notes).toBe('Keep in indirect sunlight');
-      expect(result.status).toBe(PlantStatusEnum.PLANTED);
-    });
+			expect(result).toBeInstanceOf(PlantTypeormEntity);
+			expect(result.id).toBe(plantId);
+			expect(result.growingUnitId).toBe(growingUnitId);
+			expect(result.name).toBe('Basil');
+			expect(result.species).toBe('Ocimum basilicum');
+			expect(result.plantedDate).toEqual(plantedDate);
+			expect(result.notes).toBe('Keep in indirect sunlight');
+			expect(result.status).toBe(PlantStatusEnum.PLANTED);
+		});
 
-    it('should convert primitives with null optional properties', () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+		it('should convert primitives with null optional properties', () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 
-      const primitives = {
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.GROWING,
-      };
+			const primitives = {
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.GROWING,
+			};
 
-      const result = mapper.toTypeormEntityFromPrimitives(primitives);
+			const result = mapper.toTypeormEntityFromPrimitives(primitives);
 
-      expect(result).toBeInstanceOf(PlantTypeormEntity);
-      expect(result.id).toBe(plantId);
-      expect(result.growingUnitId).toBe(growingUnitId);
-      expect(result.name).toBe('Basil');
-      expect(result.species).toBe('Ocimum basilicum');
-      expect(result.plantedDate).toBeNull();
-      expect(result.notes).toBeNull();
-      expect(result.status).toBe(PlantStatusEnum.GROWING);
-    });
-  });
+			expect(result).toBeInstanceOf(PlantTypeormEntity);
+			expect(result.id).toBe(plantId);
+			expect(result.growingUnitId).toBe(growingUnitId);
+			expect(result.name).toBe('Basil');
+			expect(result.species).toBe('Ocimum basilicum');
+			expect(result.plantedDate).toBeNull();
+			expect(result.notes).toBeNull();
+			expect(result.status).toBe(PlantStatusEnum.GROWING);
+		});
+	});
 });

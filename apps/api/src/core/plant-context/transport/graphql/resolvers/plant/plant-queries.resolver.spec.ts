@@ -14,96 +14,96 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantQueriesResolver', () => {
-  let resolver: PlantQueriesResolver;
-  let mockQueryBus: jest.Mocked<QueryBus>;
-  let mockPlantGraphQLMapper: jest.Mocked<PlantGraphQLMapper>;
-  let plantEntityFactory: PlantEntityFactory;
+	let resolver: PlantQueriesResolver;
+	let mockQueryBus: jest.Mocked<QueryBus>;
+	let mockPlantGraphQLMapper: jest.Mocked<PlantGraphQLMapper>;
+	let plantEntityFactory: PlantEntityFactory;
 
-  beforeEach(() => {
-    mockQueryBus = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<QueryBus>;
+	beforeEach(() => {
+		mockQueryBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<QueryBus>;
 
-    mockPlantGraphQLMapper = {
-      toResponseDtoFromEntity: jest.fn(),
-      toResponseDtoFromViewModel: jest.fn(),
-    } as unknown as jest.Mocked<PlantGraphQLMapper>;
+		mockPlantGraphQLMapper = {
+			toResponseDtoFromEntity: jest.fn(),
+			toResponseDtoFromViewModel: jest.fn(),
+		} as unknown as jest.Mocked<PlantGraphQLMapper>;
 
-    plantEntityFactory = new PlantEntityFactory();
+		plantEntityFactory = new PlantEntityFactory();
 
-    resolver = new PlantQueriesResolver(mockQueryBus, mockPlantGraphQLMapper);
-  });
+		resolver = new PlantQueriesResolver(mockQueryBus, mockPlantGraphQLMapper);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('plantFindById', () => {
-    it('should return plant when found', async () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
-      const input: PlantFindByIdRequestDto = {
-        id: plantId,
-      };
+	describe('plantFindById', () => {
+		it('should return plant when found', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const input: PlantFindByIdRequestDto = {
+				id: plantId,
+			};
 
-      const plantEntity = plantEntityFactory.create({
-        id: new PlantUuidValueObject(plantId),
-        growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-        name: new PlantNameValueObject('Basil'),
-        species: new PlantSpeciesValueObject('Ocimum basilicum'),
-        plantedDate: null,
-        notes: null,
-        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-      });
+			const plantEntity = plantEntityFactory.create({
+				id: new PlantUuidValueObject(plantId),
+				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				plantedDate: null,
+				notes: null,
+				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+			});
 
-      const responseDto: PlantResponseDto = {
-        id: plantId,
-        growingUnitId: growingUnitId,
-        name: 'Basil',
-        species: 'Ocimum basilicum',
-        plantedDate: null,
-        notes: null,
-        status: PlantStatusEnum.PLANTED,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+			const responseDto: PlantResponseDto = {
+				id: plantId,
+				growingUnitId: growingUnitId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: PlantStatusEnum.PLANTED,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			};
 
-      mockQueryBus.execute.mockResolvedValue(plantEntity);
-      mockPlantGraphQLMapper.toResponseDtoFromEntity.mockReturnValue(
-        responseDto,
-      );
+			mockQueryBus.execute.mockResolvedValue(plantEntity);
+			mockPlantGraphQLMapper.toResponseDtoFromEntity.mockReturnValue(
+				responseDto,
+			);
 
-      const result = await resolver.plantFindById(input);
+			const result = await resolver.plantFindById(input);
 
-      expect(result).toBe(responseDto);
-      expect(mockQueryBus.execute).toHaveBeenCalledWith(
-        expect.any(PlantFindByIdQuery),
-      );
-      const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
-      expect(query).toBeInstanceOf(PlantFindByIdQuery);
-      expect(query.id.value).toBe(plantId);
-      expect(
-        mockPlantGraphQLMapper.toResponseDtoFromEntity,
-      ).toHaveBeenCalledWith(plantEntity);
-    });
+			expect(result).toBe(responseDto);
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.any(PlantFindByIdQuery),
+			);
+			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
+			expect(query).toBeInstanceOf(PlantFindByIdQuery);
+			expect(query.id.value).toBe(plantId);
+			expect(
+				mockPlantGraphQLMapper.toResponseDtoFromEntity,
+			).toHaveBeenCalledWith(plantEntity);
+		});
 
-    it('should return null when plant not found', async () => {
-      const plantId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: PlantFindByIdRequestDto = {
-        id: plantId,
-      };
+		it('should return null when plant not found', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: PlantFindByIdRequestDto = {
+				id: plantId,
+			};
 
-      mockQueryBus.execute.mockResolvedValue(null);
+			mockQueryBus.execute.mockResolvedValue(null);
 
-      const result = await resolver.plantFindById(input);
+			const result = await resolver.plantFindById(input);
 
-      expect(result).toBeNull();
-      expect(mockQueryBus.execute).toHaveBeenCalledWith(
-        expect.any(PlantFindByIdQuery),
-      );
-      expect(
-        mockPlantGraphQLMapper.toResponseDtoFromEntity,
-      ).not.toHaveBeenCalled();
-    });
-  });
+			expect(result).toBeNull();
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.any(PlantFindByIdQuery),
+			);
+			expect(
+				mockPlantGraphQLMapper.toResponseDtoFromEntity,
+			).not.toHaveBeenCalled();
+		});
+	});
 });

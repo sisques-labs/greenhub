@@ -7,7 +7,7 @@
  * @property {number} [decimals] - Number of decimal places (default: 2)
  */
 export interface ICalculatePercentageCommandDto {
-  value: number;
-  total: number;
-  decimals?: number;
+	value: number;
+	total: number;
+	decimals?: number;
 }

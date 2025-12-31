@@ -6,32 +6,32 @@ import { FindSagaLogViewModelByIdQuery } from './saga-log-find-view-model-by-id.
 
 @QueryHandler(FindSagaLogViewModelByIdQuery)
 export class FindSagaLogViewModelByIdQueryHandler
-  implements IQueryHandler<FindSagaLogViewModelByIdQuery>
+	implements IQueryHandler<FindSagaLogViewModelByIdQuery>
 {
-  private readonly logger = new Logger(
-    FindSagaLogViewModelByIdQueryHandler.name,
-  );
+	private readonly logger = new Logger(
+		FindSagaLogViewModelByIdQueryHandler.name,
+	);
 
-  constructor(
-    private readonly assertSagaLogViewModelExistsService: AssertSagaLogViewModelExistsService,
-  ) {}
+	constructor(
+		private readonly assertSagaLogViewModelExistsService: AssertSagaLogViewModelExistsService,
+	) {}
 
-  /**
-   * Executes the FindSagaLogViewModelByIdQuery query.
-   *
-   * @param query - The FindSagaLogViewModelByIdQuery query to execute.
-   * @returns The SagaLogViewModel if found.
-   */
-  async execute(
-    query: FindSagaLogViewModelByIdQuery,
-  ): Promise<SagaLogViewModel> {
-    this.logger.log(
-      `Executing find saga log view model by id query: ${query.id.value}`,
-    );
+	/**
+	 * Executes the FindSagaLogViewModelByIdQuery query.
+	 *
+	 * @param query - The FindSagaLogViewModelByIdQuery query to execute.
+	 * @returns The SagaLogViewModel if found.
+	 */
+	async execute(
+		query: FindSagaLogViewModelByIdQuery,
+	): Promise<SagaLogViewModel> {
+		this.logger.log(
+			`Executing find saga log view model by id query: ${query.id.value}`,
+		);
 
-    // 01: Assert the saga log view model exists
-    return await this.assertSagaLogViewModelExistsService.execute(
-      query.id.value,
-    );
-  }
+		// 01: Assert the saga log view model exists
+		return await this.assertSagaLogViewModelExistsService.execute(
+			query.id.value,
+		);
+	}
 }

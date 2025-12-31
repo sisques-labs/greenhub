@@ -9,17 +9,17 @@ import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base
  * It matches the structure of GrowingUnitViewModel for consistency.
  */
 export type GrowingUnitMongoDbDto = BaseMongoDto & {
-  name: string;
-  type: string;
-  capacity: number;
-  dimensions: {
-    length: number;
-    width: number;
-    height: number;
-    unit: string;
-  } | null;
-  plants: PlantMongoDbDto[];
-  remainingCapacity: number;
-  numberOfPlants: number;
-  volume: number;
+	name: string;
+	type: string;
+	capacity: number;
+	dimensions: {
+		length: number;
+		width: number;
+		height: number;
+		unit: string;
+	} | null;
+	plants: PlantMongoDbDto[];
+	remainingCapacity: number;
+	numberOfPlants: number;
+	volume: number;
 };

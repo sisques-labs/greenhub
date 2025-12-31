@@ -7,7 +7,7 @@
  * @property {string} plantId - The id of the plant to be transplanted
  */
 export interface IPlantTransplantCommandDto {
-  sourceGrowingUnitId: string;
-  targetGrowingUnitId: string;
-  plantId: string;
+	sourceGrowingUnitId: string;
+	targetGrowingUnitId: string;
+	plantId: string;
 }

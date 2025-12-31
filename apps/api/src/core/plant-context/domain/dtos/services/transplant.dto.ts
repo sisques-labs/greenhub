@@ -11,16 +11,16 @@ import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/gro
  * @property plantId - The identifier of the plant to be transplanted.
  */
 export interface ITransplantPlantDto {
-  /**
-   * The growing unit from which the plant will be transplanted.
-   */
-  sourceGrowingUnit: GrowingUnitAggregate;
-  /**
-   * The growing unit to which the plant will be transplanted.
-   */
-  targetGrowingUnit: GrowingUnitAggregate;
-  /**
-   * The identifier of the plant to be transplanted.
-   */
-  plantId: string;
+	/**
+	 * The growing unit from which the plant will be transplanted.
+	 */
+	sourceGrowingUnit: GrowingUnitAggregate;
+	/**
+	 * The growing unit to which the plant will be transplanted.
+	 */
+	targetGrowingUnit: GrowingUnitAggregate;
+	/**
+	 * The identifier of the plant to be transplanted.
+	 */
+	plantId: string;
 }

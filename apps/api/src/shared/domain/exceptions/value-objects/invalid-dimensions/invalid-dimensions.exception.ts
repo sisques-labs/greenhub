@@ -5,7 +5,7 @@ import { BaseDomainException } from '@/shared/domain/exceptions/base-domain.exce
  * This exception is thrown when a dimensions value is invalid.
  */
 export class InvalidDimensionsException extends BaseDomainException {
-  constructor(message: string) {
-    super(message);
-  }
+	constructor(message: string) {
+		super(message);
+	}
 }

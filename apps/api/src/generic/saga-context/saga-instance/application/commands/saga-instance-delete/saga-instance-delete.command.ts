@@ -2,9 +2,9 @@ import { ISagaInstanceDeleteCommandDto } from '@/generic/saga-context/saga-insta
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class SagaInstanceDeleteCommand {
-  readonly id: SagaInstanceUuidValueObject;
+	readonly id: SagaInstanceUuidValueObject;
 
-  constructor(props: ISagaInstanceDeleteCommandDto) {
-    this.id = new SagaInstanceUuidValueObject(props.id);
-  }
+	constructor(props: ISagaInstanceDeleteCommandDto) {
+		this.id = new SagaInstanceUuidValueObject(props.id);
+	}
 }

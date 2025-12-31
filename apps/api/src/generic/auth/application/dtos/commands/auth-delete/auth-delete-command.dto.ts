@@ -5,5 +5,5 @@
  * @property {string} id - The id of the auth to delete.
  */
 export interface IAuthDeleteCommandDto {
-  id: string;
+	id: string;
 }

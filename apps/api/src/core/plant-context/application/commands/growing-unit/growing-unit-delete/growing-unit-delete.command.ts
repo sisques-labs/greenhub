@@ -8,9 +8,9 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
  * This command encapsulates the data needed to delete a growing unit aggregate.
  */
 export class GrowingUnitDeleteCommand {
-  readonly id: GrowingUnitUuidValueObject;
+	readonly id: GrowingUnitUuidValueObject;
 
-  constructor(props: IGrowingUnitDeleteCommandDto) {
-    this.id = new GrowingUnitUuidValueObject(props.id);
-  }
+	constructor(props: IGrowingUnitDeleteCommandDto) {
+		this.id = new GrowingUnitUuidValueObject(props.id);
+	}
 }
