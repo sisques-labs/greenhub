@@ -20,7 +20,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_APP_NAME || 'Sisques Labs',
 	description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || 'Sisques Labs Web App',
-	
 };
 
 export function generateStaticParams() {
