@@ -172,7 +172,7 @@ export function OverviewPlantsSection({
 					</div>
 
 					<div className="space-y-2">
-						<div className="text-sm font-medium mb-3">Additional Metrics</div>
+						<div className="text-sm font-medium mb-3">{t('additionalMetrics')}</div>
 						<div className="space-y-3">
 							{additionalMetrics.map((metric) => {
 								const Icon = metric.icon;

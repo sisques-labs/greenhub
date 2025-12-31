@@ -68,12 +68,17 @@ export class OverviewUpdatedEventHandler
     );
 
     try {
-      // 01: Recalculate overview metrics with the constant ID
+      // TODO: Remove this once we have a better way to ensure the overview is updated after the domain events have been processed
+      // 01: Wait a small delay to ensure domain event handlers have updated MongoDB projections
+      // This prevents race conditions where the overview is calculated before read models are updated
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      // 02: Recalculate overview metrics with the constant ID
       const updatedOverview = await this.overviewCalculateService.execute(
         this.OVERVIEW_ID,
       );
 
-      // 02: Save the updated overview view model
+      // 03: Save the updated overview view model
       await this.overviewReadRepository.save(updatedOverview);
 
       this.logger.log(

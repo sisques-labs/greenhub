@@ -15,6 +15,7 @@ import {
 	PackageIcon,
 	SquareIcon,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface OverviewGrowingUnitsSectionProps {
 	overview: OverviewResponse | null;
@@ -29,7 +30,7 @@ export function OverviewGrowingUnitsSection({
 	overview,
 	isLoading = false,
 }: OverviewGrowingUnitsSectionProps) {
-	// TODO: Add translations
+	const t = useTranslations('dashboard.sections.growingUnits');
 
 	if (isLoading || !overview) {
 		return (
@@ -46,28 +47,28 @@ export function OverviewGrowingUnitsSection({
 
 	const typeBreakdown = [
 		{
-			label: 'Pots',
+			label: t('pots'),
 			value: overview.growingUnitsPot,
 			icon: PackageIcon,
 			color: 'text-blue-600',
 			bgColor: 'bg-blue-50 dark:bg-blue-950/20',
 		},
 		{
-			label: 'Garden Beds',
+			label: t('gardenBeds'),
 			value: overview.growingUnitsGardenBed,
 			icon: SquareIcon,
 			color: 'text-green-600',
 			bgColor: 'bg-green-50 dark:bg-green-950/20',
 		},
 		{
-			label: 'Hanging Baskets',
+			label: t('hangingBaskets'),
 			value: overview.growingUnitsHangingBasket,
 			icon: CircleIcon,
 			color: 'text-purple-600',
 			bgColor: 'bg-purple-50 dark:bg-purple-950/20',
 		},
 		{
-			label: 'Window Boxes',
+			label: t('windowBoxes'),
 			value: overview.growingUnitsWindowBox,
 			icon: BoxIcon,
 			color: 'text-orange-600',
@@ -77,18 +78,18 @@ export function OverviewGrowingUnitsSection({
 
 	const stats = [
 		{
-			label: 'Total Growing Units',
+			label: t('totalGrowingUnits'),
 			value: overview.totalGrowingUnits,
 			icon: Grid3x3Icon,
 		},
 		{
-			label: 'Active',
+			label: t('active'),
 			value: overview.activeGrowingUnits,
 			icon: Grid3x3Icon,
 			color: 'text-green-600',
 		},
 		{
-			label: 'Empty',
+			label: t('empty'),
 			value: overview.emptyGrowingUnits,
 			icon: Grid3x3Icon,
 			color: 'text-gray-600',
@@ -100,7 +101,7 @@ export function OverviewGrowingUnitsSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Grid3x3Icon className="h-5 w-5 text-blue-600" />
-					Growing Units Overview
+					{t('title')}
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-6">
@@ -129,7 +130,7 @@ export function OverviewGrowingUnitsSection({
 
 				{/* Type Breakdown */}
 				<div className="space-y-3 pt-4 border-t">
-					<div className="text-sm font-medium mb-3">By Type</div>
+					<div className="text-sm font-medium mb-3">{t('byType')}</div>
 					<div className="grid gap-3 md:grid-cols-2">
 						{typeBreakdown.map((type) => {
 							const Icon = type.icon;
@@ -148,7 +149,7 @@ export function OverviewGrowingUnitsSection({
 										<div>
 											<div className="text-sm font-medium">{type.label}</div>
 											<div className="text-xs text-muted-foreground">
-												{percentage}% of total
+												{t('percentageOfTotal', { percentage })}
 											</div>
 										</div>
 									</div>
@@ -165,20 +166,20 @@ export function OverviewGrowingUnitsSection({
 				<div className="grid gap-4 md:grid-cols-3 pt-4 border-t">
 					<div className="text-center p-3 rounded-lg bg-muted/50">
 						<div className="text-sm text-muted-foreground mb-1">
-							Avg Plants/Unit
+							{t('avgPlantsPerUnit')}
 						</div>
 						<div className="text-xl font-bold">
 							{overview.averagePlantsPerGrowingUnit.toFixed(1)}
 						</div>
 					</div>
 					<div className="text-center p-3 rounded-lg bg-muted/50">
-						<div className="text-sm text-muted-foreground mb-1">Min</div>
+						<div className="text-sm text-muted-foreground mb-1">{t('min')}</div>
 						<div className="text-xl font-bold">
 							{overview.minPlantsPerGrowingUnit}
 						</div>
 					</div>
 					<div className="text-center p-3 rounded-lg bg-muted/50">
-						<div className="text-sm text-muted-foreground mb-1">Max</div>
+						<div className="text-sm text-muted-foreground mb-1">{t('max')}</div>
 						<div className="text-xl font-bold">
 							{overview.maxPlantsPerGrowingUnit}
 						</div>

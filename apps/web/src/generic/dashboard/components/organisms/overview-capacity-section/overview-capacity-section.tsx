@@ -12,8 +12,7 @@ import { Progress } from '@repo/shared/presentation/components/ui/progress';
 import {
 	AlertTriangleIcon,
 	CheckCircleIcon,
-	PackageIcon,
-	TrendingUpIcon,
+	PackageIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -30,7 +29,7 @@ export function OverviewCapacitySection({
 	overview,
 	isLoading = false,
 }: OverviewCapacitySectionProps) {
-	const _t = useTranslations('dashboard');
+	const t = useTranslations('dashboard.sections.capacity');
 
 	if (isLoading || !overview) {
 		return (
@@ -69,14 +68,14 @@ export function OverviewCapacitySection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<PackageIcon className="h-5 w-5 text-blue-600" />
-					Capacity Overview
+					{t('title')}
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-6">
 				{/* Overall Capacity */}
 				<div className="space-y-4">
 					<div className="flex items-center justify-between">
-						<span className="text-sm font-medium">Average Occupancy</span>
+						<span className="text-sm font-medium">{t('averageOccupancy')}</span>
 						<span
 							className={`text-2xl font-bold ${getOccupancyColor(occupancyPercentage)}`}
 						>
@@ -91,21 +90,21 @@ export function OverviewCapacitySection({
 								{totalCapacity.toLocaleString()}
 							</div>
 							<div className="text-xs text-muted-foreground mt-1">
-								Total Capacity
+								{t('totalCapacity')}
 							</div>
 						</div>
 						<div className="text-center p-3 rounded-lg bg-blue-50 dark:bg-blue-950/20">
 							<div className="text-2xl font-bold text-blue-600">
 								{usedCapacity.toLocaleString()}
 							</div>
-							<div className="text-xs text-muted-foreground mt-1">Used</div>
+							<div className="text-xs text-muted-foreground mt-1">{t('used')}</div>
 						</div>
 						<div className="text-center p-3 rounded-lg bg-green-50 dark:bg-green-950/20">
 							<div className="text-2xl font-bold text-green-600">
 								{remainingCapacity.toLocaleString()}
 							</div>
 							<div className="text-xs text-muted-foreground mt-1">
-								Available
+								{t('available')}
 							</div>
 						</div>
 					</div>
@@ -116,7 +115,7 @@ export function OverviewCapacitySection({
 					<div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20">
 						<div className="flex items-center gap-2">
 							<AlertTriangleIcon className="h-5 w-5 text-orange-600" />
-							<span className="text-sm font-medium">At Limit (≥80%)</span>
+							<span className="text-sm font-medium">{t('atLimit')}</span>
 						</div>
 						<Badge
 							variant="outline"
@@ -129,7 +128,7 @@ export function OverviewCapacitySection({
 					<div className="flex items-center justify-between p-3 rounded-lg bg-red-50 dark:bg-red-950/20">
 						<div className="flex items-center gap-2">
 							<CheckCircleIcon className="h-5 w-5 text-red-600" />
-							<span className="text-sm font-medium">Full (100%)</span>
+							<span className="text-sm font-medium">{t('full')}</span>
 						</div>
 						<Badge
 							variant="outline"
