@@ -3,12 +3,12 @@ import { IUserEventData } from '@/shared/domain/events/users/interfaces/user-eve
 import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 export class UserUpdatedEvent extends BaseEvent<
-  Partial<Omit<IUserEventData, 'id'>>
+	Partial<Omit<IUserEventData, 'id'>>
 > {
-  constructor(
-    metadata: IEventMetadata,
-    data: Partial<Omit<IUserEventData, 'id'>>,
-  ) {
-    super(metadata, data);
-  }
+	constructor(
+		metadata: IEventMetadata,
+		data: Partial<Omit<IUserEventData, 'id'>>,
+	) {
+		super(metadata, data);
+	}
 }

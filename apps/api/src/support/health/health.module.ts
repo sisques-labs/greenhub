@@ -13,9 +13,9 @@ import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health
 const RESOLVERS = [HealthQueryResolver];
 
 const SERVICES = [
-  HealthCheckService,
-  HealthWriteDatabaseCheckService,
-  HealthReadDatabaseCheckService,
+	HealthCheckService,
+	HealthWriteDatabaseCheckService,
+	HealthReadDatabaseCheckService,
 ];
 
 const QUERY_HANDLERS = [HealthCheckQueryHandler];
@@ -33,17 +33,17 @@ const REPOSITORIES = [];
 const CONTROLLERS = [HealthController];
 
 @Module({
-  imports: [SharedModule],
-  controllers: [...CONTROLLERS],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-  ],
+	imports: [SharedModule],
+	controllers: [...CONTROLLERS],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+	],
 })
 export class HealthModule {}

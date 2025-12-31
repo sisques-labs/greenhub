@@ -1,0 +1,1311 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "unknown": "Unknown",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "create": "Create",
+    "update": "Update",
+    "submit": "Submit",
+    "save": "Save",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "none": "None",
+    "empty": "Empty",
+    "notSet": "Not set",
+    "notFound": "Not found",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "completed": "Completed",
+    "pending": "Pending",
+    "viewAll": "View all",
+    "seeAll": "See all"
+  },
+  "nav": {
+    "home": "Home",
+    "settings": "Settings",
+    "plants": "Plants",
+    "growingUnits": "Growing Units",
+    "search": "Search",
+    "searchPlaceholder": "Search..."
+  },
+  "dashboard": {
+    "page": {
+      "title": "Control Panel",
+      "description": "Welcome back, here's today's summary.",
+      "addPlantButton": "Add Plant"
+    },
+    "error": {
+      "loading": "Error loading dashboard: {message}"
+    },
+    "stats": {
+      "totalPlants": {
+        "title": "Total Plants"
+      },
+      "activeUnits": {
+        "title": "Active Units"
+      },
+      "readyForHarvest": {
+        "title": "Ready for Harvest"
+      },
+      "criticalAlerts": {
+        "title": "Critical Alerts"
+      },
+      "changeSuffix": "vs last month"
+    },
+    "sections": {
+      "plants": {
+        "title": "Plants Overview",
+        "totalPlants": "Total Plants",
+        "activePlants": "Active Plants",
+        "activePercentage": "{percentage}% active",
+        "statusBreakdown": "Status Breakdown",
+        "additionalMetrics": "Additional Metrics",
+        "planted": "Planted",
+        "growing": "Growing",
+        "harvested": "Harvested",
+        "dead": "Dead",
+        "archived": "Archived",
+        "withoutPlantedDate": "Without Planted Date",
+        "withNotes": "With Notes",
+        "recent7Days": "Recent (7 days)"
+      },
+      "capacity": {
+        "title": "Capacity Overview",
+        "averageOccupancy": "Average Occupancy",
+        "totalCapacity": "Total Capacity",
+        "used": "Used",
+        "available": "Available",
+        "atLimit": "At Limit (≥80%)",
+        "full": "Full (100%)"
+      },
+      "growingUnits": {
+        "title": "Growing Units Overview",
+        "totalGrowingUnits": "Total Growing Units",
+        "active": "Active",
+        "empty": "Empty",
+        "byType": "By Type",
+        "percentageOfTotal": "{percentage}% of total",
+        "avgPlantsPerUnit": "Avg Plants/Unit",
+        "min": "Min",
+        "max": "Max",
+        "pots": "Pots",
+        "gardenBeds": "Garden Beds",
+        "hangingBaskets": "Hanging Baskets",
+        "windowBoxes": "Window Boxes"
+      },
+      "growingUnitsStatus": {
+        "title": "Status of Cultivation Units",
+        "empty": "No growing units available"
+      },
+      "recentAlerts": {
+        "title": "Recent Alerts",
+        "empty": "No recent alerts"
+      },
+      "todayTasks": {
+        "title": "Today's Tasks",
+        "assignedTo": "Assigned to",
+        "empty": "No tasks scheduled for today"
+      }
+    },
+    "common": {
+      "retry": "Retry",
+      "active": "active",
+      "total": "total",
+      "growing": "growing",
+      "atLimit": "at limit"
+    }
+  },
+  "shared": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Select status"
+      },
+      "createdAt": {
+        "label": "Created at"
+      },
+      "updatedAt": {
+        "label": "Updated at"
+      },
+      "type": {
+        "label": "Type",
+        "placeholder": "Select type"
+      },
+      "capacity": {
+        "label": "Capacity",
+        "placeholder": "Number of items"
+      },
+      "remainingCapacity": {
+        "label": "Remaining Capacity"
+      },
+      "volume": {
+        "label": "Volume"
+      },
+      "dimensions": {
+        "label": "Dimensions"
+      },
+      "length": {
+        "label": "Length",
+        "placeholder": "Length"
+      },
+      "width": {
+        "label": "Width",
+        "placeholder": "Width"
+      },
+      "height": {
+        "label": "Height",
+        "placeholder": "Height"
+      },
+      "unit": {
+        "label": "Unit",
+        "placeholder": "Select unit"
+      },
+      "plants": {
+        "label": "Active plants"
+      },
+      "species": {
+        "label": "Species",
+        "placeholder": "Species"
+      },
+      "plantedDate": {
+        "label": "Planting date"
+      },
+      "notes": {
+        "label": "Notes",
+        "placeholder": "Additional notes"
+      },
+      "growingUnitId": {
+        "label": "Growing Unit ID"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Select status"
+      },
+      "createdAt": {
+        "label": "Creation date"
+      },
+      "updatedAt": {
+        "label": "Update date"
+      }
+    },
+    "types": {
+      "growingUnit": {
+        "POT": "Pot",
+        "GARDEN_BED": "Garden bed",
+        "HANGING_BASKET": "Hanging basket",
+        "WINDOW_BOX": "Window box"
+      }
+    },
+    "units": {
+      "length": {
+        "MILLIMETER": "Millimeter",
+        "CENTIMETER": "Centimeter",
+        "METER": "Meter",
+        "INCH": "Inch",
+        "FOOT": "Foot"
+      }
+    },
+    "status": {
+      "plant": {
+        "PLANTED": "Planted",
+        "GROWING": "Growing",
+        "HARVESTED": "Harvested",
+        "DEAD": "Dead",
+        "ARCHIVED": "Archived"
+      },
+      "growingUnit": {
+        "active": "ACTIVE",
+        "inactive": "INACTIVE"
+      },
+      "location": {
+        "indoor": "Indoor",
+        "outdoor": "Outdoor"
+      }
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalid": "Invalid value",
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "type": {
+        "invalid": "Invalid type"
+      },
+      "capacity": {
+        "required": "Capacity is required"
+      },
+      "unit": {
+        "invalid": "Invalid unit"
+      }
+    },
+    "pagination": {
+      "info": "Page {page} of {totalPages} ({total} total)",
+      "showing": "Showing {from} to {to} of {total}"
+    },
+    "time": {
+      "daysAgo": "{days} days ago",
+      "weeksAgo": "{weeks} weeks ago",
+      "monthsAgo": "{months} month ago",
+      "yearsAgo": "{years} years ago"
+    }
+  },
+  "pages": {
+  "dashboard": {
+      "title": "Control Panel",
+      "description": "Welcome back, here's today's summary.",
+      "addPlantButton": "Add Plant",
+    "error": {
+      "loading": "Error loading dashboard: {message}"
+    },
+    "stats": {
+      "totalPlants": {
+        "title": "Total Plants"
+      },
+      "activeUnits": {
+        "title": "Active Units"
+      },
+      "readyForHarvest": {
+        "title": "Ready for Harvest"
+      },
+      "criticalAlerts": {
+        "title": "Critical Alerts"
+      },
+      "changeSuffix": "vs last month"
+    },
+      "sections": {
+    "growingUnitsStatus": {
+      "title": "Status of Cultivation Units",
+      "empty": "No growing units available"
+    },
+    "recentAlerts": {
+      "title": "Recent Alerts",
+      "empty": "No recent alerts"
+    },
+    "todayTasks": {
+      "title": "Today's Tasks",
+      "assignedTo": "Assigned to",
+      "empty": "No tasks scheduled for today"
+        }
+    }
+  },
+    "auth": {
+    "title": {
+      "login": "Welcome back",
+      "signup": "Create an account"
+    },
+    "description": {
+      "login": "Enter your email and password to sign in",
+      "signup": "Enter your information to create a new account"
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "name@example.com"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": {
+          "login": "Enter your password",
+          "signup": "At least 8 characters"
+        }
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm your password"
+      }
+    },
+    "actions": {
+      "login": "Sign in",
+      "signup": "Create account",
+      "switchToSignup": "Sign up",
+      "switchToLogin": "Sign in",
+      "loading": {
+        "login": "Signing in...",
+        "signup": "Creating account..."
+      }
+    },
+    "messages": {
+      "switchToSignup": "Don't have an account?",
+      "switchToLogin": "Already have an account?",
+      "error": "An error occurred. Please try again."
+    },
+    "validation": {
+      "email": {
+        "required": "Email is required",
+        "invalid": "Invalid email format"
+      },
+      "password": {
+        "required": "Password is required",
+        "minLength": "Password must be at least 8 characters"
+      },
+      "confirmPassword": {
+        "required": "Please confirm your password",
+        "mismatch": "Passwords don't match"
+      }
+    }
+  },
+  "user": {
+    "profile": {
+      "title": "User Profile",
+      "anonymous": "Anonymous user",
+        "error": {
+          "loading": "Error loading user: {message}"
+        },
+        "sections": {
+          "personalInfo": {
+            "title": "Personal Information",
+            "description": "Personal and identification data"
+          },
+          "authInfo": {
+            "title": "Authentication Information",
+            "description": "Security and authentication settings"
+          },
+          "accountInfo": {
+            "title": "Account Information",
+            "description": "Account details and activity"
+          },
+          "contactInfo": {
+            "title": "Contact Information",
+            "description": "Contact and communication data"
+          },
+          "editProfile": {
+            "title": "Edit Profile",
+            "description": "Update your personal information"
+          }
+        },
+        "fields": {
+      "email": "Email",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "provider": "Authentication provider",
+      "twoFactor": "Two-factor authentication",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "createdAt": "Created at",
+      "lastLoginAt": "Last login",
+      "phoneNumber": "Phone number",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Enter your last name"
+      },
+      "userName": {
+        "label": "Username",
+        "placeholder": "Enter your username"
+      },
+      "bio": {
+        "label": "Bio",
+        "placeholder": "Write a brief bio about yourself"
+      },
+      "avatarUrl": {
+        "label": "Avatar URL",
+        "placeholder": "https://example.com/avatar.jpg"
+      },
+      "role": {
+        "label": "Role"
+      },
+      "status": {
+        "label": "Status"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Update Profile",
+        "loading": "Updating..."
+      }
+      }
+    }
+  },
+  "plants": {
+      "list": {
+    "title": "Plant List",
+    "description": "Manage your botanical collection and monitor its health",
+    "empty": "No plants registered",
+        "emptyFiltered": "No plants match the current filters",
+    "search": {
+      "placeholder": "Search by name, species or location..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "needsWater": "Needs Water",
+      "healthy": "Healthy"
+    },
+    "table": {
+      "columns": {
+        "plant": "PLANT / SPECIES",
+        "location": "LOCATION",
+        "status": "STATUS",
+        "lastWatering": "LAST WATERING",
+        "actions": "ACTIONS"
+      },
+      "lastWatering": {
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{days} days ago",
+        "weeksAgo": "{weeks} weeks ago"
+      }
+    },
+    "actions": {
+      "create": {
+        "button": "Add Plant",
+        "title": "Create Plant",
+        "description": "Add a new plant to your collection",
+        "submit": "Create",
+        "loading": "Creating..."
+      },
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+        "error": {
+          "loading": "Error loading plants: {message}"
+        },
+        "growingUnit": {
+          "plantCount": "{count} of {total} plants"
+        }
+      },
+      "detail": {
+        "title": "Plant Detail",
+        "notFound": "Plant not found",
+        "unnamed": "Unnamed plant",
+        "error": {
+          "loading": "Error loading plant: {message}"
+        },
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Plant name"
+          },
+          "species": {
+            "label": "Species",
+            "placeholder": "Plant species"
+          },
+          "plantedDate": {
+            "label": "Planted Date"
+          },
+          "notes": {
+            "label": "Notes",
+            "placeholder": "Additional notes about the plant"
+          },
+          "growingUnitId": {
+            "label": "Growing Unit"
+          }
+        },
+        "location": {
+          "indoor": "INDOOR",
+          "outdoor": "OUTDOOR"
+        },
+        "actions": {
+          "editDetails": "Edit Details",
+          "registerWatering": "Register Watering",
+          "fertilize": "Fertilize",
+          "transplant": "Transplant"
+        },
+        "metrics": {
+          "title": "Care Requirements",
+          "watering": {
+            "label": "WATERING",
+            "every7Days": "Every 7 days"
+          },
+          "light": {
+            "label": "LIGHT",
+            "indirect": "Indirect"
+          },
+          "temperature": {
+            "label": "TEMP"
+          },
+          "humidity": {
+            "label": "HUMIDITY",
+            "high": "High"
+          }
+        },
+        "currentStatus": {
+          "lastWatering": {
+            "label": "Last Watering",
+            "onTime": "On time",
+            "next": "Next"
+          },
+          "lastFertilization": {
+            "label": "Last Fertilization",
+            "suggested": "Suggested"
+          },
+          "plantingDate": {
+            "label": "Planting Date",
+            "age": "Age"
+          }
+        },
+        "age": {
+          "yearsMonths": "{years} year {months} months",
+          "years": "{years} year",
+          "months": "{months} months",
+          "days": "{days} days"
+        },
+        "sections": {
+          "personalNotes": {
+            "title": "Personal Notes",
+            "edit": "Edit Notes",
+            "empty": "No personal notes yet. Add some notes about your plant care routine!"
+          },
+          "upcomingCare": {
+            "title": "Upcoming Care",
+            "tomorrow": "TOMORROW",
+            "lightWatering": "Light Watering",
+            "in5Days": "IN 5 DAYS",
+            "cleanLeaves": "Clean Leaves",
+            "duringDay": "During the day",
+            "in2Weeks": "IN 2 WEEKS",
+            "fertilization": "Fertilization",
+            "spring": "Spring"
+          },
+          "recentHistory": {
+            "title": "Recent History",
+            "watering": "Watering",
+            "wateringDetails": "250ml filtered water",
+            "pruning": "Pruning",
+            "pruningDetails": "Lower yellow leaves",
+            "fertilization": "Fertilization",
+            "fertilizationDetails": "Liquid fertilizer NPK 20-20-20",
+            "table": {
+              "date": "DATE",
+              "action": "ACTION",
+              "details": "DETAILS",
+              "status": "STATUS"
+            }
+          },
+          "progressGallery": {
+            "title": "Progress Gallery",
+            "more": "more"
+          },
+          "wiki": {
+            "title": "Plant Wiki",
+            "didYouKnow": "Did you know...",
+            "description": "Monstera Deliciosa is also known as 'Adam's Rib' due to the unique shape of its leaves that develop natural holes (fenestrations) as they mature.",
+            "readMore": "READ MORE"
+          }
+        },
+        "modals": {
+          "transplant": {
+            "title": "Transplant Plant",
+            "description": "Move this plant to a different growing unit",
+            "fields": {
+              "sourceGrowingUnit": {
+                "label": "From",
+                "unknown": "Unknown growing unit",
+                "helper": "Current growing unit (cannot be changed)"
+              },
+              "targetGrowingUnitId": {
+                "label": "To",
+                "placeholder": "Select a target growing unit",
+                "required": "You must select a target growing unit",
+                "capacityAvailable": "spaces available"
+              }
+            },
+            "actions": {
+              "submit": {
+                "label": "Transplant",
+                "loading": "Transplanting..."
+              }
+            }
+          }
+        }
+      }
+    },
+    "growingUnits": {
+      "list": {
+        "title": "Growing Units",
+        "description": "Visualize and manage your cultivation spaces efficiently.",
+        "empty": "No growing units available",
+        "search": {
+          "placeholder": "Search by name, type or plant..."
+        },
+        "filters": {
+          "all": "All",
+          "indoor": "Indoor",
+          "outdoor": "Outdoor",
+          "pots": "Pots",
+          "beds": "Beds"
+        },
+        "actions": {
+          "create": {
+            "button": "Create Growing Unit",
+            "title": "Create Growing Unit",
+            "description": "Add a new growing unit for your plants",
+            "submit": "Create",
+            "loading": "Creating..."
+          }
+        },
+        "noPlants": "No active plants",
+        "common": {
+          "noDimensions": "No dimensions"
+        }
+      },
+      "detail": {
+        "title": "Growing Unit Detail",
+        "notFound": "Growing unit not found",
+        "error": {
+          "loading": "Error loading growing unit: {message}"
+        },
+        "breadcrumbs": {
+          "home": "Home",
+          "growingUnits": "My Units"
+        },
+        "location": {
+          "label": "Location"
+        },
+        "summary": {
+          "substrate": {
+            "label": "Substrate",
+            "value": "Universal Soil"
+          },
+          "exposure": {
+            "label": "Exposure",
+            "directSun": "Direct Sun",
+            "partialSun": "Partial Sun",
+            "shade": "Shade"
+          },
+          "lastWatering": {
+            "label": "Last Watering",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "never": "Never"
+          },
+          "occupancy": {
+            "label": "Occupancy"
+          }
+        },
+        "sections": {
+          "plants": {
+            "title": "Plants in cultivation",
+            "variety": "Variety",
+            "planted": "PLANTED",
+            "days": "days",
+            "manage": "Manage"
+          },
+          "history": {
+            "title": "Recent History"
+          }
+        },
+        "actions": {
+          "editUnit": "Edit Unit",
+          "addPlant": "Add Plant",
+          "update": {
+            "title": "Update Growing Unit",
+            "description": "Update growing unit information",
+            "submit": "Update",
+            "loading": "Updating..."
+          },
+          "delete": {
+            "label": "Delete",
+            "loading": "Deleting...",
+            "confirm": {
+              "title": "Delete Growing Unit",
+              "description": "Are you sure you want to delete the growing unit {name}? This action cannot be undone."
+            }
+          }
+        },
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Growing unit name"
+          },
+          "type": {
+            "label": "Type",
+            "placeholder": "Select type"
+          },
+          "capacity": {
+            "label": "Capacity",
+            "placeholder": "Number of plants"
+          },
+          "remainingCapacity": {
+            "label": "Remaining Capacity"
+          },
+          "volume": {
+            "label": "Volume"
+          },
+          "dimensions": {
+            "label": "Dimensions"
+          },
+          "length": {
+            "label": "Length",
+            "placeholder": "Length"
+          },
+          "width": {
+            "label": "Width",
+            "placeholder": "Width"
+          },
+          "height": {
+            "label": "Height",
+            "placeholder": "Height"
+          },
+          "unit": {
+            "label": "Unit",
+            "placeholder": "Select unit"
+          },
+          "plants": {
+            "label": "Active plants"
+          }
+        },
+        "types": {
+          "POT": "Pot",
+          "GARDEN_BED": "Garden Bed",
+          "HANGING_BASKET": "Hanging Basket",
+          "WINDOW_BOX": "Window Box"
+        },
+        "units": {
+          "MILLIMETER": "Millimeter",
+          "CENTIMETER": "Centimeter",
+          "METER": "Meter",
+          "INCH": "Inch",
+          "FOOT": "Foot"
+        },
+        "validation": {
+          "type": {
+            "invalid": "Invalid type"
+          },
+          "capacity": {
+            "required": "Capacity is required"
+          }
+        }
+      }
+    }
+  },
+  "legacy": {
+  "plant": {
+    "common": {
+      "notSet": "Not set",
+      "unnamed": "Unnamed plant"
+    },
+    "notFound": "Plant not found",
+    "error": {
+      "loading": "Error loading plant: {message}"
+    },
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Plant name"
+      },
+      "species": {
+        "label": "Species",
+        "placeholder": "Plant species"
+      },
+      "plantedDate": {
+        "label": "Planted Date"
+      },
+      "notes": {
+        "label": "Notes",
+        "placeholder": "Additional notes about the plant"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Select status"
+      },
+      "growingUnitId": {
+        "label": "Growing Unit ID"
+      },
+      "sourceGrowingUnitId": {
+        "label": "Source Growing Unit",
+        "placeholder": "Source growing unit ID"
+      },
+      "targetGrowingUnitId": {
+        "label": "Target Growing Unit",
+        "placeholder": "Target growing unit ID"
+      }
+    },
+    "status": {
+      "PLANTED": "Planted",
+      "GROWING": "Growing",
+      "HARVESTED": "Harvested",
+      "DEAD": "Dead",
+      "ARCHIVED": "Archived"
+    },
+    "sections": {
+      "info": {
+        "title": "Plant Information",
+        "description": "Detailed information about the plant"
+      },
+      "update": {
+        "title": "Update Plant",
+        "description": "Update plant information"
+      },
+      "transplant": {
+        "title": "Transplant Plant",
+        "description": "Move plant to a different growing unit"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Update Plant",
+        "loading": "Updating..."
+      },
+      "transplant": {
+        "label": "Transplant",
+        "loading": "Transplanting..."
+      }
+    },
+      "transplant": {
+        "title": "Transplant Plant",
+        "description": "Move this plant to a different growing unit",
+        "fields": {
+          "sourceGrowingUnit": {
+            "label": "From",
+            "unknown": "Unknown growing unit",
+            "helper": "Current growing unit (cannot be changed)"
+          },
+          "targetGrowingUnitId": {
+            "label": "To",
+            "placeholder": "Select a target growing unit",
+            "required": "You must select a target growing unit",
+            "capacityAvailable": "spaces available"
+          }
+        },
+        "actions": {
+          "submit": {
+            "label": "Transplant",
+            "loading": "Transplanting..."
+          }
+        }
+      },
+    "validation": {
+      "id": {
+        "required": "ID is required"
+      },
+      "plantId": {
+        "required": "Plant ID is required"
+      },
+      "sourceGrowingUnitId": {
+        "required": "Source growing unit ID is required"
+      },
+      "targetGrowingUnitId": {
+        "required": "Target growing unit ID is required"
+      }
+    },
+    "detail": {
+      "image": {
+        "placeholder": "Plant image placeholder"
+      },
+      "location": {
+        "indoor": "INDOOR",
+        "outdoor": "OUTDOOR"
+      },
+      "actions": {
+        "registerWatering": "Register Watering",
+        "fertilize": "Fertilize"
+      },
+      "metrics": {
+        "title": "Care Requirements",
+        "watering": {
+          "label": "WATERING",
+          "every7Days": "Every 7 days"
+        },
+        "light": {
+          "label": "LIGHT",
+          "indirect": "Indirect"
+        },
+        "temperature": {
+          "label": "TEMP"
+        },
+        "humidity": {
+          "label": "HUMIDITY",
+          "high": "High"
+        }
+      },
+      "currentStatus": {
+        "lastWatering": {
+          "label": "Last Watering",
+          "onTime": "On time",
+          "daysAgo": "Days ago",
+          "next": "Next",
+          "tomorrow": "Tomorrow"
+        },
+        "lastFertilization": {
+          "label": "Last Fertilization",
+          "pending": "Pending",
+          "monthAgo": "{months} month ago",
+          "suggested": "Suggested",
+          "today": "Today"
+        },
+        "plantingDate": {
+          "label": "Planting Date",
+          "age": "Age"
+        }
+      },
+      "age": {
+        "yearsMonths": "{years} year {months} months",
+        "years": "{years} year",
+        "months": "{months} months",
+        "days": "{days} days"
+      },
+      "personalNotes": {
+        "title": "Personal Notes",
+        "edit": "Edit Notes",
+        "empty": "No personal notes yet. Add some notes about your plant care routine!"
+      },
+      "upcomingCare": {
+        "title": "Upcoming Care",
+        "tomorrow": "TOMORROW",
+        "lightWatering": "Light Watering",
+        "in5Days": "IN 5 DAYS",
+        "cleanLeaves": "Clean Leaves",
+        "duringDay": "During the day",
+        "in2Weeks": "IN 2 WEEKS",
+        "fertilization": "Fertilization",
+        "spring": "Spring"
+      },
+      "recentHistory": {
+        "title": "Recent History",
+        "viewAll": "View all",
+        "today": "Today",
+        "watering": "Watering",
+        "wateringDetails": "250ml filtered water",
+        "pruning": "Pruning",
+        "pruningDetails": "Lower yellow leaves",
+        "fertilization": "Fertilization",
+        "fertilizationDetails": "Liquid fertilizer NPK 20-20-20",
+        "completed": "Completed",
+        "table": {
+          "date": "DATE",
+          "action": "ACTION",
+          "details": "DETAILS",
+          "status": "STATUS"
+        }
+      },
+      "progressGallery": {
+        "title": "Progress Gallery",
+        "more": "more"
+      },
+      "wiki": {
+        "title": "Plant Wiki",
+        "didYouKnow": "Did you know...",
+        "description": "Monstera Deliciosa is also known as 'Adam's Rib' due to the unique shape of its leaves that develop natural holes (fenestrations) as they mature.",
+        "readMore": "READ MORE"
+      }
+    }
+  },
+    "plants": {
+      "title": "Plant List",
+      "description": "Manage your botanical collection and monitor its health",
+      "empty": "No plants registered",
+      "empty.filtered": "No plants match the current filters",
+      "growingUnit": {
+        "plantCount": "{count} of {total} plants"
+      },
+      "search": {
+        "placeholder": "Search by name, species or location..."
+      },
+      "filters": {
+        "all": "All",
+        "indoor": "Indoor",
+        "outdoor": "Outdoor",
+        "needsWater": "Needs Water",
+        "healthy": "Healthy"
+      },
+      "table": {
+        "columns": {
+          "plant": "PLANT / SPECIES",
+          "location": "LOCATION",
+          "status": "STATUS",
+          "lastWatering": "LAST WATERING",
+          "actions": "ACTIONS"
+        },
+        "lastWatering": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "daysAgo": "{days} days ago",
+          "weeksAgo": "{weeks} weeks ago"
+        },
+        "pagination": {
+          "showing": "Showing {from} to {to} of {total} plants"
+        }
+      },
+      "actions": {
+        "create": {
+          "button": "Add Plant",
+          "title": "Create Plant",
+          "description": "Add a new plant to your collection",
+          "submit": "Create",
+          "loading": "Creating..."
+        },
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "pagination": {
+        "info": "Page {page} of {totalPages} ({total} total)"
+      }
+    },
+  "growingUnit": {
+    "page": {
+      "title": "Growing Units",
+      "description": "Visualize and manage your cultivation spaces efficiently."
+    },
+    "common": {
+      "noDimensions": "No dimensions",
+      "more": "more"
+    },
+    "error": {
+      "loading": "Error loading growing units: {message}"
+    },
+    "search": {
+      "placeholder": "Search by name, type or plant..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "pots": "Pots",
+      "beds": "Beds"
+    },
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Growing unit name"
+      },
+      "type": {
+        "label": "Type",
+        "placeholder": "Select type"
+      },
+      "capacity": {
+        "label": "Capacity",
+        "placeholder": "Number of plants"
+      },
+      "remainingCapacity": {
+        "label": "Remaining Capacity"
+      },
+      "volume": {
+        "label": "Volume"
+      },
+      "dimensions": {
+        "label": "Dimensions"
+      },
+      "length": {
+        "label": "Length",
+        "placeholder": "Length"
+      },
+      "width": {
+        "label": "Width",
+        "placeholder": "Width"
+      },
+      "height": {
+        "label": "Height",
+        "placeholder": "Height"
+      },
+      "unit": {
+        "label": "Unit",
+        "placeholder": "Select unit"
+      },
+      "plants": {
+        "label": "Active plants"
+      },
+      "createdAt": {
+        "label": "Created at"
+      }
+    },
+    "noPlants": "No active plants",
+    "detail": {
+      "notFound": "Growing unit not found",
+      "error": {
+        "loading": "Error loading growing unit: {message}"
+      },
+      "breadcrumbs": {
+        "home": "Home",
+        "growingUnits": "My Units"
+      },
+      "status": {
+        "active": "ACTIVE",
+        "inactive": "INACTIVE"
+      },
+      "location": {
+        "label": "Location",
+        "indoor": "Indoor",
+        "outdoor": "Outdoor"
+      },
+      "summary": {
+        "substrate": {
+          "label": "Substrate",
+          "value": "Universal Soil"
+        },
+        "exposure": {
+          "label": "Exposure",
+          "directSun": "Direct Sun",
+          "partialSun": "Partial Sun",
+          "shade": "Shade"
+        },
+        "lastWatering": {
+          "label": "Last Watering",
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "never": "Never"
+        },
+        "occupancy": {
+          "label": "Occupancy"
+        }
+      },
+      "plants": {
+        "title": "Plants in cultivation",
+        "viewAll": "View all",
+        "variety": "Variety",
+        "planted": "PLANTED",
+        "days": "days",
+        "manage": "Manage"
+      },
+      "history": {
+        "title": "Recent History",
+        "viewAll": "View all history",
+        "today": "TODAY",
+        "yesterday": "YESTERDAY"
+      },
+      "actions": {
+        "editUnit": "Edit Unit",
+        "addPlant": "Add Plant"
+      }
+    },
+    "type": {
+      "POT": "Pot",
+      "GARDEN_BED": "Garden Bed",
+      "HANGING_BASKET": "Hanging Basket",
+      "WINDOW_BOX": "Window Box"
+    },
+    "unit": {
+      "MILLIMETER": "Millimeter",
+      "CENTIMETER": "Centimeter",
+      "METER": "Meter",
+      "INCH": "Inch",
+      "FOOT": "Foot"
+    },
+    "actions": {
+      "create": {
+        "title": "Create Growing Unit",
+        "description": "Add a new growing unit for your plants",
+        "button": "Create Growing Unit",
+        "submit": "Create",
+        "loading": "Creating..."
+      },
+      "update": {
+        "title": "Update Growing Unit",
+        "description": "Update growing unit information",
+        "submit": "Update",
+        "loading": "Updating..."
+      },
+      "edit": "Edit",
+      "delete": {
+        "label": "Delete",
+        "loading": "Deleting...",
+        "confirm": {
+          "title": "Delete Growing Unit",
+          "description": "Are you sure you want to delete the growing unit {name}? This action cannot be undone."
+        }
+      }
+    },
+    "pagination": {
+      "info": "Page {page} of {totalPages} ({total} total)"
+    },
+    "validation": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "type": {
+        "invalid": "Invalid type"
+      },
+      "capacity": {
+        "required": "Capacity is required"
+        }
+      }
+    },
+    "user": {
+      "loading": "Loading user...",
+      "notFound": "User not found",
+      "validation": {
+        "species": {
+          "required": "Species is required"
+        },
+        "status": {
+          "invalid": "Invalid status"
+        },
+        "growingUnitId": {
+          "required": "Growing unit ID is required"
+        }
+      }
+    },
+    "authPage": {
+      "title": {
+        "login": "Welcome back",
+        "signup": "Create an account"
+      },
+      "description": {
+        "login": "Enter your email and password to sign in",
+        "signup": "Enter your information to create a new account"
+      },
+      "fields": {
+        "email": {
+          "label": "Email",
+          "placeholder": "name@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": {
+            "login": "Enter your password",
+            "signup": "At least 8 characters"
+          }
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm your password"
+        }
+      },
+      "actions": {
+        "login": "Sign in",
+        "signup": "Create account",
+        "switchToSignup": "Sign up",
+        "switchToLogin": "Sign in",
+        "loading": {
+          "login": "Signing in...",
+          "signup": "Creating account..."
+        }
+      },
+      "messages": {
+        "switchToSignup": "Don't have an account?",
+        "switchToLogin": "Already have an account?",
+        "error": "An error occurred. Please try again."
+      },
+      "validation": {
+        "email": {
+          "required": "Email is required",
+          "invalid": "Invalid email format"
+        },
+        "password": {
+          "required": "Password is required",
+          "minLength": "Password must be at least 8 characters"
+        },
+        "confirmPassword": {
+          "required": "Please confirm your password",
+          "mismatch": "Passwords don't match"
+        }
+      }
+    }
+  }
+}

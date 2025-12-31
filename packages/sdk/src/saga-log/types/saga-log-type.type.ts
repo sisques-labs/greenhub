@@ -1,1 +1,1 @@
-export type SagaLogType = 'INFO' | 'WARNING' | 'ERROR' | 'DEBUG';
+export type SagaLogType = "INFO" | "WARNING" | "ERROR" | "DEBUG";

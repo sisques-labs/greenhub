@@ -41,81 +41,81 @@ import { SharedModule } from '@/shared/shared.module';
 const RESOLVERS = [SagaLogQueryResolver, SagaLogMutationsResolver];
 
 const SERVICES = [
-  AssertSagaLogExistsService,
-  AssertSagaLogNotExistsService,
-  AssertSagaLogViewModelExistsService,
+	AssertSagaLogExistsService,
+	AssertSagaLogNotExistsService,
+	AssertSagaLogViewModelExistsService,
 ];
 
 const QUERY_HANDLERS = [
-  FindSagaLogsByCriteriaQueryHandler,
-  FindSagaLogByIdQueryHandler,
-  FindSagaLogsBySagaInstanceIdQueryHandler,
-  FindSagaLogsBySagaStepIdQueryHandler,
+	FindSagaLogsByCriteriaQueryHandler,
+	FindSagaLogByIdQueryHandler,
+	FindSagaLogsBySagaInstanceIdQueryHandler,
+	FindSagaLogsBySagaStepIdQueryHandler,
 
-  // View models
-  FindSagaLogViewModelByIdQueryHandler,
-  FindSagaLogViewModelsBySagaInstanceIdQueryHandler,
-  FindSagaLogViewModelsBySagaStepIdQueryHandler,
+	// View models
+	FindSagaLogViewModelByIdQueryHandler,
+	FindSagaLogViewModelsBySagaInstanceIdQueryHandler,
+	FindSagaLogViewModelsBySagaStepIdQueryHandler,
 ];
 
 const COMMAND_HANDLERS = [
-  SagaLogCreateCommandHandler,
-  SagaLogUpdateCommandHandler,
-  SagaLogDeleteCommandHandler,
+	SagaLogCreateCommandHandler,
+	SagaLogUpdateCommandHandler,
+	SagaLogDeleteCommandHandler,
 ];
 
 const EVENT_HANDLERS = [
-  // Saga log events
-  SagaLogCreatedEventHandler,
-  SagaLogUpdatedEventHandler,
-  SagaLogDeletedEventHandler,
+	// Saga log events
+	SagaLogCreatedEventHandler,
+	SagaLogUpdatedEventHandler,
+	SagaLogDeletedEventHandler,
 
-  // Saga instance events
-  SagaInstanceCreatedEventHandler,
-  SagaInstanceUpdatedEventHandler,
-  SagaInstanceDeletedEventHandler,
-  SagaInstanceStatusChangedEventHandler,
+	// Saga instance events
+	SagaInstanceCreatedEventHandler,
+	SagaInstanceUpdatedEventHandler,
+	SagaInstanceDeletedEventHandler,
+	SagaInstanceStatusChangedEventHandler,
 
-  // Saga step events
-  SagaStepCreatedEventHandler,
-  SagaStepUpdatedEventHandler,
-  SagaStepDeletedEventHandler,
-  SagaStepStatusChangedEventHandler,
+	// Saga step events
+	SagaStepCreatedEventHandler,
+	SagaStepUpdatedEventHandler,
+	SagaStepDeletedEventHandler,
+	SagaStepStatusChangedEventHandler,
 ];
 
 const FACTORIES = [SagaLogAggregateFactory, SagaLogViewModelFactory];
 
 const MAPPERS = [
-  SagaLogTypeormMapper,
-  SagaLogMongoDBMapper,
-  SagaLogGraphQLMapper,
+	SagaLogTypeormMapper,
+	SagaLogMongoDBMapper,
+	SagaLogGraphQLMapper,
 ];
 
 const REPOSITORIES = [
-  {
-    provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-    useClass: SagaLogTypeormRepository,
-  },
-  {
-    provide: SAGA_LOG_READ_REPOSITORY_TOKEN,
-    useClass: SagaLogMongoRepository,
-  },
+	{
+		provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+		useClass: SagaLogTypeormRepository,
+	},
+	{
+		provide: SAGA_LOG_READ_REPOSITORY_TOKEN,
+		useClass: SagaLogMongoRepository,
+	},
 ];
 
 const ENTITIES = [SagaLogTypeormEntity];
 
 @Module({
-  imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-  ],
+	imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+	],
 })
 export class SagaLogModule {}

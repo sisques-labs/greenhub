@@ -3,13 +3,13 @@ import { ISagaLogEventData } from '@/shared/domain/events/saga-context/saga-log/
 import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 export class SagaLogCreatedEvent extends BaseEvent<ISagaLogEventData> {
-  /**
-   * Constructor
-   *
-   * @param metadata - The metadata of the event
-   * @param data - The data of the event
-   */
-  constructor(metadata: IEventMetadata, data: ISagaLogEventData) {
-    super(metadata, data);
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(metadata: IEventMetadata, data: ISagaLogEventData) {
+		super(metadata, data);
+	}
 }

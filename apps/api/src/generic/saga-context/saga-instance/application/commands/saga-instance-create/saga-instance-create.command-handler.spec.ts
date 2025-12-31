@@ -7,8 +7,8 @@ import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/doma
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { SagaInstanceAggregateFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-aggregate/saga-instance-aggregate.factory';
 import {
-  SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
-  SagaInstanceWriteRepository,
+	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
+	SagaInstanceWriteRepository,
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
 import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
 import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
@@ -16,241 +16,241 @@ import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/sa
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 describe('SagaInstanceCreateCommandHandler', () => {
-  let handler: SagaInstanceCreateCommandHandler;
-  let mockSagaInstanceWriteRepository: jest.Mocked<SagaInstanceWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockQueryBus: jest.Mocked<QueryBus>;
-  let mockSagaInstanceAggregateFactory: jest.Mocked<SagaInstanceAggregateFactory>;
-  let mockAssertSagaInstanceNotExistsService: jest.Mocked<AssertSagaInstanceNotExistsService>;
+	let handler: SagaInstanceCreateCommandHandler;
+	let mockSagaInstanceWriteRepository: jest.Mocked<SagaInstanceWriteRepository>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockQueryBus: jest.Mocked<QueryBus>;
+	let mockSagaInstanceAggregateFactory: jest.Mocked<SagaInstanceAggregateFactory>;
+	let mockAssertSagaInstanceNotExistsService: jest.Mocked<AssertSagaInstanceNotExistsService>;
 
-  beforeEach(async () => {
-    mockSagaInstanceWriteRepository = {
-      findById: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<SagaInstanceWriteRepository>;
+	beforeEach(async () => {
+		mockSagaInstanceWriteRepository = {
+			findById: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<SagaInstanceWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockQueryBus = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<QueryBus>;
+		mockQueryBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<QueryBus>;
 
-    mockSagaInstanceAggregateFactory = {
-      create: jest.fn(),
-      fromPrimitives: jest.fn(),
-    } as unknown as jest.Mocked<SagaInstanceAggregateFactory>;
+		mockSagaInstanceAggregateFactory = {
+			create: jest.fn(),
+			fromPrimitives: jest.fn(),
+		} as unknown as jest.Mocked<SagaInstanceAggregateFactory>;
 
-    mockAssertSagaInstanceNotExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaInstanceNotExistsService>;
+		mockAssertSagaInstanceNotExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaInstanceNotExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        SagaInstanceCreateCommandHandler,
-        {
-          provide: SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
-          useValue: mockSagaInstanceWriteRepository,
-        },
-        {
-          provide: EventBus,
-          useValue: mockEventBus,
-        },
-        {
-          provide: QueryBus,
-          useValue: mockQueryBus,
-        },
-        {
-          provide: SagaInstanceAggregateFactory,
-          useValue: mockSagaInstanceAggregateFactory,
-        },
-        {
-          provide: AssertSagaInstanceNotExistsService,
-          useValue: mockAssertSagaInstanceNotExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				SagaInstanceCreateCommandHandler,
+				{
+					provide: SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
+					useValue: mockSagaInstanceWriteRepository,
+				},
+				{
+					provide: EventBus,
+					useValue: mockEventBus,
+				},
+				{
+					provide: QueryBus,
+					useValue: mockQueryBus,
+				},
+				{
+					provide: SagaInstanceAggregateFactory,
+					useValue: mockSagaInstanceAggregateFactory,
+				},
+				{
+					provide: AssertSagaInstanceNotExistsService,
+					useValue: mockAssertSagaInstanceNotExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<SagaInstanceCreateCommandHandler>(
-      SagaInstanceCreateCommandHandler,
-    );
-  });
+		handler = module.get<SagaInstanceCreateCommandHandler>(
+			SagaInstanceCreateCommandHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should create saga instance successfully when saga instance does not exist', async () => {
-      const commandDto = {
-        name: 'Order Processing Saga',
-      };
+	describe('execute', () => {
+		it('should create saga instance successfully when saga instance does not exist', async () => {
+			const commandDto = {
+				name: 'Order Processing Saga',
+			};
 
-      const command = new SagaInstanceCreateCommand(commandDto);
-      const mockSagaInstance = new SagaInstanceAggregate(
-        {
-          id: command.id,
-          name: new SagaInstanceNameValueObject(commandDto.name),
-          status: new SagaInstanceStatusValueObject(
-            SagaInstanceStatusEnum.PENDING,
-          ),
-          startDate: null,
-          endDate: null,
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new SagaInstanceCreateCommand(commandDto);
+			const mockSagaInstance = new SagaInstanceAggregate(
+				{
+					id: command.id,
+					name: new SagaInstanceNameValueObject(commandDto.name),
+					status: new SagaInstanceStatusValueObject(
+						SagaInstanceStatusEnum.PENDING,
+					),
+					startDate: null,
+					endDate: null,
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
-        undefined,
-      );
-      mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
-      mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
+				undefined,
+			);
+			mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
+			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      const markAsPendingSpy = jest.spyOn(mockSagaInstance, 'markAsPending');
+			const markAsPendingSpy = jest.spyOn(mockSagaInstance, 'markAsPending');
 
-      const result = await handler.execute(command);
+			const result = await handler.execute(command);
 
-      expect(result).toBe(mockSagaInstance.id.value);
-      expect(
-        mockAssertSagaInstanceNotExistsService.execute,
-      ).toHaveBeenCalledWith(command.id.value);
-      expect(mockSagaInstanceAggregateFactory.create).toHaveBeenCalled();
-      expect(markAsPendingSpy).toHaveBeenCalledWith(false);
-      expect(mockSagaInstanceWriteRepository.save).toHaveBeenCalledWith(
-        mockSagaInstance,
-      );
-      expect(mockEventBus.publishAll).toHaveBeenCalled();
-    });
+			expect(result).toBe(mockSagaInstance.id.value);
+			expect(
+				mockAssertSagaInstanceNotExistsService.execute,
+			).toHaveBeenCalledWith(command.id.value);
+			expect(mockSagaInstanceAggregateFactory.create).toHaveBeenCalled();
+			expect(markAsPendingSpy).toHaveBeenCalledWith(false);
+			expect(mockSagaInstanceWriteRepository.save).toHaveBeenCalledWith(
+				mockSagaInstance,
+			);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+		});
 
-    it('should mark saga instance as pending after creation', async () => {
-      const commandDto = {
-        name: 'Order Processing Saga',
-      };
+		it('should mark saga instance as pending after creation', async () => {
+			const commandDto = {
+				name: 'Order Processing Saga',
+			};
 
-      const command = new SagaInstanceCreateCommand(commandDto);
-      const mockSagaInstance = new SagaInstanceAggregate(
-        {
-          id: command.id,
-          name: new SagaInstanceNameValueObject(commandDto.name),
-          status: new SagaInstanceStatusValueObject(
-            SagaInstanceStatusEnum.PENDING,
-          ),
-          startDate: null,
-          endDate: null,
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new SagaInstanceCreateCommand(commandDto);
+			const mockSagaInstance = new SagaInstanceAggregate(
+				{
+					id: command.id,
+					name: new SagaInstanceNameValueObject(commandDto.name),
+					status: new SagaInstanceStatusValueObject(
+						SagaInstanceStatusEnum.PENDING,
+					),
+					startDate: null,
+					endDate: null,
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
-        undefined,
-      );
-      mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
-      mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
+				undefined,
+			);
+			mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
+			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      const markAsPendingSpy = jest.spyOn(mockSagaInstance, 'markAsPending');
+			const markAsPendingSpy = jest.spyOn(mockSagaInstance, 'markAsPending');
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(markAsPendingSpy).toHaveBeenCalledWith(false);
-      expect(mockSagaInstance.status.value).toBe(
-        SagaInstanceStatusEnum.PENDING,
-      );
-    });
+			expect(markAsPendingSpy).toHaveBeenCalledWith(false);
+			expect(mockSagaInstance.status.value).toBe(
+				SagaInstanceStatusEnum.PENDING,
+			);
+		});
 
-    it('should publish SagaInstanceCreatedEvent after saving', async () => {
-      const commandDto = {
-        name: 'Order Processing Saga',
-      };
+		it('should publish SagaInstanceCreatedEvent after saving', async () => {
+			const commandDto = {
+				name: 'Order Processing Saga',
+			};
 
-      const command = new SagaInstanceCreateCommand(commandDto);
-      const mockSagaInstance = new SagaInstanceAggregate(
-        {
-          id: command.id,
-          name: new SagaInstanceNameValueObject(commandDto.name),
-          status: new SagaInstanceStatusValueObject(
-            SagaInstanceStatusEnum.PENDING,
-          ),
-          startDate: null,
-          endDate: null,
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        true,
-      );
+			const command = new SagaInstanceCreateCommand(commandDto);
+			const mockSagaInstance = new SagaInstanceAggregate(
+				{
+					id: command.id,
+					name: new SagaInstanceNameValueObject(commandDto.name),
+					status: new SagaInstanceStatusValueObject(
+						SagaInstanceStatusEnum.PENDING,
+					),
+					startDate: null,
+					endDate: null,
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				true,
+			);
 
-      mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
-        undefined,
-      );
-      mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
-      mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
+				undefined,
+			);
+			mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
+			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      const publishedEvents = mockSagaInstance.getUncommittedEvents();
-      if (Array.isArray(publishedEvents) && publishedEvents.length > 0) {
-        expect(publishedEvents[0]).toBeInstanceOf(SagaInstanceCreatedEvent);
-        expect(mockEventBus.publishAll).toHaveBeenCalledWith(publishedEvents);
-      }
-    });
+			const publishedEvents = mockSagaInstance.getUncommittedEvents();
+			if (Array.isArray(publishedEvents) && publishedEvents.length > 0) {
+				expect(publishedEvents[0]).toBeInstanceOf(SagaInstanceCreatedEvent);
+				expect(mockEventBus.publishAll).toHaveBeenCalledWith(publishedEvents);
+			}
+		});
 
-    it('should throw error if saga instance already exists', async () => {
-      const commandDto = {
-        name: 'Order Processing Saga',
-      };
+		it('should throw error if saga instance already exists', async () => {
+			const commandDto = {
+				name: 'Order Processing Saga',
+			};
 
-      const command = new SagaInstanceCreateCommand(commandDto);
-      const error = new Error('Saga instance already exists');
+			const command = new SagaInstanceCreateCommand(commandDto);
+			const error = new Error('Saga instance already exists');
 
-      mockAssertSagaInstanceNotExistsService.execute.mockRejectedValue(error);
+			mockAssertSagaInstanceNotExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(command)).rejects.toThrow(error);
-      expect(mockSagaInstanceAggregateFactory.create).not.toHaveBeenCalled();
-      expect(mockSagaInstanceWriteRepository.save).not.toHaveBeenCalled();
-    });
+			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockSagaInstanceAggregateFactory.create).not.toHaveBeenCalled();
+			expect(mockSagaInstanceWriteRepository.save).not.toHaveBeenCalled();
+		});
 
-    it('should commit events after publishing', async () => {
-      const commandDto = {
-        name: 'Order Processing Saga',
-      };
+		it('should commit events after publishing', async () => {
+			const commandDto = {
+				name: 'Order Processing Saga',
+			};
 
-      const command = new SagaInstanceCreateCommand(commandDto);
-      const mockSagaInstance = new SagaInstanceAggregate(
-        {
-          id: command.id,
-          name: new SagaInstanceNameValueObject(commandDto.name),
-          status: new SagaInstanceStatusValueObject(
-            SagaInstanceStatusEnum.PENDING,
-          ),
-          startDate: null,
-          endDate: null,
-          createdAt: new DateValueObject(new Date()),
-          updatedAt: new DateValueObject(new Date()),
-        },
-        false,
-      );
+			const command = new SagaInstanceCreateCommand(commandDto);
+			const mockSagaInstance = new SagaInstanceAggregate(
+				{
+					id: command.id,
+					name: new SagaInstanceNameValueObject(commandDto.name),
+					status: new SagaInstanceStatusValueObject(
+						SagaInstanceStatusEnum.PENDING,
+					),
+					startDate: null,
+					endDate: null,
+					createdAt: new DateValueObject(new Date()),
+					updatedAt: new DateValueObject(new Date()),
+				},
+				false,
+			);
 
-      mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
-        undefined,
-      );
-      mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
-      mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockAssertSagaInstanceNotExistsService.execute.mockResolvedValue(
+				undefined,
+			);
+			mockSagaInstanceAggregateFactory.create.mockReturnValue(mockSagaInstance);
+			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-      const commitSpy = jest.spyOn(mockSagaInstance, 'commit');
+			const commitSpy = jest.spyOn(mockSagaInstance, 'commit');
 
-      await handler.execute(command);
+			await handler.execute(command);
 
-      expect(commitSpy).toHaveBeenCalled();
-    });
-  });
+			expect(commitSpy).toHaveBeenCalled();
+		});
+	});
 });

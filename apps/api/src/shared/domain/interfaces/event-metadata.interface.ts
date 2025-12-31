@@ -1,6 +1,7 @@
 export interface IEventMetadata {
-  aggregateId: string;
-  aggregateType: string;
-  eventType: string;
-  isReplay?: boolean;
+	aggregateRootId: string;
+	aggregateRootType: string;
+	entityId: string;
+	entityType: string;
+	eventType: string;
 }

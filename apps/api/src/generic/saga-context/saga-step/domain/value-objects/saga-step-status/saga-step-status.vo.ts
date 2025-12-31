@@ -6,9 +6,9 @@ import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
  * It extends the EnumValueObject to leverage common enum functionalities.
  */
 export class SagaStepStatusValueObject extends EnumValueObject<
-  typeof SagaStepStatusEnum
+	typeof SagaStepStatusEnum
 > {
-  protected get enumObject(): typeof SagaStepStatusEnum {
-    return SagaStepStatusEnum;
-  }
+	protected get enumObject(): typeof SagaStepStatusEnum {
+		return SagaStepStatusEnum;
+	}
 }

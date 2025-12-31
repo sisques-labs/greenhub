@@ -6,24 +6,24 @@ import { FindSagaLogByIdQuery } from './saga-log-find-by-id.query';
 
 @QueryHandler(FindSagaLogByIdQuery)
 export class FindSagaLogByIdQueryHandler
-  implements IQueryHandler<FindSagaLogByIdQuery>
+	implements IQueryHandler<FindSagaLogByIdQuery>
 {
-  private readonly logger = new Logger(FindSagaLogByIdQueryHandler.name);
+	private readonly logger = new Logger(FindSagaLogByIdQueryHandler.name);
 
-  constructor(
-    private readonly assertSagaLogExistsService: AssertSagaLogExistsService,
-  ) {}
+	constructor(
+		private readonly assertSagaLogExistsService: AssertSagaLogExistsService,
+	) {}
 
-  /**
-   * Executes the FindSagaLogByIdQuery query.
-   *
-   * @param query - The FindSagaLogByIdQuery query to execute.
-   * @returns The SagaLogAggregate if found.
-   */
-  async execute(query: FindSagaLogByIdQuery): Promise<SagaLogAggregate> {
-    this.logger.log(`Executing find saga log by id query: ${query.id.value}`);
+	/**
+	 * Executes the FindSagaLogByIdQuery query.
+	 *
+	 * @param query - The FindSagaLogByIdQuery query to execute.
+	 * @returns The SagaLogAggregate if found.
+	 */
+	async execute(query: FindSagaLogByIdQuery): Promise<SagaLogAggregate> {
+		this.logger.log(`Executing find saga log by id query: ${query.id.value}`);
 
-    // 01: Assert the saga log exists
-    return await this.assertSagaLogExistsService.execute(query.id.value);
-  }
+		// 01: Assert the saga log exists
+		return await this.assertSagaLogExistsService.execute(query.id.value);
+	}
 }

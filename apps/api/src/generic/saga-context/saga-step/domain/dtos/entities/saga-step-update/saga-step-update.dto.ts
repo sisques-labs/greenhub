@@ -8,5 +8,5 @@ import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos
  * @extends Partial<Omit<ISagaStepCreateDto, 'id' | 'sagaInstanceId'>>
  */
 export type ISagaStepUpdateDto = Partial<
-  Omit<ISagaStepCreateDto, 'id' | 'sagaInstanceId'>
+	Omit<ISagaStepCreateDto, 'id' | 'sagaInstanceId'>
 >;

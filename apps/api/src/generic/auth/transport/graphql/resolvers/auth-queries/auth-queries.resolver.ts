@@ -18,43 +18,43 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class AuthQueryResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly authGraphQLMapper: AuthGraphQLMapper,
-    private readonly authUserProfileGraphQLMapper: AuthUserProfileGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly queryBus: QueryBus,
+		private readonly authGraphQLMapper: AuthGraphQLMapper,
+		private readonly authUserProfileGraphQLMapper: AuthUserProfileGraphQLMapper,
+	) {}
 
-  @Query(() => AuthUserProfileResponseDto)
-  async authProfileMe(
-    @CurrentUser() user: any,
-  ): Promise<AuthUserProfileResponseDto> {
-    // 01: Execute query
-    const result = await this.queryBus.execute(
-      new AuthProfileMeQuery({ userId: user.userId }),
-    );
+	@Query(() => AuthUserProfileResponseDto)
+	async authProfileMe(
+		@CurrentUser() user: any,
+	): Promise<AuthUserProfileResponseDto> {
+		// 01: Execute query
+		const result = await this.queryBus.execute(
+			new AuthProfileMeQuery({ userId: user.userId }),
+		);
 
-    // 02: Convert to response DTO
-    return this.authUserProfileGraphQLMapper.toResponseDto(result);
-  }
+		// 02: Convert to response DTO
+		return this.authUserProfileGraphQLMapper.toResponseDto(result);
+	}
 
-  @Query(() => PaginatedAuthResultDto)
-  @Roles(UserRoleEnum.ADMIN)
-  async findAuthsByCriteria(
-    @Args('input', { nullable: true }) input?: AuthFindByCriteriaRequestDto,
-  ): Promise<PaginatedAuthResultDto> {
-    // 01: Convert DTO to domain Criteria
-    const criteria = new Criteria(
-      input?.filters,
-      input?.sorts,
-      input?.pagination,
-    );
+	@Query(() => PaginatedAuthResultDto)
+	@Roles(UserRoleEnum.ADMIN)
+	async findAuthsByCriteria(
+		@Args('input', { nullable: true }) input?: AuthFindByCriteriaRequestDto,
+	): Promise<PaginatedAuthResultDto> {
+		// 01: Convert DTO to domain Criteria
+		const criteria = new Criteria(
+			input?.filters,
+			input?.sorts,
+			input?.pagination,
+		);
 
-    // 02: Execute query
-    const result = await this.queryBus.execute(
-      new FindAuthsByCriteriaQuery(criteria),
-    );
+		// 02: Execute query
+		const result = await this.queryBus.execute(
+			new FindAuthsByCriteriaQuery(criteria),
+		);
 
-    // 03: Convert to response DTO
-    return this.authGraphQLMapper.toPaginatedResponseDto(result);
-  }
+		// 03: Convert to response DTO
+		return this.authGraphQLMapper.toPaginatedResponseDto(result);
+	}
 }

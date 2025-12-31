@@ -11,13 +11,13 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
  * @param data - The data of the event
  */
 export class SagaLogDeletedEvent extends BaseEvent<ISagaLogEventData> {
-  /**
-   * Constructor
-   *
-   * @param metadata - The metadata of the event
-   * @param data - The data of the event
-   */
-  constructor(metadata: IEventMetadata, data: ISagaLogEventData) {
-    super(metadata, data);
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(metadata: IEventMetadata, data: ISagaLogEventData) {
+		super(metadata, data);
+	}
 }

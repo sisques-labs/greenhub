@@ -13,13 +13,13 @@
  * @property {boolean} [twoFactorEnabled] - The two factor enabled of the auth.
  */
 export interface IAuthUpdateCommandDto {
-  id: string;
-  email?: string;
-  emailVerified?: boolean;
-  lastLoginAt?: Date | null;
-  password?: string | null;
-  phoneNumber?: string;
-  provider?: string;
-  providerId?: string | null;
-  twoFactorEnabled?: boolean;
+	id: string;
+	email?: string;
+	emailVerified?: boolean;
+	lastLoginAt?: Date | null;
+	password?: string | null;
+	phoneNumber?: string;
+	provider?: string;
+	providerId?: string | null;
+	twoFactorEnabled?: boolean;
 }

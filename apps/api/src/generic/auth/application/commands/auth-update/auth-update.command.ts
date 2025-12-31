@@ -9,54 +9,54 @@ import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-obj
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 
 export class AuthUpdateCommand {
-  readonly id: AuthUuidValueObject;
-  readonly email?: AuthEmailValueObject | null;
-  readonly emailVerified?: AuthEmailVerifiedValueObject;
-  readonly lastLoginAt: AuthLastLoginAtValueObject | null;
-  readonly password?: AuthPasswordValueObject | null;
-  readonly provider?: AuthProviderValueObject;
-  readonly providerId?: AuthProviderIdValueObject | null;
-  readonly twoFactorEnabled?: AuthTwoFactorEnabledValueObject;
+	readonly id: AuthUuidValueObject;
+	readonly email?: AuthEmailValueObject | null;
+	readonly emailVerified?: AuthEmailVerifiedValueObject;
+	readonly lastLoginAt: AuthLastLoginAtValueObject | null;
+	readonly password?: AuthPasswordValueObject | null;
+	readonly provider?: AuthProviderValueObject;
+	readonly providerId?: AuthProviderIdValueObject | null;
+	readonly twoFactorEnabled?: AuthTwoFactorEnabledValueObject;
 
-  constructor(props: IAuthUpdateCommandDto) {
-    this.id = new AuthUuidValueObject(props.id);
+	constructor(props: IAuthUpdateCommandDto) {
+		this.id = new AuthUuidValueObject(props.id);
 
-    if (props.email !== undefined) {
-      this.email = props.email ? new AuthEmailValueObject(props.email) : null;
-    }
+		if (props.email !== undefined) {
+			this.email = props.email ? new AuthEmailValueObject(props.email) : null;
+		}
 
-    if (props.emailVerified !== undefined) {
-      this.emailVerified = new AuthEmailVerifiedValueObject(
-        props.emailVerified,
-      );
-    }
+		if (props.emailVerified !== undefined) {
+			this.emailVerified = new AuthEmailVerifiedValueObject(
+				props.emailVerified,
+			);
+		}
 
-    if (props.lastLoginAt !== undefined) {
-      this.lastLoginAt = props.lastLoginAt
-        ? new AuthLastLoginAtValueObject(props.lastLoginAt)
-        : null;
-    }
+		if (props.lastLoginAt !== undefined) {
+			this.lastLoginAt = props.lastLoginAt
+				? new AuthLastLoginAtValueObject(props.lastLoginAt)
+				: null;
+		}
 
-    if (props.password !== undefined) {
-      this.password = props.password
-        ? new AuthPasswordValueObject(props.password)
-        : null;
-    }
+		if (props.password !== undefined) {
+			this.password = props.password
+				? new AuthPasswordValueObject(props.password)
+				: null;
+		}
 
-    if (props.provider !== undefined) {
-      this.provider = new AuthProviderValueObject(props.provider);
-    }
+		if (props.provider !== undefined) {
+			this.provider = new AuthProviderValueObject(props.provider);
+		}
 
-    if (props.providerId !== undefined) {
-      this.providerId = props.providerId
-        ? new AuthProviderIdValueObject(props.providerId)
-        : null;
-    }
+		if (props.providerId !== undefined) {
+			this.providerId = props.providerId
+				? new AuthProviderIdValueObject(props.providerId)
+				: null;
+		}
 
-    if (props.twoFactorEnabled !== undefined) {
-      this.twoFactorEnabled = new AuthTwoFactorEnabledValueObject(
-        props.twoFactorEnabled,
-      );
-    }
-  }
+		if (props.twoFactorEnabled !== undefined) {
+			this.twoFactorEnabled = new AuthTwoFactorEnabledValueObject(
+				props.twoFactorEnabled,
+			);
+		}
+	}
 }

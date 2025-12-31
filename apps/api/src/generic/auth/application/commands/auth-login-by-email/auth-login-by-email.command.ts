@@ -3,11 +3,11 @@ import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-e
 import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
 
 export class AuthLoginByEmailCommand {
-  readonly email: AuthEmailValueObject;
-  readonly password: AuthPasswordValueObject;
+	readonly email: AuthEmailValueObject;
+	readonly password: AuthPasswordValueObject;
 
-  constructor(props: IAuthLoginByEmailCommandDto) {
-    this.email = new AuthEmailValueObject(props.email);
-    this.password = new AuthPasswordValueObject(props.password);
-  }
+	constructor(props: IAuthLoginByEmailCommandDto) {
+		this.email = new AuthEmailValueObject(props.email);
+		this.password = new AuthPasswordValueObject(props.password);
+	}
 }

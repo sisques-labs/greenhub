@@ -1,4 +1,4 @@
 export type BasePrimitives = {
-  createdAt: Date;
-  updatedAt: Date;
+	createdAt: Date;
+	updatedAt: Date;
 };

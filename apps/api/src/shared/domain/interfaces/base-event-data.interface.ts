@@ -1,4 +1,4 @@
 export interface IBaseEventData {
-  createdAt: Date;
-  updatedAt: Date;
+	createdAt: Date;
+	updatedAt: Date;
 }

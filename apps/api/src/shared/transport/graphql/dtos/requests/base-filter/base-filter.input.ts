@@ -4,18 +4,18 @@ import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 
 @InputType('BaseFilterInput')
 export class BaseFilterInput {
-  @Field(() => String, { description: 'The field to filter by' })
-  @IsString()
-  @IsNotEmpty()
-  field: string;
+	@Field(() => String, { description: 'The field to filter by' })
+	@IsString()
+	@IsNotEmpty()
+	field: string;
 
-  @Field(() => FilterOperator, { description: 'The operator to filter by' })
-  @IsEnum(FilterOperator)
-  @IsNotEmpty()
-  operator: FilterOperator;
+	@Field(() => FilterOperator, { description: 'The operator to filter by' })
+	@IsEnum(FilterOperator)
+	@IsNotEmpty()
+	operator: FilterOperator;
 
-  @Field(() => String, { description: 'The value to filter by' })
-  @IsString()
-  @IsNotEmpty()
-  value: string;
+	@Field(() => String, { description: 'The value to filter by' })
+	@IsString()
+	@IsNotEmpty()
+	value: string;
 }

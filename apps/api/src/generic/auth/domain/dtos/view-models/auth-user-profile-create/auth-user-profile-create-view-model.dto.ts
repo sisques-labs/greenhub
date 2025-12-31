@@ -24,22 +24,22 @@
  * @property {Date} updatedAt - Timestamp when the auth was last updated.
  */
 export interface IAuthUserProfileCreateViewModelDto {
-  userId: string;
-  authId: string;
-  email: string | null;
-  emailVerified: boolean;
-  lastLoginAt: Date | null;
-  phoneNumber: string | null;
-  provider: string;
-  providerId: string | null;
-  twoFactorEnabled: boolean;
-  userName: string;
-  name: string | null;
-  lastName: string | null;
-  bio: string | null;
-  avatarUrl: string | null;
-  role: string;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
+	userId: string;
+	authId: string;
+	email: string | null;
+	emailVerified: boolean;
+	lastLoginAt: Date | null;
+	phoneNumber: string | null;
+	provider: string;
+	providerId: string | null;
+	twoFactorEnabled: boolean;
+	userName: string;
+	name: string | null;
+	lastName: string | null;
+	bio: string | null;
+	avatarUrl: string | null;
+	role: string;
+	status: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

@@ -11,13 +11,13 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
  * @param data - The data of the event
  */
 export class UserDeletedEvent extends BaseEvent<IUserEventData> {
-  /**
-   * Constructor
-   *
-   * @param metadata - The metadata of the event
-   * @param data - The data of the event
-   */
-  constructor(metadata: IEventMetadata, data: IUserEventData) {
-    super(metadata, data);
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(metadata: IEventMetadata, data: IUserEventData) {
+		super(metadata, data);
+	}
 }

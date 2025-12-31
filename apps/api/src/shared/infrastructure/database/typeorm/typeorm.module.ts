@@ -8,20 +8,20 @@ const SUBSCRIBERS = [];
 
 @Global()
 @Module({
-  imports: [
-    NestTypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        url: configService.get<string>('DATABASE_URL'),
-        autoLoadEntities: true,
-        synchronize: configService.get<string>('NODE_ENV') === 'development',
-        logging: configService.get<string>('NODE_ENV') === 'development',
-        subscribers: [...SUBSCRIBERS],
-      }),
-    }),
-  ],
-  providers: [...SERVICES, ...SUBSCRIBERS],
-  exports: [...SERVICES],
+	imports: [
+		NestTypeOrmModule.forRootAsync({
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => ({
+				type: 'postgres',
+				url: configService.get<string>('DATABASE_URL'),
+				autoLoadEntities: true,
+				synchronize: configService.get<string>('NODE_ENV') === 'development',
+				logging: configService.get<string>('NODE_ENV') === 'development',
+				subscribers: [...SUBSCRIBERS],
+			}),
+		}),
+	],
+	providers: [...SERVICES, ...SUBSCRIBERS],
+	exports: [...SERVICES],
 })
 export class TypeOrmModule {}

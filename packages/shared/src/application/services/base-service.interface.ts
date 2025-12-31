@@ -4,5 +4,5 @@
  * R - Return type (e.g., result, entity, etc.)
  */
 export interface IBaseService<T = unknown, R = unknown> {
-  execute(input: T): Promise<R>;
+	execute(input: T): Promise<R>;
 }

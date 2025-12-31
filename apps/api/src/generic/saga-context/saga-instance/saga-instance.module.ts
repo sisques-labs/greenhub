@@ -31,65 +31,65 @@ import { SharedModule } from '@/shared/shared.module';
 const RESOLVERS = [SagaInstanceQueryResolver, SagaInstanceMutationsResolver];
 
 const SERVICES = [
-  AssertSagaInstanceExistsService,
-  AssertSagaInstanceNotExistsService,
-  AssertSagaInstanceViewModelExistsService,
+	AssertSagaInstanceExistsService,
+	AssertSagaInstanceNotExistsService,
+	AssertSagaInstanceViewModelExistsService,
 ];
 
 const QUERY_HANDLERS = [
-  FindSagaInstancesByCriteriaQueryHandler,
-  FindSagaInstanceByIdQueryHandler,
+	FindSagaInstancesByCriteriaQueryHandler,
+	FindSagaInstanceByIdQueryHandler,
 ];
 
 const QUERY_HANDLERS_VIEW_MODELS = [FindSagaInstanceViewModelByIdQueryHandler];
 
 const COMMAND_HANDLERS = [
-  SagaInstanceCreateCommandHandler,
-  SagaInstanceUpdateCommandHandler,
-  SagaInstanceDeleteCommandHandler,
-  SagaInstanceChangeStatusCommandHandler,
+	SagaInstanceCreateCommandHandler,
+	SagaInstanceUpdateCommandHandler,
+	SagaInstanceDeleteCommandHandler,
+	SagaInstanceChangeStatusCommandHandler,
 ];
 
 const EVENT_HANDLERS = [
-  SagaInstanceCreatedEventHandler,
-  SagaInstanceUpdatedEventHandler,
-  SagaInstanceDeletedEventHandler,
-  SagaInstanceStatusChangedEventHandler,
+	SagaInstanceCreatedEventHandler,
+	SagaInstanceUpdatedEventHandler,
+	SagaInstanceDeletedEventHandler,
+	SagaInstanceStatusChangedEventHandler,
 ];
 
 const FACTORIES = [SagaInstanceAggregateFactory, SagaInstanceViewModelFactory];
 
 const MAPPERS = [
-  SagaInstanceTypeormMapper,
-  SagaInstanceMongoDBMapper,
-  SagaInstanceGraphQLMapper,
+	SagaInstanceTypeormMapper,
+	SagaInstanceMongoDBMapper,
+	SagaInstanceGraphQLMapper,
 ];
 
 const REPOSITORIES = [
-  {
-    provide: SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
-    useClass: SagaInstanceTypeormRepository,
-  },
-  {
-    provide: SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
-    useClass: SagaInstanceMongoRepository,
-  },
+	{
+		provide: SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
+		useClass: SagaInstanceTypeormRepository,
+	},
+	{
+		provide: SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
+		useClass: SagaInstanceMongoRepository,
+	},
 ];
 
 const ENTITIES = [SagaInstanceTypeormEntity];
 @Module({
-  imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
-  controllers: [],
-  providers: [
-    ...RESOLVERS,
-    ...SERVICES,
-    ...QUERY_HANDLERS,
-    ...QUERY_HANDLERS_VIEW_MODELS,
-    ...COMMAND_HANDLERS,
-    ...EVENT_HANDLERS,
-    ...REPOSITORIES,
-    ...FACTORIES,
-    ...MAPPERS,
-  ],
+	imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],
+	controllers: [],
+	providers: [
+		...RESOLVERS,
+		...SERVICES,
+		...QUERY_HANDLERS,
+		...QUERY_HANDLERS_VIEW_MODELS,
+		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
+		...REPOSITORIES,
+		...FACTORIES,
+		...MAPPERS,
+	],
 })
 export class SagaInstanceModule {}

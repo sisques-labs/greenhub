@@ -3,11 +3,11 @@ import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/doma
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class SagaStepChangeStatusCommand {
-  readonly id: SagaStepUuidValueObject;
-  readonly status: SagaStepStatusValueObject;
+	readonly id: SagaStepUuidValueObject;
+	readonly status: SagaStepStatusValueObject;
 
-  constructor(props: ISagaStepChangeStatusCommandDto) {
-    this.id = new SagaStepUuidValueObject(props.id);
-    this.status = new SagaStepStatusValueObject(props.status);
-  }
+	constructor(props: ISagaStepChangeStatusCommandDto) {
+		this.id = new SagaStepUuidValueObject(props.id);
+		this.status = new SagaStepStatusValueObject(props.status);
+	}
 }

@@ -1,23 +1,23 @@
-import type { Filter } from '@repo/shared/domain/entities/criteria';
-import { FilterOperator } from '@repo/shared/domain/enums/filter-operator.enum';
-import type { DynamicFilter } from '@repo/shared/presentation/components/organisms/table-layout';
+import type { Filter } from "@repo/shared/domain/entities/criteria";
+import { FilterOperator } from "@repo/shared/domain/enums/filter-operator.enum";
+import type { DynamicFilter } from "@repo/shared/presentation/components/organisms/table-layout";
 
 /**
  * Options for converting dynamic filters to API format
  */
 export interface ConvertFiltersMapperOptions {
-  /**
-   * Optional search term to add as a LIKE filter
-   */
-  search?: string;
-  /**
-   * Field to use for search filter (required if search is provided)
-   */
-  searchField?: string;
-  /**
-   * Operator to use for search filter (defaults to LIKE)
-   */
-  searchOperator?: FilterOperator;
+	/**
+	 * Optional search term to add as a LIKE filter
+	 */
+	search?: string;
+	/**
+	 * Field to use for search filter (required if search is provided)
+	 */
+	searchField?: string;
+	/**
+	 * Operator to use for search filter (defaults to LIKE)
+	 */
+	searchOperator?: FilterOperator;
 }
 
 /**
@@ -27,30 +27,30 @@ export interface ConvertFiltersMapperOptions {
  * @returns Array of filters in API format
  */
 export function dynamicFiltersToApiFiltersMapper(
-  filters: DynamicFilter[],
-  options?: ConvertFiltersMapperOptions,
+	filters: DynamicFilter[],
+	options?: ConvertFiltersMapperOptions,
 ): Filter[] {
-  const apiFilters: Filter[] = [];
+	const apiFilters: Filter[] = [];
 
-  // Add search filter if provided
-  if (options?.search && options?.searchField) {
-    apiFilters.push({
-      field: options.searchField,
-      operator: options.searchOperator || FilterOperator.LIKE,
-      value: options.search,
-    });
-  }
+	// Add search filter if provided
+	if (options?.search && options?.searchField) {
+		apiFilters.push({
+			field: options.searchField,
+			operator: options.searchOperator || FilterOperator.LIKE,
+			value: options.search,
+		});
+	}
 
-  // Convert dynamic filters to API format
-  const convertedFilters = filters
-    .filter((f) => f.field && f.operator && f.value)
-    .map((f) => ({
-      field: f.field,
-      operator: f.operator as FilterOperator,
-      value: f.value,
-    }));
+	// Convert dynamic filters to API format
+	const convertedFilters = filters
+		.filter((f) => f.field && f.operator && f.value)
+		.map((f) => ({
+			field: f.field,
+			operator: f.operator as FilterOperator,
+			value: f.value,
+		}));
 
-  apiFilters.push(...convertedFilters);
+	apiFilters.push(...convertedFilters);
 
-  return apiFilters;
+	return apiFilters;
 }

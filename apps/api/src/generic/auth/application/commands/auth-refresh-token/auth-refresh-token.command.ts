@@ -2,9 +2,9 @@ import { IAuthRefreshTokenCommandDto } from '@/generic/auth/application/dtos/com
 import { AuthRefreshTokenValueObject } from '@/generic/auth/domain/value-objects/auth-refresh-token/auth-refresh-token.vo';
 
 export class AuthRefreshTokenCommand {
-  readonly refreshToken: AuthRefreshTokenValueObject;
+	readonly refreshToken: AuthRefreshTokenValueObject;
 
-  constructor(props: IAuthRefreshTokenCommandDto) {
-    this.refreshToken = new AuthRefreshTokenValueObject(props.refreshToken);
-  }
+	constructor(props: IAuthRefreshTokenCommandDto) {
+		this.refreshToken = new AuthRefreshTokenValueObject(props.refreshToken);
+	}
 }

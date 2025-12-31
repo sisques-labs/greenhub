@@ -1,3 +1,3 @@
 export type UserFindByIdInput = {
-  id: string;
+	id: string;
 };

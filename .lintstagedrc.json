@@ -1,4 +1,4 @@
 {
-  "*.{ts,tsx,js,jsx}": ["prettier --write"],
-  "*.{json,md,mdx,css,scss,yaml,yml}": ["prettier --write"]
+  "*.{ts,tsx,js,jsx,mjs,cjs}": ["node scripts/biome-format.js"],
+  "*.{json,md,mdx,css,scss,yaml,yml}": ["node scripts/biome-format.js"]
 }

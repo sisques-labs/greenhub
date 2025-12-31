@@ -1,3 +1,3 @@
 export type AuthLogoutInput = {
-  id: string;
+	id: string;
 };

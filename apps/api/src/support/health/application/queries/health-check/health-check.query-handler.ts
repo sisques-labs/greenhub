@@ -6,14 +6,14 @@ import { HealthViewModel } from '@/support/health/domain/view-models/health.view
 
 @QueryHandler(HealthCheckQuery)
 export class HealthCheckQueryHandler
-  implements IQueryHandler<HealthCheckQuery>
+	implements IQueryHandler<HealthCheckQuery>
 {
-  private readonly logger = new Logger(HealthCheckQueryHandler.name);
+	private readonly logger = new Logger(HealthCheckQueryHandler.name);
 
-  constructor(private readonly healthCheckService: HealthCheckService) {}
+	constructor(private readonly healthCheckService: HealthCheckService) {}
 
-  async execute(): Promise<HealthViewModel> {
-    this.logger.log('Executing health check query');
-    return await this.healthCheckService.execute();
-  }
+	async execute(): Promise<HealthViewModel> {
+		this.logger.log('Executing health check query');
+		return await this.healthCheckService.execute();
+	}
 }

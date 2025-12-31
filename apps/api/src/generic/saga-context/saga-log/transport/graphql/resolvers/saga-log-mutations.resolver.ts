@@ -18,74 +18,74 @@ import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mapper
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN)
 export class SagaLogMutationsResolver {
-  private readonly logger = new Logger(SagaLogMutationsResolver.name);
+	private readonly logger = new Logger(SagaLogMutationsResolver.name);
 
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly commandBus: CommandBus,
+		private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
+	) {}
 
-  @Mutation(() => MutationResponseDto)
-  async sagaLogCreate(
-    @Args('input') input: SagaLogCreateRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(
-      `Creating saga log for saga instance: ${input.sagaInstanceId} and saga step: ${input.sagaStepId}`,
-    );
+	@Mutation(() => MutationResponseDto)
+	async sagaLogCreate(
+		@Args('input') input: SagaLogCreateRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(
+			`Creating saga log for saga instance: ${input.sagaInstanceId} and saga step: ${input.sagaStepId}`,
+		);
 
-    // 01: Send the command to the command bus
-    const sagaLogId = await this.commandBus.execute(
-      new SagaLogCreateCommand({
-        sagaInstanceId: input.sagaInstanceId,
-        sagaStepId: input.sagaStepId,
-        type: input.type,
-        message: input.message,
-      }),
-    );
+		// 01: Send the command to the command bus
+		const sagaLogId = await this.commandBus.execute(
+			new SagaLogCreateCommand({
+				sagaInstanceId: input.sagaInstanceId,
+				sagaStepId: input.sagaStepId,
+				type: input.type,
+				message: input.message,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Saga log created successfully',
-      id: sagaLogId,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Saga log created successfully',
+			id: sagaLogId,
+		});
+	}
 
-  @Mutation(() => MutationResponseDto)
-  async sagaLogUpdate(
-    @Args('input') input: SagaLogUpdateRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Updating saga log by id: ${input.id}`);
+	@Mutation(() => MutationResponseDto)
+	async sagaLogUpdate(
+		@Args('input') input: SagaLogUpdateRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Updating saga log by id: ${input.id}`);
 
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(
-      new SagaLogUpdateCommand({
-        id: input.id,
-        type: input.type,
-        message: input.message,
-      }),
-    );
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(
+			new SagaLogUpdateCommand({
+				id: input.id,
+				type: input.type,
+				message: input.message,
+			}),
+		);
 
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Saga log updated successfully',
-      id: input.id,
-    });
-  }
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Saga log updated successfully',
+			id: input.id,
+		});
+	}
 
-  @Mutation(() => MutationResponseDto)
-  async sagaLogDelete(
-    @Args('input') input: SagaLogDeleteRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Deleting saga log by id: ${input.id}`);
+	@Mutation(() => MutationResponseDto)
+	async sagaLogDelete(
+		@Args('input') input: SagaLogDeleteRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Deleting saga log by id: ${input.id}`);
 
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(new SagaLogDeleteCommand({ id: input.id }));
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(new SagaLogDeleteCommand({ id: input.id }));
 
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Saga log deleted successfully',
-      id: input.id,
-    });
-  }
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Saga log deleted successfully',
+			id: input.id,
+		});
+	}
 }

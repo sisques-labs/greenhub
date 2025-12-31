@@ -1,3 +1,3 @@
 export interface ISagaLogFindViewModelBySagaInstanceIdQueryDto {
-  sagaInstanceId: string;
+	sagaInstanceId: string;
 }

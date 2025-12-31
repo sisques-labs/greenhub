@@ -18,9 +18,9 @@ import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifie
  * @property {DateValueObject} updatedAt - The date and time the saga log was last updated.
  */
 export interface ISagaLogCreateDto extends IBaseAggregateDto {
-  id: SagaLogUuidValueObject;
-  sagaInstanceId: SagaInstanceUuidValueObject;
-  sagaStepId: SagaStepUuidValueObject;
-  type: SagaLogTypeValueObject;
-  message: SagaLogMessageValueObject;
+	id: SagaLogUuidValueObject;
+	sagaInstanceId: SagaInstanceUuidValueObject;
+	sagaStepId: SagaStepUuidValueObject;
+	type: SagaLogTypeValueObject;
+	message: SagaLogMessageValueObject;
 }

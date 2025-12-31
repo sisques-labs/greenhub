@@ -2,9 +2,9 @@ import { IAuthProfileMeQueryDto } from '@/generic/auth/application/dtos/queries/
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
 export class AuthProfileMeQuery {
-  readonly userId: UserUuidValueObject;
+	readonly userId: UserUuidValueObject;
 
-  constructor(props: IAuthProfileMeQueryDto) {
-    this.userId = new UserUuidValueObject(props.userId);
-  }
+	constructor(props: IAuthProfileMeQueryDto) {
+		this.userId = new UserUuidValueObject(props.userId);
+	}
 }

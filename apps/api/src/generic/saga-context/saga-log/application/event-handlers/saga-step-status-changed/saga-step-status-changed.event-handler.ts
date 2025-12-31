@@ -6,43 +6,43 @@ import { SagaStepStatusChangedEvent } from '@/shared/domain/events/saga-context/
 
 @EventsHandler(SagaStepStatusChangedEvent)
 export class SagaStepStatusChangedEventHandler
-  implements IEventHandler<SagaStepStatusChangedEvent>
+	implements IEventHandler<SagaStepStatusChangedEvent>
 {
-  private readonly logger = new Logger(SagaStepStatusChangedEventHandler.name);
+	private readonly logger = new Logger(SagaStepStatusChangedEventHandler.name);
 
-  constructor(private readonly commandBus: CommandBus) {}
+	constructor(private readonly commandBus: CommandBus) {}
 
-  /**
-   * Handles the SagaStepStatusChangedEvent event by creating a saga log.
-   *
-   * @param event - The SagaStepStatusChangedEvent event to handle.
-   */
-  async handle(event: SagaStepStatusChangedEvent) {
-    this.logger.log(
-      `Handling saga step status changed event: ${event.aggregateId}`,
-    );
+	/**
+	 * Handles the SagaStepStatusChangedEvent event by creating a saga log.
+	 *
+	 * @param event - The SagaStepStatusChangedEvent event to handle.
+	 */
+	async handle(event: SagaStepStatusChangedEvent) {
+		this.logger.log(
+			`Handling saga step status changed event: ${event.aggregateRootId}`,
+		);
 
-    // 01: Determine log type based on status
-    let logType = SagaLogTypeEnum.INFO;
-    if (event.data.status === 'FAILED') {
-      logType = SagaLogTypeEnum.ERROR;
-    } else if (
-      event.data.status === 'RUNNING' ||
-      event.data.status === 'STARTED'
-    ) {
-      logType = SagaLogTypeEnum.DEBUG;
-    }
+		// 01: Determine log type based on status
+		let logType = SagaLogTypeEnum.INFO;
+		if (event.data.status === 'FAILED') {
+			logType = SagaLogTypeEnum.ERROR;
+		} else if (
+			event.data.status === 'RUNNING' ||
+			event.data.status === 'STARTED'
+		) {
+			logType = SagaLogTypeEnum.DEBUG;
+		}
 
-    // 02: Create a saga log for the saga step status change
-    await this.commandBus.execute(
-      new SagaLogCreateCommand({
-        sagaInstanceId: event.data.sagaInstanceId,
-        sagaStepId: event.aggregateId,
-        type: logType,
-        message: `Saga step status changed to "${event.data.status}"${
-          event.data.errorMessage ? `. Error: ${event.data.errorMessage}` : ''
-        }`,
-      }),
-    );
-  }
+		// 02: Create a saga log for the saga step status change
+		await this.commandBus.execute(
+			new SagaLogCreateCommand({
+				sagaInstanceId: event.data.sagaInstanceId,
+				sagaStepId: event.data.id,
+				type: logType,
+				message: `Saga step status changed to "${event.data.status}"${
+					event.data.errorMessage ? `. Error: ${event.data.errorMessage}` : ''
+				}`,
+			}),
+		);
+	}
 }

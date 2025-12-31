@@ -1,3 +1,3 @@
 export interface ISagaLogFindViewModelByIdQueryDto {
-  id: string;
+	id: string;
 }

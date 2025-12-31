@@ -5,5 +5,5 @@
  * @property {string} id - The id of the saga log. Must be provided.
  */
 export interface ISagaLogDeleteCommandDto {
-  id: string;
+	id: string;
 }

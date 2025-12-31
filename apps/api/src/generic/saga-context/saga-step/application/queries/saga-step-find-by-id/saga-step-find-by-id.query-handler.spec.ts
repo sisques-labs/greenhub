@@ -17,91 +17,91 @@ import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/ident
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('FindSagaStepByIdQueryHandler', () => {
-  let handler: FindSagaStepByIdQueryHandler;
-  let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
+	let handler: FindSagaStepByIdQueryHandler;
+	let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
 
-  beforeEach(async () => {
-    mockAssertSagaStepExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaStepExistsService>;
+	beforeEach(async () => {
+		mockAssertSagaStepExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaStepExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        FindSagaStepByIdQueryHandler,
-        {
-          provide: AssertSagaStepExistsService,
-          useValue: mockAssertSagaStepExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				FindSagaStepByIdQueryHandler,
+				{
+					provide: AssertSagaStepExistsService,
+					useValue: mockAssertSagaStepExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<FindSagaStepByIdQueryHandler>(
-      FindSagaStepByIdQueryHandler,
-    );
-  });
+		handler = module.get<FindSagaStepByIdQueryHandler>(
+			FindSagaStepByIdQueryHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaStepAggregate = (): SagaStepAggregate => {
-    const now = new Date();
-    return new SagaStepAggregate(
-      {
-        id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        sagaInstanceId: new SagaInstanceUuidValueObject(
-          '223e4567-e89b-12d3-a456-426614174000',
-        ),
-        name: new SagaStepNameValueObject('Test Step'),
-        order: new SagaStepOrderValueObject(1),
-        status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
-        startDate: null,
-        endDate: null,
-        errorMessage: null,
-        retryCount: new SagaStepRetryCountValueObject(0),
-        maxRetries: new SagaStepMaxRetriesValueObject(3),
-        payload: new SagaStepPayloadValueObject({}),
-        result: new SagaStepResultValueObject({}),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaStepAggregate = (): SagaStepAggregate => {
+		const now = new Date();
+		return new SagaStepAggregate(
+			{
+				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				sagaInstanceId: new SagaInstanceUuidValueObject(
+					'223e4567-e89b-12d3-a456-426614174000',
+				),
+				name: new SagaStepNameValueObject('Test Step'),
+				order: new SagaStepOrderValueObject(1),
+				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
+				startDate: null,
+				endDate: null,
+				errorMessage: null,
+				retryCount: new SagaStepRetryCountValueObject(0),
+				maxRetries: new SagaStepMaxRetriesValueObject(3),
+				payload: new SagaStepPayloadValueObject({}),
+				result: new SagaStepResultValueObject({}),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should return saga step aggregate when saga step exists', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaStepId };
-      const query = new FindSagaStepByIdQuery(queryDto);
+	describe('execute', () => {
+		it('should return saga step aggregate when saga step exists', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaStepId };
+			const query = new FindSagaStepByIdQuery(queryDto);
 
-      const mockSagaStep = createSagaStepAggregate();
+			const mockSagaStep = createSagaStepAggregate();
 
-      mockAssertSagaStepExistsService.execute.mockResolvedValue(mockSagaStep);
+			mockAssertSagaStepExistsService.execute.mockResolvedValue(mockSagaStep);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockSagaStep);
-      expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledWith(
-        sagaStepId,
-      );
-      expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockSagaStep);
+			expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledWith(
+				sagaStepId,
+			);
+			expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw SagaStepNotFoundException when saga step does not exist', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaStepId };
-      const query = new FindSagaStepByIdQuery(queryDto);
+		it('should throw SagaStepNotFoundException when saga step does not exist', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaStepId };
+			const query = new FindSagaStepByIdQuery(queryDto);
 
-      const error = new SagaStepNotFoundException(sagaStepId);
-      mockAssertSagaStepExistsService.execute.mockRejectedValue(error);
+			const error = new SagaStepNotFoundException(sagaStepId);
+			mockAssertSagaStepExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(query)).rejects.toThrow(
-        SagaStepNotFoundException,
-      );
-      expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledWith(
-        sagaStepId,
-      );
-    });
-  });
+			await expect(handler.execute(query)).rejects.toThrow(
+				SagaStepNotFoundException,
+			);
+			expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledWith(
+				sagaStepId,
+			);
+		});
+	});
 });

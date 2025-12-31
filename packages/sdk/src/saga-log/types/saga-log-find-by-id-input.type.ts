@@ -1,3 +1,3 @@
 export type SagaLogFindByIdInput = {
-  id: string;
+	id: string;
 };

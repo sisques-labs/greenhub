@@ -6,32 +6,32 @@ import { FindSagaInstanceViewModelByIdQuery } from './saga-instance-view-model-f
 
 @QueryHandler(FindSagaInstanceViewModelByIdQuery)
 export class FindSagaInstanceViewModelByIdQueryHandler
-  implements IQueryHandler<FindSagaInstanceViewModelByIdQuery>
+	implements IQueryHandler<FindSagaInstanceViewModelByIdQuery>
 {
-  private readonly logger = new Logger(
-    FindSagaInstanceViewModelByIdQueryHandler.name,
-  );
+	private readonly logger = new Logger(
+		FindSagaInstanceViewModelByIdQueryHandler.name,
+	);
 
-  constructor(
-    private readonly assertSagaInstanceViewModelExistsService: AssertSagaInstanceViewModelExistsService,
-  ) {}
+	constructor(
+		private readonly assertSagaInstanceViewModelExistsService: AssertSagaInstanceViewModelExistsService,
+	) {}
 
-  /**
-   * Executes the FindSagaInstanceViewModelByIdQuery query.
-   *
-   * @param query - The FindSagaInstanceViewModelByIdQuery query to execute.
-   * @returns The SagaInstanceViewModel if found.
-   */
-  async execute(
-    query: FindSagaInstanceViewModelByIdQuery,
-  ): Promise<SagaInstanceViewModel> {
-    this.logger.log(
-      `Executing find saga instance view model by id query: ${query.id.value}`,
-    );
+	/**
+	 * Executes the FindSagaInstanceViewModelByIdQuery query.
+	 *
+	 * @param query - The FindSagaInstanceViewModelByIdQuery query to execute.
+	 * @returns The SagaInstanceViewModel if found.
+	 */
+	async execute(
+		query: FindSagaInstanceViewModelByIdQuery,
+	): Promise<SagaInstanceViewModel> {
+		this.logger.log(
+			`Executing find saga instance view model by id query: ${query.id.value}`,
+		);
 
-    // 01: Assert the saga instance view model exists
-    return await this.assertSagaInstanceViewModelExistsService.execute(
-      query.id.value,
-    );
-  }
+		// 01: Assert the saga instance view model exists
+		return await this.assertSagaInstanceViewModelExistsService.execute(
+			query.id.value,
+		);
+	}
 }

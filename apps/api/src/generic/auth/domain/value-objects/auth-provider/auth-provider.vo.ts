@@ -6,9 +6,9 @@ import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
  * It extends the EnumValueObject to leverage common enum functionalities.
  */
 export class AuthProviderValueObject extends EnumValueObject<
-  typeof AuthProviderEnum
+	typeof AuthProviderEnum
 > {
-  protected get enumObject(): typeof AuthProviderEnum {
-    return AuthProviderEnum;
-  }
+	protected get enumObject(): typeof AuthProviderEnum {
+		return AuthProviderEnum;
+	}
 }

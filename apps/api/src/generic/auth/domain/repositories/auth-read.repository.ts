@@ -5,9 +5,9 @@ import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entit
 export const AUTH_READ_REPOSITORY_TOKEN = Symbol('AuthReadRepository');
 
 export interface AuthReadRepository {
-  findById(id: string): Promise<AuthViewModel | null>;
-  findByUserId(userId: string): Promise<AuthViewModel | null>;
-  findByCriteria(criteria: Criteria): Promise<PaginatedResult<AuthViewModel>>;
-  save(authViewModel: AuthViewModel): Promise<void>;
-  delete(id: string): Promise<boolean>;
+	findById(id: string): Promise<AuthViewModel | null>;
+	findByUserId(userId: string): Promise<AuthViewModel | null>;
+	findByCriteria(criteria: Criteria): Promise<PaginatedResult<AuthViewModel>>;
+	save(authViewModel: AuthViewModel): Promise<void>;
+	delete(id: string): Promise<boolean>;
 }

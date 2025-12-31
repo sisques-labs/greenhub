@@ -3,11 +3,11 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 @InputType('SagaInstanceCreateRequestDto')
 export class SagaInstanceCreateRequestDto {
-  @Field(() => String, {
-    description: 'The name of the saga instance',
-    nullable: false,
-  })
-  @IsString()
-  @IsNotEmpty()
-  name: string;
+	@Field(() => String, {
+		description: 'The name of the saga instance',
+		nullable: false,
+	})
+	@IsString()
+	@IsNotEmpty()
+	name: string;
 }

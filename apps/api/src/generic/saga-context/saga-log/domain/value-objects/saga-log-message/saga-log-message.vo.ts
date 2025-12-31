@@ -5,7 +5,7 @@ import { StringValueObject } from '@/shared/domain/value-objects/string/string.v
  * It extends the StringValueObject to leverage common string functionalities.
  */
 export class SagaLogMessageValueObject extends StringValueObject {
-  constructor(value: string) {
-    super(value, { allowEmpty: false });
-  }
+	constructor(value: string) {
+		super(value, { allowEmpty: false });
+	}
 }

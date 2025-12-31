@@ -6,24 +6,24 @@ import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate'
 
 @QueryHandler(UserFindByIdQuery)
 export class UserFindByIdQueryHandler
-  implements IQueryHandler<UserFindByIdQuery>
+	implements IQueryHandler<UserFindByIdQuery>
 {
-  private readonly logger = new Logger(UserFindByIdQueryHandler.name);
+	private readonly logger = new Logger(UserFindByIdQueryHandler.name);
 
-  constructor(
-    private readonly assertUserExsistsService: AssertUserExsistsService,
-  ) {}
+	constructor(
+		private readonly assertUserExsistsService: AssertUserExsistsService,
+	) {}
 
-  /**
-   * Executes the UserFindByIdQuery query.
-   *
-   * @param query - The UserFindByIdQuery query to execute.
-   * @returns The UserViewModel if found, null otherwise.
-   */
-  async execute(query: UserFindByIdQuery): Promise<UserAggregate> {
-    this.logger.log(`Executing user find by id query: ${query.id.value}`);
+	/**
+	 * Executes the UserFindByIdQuery query.
+	 *
+	 * @param query - The UserFindByIdQuery query to execute.
+	 * @returns The UserViewModel if found, null otherwise.
+	 */
+	async execute(query: UserFindByIdQuery): Promise<UserAggregate> {
+		this.logger.log(`Executing user find by id query: ${query.id.value}`);
 
-    // 01: Find the user by id
-    return await this.assertUserExsistsService.execute(query.id.value);
-  }
+		// 01: Find the user by id
+		return await this.assertUserExsistsService.execute(query.id.value);
+	}
 }

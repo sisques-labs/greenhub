@@ -7,38 +7,38 @@ import { HealthViewModel } from '@/support/health/domain/view-models/health.view
 
 @Injectable()
 export class HealthViewModelFactory
-  implements IReadFactory<HealthViewModel, IHealthCreateViewModelDto>
+	implements IReadFactory<HealthViewModel, IHealthCreateViewModelDto>
 {
-  private readonly logger = new Logger(HealthViewModelFactory.name);
+	private readonly logger = new Logger(HealthViewModelFactory.name);
 
-  /**
-   * Creates a new health view model from a DTO.
-   * @param data - The data to create the view model from.
-   * @returns The created view model.
-   */
-  public create(data: IHealthCreateViewModelDto): HealthViewModel {
-    this.logger.log(
-      `Creating health view model from DTO: ${JSON.stringify(data)}`,
-    );
-    return new HealthViewModel(data);
-  }
+	/**
+	 * Creates a new health view model from a DTO.
+	 * @param data - The data to create the view model from.
+	 * @returns The created view model.
+	 */
+	public create(data: IHealthCreateViewModelDto): HealthViewModel {
+		this.logger.log(
+			`Creating health view model from DTO: ${JSON.stringify(data)}`,
+		);
+		return new HealthViewModel(data);
+	}
 
-  public fromAggregate(source: HealthAggregate): HealthViewModel {
-    this.logger.log(`Creating health view model from aggregate: ${source}`);
-    return new HealthViewModel({
-      status: source.status.value,
-      writeDatabaseStatus: source.writeDatabaseStatus.value,
-      readDatabaseStatus: source.readDatabaseStatus.value,
-    });
-  }
-  public fromPrimitives(primitives: HealthPrimitives): HealthViewModel {
-    this.logger.log(
-      `Creating health view model from primitives: ${primitives}`,
-    );
-    return new HealthViewModel({
-      status: primitives.status,
-      writeDatabaseStatus: primitives.writeDatabaseStatus,
-      readDatabaseStatus: primitives.readDatabaseStatus,
-    });
-  }
+	public fromAggregate(source: HealthAggregate): HealthViewModel {
+		this.logger.log(`Creating health view model from aggregate: ${source}`);
+		return new HealthViewModel({
+			status: source.status.value,
+			writeDatabaseStatus: source.writeDatabaseStatus.value,
+			readDatabaseStatus: source.readDatabaseStatus.value,
+		});
+	}
+	public fromPrimitives(primitives: HealthPrimitives): HealthViewModel {
+		this.logger.log(
+			`Creating health view model from primitives: ${primitives}`,
+		);
+		return new HealthViewModel({
+			status: primitives.status,
+			writeDatabaseStatus: primitives.writeDatabaseStatus,
+			readDatabaseStatus: primitives.readDatabaseStatus,
+		});
+	}
 }

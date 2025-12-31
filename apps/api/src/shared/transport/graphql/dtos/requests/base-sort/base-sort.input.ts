@@ -4,13 +4,13 @@ import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 
 @InputType('BaseSortInput')
 export class BaseSortInput {
-  @Field(() => String, { description: 'The field to sort by' })
-  @IsString()
-  @IsNotEmpty()
-  field: string;
+	@Field(() => String, { description: 'The field to sort by' })
+	@IsString()
+	@IsNotEmpty()
+	field: string;
 
-  @Field(() => SortDirection, { description: 'The direction to sort by' })
-  @IsEnum(SortDirection)
-  @IsNotEmpty()
-  direction: SortDirection;
+	@Field(() => SortDirection, { description: 'The direction to sort by' })
+	@IsEnum(SortDirection)
+	@IsNotEmpty()
+	direction: SortDirection;
 }

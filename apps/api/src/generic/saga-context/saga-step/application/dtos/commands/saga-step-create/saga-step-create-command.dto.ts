@@ -8,8 +8,8 @@
  * @property {any} payload - The payload of the saga step. Must be provided.
  */
 export interface ISagaStepCreateCommandDto {
-  sagaInstanceId: string;
-  name: string;
-  order: number;
-  payload: any;
+	sagaInstanceId: string;
+	name: string;
+	order: number;
+	payload: any;
 }

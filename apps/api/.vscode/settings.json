@@ -1,0 +1,5 @@
+{
+	// 🔧 Biome configuration for apps/api
+	// Force Biome to use the biome.json from this directory
+	"biome.configPath": "${workspaceFolder}/apps/api/biome.json"
+}

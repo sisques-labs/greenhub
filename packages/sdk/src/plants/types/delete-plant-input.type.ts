@@ -1,3 +1,3 @@
 export type DeletePlantInput = {
-  id: string;
+	id: string;
 };

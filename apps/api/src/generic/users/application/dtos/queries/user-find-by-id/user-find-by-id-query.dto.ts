@@ -1,3 +1,3 @@
 export interface IUserFindByIdQueryDto {
-  id: string;
+	id: string;
 }

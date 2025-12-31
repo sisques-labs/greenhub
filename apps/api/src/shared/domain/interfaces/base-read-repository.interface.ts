@@ -11,35 +11,35 @@ import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entit
  * @interface IBaseReadRepository
  */
 export interface IBaseReadRepository<TViewModel> {
-  /**
-   * Find a view model by its id.
-   *
-   * @param id - The id of the view model to find.
-   * @returns Promise that resolves to the view model or null if not found.
-   */
-  findById(id: string): Promise<TViewModel | null>;
+	/**
+	 * Find a view model by its id.
+	 *
+	 * @param id - The id of the view model to find.
+	 * @returns Promise that resolves to the view model or null if not found.
+	 */
+	findById(id: string): Promise<TViewModel | null>;
 
-  /**
-   * Find a view model by its key.
-   *
-   * @param key - The key of the view model to find.
-   * @returns Promise that resolves to the view model or null if not found.
-   */
-  findByCriteria(criteria: Criteria): Promise<PaginatedResult<TViewModel>>;
+	/**
+	 * Find a view model by its key.
+	 *
+	 * @param key - The key of the view model to find.
+	 * @returns Promise that resolves to the view model or null if not found.
+	 */
+	findByCriteria(criteria: Criteria): Promise<PaginatedResult<TViewModel>>;
 
-  /**
-   * Save a view model (for read model updates).
-   *
-   * @param viewModel - The view model to save.
-   * @returns Promise that resolves when the view model is saved.
-   */
-  save(viewModel: TViewModel): Promise<void>;
+	/**
+	 * Save a view model (for read model updates).
+	 *
+	 * @param viewModel - The view model to save.
+	 * @returns Promise that resolves when the view model is saved.
+	 */
+	save(viewModel: TViewModel): Promise<void>;
 
-  /**
-   * Delete a view model by id.
-   *
-   * @param id - The id of the view model to delete.
-   * @returns Promise that resolves when the view model is deleted.
-   */
-  delete(id: string): Promise<void>;
+	/**
+	 * Delete a view model by id.
+	 *
+	 * @param id - The id of the view model to delete.
+	 * @returns Promise that resolves when the view model is deleted.
+	 */
+	delete(id: string): Promise<void>;
 }

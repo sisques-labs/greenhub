@@ -6,58 +6,58 @@ import { SagaLogTypeormEntity } from '@/generic/saga-context/saga-log/infrastruc
 
 @Injectable()
 export class SagaLogTypeormMapper {
-  private readonly logger = new Logger(SagaLogTypeormMapper.name);
+	private readonly logger = new Logger(SagaLogTypeormMapper.name);
 
-  constructor(
-    private readonly sagaLogAggregateFactory: SagaLogAggregateFactory,
-  ) {}
+	constructor(
+		private readonly sagaLogAggregateFactory: SagaLogAggregateFactory,
+	) {}
 
-  /**
-   * Converts a TypeORM entity to a saga log aggregate
-   *
-   * @param sagaLogEntity - The TypeORM entity to convert
-   * @returns The saga log aggregate
-   */
-  toDomainEntity(sagaLogEntity: SagaLogTypeormEntity): SagaLogAggregate {
-    this.logger.log(
-      `Converting TypeORM entity to domain entity with id ${sagaLogEntity.id}`,
-    );
+	/**
+	 * Converts a TypeORM entity to a saga log aggregate
+	 *
+	 * @param sagaLogEntity - The TypeORM entity to convert
+	 * @returns The saga log aggregate
+	 */
+	toDomainEntity(sagaLogEntity: SagaLogTypeormEntity): SagaLogAggregate {
+		this.logger.log(
+			`Converting TypeORM entity to domain entity with id ${sagaLogEntity.id}`,
+		);
 
-    return this.sagaLogAggregateFactory.fromPrimitives({
-      id: sagaLogEntity.id,
-      sagaInstanceId: sagaLogEntity.sagaInstanceId,
-      sagaStepId: sagaLogEntity.sagaStepId,
-      type: sagaLogEntity.type,
-      message: sagaLogEntity.message,
-      createdAt: sagaLogEntity.createdAt,
-      updatedAt: sagaLogEntity.updatedAt,
-    });
-  }
+		return this.sagaLogAggregateFactory.fromPrimitives({
+			id: sagaLogEntity.id,
+			sagaInstanceId: sagaLogEntity.sagaInstanceId,
+			sagaStepId: sagaLogEntity.sagaStepId,
+			type: sagaLogEntity.type,
+			message: sagaLogEntity.message,
+			createdAt: sagaLogEntity.createdAt,
+			updatedAt: sagaLogEntity.updatedAt,
+		});
+	}
 
-  /**
-   * Converts a saga log aggregate to a TypeORM entity
-   *
-   * @param sagaLog - The saga log aggregate to convert
-   * @returns The TypeORM entity
-   */
-  toTypeormEntity(sagaLog: SagaLogAggregate): SagaLogTypeormEntity {
-    this.logger.log(
-      `Converting domain entity with id ${sagaLog.id.value} to TypeORM entity`,
-    );
+	/**
+	 * Converts a saga log aggregate to a TypeORM entity
+	 *
+	 * @param sagaLog - The saga log aggregate to convert
+	 * @returns The TypeORM entity
+	 */
+	toTypeormEntity(sagaLog: SagaLogAggregate): SagaLogTypeormEntity {
+		this.logger.log(
+			`Converting domain entity with id ${sagaLog.id.value} to TypeORM entity`,
+		);
 
-    const primitives = sagaLog.toPrimitives();
+		const primitives = sagaLog.toPrimitives();
 
-    const entity = new SagaLogTypeormEntity();
+		const entity = new SagaLogTypeormEntity();
 
-    entity.id = primitives.id;
-    entity.sagaInstanceId = primitives.sagaInstanceId;
-    entity.sagaStepId = primitives.sagaStepId;
-    entity.type = primitives.type as SagaLogTypeEnum;
-    entity.message = primitives.message;
-    entity.createdAt = primitives.createdAt;
-    entity.updatedAt = primitives.updatedAt;
-    entity.deletedAt = null;
+		entity.id = primitives.id;
+		entity.sagaInstanceId = primitives.sagaInstanceId;
+		entity.sagaStepId = primitives.sagaStepId;
+		entity.type = primitives.type as SagaLogTypeEnum;
+		entity.message = primitives.message;
+		entity.createdAt = primitives.createdAt;
+		entity.updatedAt = primitives.updatedAt;
+		entity.deletedAt = null;
 
-    return entity;
-  }
+		return entity;
+	}
 }

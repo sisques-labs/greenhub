@@ -2,49 +2,49 @@ import { PasswordVerificationFailedException } from '@/generic/auth/application/
 import { BaseApplicationException } from '@/shared/application/exceptions/base-application/base-application.exception';
 
 describe('PasswordVerificationFailedException', () => {
-  it('should be an instance of BaseApplicationException', () => {
-    const exception = new PasswordVerificationFailedException();
+	it('should be an instance of BaseApplicationException', () => {
+		const exception = new PasswordVerificationFailedException();
 
-    expect(exception).toBeInstanceOf(BaseApplicationException);
-    expect(exception).toBeInstanceOf(Error);
-  });
+		expect(exception).toBeInstanceOf(BaseApplicationException);
+		expect(exception).toBeInstanceOf(Error);
+	});
 
-  it('should create an exception with the correct message', () => {
-    const exception = new PasswordVerificationFailedException();
+	it('should create an exception with the correct message', () => {
+		const exception = new PasswordVerificationFailedException();
 
-    expect(exception.message).toBe('Password verification failed');
-  });
+		expect(exception.message).toBe('Password verification failed');
+	});
 
-  it('should set the name to PasswordVerificationFailedException', () => {
-    const exception = new PasswordVerificationFailedException();
+	it('should set the name to PasswordVerificationFailedException', () => {
+		const exception = new PasswordVerificationFailedException();
 
-    expect(exception.name).toBe('PasswordVerificationFailedException');
-  });
+		expect(exception.name).toBe('PasswordVerificationFailedException');
+	});
 
-  it('should set the domain to Application', () => {
-    const exception = new PasswordVerificationFailedException();
+	it('should set the domain to Application', () => {
+		const exception = new PasswordVerificationFailedException();
 
-    expect(exception.layer).toBe('Application');
-  });
+		expect(exception.layer).toBe('Application');
+	});
 
-  it('should have a timestamp', () => {
-    const before = new Date();
-    const exception = new PasswordVerificationFailedException();
-    const after = new Date();
+	it('should have a timestamp', () => {
+		const before = new Date();
+		const exception = new PasswordVerificationFailedException();
+		const after = new Date();
 
-    expect(exception.timestamp).toBeInstanceOf(Date);
-    expect(exception.timestamp.getTime()).toBeGreaterThanOrEqual(
-      before.getTime(),
-    );
-    expect(exception.timestamp.getTime()).toBeLessThanOrEqual(after.getTime());
-  });
+		expect(exception.timestamp).toBeInstanceOf(Date);
+		expect(exception.timestamp.getTime()).toBeGreaterThanOrEqual(
+			before.getTime(),
+		);
+		expect(exception.timestamp.getTime()).toBeLessThanOrEqual(after.getTime());
+	});
 
-  it('should return a detailed message', () => {
-    const exception = new PasswordVerificationFailedException();
-    const detailedMessage = exception.getDetailedMessage();
+	it('should return a detailed message', () => {
+		const exception = new PasswordVerificationFailedException();
+		const detailedMessage = exception.getDetailedMessage();
 
-    expect(detailedMessage).toBe(
-      '[Application] PasswordVerificationFailedException: Password verification failed',
-    );
-  });
+		expect(detailedMessage).toBe(
+			'[Application] PasswordVerificationFailedException: Password verification failed',
+		);
+	});
 });

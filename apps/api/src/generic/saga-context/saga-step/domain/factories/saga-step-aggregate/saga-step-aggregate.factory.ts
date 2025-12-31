@@ -25,78 +25,78 @@ import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifie
  */
 @Injectable()
 export class SagaStepAggregateFactory
-  implements IWriteFactory<SagaStepAggregate, ISagaStepCreateDto>
+	implements IWriteFactory<SagaStepAggregate, ISagaStepCreateDto>
 {
-  /**
-   * Creates a new SagaStepAggregate entity using the provided properties.
-   *
-   * @param data - The saga step create data.
-   * @param data.id - The saga step id.
-   * @param data.sagaInstanceId - The saga instance id.
-   * @param data.name - The saga step name.
-   * @param data.order - The saga step order.
-   * @param data.status - The saga step status.
-   * @param data.startDate - The saga step start date.
-   * @param data.generateEvent - Whether to generate a creation event (default: true).
-   * @param data.endDate - The saga step end date.
-   * @param data.errorMessage - The saga step error message.
-   * @param data.retryCount - The saga step retry count.
-   * @param data.maxRetries - The saga step max retries.
-   * @param data.payload - The saga step payload.
-   * @param data.result - The saga step result.
-   * @param data.createdAt - The saga step created at.
-   * @param data.updatedAt - The saga step updated at.
-   * @returns {SagaStepAggregate} - The created saga step aggregate entity.
-   */
-  public create(
-    data: ISagaStepCreateDto,
-    generateEvent: boolean = true,
-  ): SagaStepAggregate {
-    return new SagaStepAggregate(data, generateEvent);
-  }
+	/**
+	 * Creates a new SagaStepAggregate entity using the provided properties.
+	 *
+	 * @param data - The saga step create data.
+	 * @param data.id - The saga step id.
+	 * @param data.sagaInstanceId - The saga instance id.
+	 * @param data.name - The saga step name.
+	 * @param data.order - The saga step order.
+	 * @param data.status - The saga step status.
+	 * @param data.startDate - The saga step start date.
+	 * @param data.generateEvent - Whether to generate a creation event (default: true).
+	 * @param data.endDate - The saga step end date.
+	 * @param data.errorMessage - The saga step error message.
+	 * @param data.retryCount - The saga step retry count.
+	 * @param data.maxRetries - The saga step max retries.
+	 * @param data.payload - The saga step payload.
+	 * @param data.result - The saga step result.
+	 * @param data.createdAt - The saga step created at.
+	 * @param data.updatedAt - The saga step updated at.
+	 * @returns {SagaStepAggregate} - The created saga step aggregate entity.
+	 */
+	public create(
+		data: ISagaStepCreateDto,
+		generateEvent: boolean = true,
+	): SagaStepAggregate {
+		return new SagaStepAggregate(data, generateEvent);
+	}
 
-  /**
-   * Creates a new SagaStepAggregate entity from primitive data.
-   *
-   * @param data - The saga step primitive data.
-   * @param data.id - The saga step id.
-   * @param data.sagaInstanceId - The saga instance id.
-   * @param data.name - The saga step name.
-   * @param data.order - The saga step order.
-   * @param data.status - The saga step status.
-   * @param data.startDate - The saga step start date.
-   * @param data.endDate - The saga step end date.
-   * @param data.errorMessage - The saga step error message.
-   * @param data.retryCount - The saga step retry count.
-   * @param data.maxRetries - The saga step max retries.
-   * @param data.payload - The saga step payload.
-   * @param data.result - The saga step result.
-   * @param data.createdAt - The saga step created at.
-   * @param data.updatedAt - The saga step updated at.
-   * @returns The created saga step aggregate entity.
-   */
-  public fromPrimitives(data: SagaStepPrimitives): SagaStepAggregate {
-    return new SagaStepAggregate({
-      id: new SagaStepUuidValueObject(data.id),
-      sagaInstanceId: new SagaInstanceUuidValueObject(data.sagaInstanceId),
-      name: new SagaStepNameValueObject(data.name),
-      order: new SagaStepOrderValueObject(data.order),
-      status: new SagaStepStatusValueObject(data.status),
-      startDate: data.startDate
-        ? new SagaStepStartDateValueObject(data.startDate)
-        : null,
-      endDate: data.endDate
-        ? new SagaStepEndDateValueObject(data.endDate)
-        : null,
-      errorMessage: data.errorMessage
-        ? new SagaStepErrorMessageValueObject(data.errorMessage)
-        : null,
-      retryCount: new SagaStepRetryCountValueObject(data.retryCount),
-      maxRetries: new SagaStepMaxRetriesValueObject(data.maxRetries),
-      payload: new SagaStepPayloadValueObject(data.payload),
-      result: new SagaStepResultValueObject(data.result),
-      createdAt: new DateValueObject(data.createdAt),
-      updatedAt: new DateValueObject(data.updatedAt),
-    });
-  }
+	/**
+	 * Creates a new SagaStepAggregate entity from primitive data.
+	 *
+	 * @param data - The saga step primitive data.
+	 * @param data.id - The saga step id.
+	 * @param data.sagaInstanceId - The saga instance id.
+	 * @param data.name - The saga step name.
+	 * @param data.order - The saga step order.
+	 * @param data.status - The saga step status.
+	 * @param data.startDate - The saga step start date.
+	 * @param data.endDate - The saga step end date.
+	 * @param data.errorMessage - The saga step error message.
+	 * @param data.retryCount - The saga step retry count.
+	 * @param data.maxRetries - The saga step max retries.
+	 * @param data.payload - The saga step payload.
+	 * @param data.result - The saga step result.
+	 * @param data.createdAt - The saga step created at.
+	 * @param data.updatedAt - The saga step updated at.
+	 * @returns The created saga step aggregate entity.
+	 */
+	public fromPrimitives(data: SagaStepPrimitives): SagaStepAggregate {
+		return new SagaStepAggregate({
+			id: new SagaStepUuidValueObject(data.id),
+			sagaInstanceId: new SagaInstanceUuidValueObject(data.sagaInstanceId),
+			name: new SagaStepNameValueObject(data.name),
+			order: new SagaStepOrderValueObject(data.order),
+			status: new SagaStepStatusValueObject(data.status),
+			startDate: data.startDate
+				? new SagaStepStartDateValueObject(data.startDate)
+				: null,
+			endDate: data.endDate
+				? new SagaStepEndDateValueObject(data.endDate)
+				: null,
+			errorMessage: data.errorMessage
+				? new SagaStepErrorMessageValueObject(data.errorMessage)
+				: null,
+			retryCount: new SagaStepRetryCountValueObject(data.retryCount),
+			maxRetries: new SagaStepMaxRetriesValueObject(data.maxRetries),
+			payload: new SagaStepPayloadValueObject(data.payload),
+			result: new SagaStepResultValueObject(data.result),
+			createdAt: new DateValueObject(data.createdAt),
+			updatedAt: new DateValueObject(data.updatedAt),
+		});
+	}
 }

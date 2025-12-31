@@ -1,7 +1,7 @@
-import type { SagaLogType } from './saga-log-type.type.js';
+import type { SagaLogType } from "./saga-log-type.type.js";
 
 export type SagaLogUpdateInput = {
-  id: string;
-  type?: SagaLogType;
-  message?: string;
+	id: string;
+	type?: SagaLogType;
+	message?: string;
 };

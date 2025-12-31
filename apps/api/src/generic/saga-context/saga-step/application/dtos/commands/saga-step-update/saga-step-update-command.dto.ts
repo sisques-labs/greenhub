@@ -8,13 +8,13 @@ import { ISagaStepCreateCommandDto } from '@/generic/saga-context/saga-step/appl
  * @extends Partial<Omit<ISagaStepCreateCommandDto, 'sagaInstanceId'>>
  */
 export interface ISagaStepUpdateCommandDto
-  extends Partial<Omit<ISagaStepCreateCommandDto, 'sagaInstanceId'>> {
-  id: string;
-  status?: string;
-  startDate?: Date | null;
-  endDate?: Date | null;
-  errorMessage?: string | null;
-  retryCount?: number;
-  maxRetries?: number;
-  result?: any;
+	extends Partial<Omit<ISagaStepCreateCommandDto, 'sagaInstanceId'>> {
+	id: string;
+	status?: string;
+	startDate?: Date | null;
+	endDate?: Date | null;
+	errorMessage?: string | null;
+	retryCount?: number;
+	maxRetries?: number;
+	result?: any;
 }

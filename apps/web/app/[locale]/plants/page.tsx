@@ -1,7 +1,7 @@
-import { PlantsManagementPage } from '@/core/plant-context/plants/presentation/components/pages/plants-management-page';
+import { PlantsPage } from "@/core/plant-context/plant/components/pages/plants-page";
 
 const Page = () => {
-  return <PlantsManagementPage />;
+	return <PlantsPage />;
 };
 
 export default Page;

@@ -4,8 +4,8 @@ import { FindSagaLogsBySagaStepIdQueryHandler } from '@/generic/saga-context/sag
 import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import {
-  SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-  SagaLogWriteRepository,
+	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+	SagaLogWriteRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
 import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
 import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
@@ -15,112 +15,112 @@ import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifier
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('FindSagaLogsBySagaStepIdQueryHandler', () => {
-  let handler: FindSagaLogsBySagaStepIdQueryHandler;
-  let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
+	let handler: FindSagaLogsBySagaStepIdQueryHandler;
+	let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
 
-  beforeEach(async () => {
-    mockSagaLogWriteRepository = {
-      findById: jest.fn(),
-      findBySagaInstanceId: jest.fn(),
-      findBySagaStepId: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<SagaLogWriteRepository>;
+	beforeEach(async () => {
+		mockSagaLogWriteRepository = {
+			findById: jest.fn(),
+			findBySagaInstanceId: jest.fn(),
+			findBySagaStepId: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<SagaLogWriteRepository>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        FindSagaLogsBySagaStepIdQueryHandler,
-        {
-          provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
-          useValue: mockSagaLogWriteRepository,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				FindSagaLogsBySagaStepIdQueryHandler,
+				{
+					provide: SAGA_LOG_WRITE_REPOSITORY_TOKEN,
+					useValue: mockSagaLogWriteRepository,
+				},
+			],
+		}).compile();
 
-    handler = module.get<FindSagaLogsBySagaStepIdQueryHandler>(
-      FindSagaLogsBySagaStepIdQueryHandler,
-    );
-  });
+		handler = module.get<FindSagaLogsBySagaStepIdQueryHandler>(
+			FindSagaLogsBySagaStepIdQueryHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaLogAggregate = (
-    id: string,
-    sagaInstanceId: string,
-    sagaStepId: string,
-    type: SagaLogTypeEnum,
-    message: string,
-  ): SagaLogAggregate => {
-    const now = new Date();
-    return new SagaLogAggregate(
-      {
-        id: new SagaLogUuidValueObject(id),
-        sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-        sagaStepId: new SagaStepUuidValueObject(sagaStepId),
-        type: new SagaLogTypeValueObject(type),
-        message: new SagaLogMessageValueObject(message),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaLogAggregate = (
+		id: string,
+		sagaInstanceId: string,
+		sagaStepId: string,
+		type: SagaLogTypeEnum,
+		message: string,
+	): SagaLogAggregate => {
+		const now = new Date();
+		return new SagaLogAggregate(
+			{
+				id: new SagaLogUuidValueObject(id),
+				sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
+				sagaStepId: new SagaStepUuidValueObject(sagaStepId),
+				type: new SagaLogTypeValueObject(type),
+				message: new SagaLogMessageValueObject(message),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should return array of saga log aggregates when saga logs exist', async () => {
-      const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { sagaStepId };
-      const query = new FindSagaLogsBySagaStepIdQuery(queryDto);
+	describe('execute', () => {
+		it('should return array of saga log aggregates when saga logs exist', async () => {
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { sagaStepId };
+			const query = new FindSagaLogsBySagaStepIdQuery(queryDto);
 
-      const mockSagaLogs = [
-        createSagaLogAggregate(
-          '123e4567-e89b-12d3-a456-426614174000',
-          '223e4567-e89b-12d3-a456-426614174000',
-          sagaStepId,
-          SagaLogTypeEnum.INFO,
-          'Log message 1',
-        ),
-        createSagaLogAggregate(
-          '223e4567-e89b-12d3-a456-426614174001',
-          '223e4567-e89b-12d3-a456-426614174000',
-          sagaStepId,
-          SagaLogTypeEnum.ERROR,
-          'Log message 2',
-        ),
-      ];
+			const mockSagaLogs = [
+				createSagaLogAggregate(
+					'123e4567-e89b-12d3-a456-426614174000',
+					'223e4567-e89b-12d3-a456-426614174000',
+					sagaStepId,
+					SagaLogTypeEnum.INFO,
+					'Log message 1',
+				),
+				createSagaLogAggregate(
+					'223e4567-e89b-12d3-a456-426614174001',
+					'223e4567-e89b-12d3-a456-426614174000',
+					sagaStepId,
+					SagaLogTypeEnum.ERROR,
+					'Log message 2',
+				),
+			];
 
-      mockSagaLogWriteRepository.findBySagaStepId.mockResolvedValue(
-        mockSagaLogs,
-      );
+			mockSagaLogWriteRepository.findBySagaStepId.mockResolvedValue(
+				mockSagaLogs,
+			);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockSagaLogs);
-      expect(result).toHaveLength(2);
-      expect(mockSagaLogWriteRepository.findBySagaStepId).toHaveBeenCalledWith(
-        sagaStepId,
-      );
-      expect(mockSagaLogWriteRepository.findBySagaStepId).toHaveBeenCalledTimes(
-        1,
-      );
-    });
+			expect(result).toBe(mockSagaLogs);
+			expect(result).toHaveLength(2);
+			expect(mockSagaLogWriteRepository.findBySagaStepId).toHaveBeenCalledWith(
+				sagaStepId,
+			);
+			expect(mockSagaLogWriteRepository.findBySagaStepId).toHaveBeenCalledTimes(
+				1,
+			);
+		});
 
-    it('should return empty array when no saga logs exist for saga step', async () => {
-      const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { sagaStepId };
-      const query = new FindSagaLogsBySagaStepIdQuery(queryDto);
+		it('should return empty array when no saga logs exist for saga step', async () => {
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { sagaStepId };
+			const query = new FindSagaLogsBySagaStepIdQuery(queryDto);
 
-      mockSagaLogWriteRepository.findBySagaStepId.mockResolvedValue([]);
+			mockSagaLogWriteRepository.findBySagaStepId.mockResolvedValue([]);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toEqual([]);
-      expect(result).toHaveLength(0);
-      expect(mockSagaLogWriteRepository.findBySagaStepId).toHaveBeenCalledWith(
-        sagaStepId,
-      );
-    });
-  });
+			expect(result).toEqual([]);
+			expect(result).toHaveLength(0);
+			expect(mockSagaLogWriteRepository.findBySagaStepId).toHaveBeenCalledWith(
+				sagaStepId,
+			);
+		});
+	});
 });

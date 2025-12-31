@@ -13,266 +13,266 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 
 describe('UserTypeormRepository', () => {
-  let repository: UserTypeormRepository;
-  let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
-  let mockUserTypeormMapper: jest.Mocked<UserTypeOrmMapper>;
-  let mockTypeormRepository: jest.Mocked<Repository<UserTypeormEntity>>;
-  let mockFindOne: jest.Mock;
-  let mockSave: jest.Mock;
-  let mockSoftDelete: jest.Mock;
+	let repository: UserTypeormRepository;
+	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
+	let mockUserTypeormMapper: jest.Mocked<UserTypeOrmMapper>;
+	let mockTypeormRepository: jest.Mocked<Repository<UserTypeormEntity>>;
+	let mockFindOne: jest.Mock;
+	let mockSave: jest.Mock;
+	let mockSoftDelete: jest.Mock;
 
-  beforeEach(() => {
-    mockFindOne = jest.fn();
-    mockSave = jest.fn();
-    mockSoftDelete = jest.fn();
+	beforeEach(() => {
+		mockFindOne = jest.fn();
+		mockSave = jest.fn();
+		mockSoftDelete = jest.fn();
 
-    mockTypeormRepository = {
-      findOne: mockFindOne,
-      save: mockSave,
-      softDelete: mockSoftDelete,
-    } as unknown as jest.Mocked<Repository<UserTypeormEntity>>;
+		mockTypeormRepository = {
+			findOne: mockFindOne,
+			save: mockSave,
+			softDelete: mockSoftDelete,
+		} as unknown as jest.Mocked<Repository<UserTypeormEntity>>;
 
-    mockTypeormMasterService = {
-      getRepository: jest.fn().mockReturnValue(mockTypeormRepository),
-    } as unknown as jest.Mocked<TypeormMasterService>;
+		mockTypeormMasterService = {
+			getRepository: jest.fn().mockReturnValue(mockTypeormRepository),
+		} as unknown as jest.Mocked<TypeormMasterService>;
 
-    mockUserTypeormMapper = {
-      toDomainEntity: jest.fn(),
-      toTypeormEntity: jest.fn(),
-    } as unknown as jest.Mocked<UserTypeOrmMapper>;
+		mockUserTypeormMapper = {
+			toDomainEntity: jest.fn(),
+			toTypeormEntity: jest.fn(),
+		} as unknown as jest.Mocked<UserTypeOrmMapper>;
 
-    repository = new UserTypeormRepository(
-      mockTypeormMasterService,
-      mockUserTypeormMapper,
-    );
-  });
+		repository = new UserTypeormRepository(
+			mockTypeormMasterService,
+			mockUserTypeormMapper,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('findById', () => {
-    it('should return user aggregate when user exists', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+	describe('findById', () => {
+		it('should return user aggregate when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const typeormEntity = new UserTypeormEntity();
-      typeormEntity.id = userId;
-      typeormEntity.userName = 'johndoe';
-      typeormEntity.name = 'John';
-      typeormEntity.lastName = 'Doe';
-      typeormEntity.bio = null;
-      typeormEntity.avatarUrl = null;
-      typeormEntity.role = UserRoleEnum.USER;
-      typeormEntity.status = UserStatusEnum.ACTIVE;
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new UserTypeormEntity();
+			typeormEntity.id = userId;
+			typeormEntity.userName = 'johndoe';
+			typeormEntity.name = 'John';
+			typeormEntity.lastName = 'Doe';
+			typeormEntity.bio = null;
+			typeormEntity.avatarUrl = null;
+			typeormEntity.role = UserRoleEnum.USER;
+			typeormEntity.status = UserStatusEnum.ACTIVE;
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const userAggregate = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const userAggregate = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      mockFindOne.mockResolvedValue(typeormEntity);
-      mockUserTypeormMapper.toDomainEntity.mockReturnValue(userAggregate);
+			mockFindOne.mockResolvedValue(typeormEntity);
+			mockUserTypeormMapper.toDomainEntity.mockReturnValue(userAggregate);
 
-      const result = await repository.findById(userId);
+			const result = await repository.findById(userId);
 
-      expect(result).toBe(userAggregate);
-      expect(mockFindOne).toHaveBeenCalledWith({
-        where: { id: userId },
-      });
-      expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
-        typeormEntity,
-      );
-      expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(userAggregate);
+			expect(mockFindOne).toHaveBeenCalledWith({
+				where: { id: userId },
+			});
+			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
+				typeormEntity,
+			);
+			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
+		});
 
-    it('should return null when user does not exist', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should return null when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockFindOne.mockResolvedValue(null);
+			mockFindOne.mockResolvedValue(null);
 
-      const result = await repository.findById(userId);
+			const result = await repository.findById(userId);
 
-      expect(result).toBeNull();
-      expect(mockFindOne).toHaveBeenCalledWith({
-        where: { id: userId },
-      });
-      expect(mockUserTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
-    });
-  });
+			expect(result).toBeNull();
+			expect(mockFindOne).toHaveBeenCalledWith({
+				where: { id: userId },
+			});
+			expect(mockUserTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
+		});
+	});
 
-  describe('findByUserName', () => {
-    it('should return user aggregate when user exists', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const userName = 'johndoe';
-      const now = new Date();
+	describe('findByUserName', () => {
+		it('should return user aggregate when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const userName = 'johndoe';
+			const now = new Date();
 
-      const typeormEntity = new UserTypeormEntity();
-      typeormEntity.id = userId;
-      typeormEntity.userName = userName;
-      typeormEntity.name = 'John';
-      typeormEntity.lastName = 'Doe';
-      typeormEntity.bio = null;
-      typeormEntity.avatarUrl = null;
-      typeormEntity.role = UserRoleEnum.USER;
-      typeormEntity.status = UserStatusEnum.ACTIVE;
-      typeormEntity.createdAt = now;
-      typeormEntity.updatedAt = now;
-      typeormEntity.deletedAt = null;
+			const typeormEntity = new UserTypeormEntity();
+			typeormEntity.id = userId;
+			typeormEntity.userName = userName;
+			typeormEntity.name = 'John';
+			typeormEntity.lastName = 'Doe';
+			typeormEntity.bio = null;
+			typeormEntity.avatarUrl = null;
+			typeormEntity.role = UserRoleEnum.USER;
+			typeormEntity.status = UserStatusEnum.ACTIVE;
+			typeormEntity.createdAt = now;
+			typeormEntity.updatedAt = now;
+			typeormEntity.deletedAt = null;
 
-      const userAggregate = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject(userName),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const userAggregate = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject(userName),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      mockFindOne.mockResolvedValue(typeormEntity);
-      mockUserTypeormMapper.toDomainEntity.mockReturnValue(userAggregate);
+			mockFindOne.mockResolvedValue(typeormEntity);
+			mockUserTypeormMapper.toDomainEntity.mockReturnValue(userAggregate);
 
-      const result = await repository.findByUserName(userName);
+			const result = await repository.findByUserName(userName);
 
-      expect(result).toBe(userAggregate);
-      expect(mockFindOne).toHaveBeenCalledWith({
-        where: { userName },
-      });
-      expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
-        typeormEntity,
-      );
-      expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(userAggregate);
+			expect(mockFindOne).toHaveBeenCalledWith({
+				where: { userName },
+			});
+			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
+				typeormEntity,
+			);
+			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
+		});
 
-    it('should return null when user does not exist', async () => {
-      const userName = 'johndoe';
+		it('should return null when user does not exist', async () => {
+			const userName = 'johndoe';
 
-      mockFindOne.mockResolvedValue(null);
+			mockFindOne.mockResolvedValue(null);
 
-      const result = await repository.findByUserName(userName);
+			const result = await repository.findByUserName(userName);
 
-      expect(result).toBeNull();
-      expect(mockFindOne).toHaveBeenCalledWith({
-        where: { userName },
-      });
-      expect(mockUserTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
-    });
-  });
+			expect(result).toBeNull();
+			expect(mockFindOne).toHaveBeenCalledWith({
+				where: { userName },
+			});
+			expect(mockUserTypeormMapper.toDomainEntity).not.toHaveBeenCalled();
+		});
+	});
 
-  describe('save', () => {
-    it('should save user aggregate and return saved aggregate', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const now = new Date();
+	describe('save', () => {
+		it('should save user aggregate and return saved aggregate', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
 
-      const userAggregate = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const userAggregate = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      const typeormEntity = new UserTypeormEntity();
-      typeormEntity.id = userId;
-      typeormEntity.userName = 'johndoe';
-      typeormEntity.role = UserRoleEnum.USER;
-      typeormEntity.status = UserStatusEnum.ACTIVE;
+			const typeormEntity = new UserTypeormEntity();
+			typeormEntity.id = userId;
+			typeormEntity.userName = 'johndoe';
+			typeormEntity.role = UserRoleEnum.USER;
+			typeormEntity.status = UserStatusEnum.ACTIVE;
 
-      const savedTypeormEntity = new UserTypeormEntity();
-      savedTypeormEntity.id = userId;
-      savedTypeormEntity.userName = 'johndoe';
-      savedTypeormEntity.name = 'John';
-      savedTypeormEntity.lastName = 'Doe';
-      savedTypeormEntity.role = UserRoleEnum.USER;
-      savedTypeormEntity.status = UserStatusEnum.ACTIVE;
+			const savedTypeormEntity = new UserTypeormEntity();
+			savedTypeormEntity.id = userId;
+			savedTypeormEntity.userName = 'johndoe';
+			savedTypeormEntity.name = 'John';
+			savedTypeormEntity.lastName = 'Doe';
+			savedTypeormEntity.role = UserRoleEnum.USER;
+			savedTypeormEntity.status = UserStatusEnum.ACTIVE;
 
-      const savedUserAggregate = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const savedUserAggregate = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      mockUserTypeormMapper.toTypeormEntity.mockReturnValue(typeormEntity);
-      mockSave.mockResolvedValue(savedTypeormEntity);
-      mockUserTypeormMapper.toDomainEntity.mockReturnValue(savedUserAggregate);
+			mockUserTypeormMapper.toTypeormEntity.mockReturnValue(typeormEntity);
+			mockSave.mockResolvedValue(savedTypeormEntity);
+			mockUserTypeormMapper.toDomainEntity.mockReturnValue(savedUserAggregate);
 
-      const result = await repository.save(userAggregate);
+			const result = await repository.save(userAggregate);
 
-      expect(result).toBe(savedUserAggregate);
-      expect(mockUserTypeormMapper.toTypeormEntity).toHaveBeenCalledWith(
-        userAggregate,
-      );
-      expect(mockSave).toHaveBeenCalledWith(typeormEntity);
-      expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
-        savedTypeormEntity,
-      );
-      expect(mockFindOne).not.toHaveBeenCalled();
-    });
-  });
+			expect(result).toBe(savedUserAggregate);
+			expect(mockUserTypeormMapper.toTypeormEntity).toHaveBeenCalledWith(
+				userAggregate,
+			);
+			expect(mockSave).toHaveBeenCalledWith(typeormEntity);
+			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledWith(
+				savedTypeormEntity,
+			);
+			expect(mockFindOne).not.toHaveBeenCalled();
+		});
+	});
 
-  describe('delete', () => {
-    it('should soft delete user and return true', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe('delete', () => {
+		it('should soft delete user and return true', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockSoftDelete.mockResolvedValue({
-        affected: 1,
-        raw: [],
-        generatedMaps: [],
-      });
+			mockSoftDelete.mockResolvedValue({
+				affected: 1,
+				raw: [],
+				generatedMaps: [],
+			});
 
-      const result = await repository.delete(userId);
+			const result = await repository.delete(userId);
 
-      expect(result).toBe(true);
-      expect(mockSoftDelete).toHaveBeenCalledWith(userId);
-      expect(mockSoftDelete).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(true);
+			expect(mockSoftDelete).toHaveBeenCalledWith(userId);
+			expect(mockSoftDelete).toHaveBeenCalledTimes(1);
+		});
 
-    it('should return false when user does not exist', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it('should return false when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
-      mockSoftDelete.mockResolvedValue({
-        affected: 0,
-        raw: [],
-        generatedMaps: [],
-      });
+			mockSoftDelete.mockResolvedValue({
+				affected: 0,
+				raw: [],
+				generatedMaps: [],
+			});
 
-      const result = await repository.delete(userId);
+			const result = await repository.delete(userId);
 
-      expect(result).toBe(false);
-      expect(mockSoftDelete).toHaveBeenCalledWith(userId);
-    });
+			expect(result).toBe(false);
+			expect(mockSoftDelete).toHaveBeenCalledWith(userId);
+		});
 
-    it('should handle delete errors correctly', async () => {
-      const userId = '123e4567-e89b-12d3-a456-426614174000';
-      const error = new Error('User not found');
+		it('should handle delete errors correctly', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const error = new Error('User not found');
 
-      mockSoftDelete.mockRejectedValue(error);
+			mockSoftDelete.mockRejectedValue(error);
 
-      await expect(repository.delete(userId)).rejects.toThrow(error);
-      expect(mockSoftDelete).toHaveBeenCalledWith(userId);
-    });
-  });
+			await expect(repository.delete(userId)).rejects.toThrow(error);
+			expect(mockSoftDelete).toHaveBeenCalledWith(userId);
+		});
+	});
 });

@@ -8,6 +8,6 @@ import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enum
  * @property {SagaStepStatusEnum} status - The new status to set.
  */
 export interface ISagaStepChangeStatusCommandDto {
-  id: string;
-  status: SagaStepStatusEnum;
+	id: string;
+	status: SagaStepStatusEnum;
 }

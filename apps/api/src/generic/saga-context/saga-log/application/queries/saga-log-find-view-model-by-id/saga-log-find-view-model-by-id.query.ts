@@ -2,9 +2,9 @@ import { ISagaLogFindViewModelByIdQueryDto } from '@/generic/saga-context/saga-l
 import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
 
 export class FindSagaLogViewModelByIdQuery {
-  readonly id: SagaLogUuidValueObject;
+	readonly id: SagaLogUuidValueObject;
 
-  constructor(props: ISagaLogFindViewModelByIdQueryDto) {
-    this.id = new SagaLogUuidValueObject(props.id);
-  }
+	constructor(props: ISagaLogFindViewModelByIdQueryDto) {
+		this.id = new SagaLogUuidValueObject(props.id);
+	}
 }

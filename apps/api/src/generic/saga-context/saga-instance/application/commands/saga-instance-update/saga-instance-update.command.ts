@@ -6,30 +6,30 @@ import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-insta
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class SagaInstanceUpdateCommand {
-  readonly id: SagaInstanceUuidValueObject;
-  readonly name?: SagaInstanceNameValueObject;
-  readonly status?: SagaInstanceStatusValueObject;
-  readonly startDate?: SagaInstanceStartDateValueObject | null;
-  readonly endDate?: SagaInstanceEndDateValueObject | null;
+	readonly id: SagaInstanceUuidValueObject;
+	readonly name?: SagaInstanceNameValueObject;
+	readonly status?: SagaInstanceStatusValueObject;
+	readonly startDate?: SagaInstanceStartDateValueObject | null;
+	readonly endDate?: SagaInstanceEndDateValueObject | null;
 
-  constructor(props: ISagaInstanceUpdateCommandDto) {
-    this.id = new SagaInstanceUuidValueObject(props.id);
+	constructor(props: ISagaInstanceUpdateCommandDto) {
+		this.id = new SagaInstanceUuidValueObject(props.id);
 
-    if (props.name !== undefined) {
-      this.name = new SagaInstanceNameValueObject(props.name);
-    }
-    if (props.status !== undefined) {
-      this.status = new SagaInstanceStatusValueObject(props.status);
-    }
-    if (props.startDate !== undefined) {
-      this.startDate = props.startDate
-        ? new SagaInstanceStartDateValueObject(props.startDate)
-        : null;
-    }
-    if (props.endDate !== undefined) {
-      this.endDate = props.endDate
-        ? new SagaInstanceEndDateValueObject(props.endDate)
-        : null;
-    }
-  }
+		if (props.name !== undefined) {
+			this.name = new SagaInstanceNameValueObject(props.name);
+		}
+		if (props.status !== undefined) {
+			this.status = new SagaInstanceStatusValueObject(props.status);
+		}
+		if (props.startDate !== undefined) {
+			this.startDate = props.startDate
+				? new SagaInstanceStartDateValueObject(props.startDate)
+				: null;
+		}
+		if (props.endDate !== undefined) {
+			this.endDate = props.endDate
+				? new SagaInstanceEndDateValueObject(props.endDate)
+				: null;
+		}
+	}
 }

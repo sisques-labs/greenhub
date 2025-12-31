@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { Loader2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface AuthSubmitButtonProps {
-  isLoading: boolean;
-  disabled?: boolean;
-  mode: 'login' | 'signup';
+	isLoading: boolean;
+	disabled?: boolean;
+	mode: "login" | "signup";
 }
 
 export function AuthSubmitButton({
-  isLoading,
-  disabled = false,
-  mode,
+	isLoading,
+	disabled = false,
+	mode,
 }: AuthSubmitButtonProps) {
-  const t = useTranslations();
+	const t = useTranslations();
 
-  return (
-    <Button type="submit" className="w-full" disabled={disabled || isLoading}>
-      {isLoading ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          {t(`authPage.actions.loading.${mode}`)}
-        </>
-      ) : (
-        t(`authPage.actions.${mode}`)
-      )}
-    </Button>
-  );
+	return (
+		<Button type="submit" className="w-full" disabled={disabled || isLoading}>
+			{isLoading ? (
+				<>
+					<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+					{t(`pages.auth.actions.loading.${mode}`)}
+				</>
+			) : (
+				t(`pages.auth.actions.${mode}`)
+			)}
+		</Button>
+	);
 }

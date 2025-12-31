@@ -20,18 +20,18 @@
  * @property {Date} updatedAt - Timestamp when the saga step was last updated.
  */
 export interface ISagaStepCreateViewModelDto {
-  id: string;
-  sagaInstanceId: string;
-  name: string;
-  order: number;
-  status: string;
-  startDate: Date | null;
-  endDate: Date | null;
-  errorMessage: string | null;
-  retryCount: number;
-  maxRetries: number;
-  payload: any;
-  result: any;
-  createdAt: Date;
-  updatedAt: Date;
+	id: string;
+	sagaInstanceId: string;
+	name: string;
+	order: number;
+	status: string;
+	startDate: Date | null;
+	endDate: Date | null;
+	errorMessage: string | null;
+	retryCount: number;
+	maxRetries: number;
+	payload: any;
+	result: any;
+	createdAt: Date;
+	updatedAt: Date;
 }

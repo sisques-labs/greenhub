@@ -14,311 +14,311 @@ import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/s
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 describe('SagaStepMutationsResolver', () => {
-  let resolver: SagaStepMutationsResolver;
-  let mockCommandBus: jest.Mocked<CommandBus>;
-  let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
+	let resolver: SagaStepMutationsResolver;
+	let mockCommandBus: jest.Mocked<CommandBus>;
+	let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
 
-  beforeEach(() => {
-    mockCommandBus = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<CommandBus>;
+	beforeEach(() => {
+		mockCommandBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<CommandBus>;
 
-    mockMutationResponseGraphQLMapper = {
-      toResponseDto: jest.fn(),
-    } as unknown as jest.Mocked<MutationResponseGraphQLMapper>;
+		mockMutationResponseGraphQLMapper = {
+			toResponseDto: jest.fn(),
+		} as unknown as jest.Mocked<MutationResponseGraphQLMapper>;
 
-    resolver = new SagaStepMutationsResolver(
-      mockCommandBus,
-      mockMutationResponseGraphQLMapper,
-    );
-  });
+		resolver = new SagaStepMutationsResolver(
+			mockCommandBus,
+			mockMutationResponseGraphQLMapper,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('sagaStepCreate', () => {
-    it('should create saga step successfully', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: SagaStepCreateRequestDto = {
-        sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-        name: 'Process Payment',
-        order: 1,
-        payload: JSON.stringify({ orderId: '12345' }),
-      };
+	describe('sagaStepCreate', () => {
+		it('should create saga step successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: SagaStepCreateRequestDto = {
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				order: 1,
+				payload: JSON.stringify({ orderId: '12345' }),
+			};
 
-      const mutationResponse: MutationResponseDto = {
-        success: true,
-        message: 'Saga step created successfully',
-        id: sagaStepId,
-      };
+			const mutationResponse: MutationResponseDto = {
+				success: true,
+				message: 'Saga step created successfully',
+				id: sagaStepId,
+			};
 
-      mockCommandBus.execute.mockResolvedValue(sagaStepId);
-      mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
-        mutationResponse,
-      );
+			mockCommandBus.execute.mockResolvedValue(sagaStepId);
+			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
+				mutationResponse,
+			);
 
-      const result = await resolver.sagaStepCreate(input);
+			const result = await resolver.sagaStepCreate(input);
 
-      expect(result).toBe(mutationResponse);
-      expect(mockCommandBus.execute).toHaveBeenCalledWith(
-        expect.any(SagaStepCreateCommand),
-      );
-      const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-      expect(command).toBeInstanceOf(SagaStepCreateCommand);
-      expect(command.sagaInstanceId.value).toBe(input.sagaInstanceId);
-      expect(command.name.value).toBe(input.name);
-      expect(command.order.value).toBe(input.order);
-      expect(command.payload.value).toEqual({ orderId: '12345' });
-      expect(
-        mockMutationResponseGraphQLMapper.toResponseDto,
-      ).toHaveBeenCalledWith({
-        success: true,
-        message: 'Saga step created successfully',
-        id: sagaStepId,
-      });
-    });
+			expect(result).toBe(mutationResponse);
+			expect(mockCommandBus.execute).toHaveBeenCalledWith(
+				expect.any(SagaStepCreateCommand),
+			);
+			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
+			expect(command).toBeInstanceOf(SagaStepCreateCommand);
+			expect(command.sagaInstanceId.value).toBe(input.sagaInstanceId);
+			expect(command.name.value).toBe(input.name);
+			expect(command.order.value).toBe(input.order);
+			expect(command.payload.value).toEqual({ orderId: '12345' });
+			expect(
+				mockMutationResponseGraphQLMapper.toResponseDto,
+			).toHaveBeenCalledWith({
+				success: true,
+				message: 'Saga step created successfully',
+				id: sagaStepId,
+			});
+		});
 
-    it('should throw BadRequestException for invalid JSON payload', async () => {
-      const input: SagaStepCreateRequestDto = {
-        sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-        name: 'Process Payment',
-        order: 1,
-        payload: 'invalid json',
-      };
+		it('should throw BadRequestException for invalid JSON payload', async () => {
+			const input: SagaStepCreateRequestDto = {
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				order: 1,
+				payload: 'invalid json',
+			};
 
-      await expect(resolver.sagaStepCreate(input)).rejects.toThrow(
-        BadRequestException,
-      );
-      expect(mockCommandBus.execute).not.toHaveBeenCalled();
-    });
+			await expect(resolver.sagaStepCreate(input)).rejects.toThrow(
+				BadRequestException,
+			);
+			expect(mockCommandBus.execute).not.toHaveBeenCalled();
+		});
 
-    it('should handle empty JSON payload', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: SagaStepCreateRequestDto = {
-        sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-        name: 'Process Payment',
-        order: 1,
-        payload: JSON.stringify({}),
-      };
+		it('should handle empty JSON payload', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: SagaStepCreateRequestDto = {
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				order: 1,
+				payload: JSON.stringify({}),
+			};
 
-      mockCommandBus.execute.mockResolvedValue(sagaStepId);
-      mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
-        success: true,
-        message: 'Saga step created successfully',
-        id: sagaStepId,
-      });
+			mockCommandBus.execute.mockResolvedValue(sagaStepId);
+			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
+				success: true,
+				message: 'Saga step created successfully',
+				id: sagaStepId,
+			});
 
-      await resolver.sagaStepCreate(input);
+			await resolver.sagaStepCreate(input);
 
-      const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-      expect(command.payload.value).toEqual({});
-    });
-  });
+			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
+			expect(command.payload.value).toEqual({});
+		});
+	});
 
-  describe('sagaStepUpdate', () => {
-    it('should update saga step successfully', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: SagaStepUpdateRequestDto = {
-        id: sagaStepId,
-        name: 'Process Payment Updated',
-        order: 2,
-        status: SagaStepStatusEnum.COMPLETED,
-        payload: JSON.stringify({ orderId: '12345', updated: true }),
-        result: JSON.stringify({ success: true }),
-      };
+	describe('sagaStepUpdate', () => {
+		it('should update saga step successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: SagaStepUpdateRequestDto = {
+				id: sagaStepId,
+				name: 'Process Payment Updated',
+				order: 2,
+				status: SagaStepStatusEnum.COMPLETED,
+				payload: JSON.stringify({ orderId: '12345', updated: true }),
+				result: JSON.stringify({ success: true }),
+			};
 
-      const mutationResponse: MutationResponseDto = {
-        success: true,
-        message: 'Saga step updated successfully',
-        id: sagaStepId,
-      };
+			const mutationResponse: MutationResponseDto = {
+				success: true,
+				message: 'Saga step updated successfully',
+				id: sagaStepId,
+			};
 
-      mockCommandBus.execute.mockResolvedValue(undefined);
-      mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
-        mutationResponse,
-      );
+			mockCommandBus.execute.mockResolvedValue(undefined);
+			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
+				mutationResponse,
+			);
 
-      const result = await resolver.sagaStepUpdate(input);
+			const result = await resolver.sagaStepUpdate(input);
 
-      expect(result).toBe(mutationResponse);
-      expect(mockCommandBus.execute).toHaveBeenCalledWith(
-        expect.any(SagaStepUpdateCommand),
-      );
-      const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-      expect(command).toBeInstanceOf(SagaStepUpdateCommand);
-      expect(command.id.value).toBe(sagaStepId);
-      expect(command.name?.value).toBe(input.name);
-      expect(command.order?.value).toBe(input.order);
-      expect(command.status?.value).toBe(input.status);
-      expect(command.payload?.value).toEqual({
-        orderId: '12345',
-        updated: true,
-      });
-      expect(command.result?.value).toEqual({ success: true });
-      expect(
-        mockMutationResponseGraphQLMapper.toResponseDto,
-      ).toHaveBeenCalledWith({
-        success: true,
-        message: 'Saga step updated successfully',
-        id: sagaStepId,
-      });
-    });
+			expect(result).toBe(mutationResponse);
+			expect(mockCommandBus.execute).toHaveBeenCalledWith(
+				expect.any(SagaStepUpdateCommand),
+			);
+			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
+			expect(command).toBeInstanceOf(SagaStepUpdateCommand);
+			expect(command.id.value).toBe(sagaStepId);
+			expect(command.name?.value).toBe(input.name);
+			expect(command.order?.value).toBe(input.order);
+			expect(command.status?.value).toBe(input.status);
+			expect(command.payload?.value).toEqual({
+				orderId: '12345',
+				updated: true,
+			});
+			expect(command.result?.value).toEqual({ success: true });
+			expect(
+				mockMutationResponseGraphQLMapper.toResponseDto,
+			).toHaveBeenCalledWith({
+				success: true,
+				message: 'Saga step updated successfully',
+				id: sagaStepId,
+			});
+		});
 
-    it('should update saga step without payload and result', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: SagaStepUpdateRequestDto = {
-        id: sagaStepId,
-        name: 'Process Payment Updated',
-        order: 2,
-      };
+		it('should update saga step without payload and result', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: SagaStepUpdateRequestDto = {
+				id: sagaStepId,
+				name: 'Process Payment Updated',
+				order: 2,
+			};
 
-      mockCommandBus.execute.mockResolvedValue(undefined);
-      mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
-        success: true,
-        message: 'Saga step updated successfully',
-        id: sagaStepId,
-      });
+			mockCommandBus.execute.mockResolvedValue(undefined);
+			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
+				success: true,
+				message: 'Saga step updated successfully',
+				id: sagaStepId,
+			});
 
-      await resolver.sagaStepUpdate(input);
+			await resolver.sagaStepUpdate(input);
 
-      const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-      expect(command.payload).toBeUndefined();
-      expect(command.result).toBeUndefined();
-    });
+			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
+			expect(command.payload).toBeUndefined();
+			expect(command.result).toBeUndefined();
+		});
 
-    it('should throw BadRequestException for invalid JSON payload', async () => {
-      const input: SagaStepUpdateRequestDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Process Payment',
-        payload: 'invalid json',
-      };
+		it('should throw BadRequestException for invalid JSON payload', async () => {
+			const input: SagaStepUpdateRequestDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				payload: 'invalid json',
+			};
 
-      await expect(resolver.sagaStepUpdate(input)).rejects.toThrow(
-        BadRequestException,
-      );
-      expect(mockCommandBus.execute).not.toHaveBeenCalled();
-    });
+			await expect(resolver.sagaStepUpdate(input)).rejects.toThrow(
+				BadRequestException,
+			);
+			expect(mockCommandBus.execute).not.toHaveBeenCalled();
+		});
 
-    it('should throw BadRequestException for invalid JSON result', async () => {
-      const input: SagaStepUpdateRequestDto = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Process Payment',
-        result: 'invalid json',
-      };
+		it('should throw BadRequestException for invalid JSON result', async () => {
+			const input: SagaStepUpdateRequestDto = {
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				result: 'invalid json',
+			};
 
-      await expect(resolver.sagaStepUpdate(input)).rejects.toThrow(
-        BadRequestException,
-      );
-      expect(mockCommandBus.execute).not.toHaveBeenCalled();
-    });
-  });
+			await expect(resolver.sagaStepUpdate(input)).rejects.toThrow(
+				BadRequestException,
+			);
+			expect(mockCommandBus.execute).not.toHaveBeenCalled();
+		});
+	});
 
-  describe('sagaStepChangeStatus', () => {
-    it('should change saga step status successfully', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: SagaStepChangeStatusRequestDto = {
-        id: sagaStepId,
-        status: SagaStepStatusEnum.COMPLETED,
-      };
+	describe('sagaStepChangeStatus', () => {
+		it('should change saga step status successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: SagaStepChangeStatusRequestDto = {
+				id: sagaStepId,
+				status: SagaStepStatusEnum.COMPLETED,
+			};
 
-      const mutationResponse: MutationResponseDto = {
-        success: true,
-        message: 'Saga step status changed successfully',
-        id: sagaStepId,
-      };
+			const mutationResponse: MutationResponseDto = {
+				success: true,
+				message: 'Saga step status changed successfully',
+				id: sagaStepId,
+			};
 
-      mockCommandBus.execute.mockResolvedValue(undefined);
-      mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
-        mutationResponse,
-      );
+			mockCommandBus.execute.mockResolvedValue(undefined);
+			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
+				mutationResponse,
+			);
 
-      const result = await resolver.sagaStepChangeStatus(input);
+			const result = await resolver.sagaStepChangeStatus(input);
 
-      expect(result).toBe(mutationResponse);
-      expect(mockCommandBus.execute).toHaveBeenCalledWith(
-        expect.any(SagaStepChangeStatusCommand),
-      );
-      const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-      expect(command).toBeInstanceOf(SagaStepChangeStatusCommand);
-      expect(command.id.value).toBe(sagaStepId);
-      expect(command.status.value).toBe(input.status);
-      expect(
-        mockMutationResponseGraphQLMapper.toResponseDto,
-      ).toHaveBeenCalledWith({
-        success: true,
-        message: 'Saga step status changed successfully',
-        id: sagaStepId,
-      });
-    });
+			expect(result).toBe(mutationResponse);
+			expect(mockCommandBus.execute).toHaveBeenCalledWith(
+				expect.any(SagaStepChangeStatusCommand),
+			);
+			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
+			expect(command).toBeInstanceOf(SagaStepChangeStatusCommand);
+			expect(command.id.value).toBe(sagaStepId);
+			expect(command.status.value).toBe(input.status);
+			expect(
+				mockMutationResponseGraphQLMapper.toResponseDto,
+			).toHaveBeenCalledWith({
+				success: true,
+				message: 'Saga step status changed successfully',
+				id: sagaStepId,
+			});
+		});
 
-    it('should handle different status values', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const statuses = [
-        SagaStepStatusEnum.PENDING,
-        SagaStepStatusEnum.STARTED,
-        SagaStepStatusEnum.RUNNING,
-        SagaStepStatusEnum.COMPLETED,
-        SagaStepStatusEnum.FAILED,
-      ];
+		it('should handle different status values', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const statuses = [
+				SagaStepStatusEnum.PENDING,
+				SagaStepStatusEnum.STARTED,
+				SagaStepStatusEnum.RUNNING,
+				SagaStepStatusEnum.COMPLETED,
+				SagaStepStatusEnum.FAILED,
+			];
 
-      for (const status of statuses) {
-        const input: SagaStepChangeStatusRequestDto = {
-          id: sagaStepId,
-          status: status,
-        };
+			for (const status of statuses) {
+				const input: SagaStepChangeStatusRequestDto = {
+					id: sagaStepId,
+					status: status,
+				};
 
-        mockCommandBus.execute.mockResolvedValue(undefined);
-        mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
-          success: true,
-          message: 'Saga step status changed successfully',
-          id: sagaStepId,
-        });
+				mockCommandBus.execute.mockResolvedValue(undefined);
+				mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
+					success: true,
+					message: 'Saga step status changed successfully',
+					id: sagaStepId,
+				});
 
-        await resolver.sagaStepChangeStatus(input);
+				await resolver.sagaStepChangeStatus(input);
 
-        const command = (mockCommandBus.execute as jest.Mock).mock.calls[
-          mockCommandBus.execute.mock.calls.length - 1
-        ][0];
-        expect(command.status.value).toBe(status);
-      }
-    });
-  });
+				const command = (mockCommandBus.execute as jest.Mock).mock.calls[
+					mockCommandBus.execute.mock.calls.length - 1
+				][0];
+				expect(command.status.value).toBe(status);
+			}
+		});
+	});
 
-  describe('sagaStepDelete', () => {
-    it('should delete saga step successfully', async () => {
-      const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-      const input: SagaStepDeleteRequestDto = {
-        id: sagaStepId,
-      };
+	describe('sagaStepDelete', () => {
+		it('should delete saga step successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const input: SagaStepDeleteRequestDto = {
+				id: sagaStepId,
+			};
 
-      const mutationResponse: MutationResponseDto = {
-        success: true,
-        message: 'Saga step deleted successfully',
-        id: sagaStepId,
-      };
+			const mutationResponse: MutationResponseDto = {
+				success: true,
+				message: 'Saga step deleted successfully',
+				id: sagaStepId,
+			};
 
-      mockCommandBus.execute.mockResolvedValue(undefined);
-      mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
-        mutationResponse,
-      );
+			mockCommandBus.execute.mockResolvedValue(undefined);
+			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue(
+				mutationResponse,
+			);
 
-      const result = await resolver.sagaStepDelete(input);
+			const result = await resolver.sagaStepDelete(input);
 
-      expect(result).toBe(mutationResponse);
-      expect(mockCommandBus.execute).toHaveBeenCalledWith(
-        expect.any(SagaStepDeleteCommand),
-      );
-      const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-      expect(command).toBeInstanceOf(SagaStepDeleteCommand);
-      expect(command.id.value).toBe(sagaStepId);
-      expect(
-        mockMutationResponseGraphQLMapper.toResponseDto,
-      ).toHaveBeenCalledWith({
-        success: true,
-        message: 'Saga step deleted successfully',
-        id: sagaStepId,
-      });
-    });
-  });
+			expect(result).toBe(mutationResponse);
+			expect(mockCommandBus.execute).toHaveBeenCalledWith(
+				expect.any(SagaStepDeleteCommand),
+			);
+			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
+			expect(command).toBeInstanceOf(SagaStepDeleteCommand);
+			expect(command.id.value).toBe(sagaStepId);
+			expect(
+				mockMutationResponseGraphQLMapper.toResponseDto,
+			).toHaveBeenCalledWith({
+				success: true,
+				message: 'Saga step deleted successfully',
+				id: sagaStepId,
+			});
+		});
+	});
 });

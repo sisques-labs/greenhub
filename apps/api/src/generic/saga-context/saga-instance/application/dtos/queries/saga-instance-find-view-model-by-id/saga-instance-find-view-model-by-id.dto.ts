@@ -1,3 +1,3 @@
 export interface ISagaInstanceFindViewModelByIdQueryDto {
-  id: string;
+	id: string;
 }

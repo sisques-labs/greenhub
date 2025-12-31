@@ -6,30 +6,30 @@ import { SagaInstanceDeletedEvent } from '@/shared/domain/events/saga-context/sa
 
 @EventsHandler(SagaInstanceDeletedEvent)
 export class SagaInstanceDeletedEventHandler
-  implements IEventHandler<SagaInstanceDeletedEvent>
+	implements IEventHandler<SagaInstanceDeletedEvent>
 {
-  private readonly logger = new Logger(SagaInstanceDeletedEventHandler.name);
+	private readonly logger = new Logger(SagaInstanceDeletedEventHandler.name);
 
-  constructor(private readonly commandBus: CommandBus) {}
+	constructor(private readonly commandBus: CommandBus) {}
 
-  /**
-   * Handles the SagaInstanceDeletedEvent event by creating a saga log.
-   *
-   * @param event - The SagaInstanceDeletedEvent event to handle.
-   */
-  async handle(event: SagaInstanceDeletedEvent) {
-    this.logger.log(
-      `Handling saga instance deleted event: ${event.aggregateId}`,
-    );
+	/**
+	 * Handles the SagaInstanceDeletedEvent event by creating a saga log.
+	 *
+	 * @param event - The SagaInstanceDeletedEvent event to handle.
+	 */
+	async handle(event: SagaInstanceDeletedEvent) {
+		this.logger.log(
+			`Handling saga instance deleted event: ${event.aggregateRootId}`,
+		);
 
-    // 01: Create a saga log for the saga instance deletion
-    await this.commandBus.execute(
-      new SagaLogCreateCommand({
-        sagaInstanceId: event.aggregateId,
-        sagaStepId: event.aggregateId, // Using instance id as step id for instance-level logs
-        type: SagaLogTypeEnum.INFO,
-        message: `Saga instance "${event.data.name}" deleted`,
-      }),
-    );
-  }
+		// 01: Create a saga log for the saga instance deletion
+		await this.commandBus.execute(
+			new SagaLogCreateCommand({
+				sagaInstanceId: event.aggregateRootId,
+				sagaStepId: event.aggregateRootId, // Using instance id as step id for instance-level logs
+				type: SagaLogTypeEnum.INFO,
+				message: `Saga instance "${event.data.name}" deleted`,
+			}),
+		);
+	}
 }

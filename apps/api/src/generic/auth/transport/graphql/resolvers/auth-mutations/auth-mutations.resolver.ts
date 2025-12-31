@@ -17,97 +17,97 @@ import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mapper
 @Resolver()
 @Public()
 export class AuthMutationsResolver {
-  private readonly logger = new Logger(AuthMutationsResolver.name);
+	private readonly logger = new Logger(AuthMutationsResolver.name);
 
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly commandBus: CommandBus,
+		private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
+	) {}
 
-  @Mutation(() => LoginResponseDto)
-  async loginByEmail(
-    @Args('input') input: AuthLoginByEmailRequestDto,
-  ): Promise<LoginResponseDto> {
-    this.logger.log(`Login by email for email: ${input.email}`);
+	@Mutation(() => LoginResponseDto)
+	async loginByEmail(
+		@Args('input') input: AuthLoginByEmailRequestDto,
+	): Promise<LoginResponseDto> {
+		this.logger.log(`Login by email for email: ${input.email}`);
 
-    // 01: Send the command to the command bus
-    const tokens = await this.commandBus.execute(
-      new AuthLoginByEmailCommand({
-        email: input.email,
-        password: input.password,
-      }),
-    );
+		// 01: Send the command to the command bus
+		const tokens = await this.commandBus.execute(
+			new AuthLoginByEmailCommand({
+				email: input.email,
+				password: input.password,
+			}),
+		);
 
-    // 02: Return tokens
-    return tokens;
-  }
+		// 02: Return tokens
+		return tokens;
+	}
 
-  @Mutation(() => MutationResponseDto)
-  async registerByEmail(
-    @Args('input') input: AuthRegisterByEmailRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Register by email for email: ${input.email}`);
+	@Mutation(() => MutationResponseDto)
+	async registerByEmail(
+		@Args('input') input: AuthRegisterByEmailRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Register by email for email: ${input.email}`);
 
-    // 01: Send the command to the command bus
-    const registeredAuthId = await this.commandBus.execute(
-      new AuthRegisterByEmailCommand({
-        email: input.email,
-        password: input.password,
-      }),
-    );
+		// 01: Send the command to the command bus
+		const registeredAuthId = await this.commandBus.execute(
+			new AuthRegisterByEmailCommand({
+				email: input.email,
+				password: input.password,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'Auth registered successfully',
-      id: registeredAuthId,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'Auth registered successfully',
+			id: registeredAuthId,
+		});
+	}
 
-  @Mutation(() => RefreshTokenResponseDto)
-  async refreshToken(
-    @Args('input') input: AuthRefreshTokenRequestDto,
-  ): Promise<RefreshTokenResponseDto> {
-    this.logger.log('Refresh token requested');
+	@Mutation(() => RefreshTokenResponseDto)
+	async refreshToken(
+		@Args('input') input: AuthRefreshTokenRequestDto,
+	): Promise<RefreshTokenResponseDto> {
+		this.logger.log('Refresh token requested');
 
-    // 01: Send the command to the command bus
-    const newAccessToken = await this.commandBus.execute(
-      new AuthRefreshTokenCommand({
-        refreshToken: input.refreshToken,
-      }),
-    );
+		// 01: Send the command to the command bus
+		const newAccessToken = await this.commandBus.execute(
+			new AuthRefreshTokenCommand({
+				refreshToken: input.refreshToken,
+			}),
+		);
 
-    // 02: Return new access token
-    return {
-      accessToken: newAccessToken,
-    };
-  }
+		// 02: Return new access token
+		return {
+			accessToken: newAccessToken,
+		};
+	}
 
-  @Mutation(() => MutationResponseDto)
-  async logout(
-    @Args('input') input: UpdateUserRequestDto,
-  ): Promise<MutationResponseDto> {
-    this.logger.log(`Logout for id: ${input.id}`);
+	@Mutation(() => MutationResponseDto)
+	async logout(
+		@Args('input') input: UpdateUserRequestDto,
+	): Promise<MutationResponseDto> {
+		this.logger.log(`Logout for id: ${input.id}`);
 
-    // 01: Send the command to the command bus
-    // await this.commandBus.execute(
-    //   new AuthLogoutCommand({
-    //     id: input.id,
-    //     name: input.name,
-    //     bio: input.bio,
-    //     avatarUrl: input.avatarUrl,
-    //     lastName: input.lastName,
-    //     role: input.role,
-    //     status: input.status,
-    //     userName: input.userName,
-    //   }),
-    // );
+		// 01: Send the command to the command bus
+		// await this.commandBus.execute(
+		//   new AuthLogoutCommand({
+		//     id: input.id,
+		//     name: input.name,
+		//     bio: input.bio,
+		//     avatarUrl: input.avatarUrl,
+		//     lastName: input.lastName,
+		//     role: input.role,
+		//     status: input.status,
+		//     userName: input.userName,
+		//   }),
+		// );
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'User updated successfully',
-      id: input.id,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'User updated successfully',
+			id: input.id,
+		});
+	}
 }

@@ -2,9 +2,9 @@ import { ISagaInstanceFindByCriteriaQueryDto } from '@/generic/saga-context/saga
 import { Criteria } from '@/shared/domain/entities/criteria';
 
 export class FindSagaInstancesByCriteriaQuery {
-  readonly criteria: Criteria;
+	readonly criteria: Criteria;
 
-  constructor(props: ISagaInstanceFindByCriteriaQueryDto) {
-    this.criteria = props.criteria;
-  }
+	constructor(props: ISagaInstanceFindByCriteriaQueryDto) {
+		this.criteria = props.criteria;
+	}
 }

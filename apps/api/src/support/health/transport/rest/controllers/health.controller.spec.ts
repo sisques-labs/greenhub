@@ -4,49 +4,49 @@ import { HealthController } from '@/support/health/transport/rest/controllers/he
 import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health-rest.mapper';
 
 describe('HealthController', () => {
-  let controller: HealthController;
-  let mockHealthCheckService: jest.Mocked<HealthCheckService>;
-  let mockHealthRestMapper: jest.Mocked<HealthRestMapper>;
+	let controller: HealthController;
+	let mockHealthCheckService: jest.Mocked<HealthCheckService>;
+	let mockHealthRestMapper: jest.Mocked<HealthRestMapper>;
 
-  beforeEach(() => {
-    mockHealthCheckService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<HealthCheckService>;
+	beforeEach(() => {
+		mockHealthCheckService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<HealthCheckService>;
 
-    mockHealthRestMapper = {
-      toResponseDto: jest.fn(),
-      toPaginatedResponseDto: jest.fn(),
-    } as unknown as jest.Mocked<HealthRestMapper>;
+		mockHealthRestMapper = {
+			toResponseDto: jest.fn(),
+			toPaginatedResponseDto: jest.fn(),
+		} as unknown as jest.Mocked<HealthRestMapper>;
 
-    controller = new HealthController(
-      mockHealthCheckService,
-      mockHealthRestMapper,
-    );
-  });
+		controller = new HealthController(
+			mockHealthCheckService,
+			mockHealthRestMapper,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  it('should return mapped health response', async () => {
-    const viewModel = new HealthViewModel({
-      status: 'OK',
-      writeDatabaseStatus: 'OK',
-      readDatabaseStatus: 'OK',
-    });
-    const responseDto = {
-      status: 'OK',
-      writeDatabaseStatus: 'OK',
-      readDatabaseStatus: 'OK',
-    };
+	it('should return mapped health response', async () => {
+		const viewModel = new HealthViewModel({
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
+		});
+		const responseDto = {
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
+		};
 
-    mockHealthCheckService.execute.mockResolvedValue(viewModel);
-    mockHealthRestMapper.toResponseDto.mockReturnValue(responseDto);
+		mockHealthCheckService.execute.mockResolvedValue(viewModel);
+		mockHealthRestMapper.toResponseDto.mockReturnValue(responseDto);
 
-    const result = await controller.healthCheck();
+		const result = await controller.healthCheck();
 
-    expect(mockHealthCheckService.execute).toHaveBeenCalledTimes(1);
-    expect(mockHealthRestMapper.toResponseDto).toHaveBeenCalledWith(viewModel);
-    expect(result).toBe(responseDto);
-  });
+		expect(mockHealthCheckService.execute).toHaveBeenCalledTimes(1);
+		expect(mockHealthRestMapper.toResponseDto).toHaveBeenCalledWith(viewModel);
+		expect(result).toBe(responseDto);
+	});
 });

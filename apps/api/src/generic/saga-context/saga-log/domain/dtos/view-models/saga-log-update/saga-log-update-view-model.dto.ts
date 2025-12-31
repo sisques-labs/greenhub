@@ -8,8 +8,8 @@ import { ISagaLogCreateViewModelDto } from '@/generic/saga-context/saga-log/doma
  * @property {string} message - The message of the saga log.
  */
 export type ISagaLogUpdateViewModelDto = Partial<
-  Omit<
-    ISagaLogCreateViewModelDto,
-    'id' | 'sagaInstanceId' | 'sagaStepId' | 'createdAt' | 'updatedAt'
-  >
+	Omit<
+		ISagaLogCreateViewModelDto,
+		'id' | 'sagaInstanceId' | 'sagaStepId' | 'createdAt' | 'updatedAt'
+	>
 >;

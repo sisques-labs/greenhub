@@ -7,108 +7,108 @@ import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/sa
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 
 describe('FindSagaLogViewModelByIdQueryHandler', () => {
-  let handler: FindSagaLogViewModelByIdQueryHandler;
-  let mockAssertSagaLogViewModelExistsService: jest.Mocked<AssertSagaLogViewModelExistsService>;
+	let handler: FindSagaLogViewModelByIdQueryHandler;
+	let mockAssertSagaLogViewModelExistsService: jest.Mocked<AssertSagaLogViewModelExistsService>;
 
-  beforeEach(async () => {
-    mockAssertSagaLogViewModelExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaLogViewModelExistsService>;
+	beforeEach(async () => {
+		mockAssertSagaLogViewModelExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaLogViewModelExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        FindSagaLogViewModelByIdQueryHandler,
-        {
-          provide: AssertSagaLogViewModelExistsService,
-          useValue: mockAssertSagaLogViewModelExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				FindSagaLogViewModelByIdQueryHandler,
+				{
+					provide: AssertSagaLogViewModelExistsService,
+					useValue: mockAssertSagaLogViewModelExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<FindSagaLogViewModelByIdQueryHandler>(
-      FindSagaLogViewModelByIdQueryHandler,
-    );
-  });
+		handler = module.get<FindSagaLogViewModelByIdQueryHandler>(
+			FindSagaLogViewModelByIdQueryHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should return saga log view model when saga log exists', async () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaLogId };
-      const query = new FindSagaLogViewModelByIdQuery(queryDto);
+	describe('execute', () => {
+		it('should return saga log view model when saga log exists', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaLogId };
+			const query = new FindSagaLogViewModelByIdQuery(queryDto);
 
-      const mockViewModel = new SagaLogViewModel({
-        id: sagaLogId,
-        sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-        sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
-        type: SagaLogTypeEnum.INFO,
-        message: 'Test log message',
-        createdAt: new Date('2024-01-01T10:00:00Z'),
-        updatedAt: new Date('2024-01-01T10:00:00Z'),
-      });
+			const mockViewModel = new SagaLogViewModel({
+				id: sagaLogId,
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				type: SagaLogTypeEnum.INFO,
+				message: 'Test log message',
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
+			});
 
-      mockAssertSagaLogViewModelExistsService.execute.mockResolvedValue(
-        mockViewModel,
-      );
+			mockAssertSagaLogViewModelExistsService.execute.mockResolvedValue(
+				mockViewModel,
+			);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockViewModel);
-      expect(
-        mockAssertSagaLogViewModelExistsService.execute,
-      ).toHaveBeenCalledWith(sagaLogId);
-      expect(
-        mockAssertSagaLogViewModelExistsService.execute,
-      ).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockViewModel);
+			expect(
+				mockAssertSagaLogViewModelExistsService.execute,
+			).toHaveBeenCalledWith(sagaLogId);
+			expect(
+				mockAssertSagaLogViewModelExistsService.execute,
+			).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw SagaLogNotFoundException when saga log does not exist', async () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaLogId };
-      const query = new FindSagaLogViewModelByIdQuery(queryDto);
+		it('should throw SagaLogNotFoundException when saga log does not exist', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaLogId };
+			const query = new FindSagaLogViewModelByIdQuery(queryDto);
 
-      const error = new SagaLogNotFoundException(sagaLogId);
-      mockAssertSagaLogViewModelExistsService.execute.mockRejectedValue(error);
+			const error = new SagaLogNotFoundException(sagaLogId);
+			mockAssertSagaLogViewModelExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(query)).rejects.toThrow(
-        SagaLogNotFoundException,
-      );
-      expect(
-        mockAssertSagaLogViewModelExistsService.execute,
-      ).toHaveBeenCalledWith(sagaLogId);
-    });
+			await expect(handler.execute(query)).rejects.toThrow(
+				SagaLogNotFoundException,
+			);
+			expect(
+				mockAssertSagaLogViewModelExistsService.execute,
+			).toHaveBeenCalledWith(sagaLogId);
+		});
 
-    it('should return view model with all fields populated', async () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaLogId };
-      const query = new FindSagaLogViewModelByIdQuery(queryDto);
+		it('should return view model with all fields populated', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaLogId };
+			const query = new FindSagaLogViewModelByIdQuery(queryDto);
 
-      const mockViewModel = new SagaLogViewModel({
-        id: sagaLogId,
-        sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-        sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
-        type: SagaLogTypeEnum.ERROR,
-        message: 'Error log message',
-        createdAt: new Date('2024-01-01T10:00:00Z'),
-        updatedAt: new Date('2024-01-01T11:00:00Z'),
-      });
+			const mockViewModel = new SagaLogViewModel({
+				id: sagaLogId,
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				type: SagaLogTypeEnum.ERROR,
+				message: 'Error log message',
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T11:00:00Z'),
+			});
 
-      mockAssertSagaLogViewModelExistsService.execute.mockResolvedValue(
-        mockViewModel,
-      );
+			mockAssertSagaLogViewModelExistsService.execute.mockResolvedValue(
+				mockViewModel,
+			);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result.id).toBe(sagaLogId);
-      expect(result.sagaInstanceId).toBe(
-        '223e4567-e89b-12d3-a456-426614174000',
-      );
-      expect(result.sagaStepId).toBe('323e4567-e89b-12d3-a456-426614174000');
-      expect(result.type).toBe(SagaLogTypeEnum.ERROR);
-      expect(result.message).toBe('Error log message');
-    });
-  });
+			expect(result.id).toBe(sagaLogId);
+			expect(result.sagaInstanceId).toBe(
+				'223e4567-e89b-12d3-a456-426614174000',
+			);
+			expect(result.sagaStepId).toBe('323e4567-e89b-12d3-a456-426614174000');
+			expect(result.type).toBe(SagaLogTypeEnum.ERROR);
+			expect(result.message).toBe('Error log message');
+		});
+	});
 });

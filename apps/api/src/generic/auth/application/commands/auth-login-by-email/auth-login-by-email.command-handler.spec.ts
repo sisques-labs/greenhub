@@ -27,243 +27,243 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
 import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
 describe('AuthLoginByEmailCommandHandler', () => {
-  let handler: AuthLoginByEmailCommandHandler;
-  let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
-  let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
-  let mockAssertAuthEmailExistsService: jest.Mocked<AssertAuthEmailExistsService>;
-  let mockPasswordHashingService: jest.Mocked<PasswordHashingService>;
-  let mockJwtAuthService: jest.Mocked<JwtAuthService>;
-  let mockEventBus: jest.Mocked<EventBus>;
-  let mockQueryBus: jest.Mocked<QueryBus>;
+	let handler: AuthLoginByEmailCommandHandler;
+	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
+	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
+	let mockAssertAuthEmailExistsService: jest.Mocked<AssertAuthEmailExistsService>;
+	let mockPasswordHashingService: jest.Mocked<PasswordHashingService>;
+	let mockJwtAuthService: jest.Mocked<JwtAuthService>;
+	let mockEventBus: jest.Mocked<EventBus>;
+	let mockQueryBus: jest.Mocked<QueryBus>;
 
-  beforeEach(() => {
-    mockAuthReadRepository = {
-      findById: jest.fn(),
-      findByCriteria: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<AuthReadRepository>;
+	beforeEach(() => {
+		mockAuthReadRepository = {
+			findById: jest.fn(),
+			findByCriteria: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<AuthReadRepository>;
 
-    mockAuthWriteRepository = {
-      findById: jest.fn(),
-      findByEmail: jest.fn(),
-      save: jest.fn(),
-      delete: jest.fn(),
-    } as unknown as jest.Mocked<AuthWriteRepository>;
+		mockAuthWriteRepository = {
+			findById: jest.fn(),
+			findByEmail: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+		} as unknown as jest.Mocked<AuthWriteRepository>;
 
-    mockAssertAuthEmailExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertAuthEmailExistsService>;
+		mockAssertAuthEmailExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertAuthEmailExistsService>;
 
-    mockPasswordHashingService = {
-      hashPassword: jest.fn(),
-      verifyPassword: jest.fn(),
-      isValidHash: jest.fn(),
-      getCostFactor: jest.fn(),
-      setCostFactor: jest.fn(),
-    } as unknown as jest.Mocked<PasswordHashingService>;
+		mockPasswordHashingService = {
+			hashPassword: jest.fn(),
+			verifyPassword: jest.fn(),
+			isValidHash: jest.fn(),
+			getCostFactor: jest.fn(),
+			setCostFactor: jest.fn(),
+		} as unknown as jest.Mocked<PasswordHashingService>;
 
-    mockJwtAuthService = {
-      generateAccessToken: jest.fn(),
-      generateRefreshToken: jest.fn(),
-      generateTokenPair: jest.fn(),
-      verifyAccessToken: jest.fn(),
-      verifyRefreshToken: jest.fn(),
-      decodeToken: jest.fn(),
-    } as unknown as jest.Mocked<JwtAuthService>;
+		mockJwtAuthService = {
+			generateAccessToken: jest.fn(),
+			generateRefreshToken: jest.fn(),
+			generateTokenPair: jest.fn(),
+			verifyAccessToken: jest.fn(),
+			verifyRefreshToken: jest.fn(),
+			decodeToken: jest.fn(),
+		} as unknown as jest.Mocked<JwtAuthService>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+		mockEventBus = {
+			publishAll: jest.fn(),
+			publish: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
 
-    mockQueryBus = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<QueryBus>;
+		mockQueryBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<QueryBus>;
 
-    handler = new AuthLoginByEmailCommandHandler(
-      mockAuthReadRepository,
-      mockAuthWriteRepository,
-      mockAssertAuthEmailExistsService,
-      mockPasswordHashingService,
-      mockJwtAuthService,
-      mockEventBus,
-      mockQueryBus,
-    );
-  });
+		handler = new AuthLoginByEmailCommandHandler(
+			mockAuthReadRepository,
+			mockAuthWriteRepository,
+			mockAssertAuthEmailExistsService,
+			mockPasswordHashingService,
+			mockJwtAuthService,
+			mockEventBus,
+			mockQueryBus,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  describe('execute', () => {
-    it('should login successfully with valid credentials', async () => {
-      const email = 'test@example.com';
-      const password = 'SecurePass123!';
-      const hashedPassword =
-        '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqBWVHxkd0u';
-      const authId = '123e4567-e89b-12d3-a456-426614174000';
-      const userId = '123e4567-e89b-12d3-a456-426614174001';
-      const now = new Date();
+	describe('execute', () => {
+		it('should login successfully with valid credentials', async () => {
+			const email = 'test@example.com';
+			const password = 'SecurePass123!';
+			const hashedPassword =
+				'$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqBWVHxkd0u';
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
+			const now = new Date();
 
-      const command = new AuthLoginByEmailCommand({ email, password });
+			const command = new AuthLoginByEmailCommand({ email, password });
 
-      const mockAuth = new AuthAggregate(
-        {
-          id: new AuthUuidValueObject(authId),
-          userId: new UserUuidValueObject(userId),
-          email: new AuthEmailValueObject(email),
-          emailVerified: new AuthEmailVerifiedValueObject(false),
-          lastLoginAt: null,
-          password: new AuthPasswordValueObject(hashedPassword),
-          phoneNumber: null,
-          provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
-          providerId: null,
-          twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const mockAuth = new AuthAggregate(
+				{
+					id: new AuthUuidValueObject(authId),
+					userId: new UserUuidValueObject(userId),
+					email: new AuthEmailValueObject(email),
+					emailVerified: new AuthEmailVerifiedValueObject(false),
+					lastLoginAt: null,
+					password: new AuthPasswordValueObject(hashedPassword),
+					phoneNumber: null,
+					provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
+					providerId: null,
+					twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      const mockUser = new UserAggregate(
-        {
-          id: new UserUuidValueObject(userId),
-          userName: new UserUserNameValueObject('johndoe'),
-          role: new UserRoleValueObject(UserRoleEnum.USER),
-          status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const mockUser = new UserAggregate(
+				{
+					id: new UserUuidValueObject(userId),
+					userName: new UserUserNameValueObject('johndoe'),
+					role: new UserRoleValueObject(UserRoleEnum.USER),
+					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      const mockTokens: ITokenPair = {
-        accessToken: 'access-token',
-        refreshToken: 'refresh-token',
-      };
+			const mockTokens: ITokenPair = {
+				accessToken: 'access-token',
+				refreshToken: 'refresh-token',
+			};
 
-      mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
-      mockPasswordHashingService.verifyPassword.mockResolvedValue(true);
-      // Mock queryBus.execute to return different values for different queries
-      mockQueryBus.execute.mockImplementation((_query: any) => {
-        // UserFindByIdQuery returns UserAggregate
-        return Promise.resolve(mockUser);
-      });
-      mockAuthWriteRepository.save.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
-      mockJwtAuthService.generateTokenPair.mockReturnValue(mockTokens);
+			mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
+			mockPasswordHashingService.verifyPassword.mockResolvedValue(true);
+			// Mock queryBus.execute to return different values for different queries
+			mockQueryBus.execute.mockImplementation((_query: any) => {
+				// UserFindByIdQuery returns UserAggregate
+				return Promise.resolve(mockUser);
+			});
+			mockAuthWriteRepository.save.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockJwtAuthService.generateTokenPair.mockReturnValue(mockTokens);
 
-      const updateLastLoginAtSpy = jest.spyOn(mockAuth, 'updateLastLoginAt');
-      const commitSpy = jest.spyOn(mockAuth, 'commit');
-      const getUncommittedEventsSpy = jest
-        .spyOn(mockAuth, 'getUncommittedEvents')
-        .mockReturnValue([]);
+			const updateLastLoginAtSpy = jest.spyOn(mockAuth, 'updateLastLoginAt');
+			const commitSpy = jest.spyOn(mockAuth, 'commit');
+			const getUncommittedEventsSpy = jest
+				.spyOn(mockAuth, 'getUncommittedEvents')
+				.mockReturnValue([]);
 
-      const result = await handler.execute(command);
+			const result = await handler.execute(command);
 
-      expect(result).toEqual(mockTokens);
-      expect(mockAssertAuthEmailExistsService.execute).toHaveBeenCalledWith(
-        email,
-      );
-      expect(mockPasswordHashingService.verifyPassword).toHaveBeenCalledWith(
-        command.password,
-        hashedPassword,
-      );
-      expect(mockQueryBus.execute).toHaveBeenCalledWith(
-        expect.any(UserFindByIdQuery),
-      );
-      expect(updateLastLoginAtSpy).toHaveBeenCalled();
-      expect(mockAuthWriteRepository.save).toHaveBeenCalledWith(mockAuth);
-      expect(mockEventBus.publishAll).toHaveBeenCalled();
-      expect(commitSpy).toHaveBeenCalled();
-      expect(mockJwtAuthService.generateTokenPair).toHaveBeenCalledWith({
-        id: authId,
-        userId: userId,
-        email: email,
-        username: 'johndoe',
-        role: UserRoleEnum.USER,
-      });
+			expect(result).toEqual(mockTokens);
+			expect(mockAssertAuthEmailExistsService.execute).toHaveBeenCalledWith(
+				email,
+			);
+			expect(mockPasswordHashingService.verifyPassword).toHaveBeenCalledWith(
+				command.password,
+				hashedPassword,
+			);
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.any(UserFindByIdQuery),
+			);
+			expect(updateLastLoginAtSpy).toHaveBeenCalled();
+			expect(mockAuthWriteRepository.save).toHaveBeenCalledWith(mockAuth);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(commitSpy).toHaveBeenCalled();
+			expect(mockJwtAuthService.generateTokenPair).toHaveBeenCalledWith({
+				id: authId,
+				userId: userId,
+				email: email,
+				username: 'johndoe',
+				role: UserRoleEnum.USER,
+			});
 
-      updateLastLoginAtSpy.mockRestore();
-      commitSpy.mockRestore();
-      getUncommittedEventsSpy.mockRestore();
-    });
+			updateLastLoginAtSpy.mockRestore();
+			commitSpy.mockRestore();
+			getUncommittedEventsSpy.mockRestore();
+		});
 
-    it('should throw UnauthorizedException when auth has no password', async () => {
-      const email = 'test@example.com';
-      const password = 'SecurePass123!';
-      const now = new Date();
+		it('should throw UnauthorizedException when auth has no password', async () => {
+			const email = 'test@example.com';
+			const password = 'SecurePass123!';
+			const now = new Date();
 
-      const command = new AuthLoginByEmailCommand({ email, password });
+			const command = new AuthLoginByEmailCommand({ email, password });
 
-      const mockAuth = new AuthAggregate(
-        {
-          id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-          userId: new UserUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174001',
-          ),
-          email: new AuthEmailValueObject(email),
-          emailVerified: new AuthEmailVerifiedValueObject(false),
-          lastLoginAt: null,
-          password: null,
-          phoneNumber: null,
-          provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
-          providerId: null,
-          twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const mockAuth = new AuthAggregate(
+				{
+					id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+					userId: new UserUuidValueObject(
+						'123e4567-e89b-12d3-a456-426614174001',
+					),
+					email: new AuthEmailValueObject(email),
+					emailVerified: new AuthEmailVerifiedValueObject(false),
+					lastLoginAt: null,
+					password: null,
+					phoneNumber: null,
+					provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
+					providerId: null,
+					twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
+			mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
 
-      await expect(handler.execute(command)).rejects.toThrow(
-        UnauthorizedException,
-      );
-      expect(mockPasswordHashingService.verifyPassword).not.toHaveBeenCalled();
-    });
+			await expect(handler.execute(command)).rejects.toThrow(
+				UnauthorizedException,
+			);
+			expect(mockPasswordHashingService.verifyPassword).not.toHaveBeenCalled();
+		});
 
-    it('should throw UnauthorizedException when password verification fails', async () => {
-      const email = 'test@example.com';
-      const password = 'SecurePass123!';
-      const hashedPassword =
-        '$2b$12$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012345678901234567890';
-      const now = new Date();
+		it('should throw UnauthorizedException when password verification fails', async () => {
+			const email = 'test@example.com';
+			const password = 'SecurePass123!';
+			const hashedPassword =
+				'$2b$12$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012345678901234567890';
+			const now = new Date();
 
-      const command = new AuthLoginByEmailCommand({ email, password });
+			const command = new AuthLoginByEmailCommand({ email, password });
 
-      const mockAuth = new AuthAggregate(
-        {
-          id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-          userId: new UserUuidValueObject(
-            '123e4567-e89b-12d3-a456-426614174001',
-          ),
-          email: new AuthEmailValueObject(email),
-          emailVerified: new AuthEmailVerifiedValueObject(false),
-          lastLoginAt: null,
-          password: new AuthPasswordValueObject(hashedPassword),
-          phoneNumber: null,
-          provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
-          providerId: null,
-          twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
-          createdAt: new DateValueObject(now),
-          updatedAt: new DateValueObject(now),
-        },
-        false,
-      );
+			const mockAuth = new AuthAggregate(
+				{
+					id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+					userId: new UserUuidValueObject(
+						'123e4567-e89b-12d3-a456-426614174001',
+					),
+					email: new AuthEmailValueObject(email),
+					emailVerified: new AuthEmailVerifiedValueObject(false),
+					lastLoginAt: null,
+					password: new AuthPasswordValueObject(hashedPassword),
+					phoneNumber: null,
+					provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
+					providerId: null,
+					twoFactorEnabled: new AuthTwoFactorEnabledValueObject(false),
+					createdAt: new DateValueObject(now),
+					updatedAt: new DateValueObject(now),
+				},
+				false,
+			);
 
-      mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
-      mockPasswordHashingService.verifyPassword.mockRejectedValue(
-        new UnauthorizedException('Invalid credentials'),
-      );
+			mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
+			mockPasswordHashingService.verifyPassword.mockRejectedValue(
+				new UnauthorizedException('Invalid credentials'),
+			);
 
-      await expect(handler.execute(command)).rejects.toThrow(
-        UnauthorizedException,
-      );
-      expect(mockQueryBus.execute).not.toHaveBeenCalled();
-      expect(mockAuthWriteRepository.save).not.toHaveBeenCalled();
-    });
-  });
+			await expect(handler.execute(command)).rejects.toThrow(
+				UnauthorizedException,
+			);
+			expect(mockQueryBus.execute).not.toHaveBeenCalled();
+			expect(mockAuthWriteRepository.save).not.toHaveBeenCalled();
+		});
+	});
 });

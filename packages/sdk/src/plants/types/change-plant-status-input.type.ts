@@ -1,6 +1,6 @@
-import { PlantStatus } from './plant-status.type.js';
+import { PlantStatus } from "./plant-status.type.js";
 
 export type ChangePlantStatusInput = {
-  id: string;
-  status: PlantStatus;
+	id: string;
+	status: PlantStatus;
 };

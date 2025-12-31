@@ -18,76 +18,76 @@ import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mapper
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UserMutationsResolver {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly commandBus: CommandBus,
+		private readonly mutationResponseGraphQLMapper: MutationResponseGraphQLMapper,
+	) {}
 
-  @Mutation(() => MutationResponseDto)
-  @Roles(UserRoleEnum.ADMIN)
-  async createUser(
-    @Args('input') input: CreateUserRequestDto,
-  ): Promise<MutationResponseDto> {
-    // 01: Send the command to the command bus
-    const createdUserId = await this.commandBus.execute(
-      new UserCreateCommand({
-        name: input.name,
-        bio: input.bio,
-        avatarUrl: input.avatarUrl,
-        lastName: input.lastName,
-        role: input.role,
-        userName: input.userName,
-      }),
-    );
+	@Mutation(() => MutationResponseDto)
+	@Roles(UserRoleEnum.ADMIN)
+	async createUser(
+		@Args('input') input: CreateUserRequestDto,
+	): Promise<MutationResponseDto> {
+		// 01: Send the command to the command bus
+		const createdUserId = await this.commandBus.execute(
+			new UserCreateCommand({
+				name: input.name,
+				bio: input.bio,
+				avatarUrl: input.avatarUrl,
+				lastName: input.lastName,
+				role: input.role,
+				userName: input.userName,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'User created successfully',
-      id: createdUserId,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'User created successfully',
+			id: createdUserId,
+		});
+	}
 
-  @Mutation(() => MutationResponseDto)
-  @UseGuards(OwnerGuard)
-  async updateUser(
-    @Args('input') input: UpdateUserRequestDto,
-  ): Promise<MutationResponseDto> {
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(
-      new UserUpdateCommand({
-        id: input.id,
-        name: input.name,
-        bio: input.bio,
-        avatarUrl: input.avatarUrl,
-        lastName: input.lastName,
-        role: input.role,
-        status: input.status,
-        userName: input.userName,
-      }),
-    );
+	@Mutation(() => MutationResponseDto)
+	@UseGuards(OwnerGuard)
+	async updateUser(
+		@Args('input') input: UpdateUserRequestDto,
+	): Promise<MutationResponseDto> {
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(
+			new UserUpdateCommand({
+				id: input.id,
+				name: input.name,
+				bio: input.bio,
+				avatarUrl: input.avatarUrl,
+				lastName: input.lastName,
+				role: input.role,
+				status: input.status,
+				userName: input.userName,
+			}),
+		);
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'User updated successfully',
-      id: input.id,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'User updated successfully',
+			id: input.id,
+		});
+	}
 
-  @Mutation(() => MutationResponseDto)
-  @Roles(UserRoleEnum.ADMIN)
-  async deleteUser(
-    @Args('input') input: DeleteUserRequestDto,
-  ): Promise<MutationResponseDto> {
-    // 01: Send the command to the command bus
-    await this.commandBus.execute(new UserDeleteCommand({ id: input.id }));
+	@Mutation(() => MutationResponseDto)
+	@Roles(UserRoleEnum.ADMIN)
+	async deleteUser(
+		@Args('input') input: DeleteUserRequestDto,
+	): Promise<MutationResponseDto> {
+		// 01: Send the command to the command bus
+		await this.commandBus.execute(new UserDeleteCommand({ id: input.id }));
 
-    // 02: Return success response
-    return this.mutationResponseGraphQLMapper.toResponseDto({
-      success: true,
-      message: 'User deleted successfully',
-      id: input.id,
-    });
-  }
+		// 02: Return success response
+		return this.mutationResponseGraphQLMapper.toResponseDto({
+			success: true,
+			message: 'User deleted successfully',
+			id: input.id,
+		});
+	}
 }

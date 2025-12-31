@@ -5,8 +5,8 @@ import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entit
 export const USER_READ_REPOSITORY_TOKEN = Symbol('UserReadRepository');
 
 export interface UserReadRepository {
-  findById(id: string): Promise<UserViewModel | null>;
-  findByCriteria(criteria: Criteria): Promise<PaginatedResult<UserViewModel>>;
-  save(userViewModel: UserViewModel): Promise<void>;
-  delete(id: string): Promise<boolean>;
+	findById(id: string): Promise<UserViewModel | null>;
+	findByCriteria(criteria: Criteria): Promise<PaginatedResult<UserViewModel>>;
+	save(userViewModel: UserViewModel): Promise<void>;
+	delete(id: string): Promise<boolean>;
 }

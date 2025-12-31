@@ -18,51 +18,51 @@ import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifie
  */
 @Injectable()
 export class SagaLogAggregateFactory
-  implements IWriteFactory<SagaLogAggregate, ISagaLogCreateDto>
+	implements IWriteFactory<SagaLogAggregate, ISagaLogCreateDto>
 {
-  /**
-   * Creates a new SagaLogAggregate entity using the provided properties.
-   *
-   * @param data - The saga log create data.
-   * @param data.id - The saga log id.
-   * @param data.sagaInstanceId - The saga instance id.
-   * @param data.sagaStepId - The saga step id.
-   * @param data.type - The saga log type.
-   * @param data.message - The saga log message.
-   * @param data.createdAt - The saga log created at.
-   * @param data.updatedAt - The saga log updated at.
-   * @param generateEvent - Whether to generate a creation event (default: true).
-   * @returns {SagaLogAggregate} - The created saga log aggregate entity.
-   */
-  public create(
-    data: ISagaLogCreateDto,
-    generateEvent: boolean = true,
-  ): SagaLogAggregate {
-    return new SagaLogAggregate(data, generateEvent);
-  }
+	/**
+	 * Creates a new SagaLogAggregate entity using the provided properties.
+	 *
+	 * @param data - The saga log create data.
+	 * @param data.id - The saga log id.
+	 * @param data.sagaInstanceId - The saga instance id.
+	 * @param data.sagaStepId - The saga step id.
+	 * @param data.type - The saga log type.
+	 * @param data.message - The saga log message.
+	 * @param data.createdAt - The saga log created at.
+	 * @param data.updatedAt - The saga log updated at.
+	 * @param generateEvent - Whether to generate a creation event (default: true).
+	 * @returns {SagaLogAggregate} - The created saga log aggregate entity.
+	 */
+	public create(
+		data: ISagaLogCreateDto,
+		generateEvent: boolean = true,
+	): SagaLogAggregate {
+		return new SagaLogAggregate(data, generateEvent);
+	}
 
-  /**
-   * Creates a new SagaLogAggregate entity from primitive data.
-   *
-   * @param data - The saga log primitive data.
-   * @param data.id - The saga log id.
-   * @param data.sagaInstanceId - The saga instance id.
-   * @param data.sagaStepId - The saga step id.
-   * @param data.type - The saga log type.
-   * @param data.message - The saga log message.
-   * @param data.createdAt - The saga log created at.
-   * @param data.updatedAt - The saga log updated at.
-   * @returns The created saga log aggregate entity.
-   */
-  public fromPrimitives(data: SagaLogPrimitives): SagaLogAggregate {
-    return new SagaLogAggregate({
-      id: new SagaLogUuidValueObject(data.id),
-      sagaInstanceId: new SagaInstanceUuidValueObject(data.sagaInstanceId),
-      sagaStepId: new SagaStepUuidValueObject(data.sagaStepId),
-      type: new SagaLogTypeValueObject(data.type),
-      message: new SagaLogMessageValueObject(data.message),
-      createdAt: new DateValueObject(data.createdAt),
-      updatedAt: new DateValueObject(data.updatedAt),
-    });
-  }
+	/**
+	 * Creates a new SagaLogAggregate entity from primitive data.
+	 *
+	 * @param data - The saga log primitive data.
+	 * @param data.id - The saga log id.
+	 * @param data.sagaInstanceId - The saga instance id.
+	 * @param data.sagaStepId - The saga step id.
+	 * @param data.type - The saga log type.
+	 * @param data.message - The saga log message.
+	 * @param data.createdAt - The saga log created at.
+	 * @param data.updatedAt - The saga log updated at.
+	 * @returns The created saga log aggregate entity.
+	 */
+	public fromPrimitives(data: SagaLogPrimitives): SagaLogAggregate {
+		return new SagaLogAggregate({
+			id: new SagaLogUuidValueObject(data.id),
+			sagaInstanceId: new SagaInstanceUuidValueObject(data.sagaInstanceId),
+			sagaStepId: new SagaStepUuidValueObject(data.sagaStepId),
+			type: new SagaLogTypeValueObject(data.type),
+			message: new SagaLogMessageValueObject(data.message),
+			createdAt: new DateValueObject(data.createdAt),
+			updatedAt: new DateValueObject(data.updatedAt),
+		});
+	}
 }

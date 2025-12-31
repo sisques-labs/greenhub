@@ -1,3 +1,3 @@
 export type DeleteUserInput = {
-  id: string;
+	id: string;
 };

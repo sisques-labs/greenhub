@@ -1,3 +1,3 @@
 export type SagaStepFindBySagaInstanceIdInput = {
-  sagaInstanceId: string;
+	sagaInstanceId: string;
 };

@@ -1,3 +1,3 @@
 export type SagaStepFindByIdInput = {
-  id: string;
+	id: string;
 };

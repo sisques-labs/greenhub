@@ -15,5 +15,5 @@ import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models
  * @property {Date} updatedAt - Timestamp when the user was last updated.
  */
 export type IUserUpdateViewModelDto = Partial<
-  Omit<IUserCreateViewModelDto, 'id' | 'createdAt' | 'updatedAt'>
+	Omit<IUserCreateViewModelDto, 'id' | 'createdAt' | 'updatedAt'>
 >;

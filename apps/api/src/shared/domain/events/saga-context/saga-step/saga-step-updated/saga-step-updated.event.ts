@@ -11,12 +11,12 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
  * @param data - The data of the event
  */
 export class SagaStepUpdatedEvent extends BaseEvent<
-  Partial<Omit<ISagaStepEventData, 'id' | 'sagaInstanceId'>>
+	Partial<Omit<ISagaStepEventData, 'id' | 'sagaInstanceId'>>
 > {
-  constructor(
-    metadata: IEventMetadata,
-    data: Partial<Omit<ISagaStepEventData, 'id' | 'sagaInstanceId'>>,
-  ) {
-    super(metadata, data);
-  }
+	constructor(
+		metadata: IEventMetadata,
+		data: Partial<Omit<ISagaStepEventData, 'id' | 'sagaInstanceId'>>,
+	) {
+		super(metadata, data);
+	}
 }

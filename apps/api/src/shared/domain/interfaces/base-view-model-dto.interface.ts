@@ -6,7 +6,7 @@
  * across the application.
  */
 export interface IBaseViewModelDto {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
+	id: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

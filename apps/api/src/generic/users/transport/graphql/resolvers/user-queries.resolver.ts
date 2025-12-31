@@ -10,8 +10,8 @@ import { UserViewModelFindByIdQuery } from '@/generic/users/application/queries/
 import { UserFindByCriteriaRequestDto } from '@/generic/users/transport/graphql/dtos/requests/user-find-by-criteria.request.dto';
 import { UserFindByIdRequestDto } from '@/generic/users/transport/graphql/dtos/requests/user-find-by-id.request.dto';
 import {
-  PaginatedUserResultDto,
-  UserResponseDto,
+	PaginatedUserResultDto,
+	UserResponseDto,
 } from '@/generic/users/transport/graphql/dtos/responses/user.response.dto';
 import { UserGraphQLMapper } from '@/generic/users/transport/graphql/mappers/user.mapper';
 import { Criteria } from '@/shared/domain/entities/criteria';
@@ -20,43 +20,43 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UserQueryResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly userGraphQLMapper: UserGraphQLMapper,
-  ) {}
+	constructor(
+		private readonly queryBus: QueryBus,
+		private readonly userGraphQLMapper: UserGraphQLMapper,
+	) {}
 
-  @Query(() => PaginatedUserResultDto)
-  @Roles(UserRoleEnum.ADMIN)
-  async usersFindByCriteria(
-    @Args('input', { nullable: true }) input?: UserFindByCriteriaRequestDto,
-  ): Promise<PaginatedUserResultDto> {
-    // 01: Convert DTO to domain Criteria
-    const criteria = new Criteria(
-      input?.filters,
-      input?.sorts,
-      input?.pagination,
-    );
+	@Query(() => PaginatedUserResultDto)
+	@Roles(UserRoleEnum.ADMIN)
+	async usersFindByCriteria(
+		@Args('input', { nullable: true }) input?: UserFindByCriteriaRequestDto,
+	): Promise<PaginatedUserResultDto> {
+		// 01: Convert DTO to domain Criteria
+		const criteria = new Criteria(
+			input?.filters,
+			input?.sorts,
+			input?.pagination,
+		);
 
-    // 02: Execute query
-    const result = await this.queryBus.execute(
-      new FindUsersByCriteriaQuery(criteria),
-    );
+		// 02: Execute query
+		const result = await this.queryBus.execute(
+			new FindUsersByCriteriaQuery(criteria),
+		);
 
-    // 03: Convert to response DTO
-    return this.userGraphQLMapper.toPaginatedResponseDto(result);
-  }
+		// 03: Convert to response DTO
+		return this.userGraphQLMapper.toPaginatedResponseDto(result);
+	}
 
-  @Query(() => UserResponseDto)
-  @UseGuards(OwnerGuard)
-  async userFindById(
-    @Args('input') input: UserFindByIdRequestDto,
-  ): Promise<UserResponseDto> {
-    // 01: Execute query
-    const result = await this.queryBus.execute(
-      new UserViewModelFindByIdQuery({ id: input.id }),
-    );
+	@Query(() => UserResponseDto)
+	@UseGuards(OwnerGuard)
+	async userFindById(
+		@Args('input') input: UserFindByIdRequestDto,
+	): Promise<UserResponseDto> {
+		// 01: Execute query
+		const result = await this.queryBus.execute(
+			new UserViewModelFindByIdQuery({ id: input.id }),
+		);
 
-    // 02: Convert to response DTO
-    return this.userGraphQLMapper.toResponseDto(result);
-  }
+		// 02: Convert to response DTO
+		return this.userGraphQLMapper.toResponseDto(result);
+	}
 }

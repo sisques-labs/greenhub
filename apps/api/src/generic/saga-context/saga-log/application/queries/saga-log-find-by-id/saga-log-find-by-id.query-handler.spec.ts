@@ -13,86 +13,86 @@ import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifier
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 describe('FindSagaLogByIdQueryHandler', () => {
-  let handler: FindSagaLogByIdQueryHandler;
-  let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
+	let handler: FindSagaLogByIdQueryHandler;
+	let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
 
-  beforeEach(async () => {
-    mockAssertSagaLogExistsService = {
-      execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertSagaLogExistsService>;
+	beforeEach(async () => {
+		mockAssertSagaLogExistsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertSagaLogExistsService>;
 
-    const module = await Test.createTestingModule({
-      providers: [
-        FindSagaLogByIdQueryHandler,
-        {
-          provide: AssertSagaLogExistsService,
-          useValue: mockAssertSagaLogExistsService,
-        },
-      ],
-    }).compile();
+		const module = await Test.createTestingModule({
+			providers: [
+				FindSagaLogByIdQueryHandler,
+				{
+					provide: AssertSagaLogExistsService,
+					useValue: mockAssertSagaLogExistsService,
+				},
+			],
+		}).compile();
 
-    handler = module.get<FindSagaLogByIdQueryHandler>(
-      FindSagaLogByIdQueryHandler,
-    );
-  });
+		handler = module.get<FindSagaLogByIdQueryHandler>(
+			FindSagaLogByIdQueryHandler,
+		);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  const createSagaLogAggregate = (): SagaLogAggregate => {
-    const now = new Date();
-    return new SagaLogAggregate(
-      {
-        id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-        sagaInstanceId: new SagaInstanceUuidValueObject(
-          '223e4567-e89b-12d3-a456-426614174000',
-        ),
-        sagaStepId: new SagaStepUuidValueObject(
-          '323e4567-e89b-12d3-a456-426614174000',
-        ),
-        type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-        message: new SagaLogMessageValueObject('Test log message'),
-        createdAt: new DateValueObject(now),
-        updatedAt: new DateValueObject(now),
-      },
-      false,
-    );
-  };
+	const createSagaLogAggregate = (): SagaLogAggregate => {
+		const now = new Date();
+		return new SagaLogAggregate(
+			{
+				id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				sagaInstanceId: new SagaInstanceUuidValueObject(
+					'223e4567-e89b-12d3-a456-426614174000',
+				),
+				sagaStepId: new SagaStepUuidValueObject(
+					'323e4567-e89b-12d3-a456-426614174000',
+				),
+				type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
+				message: new SagaLogMessageValueObject('Test log message'),
+				createdAt: new DateValueObject(now),
+				updatedAt: new DateValueObject(now),
+			},
+			false,
+		);
+	};
 
-  describe('execute', () => {
-    it('should return saga log aggregate when saga log exists', async () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaLogId };
-      const query = new FindSagaLogByIdQuery(queryDto);
+	describe('execute', () => {
+		it('should return saga log aggregate when saga log exists', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaLogId };
+			const query = new FindSagaLogByIdQuery(queryDto);
 
-      const mockSagaLog = createSagaLogAggregate();
+			const mockSagaLog = createSagaLogAggregate();
 
-      mockAssertSagaLogExistsService.execute.mockResolvedValue(mockSagaLog);
+			mockAssertSagaLogExistsService.execute.mockResolvedValue(mockSagaLog);
 
-      const result = await handler.execute(query);
+			const result = await handler.execute(query);
 
-      expect(result).toBe(mockSagaLog);
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
-        sagaLogId,
-      );
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledTimes(1);
-    });
+			expect(result).toBe(mockSagaLog);
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
+				sagaLogId,
+			);
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledTimes(1);
+		});
 
-    it('should throw SagaLogNotFoundException when saga log does not exist', async () => {
-      const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-      const queryDto = { id: sagaLogId };
-      const query = new FindSagaLogByIdQuery(queryDto);
+		it('should throw SagaLogNotFoundException when saga log does not exist', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const queryDto = { id: sagaLogId };
+			const query = new FindSagaLogByIdQuery(queryDto);
 
-      const error = new SagaLogNotFoundException(sagaLogId);
-      mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
+			const error = new SagaLogNotFoundException(sagaLogId);
+			mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
 
-      await expect(handler.execute(query)).rejects.toThrow(
-        SagaLogNotFoundException,
-      );
-      expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
-        sagaLogId,
-      );
-    });
-  });
+			await expect(handler.execute(query)).rejects.toThrow(
+				SagaLogNotFoundException,
+			);
+			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledWith(
+				sagaLogId,
+			);
+		});
+	});
 });

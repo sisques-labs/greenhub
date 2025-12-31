@@ -8,9 +8,12 @@ type MutationResponseDto {
   id: String
 }
 
-type ContainerPlantResponseDto {
+type PlantResponseDto {
   """The id of the plant"""
   id: String!
+
+  """The id of the growing unit containing the plant"""
+  growingUnitId: String!
 
   """The name of the plant"""
   name: String!
@@ -39,30 +42,56 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type ContainerResponseDto {
-  """The id of the container"""
+type GrowingUnitDimensionsResponseDto {
+  """The length of the growing unit"""
+  length: Float!
+
+  """The width of the growing unit"""
+  width: Float!
+
+  """The height of the growing unit"""
+  height: Float!
+
+  """The unit of measurement for dimensions"""
+  unit: String!
+}
+
+type GrowingUnitResponseDto {
+  """The id of the growing unit"""
   id: String!
 
-  """The name of the container"""
+  """The name of the growing unit"""
   name: String!
 
-  """The type of the container"""
+  """The type of the growing unit"""
   type: String!
 
-  """The plants in the container"""
-  plants: [ContainerPlantResponseDto!]!
+  """The capacity of the growing unit"""
+  capacity: Float!
 
-  """The number of plants in the container"""
+  """The dimensions of the growing unit"""
+  dimensions: GrowingUnitDimensionsResponseDto
+
+  """The plants in the growing unit"""
+  plants: [PlantResponseDto!]!
+
+  """The number of plants in the growing unit"""
   numberOfPlants: Float!
 
-  """The created at timestamp of the container"""
+  """The remaining capacity of the growing unit"""
+  remainingCapacity: Float!
+
+  """The volume of the growing unit in cubic units"""
+  volume: Float!
+
+  """The created at timestamp of the growing unit"""
   createdAt: DateTime!
 
-  """The updated at timestamp of the container"""
+  """The updated at timestamp of the growing unit"""
   updatedAt: DateTime!
 }
 
-type PaginatedContainerResultDto {
+type PaginatedGrowingUnitResultDto {
   """The total number of items"""
   total: Int!
 
@@ -75,54 +104,8 @@ type PaginatedContainerResultDto {
   """The total number of pages"""
   totalPages: Int!
 
-  """The containers in the current page"""
-  items: [ContainerResponseDto!]!
-}
-
-type PlantResponseDto {
-  """The id of the plant"""
-  id: String!
-
-  """The container id of the plant"""
-  containerId: String!
-
-  """The name of the plant"""
-  name: String!
-
-  """The species of the plant"""
-  species: String!
-
-  """The date when the plant was planted"""
-  plantedDate: DateTime
-
-  """Additional notes about the plant"""
-  notes: String
-
-  """The status of the plant"""
-  status: String!
-
-  """The created at timestamp of the plant"""
-  createdAt: DateTime!
-
-  """The updated at timestamp of the plant"""
-  updatedAt: DateTime!
-}
-
-type PaginatedPlantResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The plants in the current page"""
-  items: [PlantResponseDto!]!
+  """The growing units in the current page"""
+  items: [GrowingUnitResponseDto!]!
 }
 
 type LoginResponseDto {
@@ -241,6 +224,107 @@ type AuthUserProfileResponseDto {
 
   """The updated at timestamp"""
   updatedAt: DateTime
+}
+
+type OverviewResponseDto {
+  """The id of the overview"""
+  id: String!
+
+  """The total number of plants"""
+  totalPlants: Float!
+
+  """The total number of active plants (not dead, not archived)"""
+  totalActivePlants: Float!
+
+  """The average number of plants per growing unit"""
+  averagePlantsPerGrowingUnit: Float!
+
+  """The number of plants with PLANTED status"""
+  plantsPlanted: Float!
+
+  """The number of plants with GROWING status"""
+  plantsGrowing: Float!
+
+  """The number of plants with HARVESTED status"""
+  plantsHarvested: Float!
+
+  """The number of plants with DEAD status"""
+  plantsDead: Float!
+
+  """The number of plants with ARCHIVED status"""
+  plantsArchived: Float!
+
+  """The number of plants without a planted date"""
+  plantsWithoutPlantedDate: Float!
+
+  """The number of plants with notes"""
+  plantsWithNotes: Float!
+
+  """The number of plants created in the last 7 days"""
+  recentPlants: Float!
+
+  """The total number of growing units"""
+  totalGrowingUnits: Float!
+
+  """The number of growing units with at least 1 plant"""
+  activeGrowingUnits: Float!
+
+  """The number of growing units without plants"""
+  emptyGrowingUnits: Float!
+
+  """The number of growing units of type POT"""
+  growingUnitsPot: Float!
+
+  """The number of growing units of type GARDEN_BED"""
+  growingUnitsGardenBed: Float!
+
+  """The number of growing units of type HANGING_BASKET"""
+  growingUnitsHangingBasket: Float!
+
+  """The number of growing units of type WINDOW_BOX"""
+  growingUnitsWindowBox: Float!
+
+  """The total capacity across all growing units"""
+  totalCapacity: Float!
+
+  """The total capacity used across all growing units"""
+  totalCapacityUsed: Float!
+
+  """The average occupancy percentage across all growing units"""
+  averageOccupancy: Float!
+
+  """The number of growing units at limit (>= 80% occupancy)"""
+  growingUnitsAtLimit: Float!
+
+  """The number of growing units at full capacity (100% occupancy)"""
+  growingUnitsFull: Float!
+
+  """The total remaining capacity across all growing units"""
+  totalRemainingCapacity: Float!
+
+  """The number of growing units with dimensions"""
+  growingUnitsWithDimensions: Float!
+
+  """The total volume of growing units with dimensions"""
+  totalVolume: Float!
+
+  """The average volume of growing units with dimensions"""
+  averageVolume: Float!
+
+  """The minimum number of plants per growing unit"""
+  minPlantsPerGrowingUnit: Float!
+
+  """The maximum number of plants per growing unit"""
+  maxPlantsPerGrowingUnit: Float!
+
+  """The median number of plants per growing unit"""
+  medianPlantsPerGrowingUnit: Float!
+
+  """The created at timestamp of the overview"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the overview"""
+  updatedAt: DateTime!
 }
 
 type SagaInstanceResponseDto {
@@ -461,13 +545,24 @@ type PaginatedUserResultDto {
   items: [UserResponseDto!]!
 }
 
+type HealthResponseDto {
+  """The status of the check"""
+  status: String!
+
+  """The status of the write database check"""
+  writeDatabaseStatus: String!
+
+  """The status of the read database check"""
+  readDatabaseStatus: String!
+}
+
 type Query {
   hello: String!
   health: String!
-  containersFindByCriteria(input: ContainerFindByCriteriaRequestDto): PaginatedContainerResultDto!
-  containerFindById(input: ContainerFindByIdRequestDto!): ContainerResponseDto
-  plantsFindByCriteria(input: PlantFindByCriteriaRequestDto): PaginatedPlantResultDto!
+  growingUnitsFindByCriteria(input: GrowingUnitFindByCriteriaRequestDto): PaginatedGrowingUnitResultDto!
+  growingUnitFindById(input: GrowingUnitFindByIdRequestDto!): GrowingUnitResponseDto
   plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
+  healthCheck: HealthResponseDto!
   authProfileMe: AuthUserProfileResponseDto!
   findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
   sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
@@ -481,9 +576,10 @@ type Query {
   sagaLogFindByCriteria(input: SagaLogFindByCriteriaRequestDto): PaginatedSagaLogResultDto!
   usersFindByCriteria(input: UserFindByCriteriaRequestDto): PaginatedUserResultDto!
   userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
+  overviewFind: OverviewResponseDto
 }
 
-input ContainerFindByCriteriaRequestDto {
+input GrowingUnitFindByCriteriaRequestDto {
   """The filters to find by"""
   filters: [BaseFilterInput!] = []
 
@@ -539,24 +635,13 @@ input BasePaginationInput {
   perPage: Int!
 }
 
-input ContainerFindByIdRequestDto {
-  """The id of the container to find"""
+input GrowingUnitFindByIdRequestDto {
+  """The id of the growing unit to find"""
   id: String!
 }
 
-input PlantFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
-}
-
 input PlantFindByIdRequestDto {
-  """The id of the plant"""
+  """The id of the plant to find"""
   id: String!
 }
 
@@ -651,13 +736,13 @@ input UserFindByIdRequestDto {
 }
 
 type Mutation {
-  createContainer(input: CreateContainerRequestDto!): MutationResponseDto!
-  updateContainer(input: UpdateContainerRequestDto!): MutationResponseDto!
-  deleteContainer(input: DeleteContainerRequestDto!): MutationResponseDto!
-  createPlant(input: CreatePlantRequestDto!): MutationResponseDto!
-  updatePlant(input: UpdatePlantRequestDto!): MutationResponseDto!
-  deletePlant(input: DeletePlantRequestDto!): MutationResponseDto!
-  changePlantStatus(input: PlantChangeStatusRequestDto!): MutationResponseDto!
+  growingUnitCreate(input: GrowingUnitCreateRequestDto!): MutationResponseDto!
+  growingUnitUpdate(input: GrowingUnitUpdateRequestDto!): MutationResponseDto!
+  growingUnitDelete(input: GrowingUnitDeleteRequestDto!): MutationResponseDto!
+  plantAdd(input: PlantAddRequestDto!): MutationResponseDto!
+  plantUpdate(input: PlantUpdateRequestDto!): MutationResponseDto!
+  plantRemove(input: PlantRemoveRequestDto!): MutationResponseDto!
+  plantTransplant(input: PlantTransplantRequestDto!): MutationResponseDto!
   loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
   registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
   refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
@@ -678,33 +763,80 @@ type Mutation {
   deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
 }
 
-input CreateContainerRequestDto {
-  """The name of the container"""
+input GrowingUnitCreateRequestDto {
+  """The name of the growing unit"""
   name: String!
 
-  """The type of the container"""
-  type: String!
+  """The type of the growing unit"""
+  type: GrowingUnitTypeEnum!
+
+  """The capacity of the growing unit"""
+  capacity: Float!
+
+  """The length of the growing unit"""
+  length: Float
+
+  """The width of the growing unit"""
+  width: Float
+
+  """The height of the growing unit"""
+  height: Float
+
+  """The unit of measurement for dimensions"""
+  unit: LengthUnitEnum
 }
 
-input UpdateContainerRequestDto {
-  """The id of the container"""
+"""The type of the growing unit"""
+enum GrowingUnitTypeEnum {
+  POT
+  GARDEN_BED
+  HANGING_BASKET
+  WINDOW_BOX
+}
+
+"""The unit of the length"""
+enum LengthUnitEnum {
+  MILLIMETER
+  CENTIMETER
+  METER
+  INCH
+  FOOT
+}
+
+input GrowingUnitUpdateRequestDto {
+  """The id of the growing unit"""
   id: String!
 
-  """The name of the container"""
+  """The name of the growing unit"""
   name: String
 
-  """The type of the container"""
+  """The type of the growing unit"""
   type: String
+
+  """The capacity of the growing unit"""
+  capacity: Float
+
+  """The length of the growing unit"""
+  length: Float
+
+  """The width of the growing unit"""
+  width: Float
+
+  """The height of the growing unit"""
+  height: Float
+
+  """The unit of measurement for dimensions"""
+  unit: LengthUnitEnum
 }
 
-input DeleteContainerRequestDto {
-  """The id of the container to delete"""
+input GrowingUnitDeleteRequestDto {
+  """The id of the growing unit to delete"""
   id: String!
 }
 
-input CreatePlantRequestDto {
-  """The container id of the plant"""
-  containerId: String!
+input PlantAddRequestDto {
+  """The id of the growing unit to add the plant to"""
+  growingUnitId: String!
 
   """The name of the plant"""
   name: String!
@@ -718,12 +850,21 @@ input CreatePlantRequestDto {
   """Additional notes about the plant"""
   notes: String
 
-  """The status of the plant"""
-  status: String
+  """The status of the plant. Defaults to PLANTED if not provided"""
+  status: PlantStatusEnum
 }
 
-input UpdatePlantRequestDto {
-  """The id of the plant"""
+"""The status of the plant"""
+enum PlantStatusEnum {
+  PLANTED
+  GROWING
+  HARVESTED
+  DEAD
+  ARCHIVED
+}
+
+input PlantUpdateRequestDto {
+  """The id of the plant to update"""
   id: String!
 
   """The name of the plant"""
@@ -732,27 +873,33 @@ input UpdatePlantRequestDto {
   """The species of the plant"""
   species: String
 
-  """The date when the plant was planted"""
+  """The date when the plant was planted. Can be null to clear the date"""
   plantedDate: DateTime
 
-  """Additional notes about the plant"""
+  """Additional notes about the plant. Can be null to clear notes"""
   notes: String
 
-  """The status of the plant"""
-  status: String
+  """The status of the plant. Defaults to PLANTED if not provided"""
+  status: PlantStatusEnum
 }
 
-input DeletePlantRequestDto {
-  """The id of the plant"""
-  id: String!
+input PlantRemoveRequestDto {
+  """The id of the growing unit to remove the plant from"""
+  growingUnitId: String!
+
+  """The id of the plant to remove"""
+  plantId: String!
 }
 
-input PlantChangeStatusRequestDto {
-  """The id of the plant"""
-  id: String!
+input PlantTransplantRequestDto {
+  """The id of the growing unit from which the plant will be transplanted"""
+  sourceGrowingUnitId: String!
 
-  """The new status of the plant"""
-  status: String!
+  """The id of the growing unit to which the plant will be transplanted"""
+  targetGrowingUnitId: String!
+
+  """The id of the plant to be transplanted"""
+  plantId: String!
 }
 
 input AuthLoginByEmailRequestDto {

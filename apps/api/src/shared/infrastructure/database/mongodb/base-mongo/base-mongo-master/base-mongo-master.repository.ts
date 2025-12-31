@@ -6,7 +6,7 @@ import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/ser
  * Extends BaseMongoDatabaseRepository to provide common MongoDB operations.
  */
 export class BaseMongoMasterRepository extends BaseMongoDatabaseRepository {
-  constructor(protected readonly mongoMasterService: MongoMasterService) {
-    super();
-  }
+	constructor(protected readonly mongoMasterService: MongoMasterService) {
+		super();
+	}
 }

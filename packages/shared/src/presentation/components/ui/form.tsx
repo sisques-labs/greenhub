@@ -1,155 +1,232 @@
-'use client';
+"use client";
 
-import * as LabelPrimitive from '@radix-ui/react-label';
-import { Slot } from '@radix-ui/react-slot';
-import { Label } from '@repo/shared/presentation/components/ui/label';
-import { cn } from '@repo/shared/presentation/lib/utils';
-import * as React from 'react';
-import {
-  Controller,
-  type ControllerProps,
-  FormProvider,
-  useFormContext,
-  useFormState,
-} from 'react-hook-form';
+import type * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
+import { Label } from "@repo/shared/presentation/components/ui/label";
+import { cn } from "@repo/shared/presentation/lib/utils";
+import * as React from "react";
 
-const Form = FormProvider;
+type FormErrors = Record<string, { message?: string } | undefined>;
 
-const FormFieldContext = React.createContext<{ name: string }>({
-  name: '',
+type FormContextValue = {
+	errors: FormErrors;
+};
+
+const FormContext = React.createContext<FormContextValue>({
+	errors: {},
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-function FormField(props: ControllerProps<any, any>) {
-  return (
-    <FormFieldContext.Provider value={{ name: String(props.name) }}>
-      {/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
-      <Controller {...(props as any)} />
-    </FormFieldContext.Provider>
-  );
+const FormFieldContext = React.createContext<{ name: string }>({
+	name: "",
+});
+
+interface FormProps {
+	children: React.ReactNode;
+	errors?: FormErrors;
+}
+
+function Form({ children, errors = {} }: FormProps) {
+	return (
+		<FormContext.Provider value={{ errors }}>{children}</FormContext.Provider>
+	);
+}
+
+interface FormFieldProps {
+	name: string;
+	children: (props: {
+		value: string;
+		onChange: (value: string) => void;
+		error?: { message?: string };
+	}) => React.ReactNode;
+}
+
+function FormField({ name, children }: FormFieldProps) {
+	const { errors } = React.useContext(FormContext);
+	const fieldContext = React.useContext(FormFieldContext);
+	const error = errors[name];
+
+	return (
+		<FormFieldContext.Provider value={{ name }}>
+			{children({
+				value: "",
+				onChange: () => {},
+				error,
+			})}
+		</FormFieldContext.Provider>
+	);
 }
 
 const useFormField = () => {
-  const fieldContext = React.useContext(FormFieldContext);
-  const itemContext = React.useContext(FormItemContext);
-  const { getFieldState } = useFormContext();
-  const formState = useFormState({ name: fieldContext.name });
-  const fieldState = getFieldState(fieldContext.name, formState);
+	const fieldContext = React.useContext(FormFieldContext);
+	const itemContext = React.useContext(FormItemContext);
+	const { errors } = React.useContext(FormContext);
+	const error = errors[fieldContext.name];
 
-  if (!fieldContext) {
-    throw new Error('useFormField should be used within <FormField>');
-  }
+	if (!fieldContext) {
+		throw new Error("useFormField should be used within <FormField>");
+	}
 
-  const { id } = itemContext;
+	const { id } = itemContext;
 
-  return {
-    id,
-    name: fieldContext.name,
-    formItemId: `${id}-form-item`,
-    formDescriptionId: `${id}-form-item-description`,
-    formMessageId: `${id}-form-item-message`,
-    ...fieldState,
-  };
+	return {
+		id,
+		name: fieldContext.name,
+		formItemId: `${id}-form-item`,
+		formDescriptionId: `${id}-form-item-description`,
+		formMessageId: `${id}-form-item-message`,
+		error,
+	};
 };
 
 type FormItemContextValue = {
-  id: string;
+	id: string;
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue,
+	{} as FormItemContextValue,
 );
 
-function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
-  const id = React.useId();
+function FormItem({ className, ...props }: React.ComponentProps<"div">) {
+	const id = React.useId();
 
-  return (
-    <FormItemContext.Provider value={{ id }}>
-      <div
-        data-slot="form-item"
-        className={cn('grid gap-2', className)}
-        {...props}
-      />
-    </FormItemContext.Provider>
-  );
+	return (
+		<FormItemContext.Provider value={{ id }}>
+			<div
+				data-slot="form-item"
+				className={cn("grid gap-2", className)}
+				{...props}
+			/>
+		</FormItemContext.Provider>
+	);
 }
 
 function FormLabel({
-  className,
-  ...props
+	className,
+	...props
 }: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  const { error, formItemId } = useFormField();
+	let error: { message?: string } | undefined;
+	let formItemId: string | undefined;
 
-  return (
-    <Label
-      data-slot="form-label"
-      data-error={!!error}
-      className={cn('data-[error=true]:text-destructive', className)}
-      htmlFor={formItemId}
-      {...props}
-    />
-  );
+	try {
+		const fieldContext = useFormField();
+		error = fieldContext.error;
+		formItemId = fieldContext.formItemId;
+	} catch {
+		// If useFormField fails, we're not in a FormField context
+		// Use a default id
+		formItemId = props.htmlFor;
+	}
+
+	return (
+		<Label
+			data-slot="form-label"
+			data-error={!!error}
+			className={cn("data-[error=true]:text-destructive", className)}
+			htmlFor={formItemId}
+			{...props}
+		/>
+	);
 }
 
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
-  const { error, formItemId, formDescriptionId, formMessageId } =
-    useFormField();
+	let error: { message?: string } | undefined;
+	let formItemId: string | undefined;
+	let formDescriptionId: string | undefined;
+	let formMessageId: string | undefined;
 
-  return (
-    <Slot
-      data-slot="form-control"
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
-  );
+	try {
+		const fieldContext = useFormField();
+		error = fieldContext.error;
+		formItemId = fieldContext.formItemId;
+		formDescriptionId = fieldContext.formDescriptionId;
+		formMessageId = fieldContext.formMessageId;
+	} catch {
+		// If useFormField fails, we're not in a FormField context
+		// Use default values
+		formItemId = props.id;
+	}
+
+	return (
+		<Slot
+			data-slot="form-control"
+			id={formItemId}
+			aria-describedby={
+				!error ? formDescriptionId : `${formDescriptionId} ${formMessageId}`
+			}
+			aria-invalid={!!error}
+			{...props}
+		/>
+	);
 }
 
-function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
-  const { formDescriptionId } = useFormField();
+function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
+	let formDescriptionId: string | undefined;
 
-  return (
-    <p
-      data-slot="form-description"
-      id={formDescriptionId}
-      className={cn('text-muted-foreground text-sm', className)}
-      {...props}
-    />
-  );
+	try {
+		const fieldContext = useFormField();
+		formDescriptionId = fieldContext.formDescriptionId;
+	} catch {
+		// If useFormField fails, we're not in a FormField context
+		// Use a default id
+		formDescriptionId = props.id;
+	}
+
+	return (
+		<p
+			data-slot="form-description"
+			id={formDescriptionId}
+			className={cn("text-muted-foreground text-sm", className)}
+			{...props}
+		/>
+	);
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
-  const { error, formMessageId } = useFormField();
-  const body = error ? String(error?.message ?? '') : props.children;
+interface FormMessageProps extends React.ComponentProps<"p"> {
+	fieldName?: string;
+}
 
-  if (!body) {
-    return null;
-  }
+function FormMessage({ className, fieldName, ...props }: FormMessageProps) {
+	const { errors } = React.useContext(FormContext);
 
-  return (
-    <p
-      data-slot="form-message"
-      id={formMessageId}
-      className={cn('text-destructive text-sm', className)}
-      {...props}
-    >
-      {body}
-    </p>
-  );
+	// Try to get error from fieldName prop first, then from context
+	let error: { message?: string } | undefined;
+	let formMessageId: string | undefined;
+
+	if (fieldName) {
+		error = errors[fieldName];
+		formMessageId = `${fieldName}-form-item-message`;
+	} else {
+		try {
+			error = errors[fieldName ?? ""];
+			formMessageId = `${fieldName}-form-item-message`;
+		} catch {}
+	}
+
+	const body = error ? String(error?.message ?? "") : props.children;
+
+	if (!body) {
+		return null;
+	}
+
+	return (
+		<p
+			data-slot="form-message"
+			id={formMessageId}
+			className={cn("text-destructive text-sm", className)}
+			{...props}
+		>
+			{body}
+		</p>
+	);
 }
 
 export {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  useFormField,
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	useFormField,
 };

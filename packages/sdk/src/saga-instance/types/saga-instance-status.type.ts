@@ -1,6 +1,6 @@
 export type SagaInstanceStatus =
-  | 'PENDING'
-  | 'STARTED'
-  | 'RUNNING'
-  | 'COMPLETED'
-  | 'FAILED';
+	| "PENDING"
+	| "STARTED"
+	| "RUNNING"
+	| "COMPLETED"
+	| "FAILED";

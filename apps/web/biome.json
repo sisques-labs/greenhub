@@ -59,7 +59,7 @@
 		]
 	},
 	"javascript": {
-		"formatter": { "quoteStyle": "single" },
+		"formatter": { "quoteStyle": "double" },
 		"parser": { "unsafeParameterDecoratorsEnabled": true },
 		"globals": []
 	},

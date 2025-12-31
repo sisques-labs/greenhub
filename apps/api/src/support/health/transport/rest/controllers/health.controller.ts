@@ -4,16 +4,16 @@ import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health
 
 @Controller('health')
 export class HealthController {
-  private readonly logger = new Logger(HealthController.name);
-  constructor(
-    private readonly healthCheckService: HealthCheckService,
-    private readonly healthRestMapper: HealthRestMapper,
-  ) {}
+	private readonly logger = new Logger(HealthController.name);
+	constructor(
+		private readonly healthCheckService: HealthCheckService,
+		private readonly healthRestMapper: HealthRestMapper,
+	) {}
 
-  @Get()
-  async healthCheck() {
-    this.logger.log('Checking health');
-    const result = await this.healthCheckService.execute();
-    return this.healthRestMapper.toResponseDto(result);
-  }
+	@Get()
+	async healthCheck() {
+		this.logger.log('Checking health');
+		const result = await this.healthCheckService.execute();
+		return this.healthRestMapper.toResponseDto(result);
+	}
 }

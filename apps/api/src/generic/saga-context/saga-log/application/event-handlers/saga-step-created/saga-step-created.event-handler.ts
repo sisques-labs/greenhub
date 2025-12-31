@@ -6,28 +6,30 @@ import { SagaStepCreatedEvent } from '@/shared/domain/events/saga-context/saga-s
 
 @EventsHandler(SagaStepCreatedEvent)
 export class SagaStepCreatedEventHandler
-  implements IEventHandler<SagaStepCreatedEvent>
+	implements IEventHandler<SagaStepCreatedEvent>
 {
-  private readonly logger = new Logger(SagaStepCreatedEventHandler.name);
+	private readonly logger = new Logger(SagaStepCreatedEventHandler.name);
 
-  constructor(private readonly commandBus: CommandBus) {}
+	constructor(private readonly commandBus: CommandBus) {}
 
-  /**
-   * Handles the SagaStepCreatedEvent event by creating a saga log.
-   *
-   * @param event - The SagaStepCreatedEvent event to handle.
-   */
-  async handle(event: SagaStepCreatedEvent) {
-    this.logger.log(`Handling saga step created event: ${event.aggregateId}`);
+	/**
+	 * Handles the SagaStepCreatedEvent event by creating a saga log.
+	 *
+	 * @param event - The SagaStepCreatedEvent event to handle.
+	 */
+	async handle(event: SagaStepCreatedEvent) {
+		this.logger.log(
+			`Handling saga step created event: ${event.aggregateRootId}`,
+		);
 
-    // 01: Create a saga log for the saga step creation
-    await this.commandBus.execute(
-      new SagaLogCreateCommand({
-        sagaInstanceId: event.data.sagaInstanceId,
-        sagaStepId: event.aggregateId,
-        type: SagaLogTypeEnum.INFO,
-        message: `Saga step "${event.data.name}" created with status "${event.data.status}"`,
-      }),
-    );
-  }
+		// 01: Create a saga log for the saga step creation
+		await this.commandBus.execute(
+			new SagaLogCreateCommand({
+				sagaInstanceId: event.data.sagaInstanceId,
+				sagaStepId: event.data.id,
+				type: SagaLogTypeEnum.INFO,
+				message: `Saga step "${event.data.name}" created with status "${event.data.status}"`,
+			}),
+		);
+	}
 }

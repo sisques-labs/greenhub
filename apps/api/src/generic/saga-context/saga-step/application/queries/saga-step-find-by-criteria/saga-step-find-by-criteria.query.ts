@@ -2,9 +2,9 @@ import { ISagaStepFindByCriteriaQueryDto } from '@/generic/saga-context/saga-ste
 import { Criteria } from '@/shared/domain/entities/criteria';
 
 export class FindSagaStepsByCriteriaQuery {
-  readonly criteria: Criteria;
+	readonly criteria: Criteria;
 
-  constructor(props: ISagaStepFindByCriteriaQueryDto) {
-    this.criteria = props.criteria;
-  }
+	constructor(props: ISagaStepFindByCriteriaQueryDto) {
+		this.criteria = props.criteria;
+	}
 }

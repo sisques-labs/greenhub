@@ -8,6 +8,6 @@ import { IUserCreateCommandDto } from '@/generic/users/application/dtos/commands
  * @extends Partial<IUserCreateCommandDto>
  */
 export interface IUserUpdateCommandDto extends Partial<IUserCreateCommandDto> {
-  id: string;
-  status?: string;
+	id: string;
+	status?: string;
 }

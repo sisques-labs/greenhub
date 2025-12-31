@@ -1,5 +1,7 @@
+import { DashboardPage } from "@/generic/dashboard/components/pages/dashboard-page";
+
 const Page = () => {
-  return <div>Home</div>;
+	return <DashboardPage />;
 };
 
 export default Page;

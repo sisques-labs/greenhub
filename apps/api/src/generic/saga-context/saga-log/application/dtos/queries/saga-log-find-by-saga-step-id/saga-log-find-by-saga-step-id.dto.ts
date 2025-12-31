@@ -1,3 +1,3 @@
 export interface ISagaLogFindBySagaStepIdQueryDto {
-  sagaStepId: string;
+	sagaStepId: string;
 }

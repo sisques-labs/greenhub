@@ -19,11 +19,11 @@ import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/ident
  * @property {DateValueObject} updatedAt - The date and time the user was last updated.
  */
 export interface ISagaInstanceCreateDto extends IBaseAggregateDto {
-  id: SagaInstanceUuidValueObject;
-  name: SagaInstanceNameValueObject;
-  status: SagaInstanceStatusValueObject;
-  startDate: SagaInstanceStartDateValueObject | null;
-  endDate: SagaInstanceEndDateValueObject | null;
-  createdAt: DateValueObject;
-  updatedAt: DateValueObject;
+	id: SagaInstanceUuidValueObject;
+	name: SagaInstanceNameValueObject;
+	status: SagaInstanceStatusValueObject;
+	startDate: SagaInstanceStartDateValueObject | null;
+	endDate: SagaInstanceEndDateValueObject | null;
+	createdAt: DateValueObject;
+	updatedAt: DateValueObject;
 }

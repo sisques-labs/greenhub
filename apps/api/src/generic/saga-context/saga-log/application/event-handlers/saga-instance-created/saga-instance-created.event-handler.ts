@@ -6,31 +6,31 @@ import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/sa
 
 @EventsHandler(SagaInstanceCreatedEvent)
 export class SagaInstanceCreatedEventHandler
-  implements IEventHandler<SagaInstanceCreatedEvent>
+	implements IEventHandler<SagaInstanceCreatedEvent>
 {
-  private readonly logger = new Logger(SagaInstanceCreatedEventHandler.name);
+	private readonly logger = new Logger(SagaInstanceCreatedEventHandler.name);
 
-  constructor(private readonly commandBus: CommandBus) {}
+	constructor(private readonly commandBus: CommandBus) {}
 
-  /**
-   * Handles the SagaInstanceCreatedEvent event by creating a saga log.
-   *
-   * @param event - The SagaInstanceCreatedEvent event to handle.
-   */
-  async handle(event: SagaInstanceCreatedEvent) {
-    this.logger.log(
-      `Handling saga instance created event: ${event.aggregateId}`,
-    );
+	/**
+	 * Handles the SagaInstanceCreatedEvent event by creating a saga log.
+	 *
+	 * @param event - The SagaInstanceCreatedEvent event to handle.
+	 */
+	async handle(event: SagaInstanceCreatedEvent) {
+		this.logger.log(
+			`Handling saga instance created event: ${event.aggregateRootId}`,
+		);
 
-    // 01: Create a saga log for the saga instance creation
-    // Note: sagaStepId is set to the same as sagaInstanceId since there's no step yet
-    await this.commandBus.execute(
-      new SagaLogCreateCommand({
-        sagaInstanceId: event.aggregateId,
-        sagaStepId: event.aggregateId,
-        type: SagaLogTypeEnum.INFO,
-        message: `Saga instance "${event.data.name}" created with status "${event.data.status}"`,
-      }),
-    );
-  }
+		// 01: Create a saga log for the saga instance creation
+		// Note: sagaStepId is set to the same as sagaInstanceId since there's no step yet
+		await this.commandBus.execute(
+			new SagaLogCreateCommand({
+				sagaInstanceId: event.aggregateRootId,
+				sagaStepId: event.aggregateRootId,
+				type: SagaLogTypeEnum.INFO,
+				message: `Saga instance "${event.data.name}" created with status "${event.data.status}"`,
+			}),
+		);
+	}
 }

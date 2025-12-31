@@ -10,4 +10,4 @@ export const ROLES_KEY = 'roles';
  * @returns Metadata decorator
  */
 export const Roles = (...roles: UserRoleEnum[]) =>
-  SetMetadata(ROLES_KEY, roles);
+	SetMetadata(ROLES_KEY, roles);

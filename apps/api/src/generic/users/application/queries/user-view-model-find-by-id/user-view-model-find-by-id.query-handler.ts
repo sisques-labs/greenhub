@@ -6,26 +6,26 @@ import { UserViewModel } from '@/generic/users/domain/view-models/user.view-mode
 
 @QueryHandler(UserViewModelFindByIdQuery)
 export class UserViewModelFindByIdQueryHandler
-  implements IQueryHandler<UserViewModelFindByIdQuery>
+	implements IQueryHandler<UserViewModelFindByIdQuery>
 {
-  private readonly logger = new Logger(UserViewModelFindByIdQueryHandler.name);
+	private readonly logger = new Logger(UserViewModelFindByIdQueryHandler.name);
 
-  constructor(
-    private readonly assertUserViewModelExsistsService: AssertUserViewModelExsistsService,
-  ) {}
+	constructor(
+		private readonly assertUserViewModelExsistsService: AssertUserViewModelExsistsService,
+	) {}
 
-  /**
-   * Executes the UserViewModelFindByIdQuery query.
-   *
-   * @param query - The UserViewModelFindByIdQuery query to execute.
-   * @returns The UserViewModel if found, null otherwise.
-   */
-  async execute(query: UserViewModelFindByIdQuery): Promise<UserViewModel> {
-    this.logger.log(
-      `Executing user view model find by id query: ${query.id.value}`,
-    );
+	/**
+	 * Executes the UserViewModelFindByIdQuery query.
+	 *
+	 * @param query - The UserViewModelFindByIdQuery query to execute.
+	 * @returns The UserViewModel if found, null otherwise.
+	 */
+	async execute(query: UserViewModelFindByIdQuery): Promise<UserViewModel> {
+		this.logger.log(
+			`Executing user view model find by id query: ${query.id.value}`,
+		);
 
-    // 01: Find the user view model by id
-    return await this.assertUserViewModelExsistsService.execute(query.id.value);
-  }
+		// 01: Find the user view model by id
+		return await this.assertUserViewModelExsistsService.execute(query.id.value);
+	}
 }

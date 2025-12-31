@@ -11,10 +11,10 @@
  * @property {string} userName - The user's username. Must be provided.
  */
 export interface IUserCreateCommandDto {
-  avatarUrl: string | null;
-  bio: string | null;
-  lastName: string | null;
-  name: string | null;
-  role?: string;
-  userName: string | null;
+	avatarUrl: string | null;
+	bio: string | null;
+	lastName: string | null;
+	name: string | null;
+	role?: string;
+	userName: string | null;
 }

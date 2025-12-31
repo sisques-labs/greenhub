@@ -32,16 +32,16 @@ import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifie
  * @property {DateValueObject} updatedAt - The date and time the saga step was last updated.
  */
 export interface ISagaStepCreateDto extends IBaseAggregateDto {
-  id: SagaStepUuidValueObject;
-  sagaInstanceId: SagaInstanceUuidValueObject;
-  name: SagaStepNameValueObject;
-  order: SagaStepOrderValueObject;
-  status: SagaStepStatusValueObject;
-  startDate: SagaStepStartDateValueObject | null;
-  endDate: SagaStepEndDateValueObject | null;
-  errorMessage: SagaStepErrorMessageValueObject | null;
-  retryCount: SagaStepRetryCountValueObject;
-  maxRetries: SagaStepMaxRetriesValueObject;
-  payload: SagaStepPayloadValueObject;
-  result: SagaStepResultValueObject;
+	id: SagaStepUuidValueObject;
+	sagaInstanceId: SagaInstanceUuidValueObject;
+	name: SagaStepNameValueObject;
+	order: SagaStepOrderValueObject;
+	status: SagaStepStatusValueObject;
+	startDate: SagaStepStartDateValueObject | null;
+	endDate: SagaStepEndDateValueObject | null;
+	errorMessage: SagaStepErrorMessageValueObject | null;
+	retryCount: SagaStepRetryCountValueObject;
+	maxRetries: SagaStepMaxRetriesValueObject;
+	payload: SagaStepPayloadValueObject;
+	result: SagaStepResultValueObject;
 }

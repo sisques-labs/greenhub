@@ -6,28 +6,30 @@ import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-s
 
 @EventsHandler(SagaStepDeletedEvent)
 export class SagaStepDeletedEventHandler
-  implements IEventHandler<SagaStepDeletedEvent>
+	implements IEventHandler<SagaStepDeletedEvent>
 {
-  private readonly logger = new Logger(SagaStepDeletedEventHandler.name);
+	private readonly logger = new Logger(SagaStepDeletedEventHandler.name);
 
-  constructor(private readonly commandBus: CommandBus) {}
+	constructor(private readonly commandBus: CommandBus) {}
 
-  /**
-   * Handles the SagaStepDeletedEvent event by creating a saga log.
-   *
-   * @param event - The SagaStepDeletedEvent event to handle.
-   */
-  async handle(event: SagaStepDeletedEvent) {
-    this.logger.log(`Handling saga step deleted event: ${event.aggregateId}`);
+	/**
+	 * Handles the SagaStepDeletedEvent event by creating a saga log.
+	 *
+	 * @param event - The SagaStepDeletedEvent event to handle.
+	 */
+	async handle(event: SagaStepDeletedEvent) {
+		this.logger.log(
+			`Handling saga step deleted event: ${event.aggregateRootId}`,
+		);
 
-    // 01: Create a saga log for the saga step deletion
-    await this.commandBus.execute(
-      new SagaLogCreateCommand({
-        sagaInstanceId: event.data.sagaInstanceId,
-        sagaStepId: event.aggregateId,
-        type: SagaLogTypeEnum.INFO,
-        message: `Saga step "${event.data.name}" deleted`,
-      }),
-    );
-  }
+		// 01: Create a saga log for the saga step deletion
+		await this.commandBus.execute(
+			new SagaLogCreateCommand({
+				sagaInstanceId: event.data.sagaInstanceId,
+				sagaStepId: event.data.id,
+				type: SagaLogTypeEnum.INFO,
+				message: `Saga step "${event.data.name}" deleted`,
+			}),
+		);
+	}
 }

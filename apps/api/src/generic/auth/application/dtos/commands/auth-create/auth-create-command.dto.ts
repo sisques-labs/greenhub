@@ -13,14 +13,14 @@
  * @property {Date} [lastLoginAt] - The last login timestamp. Can be null if not provided.
  */
 export interface IAuthCreateCommandDto {
-  id?: string | null;
-  userId: string;
-  email?: string | null;
-  password?: string | null;
-  emailVerified?: boolean;
-  phoneNumber?: string | null;
-  provider: string;
-  providerId?: string | null;
-  twoFactorEnabled?: boolean;
-  lastLoginAt?: Date | null;
+	id?: string | null;
+	userId: string;
+	email?: string | null;
+	password?: string | null;
+	emailVerified?: boolean;
+	phoneNumber?: string | null;
+	provider: string;
+	providerId?: string | null;
+	twoFactorEnabled?: boolean;
+	lastLoginAt?: Date | null;
 }
