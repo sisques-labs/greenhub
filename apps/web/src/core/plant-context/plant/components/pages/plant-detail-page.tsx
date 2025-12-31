@@ -58,7 +58,8 @@ export function PlantDetailPage() {
 		handleTransplantSubmit,
 	} = usePlantDetailPage(id);
 
-	if (isLoading) {
+	// Show skeleton while loading or if data is not yet available
+	if (isLoading || plant === null || plant === undefined) {
 		return (
 			<div className="mx-auto space-y-6">
 				<Skeleton className="h-6 w-64" />

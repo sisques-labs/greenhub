@@ -82,7 +82,8 @@ export function GrowingUnitDetailPage() {
 		setCreatePlantDialogOpen(true);
 	};
 
-	if (isLoading) {
+	// Show skeleton while loading or if data is not yet available
+	if (isLoading || growingUnit === null || growingUnit === undefined) {
 		return (
 			<div className="mx-auto space-y-6">
 				<Skeleton className="h-6 w-64" />

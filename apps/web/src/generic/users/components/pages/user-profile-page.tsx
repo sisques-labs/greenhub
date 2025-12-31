@@ -42,7 +42,8 @@ export function UserProfilePage() {
 		});
 	};
 
-	if (isLoadingProfile) {
+	// Show skeleton while loading or if data is not yet available
+	if (isLoadingProfile || profile === null || profile === undefined) {
 		return <UserProfilePageSkeleton />;
 	}
 

@@ -1,5 +1,12 @@
 'use client';
 
+import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
+import { PlantsPageSkeleton } from '@/core/plant-context/plant/components/organisms/plants-page-skeleton/plants-page-skeleton';
+import { usePlantsPage } from '@/core/plant-context/plant/hooks/use-plants-page/use-plants-page';
+import {
+	type FilterOption,
+	SearchAndFilters,
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -18,13 +25,6 @@ import {
 	PlusIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
-import { PlantsPageSkeleton } from '@/core/plant-context/plant/components/organisms/plants-page-skeleton/plants-page-skeleton';
-import { usePlantsPage } from '@/core/plant-context/plant/hooks/use-plants-page/use-plants-page';
-import {
-	type FilterOption,
-	SearchAndFilters,
-} from '@/shared/components/ui/search-and-filters/search-and-filters';
 
 export function PlantsPage() {
 	const t = useTranslations();
@@ -46,6 +46,7 @@ export function PlantsPage() {
 		handleDelete,
 		handlePageChange,
 		hasAnyPlants,
+		growingUnits,
 	} = usePlantsPage();
 
 	const filterOptions: FilterOption[] = [
@@ -72,7 +73,8 @@ export function PlantsPage() {
 		},
 	];
 
-	if (isLoading) {
+	// Show skeleton while loading or if data is not yet available
+	if (isLoading || growingUnits === null || growingUnits === undefined) {
 		return <PlantsPageSkeleton />;
 	}
 

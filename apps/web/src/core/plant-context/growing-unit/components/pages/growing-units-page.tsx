@@ -132,7 +132,8 @@ export function GrowingUnitsPage() {
 		setCreateDialogOpen(true);
 	};
 
-	if (isLoadingGrowingUnits) {
+	// Show skeleton while loading or if data is not yet available
+	if (isLoadingGrowingUnits || growingUnits === null || growingUnits === undefined) {
 		return <GrowingUnitsPageSkeleton />;
 	}
 
