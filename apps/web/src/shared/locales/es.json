@@ -36,6 +36,93 @@
     "plants": "Plantas",
     "growingUnits": "Unidades de Cultivo"
   },
+  "dashboard": {
+    "page": {
+      "title": "Panel de Control",
+      "description": "Bienvenido de nuevo, aquí tienes el resumen de hoy.",
+      "addPlantButton": "Añadir Planta"
+    },
+    "error": {
+      "loading": "Error al cargar el dashboard: {message}"
+    },
+    "stats": {
+      "totalPlants": {
+        "title": "Total Plantas"
+      },
+      "activeUnits": {
+        "title": "Unidades Activas"
+      },
+      "readyForHarvest": {
+        "title": "Listas para Cosecha"
+      },
+      "criticalAlerts": {
+        "title": "Alertas Críticas"
+      },
+      "changeSuffix": "vs mes anterior"
+    },
+    "sections": {
+      "plants": {
+        "title": "Resumen de Plantas",
+        "totalPlants": "Total Plantas",
+        "activePlants": "Plantas Activas",
+        "activePercentage": "{percentage}% activas",
+        "statusBreakdown": "Desglose por Estado",
+        "additionalMetrics": "Métricas Adicionales",
+        "planted": "Plantadas",
+        "growing": "Creciendo",
+        "harvested": "Cosechadas",
+        "dead": "Muertas",
+        "archived": "Archivadas",
+        "withoutPlantedDate": "Sin Fecha de Plantación",
+        "withNotes": "Con Notas",
+        "recent7Days": "Recientes (7 días)"
+      },
+      "capacity": {
+        "title": "Resumen de Capacidad",
+        "averageOccupancy": "Ocupación Promedio",
+        "totalCapacity": "Capacidad Total",
+        "used": "Usada",
+        "available": "Disponible",
+        "atLimit": "En Límite (≥80%)",
+        "full": "Llena (100%)"
+      },
+      "growingUnits": {
+        "title": "Resumen de Unidades de Cultivo",
+        "totalGrowingUnits": "Total Unidades de Cultivo",
+        "active": "Activas",
+        "empty": "Vacías",
+        "byType": "Por Tipo",
+        "percentageOfTotal": "{percentage}% del total",
+        "avgPlantsPerUnit": "Prom. Plantas/Unidad",
+        "min": "Mín",
+        "max": "Máx",
+        "pots": "Macetas",
+        "gardenBeds": "Bancales",
+        "hangingBaskets": "Cestas Colgantes",
+        "windowBoxes": "Jardines de Ventana"
+      },
+      "growingUnitsStatus": {
+        "title": "Estado de Unidades de Cultivo",
+        "empty": "No hay unidades de cultivo disponibles"
+      },
+      "recentAlerts": {
+        "title": "Alertas Recientes",
+        "empty": "No hay alertas recientes"
+      },
+      "todayTasks": {
+        "title": "Tareas de Hoy",
+        "assignedTo": "Asignado a",
+        "empty": "No hay tareas programadas para hoy"
+      }
+    },
+    "common": {
+      "retry": "Reintentar",
+      "active": "activas",
+      "total": "total",
+      "growing": "creciendo",
+      "atLimit": "en límite"
+    }
+  },
   "shared": {
     "fields": {
       "name": {

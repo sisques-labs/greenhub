@@ -32,7 +32,7 @@ export function DashboardPage() {
 					</p>
 					<Button onClick={() => window.location.reload()} variant="outline">
 						<RefreshCwIcon className="mr-2 h-4 w-4" />
-						Retry
+						{t('common.retry')}
 					</Button>
 				</div>
 			</div>

@@ -30,6 +30,7 @@ export function OverviewStatsCards({
 	isLoading = false,
 }: OverviewStatsCardsProps) {
 	const t = useTranslations('dashboard.stats');
+	const tCommon = useTranslations('dashboard.common');
 
 	if (isLoading || !overview) {
 		return (
@@ -59,7 +60,7 @@ export function OverviewStatsCards({
 		{
 			title: t('totalPlants.title'),
 			value: overview.totalPlants.toLocaleString(),
-			subtitle: `${overview.totalActivePlants} active`,
+			subtitle: `${overview.totalActivePlants} ${tCommon('active')}`,
 			icon: FlowerIcon,
 			iconColor: 'text-green-600',
 			bgColor: 'bg-green-50 dark:bg-green-950/20',
@@ -67,7 +68,7 @@ export function OverviewStatsCards({
 		{
 			title: t('activeUnits.title'),
 			value: overview.activeGrowingUnits.toString(),
-			subtitle: `${overview.totalGrowingUnits} total`,
+			subtitle: `${overview.totalGrowingUnits} ${tCommon('total')}`,
 			icon: Grid3x3Icon,
 			iconColor: 'text-blue-600',
 			bgColor: 'bg-blue-50 dark:bg-blue-950/20',
@@ -75,7 +76,7 @@ export function OverviewStatsCards({
 		{
 			title: t('readyForHarvest.title'),
 			value: overview.plantsHarvested.toString(),
-			subtitle: `${overview.plantsGrowing} growing`,
+			subtitle: `${overview.plantsGrowing} ${tCommon('growing')}`,
 			icon: PackageIcon,
 			iconColor: 'text-orange-600',
 			bgColor: 'bg-orange-50 dark:bg-orange-950/20',
@@ -83,7 +84,7 @@ export function OverviewStatsCards({
 		{
 			title: t('criticalAlerts.title'),
 			value: criticalAlerts.toString(),
-			subtitle: `${overview.growingUnitsAtLimit} at limit`,
+			subtitle: `${overview.growingUnitsAtLimit} ${tCommon('atLimit')}`,
 			icon: AlertTriangleIcon,
 			iconColor: 'text-red-600',
 			bgColor: 'bg-red-50 dark:bg-red-950/20',

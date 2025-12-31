@@ -36,6 +36,93 @@
     "plants": "Plants",
     "growingUnits": "Growing Units"
   },
+  "dashboard": {
+    "page": {
+      "title": "Control Panel",
+      "description": "Welcome back, here's today's summary.",
+      "addPlantButton": "Add Plant"
+    },
+    "error": {
+      "loading": "Error loading dashboard: {message}"
+    },
+    "stats": {
+      "totalPlants": {
+        "title": "Total Plants"
+      },
+      "activeUnits": {
+        "title": "Active Units"
+      },
+      "readyForHarvest": {
+        "title": "Ready for Harvest"
+      },
+      "criticalAlerts": {
+        "title": "Critical Alerts"
+      },
+      "changeSuffix": "vs last month"
+    },
+    "sections": {
+      "plants": {
+        "title": "Plants Overview",
+        "totalPlants": "Total Plants",
+        "activePlants": "Active Plants",
+        "activePercentage": "{percentage}% active",
+        "statusBreakdown": "Status Breakdown",
+        "additionalMetrics": "Additional Metrics",
+        "planted": "Planted",
+        "growing": "Growing",
+        "harvested": "Harvested",
+        "dead": "Dead",
+        "archived": "Archived",
+        "withoutPlantedDate": "Without Planted Date",
+        "withNotes": "With Notes",
+        "recent7Days": "Recent (7 days)"
+      },
+      "capacity": {
+        "title": "Capacity Overview",
+        "averageOccupancy": "Average Occupancy",
+        "totalCapacity": "Total Capacity",
+        "used": "Used",
+        "available": "Available",
+        "atLimit": "At Limit (≥80%)",
+        "full": "Full (100%)"
+      },
+      "growingUnits": {
+        "title": "Growing Units Overview",
+        "totalGrowingUnits": "Total Growing Units",
+        "active": "Active",
+        "empty": "Empty",
+        "byType": "By Type",
+        "percentageOfTotal": "{percentage}% of total",
+        "avgPlantsPerUnit": "Avg Plants/Unit",
+        "min": "Min",
+        "max": "Max",
+        "pots": "Pots",
+        "gardenBeds": "Garden Beds",
+        "hangingBaskets": "Hanging Baskets",
+        "windowBoxes": "Window Boxes"
+      },
+      "growingUnitsStatus": {
+        "title": "Status of Cultivation Units",
+        "empty": "No growing units available"
+      },
+      "recentAlerts": {
+        "title": "Recent Alerts",
+        "empty": "No recent alerts"
+      },
+      "todayTasks": {
+        "title": "Today's Tasks",
+        "assignedTo": "Assigned to",
+        "empty": "No tasks scheduled for today"
+      }
+    },
+    "common": {
+      "retry": "Retry",
+      "active": "active",
+      "total": "total",
+      "growing": "growing",
+      "atLimit": "at limit"
+    }
+  },
   "shared": {
     "fields": {
       "name": {
