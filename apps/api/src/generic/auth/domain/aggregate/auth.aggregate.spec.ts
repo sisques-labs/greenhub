@@ -307,8 +307,8 @@ describe('AuthAggregate', () => {
       expect(events[0]).toBeInstanceOf(AuthUpdatedEvent);
 
       const event = events[0] as AuthUpdatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(AuthAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(AuthAggregate.name);
       expect(event.eventType).toBe(AuthUpdatedEvent.name);
       expect(event.data.email).toBe('updated@example.com');
     });
@@ -352,8 +352,8 @@ describe('AuthAggregate', () => {
       expect(events[0]).toBeInstanceOf(AuthUpdatedLastLoginAtEvent);
 
       const event = events[0] as AuthUpdatedLastLoginAtEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(AuthAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(AuthAggregate.name);
       expect(event.eventType).toBe(AuthUpdatedLastLoginAtEvent.name);
       expect(event.data.lastLoginAt).toEqual(new Date('2024-01-02T10:00:00Z'));
     });
@@ -383,8 +383,8 @@ describe('AuthAggregate', () => {
       expect(events[0]).toBeInstanceOf(AuthDeletedEvent);
 
       const event = events[0] as AuthDeletedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
-      expect(event.aggregateType).toBe(AuthAggregate.name);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
+      expect(event.aggregateRootType).toBe(AuthAggregate.name);
       expect(event.eventType).toBe(AuthDeletedEvent.name);
       expect(event.data.id).toBe(aggregate.id.value);
     });

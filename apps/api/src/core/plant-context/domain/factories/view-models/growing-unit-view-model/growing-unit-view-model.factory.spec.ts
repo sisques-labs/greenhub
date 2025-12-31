@@ -169,7 +169,7 @@ describe('GrowingUnitViewModelFactory', () => {
         plants: [],
       };
 
-      const aggregate = growingUnitAggregateFactory.create(dto, false);
+      const aggregate = growingUnitAggregateFactory.create(dto);
       const viewModel = factory.fromAggregate(aggregate);
 
       expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
@@ -189,7 +189,7 @@ describe('GrowingUnitViewModelFactory', () => {
         plants: [],
       };
 
-      const aggregate = growingUnitAggregateFactory.create(dto, false);
+      const aggregate = growingUnitAggregateFactory.create(dto);
       const viewModel = factory.fromAggregate(aggregate);
 
       expect(viewModel).toBeInstanceOf(GrowingUnitViewModel);
@@ -207,7 +207,7 @@ describe('GrowingUnitViewModelFactory', () => {
         plants: [],
       };
 
-      const aggregate = growingUnitAggregateFactory.create(dto, false);
+      const aggregate = growingUnitAggregateFactory.create(dto);
       const viewModel = factory.fromAggregate(aggregate);
 
       expect(viewModel.remainingCapacity).toBe(10);

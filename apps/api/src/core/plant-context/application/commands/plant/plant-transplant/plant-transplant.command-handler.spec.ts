@@ -20,6 +20,7 @@ import { PlantStatusValueObject } from '@/core/plant-context/domain/value-object
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 import { EventBus } from '@nestjs/cqrs';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 describe('PlantTransplantCommandHandler', () => {
   let handler: PlantTransplantCommandHandler;
@@ -28,6 +29,7 @@ describe('PlantTransplantCommandHandler', () => {
   let mockEventBus: jest.Mocked<EventBus>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
   let mockPlantTransplantService: jest.Mocked<PlantTransplantService>;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 
   beforeEach(() => {
     mockGrowingUnitWriteRepository = {
@@ -56,12 +58,17 @@ describe('PlantTransplantCommandHandler', () => {
       execute: jest.fn(),
     } as unknown as jest.Mocked<PlantTransplantService>;
 
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
+
     handler = new PlantTransplantCommandHandler(
       mockGrowingUnitWriteRepository,
       mockPlantWriteRepository,
       mockEventBus,
       mockAssertGrowingUnitExistsService,
       mockPlantTransplantService,
+      mockPublishIntegrationEventsService,
     );
   });
 

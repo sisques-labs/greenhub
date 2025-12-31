@@ -56,8 +56,10 @@ describe('SagaStepDeletedEventHandler', () => {
 
       const event = new SagaStepDeletedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepDeletedEvent',
         },
         eventData,
@@ -149,8 +151,10 @@ describe('SagaStepDeletedEventHandler', () => {
 
       const event = new SagaStepDeletedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepDeletedEvent',
         },
         eventData,

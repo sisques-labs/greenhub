@@ -1,4 +1,3 @@
-import { GrowingUnitCreatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event';
 import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
@@ -77,15 +76,15 @@ describe('GrowingUnitAggregate', () => {
       expect(aggregate.dimensions).toBeNull();
     });
 
-    it('should generate GrowingUnitCreatedEvent by default', () => {
+    it('should not generate GrowingUnitCreatedEvent by default', () => {
       const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const events = aggregate.getUncommittedEvents();
 
-      expect(events).toHaveLength(1);
-      expect(events[0]).toBeInstanceOf(GrowingUnitCreatedEvent);
+      // Note: GrowingUnitAggregate constructor does not generate events
+      expect(events).toHaveLength(0);
     });
 
-    it('should not generate event when generateEvent is false', () => {
+    it('should not generate event (constructor does not support generateEvent parameter)', () => {
       const aggregate = new GrowingUnitAggregate(growingUnitDto);
       const events = aggregate.getUncommittedEvents();
 

@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
 import { PlantAddCommandHandler } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command-handler';
 import { IPlantAddCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-add/plant-add-command.dto';
@@ -25,6 +26,7 @@ describe('PlantAddCommandHandler', () => {
   let mockEventBus: jest.Mocked<EventBus>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
   let mockPlantEntityFactory: jest.Mocked<PlantEntityFactory>;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 
   beforeEach(() => {
     mockGrowingUnitWriteRepository = {
@@ -47,11 +49,16 @@ describe('PlantAddCommandHandler', () => {
       fromPrimitives: jest.fn(),
     } as unknown as jest.Mocked<PlantEntityFactory>;
 
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
+
     handler = new PlantAddCommandHandler(
       mockGrowingUnitWriteRepository,
       mockEventBus,
       mockAssertGrowingUnitExistsService,
       mockPlantEntityFactory,
+      mockPublishIntegrationEventsService,
     );
   });
 

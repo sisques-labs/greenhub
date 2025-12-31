@@ -68,8 +68,10 @@ describe('SagaLogCreatedEventHandler', () => {
 
       const event = new SagaLogCreatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaLogAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaLogAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaLogAggregate',
           eventType: 'SagaLogCreatedEvent',
         },
         eventData,

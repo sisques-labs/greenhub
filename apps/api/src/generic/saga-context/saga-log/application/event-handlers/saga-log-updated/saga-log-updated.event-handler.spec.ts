@@ -66,8 +66,10 @@ describe('SagaLogUpdatedEventHandler', () => {
 
       const event = new SagaLogUpdatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaLogAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaLogAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaLogAggregate',
           eventType: 'SagaLogUpdatedEvent',
         },
         eventData,

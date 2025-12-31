@@ -47,8 +47,10 @@ describe('SagaInstanceStatusChangedEventHandler', () => {
 
       const event = new SagaInstanceStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceStatusChangedEvent',
         },
         eventData,
@@ -79,8 +81,10 @@ describe('SagaInstanceStatusChangedEventHandler', () => {
 
       const event = new SagaInstanceStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceStatusChangedEvent',
         },
         eventData,
@@ -111,8 +115,10 @@ describe('SagaInstanceStatusChangedEventHandler', () => {
 
       const event = new SagaInstanceStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceStatusChangedEvent',
         },
         eventData,
@@ -140,8 +146,10 @@ describe('SagaInstanceStatusChangedEventHandler', () => {
 
       const event = new SagaInstanceStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceStatusChangedEvent',
         },
         eventData,
@@ -169,8 +177,10 @@ describe('SagaInstanceStatusChangedEventHandler', () => {
 
       const event = new SagaInstanceStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceStatusChangedEvent',
         },
         eventData,
@@ -198,8 +208,10 @@ describe('SagaInstanceStatusChangedEventHandler', () => {
 
       const event = new SagaInstanceStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceStatusChangedEvent',
         },
         eventData,

@@ -48,8 +48,10 @@ describe('SagaInstanceDeletedEventHandler', () => {
 
       const event = new SagaInstanceDeletedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceDeletedEvent',
         },
         eventData,
@@ -125,8 +127,10 @@ describe('SagaInstanceDeletedEventHandler', () => {
 
       const event = new SagaInstanceDeletedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceDeletedEvent',
         },
         eventData,

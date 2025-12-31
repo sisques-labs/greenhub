@@ -181,7 +181,7 @@ describe('SagaInstanceAggregate', () => {
       expect(events[0]).toBeInstanceOf(SagaInstanceUpdatedEvent);
 
       const event = events[0] as SagaInstanceUpdatedEvent;
-      expect(event.aggregateId).toBe(aggregate.id.value);
+      expect(event.aggregateRootId).toBe(aggregate.id.value);
       expect(event.data).toEqual(aggregate.toPrimitives());
     });
 

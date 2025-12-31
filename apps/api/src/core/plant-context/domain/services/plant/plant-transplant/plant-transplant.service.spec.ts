@@ -38,7 +38,6 @@ describe('PlantTransplantService', () => {
         dimensions: null,
         plants: [],
       },
-      false,
     );
 
     // Create target growing unit with capacity for 3 plants
@@ -51,7 +50,6 @@ describe('PlantTransplantService', () => {
         dimensions: null,
         plants: [],
       },
-      false,
     );
 
     // Create a plant

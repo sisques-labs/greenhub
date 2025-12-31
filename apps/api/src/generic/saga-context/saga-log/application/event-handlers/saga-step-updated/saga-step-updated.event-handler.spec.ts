@@ -55,8 +55,10 @@ describe('SagaStepUpdatedEventHandler', () => {
 
       const event = new SagaStepUpdatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepUpdatedEvent',
         },
         eventData,
@@ -117,8 +119,10 @@ describe('SagaStepUpdatedEventHandler', () => {
 
       const event = new SagaStepUpdatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepUpdatedEvent',
         },
         eventData,
@@ -162,8 +166,10 @@ describe('SagaStepUpdatedEventHandler', () => {
 
       const event = new SagaStepUpdatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepUpdatedEvent',
         },
         eventData,
@@ -205,8 +211,10 @@ describe('SagaStepUpdatedEventHandler', () => {
 
       const event = new SagaStepUpdatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepUpdatedEvent',
         },
         eventData,
@@ -229,8 +237,10 @@ describe('SagaStepUpdatedEventHandler', () => {
 
       const event = new SagaStepUpdatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepUpdatedEvent',
         },
         eventData,

@@ -98,9 +98,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
         mockGrowingUnit,
       );
       expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledTimes(1);
-      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(
-        mockGrowingUnit.getUncommittedEvents(),
-      );
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
+      const callArgs = mockPublishIntegrationEventsService.execute.mock.calls[0][0];
+      expect(callArgs).toBeInstanceOf(GrowingUnitCreatedEvent);
       expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledTimes(1);
     });
 
@@ -165,10 +165,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
       await handler.execute(command);
 
-      const uncommittedEvents = mockGrowingUnit.getUncommittedEvents();
-      expect(uncommittedEvents).toHaveLength(1);
-      expect(uncommittedEvents[0]).toBeInstanceOf(GrowingUnitCreatedEvent);
-      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(uncommittedEvents);
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
+      const callArgs = mockPublishIntegrationEventsService.execute.mock.calls[0][0];
+      expect(callArgs).toBeInstanceOf(GrowingUnitCreatedEvent);
     });
 
     it('should save growing unit before publishing events', async () => {

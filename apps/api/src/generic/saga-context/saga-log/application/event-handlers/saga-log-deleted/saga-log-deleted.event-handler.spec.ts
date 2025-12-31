@@ -66,8 +66,10 @@ describe('SagaLogDeletedEventHandler', () => {
 
       const event = new SagaLogDeletedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaLogAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaLogAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaLogAggregate',
           eventType: 'SagaLogDeletedEvent',
         },
         eventData,

@@ -55,8 +55,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,
@@ -95,8 +97,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,
@@ -135,8 +139,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,
@@ -175,8 +181,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,
@@ -213,8 +221,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,
@@ -250,8 +260,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,
@@ -287,8 +299,10 @@ describe('SagaStepStatusChangedEventHandler', () => {
 
       const event = new SagaStepStatusChangedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaStepAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaStepAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaStepAggregate',
           eventType: 'SagaStepStatusChangedEvent',
         },
         eventData,

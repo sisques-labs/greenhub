@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
 import { PlantUpdateCommandHandler } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command-handler';
 import { IPlantUpdateCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-update/plant-update-command.dto';
@@ -17,7 +18,7 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitPlantNameChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-name-changed/plant-name-changed.event';
+import { PlantNameChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-name-changed/plant-name-changed.event';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
@@ -28,6 +29,7 @@ describe('PlantUpdateCommandHandler', () => {
   let mockAssertPlantExistsService: jest.Mocked<AssertPlantExistsService>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
   let plantEntityFactory: PlantEntityFactory;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 
   beforeEach(() => {
     plantEntityFactory = new PlantEntityFactory();
@@ -50,11 +52,16 @@ describe('PlantUpdateCommandHandler', () => {
       execute: jest.fn(),
     } as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
+
     handler = new PlantUpdateCommandHandler(
       mockGrowingUnitWriteRepository,
       mockEventBus,
       mockAssertPlantExistsService,
       mockAssertGrowingUnitExistsService,
+      mockPublishIntegrationEventsService,
     );
   });
 
@@ -222,9 +229,9 @@ describe('PlantUpdateCommandHandler', () => {
       expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
       expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
       const nameChangedEvent = capturedEvents.find(
-        (e) => e instanceof GrowingUnitPlantNameChangedEvent,
+        (e) => e instanceof PlantNameChangedEvent,
       );
-      expect(nameChangedEvent).toBeInstanceOf(GrowingUnitPlantNameChangedEvent);
+      expect(nameChangedEvent).toBeInstanceOf(PlantNameChangedEvent);
     });
 
     it('should update plant species successfully', async () => {

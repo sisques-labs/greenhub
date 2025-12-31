@@ -48,8 +48,10 @@ describe('SagaInstanceCreatedEventHandler', () => {
 
       const event = new SagaInstanceCreatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceCreatedEvent',
         },
         eventData,
@@ -126,8 +128,10 @@ describe('SagaInstanceCreatedEventHandler', () => {
 
       const event = new SagaInstanceCreatedEvent(
         {
-          aggregateId: aggregateId,
-          aggregateType: 'SagaInstanceAggregate',
+          aggregateRootId: aggregateId,
+          aggregateRootType: 'SagaInstanceAggregate',
+          entityId: aggregateId,
+          entityType: 'SagaInstanceAggregate',
           eventType: 'SagaInstanceCreatedEvent',
         },
         eventData,

@@ -75,7 +75,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
@@ -115,7 +114,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
@@ -146,7 +144,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
@@ -182,7 +179,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
@@ -221,7 +217,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
@@ -253,7 +248,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       const originalName = mockGrowingUnit.name.value;
@@ -290,7 +284,6 @@ describe('GrowingUnitUpdateCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
       );
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
