@@ -1,24 +1,24 @@
-import { CommandBus } from "@nestjs/cqrs";
-import { GrowingUnitCreateCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command";
-import { GrowingUnitDeleteCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command";
-import { GrowingUnitUpdateCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command";
-import { PlantAddCommand } from "@/core/plant-context/application/commands/plant/plant-add/plant-add.command";
-import { PlantRemoveCommand } from "@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command";
-import { PlantUpdateCommand } from "@/core/plant-context/application/commands/plant/plant-update/plant-update.command";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { GrowingUnitCreateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-create.request.dto";
-import { GrowingUnitDeleteRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-delete.request.dto";
-import { GrowingUnitUpdateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-update.request.dto";
-import { PlantAddRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto";
-import { PlantRemoveRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto";
-import { PlantUpdateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto";
-import { GrowingUnitMutationsResolver } from "@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-mutations.resolver";
-import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { CommandBus } from '@nestjs/cqrs';
+import { GrowingUnitCreateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command';
+import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
+import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
+import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
+import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
+import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { GrowingUnitCreateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-create.request.dto';
+import { GrowingUnitDeleteRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-delete.request.dto';
+import { GrowingUnitUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-update.request.dto';
+import { PlantAddRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto';
+import { PlantRemoveRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto';
+import { PlantUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto';
+import { GrowingUnitMutationsResolver } from '@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-mutations.resolver';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
-describe("GrowingUnitMutationsResolver", () => {
+describe('GrowingUnitMutationsResolver', () => {
 	let resolver: GrowingUnitMutationsResolver;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 	let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
@@ -42,11 +42,11 @@ describe("GrowingUnitMutationsResolver", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("growingUnitCreate", () => {
-		it("should create growing unit successfully", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('growingUnitCreate', () => {
+		it('should create growing unit successfully', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitCreateRequestDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				length: 2.0,
@@ -57,7 +57,7 @@ describe("GrowingUnitMutationsResolver", () => {
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Growing unit created successfully",
+				message: 'Growing unit created successfully',
 				id: growingUnitId,
 			};
 
@@ -74,29 +74,29 @@ describe("GrowingUnitMutationsResolver", () => {
 			);
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
 			expect(command).toBeInstanceOf(GrowingUnitCreateCommand);
-			expect(command.name.value).toBe("Garden Bed 1");
+			expect(command.name.value).toBe('Garden Bed 1');
 			expect(command.type.value).toBe(GrowingUnitTypeEnum.GARDEN_BED);
 			expect(command.capacity.value).toBe(10);
 			expect(
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Growing unit created successfully",
+				message: 'Growing unit created successfully',
 				id: growingUnitId,
 			});
 		});
 
-		it("should create growing unit without dimensions", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should create growing unit without dimensions', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitCreateRequestDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Growing unit created successfully",
+				message: 'Growing unit created successfully',
 				id: growingUnitId,
 			};
 
@@ -114,12 +114,12 @@ describe("GrowingUnitMutationsResolver", () => {
 		});
 	});
 
-	describe("growingUnitUpdate", () => {
-		it("should update growing unit successfully", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('growingUnitUpdate', () => {
+		it('should update growing unit successfully', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitUpdateRequestDto = {
 				id: growingUnitId,
-				name: "Garden Bed 2",
+				name: 'Garden Bed 2',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 15,
 				length: 3.0,
@@ -130,7 +130,7 @@ describe("GrowingUnitMutationsResolver", () => {
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Growing unit updated successfully",
+				message: 'Growing unit updated successfully',
 				id: growingUnitId,
 			};
 
@@ -148,26 +148,26 @@ describe("GrowingUnitMutationsResolver", () => {
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
 			expect(command).toBeInstanceOf(GrowingUnitUpdateCommand);
 			expect(command.id.value).toBe(growingUnitId);
-			expect(command.name?.value).toBe("Garden Bed 2");
+			expect(command.name?.value).toBe('Garden Bed 2');
 			expect(
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Growing unit updated successfully",
+				message: 'Growing unit updated successfully',
 				id: growingUnitId,
 			});
 		});
 
-		it("should update growing unit without dimensions", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should update growing unit without dimensions', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitUpdateRequestDto = {
 				id: growingUnitId,
-				name: "Garden Bed 2",
+				name: 'Garden Bed 2',
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Growing unit updated successfully",
+				message: 'Growing unit updated successfully',
 				id: growingUnitId,
 			};
 
@@ -187,16 +187,16 @@ describe("GrowingUnitMutationsResolver", () => {
 		});
 	});
 
-	describe("growingUnitDelete", () => {
-		it("should delete growing unit successfully", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('growingUnitDelete', () => {
+		it('should delete growing unit successfully', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitDeleteRequestDto = {
 				id: growingUnitId,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Growing unit deleted successfully",
+				message: 'Growing unit deleted successfully',
 				id: growingUnitId,
 			};
 
@@ -218,28 +218,28 @@ describe("GrowingUnitMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Growing unit deleted successfully",
+				message: 'Growing unit deleted successfully',
 				id: growingUnitId,
 			});
 		});
 	});
 
-	describe("plantAdd", () => {
-		it("should add plant successfully", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
-			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('plantAdd', () => {
+		it('should add plant successfully', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: PlantAddRequestDto = {
 				growingUnitId: growingUnitId,
-				name: "Basil",
-				species: "Ocimum basilicum",
-				plantedDate: new Date("2024-01-15"),
-				notes: "Keep in indirect sunlight",
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: new Date('2024-01-15'),
+				notes: 'Keep in indirect sunlight',
 				status: PlantStatusEnum.PLANTED,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Plant added successfully",
+				message: 'Plant added successfully',
 				id: plantId,
 			};
 
@@ -257,30 +257,30 @@ describe("GrowingUnitMutationsResolver", () => {
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
 			expect(command).toBeInstanceOf(PlantAddCommand);
 			expect(command.growingUnitId.value).toBe(growingUnitId);
-			expect(command.name.value).toBe("Basil");
+			expect(command.name.value).toBe('Basil');
 			expect(
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Plant added successfully",
+				message: 'Plant added successfully',
 				id: plantId,
 			});
 		});
 	});
 
-	describe("plantUpdate", () => {
-		it("should update plant successfully", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('plantUpdate', () => {
+		it('should update plant successfully', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: PlantUpdateRequestDto = {
 				id: plantId,
-				name: "Basil Updated",
-				species: "Ocimum basilicum",
+				name: 'Basil Updated',
+				species: 'Ocimum basilicum',
 				status: PlantStatusEnum.GROWING,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Plant updated successfully",
+				message: 'Plant updated successfully',
 				id: plantId,
 			};
 
@@ -298,21 +298,21 @@ describe("GrowingUnitMutationsResolver", () => {
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
 			expect(command).toBeInstanceOf(PlantUpdateCommand);
 			expect(command.id.value).toBe(plantId);
-			expect(command.name?.value).toBe("Basil Updated");
+			expect(command.name?.value).toBe('Basil Updated');
 			expect(
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Plant updated successfully",
+				message: 'Plant updated successfully',
 				id: plantId,
 			});
 		});
 	});
 
-	describe("plantRemove", () => {
-		it("should remove plant successfully", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
-			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('plantRemove', () => {
+		it('should remove plant successfully', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: PlantRemoveRequestDto = {
 				growingUnitId: growingUnitId,
 				plantId: plantId,
@@ -320,7 +320,7 @@ describe("GrowingUnitMutationsResolver", () => {
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Plant removed successfully",
+				message: 'Plant removed successfully',
 				id: plantId,
 			};
 
@@ -343,7 +343,7 @@ describe("GrowingUnitMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Plant removed successfully",
+				message: 'Plant removed successfully',
 				id: plantId,
 			});
 		});

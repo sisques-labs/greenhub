@@ -1,16 +1,16 @@
-import { Test } from "@nestjs/testing";
-import { SagaInstanceNotFoundException } from "@/generic/saga-context/saga-instance/application/exceptions/saga-instance-not-found/saga-instance-not-found.exception";
-import { FindSagaInstanceByIdQuery } from "@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query";
-import { FindSagaInstanceByIdQueryHandler } from "@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query-handler";
-import { AssertSagaInstanceExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service";
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
-import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { Test } from '@nestjs/testing';
+import { SagaInstanceNotFoundException } from '@/generic/saga-context/saga-instance/application/exceptions/saga-instance-not-found/saga-instance-not-found.exception';
+import { FindSagaInstanceByIdQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query';
+import { FindSagaInstanceByIdQueryHandler } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query-handler';
+import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
+import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
-describe("FindSagaInstanceByIdQueryHandler", () => {
+describe('FindSagaInstanceByIdQueryHandler', () => {
 	let handler: FindSagaInstanceByIdQueryHandler;
 	let mockAssertSagaInstanceExistsService: jest.Mocked<AssertSagaInstanceExistsService>;
 
@@ -43,9 +43,9 @@ describe("FindSagaInstanceByIdQueryHandler", () => {
 		return new SagaInstanceAggregate(
 			{
 				id: new SagaInstanceUuidValueObject(
-					"123e4567-e89b-12d3-a456-426614174000",
+					'123e4567-e89b-12d3-a456-426614174000',
 				),
-				name: new SagaInstanceNameValueObject("Order Processing Saga"),
+				name: new SagaInstanceNameValueObject('Order Processing Saga'),
 				status: new SagaInstanceStatusValueObject(
 					SagaInstanceStatusEnum.PENDING,
 				),
@@ -58,9 +58,9 @@ describe("FindSagaInstanceByIdQueryHandler", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should return saga instance aggregate when saga instance exists", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return saga instance aggregate when saga instance exists', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaInstanceId };
 			const query = new FindSagaInstanceByIdQuery(queryDto);
 
@@ -78,8 +78,8 @@ describe("FindSagaInstanceByIdQueryHandler", () => {
 			);
 		});
 
-		it("should throw SagaInstanceNotFoundException when saga instance does not exist", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaInstanceNotFoundException when saga instance does not exist', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaInstanceId };
 			const query = new FindSagaInstanceByIdQuery(queryDto);
 

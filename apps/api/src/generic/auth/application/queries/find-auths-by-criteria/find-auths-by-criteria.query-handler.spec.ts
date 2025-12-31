@@ -1,12 +1,12 @@
-import { FindAuthsByCriteriaQueryHandler } from "@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query-handler";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthReadRepository } from "@/generic/auth/domain/repositories/auth-read.repository";
-import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { FindAuthsByCriteriaQuery } from "./find-auths-by-criteria.query";
+import { FindAuthsByCriteriaQueryHandler } from '@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query-handler';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
+import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { FindAuthsByCriteriaQuery } from './find-auths-by-criteria.query';
 
-describe("FindAuthsByCriteriaQueryHandler", () => {
+describe('FindAuthsByCriteriaQueryHandler', () => {
 	let handler: FindAuthsByCriteriaQueryHandler;
 	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 
@@ -25,15 +25,15 @@ describe("FindAuthsByCriteriaQueryHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return paginated auth view models", async () => {
+	describe('execute', () => {
+		it('should return paginated auth view models', async () => {
 			const criteria = new Criteria();
 			const query = new FindAuthsByCriteriaQuery(criteria);
 
 			const mockAuthViewModel1 = new AuthViewModel({
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				userId: "123e4567-e89b-12d3-a456-426614174001",
-				email: "test1@example.com",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				userId: '123e4567-e89b-12d3-a456-426614174001',
+				email: 'test1@example.com',
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
@@ -46,15 +46,15 @@ describe("FindAuthsByCriteriaQueryHandler", () => {
 			});
 
 			const mockAuthViewModel2 = new AuthViewModel({
-				id: "123e4567-e89b-12d3-a456-426614174002",
-				userId: "123e4567-e89b-12d3-a456-426614174003",
-				email: "test2@example.com",
+				id: '123e4567-e89b-12d3-a456-426614174002',
+				userId: '123e4567-e89b-12d3-a456-426614174003',
+				email: 'test2@example.com',
 				emailVerified: true,
 				lastLoginAt: null,
 				password: null,
 				phoneNumber: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: false,
 				createdAt: new Date(),
 				updatedAt: new Date(),
@@ -78,7 +78,7 @@ describe("FindAuthsByCriteriaQueryHandler", () => {
 			expect(mockAuthReadRepository.findByCriteria).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return empty paginated result when no auths found", async () => {
+		it('should return empty paginated result when no auths found', async () => {
 			const criteria = new Criteria();
 			const query = new FindAuthsByCriteriaQuery(criteria);
 

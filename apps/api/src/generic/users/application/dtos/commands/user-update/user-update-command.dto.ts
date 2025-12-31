@@ -1,4 +1,4 @@
-import { IUserCreateCommandDto } from "@/generic/users/application/dtos/commands/user-create/user-create-command.dto";
+import { IUserCreateCommandDto } from '@/generic/users/application/dtos/commands/user-create/user-create-command.dto';
 
 /**
  * Data Transfer Object for updating a user via command layer.

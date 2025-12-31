@@ -1,21 +1,21 @@
-import { EventBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaInstanceDeleteCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command";
-import { SagaInstanceDeleteCommandHandler } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command-handler";
-import { AssertSagaInstanceExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service";
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaInstanceDeleteCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command';
+import { SagaInstanceDeleteCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command-handler';
+import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
-} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository";
-import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
-import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
-import { SagaInstanceDeletedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-deleted/saga-instance-deleted.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
+import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
+import { SagaInstanceDeletedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-deleted/saga-instance-deleted.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
-describe("SagaInstanceDeleteCommandHandler", () => {
+describe('SagaInstanceDeleteCommandHandler', () => {
 	let handler: SagaInstanceDeleteCommandHandler;
 	let mockSagaInstanceWriteRepository: jest.Mocked<SagaInstanceWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -26,9 +26,9 @@ describe("SagaInstanceDeleteCommandHandler", () => {
 		return new SagaInstanceAggregate(
 			{
 				id: new SagaInstanceUuidValueObject(
-					"123e4567-e89b-12d3-a456-426614174000",
+					'123e4567-e89b-12d3-a456-426614174000',
 				),
-				name: new SagaInstanceNameValueObject("Order Processing Saga"),
+				name: new SagaInstanceNameValueObject('Order Processing Saga'),
 				status: new SagaInstanceStatusValueObject(
 					SagaInstanceStatusEnum.PENDING,
 				),
@@ -84,9 +84,9 @@ describe("SagaInstanceDeleteCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should delete saga instance successfully", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should delete saga instance successfully', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const command = new SagaInstanceDeleteCommand({ id: sagaInstanceId });
 
 			const existingSagaInstance = createSagaInstanceAggregate();
@@ -108,12 +108,12 @@ describe("SagaInstanceDeleteCommandHandler", () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
-		it("should call delete method on aggregate", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should call delete method on aggregate', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const command = new SagaInstanceDeleteCommand({ id: sagaInstanceId });
 
 			const existingSagaInstance = createSagaInstanceAggregate();
-			const deleteSpy = jest.spyOn(existingSagaInstance, "delete");
+			const deleteSpy = jest.spyOn(existingSagaInstance, 'delete');
 
 			mockAssertSagaInstanceExistsService.execute.mockResolvedValue(
 				existingSagaInstance,
@@ -126,8 +126,8 @@ describe("SagaInstanceDeleteCommandHandler", () => {
 			expect(deleteSpy).toHaveBeenCalled();
 		});
 
-		it("should publish SagaInstanceDeletedEvent after deleting", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should publish SagaInstanceDeletedEvent after deleting', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const command = new SagaInstanceDeleteCommand({ id: sagaInstanceId });
 
 			const existingSagaInstance = createSagaInstanceAggregate();
@@ -147,11 +147,11 @@ describe("SagaInstanceDeleteCommandHandler", () => {
 			}
 		});
 
-		it("should throw error if saga instance does not exist", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw error if saga instance does not exist', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const command = new SagaInstanceDeleteCommand({ id: sagaInstanceId });
 
-			const error = new Error("Saga instance not found");
+			const error = new Error('Saga instance not found');
 
 			mockAssertSagaInstanceExistsService.execute.mockRejectedValue(error);
 

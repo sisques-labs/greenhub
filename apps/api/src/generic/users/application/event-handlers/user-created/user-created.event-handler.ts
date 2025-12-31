@@ -1,12 +1,12 @@
-import { Inject, Logger } from "@nestjs/common";
-import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { UserViewModelFactory } from "@/generic/users/domain/factories/user-view-model/user-view-model.factory";
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { UserViewModelFactory } from '@/generic/users/domain/factories/user-view-model/user-view-model.factory';
 import {
 	USER_READ_REPOSITORY_TOKEN,
 	UserReadRepository,
-} from "@/generic/users/domain/repositories/user-read.repository";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
-import { UserCreatedEvent } from "@/shared/domain/events/users/user-created/user-created.event";
+} from '@/generic/users/domain/repositories/user-read.repository';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
+import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
 
 @EventsHandler(UserCreatedEvent)
 export class UserCreatedEventHandler

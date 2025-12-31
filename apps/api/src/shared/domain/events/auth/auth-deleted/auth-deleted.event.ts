@@ -1,6 +1,6 @@
-import { IAuthEventData } from "@/shared/domain/events/auth/interfaces/auth-event-data.interface";
-import { BaseEvent } from "@/shared/domain/events/base-event.interface";
-import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
+import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
+import { BaseEvent } from '@/shared/domain/events/base-event.interface';
+import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 /**
  * Auth deleted event

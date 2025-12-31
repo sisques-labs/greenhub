@@ -1,4 +1,4 @@
-import { IBaseViewModelDto } from "@/shared/domain/interfaces/base-view-model-dto.interface";
+import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dto.interface';
 
 /**
  * Represents the view model for the data returned after creating a plant entity.

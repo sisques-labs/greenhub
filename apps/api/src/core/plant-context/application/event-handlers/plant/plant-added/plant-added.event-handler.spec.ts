@@ -1,23 +1,23 @@
-import { Test } from "@nestjs/testing";
-import { PlantCreatedEventHandler } from "@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler";
-import { PlantCreatedEvent } from "@/core/plant-context/application/events/plant/plant-created/plant-created.event";
-import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
-import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
-import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { GrowingUnitViewModelFactory } from "@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory";
+import { Test } from '@nestjs/testing';
+import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
+import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
+import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
-} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository";
-import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
-import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
-import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
-import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 
-describe("PlantCreatedEventHandler", () => {
+describe('PlantCreatedEventHandler', () => {
 	let handler: PlantCreatedEventHandler;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
@@ -66,10 +66,10 @@ describe("PlantCreatedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should update growing unit view model when plant is added", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const plantId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should update growing unit view model when plant is added', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const event = new PlantCreatedEvent(
 				{
 					aggregateRootId: growingUnitId,
@@ -81,8 +81,8 @@ describe("PlantCreatedEventHandler", () => {
 				{
 					id: plantId,
 					growingUnitId,
-					name: "Basil",
-					species: "Ocimum basilicum",
+					name: 'Basil',
+					species: 'Ocimum basilicum',
 					plantedDate: null,
 					notes: null,
 					status: PlantStatusEnum.PLANTED,
@@ -91,7 +91,7 @@ describe("PlantCreatedEventHandler", () => {
 
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -101,7 +101,7 @@ describe("PlantCreatedEventHandler", () => {
 			const now = new Date();
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,

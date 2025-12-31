@@ -1,15 +1,15 @@
-import { Test } from "@nestjs/testing";
-import { SagaStepDeletedEventHandler } from "@/generic/saga-context/saga-step/application/event-handlers/saga-step-deleted/saga-step-deleted.event-handler";
-import { AssertSagaStepViewModelExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { Test } from '@nestjs/testing';
+import { SagaStepDeletedEventHandler } from '@/generic/saga-context/saga-step/application/event-handlers/saga-step-deleted/saga-step-deleted.event-handler';
+import { AssertSagaStepViewModelExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
 	SAGA_STEP_READ_REPOSITORY_TOKEN,
 	SagaStepReadRepository,
-} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { SagaStepDeletedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event";
+} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event';
 
-describe("SagaStepDeletedEventHandler", () => {
+describe('SagaStepDeletedEventHandler', () => {
 	let handler: SagaStepDeletedEventHandler;
 	let mockSagaStepReadRepository: jest.Mocked<SagaStepReadRepository>;
 	let mockAssertSagaStepViewModelExistsService: jest.Mocked<AssertSagaStepViewModelExistsService>;
@@ -50,13 +50,13 @@ describe("SagaStepDeletedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should delete saga step view model when event is handled", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should delete saga step view model when event is handled', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Test Step",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Test Step',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -66,25 +66,25 @@ describe("SagaStepDeletedEventHandler", () => {
 				maxRetries: 3,
 				payload: {},
 				result: {},
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaStepDeletedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepDeletedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepDeletedEvent',
 				},
 				eventData,
 			);
 
 			const existingViewModel = new SagaStepViewModel({
 				id: aggregateId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Test Step",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Test Step',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -94,8 +94,8 @@ describe("SagaStepDeletedEventHandler", () => {
 				maxRetries: 3,
 				payload: {},
 				result: {},
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			mockAssertSagaStepViewModelExistsService.execute.mockResolvedValue(
@@ -117,12 +117,12 @@ describe("SagaStepDeletedEventHandler", () => {
 			expect(mockSagaStepReadRepository.delete).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw error when view model does not exist", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw error when view model does not exist', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Test Step",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Test Step',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -132,22 +132,22 @@ describe("SagaStepDeletedEventHandler", () => {
 				maxRetries: 3,
 				payload: {},
 				result: {},
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaStepDeletedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepDeletedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepDeletedEvent',
 				},
 				eventData,
 			);
 
-			const error = new Error("Saga step view model not found");
+			const error = new Error('Saga step view model not found');
 			mockAssertSagaStepViewModelExistsService.execute.mockRejectedValue(error);
 
 			await expect(handler.handle(event)).rejects.toThrow(error);

@@ -1,10 +1,10 @@
-import { CommandBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaInstanceStatusChangedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event";
-import { SagaInstanceStatusChangedEventHandler } from "./saga-instance-status-changed.event-handler";
+import { CommandBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
+import { SagaInstanceStatusChangedEventHandler } from './saga-instance-status-changed.event-handler';
 
-describe("SagaInstanceStatusChangedEventHandler", () => {
+describe('SagaInstanceStatusChangedEventHandler', () => {
 	let handler: SagaInstanceStatusChangedEventHandler;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 
@@ -32,26 +32,26 @@ describe("SagaInstanceStatusChangedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should create INFO log for normal status changes", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should create INFO log for normal status changes', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "COMPLETED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'COMPLETED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceStatusChangedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceStatusChangedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceStatusChangedEvent',
 				},
 				eventData,
 			);
@@ -67,25 +67,25 @@ describe("SagaInstanceStatusChangedEventHandler", () => {
 			);
 		});
 
-		it("should create ERROR log for FAILED status", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should create ERROR log for FAILED status', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "FAILED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'FAILED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceStatusChangedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceStatusChangedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceStatusChangedEvent',
 				},
 				eventData,
 			);
@@ -101,25 +101,25 @@ describe("SagaInstanceStatusChangedEventHandler", () => {
 			);
 		});
 
-		it("should create ERROR log for COMPENSATING status", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should create ERROR log for COMPENSATING status', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "COMPENSATING",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'COMPENSATING',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceStatusChangedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceStatusChangedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceStatusChangedEvent',
 				},
 				eventData,
 			);
@@ -132,25 +132,25 @@ describe("SagaInstanceStatusChangedEventHandler", () => {
 			expect(command.type.value).toBe(SagaLogTypeEnum.ERROR);
 		});
 
-		it("should create DEBUG log for RUNNING status", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should create DEBUG log for RUNNING status', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "RUNNING",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'RUNNING',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceStatusChangedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceStatusChangedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceStatusChangedEvent',
 				},
 				eventData,
 			);
@@ -163,25 +163,25 @@ describe("SagaInstanceStatusChangedEventHandler", () => {
 			expect(command.type.value).toBe(SagaLogTypeEnum.DEBUG);
 		});
 
-		it("should create DEBUG log for STARTED status", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should create DEBUG log for STARTED status', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "STARTED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'STARTED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceStatusChangedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceStatusChangedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceStatusChangedEvent',
 				},
 				eventData,
 			);
@@ -194,30 +194,30 @@ describe("SagaInstanceStatusChangedEventHandler", () => {
 			expect(command.type.value).toBe(SagaLogTypeEnum.DEBUG);
 		});
 
-		it("should handle errors from command bus", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle errors from command bus', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "COMPLETED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'COMPLETED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceStatusChangedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceStatusChangedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceStatusChangedEvent',
 				},
 				eventData,
 			);
 
-			const error = new Error("Command execution failed");
+			const error = new Error('Command execution failed');
 			mockCommandBus.execute.mockRejectedValue(error);
 
 			await expect(handler.handle(event)).rejects.toThrow(error);

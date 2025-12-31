@@ -1,4 +1,4 @@
-import { BaseUpdateCommandHandler } from "./base-update.command-handler";
+import { BaseUpdateCommandHandler } from './base-update.command-handler';
 
 // Create a concrete implementation for testing
 interface TestCommand {
@@ -42,75 +42,75 @@ class TestUpdateCommandHandler extends BaseUpdateCommandHandler<
 	}
 }
 
-describe("BaseUpdateCommandHandler", () => {
+describe('BaseUpdateCommandHandler', () => {
 	let handler: TestUpdateCommandHandler;
 
 	beforeEach(() => {
 		handler = new TestUpdateCommandHandler();
 	});
 
-	it("should be defined", () => {
+	it('should be defined', () => {
 		expect(handler).toBeDefined();
 	});
 
-	it("should have a logger", () => {
-		expect(handler["logger"]).toBeDefined();
+	it('should have a logger', () => {
+		expect(handler['logger']).toBeDefined();
 	});
 
-	describe("extractUpdateData", () => {
-		it("should extract update data excluding undefined values", () => {
+	describe('extractUpdateData', () => {
+		it('should extract update data excluding undefined values', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
+				id: '123',
+				name: 'John',
 				email: undefined,
 				age: 30,
-				status: "active",
+				status: 'active',
 			};
 
 			const result = handler.extractUpdateDataPublic(command);
 
 			expect(result).toEqual({
-				id: "123",
-				name: "John",
+				id: '123',
+				name: 'John',
 				age: 30,
-				status: "active",
+				status: 'active',
 			});
 			expect(result.email).toBeUndefined();
 		});
 
-		it("should exclude specified fields", () => {
+		it('should exclude specified fields', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
 			};
 
-			const result = handler.extractUpdateDataPublic(command, ["id", "age"]);
+			const result = handler.extractUpdateDataPublic(command, ['id', 'age']);
 
 			expect(result).toEqual({
-				name: "John",
-				email: "john@example.com",
+				name: 'John',
+				email: 'john@example.com',
 			});
 			expect(result.id).toBeUndefined();
 			expect(result.age).toBeUndefined();
 		});
 
-		it("should handle empty command", () => {
+		it('should handle empty command', () => {
 			const command: TestCommand = {
-				id: "123",
+				id: '123',
 			};
 
 			const result = handler.extractUpdateDataPublic(command);
 
 			expect(result).toEqual({
-				id: "123",
+				id: '123',
 			});
 		});
 
-		it("should handle command with all undefined values", () => {
+		it('should handle command with all undefined values', () => {
 			const command: TestCommand = {
-				id: "123",
+				id: '123',
 				name: undefined,
 				email: undefined,
 				age: undefined,
@@ -119,58 +119,58 @@ describe("BaseUpdateCommandHandler", () => {
 			const result = handler.extractUpdateDataPublic(command);
 
 			expect(result).toEqual({
-				id: "123",
+				id: '123',
 			});
 		});
 
-		it("should handle command with all defined values", () => {
+		it('should handle command with all defined values', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
-				status: "active",
+				status: 'active',
 			};
 
 			const result = handler.extractUpdateDataPublic(command);
 
 			expect(result).toEqual({
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
-				status: "active",
+				status: 'active',
 			});
 		});
 
-		it("should exclude multiple fields", () => {
+		it('should exclude multiple fields', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
-				status: "active",
+				status: 'active',
 			};
 
 			const result = handler.extractUpdateDataPublic(command, [
-				"id",
-				"email",
-				"status",
+				'id',
+				'email',
+				'status',
 			]);
 
 			expect(result).toEqual({
-				name: "John",
+				name: 'John',
 				age: 30,
 			});
 		});
 	});
 
-	describe("extractUpdateDataWithTransform", () => {
-		it("should extract and transform data", () => {
+	describe('extractUpdateDataWithTransform', () => {
+		it('should extract and transform data', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
 			};
 
@@ -184,32 +184,32 @@ describe("BaseUpdateCommandHandler", () => {
 				transformer,
 			);
 
-			expect(result.name).toBe("JOHN");
-			expect(result.email).toBe("john@example.com");
+			expect(result.name).toBe('JOHN');
+			expect(result.email).toBe('john@example.com');
 			expect(result.age).toBe(30);
 		});
 
-		it("should extract data without transformer", () => {
+		it('should extract data without transformer', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 			};
 
 			const result = handler.extractUpdateDataWithTransformPublic(command);
 
 			expect(result).toEqual({
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 			});
 		});
 
-		it("should apply transformer and exclude fields", () => {
+		it('should apply transformer and exclude fields', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
 			};
 
@@ -221,20 +221,20 @@ describe("BaseUpdateCommandHandler", () => {
 			const result = handler.extractUpdateDataWithTransformPublic(
 				command,
 				transformer,
-				["id", "age"],
+				['id', 'age'],
 			);
 
-			expect(result.name).toBe("JOHN");
-			expect(result.email).toBe("john@example.com");
+			expect(result.name).toBe('JOHN');
+			expect(result.email).toBe('john@example.com');
 			expect(result.id).toBeUndefined();
 			expect(result.age).toBeUndefined();
 		});
 
-		it("should handle complex transformation", () => {
+		it('should handle complex transformation', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
-				email: "john@example.com",
+				id: '123',
+				name: 'John',
+				email: 'john@example.com',
 				age: 30,
 			};
 
@@ -252,18 +252,18 @@ describe("BaseUpdateCommandHandler", () => {
 			const result = handler.extractUpdateDataWithTransformPublic(
 				command,
 				transformer,
-				["id"],
+				['id'],
 			);
 
-			expect(result.name).toBe("John");
-			expect(result.email).toBe("john@example.com");
+			expect(result.name).toBe('John');
+			expect(result.email).toBe('john@example.com');
 			expect(result.age).toBe(31);
 		});
 
-		it("should handle empty transformer result", () => {
+		it('should handle empty transformer result', () => {
 			const command: TestCommand = {
-				id: "123",
-				name: "John",
+				id: '123',
+				name: 'John',
 			};
 
 			const transformer = () => ({});

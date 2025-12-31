@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
-import { UserAggregateFactory } from "@/generic/users/domain/factories/user-aggregate/user-aggregate.factory";
-import { UserTypeormEntity } from "@/generic/users/infrastructure/database/typeorm/entities/user-typeorm.entity";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { Injectable, Logger } from '@nestjs/common';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
+import { UserAggregateFactory } from '@/generic/users/domain/factories/user-aggregate/user-aggregate.factory';
+import { UserTypeormEntity } from '@/generic/users/infrastructure/database/typeorm/entities/user-typeorm.entity';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 
 @Injectable()
 export class UserTypeOrmMapper {

@@ -1,14 +1,14 @@
-import { Test } from "@nestjs/testing";
-import { GrowingUnitNotFoundException } from "@/core/plant-context/application/exceptions/growing-unit/growing-unit-not-found/growing-unit-not-found.exception";
-import { AssertGrowingUnitViewModelExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
+import { Test } from '@nestjs/testing';
+import { GrowingUnitNotFoundException } from '@/core/plant-context/application/exceptions/growing-unit/growing-unit-not-found/growing-unit-not-found.exception';
+import { AssertGrowingUnitViewModelExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
-} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 
-describe("AssertGrowingUnitViewModelExistsService", () => {
+describe('AssertGrowingUnitViewModelExistsService', () => {
 	let service: AssertGrowingUnitViewModelExistsService;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 
@@ -39,13 +39,13 @@ describe("AssertGrowingUnitViewModelExistsService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return growing unit view model when found", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return growing unit view model when found', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,
@@ -68,8 +68,8 @@ describe("AssertGrowingUnitViewModelExistsService", () => {
 			expect(mockGrowingUnitReadRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw GrowingUnitNotFoundException when growing unit does not exist", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw GrowingUnitNotFoundException when growing unit does not exist', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockGrowingUnitReadRepository.findById.mockResolvedValue(null);
 
@@ -81,8 +81,8 @@ describe("AssertGrowingUnitViewModelExistsService", () => {
 			);
 		});
 
-		it("should throw exception with correct message", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw exception with correct message', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockGrowingUnitReadRepository.findById.mockResolvedValue(null);
 

@@ -1,11 +1,11 @@
-import { ConfigService } from "@nestjs/config";
-import { Test, TestingModule } from "@nestjs/testing";
-import { Db, MongoClient } from "mongodb";
-import { MongoMasterService } from "./mongo-master.service";
+import { ConfigService } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Db, MongoClient } from 'mongodb';
+import { MongoMasterService } from './mongo-master.service';
 
-jest.mock("mongodb");
+jest.mock('mongodb');
 
-describe("MongoMasterService", () => {
+describe('MongoMasterService', () => {
 	let service: MongoMasterService;
 	let module: TestingModule;
 	let mockClient: jest.Mocked<MongoClient>;
@@ -16,8 +16,8 @@ describe("MongoMasterService", () => {
 		mockConfigService = {
 			get: jest.fn((key: string) => {
 				const config: Record<string, string> = {
-					MONGODB_URI: "mongodb://localhost:27017",
-					MONGODB_DATABASE: "test-db",
+					MONGODB_URI: 'mongodb://localhost:27017',
+					MONGODB_DATABASE: 'test-db',
 				};
 				return config[key];
 			}),
@@ -40,8 +40,8 @@ describe("MongoMasterService", () => {
 
 	afterEach(async () => {
 		// Initialize client if not already done to avoid errors in onModuleDestroy
-		if (module && service && !service["client"]) {
-			service["client"] = mockClient;
+		if (module && service && !service['client']) {
+			service['client'] = mockClient;
 		}
 		if (module) {
 			try {
@@ -66,37 +66,37 @@ describe("MongoMasterService", () => {
 		service = module.get<MongoMasterService>(MongoMasterService);
 	});
 
-	it("should be defined", () => {
+	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});
 
-	describe("onModuleInit", () => {
-		it("should connect to MongoDB", async () => {
+	describe('onModuleInit', () => {
+		it('should connect to MongoDB', async () => {
 			await service.onModuleInit();
 
-			expect(MongoClient).toHaveBeenCalledWith("mongodb://localhost:27017", {
-				authSource: "admin",
+			expect(MongoClient).toHaveBeenCalledWith('mongodb://localhost:27017', {
+				authSource: 'admin',
 			});
 			expect(mockClient.connect).toHaveBeenCalledTimes(1);
-			expect(mockClient.db).toHaveBeenCalledWith("test-db");
+			expect(mockClient.db).toHaveBeenCalledWith('test-db');
 		});
 
-		it("should handle connection errors", async () => {
-			const error = new Error("Connection failed");
+		it('should handle connection errors', async () => {
+			const error = new Error('Connection failed');
 			mockClient.connect.mockRejectedValue(error);
-			const errorSpy = jest.spyOn(service["logger"], "error");
+			const errorSpy = jest.spyOn(service['logger'], 'error');
 
 			await expect(service.onModuleInit()).rejects.toThrow(error);
 
 			expect(errorSpy).toHaveBeenCalledWith(
-				expect.stringContaining("Error connecting to MongoDB Master:"),
+				expect.stringContaining('Error connecting to MongoDB Master:'),
 			);
 			errorSpy.mockRestore();
 		});
 	});
 
-	describe("onModuleDestroy", () => {
-		it("should close MongoDB connection", async () => {
+	describe('onModuleDestroy', () => {
+		it('should close MongoDB connection', async () => {
 			await service.onModuleInit();
 			await service.onModuleDestroy();
 
@@ -104,8 +104,8 @@ describe("MongoMasterService", () => {
 		});
 	});
 
-	describe("getDatabase", () => {
-		it("should return the database instance", async () => {
+	describe('getDatabase', () => {
+		it('should return the database instance', async () => {
 			await service.onModuleInit();
 
 			const db = service.getDatabase();
@@ -114,10 +114,10 @@ describe("MongoMasterService", () => {
 		});
 	});
 
-	describe("getCollection", () => {
-		it("should return a collection by name", async () => {
+	describe('getCollection', () => {
+		it('should return a collection by name', async () => {
 			await service.onModuleInit();
-			const collectionName = "users";
+			const collectionName = 'users';
 			const mockCollection = {} as any;
 			mockDb.collection.mockReturnValue(mockCollection);
 

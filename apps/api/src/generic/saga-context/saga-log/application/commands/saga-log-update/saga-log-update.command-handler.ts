@@ -1,13 +1,13 @@
-import { Inject, Logger } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
-import { SagaLogUpdateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command";
-import { AssertSagaLogExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service";
-import { ISagaLogUpdateDto } from "@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto";
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { SagaLogUpdateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command';
+import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
+import { ISagaLogUpdateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto';
 import {
 	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
 	SagaLogWriteRepository,
-} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository";
-import { BaseUpdateCommandHandler } from "@/shared/application/commands/update/base-update/base-update.command-handler";
+} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
+import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
 
 @CommandHandler(SagaLogUpdateCommand)
 export class SagaLogUpdateCommandHandler
@@ -42,9 +42,9 @@ export class SagaLogUpdateCommandHandler
 
 		// 02: Extract update data excluding the id, sagaInstanceId and sagaStepId fields
 		const updateData = this.extractUpdateData(command, [
-			"id",
-			"sagaInstanceId",
-			"sagaStepId",
+			'id',
+			'sagaInstanceId',
+			'sagaStepId',
 		]);
 		this.logger.debug(`Update data: ${JSON.stringify(updateData)}`);
 

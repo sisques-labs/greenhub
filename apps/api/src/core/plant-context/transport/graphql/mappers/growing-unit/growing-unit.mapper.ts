@@ -1,12 +1,12 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { Injectable, Logger } from '@nestjs/common';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import {
 	GrowingUnitDimensionsResponseDto,
 	GrowingUnitResponseDto,
 	PaginatedGrowingUnitResultDto,
-} from "@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto";
-import { PlantResponseDto } from "@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+} from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
+import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 /**
  * Mapper for converting between GrowingUnitViewModel domain entities and GraphQL DTOs.
@@ -26,7 +26,7 @@ export class GrowingUnitGraphQLMapper {
 	 * @returns The GraphQL response DTO
 	 */
 	private toPlantResponseDto(
-		plant: GrowingUnitViewModel["plants"][0],
+		plant: GrowingUnitViewModel['plants'][0],
 	): PlantResponseDto {
 		return {
 			id: plant.id,

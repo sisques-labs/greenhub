@@ -1,18 +1,18 @@
-import { Logger } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { AuthLoginByEmailCommand } from "@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command";
-import { AuthRefreshTokenCommand } from "@/generic/auth/application/commands/auth-refresh-token/auth-refresh-token.command";
-import { AuthRegisterByEmailCommand } from "@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command";
-import { Public } from "@/generic/auth/infrastructure/decorators/public/public.decorator";
-import { AuthLoginByEmailRequestDto } from "@/generic/auth/transport/graphql/dtos/requests/auth-login-by-email.request.dto";
-import { AuthRefreshTokenRequestDto } from "@/generic/auth/transport/graphql/dtos/requests/auth-refresh-token.request.dto";
-import { AuthRegisterByEmailRequestDto } from "@/generic/auth/transport/graphql/dtos/requests/auth-register-by-email.request.dto";
-import { LoginResponseDto } from "@/generic/auth/transport/graphql/dtos/responses/login.response.dto";
-import { RefreshTokenResponseDto } from "@/generic/auth/transport/graphql/dtos/responses/refresh-token.response.dto";
-import { UpdateUserRequestDto } from "@/generic/users/transport/graphql/dtos/requests/update-user.request.dto";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { Logger } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { AuthLoginByEmailCommand } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command';
+import { AuthRefreshTokenCommand } from '@/generic/auth/application/commands/auth-refresh-token/auth-refresh-token.command';
+import { AuthRegisterByEmailCommand } from '@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command';
+import { Public } from '@/generic/auth/infrastructure/decorators/public/public.decorator';
+import { AuthLoginByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-login-by-email.request.dto';
+import { AuthRefreshTokenRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-refresh-token.request.dto';
+import { AuthRegisterByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-register-by-email.request.dto';
+import { LoginResponseDto } from '@/generic/auth/transport/graphql/dtos/responses/login.response.dto';
+import { RefreshTokenResponseDto } from '@/generic/auth/transport/graphql/dtos/responses/refresh-token.response.dto';
+import { UpdateUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/update-user.request.dto';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 @Resolver()
 @Public()
@@ -26,7 +26,7 @@ export class AuthMutationsResolver {
 
 	@Mutation(() => LoginResponseDto)
 	async loginByEmail(
-		@Args("input") input: AuthLoginByEmailRequestDto,
+		@Args('input') input: AuthLoginByEmailRequestDto,
 	): Promise<LoginResponseDto> {
 		this.logger.log(`Login by email for email: ${input.email}`);
 
@@ -44,7 +44,7 @@ export class AuthMutationsResolver {
 
 	@Mutation(() => MutationResponseDto)
 	async registerByEmail(
-		@Args("input") input: AuthRegisterByEmailRequestDto,
+		@Args('input') input: AuthRegisterByEmailRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Register by email for email: ${input.email}`);
 
@@ -59,16 +59,16 @@ export class AuthMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Auth registered successfully",
+			message: 'Auth registered successfully',
 			id: registeredAuthId,
 		});
 	}
 
 	@Mutation(() => RefreshTokenResponseDto)
 	async refreshToken(
-		@Args("input") input: AuthRefreshTokenRequestDto,
+		@Args('input') input: AuthRefreshTokenRequestDto,
 	): Promise<RefreshTokenResponseDto> {
-		this.logger.log("Refresh token requested");
+		this.logger.log('Refresh token requested');
 
 		// 01: Send the command to the command bus
 		const newAccessToken = await this.commandBus.execute(
@@ -85,7 +85,7 @@ export class AuthMutationsResolver {
 
 	@Mutation(() => MutationResponseDto)
 	async logout(
-		@Args("input") input: UpdateUserRequestDto,
+		@Args('input') input: UpdateUserRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Logout for id: ${input.id}`);
 
@@ -106,7 +106,7 @@ export class AuthMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "User updated successfully",
+			message: 'User updated successfully',
 			id: input.id,
 		});
 	}

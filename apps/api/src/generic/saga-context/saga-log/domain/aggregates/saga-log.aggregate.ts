@@ -1,16 +1,16 @@
-import { ISagaLogCreateDto } from "@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-create/saga-log-create.dto";
-import { ISagaLogUpdateDto } from "@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto";
-import { SagaLogPrimitives } from "@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives";
-import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
-import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
-import { BaseAggregate } from "@/shared/domain/aggregates/base-aggregate/base.aggregate";
-import { SagaLogCreatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event";
-import { SagaLogDeletedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event";
-import { SagaLogUpdatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+import { ISagaLogCreateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-create/saga-log-create.dto';
+import { ISagaLogUpdateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto';
+import { SagaLogPrimitives } from '@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives';
+import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
+import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
+import { BaseAggregate } from '@/shared/domain/aggregates/base-aggregate/base.aggregate';
+import { SagaLogCreatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event';
+import { SagaLogDeletedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event';
+import { SagaLogUpdatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
 export class SagaLogAggregate extends BaseAggregate {
 	private readonly _id: SagaLogUuidValueObject;

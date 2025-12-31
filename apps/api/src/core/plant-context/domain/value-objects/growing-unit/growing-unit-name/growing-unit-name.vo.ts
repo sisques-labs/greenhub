@@ -1,4 +1,4 @@
-import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
+import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
 
 /**
  * Value object representing the name of a growing unit.

@@ -1,17 +1,17 @@
-import { InvalidSaltRoundsException } from "@/generic/auth/application/exceptions/auth-invalid-salt-rounds/auth-invalid-salt-rounds.exception";
-import { BaseDomainException } from "@/shared/domain/exceptions/base-domain.exception";
+import { InvalidSaltRoundsException } from '@/generic/auth/application/exceptions/auth-invalid-salt-rounds/auth-invalid-salt-rounds.exception';
+import { BaseDomainException } from '@/shared/domain/exceptions/base-domain.exception';
 
-describe("InvalidSaltRoundsException", () => {
+describe('InvalidSaltRoundsException', () => {
 	const invalidRounds = 35;
 
-	it("should be an instance of BaseDomainException", () => {
+	it('should be an instance of BaseDomainException', () => {
 		const exception = new InvalidSaltRoundsException(invalidRounds);
 
 		expect(exception).toBeInstanceOf(BaseDomainException);
 		expect(exception).toBeInstanceOf(Error);
 	});
 
-	it("should create an exception with the correct message", () => {
+	it('should create an exception with the correct message', () => {
 		const exception = new InvalidSaltRoundsException(invalidRounds);
 
 		expect(exception.message).toBe(
@@ -19,19 +19,19 @@ describe("InvalidSaltRoundsException", () => {
 		);
 	});
 
-	it("should set the name to InvalidSaltRoundsException", () => {
+	it('should set the name to InvalidSaltRoundsException', () => {
 		const exception = new InvalidSaltRoundsException(invalidRounds);
 
-		expect(exception.name).toBe("InvalidSaltRoundsException");
+		expect(exception.name).toBe('InvalidSaltRoundsException');
 	});
 
-	it("should set the domain to PasswordHashing", () => {
+	it('should set the domain to PasswordHashing', () => {
 		const exception = new InvalidSaltRoundsException(invalidRounds);
 
-		expect(exception.layer).toBe("Domain");
+		expect(exception.layer).toBe('Domain');
 	});
 
-	it("should have a timestamp", () => {
+	it('should have a timestamp', () => {
 		const before = new Date();
 		const exception = new InvalidSaltRoundsException(invalidRounds);
 		const after = new Date();
@@ -43,7 +43,7 @@ describe("InvalidSaltRoundsException", () => {
 		expect(exception.timestamp.getTime()).toBeLessThanOrEqual(after.getTime());
 	});
 
-	it("should return a detailed message", () => {
+	it('should return a detailed message', () => {
 		const exception = new InvalidSaltRoundsException(invalidRounds);
 		const detailedMessage = exception.getDetailedMessage();
 
@@ -52,7 +52,7 @@ describe("InvalidSaltRoundsException", () => {
 		);
 	});
 
-	it("should work with different invalid round values", () => {
+	it('should work with different invalid round values', () => {
 		const lowRounds = 3;
 		const highRounds = 32;
 

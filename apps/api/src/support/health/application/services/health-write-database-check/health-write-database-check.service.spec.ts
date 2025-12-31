@@ -1,8 +1,8 @@
-import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
-import { HealthWriteDatabaseCheckService } from "@/support/health/application/services/health-write-database-check/health-write-database-check.service";
-import { HealthStatusEnum } from "@/support/health/domain/enum/health-status.enum";
+import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { HealthWriteDatabaseCheckService } from '@/support/health/application/services/health-write-database-check/health-write-database-check.service';
+import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
 
-describe("HealthWriteDatabaseCheckService", () => {
+describe('HealthWriteDatabaseCheckService', () => {
 	let service: HealthWriteDatabaseCheckService;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 
@@ -22,24 +22,24 @@ describe("HealthWriteDatabaseCheckService", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should return OK when database connection is healthy", async () => {
+	it('should return OK when database connection is healthy', async () => {
 		const mockDataSource = mockTypeormMasterService.getDataSource();
-		(mockDataSource.query as jest.Mock).mockResolvedValue([{ "?column?": 1 }]);
+		(mockDataSource.query as jest.Mock).mockResolvedValue([{ '?column?': 1 }]);
 
 		const result = await service.execute();
 
-		expect(mockDataSource.query).toHaveBeenCalledWith("SELECT 1");
+		expect(mockDataSource.query).toHaveBeenCalledWith('SELECT 1');
 		expect(result).toBe(HealthStatusEnum.OK);
 	});
 
-	it("should return ERROR when database connection fails", async () => {
-		const error = new Error("Database connection failed");
+	it('should return ERROR when database connection fails', async () => {
+		const error = new Error('Database connection failed');
 		const mockDataSource = mockTypeormMasterService.getDataSource();
 		(mockDataSource.query as jest.Mock).mockRejectedValue(error);
 
 		const result = await service.execute();
 
-		expect(mockDataSource.query).toHaveBeenCalledWith("SELECT 1");
+		expect(mockDataSource.query).toHaveBeenCalledWith('SELECT 1');
 		expect(result).toBe(HealthStatusEnum.ERROR);
 	});
 });

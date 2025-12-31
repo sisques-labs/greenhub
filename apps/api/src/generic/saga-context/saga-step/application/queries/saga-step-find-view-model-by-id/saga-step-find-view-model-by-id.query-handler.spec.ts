@@ -1,12 +1,12 @@
-import { Test } from "@nestjs/testing";
-import { SagaStepNotFoundException } from "@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception";
-import { FindSagaStepViewModelByIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query";
-import { FindSagaStepViewModelByIdQueryHandler } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query-handler";
-import { AssertSagaStepViewModelExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
+import { Test } from '@nestjs/testing';
+import { SagaStepNotFoundException } from '@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception';
+import { FindSagaStepViewModelByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query';
+import { FindSagaStepViewModelByIdQueryHandler } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query-handler';
+import { AssertSagaStepViewModelExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
 
-describe("FindSagaStepViewModelByIdQueryHandler", () => {
+describe('FindSagaStepViewModelByIdQueryHandler', () => {
 	let handler: FindSagaStepViewModelByIdQueryHandler;
 	let mockAssertSagaStepViewModelExistsService: jest.Mocked<AssertSagaStepViewModelExistsService>;
 
@@ -34,16 +34,16 @@ describe("FindSagaStepViewModelByIdQueryHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return saga step view model when saga step exists", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return saga step view model when saga step exists', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaStepId };
 			const query = new FindSagaStepViewModelByIdQuery(queryDto);
 
 			const mockViewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -53,8 +53,8 @@ describe("FindSagaStepViewModelByIdQueryHandler", () => {
 				maxRetries: 3,
 				payload: {},
 				result: {},
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			mockAssertSagaStepViewModelExistsService.execute.mockResolvedValue(
@@ -72,8 +72,8 @@ describe("FindSagaStepViewModelByIdQueryHandler", () => {
 			).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw SagaStepNotFoundException when saga step does not exist", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaStepNotFoundException when saga step does not exist', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaStepId };
 			const query = new FindSagaStepViewModelByIdQuery(queryDto);
 
@@ -88,17 +88,17 @@ describe("FindSagaStepViewModelByIdQueryHandler", () => {
 			).toHaveBeenCalledWith(sagaStepId);
 		});
 
-		it("should return view model with all fields populated", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return view model with all fields populated', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaStepId };
 			const query = new FindSagaStepViewModelByIdQuery(queryDto);
 
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 			const mockViewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
 				startDate: startDate,
@@ -106,10 +106,10 @@ describe("FindSagaStepViewModelByIdQueryHandler", () => {
 				errorMessage: null,
 				retryCount: 2,
 				maxRetries: 5,
-				payload: { orderId: "12345" },
+				payload: { orderId: '12345' },
 				result: { success: true },
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T11:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T11:00:00Z'),
 			});
 
 			mockAssertSagaStepViewModelExistsService.execute.mockResolvedValue(
@@ -119,7 +119,7 @@ describe("FindSagaStepViewModelByIdQueryHandler", () => {
 			const result = await handler.execute(query);
 
 			expect(result.id).toBe(sagaStepId);
-			expect(result.name).toBe("Process Payment");
+			expect(result.name).toBe('Process Payment');
 			expect(result.status).toBe(SagaStepStatusEnum.COMPLETED);
 			expect(result.startDate).toEqual(startDate);
 			expect(result.endDate).toEqual(endDate);

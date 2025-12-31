@@ -1,5 +1,5 @@
-import { ISagaStepCreateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto";
-import { ISagaStepUpdateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-update/saga-step-update-view-model.dto";
+import { ISagaStepCreateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto';
+import { ISagaStepUpdateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-update/saga-step-update-view-model.dto';
 
 /**
  * This class is used to represent a saga step view model.

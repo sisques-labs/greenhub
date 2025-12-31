@@ -1,5 +1,5 @@
-import { ISagaInstanceDeleteCommandDto } from "@/generic/saga-context/saga-instance/application/dtos/commands/saga-instance-delete/saga-instance-delete-command.dto";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { ISagaInstanceDeleteCommandDto } from '@/generic/saga-context/saga-instance/application/dtos/commands/saga-instance-delete/saga-instance-delete-command.dto';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class SagaInstanceDeleteCommand {
 	readonly id: SagaInstanceUuidValueObject;

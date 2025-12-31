@@ -1,4 +1,4 @@
-import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
+import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
 
 /**
  * Data Transfer Object for updating a user view model.
@@ -15,5 +15,5 @@ import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models
  * @property {Date} updatedAt - Timestamp when the user was last updated.
  */
 export type IUserUpdateViewModelDto = Partial<
-	Omit<IUserCreateViewModelDto, "id" | "createdAt" | "updatedAt">
+	Omit<IUserCreateViewModelDto, 'id' | 'createdAt' | 'updatedAt'>
 >;

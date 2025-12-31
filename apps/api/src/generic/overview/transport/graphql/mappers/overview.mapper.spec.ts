@@ -1,9 +1,9 @@
-import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
-import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
-import { OverviewResponseDto } from "@/generic/overview/transport/graphql/dtos/responses/overview.response.dto";
-import { OverviewGraphQLMapper } from "@/generic/overview/transport/graphql/mappers/overview.mapper";
+import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+import { OverviewResponseDto } from '@/generic/overview/transport/graphql/dtos/responses/overview.response.dto';
+import { OverviewGraphQLMapper } from '@/generic/overview/transport/graphql/mappers/overview.mapper';
 
-describe("OverviewGraphQLMapper", () => {
+describe('OverviewGraphQLMapper', () => {
 	let mapper: OverviewGraphQLMapper;
 	let overviewViewModelFactory: OverviewViewModelFactory;
 
@@ -12,11 +12,11 @@ describe("OverviewGraphQLMapper", () => {
 		overviewViewModelFactory = new OverviewViewModelFactory();
 	});
 
-	describe("toResponseDto", () => {
-		it("should convert overview view model to response DTO with all properties", () => {
-			const overviewId = "overview";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('toResponseDto', () => {
+		it('should convert overview view model to response DTO with all properties', () => {
+			const overviewId = 'overview';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = overviewViewModelFactory.create({
 				id: overviewId,
@@ -93,10 +93,10 @@ describe("OverviewGraphQLMapper", () => {
 			});
 		});
 
-		it("should convert overview view model with zero values", () => {
-			const overviewId = "overview";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+		it('should convert overview view model with zero values', () => {
+			const overviewId = 'overview';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = overviewViewModelFactory.create({
 				id: overviewId,

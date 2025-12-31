@@ -1,4 +1,4 @@
-import { ICalculatePercentageCommandDto } from "@/support/math/application/dtos/commands/calculate-percentage/calculate-percentage-command.dto";
+import { ICalculatePercentageCommandDto } from '@/support/math/application/dtos/commands/calculate-percentage/calculate-percentage-command.dto';
 
 /**
  * Command for calculating percentage.

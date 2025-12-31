@@ -1,15 +1,15 @@
-import { Test } from "@nestjs/testing";
-import { SagaLogDeletedEventHandler } from "@/generic/saga-context/saga-log/application/event-handlers/saga-log-deleted/saga-log-deleted.event-handler";
-import { AssertSagaLogViewModelExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { Test } from '@nestjs/testing';
+import { SagaLogDeletedEventHandler } from '@/generic/saga-context/saga-log/application/event-handlers/saga-log-deleted/saga-log-deleted.event-handler';
+import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import {
 	SAGA_LOG_READ_REPOSITORY_TOKEN,
 	SagaLogReadRepository,
-} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository";
-import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
-import { SagaLogDeletedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event";
+} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
+import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+import { SagaLogDeletedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event';
 
-describe("SagaLogDeletedEventHandler", () => {
+describe('SagaLogDeletedEventHandler', () => {
 	let handler: SagaLogDeletedEventHandler;
 	let mockSagaLogReadRepository: jest.Mocked<SagaLogReadRepository>;
 	let mockAssertSagaLogViewModelExistsService: jest.Mocked<AssertSagaLogViewModelExistsService>;
@@ -51,26 +51,26 @@ describe("SagaLogDeletedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should delete saga log view model from event", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should delete saga log view model from event', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.INFO,
-				message: "Test log message",
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				message: 'Test log message',
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaLogDeletedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaLogAggregate",
+					aggregateRootType: 'SagaLogAggregate',
 					entityId: aggregateId,
-					entityType: "SagaLogAggregate",
-					eventType: "SagaLogDeletedEvent",
+					entityType: 'SagaLogAggregate',
+					eventType: 'SagaLogDeletedEvent',
 				},
 				eventData,
 			);

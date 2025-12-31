@@ -1,26 +1,26 @@
-import { Inject, Logger, UnauthorizedException } from "@nestjs/common";
+import { Inject, Logger, UnauthorizedException } from '@nestjs/common';
 import {
 	CommandHandler,
 	EventBus,
 	ICommandHandler,
 	QueryBus,
-} from "@nestjs/cqrs";
-import { AssertAuthEmailExistsService } from "@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service";
-import { JwtAuthService } from "@/generic/auth/application/services/jwt-auth/jwt-auth.service";
-import { PasswordHashingService } from "@/generic/auth/application/services/password-hashing/password-hashing.service";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { ITokenPair } from "@/generic/auth/domain/interfaces/token-pair.interface";
+} from '@nestjs/cqrs';
+import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
+import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
+import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { ITokenPair } from '@/generic/auth/domain/interfaces/token-pair.interface';
 import {
 	AUTH_READ_REPOSITORY_TOKEN,
 	AuthReadRepository,
-} from "@/generic/auth/domain/repositories/auth-read.repository";
+} from '@/generic/auth/domain/repositories/auth-read.repository';
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
-} from "@/generic/auth/domain/repositories/auth-write.repository";
-import { AuthLastLoginAtValueObject } from "@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo";
-import { UserFindByIdQuery } from "@/generic/users/application/queries/user-find-by-id/user-find-by-id.query";
-import { AuthLoginByEmailCommand } from "./auth-login-by-email.command";
+} from '@/generic/auth/domain/repositories/auth-write.repository';
+import { AuthLastLoginAtValueObject } from '@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo';
+import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
+import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
 @CommandHandler(AuthLoginByEmailCommand)
 export class AuthLoginByEmailCommandHandler
@@ -59,7 +59,7 @@ export class AuthLoginByEmailCommandHandler
 		// 02: Verify password
 		if (!auth.password?.value) {
 			this.logger.error(`No password found for auth: ${auth.id.value}`);
-			throw new UnauthorizedException("Invalid credentials");
+			throw new UnauthorizedException('Invalid credentials');
 		}
 
 		// 03: Verify password

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Service for calculating medians.
@@ -30,7 +30,7 @@ export class CalculateMedianService {
 		);
 
 		if (values.length === 0) {
-			this.logger.warn("Empty array provided, returning 0");
+			this.logger.warn('Empty array provided, returning 0');
 			return 0;
 		}
 

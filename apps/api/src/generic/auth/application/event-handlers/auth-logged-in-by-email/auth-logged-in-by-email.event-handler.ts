@@ -1,11 +1,11 @@
-import { Inject, Logger } from "@nestjs/common";
-import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { AssertAuthViewModelExistsService } from "@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service";
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
 import {
 	AUTH_READ_REPOSITORY_TOKEN,
 	AuthReadRepository,
-} from "@/generic/auth/domain/repositories/auth-read.repository";
-import { AuthLoggedInByEmailEvent } from "@/shared/domain/events/auth/auth-logged-in-by-email/auth-logged-in-by-email.event";
+} from '@/generic/auth/domain/repositories/auth-read.repository';
+import { AuthLoggedInByEmailEvent } from '@/shared/domain/events/auth/auth-logged-in-by-email/auth-logged-in-by-email.event';
 
 @EventsHandler(AuthLoggedInByEmailEvent)
 export class AuthLoggedInByEmailEventHandler

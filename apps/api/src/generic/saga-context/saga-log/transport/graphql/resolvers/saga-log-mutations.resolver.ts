@@ -1,18 +1,18 @@
-import { Logger, UseGuards } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
-import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
-import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
-import { SagaLogDeleteCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command";
-import { SagaLogUpdateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command";
-import { SagaLogCreateRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-create.request.dto";
-import { SagaLogDeleteRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-delete.request.dto";
-import { SagaLogUpdateRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-update.request.dto";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { Logger, UseGuards } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
+import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
+import { SagaLogDeleteCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command';
+import { SagaLogUpdateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command';
+import { SagaLogCreateRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-create.request.dto';
+import { SagaLogDeleteRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-delete.request.dto';
+import { SagaLogUpdateRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-update.request.dto';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -27,7 +27,7 @@ export class SagaLogMutationsResolver {
 
 	@Mutation(() => MutationResponseDto)
 	async sagaLogCreate(
-		@Args("input") input: SagaLogCreateRequestDto,
+		@Args('input') input: SagaLogCreateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(
 			`Creating saga log for saga instance: ${input.sagaInstanceId} and saga step: ${input.sagaStepId}`,
@@ -46,14 +46,14 @@ export class SagaLogMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga log created successfully",
+			message: 'Saga log created successfully',
 			id: sagaLogId,
 		});
 	}
 
 	@Mutation(() => MutationResponseDto)
 	async sagaLogUpdate(
-		@Args("input") input: SagaLogUpdateRequestDto,
+		@Args('input') input: SagaLogUpdateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Updating saga log by id: ${input.id}`);
 
@@ -68,14 +68,14 @@ export class SagaLogMutationsResolver {
 
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga log updated successfully",
+			message: 'Saga log updated successfully',
 			id: input.id,
 		});
 	}
 
 	@Mutation(() => MutationResponseDto)
 	async sagaLogDelete(
-		@Args("input") input: SagaLogDeleteRequestDto,
+		@Args('input') input: SagaLogDeleteRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Deleting saga log by id: ${input.id}`);
 
@@ -84,7 +84,7 @@ export class SagaLogMutationsResolver {
 
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga log deleted successfully",
+			message: 'Saga log deleted successfully',
 			id: input.id,
 		});
 	}

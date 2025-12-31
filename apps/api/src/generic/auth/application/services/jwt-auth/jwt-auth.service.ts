@@ -1,8 +1,8 @@
-import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { JwtService as NestJwtService } from "@nestjs/jwt";
-import { IJwtPayload } from "@/generic/auth/domain/interfaces/jwt-payload.interface";
-import { ITokenPair } from "@/generic/auth/domain/interfaces/token-pair.interface";
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService as NestJwtService } from '@nestjs/jwt';
+import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';
+import { ITokenPair } from '@/generic/auth/domain/interfaces/token-pair.interface';
 
 /**
  * JWT Service
@@ -21,13 +21,13 @@ export class JwtAuthService {
 		private readonly configService: ConfigService,
 	) {
 		this.accessTokenSecret =
-			this.configService.get<string>("JWT_ACCESS_SECRET") || "access-secret";
+			this.configService.get<string>('JWT_ACCESS_SECRET') || 'access-secret';
 		this.refreshTokenSecret =
-			this.configService.get<string>("JWT_REFRESH_SECRET") || "refresh-secret";
+			this.configService.get<string>('JWT_REFRESH_SECRET') || 'refresh-secret';
 		this.accessTokenExpiration =
-			this.configService.get<string>("JWT_ACCESS_EXPIRATION") || "15m";
+			this.configService.get<string>('JWT_ACCESS_EXPIRATION') || '15m';
 		this.refreshTokenExpiration =
-			this.configService.get<string>("JWT_REFRESH_EXPIRATION") || "7d";
+			this.configService.get<string>('JWT_REFRESH_EXPIRATION') || '7d';
 	}
 
 	/**
@@ -75,13 +75,13 @@ export class JwtAuthService {
 	 */
 	verifyAccessToken(token: string): IJwtPayload {
 		try {
-			this.logger.log("Verifying access token");
+			this.logger.log('Verifying access token');
 			return this.jwtService.verify(token, {
 				secret: this.accessTokenSecret,
 			}) as IJwtPayload;
 		} catch (error) {
 			this.logger.error(`Access token verification failed: ${error.message}`);
-			throw new UnauthorizedException("Invalid access token");
+			throw new UnauthorizedException('Invalid access token');
 		}
 	}
 
@@ -92,13 +92,13 @@ export class JwtAuthService {
 	 */
 	verifyRefreshToken(token: string): IJwtPayload {
 		try {
-			this.logger.log("Verifying refresh token");
+			this.logger.log('Verifying refresh token');
 			return this.jwtService.verify(token, {
 				secret: this.refreshTokenSecret,
 			}) as IJwtPayload;
 		} catch (error) {
 			this.logger.error(`Refresh token verification failed: ${error.message}`);
-			throw new UnauthorizedException("Invalid refresh token");
+			throw new UnauthorizedException('Invalid refresh token');
 		}
 	}
 
@@ -108,7 +108,7 @@ export class JwtAuthService {
 	 * @returns New access token (optionally with new refresh token)
 	 */
 	refreshToken(refreshToken: string): string {
-		this.logger.log("Refreshing access token using refresh token");
+		this.logger.log('Refreshing access token using refresh token');
 
 		// Verify and decode the refresh token
 		const payload = this.verifyRefreshToken(refreshToken);
@@ -127,7 +127,7 @@ export class JwtAuthService {
 	 * @returns Decoded payload
 	 */
 	decodeToken(token: string): IJwtPayload {
-		this.logger.log("Decoding token");
+		this.logger.log('Decoding token');
 		return this.jwtService.decode(token) as IJwtPayload;
 	}
 }

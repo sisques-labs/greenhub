@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
-import { ISagaInstanceCreateViewModelDto } from "@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto";
-import { SagaInstancePrimitives } from "@/generic/saga-context/saga-instance/domain/primitives/saga-instance.primitives";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
+import { Injectable, Logger } from '@nestjs/common';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
+import { ISagaInstanceCreateViewModelDto } from '@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto';
+import { SagaInstancePrimitives } from '@/generic/saga-context/saga-instance/domain/primitives/saga-instance.primitives';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
 
 /**
  * This factory class is used to create a new saga instance view model.

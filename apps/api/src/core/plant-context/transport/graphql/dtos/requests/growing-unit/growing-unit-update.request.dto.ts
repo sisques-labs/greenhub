@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from '@nestjs/graphql';
 import {
 	IsEnum,
 	IsInt,
@@ -8,19 +8,19 @@ import {
 	IsString,
 	IsUUID,
 	Min,
-} from "class-validator";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
+} from 'class-validator';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
-@InputType("GrowingUnitUpdateRequestDto")
+@InputType('GrowingUnitUpdateRequestDto')
 export class GrowingUnitUpdateRequestDto {
-	@Field(() => String, { description: "The id of the growing unit" })
+	@Field(() => String, { description: 'The id of the growing unit' })
 	@IsUUID()
 	@IsNotEmpty()
 	id: string;
 
 	@Field(() => String, {
-		description: "The name of the growing unit",
+		description: 'The name of the growing unit',
 		nullable: true,
 	})
 	@IsString()
@@ -28,7 +28,7 @@ export class GrowingUnitUpdateRequestDto {
 	name?: string;
 
 	@Field(() => String, {
-		description: "The type of the growing unit",
+		description: 'The type of the growing unit',
 		nullable: true,
 	})
 	@IsEnum(GrowingUnitTypeEnum)
@@ -36,7 +36,7 @@ export class GrowingUnitUpdateRequestDto {
 	type?: GrowingUnitTypeEnum;
 
 	@Field(() => Number, {
-		description: "The capacity of the growing unit",
+		description: 'The capacity of the growing unit',
 		nullable: true,
 	})
 	@IsInt()
@@ -46,7 +46,7 @@ export class GrowingUnitUpdateRequestDto {
 
 	@Field(() => Number, {
 		nullable: true,
-		description: "The length of the growing unit",
+		description: 'The length of the growing unit',
 	})
 	@IsNumber()
 	@IsOptional()
@@ -54,7 +54,7 @@ export class GrowingUnitUpdateRequestDto {
 
 	@Field(() => Number, {
 		nullable: true,
-		description: "The width of the growing unit",
+		description: 'The width of the growing unit',
 	})
 	@IsNumber()
 	@IsOptional()
@@ -62,7 +62,7 @@ export class GrowingUnitUpdateRequestDto {
 
 	@Field(() => Number, {
 		nullable: true,
-		description: "The height of the growing unit",
+		description: 'The height of the growing unit',
 	})
 	@IsNumber()
 	@IsOptional()
@@ -70,7 +70,7 @@ export class GrowingUnitUpdateRequestDto {
 
 	@Field(() => LengthUnitEnum, {
 		nullable: true,
-		description: "The unit of measurement for dimensions",
+		description: 'The unit of measurement for dimensions',
 	})
 	@IsEnum(LengthUnitEnum)
 	@IsOptional()

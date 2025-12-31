@@ -1,5 +1,5 @@
-import { PlantViewModel } from "@/core/plant-context/domain/view-models/plant/plant.view-model";
-import { IBaseViewModelDto } from "@/shared/domain/interfaces/base-view-model-dto.interface";
+import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dto.interface';
 
 /**
  * Represents the view model for the data returned after creating a plant entity.

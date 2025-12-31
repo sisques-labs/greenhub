@@ -1,20 +1,20 @@
-import { Logger, UseGuards } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { PlantAddCommand } from "@/core/plant-context/application/commands/plant/plant-add/plant-add.command";
-import { PlantRemoveCommand } from "@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command";
-import { PlantTransplantCommand } from "@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command";
-import { PlantUpdateCommand } from "@/core/plant-context/application/commands/plant/plant-update/plant-update.command";
-import { PlantAddRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto";
-import { PlantRemoveRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto";
-import { PlantTransplantRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-transplant.request.dto";
-import { PlantUpdateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto";
-import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
-import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { Logger, UseGuards } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
+import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
+import { PlantTransplantCommand } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command';
+import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
+import { PlantAddRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto';
+import { PlantRemoveRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto';
+import { PlantTransplantRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-transplant.request.dto';
+import { PlantUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto';
+import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 /**
  * GraphQL resolver for plant mutations.
@@ -41,7 +41,7 @@ export class PlantMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantAdd(
-		@Args("input") input: PlantAddRequestDto,
+		@Args('input') input: PlantAddRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Adding plant with input: ${JSON.stringify(input)}`);
 
@@ -60,7 +60,7 @@ export class PlantMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Plant added successfully",
+			message: 'Plant added successfully',
 			id: createdPlantId,
 		});
 	}
@@ -73,7 +73,7 @@ export class PlantMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantUpdate(
-		@Args("input") input: PlantUpdateRequestDto,
+		@Args('input') input: PlantUpdateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Updating plant with input: ${JSON.stringify(input)}`);
 
@@ -92,7 +92,7 @@ export class PlantMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Plant updated successfully",
+			message: 'Plant updated successfully',
 			id: input.id,
 		});
 	}
@@ -105,7 +105,7 @@ export class PlantMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantRemove(
-		@Args("input") input: PlantRemoveRequestDto,
+		@Args('input') input: PlantRemoveRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Removing plant with input: ${JSON.stringify(input)}`);
 
@@ -120,7 +120,7 @@ export class PlantMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Plant removed successfully",
+			message: 'Plant removed successfully',
 			id: input.plantId,
 		});
 	}
@@ -133,7 +133,7 @@ export class PlantMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantTransplant(
-		@Args("input") input: PlantTransplantRequestDto,
+		@Args('input') input: PlantTransplantRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Transplanting plant with input: ${JSON.stringify(input)}`);
 
@@ -149,7 +149,7 @@ export class PlantMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Plant transplanted successfully",
+			message: 'Plant transplanted successfully',
 			id: input.plantId,
 		});
 	}

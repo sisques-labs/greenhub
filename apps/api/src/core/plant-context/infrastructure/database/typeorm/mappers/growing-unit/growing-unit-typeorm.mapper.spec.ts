@@ -1,24 +1,24 @@
-import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { GrowingUnitAggregateFactory } from "@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory";
-import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
-import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
-import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
-import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
-import { PlantNameValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo";
-import { PlantSpeciesValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo";
-import { PlantStatusValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo";
-import { GrowingUnitTypeormEntity } from "@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity";
-import { PlantTypeormEntity } from "@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity";
-import { GrowingUnitTypeormMapper } from "@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper";
-import { PlantTypeormMapper } from "@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper";
-import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
-import { DimensionsValueObject } from "@/shared/domain/value-objects/dimensions/dimensions.vo";
-import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
-import { PlantUuidValueObject } from "@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo";
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
+import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
+import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
+import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
+import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
+import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper';
+import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
+import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
-describe("GrowingUnitTypeormMapper", () => {
+describe('GrowingUnitTypeormMapper', () => {
 	let mapper: GrowingUnitTypeormMapper;
 	let mockGrowingUnitAggregateFactory: jest.Mocked<GrowingUnitAggregateFactory>;
 	let mockPlantTypeormMapper: jest.Mocked<PlantTypeormMapper>;
@@ -48,17 +48,17 @@ describe("GrowingUnitTypeormMapper", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("toDomainEntity", () => {
-		it("should convert TypeORM entity to domain aggregate with all properties", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const plantId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('toDomainEntity', () => {
+		it('should convert TypeORM entity to domain aggregate with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const plantTypeormEntity = new PlantTypeormEntity();
 			plantTypeormEntity.id = plantId;
 			plantTypeormEntity.growingUnitId = growingUnitId;
-			plantTypeormEntity.name = "Basil";
-			plantTypeormEntity.species = "Ocimum basilicum";
+			plantTypeormEntity.name = 'Basil';
+			plantTypeormEntity.species = 'Ocimum basilicum';
 			plantTypeormEntity.plantedDate = null;
 			plantTypeormEntity.notes = null;
 			plantTypeormEntity.status = PlantStatusEnum.PLANTED;
@@ -68,7 +68,7 @@ describe("GrowingUnitTypeormMapper", () => {
 
 			const typeormEntity = new GrowingUnitTypeormEntity();
 			typeormEntity.id = growingUnitId;
-			typeormEntity.name = "Garden Bed 1";
+			typeormEntity.name = 'Garden Bed 1';
 			typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
 			typeormEntity.capacity = 10;
 			typeormEntity.length = 2.0;
@@ -83,8 +83,8 @@ describe("GrowingUnitTypeormMapper", () => {
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject("Basil"),
-				species: new PlantSpeciesValueObject("Ocimum basilicum"),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -92,7 +92,7 @@ describe("GrowingUnitTypeormMapper", () => {
 
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: new DimensionsValueObject({
@@ -119,7 +119,7 @@ describe("GrowingUnitTypeormMapper", () => {
 				mockGrowingUnitAggregateFactory.fromPrimitives,
 			).toHaveBeenCalledWith({
 				id: growingUnitId,
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: {
@@ -132,13 +132,13 @@ describe("GrowingUnitTypeormMapper", () => {
 			});
 		});
 
-		it("should convert TypeORM entity with null dimensions and no plants", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should convert TypeORM entity with null dimensions and no plants', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity = new GrowingUnitTypeormEntity();
 			typeormEntity.id = growingUnitId;
-			typeormEntity.name = "Garden Bed 1";
+			typeormEntity.name = 'Garden Bed 1';
 			typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
 			typeormEntity.capacity = 10;
 			typeormEntity.length = null;
@@ -152,7 +152,7 @@ describe("GrowingUnitTypeormMapper", () => {
 
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -171,7 +171,7 @@ describe("GrowingUnitTypeormMapper", () => {
 				mockGrowingUnitAggregateFactory.fromPrimitives,
 			).toHaveBeenCalledWith({
 				id: growingUnitId,
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,
@@ -180,16 +180,16 @@ describe("GrowingUnitTypeormMapper", () => {
 		});
 	});
 
-	describe("toTypeormEntity", () => {
-		it("should convert domain aggregate to TypeORM entity with all properties", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const plantId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('toTypeormEntity', () => {
+		it('should convert domain aggregate to TypeORM entity with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject("Basil"),
-				species: new PlantSpeciesValueObject("Ocimum basilicum"),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -197,7 +197,7 @@ describe("GrowingUnitTypeormMapper", () => {
 
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: new DimensionsValueObject({
@@ -212,17 +212,17 @@ describe("GrowingUnitTypeormMapper", () => {
 			const plantTypeormEntity = new PlantTypeormEntity();
 			plantTypeormEntity.id = plantId;
 			plantTypeormEntity.growingUnitId = growingUnitId;
-			plantTypeormEntity.name = "Basil";
-			plantTypeormEntity.species = "Ocimum basilicum";
+			plantTypeormEntity.name = 'Basil';
+			plantTypeormEntity.species = 'Ocimum basilicum';
 			plantTypeormEntity.plantedDate = null;
 			plantTypeormEntity.notes = null;
 			plantTypeormEntity.status = PlantStatusEnum.PLANTED;
 
 			const toPrimitivesSpy = jest
-				.spyOn(growingUnitAggregate, "toPrimitives")
+				.spyOn(growingUnitAggregate, 'toPrimitives')
 				.mockReturnValue({
 					id: growingUnitId,
-					name: "Garden Bed 1",
+					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
 					dimensions: {
@@ -242,7 +242,7 @@ describe("GrowingUnitTypeormMapper", () => {
 
 			expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
 			expect(result.id).toBe(growingUnitId);
-			expect(result.name).toBe("Garden Bed 1");
+			expect(result.name).toBe('Garden Bed 1');
 			expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
 			expect(result.capacity).toBe(10);
 			expect(result.length).toBe(2.0);
@@ -259,12 +259,12 @@ describe("GrowingUnitTypeormMapper", () => {
 			toPrimitivesSpy.mockRestore();
 		});
 
-		it("should convert domain aggregate with null dimensions", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should convert domain aggregate with null dimensions', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -272,10 +272,10 @@ describe("GrowingUnitTypeormMapper", () => {
 			});
 
 			const toPrimitivesSpy = jest
-				.spyOn(growingUnitAggregate, "toPrimitives")
+				.spyOn(growingUnitAggregate, 'toPrimitives')
 				.mockReturnValue({
 					id: growingUnitId,
-					name: "Garden Bed 1",
+					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
 					dimensions: null,
@@ -286,7 +286,7 @@ describe("GrowingUnitTypeormMapper", () => {
 
 			expect(result).toBeInstanceOf(GrowingUnitTypeormEntity);
 			expect(result.id).toBe(growingUnitId);
-			expect(result.name).toBe("Garden Bed 1");
+			expect(result.name).toBe('Garden Bed 1');
 			expect(result.type).toBe(GrowingUnitTypeEnum.GARDEN_BED);
 			expect(result.capacity).toBe(10);
 			expect(result.length).toBeNull();

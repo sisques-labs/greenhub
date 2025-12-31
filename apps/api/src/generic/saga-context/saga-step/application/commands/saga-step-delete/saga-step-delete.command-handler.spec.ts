@@ -1,27 +1,27 @@
-import { EventBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaStepDeleteCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command";
-import { SagaStepDeleteCommandHandler } from "@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command-handler";
-import { AssertSagaStepExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service";
-import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaStepDeleteCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command';
+import { SagaStepDeleteCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command-handler';
+import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
+import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
-} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository";
-import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
-import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
-import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
-import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
-import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
-import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
-import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
-import { SagaStepDeletedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
+import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
+import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
+import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
+import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
+import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
+import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
+import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
+import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
-describe("SagaStepDeleteCommandHandler", () => {
+describe('SagaStepDeleteCommandHandler', () => {
 	let handler: SagaStepDeleteCommandHandler;
 	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -75,11 +75,11 @@ describe("SagaStepDeleteCommandHandler", () => {
 		const now = new Date();
 		return new SagaStepAggregate(
 			{
-				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					"223e4567-e89b-12d3-a456-426614174000",
+					'223e4567-e89b-12d3-a456-426614174000',
 				),
-				name: new SagaStepNameValueObject("Test Step"),
+				name: new SagaStepNameValueObject('Test Step'),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
@@ -96,16 +96,16 @@ describe("SagaStepDeleteCommandHandler", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should delete saga step successfully when saga step exists", async () => {
+	describe('execute', () => {
+		it('should delete saga step successfully when saga step exists', async () => {
 			const existingSagaStep = createSagaStepAggregate();
 			const deleteCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
 			const command = new SagaStepDeleteCommand(deleteCommandDto);
-			const deleteSpy = jest.spyOn(existingSagaStep, "delete");
-			const commitSpy = jest.spyOn(existingSagaStep, "commit");
+			const deleteSpy = jest.spyOn(existingSagaStep, 'delete');
+			const commitSpy = jest.spyOn(existingSagaStep, 'commit');
 
 			mockAssertSagaStepExistsService.execute.mockResolvedValue(
 				existingSagaStep,
@@ -128,13 +128,13 @@ describe("SagaStepDeleteCommandHandler", () => {
 			expect(commitSpy).toHaveBeenCalled();
 		});
 
-		it("should throw error when saga step does not exist", async () => {
+		it('should throw error when saga step does not exist', async () => {
 			const deleteCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
 			const command = new SagaStepDeleteCommand(deleteCommandDto);
-			const error = new Error("Saga step not found");
+			const error = new Error('Saga step not found');
 
 			mockAssertSagaStepExistsService.execute.mockRejectedValue(error);
 
@@ -146,10 +146,10 @@ describe("SagaStepDeleteCommandHandler", () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it("should publish SagaStepDeletedEvent after deleting", async () => {
+		it('should publish SagaStepDeletedEvent after deleting', async () => {
 			const existingSagaStep = createSagaStepAggregate();
 			const deleteCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
 			const command = new SagaStepDeleteCommand(deleteCommandDto);

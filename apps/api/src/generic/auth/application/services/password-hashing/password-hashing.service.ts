@@ -1,10 +1,10 @@
-import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
-import * as bcrypt from "bcrypt";
-import { InvalidHashFormatException } from "@/generic/auth/application/exceptions/auth-invalid-hash-format/auth-invalid-hash-format.exception";
-import { InvalidSaltRoundsException } from "@/generic/auth/application/exceptions/auth-invalid-salt-rounds/auth-invalid-salt-rounds.exception";
-import { PasswordHashingFailedException } from "@/generic/auth/application/exceptions/password-hashing-failed/password-hashing-failed.exception";
-import { PasswordVerificationFailedException } from "@/generic/auth/application/exceptions/password-verification-failed/password-verification-failed.exception";
-import { PasswordValueObject } from "@/shared/domain/value-objects/password/password.vo";
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { InvalidHashFormatException } from '@/generic/auth/application/exceptions/auth-invalid-hash-format/auth-invalid-hash-format.exception';
+import { InvalidSaltRoundsException } from '@/generic/auth/application/exceptions/auth-invalid-salt-rounds/auth-invalid-salt-rounds.exception';
+import { PasswordHashingFailedException } from '@/generic/auth/application/exceptions/password-hashing-failed/password-hashing-failed.exception';
+import { PasswordVerificationFailedException } from '@/generic/auth/application/exceptions/password-verification-failed/password-verification-failed.exception';
+import { PasswordValueObject } from '@/shared/domain/value-objects/password/password.vo';
 
 /**
  * Password Hashing Service Implementation
@@ -32,7 +32,7 @@ export class PasswordHashingService {
 			const salt = await bcrypt.genSalt(this.saltRounds);
 			return await bcrypt.hash(passwordString, salt);
 		} catch (error) {
-			this.logger.error("Password hashing failed", error);
+			this.logger.error('Password hashing failed', error);
 			throw new PasswordHashingFailedException();
 		}
 	}
@@ -57,7 +57,7 @@ export class PasswordHashingService {
 
 			if (!isPasswordValid) {
 				this.logger.error(`Invalid password`);
-				throw new UnauthorizedException("Invalid credentials");
+				throw new UnauthorizedException('Invalid credentials');
 			}
 
 			return isPasswordValid;
@@ -75,7 +75,7 @@ export class PasswordHashingService {
 	 * @returns boolean - True if it's a valid hash format
 	 */
 	public isValidHash(hash: string): boolean {
-		if (!hash || typeof hash !== "string") {
+		if (!hash || typeof hash !== 'string') {
 			return false;
 		}
 

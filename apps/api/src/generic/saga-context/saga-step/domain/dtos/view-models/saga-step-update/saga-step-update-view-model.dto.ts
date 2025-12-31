@@ -1,4 +1,4 @@
-import { ISagaStepCreateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto";
+import { ISagaStepCreateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto';
 
 /**
  * Data Transfer Object for updating a saga step view model.
@@ -18,6 +18,6 @@ import { ISagaStepCreateViewModelDto } from "@/generic/saga-context/saga-step/do
 export type ISagaStepUpdateViewModelDto = Partial<
 	Omit<
 		ISagaStepCreateViewModelDto,
-		"id" | "sagaInstanceId" | "createdAt" | "updatedAt"
+		'id' | 'sagaInstanceId' | 'createdAt' | 'updatedAt'
 	>
 >;

@@ -1,23 +1,23 @@
-import { EventBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaLogDeleteCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command";
-import { SagaLogDeleteCommandHandler } from "@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command-handler";
-import { AssertSagaLogExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service";
-import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaLogDeleteCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command';
+import { SagaLogDeleteCommandHandler } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command-handler';
+import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
+import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import {
 	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
 	SagaLogWriteRepository,
-} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository";
-import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
-import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
-import { SagaLogDeletedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
+import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
+import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
+import { SagaLogDeletedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
-describe("SagaLogDeleteCommandHandler", () => {
+describe('SagaLogDeleteCommandHandler', () => {
 	let handler: SagaLogDeleteCommandHandler;
 	let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -72,15 +72,15 @@ describe("SagaLogDeleteCommandHandler", () => {
 		const now = new Date();
 		return new SagaLogAggregate(
 			{
-				id: new SagaLogUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+				id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					"223e4567-e89b-12d3-a456-426614174000",
+					'223e4567-e89b-12d3-a456-426614174000',
 				),
 				sagaStepId: new SagaStepUuidValueObject(
-					"323e4567-e89b-12d3-a456-426614174000",
+					'323e4567-e89b-12d3-a456-426614174000',
 				),
 				type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-				message: new SagaLogMessageValueObject("Test log message"),
+				message: new SagaLogMessageValueObject('Test log message'),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
 			},
@@ -88,16 +88,16 @@ describe("SagaLogDeleteCommandHandler", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should delete saga log successfully when saga log exists", async () => {
+	describe('execute', () => {
+		it('should delete saga log successfully when saga log exists', async () => {
 			const existingSagaLog = createSagaLogAggregate();
 			const deleteCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
 			const command = new SagaLogDeleteCommand(deleteCommandDto);
-			const deleteSpy = jest.spyOn(existingSagaLog, "delete");
-			const commitSpy = jest.spyOn(existingSagaLog, "commit");
+			const deleteSpy = jest.spyOn(existingSagaLog, 'delete');
+			const commitSpy = jest.spyOn(existingSagaLog, 'commit');
 
 			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
 			mockSagaLogWriteRepository.delete.mockResolvedValue(true);
@@ -118,13 +118,13 @@ describe("SagaLogDeleteCommandHandler", () => {
 			expect(commitSpy).toHaveBeenCalled();
 		});
 
-		it("should throw error when saga log does not exist", async () => {
+		it('should throw error when saga log does not exist', async () => {
 			const deleteCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
 			const command = new SagaLogDeleteCommand(deleteCommandDto);
-			const error = new Error("Saga log not found");
+			const error = new Error('Saga log not found');
 
 			mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
 
@@ -136,10 +136,10 @@ describe("SagaLogDeleteCommandHandler", () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it("should publish SagaLogDeletedEvent after deleting", async () => {
+		it('should publish SagaLogDeletedEvent after deleting', async () => {
 			const existingSagaLog = createSagaLogAggregate();
 			const deleteCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
 			const command = new SagaLogDeleteCommand(deleteCommandDto);

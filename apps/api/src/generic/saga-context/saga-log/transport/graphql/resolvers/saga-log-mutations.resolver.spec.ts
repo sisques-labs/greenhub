@@ -1,16 +1,16 @@
-import { CommandBus } from "@nestjs/cqrs";
-import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
-import { SagaLogDeleteCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command";
-import { SagaLogUpdateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaLogCreateRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-create.request.dto";
-import { SagaLogDeleteRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-delete.request.dto";
-import { SagaLogUpdateRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-update.request.dto";
-import { SagaLogMutationsResolver } from "@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-mutations.resolver";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { CommandBus } from '@nestjs/cqrs';
+import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
+import { SagaLogDeleteCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command';
+import { SagaLogUpdateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaLogCreateRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-create.request.dto';
+import { SagaLogDeleteRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-delete.request.dto';
+import { SagaLogUpdateRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-update.request.dto';
+import { SagaLogMutationsResolver } from '@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-mutations.resolver';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
-describe("SagaLogMutationsResolver", () => {
+describe('SagaLogMutationsResolver', () => {
 	let resolver: SagaLogMutationsResolver;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 	let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
@@ -34,19 +34,19 @@ describe("SagaLogMutationsResolver", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("sagaLogCreate", () => {
-		it("should create saga log successfully", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaLogCreate', () => {
+		it('should create saga log successfully', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogCreateRequestDto = {
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.INFO,
-				message: "Test log message",
+				message: 'Test log message',
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga log created successfully",
+				message: 'Saga log created successfully',
 				id: sagaLogId,
 			};
 
@@ -71,13 +71,13 @@ describe("SagaLogMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga log created successfully",
+				message: 'Saga log created successfully',
 				id: sagaLogId,
 			});
 		});
 
-		it("should handle different log types", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle different log types', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const types = [
 				SagaLogTypeEnum.INFO,
 				SagaLogTypeEnum.WARNING,
@@ -87,8 +87,8 @@ describe("SagaLogMutationsResolver", () => {
 
 			for (const type of types) {
 				const input: SagaLogCreateRequestDto = {
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 					type: type,
 					message: `Test message for ${type}`,
 				};
@@ -96,7 +96,7 @@ describe("SagaLogMutationsResolver", () => {
 				mockCommandBus.execute.mockResolvedValue(sagaLogId);
 				mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
 					success: true,
-					message: "Saga log created successfully",
+					message: 'Saga log created successfully',
 					id: sagaLogId,
 				});
 
@@ -111,18 +111,18 @@ describe("SagaLogMutationsResolver", () => {
 		});
 	});
 
-	describe("sagaLogUpdate", () => {
-		it("should update saga log successfully", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaLogUpdate', () => {
+		it('should update saga log successfully', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogUpdateRequestDto = {
 				id: sagaLogId,
 				type: SagaLogTypeEnum.ERROR,
-				message: "Updated log message",
+				message: 'Updated log message',
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga log updated successfully",
+				message: 'Saga log updated successfully',
 				id: sagaLogId,
 			};
 
@@ -146,13 +146,13 @@ describe("SagaLogMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga log updated successfully",
+				message: 'Saga log updated successfully',
 				id: sagaLogId,
 			});
 		});
 
-		it("should update saga log with only type", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should update saga log with only type', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogUpdateRequestDto = {
 				id: sagaLogId,
 				type: SagaLogTypeEnum.WARNING,
@@ -161,7 +161,7 @@ describe("SagaLogMutationsResolver", () => {
 			mockCommandBus.execute.mockResolvedValue(undefined);
 			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
 				success: true,
-				message: "Saga log updated successfully",
+				message: 'Saga log updated successfully',
 				id: sagaLogId,
 			});
 
@@ -172,17 +172,17 @@ describe("SagaLogMutationsResolver", () => {
 			expect(command.message).toBeUndefined();
 		});
 
-		it("should update saga log with only message", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should update saga log with only message', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogUpdateRequestDto = {
 				id: sagaLogId,
-				message: "Updated message",
+				message: 'Updated message',
 			};
 
 			mockCommandBus.execute.mockResolvedValue(undefined);
 			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
 				success: true,
-				message: "Saga log updated successfully",
+				message: 'Saga log updated successfully',
 				id: sagaLogId,
 			});
 
@@ -194,16 +194,16 @@ describe("SagaLogMutationsResolver", () => {
 		});
 	});
 
-	describe("sagaLogDelete", () => {
-		it("should delete saga log successfully", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaLogDelete', () => {
+		it('should delete saga log successfully', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogDeleteRequestDto = {
 				id: sagaLogId,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga log deleted successfully",
+				message: 'Saga log deleted successfully',
 				id: sagaLogId,
 			};
 
@@ -225,7 +225,7 @@ describe("SagaLogMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga log deleted successfully",
+				message: 'Saga log deleted successfully',
 				id: sagaLogId,
 			});
 		});

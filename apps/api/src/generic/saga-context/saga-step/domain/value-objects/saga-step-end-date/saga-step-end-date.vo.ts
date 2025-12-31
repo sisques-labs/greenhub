@@ -1,4 +1,4 @@
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 /**
  * SagaStepEndDateValueObject represents the end date of a saga step.

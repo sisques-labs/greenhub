@@ -1,24 +1,24 @@
-import { Logger, UseGuards } from "@nestjs/common";
-import { QueryBus } from "@nestjs/cqrs";
-import { Args, Query, Resolver } from "@nestjs/graphql";
-import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
-import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
-import { FindSagaLogsByCriteriaQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query";
-import { FindSagaLogViewModelByIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query";
-import { FindSagaLogViewModelsBySagaInstanceIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query";
-import { FindSagaLogViewModelsBySagaStepIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-step-id/saga-log-find-view-model-by-saga-step-id.query";
-import { SagaLogFindByCriteriaRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-criteria.request.dto";
-import { SagaLogFindByIdRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-id.request.dto";
-import { SagaLogFindBySagaInstanceIdRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-instance-id.request.dto";
-import { SagaLogFindBySagaStepIdRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-step-id.request.dto";
+import { Logger, UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
+import { FindSagaLogsByCriteriaQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query';
+import { FindSagaLogViewModelByIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query';
+import { FindSagaLogViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query';
+import { FindSagaLogViewModelsBySagaStepIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-step-id/saga-log-find-view-model-by-saga-step-id.query';
+import { SagaLogFindByCriteriaRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-criteria.request.dto';
+import { SagaLogFindByIdRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-id.request.dto';
+import { SagaLogFindBySagaInstanceIdRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-instance-id.request.dto';
+import { SagaLogFindBySagaStepIdRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-step-id.request.dto';
 import {
 	PaginatedSagaLogResultDto,
 	SagaLogResponseDto,
-} from "@/generic/saga-context/saga-log/transport/graphql/dtos/responses/saga-log.response.dto";
-import { SagaLogGraphQLMapper } from "@/generic/saga-context/saga-log/transport/graphql/mappers/saga-log.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+} from '@/generic/saga-context/saga-log/transport/graphql/dtos/responses/saga-log.response.dto';
+import { SagaLogGraphQLMapper } from '@/generic/saga-context/saga-log/transport/graphql/mappers/saga-log.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -33,7 +33,7 @@ export class SagaLogQueryResolver {
 
 	@Query(() => SagaLogResponseDto, { nullable: true })
 	async sagaLogFindById(
-		@Args("input") input: SagaLogFindByIdRequestDto,
+		@Args('input') input: SagaLogFindByIdRequestDto,
 	): Promise<SagaLogResponseDto | null> {
 		this.logger.log(`Finding saga log by id: ${input.id}`);
 
@@ -46,7 +46,7 @@ export class SagaLogQueryResolver {
 
 	@Query(() => [SagaLogResponseDto])
 	async sagaLogFindBySagaInstanceId(
-		@Args("input") input: SagaLogFindBySagaInstanceIdRequestDto,
+		@Args('input') input: SagaLogFindBySagaInstanceIdRequestDto,
 	): Promise<SagaLogResponseDto[]> {
 		this.logger.log(
 			`Finding saga logs by saga instance id: ${input.sagaInstanceId}`,
@@ -65,7 +65,7 @@ export class SagaLogQueryResolver {
 
 	@Query(() => [SagaLogResponseDto])
 	async sagaLogFindBySagaStepId(
-		@Args("input") input: SagaLogFindBySagaStepIdRequestDto,
+		@Args('input') input: SagaLogFindBySagaStepIdRequestDto,
 	): Promise<SagaLogResponseDto[]> {
 		this.logger.log(`Finding saga logs by saga step id: ${input.sagaStepId}`);
 
@@ -82,7 +82,7 @@ export class SagaLogQueryResolver {
 
 	@Query(() => PaginatedSagaLogResultDto)
 	async sagaLogFindByCriteria(
-		@Args("input", { nullable: true })
+		@Args('input', { nullable: true })
 		input?: SagaLogFindByCriteriaRequestDto,
 	): Promise<PaginatedSagaLogResultDto> {
 		this.logger.log(`Finding saga logs by criteria: ${JSON.stringify(input)}`);

@@ -1,7 +1,7 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
-import { AuthUserProfileViewModel } from "@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { Injectable, Logger } from '@nestjs/common';
+import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
+import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 
 @Injectable()
 export class AuthUserProfileViewModelFactory {

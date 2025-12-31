@@ -1,4 +1,4 @@
-import { ICalculateMedianCommandDto } from "@/support/math/application/dtos/commands/calculate-median/calculate-median-command.dto";
+import { ICalculateMedianCommandDto } from '@/support/math/application/dtos/commands/calculate-median/calculate-median-command.dto';
 
 /**
  * Command for calculating median.

@@ -1,35 +1,35 @@
-import { AuthNotFoundException } from "@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception";
-import { BaseApplicationException } from "@/shared/application/exceptions/base-application/base-application.exception";
+import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
+import { BaseApplicationException } from '@/shared/application/exceptions/base-application/base-application.exception';
 
-describe("AuthNotFoundException", () => {
-	const authId = "123e4567-e89b-12d3-a456-426614174000";
+describe('AuthNotFoundException', () => {
+	const authId = '123e4567-e89b-12d3-a456-426614174000';
 
-	it("should be an instance of BaseApplicationException", () => {
+	it('should be an instance of BaseApplicationException', () => {
 		const exception = new AuthNotFoundException(authId);
 
 		expect(exception).toBeInstanceOf(BaseApplicationException);
 		expect(exception).toBeInstanceOf(Error);
 	});
 
-	it("should create an exception with the correct message", () => {
+	it('should create an exception with the correct message', () => {
 		const exception = new AuthNotFoundException(authId);
 
 		expect(exception.message).toBe(`Auth with id ${authId} not found`);
 	});
 
-	it("should set the name to AuthNotFoundException", () => {
+	it('should set the name to AuthNotFoundException', () => {
 		const exception = new AuthNotFoundException(authId);
 
-		expect(exception.name).toBe("AuthNotFoundException");
+		expect(exception.name).toBe('AuthNotFoundException');
 	});
 
-	it("should set the domain to Application", () => {
+	it('should set the domain to Application', () => {
 		const exception = new AuthNotFoundException(authId);
 
-		expect(exception.layer).toBe("Application");
+		expect(exception.layer).toBe('Application');
 	});
 
-	it("should have a timestamp", () => {
+	it('should have a timestamp', () => {
 		const before = new Date();
 		const exception = new AuthNotFoundException(authId);
 		const after = new Date();
@@ -41,7 +41,7 @@ describe("AuthNotFoundException", () => {
 		expect(exception.timestamp.getTime()).toBeLessThanOrEqual(after.getTime());
 	});
 
-	it("should return a detailed message", () => {
+	it('should return a detailed message', () => {
 		const exception = new AuthNotFoundException(authId);
 		const detailedMessage = exception.getDetailedMessage();
 

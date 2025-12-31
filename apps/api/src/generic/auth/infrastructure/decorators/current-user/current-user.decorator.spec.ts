@@ -1,19 +1,19 @@
-import { ExecutionContext } from "@nestjs/common";
-import { GqlExecutionContext } from "@nestjs/graphql";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
-import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
-import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
-import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
-import { CurrentUser } from "@/generic/auth/infrastructure/decorators/current-user/current-user.decorator";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { ExecutionContext } from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
+import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
+import { CurrentUser } from '@/generic/auth/infrastructure/decorators/current-user/current-user.decorator';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
-jest.mock("@nestjs/graphql");
+jest.mock('@nestjs/graphql');
 
-describe("CurrentUser", () => {
+describe('CurrentUser', () => {
 	let mockContext: ExecutionContext;
 	let mockGqlContext: any;
 	let mockRequest: any;
@@ -58,17 +58,17 @@ describe("CurrentUser", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should be a function decorator", () => {
-		expect(typeof CurrentUser).toBe("function");
+	it('should be a function decorator', () => {
+		expect(typeof CurrentUser).toBe('function');
 	});
 
-	it("should extract user from GraphQL context request", () => {
+	it('should extract user from GraphQL context request', () => {
 		const now = new Date();
 		const mockUser = new AuthAggregate(
 			{
-				id: new AuthUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
-				userId: new UserUuidValueObject("123e4567-e89b-12d3-a456-426614174001"),
-				email: new AuthEmailValueObject("test@example.com"),
+				id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				userId: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174001'),
+				email: new AuthEmailValueObject('test@example.com'),
 				emailVerified: new AuthEmailVerifiedValueObject(false),
 				lastLoginAt: null,
 				password: null,
@@ -91,7 +91,7 @@ describe("CurrentUser", () => {
 		expect(result).toBe(mockUser);
 	});
 
-	it("should return undefined when user is not in request", () => {
+	it('should return undefined when user is not in request', () => {
 		mockRequest.user = undefined;
 
 		const result = executeDecoratorFactory(null, mockContext);

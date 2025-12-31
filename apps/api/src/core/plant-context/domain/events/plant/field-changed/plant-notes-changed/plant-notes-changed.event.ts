@@ -1,6 +1,6 @@
-import { BaseEvent } from "@/shared/domain/events/base-event.interface";
-import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
-import { IFieldChangedEventData } from "@/shared/domain/interfaces/updated-field.interface";
+import { BaseEvent } from '@/shared/domain/events/base-event.interface';
+import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
+import { IFieldChangedEventData } from '@/shared/domain/interfaces/updated-field.interface';
 
 export class PlantNotesChangedEvent extends BaseEvent<
 	IFieldChangedEventData<string | null>

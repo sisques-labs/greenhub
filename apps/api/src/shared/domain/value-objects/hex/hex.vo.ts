@@ -1,4 +1,4 @@
-import { InvalidHexException } from "@/shared/domain/exceptions/value-objects/invalid-hex/invalid-hex.exception";
+import { InvalidHexException } from '@/shared/domain/exceptions/value-objects/invalid-hex/invalid-hex.exception';
 
 /**
  * Hex Value Object
@@ -36,7 +36,7 @@ export class HexValueObject {
 	 * @returns The buffer representation of the hex value
 	 */
 	public toBuffer(): Buffer {
-		return Buffer.from(this._value, "hex");
+		return Buffer.from(this._value, 'hex');
 	}
 
 	private validate(value: string): void {
@@ -45,15 +45,15 @@ export class HexValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === "") {
-			throw new InvalidHexException("Hex value cannot be empty");
+		if (!value || value.trim() === '') {
+			throw new InvalidHexException('Hex value cannot be empty');
 		}
 	}
 
 	private checkIsHex(value: string): void {
 		const hexPattern = /^[0-9a-fA-F]+$/;
 		if (!hexPattern.test(value)) {
-			throw new InvalidHexException("Value must be a valid hexadecimal string");
+			throw new InvalidHexException('Value must be a valid hexadecimal string');
 		}
 	}
 }

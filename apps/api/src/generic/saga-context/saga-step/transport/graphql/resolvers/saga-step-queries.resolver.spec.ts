@@ -1,22 +1,22 @@
-import { QueryBus } from "@nestjs/cqrs";
-import { FindSagaStepsByCriteriaQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query";
-import { FindSagaStepViewModelByIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query";
-import { FindSagaStepViewModelsBySagaInstanceIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-saga-instance-id/saga-step-find-view-model-by-saga-instance-id.query";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { SagaStepFindByCriteriaRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-criteria.request.dto";
-import { SagaStepFindByIdRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-id.request.dto";
-import { SagaStepFindBySagaInstanceIdRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-saga-instance-id.request.dto";
+import { QueryBus } from '@nestjs/cqrs';
+import { FindSagaStepsByCriteriaQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query';
+import { FindSagaStepViewModelByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query';
+import { FindSagaStepViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-saga-instance-id/saga-step-find-view-model-by-saga-instance-id.query';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { SagaStepFindByCriteriaRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-criteria.request.dto';
+import { SagaStepFindByIdRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-id.request.dto';
+import { SagaStepFindBySagaInstanceIdRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-saga-instance-id.request.dto';
 import {
 	PaginatedSagaStepResultDto,
 	SagaStepResponseDto,
-} from "@/generic/saga-context/saga-step/transport/graphql/dtos/responses/saga-step.response.dto";
-import { SagaStepGraphQLMapper } from "@/generic/saga-context/saga-step/transport/graphql/mappers/saga-step.mapper";
-import { SagaStepQueryResolver } from "@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-queries.resolver";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+} from '@/generic/saga-context/saga-step/transport/graphql/dtos/responses/saga-step.response.dto';
+import { SagaStepGraphQLMapper } from '@/generic/saga-context/saga-step/transport/graphql/mappers/saga-step.mapper';
+import { SagaStepQueryResolver } from '@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-queries.resolver';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
-describe("SagaStepQueryResolver", () => {
+describe('SagaStepQueryResolver', () => {
 	let resolver: SagaStepQueryResolver;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockSagaStepGraphQLMapper: jest.Mocked<SagaStepGraphQLMapper>;
@@ -41,19 +41,19 @@ describe("SagaStepQueryResolver", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("sagaStepFindById", () => {
-		it("should return saga step when found", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaStepFindById', () => {
+		it('should return saga step when found', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepFindByIdRequestDto = {
 				id: sagaStepId,
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -101,8 +101,8 @@ describe("SagaStepQueryResolver", () => {
 			);
 		});
 
-		it("should return null when saga step not found", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when saga step not found', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepFindByIdRequestDto = {
 				id: sagaStepId,
 			};
@@ -119,20 +119,20 @@ describe("SagaStepQueryResolver", () => {
 		});
 	});
 
-	describe("sagaStepFindBySagaInstanceId", () => {
-		it("should return array of saga steps when found", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('sagaStepFindBySagaInstanceId', () => {
+		it('should return array of saga steps when found', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepFindBySagaInstanceIdRequestDto = {
 				sagaInstanceId: sagaInstanceId,
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModels: SagaStepViewModel[] = [
 				new SagaStepViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
+					id: '123e4567-e89b-12d3-a456-426614174000',
 					sagaInstanceId: sagaInstanceId,
-					name: "Process Payment",
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -146,13 +146,13 @@ describe("SagaStepQueryResolver", () => {
 					updatedAt: updatedAt,
 				}),
 				new SagaStepViewModel({
-					id: "323e4567-e89b-12d3-a456-426614174001",
+					id: '323e4567-e89b-12d3-a456-426614174001',
 					sagaInstanceId: sagaInstanceId,
-					name: "Send Email",
+					name: 'Send Email',
 					order: 2,
 					status: SagaStepStatusEnum.COMPLETED,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					errorMessage: null,
 					retryCount: 0,
 					maxRetries: 3,
@@ -199,8 +199,8 @@ describe("SagaStepQueryResolver", () => {
 			expect(mockSagaStepGraphQLMapper.toResponseDto).toHaveBeenCalledTimes(2);
 		});
 
-		it("should return empty array when no saga steps found", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should return empty array when no saga steps found', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepFindBySagaInstanceIdRequestDto = {
 				sagaInstanceId: sagaInstanceId,
 			};
@@ -217,21 +217,21 @@ describe("SagaStepQueryResolver", () => {
 		});
 	});
 
-	describe("sagaStepFindByCriteria", () => {
-		it("should return paginated saga steps when criteria matches", async () => {
+	describe('sagaStepFindByCriteria', () => {
+		it('should return paginated saga steps when criteria matches', async () => {
 			const input: SagaStepFindByCriteriaRequestDto = {
 				filters: [],
 				sorts: [],
 				pagination: { page: 1, perPage: 10 },
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModels: SagaStepViewModel[] = [
 				new SagaStepViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Process Payment",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -291,7 +291,7 @@ describe("SagaStepQueryResolver", () => {
 			).toHaveBeenCalledWith(paginatedResult);
 		});
 
-		it("should return paginated saga steps when input is undefined", async () => {
+		it('should return paginated saga steps when input is undefined', async () => {
 			const viewModels: SagaStepViewModel[] = [];
 			const paginatedResult = new PaginatedResult(viewModels, 0, 1, 10);
 			const paginatedResponseDto: PaginatedSagaStepResultDto = {
@@ -320,16 +320,16 @@ describe("SagaStepQueryResolver", () => {
 			).toHaveBeenCalledWith(paginatedResult);
 		});
 
-		it("should handle criteria with filters and sorts", async () => {
+		it('should handle criteria with filters and sorts', async () => {
 			const input: SagaStepFindByCriteriaRequestDto = {
 				filters: [
 					{
-						field: "status",
-						operator: "eq" as any,
+						field: 'status',
+						operator: 'eq' as any,
 						value: SagaStepStatusEnum.PENDING,
 					},
 				],
-				sorts: [{ field: "order", direction: "ASC" as any }],
+				sorts: [{ field: 'order', direction: 'ASC' as any }],
 				pagination: { page: 1, perPage: 10 },
 			};
 

@@ -1,4 +1,4 @@
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 
 /**
  * Data Transfer Object for changing a saga step status via command layer.

@@ -1,23 +1,23 @@
-import { EventBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaLogUpdateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command";
-import { SagaLogUpdateCommandHandler } from "@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command-handler";
-import { AssertSagaLogExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service";
-import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaLogUpdateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command';
+import { SagaLogUpdateCommandHandler } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command-handler';
+import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
+import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import {
 	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
 	SagaLogWriteRepository,
-} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository";
-import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
-import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
-import { SagaLogUpdatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
+import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
+import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
+import { SagaLogUpdatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
-describe("SagaLogUpdateCommandHandler", () => {
+describe('SagaLogUpdateCommandHandler', () => {
 	let handler: SagaLogUpdateCommandHandler;
 	let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -72,15 +72,15 @@ describe("SagaLogUpdateCommandHandler", () => {
 		const now = new Date();
 		return new SagaLogAggregate(
 			{
-				id: new SagaLogUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+				id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					"223e4567-e89b-12d3-a456-426614174000",
+					'223e4567-e89b-12d3-a456-426614174000',
 				),
 				sagaStepId: new SagaStepUuidValueObject(
-					"323e4567-e89b-12d3-a456-426614174000",
+					'323e4567-e89b-12d3-a456-426614174000',
 				),
 				type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-				message: new SagaLogMessageValueObject("Original message"),
+				message: new SagaLogMessageValueObject('Original message'),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
 			},
@@ -88,20 +88,20 @@ describe("SagaLogUpdateCommandHandler", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should update saga log successfully when saga log exists", async () => {
+	describe('execute', () => {
+		it('should update saga log successfully when saga log exists', async () => {
 			const existingSagaLog = createSagaLogAggregate();
 
 			const updateCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.ERROR,
-				message: "Updated message",
+				message: 'Updated message',
 			};
 
 			const command = new SagaLogUpdateCommand(updateCommandDto);
 
-			const updateSpy = jest.spyOn(existingSagaLog, "update");
-			const commitSpy = jest.spyOn(existingSagaLog, "commit");
+			const updateSpy = jest.spyOn(existingSagaLog, 'update');
+			const commitSpy = jest.spyOn(existingSagaLog, 'commit');
 
 			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
 			mockSagaLogWriteRepository.save.mockResolvedValue(existingSagaLog);
@@ -127,11 +127,11 @@ describe("SagaLogUpdateCommandHandler", () => {
 			expect(commitSpy).toHaveBeenCalled();
 		});
 
-		it("should extract update data excluding id, sagaInstanceId and sagaStepId", async () => {
+		it('should extract update data excluding id, sagaInstanceId and sagaStepId', async () => {
 			const existingSagaLog = createSagaLogAggregate();
 
 			const updateCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.WARNING,
 			};
 
@@ -139,7 +139,7 @@ describe("SagaLogUpdateCommandHandler", () => {
 
 			const extractUpdateDataSpy = jest.spyOn(
 				handler as any,
-				"extractUpdateData",
+				'extractUpdateData',
 			);
 
 			mockAssertSagaLogExistsService.execute.mockResolvedValue(existingSagaLog);
@@ -149,17 +149,17 @@ describe("SagaLogUpdateCommandHandler", () => {
 			await handler.execute(command);
 
 			expect(extractUpdateDataSpy).toHaveBeenCalledWith(command, [
-				"id",
-				"sagaInstanceId",
-				"sagaStepId",
+				'id',
+				'sagaInstanceId',
+				'sagaStepId',
 			]);
 		});
 
-		it("should publish SagaLogUpdatedEvent after updating", async () => {
+		it('should publish SagaLogUpdatedEvent after updating', async () => {
 			const existingSagaLog = createSagaLogAggregate();
 
 			const updateCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.DEBUG,
 			};
 
@@ -178,14 +178,14 @@ describe("SagaLogUpdateCommandHandler", () => {
 			}
 		});
 
-		it("should throw error when saga log does not exist", async () => {
+		it('should throw error when saga log does not exist', async () => {
 			const updateCommandDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
+				id: '123e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.ERROR,
 			};
 
 			const command = new SagaLogUpdateCommand(updateCommandDto);
-			const error = new Error("Saga log not found");
+			const error = new Error('Saga log not found');
 
 			mockAssertSagaLogExistsService.execute.mockRejectedValue(error);
 

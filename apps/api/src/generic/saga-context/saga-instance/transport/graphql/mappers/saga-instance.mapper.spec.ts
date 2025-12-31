@@ -1,26 +1,26 @@
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { SagaInstanceGraphQLMapper } from "@/generic/saga-context/saga-instance/transport/graphql/mappers/saga-instance.mapper";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { SagaInstanceGraphQLMapper } from '@/generic/saga-context/saga-instance/transport/graphql/mappers/saga-instance.mapper';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
-describe("SagaInstanceGraphQLMapper", () => {
+describe('SagaInstanceGraphQLMapper', () => {
 	let mapper: SagaInstanceGraphQLMapper;
 
 	beforeEach(() => {
 		mapper = new SagaInstanceGraphQLMapper();
 	});
 
-	describe("toResponseDto", () => {
-		it("should map saga instance view model to response dto with all properties", () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('toResponseDto', () => {
+		it('should map saga instance view model to response dto with all properties', () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaInstanceViewModel({
 				id: sagaInstanceId,
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
@@ -41,14 +41,14 @@ describe("SagaInstanceGraphQLMapper", () => {
 			});
 		});
 
-		it("should map saga instance view model with null optional properties", () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+		it('should map saga instance view model with null optional properties', () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaInstanceViewModel({
 				id: sagaInstanceId,
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
@@ -70,15 +70,15 @@ describe("SagaInstanceGraphQLMapper", () => {
 		});
 	});
 
-	describe("toPaginatedResponseDto", () => {
-		it("should map paginated result to paginated response dto", () => {
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('toPaginatedResponseDto', () => {
+		it('should map paginated result to paginated response dto', () => {
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const viewModels: SagaInstanceViewModel[] = [
 				new SagaInstanceViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					name: "Order Processing Saga",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					name: 'Order Processing Saga',
 					status: SagaInstanceStatusEnum.PENDING,
 					startDate: null,
 					endDate: null,
@@ -86,11 +86,11 @@ describe("SagaInstanceGraphQLMapper", () => {
 					updatedAt: updatedAt,
 				}),
 				new SagaInstanceViewModel({
-					id: "223e4567-e89b-12d3-a456-426614174001",
-					name: "Payment Processing Saga",
+					id: '223e4567-e89b-12d3-a456-426614174001',
+					name: 'Payment Processing Saga',
 					status: SagaInstanceStatusEnum.COMPLETED,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				}),
@@ -103,8 +103,8 @@ describe("SagaInstanceGraphQLMapper", () => {
 			expect(result).toEqual({
 				items: [
 					{
-						id: "123e4567-e89b-12d3-a456-426614174000",
-						name: "Order Processing Saga",
+						id: '123e4567-e89b-12d3-a456-426614174000',
+						name: 'Order Processing Saga',
 						status: SagaInstanceStatusEnum.PENDING,
 						startDate: null,
 						endDate: null,
@@ -112,11 +112,11 @@ describe("SagaInstanceGraphQLMapper", () => {
 						updatedAt: updatedAt,
 					},
 					{
-						id: "223e4567-e89b-12d3-a456-426614174001",
-						name: "Payment Processing Saga",
+						id: '223e4567-e89b-12d3-a456-426614174001',
+						name: 'Payment Processing Saga',
 						status: SagaInstanceStatusEnum.COMPLETED,
-						startDate: new Date("2024-01-01T10:00:00Z"),
-						endDate: new Date("2024-01-01T11:00:00Z"),
+						startDate: new Date('2024-01-01T10:00:00Z'),
+						endDate: new Date('2024-01-01T11:00:00Z'),
 						createdAt: createdAt,
 						updatedAt: updatedAt,
 					},
@@ -128,7 +128,7 @@ describe("SagaInstanceGraphQLMapper", () => {
 			});
 		});
 
-		it("should map empty paginated result", () => {
+		it('should map empty paginated result', () => {
 			const paginatedResult = new PaginatedResult([], 0, 1, 10);
 
 			const result = mapper.toPaginatedResponseDto(paginatedResult);

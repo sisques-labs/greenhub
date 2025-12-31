@@ -1,20 +1,20 @@
-import { UnauthorizedException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { IJwtPayload } from "@/generic/auth/domain/interfaces/jwt-payload.interface";
-import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
-import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
-import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
-import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
-import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
-import { JwtStrategy } from "@/generic/auth/infrastructure/strategies/jwt/jwt.strategy";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';
+import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
+import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
+import { JwtStrategy } from '@/generic/auth/infrastructure/strategies/jwt/jwt.strategy';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
-describe("JwtStrategy", () => {
+describe('JwtStrategy', () => {
 	let strategy: JwtStrategy;
 	let mockConfigService: jest.Mocked<ConfigService>;
 	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
@@ -23,7 +23,7 @@ describe("JwtStrategy", () => {
 		mockConfigService = {
 			get: jest.fn((key: string) => {
 				const config: Record<string, string> = {
-					JWT_ACCESS_SECRET: "test-access-secret",
+					JWT_ACCESS_SECRET: 'test-access-secret',
 				};
 				return config[key];
 			}),
@@ -43,16 +43,16 @@ describe("JwtStrategy", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("validate", () => {
-		it("should return user data with role and userId when auth exists", async () => {
+	describe('validate', () => {
+		it('should return user data with role and userId when auth exists', async () => {
 			const now = new Date();
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 
 			const payload: IJwtPayload = {
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				role: UserRoleEnum.ADMIN,
 			};
 
@@ -60,7 +60,7 @@ describe("JwtStrategy", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -87,11 +87,11 @@ describe("JwtStrategy", () => {
 			expect(mockAuthWriteRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw UnauthorizedException when auth does not exist", async () => {
+		it('should throw UnauthorizedException when auth does not exist', async () => {
 			const payload: IJwtPayload = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				userId: "123e4567-e89b-12d3-a456-426614174001",
-				email: "test@example.com",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				userId: '123e4567-e89b-12d3-a456-426614174001',
+				email: 'test@example.com',
 				role: UserRoleEnum.USER,
 			};
 
@@ -101,7 +101,7 @@ describe("JwtStrategy", () => {
 				UnauthorizedException,
 			);
 			await expect(strategy.validate(payload)).rejects.toThrow(
-				"User not found",
+				'User not found',
 			);
 			expect(mockAuthWriteRepository.findById).toHaveBeenCalledWith(payload.id);
 		});

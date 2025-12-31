@@ -13,17 +13,17 @@
  */
 export enum LengthUnitEnum {
 	/** Millimeter (mm) */
-	MILLIMETER = "MILLIMETER",
+	MILLIMETER = 'MILLIMETER',
 
 	/** Centimeter (cm) */
-	CENTIMETER = "CENTIMETER",
+	CENTIMETER = 'CENTIMETER',
 
 	/** Meter (m) */
-	METER = "METER",
+	METER = 'METER',
 
 	/** Inch (in) */
-	INCH = "INCH",
+	INCH = 'INCH',
 
 	/** Foot (ft) */
-	FOOT = "FOOT",
+	FOOT = 'FOOT',
 }

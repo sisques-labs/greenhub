@@ -1,18 +1,18 @@
-import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
-import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
-import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
+import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
+import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 
-describe("OverviewViewModelFactory", () => {
+describe('OverviewViewModelFactory', () => {
 	let factory: OverviewViewModelFactory;
 
 	beforeEach(() => {
 		factory = new OverviewViewModelFactory();
 	});
 
-	describe("create", () => {
-		it("should create an OverviewViewModel from DTO", () => {
+	describe('create', () => {
+		it('should create an OverviewViewModel from DTO', () => {
 			const dto: IOverviewViewModelDto = {
-				id: "overview-1",
+				id: 'overview-1',
 				// Plants metrics
 				totalPlants: 150,
 				totalActivePlants: 120,
@@ -51,8 +51,8 @@ describe("OverviewViewModelFactory", () => {
 				minPlantsPerGrowingUnit: 0,
 				maxPlantsPerGrowingUnit: 12,
 				medianPlantsPerGrowingUnit: 6,
-				createdAt: new Date("2024-01-15"),
-				updatedAt: new Date("2024-01-15"),
+				createdAt: new Date('2024-01-15'),
+				updatedAt: new Date('2024-01-15'),
 			};
 
 			const viewModel = factory.create(dto);
@@ -74,9 +74,9 @@ describe("OverviewViewModelFactory", () => {
 			expect(viewModel.averageOccupancy).toBe(dto.averageOccupancy);
 		});
 
-		it("should create an OverviewViewModel from DTO with zero values", () => {
+		it('should create an OverviewViewModel from DTO with zero values', () => {
 			const dto: IOverviewViewModelDto = {
-				id: "overview-empty",
+				id: 'overview-empty',
 				totalPlants: 0,
 				totalActivePlants: 0,
 				averagePlantsPerGrowingUnit: 0,
@@ -119,9 +119,9 @@ describe("OverviewViewModelFactory", () => {
 			expect(viewModel.totalCapacity).toBe(0);
 		});
 
-		it("should create an OverviewViewModel with all metrics set", () => {
+		it('should create an OverviewViewModel with all metrics set', () => {
 			const dto: IOverviewViewModelDto = {
-				id: "overview-complete",
+				id: 'overview-complete',
 				totalPlants: 200,
 				totalActivePlants: 180,
 				averagePlantsPerGrowingUnit: 8,
@@ -159,7 +159,7 @@ describe("OverviewViewModelFactory", () => {
 			const viewModel = factory.create(dto);
 
 			expect(viewModel).toBeInstanceOf(OverviewViewModel);
-			expect(viewModel.id).toBe("overview-complete");
+			expect(viewModel.id).toBe('overview-complete');
 			expect(viewModel.totalPlants).toBe(200);
 			expect(viewModel.totalActivePlants).toBe(180);
 			expect(viewModel.averagePlantsPerGrowingUnit).toBe(8);

@@ -1,7 +1,7 @@
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
 
 export const SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN = Symbol(
-	"SagaInstanceWriteRepository",
+	'SagaInstanceWriteRepository',
 );
 
 export interface SagaInstanceWriteRepository {

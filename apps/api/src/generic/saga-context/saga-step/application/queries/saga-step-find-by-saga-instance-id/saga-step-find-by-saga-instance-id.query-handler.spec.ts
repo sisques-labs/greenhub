@@ -1,24 +1,24 @@
-import { Test } from "@nestjs/testing";
-import { FindSagaStepsBySagaInstanceIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-saga-instance-id/saga-step-find-by-saga-instance-id.query";
-import { FindSagaStepsBySagaInstanceIdQueryHandler } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-saga-instance-id/saga-step-find-by-saga-instance-id.query-handler";
-import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { Test } from '@nestjs/testing';
+import { FindSagaStepsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-saga-instance-id/saga-step-find-by-saga-instance-id.query';
+import { FindSagaStepsBySagaInstanceIdQueryHandler } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-saga-instance-id/saga-step-find-by-saga-instance-id.query-handler';
+import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
-} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository";
-import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
-import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
-import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
-import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
-import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
-import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
-import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
+import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
+import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
+import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
+import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
+import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
+import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
+import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
-describe("FindSagaStepsBySagaInstanceIdQueryHandler", () => {
+describe('FindSagaStepsBySagaInstanceIdQueryHandler', () => {
 	let handler: FindSagaStepsBySagaInstanceIdQueryHandler;
 	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
 
@@ -77,23 +77,23 @@ describe("FindSagaStepsBySagaInstanceIdQueryHandler", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should return array of saga step aggregates when saga steps exist", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return array of saga step aggregates when saga steps exist', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { sagaInstanceId };
 			const query = new FindSagaStepsBySagaInstanceIdQuery(queryDto);
 
 			const mockSagaSteps = [
 				createSagaStepAggregate(
-					"123e4567-e89b-12d3-a456-426614174000",
+					'123e4567-e89b-12d3-a456-426614174000',
 					sagaInstanceId,
-					"Process Payment",
+					'Process Payment',
 					1,
 				),
 				createSagaStepAggregate(
-					"223e4567-e89b-12d3-a456-426614174001",
+					'223e4567-e89b-12d3-a456-426614174001',
 					sagaInstanceId,
-					"Send Email",
+					'Send Email',
 					2,
 				),
 			];
@@ -114,8 +114,8 @@ describe("FindSagaStepsBySagaInstanceIdQueryHandler", () => {
 			).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return empty array when no saga steps exist for saga instance", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should return empty array when no saga steps exist for saga instance', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { sagaInstanceId };
 			const query = new FindSagaStepsBySagaInstanceIdQuery(queryDto);
 
@@ -130,28 +130,28 @@ describe("FindSagaStepsBySagaInstanceIdQueryHandler", () => {
 			).toHaveBeenCalledWith(sagaInstanceId);
 		});
 
-		it("should return saga steps ordered by order field", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should return saga steps ordered by order field', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { sagaInstanceId };
 			const query = new FindSagaStepsBySagaInstanceIdQuery(queryDto);
 
 			const mockSagaSteps = [
 				createSagaStepAggregate(
-					"123e4567-e89b-12d3-a456-426614174000",
+					'123e4567-e89b-12d3-a456-426614174000',
 					sagaInstanceId,
-					"Step 2",
+					'Step 2',
 					2,
 				),
 				createSagaStepAggregate(
-					"223e4567-e89b-12d3-a456-426614174001",
+					'223e4567-e89b-12d3-a456-426614174001',
 					sagaInstanceId,
-					"Step 1",
+					'Step 1',
 					1,
 				),
 				createSagaStepAggregate(
-					"323e4567-e89b-12d3-a456-426614174002",
+					'323e4567-e89b-12d3-a456-426614174002',
 					sagaInstanceId,
-					"Step 3",
+					'Step 3',
 					3,
 				),
 			];

@@ -1,4 +1,4 @@
-import { InvalidUrlException } from "@/shared/domain/exceptions/value-objects/invalid-url/invalid-url.exception";
+import { InvalidUrlException } from '@/shared/domain/exceptions/value-objects/invalid-url/invalid-url.exception';
 
 /**
  * Url Value Object
@@ -30,13 +30,13 @@ export class UrlValueObject {
 
 	private checkIsEmpty(value: string): void {
 		if (!value) {
-			throw new InvalidUrlException("URL cannot be empty");
+			throw new InvalidUrlException('URL cannot be empty');
 		}
 	}
 
 	private checkIsUrl(value: string): void {
-		if (!value.startsWith("http")) {
-			throw new InvalidUrlException("URL must start with http");
+		if (!value.startsWith('http')) {
+			throw new InvalidUrlException('URL must start with http');
 		}
 	}
 }

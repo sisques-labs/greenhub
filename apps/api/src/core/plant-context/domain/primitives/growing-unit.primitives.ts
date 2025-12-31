@@ -1,4 +1,4 @@
-import { PlantPrimitives } from "@/core/plant-context/domain/primitives/plant.primitives";
+import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
 
 export type GrowingUnitPrimitives = {
 	id: string;

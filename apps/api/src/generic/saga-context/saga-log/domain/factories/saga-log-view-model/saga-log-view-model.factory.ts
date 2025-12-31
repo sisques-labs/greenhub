@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
-import { ISagaLogCreateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto";
-import { SagaLogPrimitives } from "@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives";
-import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
-import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
+import { Injectable, Logger } from '@nestjs/common';
+import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+import { ISagaLogCreateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto';
+import { SagaLogPrimitives } from '@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives';
+import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
 
 /**
  * This factory class is used to create a new saga log view model.

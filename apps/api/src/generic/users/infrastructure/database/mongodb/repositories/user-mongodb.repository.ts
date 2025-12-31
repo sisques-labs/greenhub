@@ -1,18 +1,18 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { UserReadRepository } from "@/generic/users/domain/repositories/user-read.repository";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
-import { UserMongoDBMapper } from "@/generic/users/infrastructure/database/mongodb/mappers/user-mongodb.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { BaseMongoMasterRepository } from "@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Injectable, Logger } from '@nestjs/common';
+import { UserReadRepository } from '@/generic/users/domain/repositories/user-read.repository';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
+import { UserMongoDBMapper } from '@/generic/users/infrastructure/database/mongodb/mappers/user-mongodb.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { BaseMongoMasterRepository } from '@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
 @Injectable()
 export class UserMongoRepository
 	extends BaseMongoMasterRepository
 	implements UserReadRepository
 {
-	private readonly collectionName = "users";
+	private readonly collectionName = 'users';
 
 	constructor(
 		mongoMasterService: MongoMasterService,

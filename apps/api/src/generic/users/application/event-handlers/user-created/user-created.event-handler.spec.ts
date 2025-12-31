@@ -1,13 +1,13 @@
-import { UserViewModelFactory } from "@/generic/users/domain/factories/user-view-model/user-view-model.factory";
-import { UserPrimitives } from "@/generic/users/domain/primitives/user.primitives";
-import { UserReadRepository } from "@/generic/users/domain/repositories/user-read.repository";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
-import { UserCreatedEvent } from "@/shared/domain/events/users/user-created/user-created.event";
-import { UserCreatedEventHandler } from "./user-created.event-handler";
+import { UserViewModelFactory } from '@/generic/users/domain/factories/user-view-model/user-view-model.factory';
+import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
+import { UserReadRepository } from '@/generic/users/domain/repositories/user-read.repository';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
+import { UserCreatedEventHandler } from './user-created.event-handler';
 
-describe("UserCreatedEventHandler", () => {
+describe('UserCreatedEventHandler', () => {
 	let handler: UserCreatedEventHandler;
 	let mockUserReadRepository: jest.Mocked<UserReadRepository>;
 	let mockUserViewModelFactory: jest.Mocked<UserViewModelFactory>;
@@ -36,14 +36,14 @@ describe("UserCreatedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should create and save user view model when event is handled", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should create and save user view model when event is handled', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -55,19 +55,19 @@ describe("UserCreatedEventHandler", () => {
 			const event = new UserCreatedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserCreatedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserCreatedEvent',
 				},
 				userPrimitives,
 			);
 
 			const mockViewModel = new UserViewModel({
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -89,17 +89,17 @@ describe("UserCreatedEventHandler", () => {
 			expect(mockUserReadRepository.save).toHaveBeenCalledTimes(1);
 		});
 
-		it("should handle event with all user properties", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle event with all user properties', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.ADMIN,
 				status: UserStatusEnum.INACTIVE,
-				bio: "Software developer",
-				avatarUrl: "https://example.com/avatar.jpg",
+				bio: 'Software developer',
+				avatarUrl: 'https://example.com/avatar.jpg',
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			};
@@ -107,23 +107,23 @@ describe("UserCreatedEventHandler", () => {
 			const event = new UserCreatedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserCreatedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserCreatedEvent',
 				},
 				userPrimitives,
 			);
 
 			const mockViewModel = new UserViewModel({
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.ADMIN,
 				status: UserStatusEnum.INACTIVE,
-				bio: "Software developer",
-				avatarUrl: "https://example.com/avatar.jpg",
+				bio: 'Software developer',
+				avatarUrl: 'https://example.com/avatar.jpg',
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			});
@@ -139,11 +139,11 @@ describe("UserCreatedEventHandler", () => {
 			expect(mockUserReadRepository.save).toHaveBeenCalledWith(mockViewModel);
 		});
 
-		it("should handle event with minimal user data", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle event with minimal user data', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
+				userName: 'johndoe',
 				name: null,
 				lastName: null,
 				role: UserRoleEnum.USER,
@@ -157,17 +157,17 @@ describe("UserCreatedEventHandler", () => {
 			const event = new UserCreatedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserCreatedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserCreatedEvent',
 				},
 				userPrimitives,
 			);
 
 			const mockViewModel = new UserViewModel({
 				id: userId,
-				userName: "johndoe",
+				userName: 'johndoe',
 				name: null,
 				lastName: null,
 				role: UserRoleEnum.USER,
@@ -189,13 +189,13 @@ describe("UserCreatedEventHandler", () => {
 			expect(mockUserReadRepository.save).toHaveBeenCalledWith(mockViewModel);
 		});
 
-		it("should use correct aggregate id from event metadata", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should use correct aggregate id from event metadata', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -207,19 +207,19 @@ describe("UserCreatedEventHandler", () => {
 			const event = new UserCreatedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserCreatedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserCreatedEvent',
 				},
 				userPrimitives,
 			);
 
 			const mockViewModel = new UserViewModel({
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -237,13 +237,13 @@ describe("UserCreatedEventHandler", () => {
 			expect(event.data.id).toBe(userId);
 		});
 
-		it("should save view model after creating it", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should save view model after creating it', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -255,19 +255,19 @@ describe("UserCreatedEventHandler", () => {
 			const event = new UserCreatedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserCreatedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserCreatedEvent',
 				},
 				userPrimitives,
 			);
 
 			const mockViewModel = new UserViewModel({
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,

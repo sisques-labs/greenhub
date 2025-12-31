@@ -1,9 +1,9 @@
-import { HealthAggregate } from "@/support/health/domain/aggregates/health.aggregate";
-import { IHealthCreateDto } from "@/support/health/domain/dtos/entities/health-create/health-create.dto";
-import { HealthStatusEnum } from "@/support/health/domain/enum/health-status.enum";
-import { HealthStatusValueObject } from "@/support/health/domain/value-objects/health-status/health-status.vo";
+import { HealthAggregate } from '@/support/health/domain/aggregates/health.aggregate';
+import { IHealthCreateDto } from '@/support/health/domain/dtos/entities/health-create/health-create.dto';
+import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
+import { HealthStatusValueObject } from '@/support/health/domain/value-objects/health-status/health-status.vo';
 
-describe("HealthAggregate", () => {
+describe('HealthAggregate', () => {
 	const createDto = (
 		status: HealthStatusEnum = HealthStatusEnum.OK,
 		writeDatabaseStatus: HealthStatusEnum = HealthStatusEnum.OK,
@@ -14,7 +14,7 @@ describe("HealthAggregate", () => {
 		readDatabaseStatus: new HealthStatusValueObject(readDatabaseStatus),
 	});
 
-	it("should expose status value object via getter", () => {
+	it('should expose status value object via getter', () => {
 		const dto = createDto(
 			HealthStatusEnum.OK,
 			HealthStatusEnum.OK,

@@ -1,15 +1,15 @@
-import { CommandBus } from "@nestjs/cqrs";
-import { AuthLoginByEmailCommand } from "@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command";
-import { AuthRegisterByEmailCommand } from "@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command";
-import { AuthLoginByEmailRequestDto } from "@/generic/auth/transport/graphql/dtos/requests/auth-login-by-email.request.dto";
-import { AuthRegisterByEmailRequestDto } from "@/generic/auth/transport/graphql/dtos/requests/auth-register-by-email.request.dto";
-import { LoginResponseDto } from "@/generic/auth/transport/graphql/dtos/responses/login.response.dto";
-import { AuthMutationsResolver } from "@/generic/auth/transport/graphql/resolvers/auth-mutations/auth-mutations.resolver";
-import { UpdateUserRequestDto } from "@/generic/users/transport/graphql/dtos/requests/update-user.request.dto";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { CommandBus } from '@nestjs/cqrs';
+import { AuthLoginByEmailCommand } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command';
+import { AuthRegisterByEmailCommand } from '@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command';
+import { AuthLoginByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-login-by-email.request.dto';
+import { AuthRegisterByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-register-by-email.request.dto';
+import { LoginResponseDto } from '@/generic/auth/transport/graphql/dtos/responses/login.response.dto';
+import { AuthMutationsResolver } from '@/generic/auth/transport/graphql/resolvers/auth-mutations/auth-mutations.resolver';
+import { UpdateUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/update-user.request.dto';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
-describe("AuthMutationsResolver", () => {
+describe('AuthMutationsResolver', () => {
 	let resolver: AuthMutationsResolver;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 	let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
@@ -33,16 +33,16 @@ describe("AuthMutationsResolver", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("loginByEmail", () => {
-		it("should login user by email and return tokens", async () => {
+	describe('loginByEmail', () => {
+		it('should login user by email and return tokens', async () => {
 			const input: AuthLoginByEmailRequestDto = {
-				email: "test@example.com",
-				password: "SecureP@ssw0rd123",
+				email: 'test@example.com',
+				password: 'SecureP@ssw0rd123',
 			};
 
 			const tokens: LoginResponseDto = {
-				accessToken: "access-token",
-				refreshToken: "refresh-token",
+				accessToken: 'access-token',
+				refreshToken: 'refresh-token',
 			};
 
 			mockCommandBus.execute.mockResolvedValue(tokens);
@@ -55,19 +55,19 @@ describe("AuthMutationsResolver", () => {
 			);
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
 			expect(command).toBeInstanceOf(AuthLoginByEmailCommand);
-			expect(command.email.value).toBe("test@example.com");
-			expect(command.password.value).toBe("SecureP@ssw0rd123");
+			expect(command.email.value).toBe('test@example.com');
+			expect(command.password.value).toBe('SecureP@ssw0rd123');
 		});
 
-		it("should handle login with different email", async () => {
+		it('should handle login with different email', async () => {
 			const input: AuthLoginByEmailRequestDto = {
-				email: "another@example.com",
-				password: "DifferentP@ssw0rd456",
+				email: 'another@example.com',
+				password: 'DifferentP@ssw0rd456',
 			};
 
 			const tokens: LoginResponseDto = {
-				accessToken: "another-access-token",
-				refreshToken: "another-refresh-token",
+				accessToken: 'another-access-token',
+				refreshToken: 'another-refresh-token',
 			};
 
 			mockCommandBus.execute.mockResolvedValue(tokens);
@@ -79,17 +79,17 @@ describe("AuthMutationsResolver", () => {
 		});
 	});
 
-	describe("registerByEmail", () => {
-		it("should register user by email and return success response", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('registerByEmail', () => {
+		it('should register user by email and return success response', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: AuthRegisterByEmailRequestDto = {
-				email: "newuser@example.com",
-				password: "SecureP@ssw0rd789",
+				email: 'newuser@example.com',
+				password: 'SecureP@ssw0rd789',
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Auth registered successfully",
+				message: 'Auth registered successfully',
 				id: authId,
 			};
 
@@ -106,27 +106,27 @@ describe("AuthMutationsResolver", () => {
 			);
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
 			expect(command).toBeInstanceOf(AuthRegisterByEmailCommand);
-			expect(command.email.value).toBe("newuser@example.com");
-			expect(command.password.value).toBe("SecureP@ssw0rd789");
+			expect(command.email.value).toBe('newuser@example.com');
+			expect(command.password.value).toBe('SecureP@ssw0rd789');
 			expect(
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Auth registered successfully",
+				message: 'Auth registered successfully',
 				id: authId,
 			});
 		});
 
-		it("should handle registration with different email", async () => {
-			const authId = "223e4567-e89b-12d3-a456-426614174001";
+		it('should handle registration with different email', async () => {
+			const authId = '223e4567-e89b-12d3-a456-426614174001';
 			const input: AuthRegisterByEmailRequestDto = {
-				email: "another@example.com",
-				password: "AnotherP@ssw0rd321",
+				email: 'another@example.com',
+				password: 'AnotherP@ssw0rd321',
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Auth registered successfully",
+				message: 'Auth registered successfully',
 				id: authId,
 			};
 
@@ -142,16 +142,16 @@ describe("AuthMutationsResolver", () => {
 		});
 	});
 
-	describe("logout", () => {
-		it("should logout user and return success response", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('logout', () => {
+		it('should logout user and return success response', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: UpdateUserRequestDto = {
 				id: userId,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "User updated successfully",
+				message: 'User updated successfully',
 				id: userId,
 			};
 
@@ -166,20 +166,20 @@ describe("AuthMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "User updated successfully",
+				message: 'User updated successfully',
 				id: userId,
 			});
 		});
 
-		it("should handle logout with different user id", async () => {
-			const userId = "323e4567-e89b-12d3-a456-426614174002";
+		it('should handle logout with different user id', async () => {
+			const userId = '323e4567-e89b-12d3-a456-426614174002';
 			const input: UpdateUserRequestDto = {
 				id: userId,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "User updated successfully",
+				message: 'User updated successfully',
 				id: userId,
 			};
 

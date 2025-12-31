@@ -1,5 +1,5 @@
-import { randomUUID } from "crypto";
-import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
+import { randomUUID } from 'crypto';
+import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 export abstract class BaseEvent<TData> {
 	readonly eventId: string;

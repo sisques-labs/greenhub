@@ -1,32 +1,32 @@
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
-import { ISagaInstanceCreateViewModelDto } from "@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstanceViewModelFactory } from "@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory";
-import { SagaInstancePrimitives } from "@/generic/saga-context/saga-instance/domain/primitives/saga-instance.primitives";
-import { SagaInstanceEndDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo";
-import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
-import { SagaInstanceStartDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo";
-import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
+import { ISagaInstanceCreateViewModelDto } from '@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstanceViewModelFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory';
+import { SagaInstancePrimitives } from '@/generic/saga-context/saga-instance/domain/primitives/saga-instance.primitives';
+import { SagaInstanceEndDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo';
+import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
+import { SagaInstanceStartDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo';
+import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
-describe("SagaInstanceViewModelFactory", () => {
+describe('SagaInstanceViewModelFactory', () => {
 	let factory: SagaInstanceViewModelFactory;
 
 	beforeEach(() => {
 		factory = new SagaInstanceViewModelFactory();
 	});
 
-	describe("create", () => {
-		it("should create a SagaInstanceViewModel from DTO with all fields", () => {
-			const now = new Date("2024-01-01T10:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('create', () => {
+		it('should create a SagaInstanceViewModel from DTO with all fields', () => {
+			const now = new Date('2024-01-01T10:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const dto: ISagaInstanceCreateViewModelDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Order Processing Saga",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
@@ -46,12 +46,12 @@ describe("SagaInstanceViewModelFactory", () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it("should create a SagaInstanceViewModel from DTO with null optional fields", () => {
-			const now = new Date("2024-01-01T10:00:00Z");
+		it('should create a SagaInstanceViewModel from DTO with null optional fields', () => {
+			const now = new Date('2024-01-01T10:00:00Z');
 
 			const dto: ISagaInstanceCreateViewModelDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Order Processing Saga",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
@@ -67,15 +67,15 @@ describe("SagaInstanceViewModelFactory", () => {
 		});
 	});
 
-	describe("fromPrimitives", () => {
-		it("should create a SagaInstanceViewModel from primitives with all fields", () => {
-			const now = new Date("2024-01-01T10:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('fromPrimitives', () => {
+		it('should create a SagaInstanceViewModel from primitives with all fields', () => {
+			const now = new Date('2024-01-01T10:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const primitives: SagaInstancePrimitives = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Order Processing Saga",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
@@ -95,12 +95,12 @@ describe("SagaInstanceViewModelFactory", () => {
 			expect(viewModel.updatedAt).toEqual(primitives.updatedAt);
 		});
 
-		it("should create a SagaInstanceViewModel from primitives with null optional fields", () => {
-			const now = new Date("2024-01-01T10:00:00Z");
+		it('should create a SagaInstanceViewModel from primitives with null optional fields', () => {
+			const now = new Date('2024-01-01T10:00:00Z');
 
 			const primitives: SagaInstancePrimitives = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Order Processing Saga",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
@@ -116,18 +116,18 @@ describe("SagaInstanceViewModelFactory", () => {
 		});
 	});
 
-	describe("fromAggregate", () => {
-		it("should create a SagaInstanceViewModel from aggregate with all fields", () => {
-			const now = new Date("2024-01-01T10:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('fromAggregate', () => {
+		it('should create a SagaInstanceViewModel from aggregate with all fields', () => {
+			const now = new Date('2024-01-01T10:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const aggregate = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(
-						"123e4567-e89b-12d3-a456-426614174000",
+						'123e4567-e89b-12d3-a456-426614174000',
 					),
-					name: new SagaInstanceNameValueObject("Order Processing Saga"),
+					name: new SagaInstanceNameValueObject('Order Processing Saga'),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.COMPLETED,
 					),
@@ -151,15 +151,15 @@ describe("SagaInstanceViewModelFactory", () => {
 			expect(viewModel.updatedAt).toEqual(aggregate.updatedAt.value);
 		});
 
-		it("should create a SagaInstanceViewModel from aggregate with null optional fields", () => {
-			const now = new Date("2024-01-01T10:00:00Z");
+		it('should create a SagaInstanceViewModel from aggregate with null optional fields', () => {
+			const now = new Date('2024-01-01T10:00:00Z');
 
 			const aggregate = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(
-						"123e4567-e89b-12d3-a456-426614174000",
+						'123e4567-e89b-12d3-a456-426614174000',
 					),
-					name: new SagaInstanceNameValueObject("Order Processing Saga"),
+					name: new SagaInstanceNameValueObject('Order Processing Saga'),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.PENDING,
 					),

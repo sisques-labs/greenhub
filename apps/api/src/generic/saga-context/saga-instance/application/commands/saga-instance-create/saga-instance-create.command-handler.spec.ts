@@ -1,21 +1,21 @@
-import { EventBus, QueryBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaInstanceCreateCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command";
-import { SagaInstanceCreateCommandHandler } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command-handler";
-import { AssertSagaInstanceNotExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-not-exists/assert-saga-instance-not-exists.service";
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstanceAggregateFactory } from "@/generic/saga-context/saga-instance/domain/factories/saga-instance-aggregate/saga-instance-aggregate.factory";
+import { EventBus, QueryBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaInstanceCreateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command';
+import { SagaInstanceCreateCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command-handler';
+import { AssertSagaInstanceNotExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-not-exists/assert-saga-instance-not-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstanceAggregateFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-aggregate/saga-instance-aggregate.factory';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
-} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository";
-import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
-import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
-import { SagaInstanceCreatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
+import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
+import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
-describe("SagaInstanceCreateCommandHandler", () => {
+describe('SagaInstanceCreateCommandHandler', () => {
 	let handler: SagaInstanceCreateCommandHandler;
 	let mockSagaInstanceWriteRepository: jest.Mocked<SagaInstanceWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -83,10 +83,10 @@ describe("SagaInstanceCreateCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should create saga instance successfully when saga instance does not exist", async () => {
+	describe('execute', () => {
+		it('should create saga instance successfully when saga instance does not exist', async () => {
 			const commandDto = {
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 			};
 
 			const command = new SagaInstanceCreateCommand(commandDto);
@@ -112,7 +112,7 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-			const markAsPendingSpy = jest.spyOn(mockSagaInstance, "markAsPending");
+			const markAsPendingSpy = jest.spyOn(mockSagaInstance, 'markAsPending');
 
 			const result = await handler.execute(command);
 
@@ -128,9 +128,9 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
-		it("should mark saga instance as pending after creation", async () => {
+		it('should mark saga instance as pending after creation', async () => {
 			const commandDto = {
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 			};
 
 			const command = new SagaInstanceCreateCommand(commandDto);
@@ -156,7 +156,7 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-			const markAsPendingSpy = jest.spyOn(mockSagaInstance, "markAsPending");
+			const markAsPendingSpy = jest.spyOn(mockSagaInstance, 'markAsPending');
 
 			await handler.execute(command);
 
@@ -166,9 +166,9 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			);
 		});
 
-		it("should publish SagaInstanceCreatedEvent after saving", async () => {
+		it('should publish SagaInstanceCreatedEvent after saving', async () => {
 			const commandDto = {
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 			};
 
 			const command = new SagaInstanceCreateCommand(commandDto);
@@ -203,13 +203,13 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			}
 		});
 
-		it("should throw error if saga instance already exists", async () => {
+		it('should throw error if saga instance already exists', async () => {
 			const commandDto = {
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 			};
 
 			const command = new SagaInstanceCreateCommand(commandDto);
-			const error = new Error("Saga instance already exists");
+			const error = new Error('Saga instance already exists');
 
 			mockAssertSagaInstanceNotExistsService.execute.mockRejectedValue(error);
 
@@ -218,9 +218,9 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			expect(mockSagaInstanceWriteRepository.save).not.toHaveBeenCalled();
 		});
 
-		it("should commit events after publishing", async () => {
+		it('should commit events after publishing', async () => {
 			const commandDto = {
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 			};
 
 			const command = new SagaInstanceCreateCommand(commandDto);
@@ -246,7 +246,7 @@ describe("SagaInstanceCreateCommandHandler", () => {
 			mockSagaInstanceWriteRepository.save.mockResolvedValue(mockSagaInstance);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-			const commitSpy = jest.spyOn(mockSagaInstance, "commit");
+			const commitSpy = jest.spyOn(mockSagaInstance, 'commit');
 
 			await handler.execute(command);
 

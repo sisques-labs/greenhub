@@ -1,14 +1,14 @@
-import { UserNotFoundException } from "@/generic/users/application/exceptions/user-not-found/user-not-found.exception";
-import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
-import { UserPrimitives } from "@/generic/users/domain/primitives/user.primitives";
-import { UserReadRepository } from "@/generic/users/domain/repositories/user-read.repository";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
-import { UserDeletedEvent } from "@/shared/domain/events/users/user-deleted/user-deleted.event";
-import { UserDeletedEventHandler } from "./user-deleted.event-handler";
+import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
+import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
+import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
+import { UserReadRepository } from '@/generic/users/domain/repositories/user-read.repository';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { UserDeletedEvent } from '@/shared/domain/events/users/user-deleted/user-deleted.event';
+import { UserDeletedEventHandler } from './user-deleted.event-handler';
 
-describe("UserDeletedEventHandler", () => {
+describe('UserDeletedEventHandler', () => {
 	let handler: UserDeletedEventHandler;
 	let mockUserReadRepository: jest.Mocked<UserReadRepository>;
 
@@ -27,16 +27,16 @@ describe("UserDeletedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should delete user view model when event is handled", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should delete user view model when event is handled', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -48,19 +48,19 @@ describe("UserDeletedEventHandler", () => {
 			const event = new UserDeletedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserDeletedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserDeletedEvent',
 				},
 				userPrimitives,
 			);
 
 			const existingViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -82,15 +82,15 @@ describe("UserDeletedEventHandler", () => {
 			expect(mockUserReadRepository.delete).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw exception when user view model does not exist", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw exception when user view model does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -102,10 +102,10 @@ describe("UserDeletedEventHandler", () => {
 			const event = new UserDeletedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserDeletedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserDeletedEvent',
 				},
 				userPrimitives,
 			);
@@ -123,15 +123,15 @@ describe("UserDeletedEventHandler", () => {
 			expect(mockUserReadRepository.delete).not.toHaveBeenCalled();
 		});
 
-		it("should use correct aggregate id from event metadata", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should use correct aggregate id from event metadata', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -143,19 +143,19 @@ describe("UserDeletedEventHandler", () => {
 			const event = new UserDeletedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserDeletedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserDeletedEvent',
 				},
 				userPrimitives,
 			);
 
 			const existingViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -176,15 +176,15 @@ describe("UserDeletedEventHandler", () => {
 			expect(mockUserReadRepository.delete).toHaveBeenCalledWith(userId);
 		});
 
-		it("should delete view model after finding it", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should delete view model after finding it', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -196,19 +196,19 @@ describe("UserDeletedEventHandler", () => {
 			const event = new UserDeletedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserDeletedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserDeletedEvent',
 				},
 				userPrimitives,
 			);
 
 			const existingViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -231,15 +231,15 @@ describe("UserDeletedEventHandler", () => {
 			expect(findOrder).toBeLessThan(deleteOrder);
 		});
 
-		it("should delete view model with correct id", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should delete view model with correct id', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -251,19 +251,19 @@ describe("UserDeletedEventHandler", () => {
 			const event = new UserDeletedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserDeletedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserDeletedEvent',
 				},
 				userPrimitives,
 			);
 
 			const existingViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -285,19 +285,19 @@ describe("UserDeletedEventHandler", () => {
 			expect(existingViewModel.id).toBe(userId);
 		});
 
-		it("should handle deletion for user with all properties", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle deletion for user with all properties', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const userPrimitives: UserPrimitives = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.ADMIN,
 				status: UserStatusEnum.INACTIVE,
-				bio: "Software developer",
-				avatarUrl: "https://example.com/avatar.jpg",
+				bio: 'Software developer',
+				avatarUrl: 'https://example.com/avatar.jpg',
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -305,23 +305,23 @@ describe("UserDeletedEventHandler", () => {
 			const event = new UserDeletedEvent(
 				{
 					aggregateRootId: userId,
-					aggregateRootType: "UserAggregate",
+					aggregateRootType: 'UserAggregate',
 					entityId: userId,
-					entityType: "UserAggregate",
-					eventType: "UserDeletedEvent",
+					entityType: 'UserAggregate',
+					eventType: 'UserDeletedEvent',
 				},
 				userPrimitives,
 			);
 
 			const existingViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.ADMIN,
 				status: UserStatusEnum.INACTIVE,
-				bio: "Software developer",
-				avatarUrl: "https://example.com/avatar.jpg",
+				bio: 'Software developer',
+				avatarUrl: 'https://example.com/avatar.jpg',
 				createdAt: now,
 				updatedAt: now,
 			};

@@ -1,14 +1,14 @@
-import { Collection } from "mongodb";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { SagaStepMongoDbDto } from "@/generic/saga-context/saga-step/infrastructure/database/mongodb/dtos/saga-step-mongodb.dto";
-import { SagaStepMongoDBMapper } from "@/generic/saga-context/saga-step/infrastructure/database/mongodb/mappers/saga-step-mongodb.mapper";
-import { SagaStepMongoRepository } from "@/generic/saga-context/saga-step/infrastructure/database/mongodb/repositories/saga-step-mongodb.repository";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Collection } from 'mongodb';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { SagaStepMongoDbDto } from '@/generic/saga-context/saga-step/infrastructure/database/mongodb/dtos/saga-step-mongodb.dto';
+import { SagaStepMongoDBMapper } from '@/generic/saga-context/saga-step/infrastructure/database/mongodb/mappers/saga-step-mongodb.mapper';
+import { SagaStepMongoRepository } from '@/generic/saga-context/saga-step/infrastructure/database/mongodb/repositories/saga-step-mongodb.repository';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
-describe("SagaStepMongoRepository", () => {
+describe('SagaStepMongoRepository', () => {
 	let repository: SagaStepMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockSagaStepMongoDBMapper: jest.Mocked<SagaStepMongoDBMapper>;
@@ -42,15 +42,15 @@ describe("SagaStepMongoRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return saga step view model when saga step exists", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('findById', () => {
+		it('should return saga step view model when saga step exists', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const mongoDoc: SagaStepMongoDbDto = {
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -88,7 +88,7 @@ describe("SagaStepMongoRepository", () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"saga-steps",
+				'saga-steps',
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({ id: sagaStepId });
 			expect(mockSagaStepMongoDBMapper.toViewModel).toHaveBeenCalledWith({
@@ -109,8 +109,8 @@ describe("SagaStepMongoRepository", () => {
 			});
 		});
 
-		it("should return null when saga step does not exist", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when saga step does not exist', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -122,16 +122,16 @@ describe("SagaStepMongoRepository", () => {
 		});
 	});
 
-	describe("findBySagaInstanceId", () => {
-		it("should return array of saga step view models when saga steps exist", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('findBySagaInstanceId', () => {
+		it('should return array of saga step view models when saga steps exist', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const mongoDocs: SagaStepMongoDbDto[] = [
 				{
-					id: "123e4567-e89b-12d3-a456-426614174000",
+					id: '123e4567-e89b-12d3-a456-426614174000',
 					sagaInstanceId: sagaInstanceId,
-					name: "Process Payment",
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -145,13 +145,13 @@ describe("SagaStepMongoRepository", () => {
 					updatedAt: updatedAt,
 				},
 				{
-					id: "323e4567-e89b-12d3-a456-426614174001",
+					id: '323e4567-e89b-12d3-a456-426614174001',
 					sagaInstanceId: sagaInstanceId,
-					name: "Send Email",
+					name: 'Send Email',
 					order: 2,
 					status: SagaStepStatusEnum.COMPLETED,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					errorMessage: null,
 					retryCount: 0,
 					maxRetries: 3,
@@ -201,8 +201,8 @@ describe("SagaStepMongoRepository", () => {
 			expect(mockSagaStepMongoDBMapper.toViewModel).toHaveBeenCalledTimes(2);
 		});
 
-		it("should return empty array when no saga steps exist", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should return empty array when no saga steps exist', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 
 			const findMock = jest.fn().mockReturnValue({
 				toArray: jest.fn().mockResolvedValue([]),
@@ -219,17 +219,17 @@ describe("SagaStepMongoRepository", () => {
 		});
 	});
 
-	describe("findByCriteria", () => {
-		it("should return paginated result with saga steps when criteria matches", async () => {
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('findByCriteria', () => {
+		it('should return paginated result with saga steps when criteria matches', async () => {
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const mongoDocs: SagaStepMongoDbDto[] = [
 				{
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Process Payment",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -297,16 +297,16 @@ describe("SagaStepMongoRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save saga step view model using upsert", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('save', () => {
+		it('should save saga step view model using upsert', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -359,9 +359,9 @@ describe("SagaStepMongoRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should delete saga step view model by id", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should delete saga step view model by id', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,

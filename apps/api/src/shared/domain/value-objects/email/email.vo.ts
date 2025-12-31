@@ -1,4 +1,4 @@
-import { InvalidEmailException } from "@/shared/domain/exceptions/value-objects/invalid-email/invalid-email.exception";
+import { InvalidEmailException } from '@/shared/domain/exceptions/value-objects/invalid-email/invalid-email.exception';
 
 /**
  * Email Value Object
@@ -28,7 +28,7 @@ export class EmailValueObject {
 	 * @returns The local part of the email
 	 */
 	public getLocalPart(): string {
-		return this._value.split("@")[0];
+		return this._value.split('@')[0];
 	}
 
 	/**
@@ -36,7 +36,7 @@ export class EmailValueObject {
 	 * @returns The domain part of the email
 	 */
 	public getDomain(): string {
-		return this._value.split("@")[1];
+		return this._value.split('@')[1];
 	}
 
 	private validate(value: string): void {
@@ -45,8 +45,8 @@ export class EmailValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === "") {
-			throw new InvalidEmailException("Email cannot be empty");
+		if (!value || value.trim() === '') {
+			throw new InvalidEmailException('Email cannot be empty');
 		}
 	}
 
@@ -56,18 +56,18 @@ export class EmailValueObject {
 			/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 		if (!emailPattern.test(value)) {
-			throw new InvalidEmailException("Invalid email format");
+			throw new InvalidEmailException('Invalid email format');
 		}
 
 		// Additional checks
 		if (value.length > 254) {
-			throw new InvalidEmailException("Email is too long (max 254 characters)");
+			throw new InvalidEmailException('Email is too long (max 254 characters)');
 		}
 
-		const localPart = value.split("@")[0];
+		const localPart = value.split('@')[0];
 		if (localPart.length > 64) {
 			throw new InvalidEmailException(
-				"Local part of email is too long (max 64 characters)",
+				'Local part of email is too long (max 64 characters)',
 			);
 		}
 	}

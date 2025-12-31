@@ -1,4 +1,4 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Service for calculating percentages.
@@ -31,12 +31,12 @@ export class CalculatePercentageService {
 		);
 
 		if (total === 0) {
-			this.logger.warn("Total is zero, returning 0");
+			this.logger.warn('Total is zero, returning 0');
 			return 0;
 		}
 
 		if (value < 0 || total < 0) {
-			this.logger.warn("Negative values detected, returning 0");
+			this.logger.warn('Negative values detected, returning 0');
 			return 0;
 		}
 

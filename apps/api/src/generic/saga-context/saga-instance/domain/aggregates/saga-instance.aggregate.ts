@@ -1,18 +1,18 @@
-import { ISagaInstanceCreateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto";
-import { ISagaInstanceUpdateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-update/saga-instance-update.dto";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstancePrimitives } from "@/generic/saga-context/saga-instance/domain/primitives/saga-instance.primitives";
-import { SagaInstanceEndDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo";
-import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
-import { SagaInstanceStartDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo";
-import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
-import { BaseAggregate } from "@/shared/domain/aggregates/base-aggregate/base.aggregate";
-import { SagaInstanceCreatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event";
-import { SagaInstanceDeletedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-deleted/saga-instance-deleted.event";
-import { SagaInstanceStatusChangedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event";
-import { SagaInstanceUpdatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { ISagaInstanceCreateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto';
+import { ISagaInstanceUpdateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-update/saga-instance-update.dto';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstancePrimitives } from '@/generic/saga-context/saga-instance/domain/primitives/saga-instance.primitives';
+import { SagaInstanceEndDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo';
+import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
+import { SagaInstanceStartDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo';
+import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
+import { BaseAggregate } from '@/shared/domain/aggregates/base-aggregate/base.aggregate';
+import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event';
+import { SagaInstanceDeletedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-deleted/saga-instance-deleted.event';
+import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
+import { SagaInstanceUpdatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
 export class SagaInstanceAggregate extends BaseAggregate {
 	private readonly _id: SagaInstanceUuidValueObject;

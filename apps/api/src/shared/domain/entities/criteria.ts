@@ -1,5 +1,5 @@
-import { FilterOperator } from "@/shared/domain/enums/filter-operator.enum";
-import { SortDirection } from "@/shared/domain/enums/sort-direction.enum";
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 
 export interface Filter {
 	field: string;

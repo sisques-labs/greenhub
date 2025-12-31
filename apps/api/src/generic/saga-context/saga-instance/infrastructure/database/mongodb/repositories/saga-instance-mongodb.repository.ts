@@ -1,18 +1,18 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { SagaInstanceReadRepository } from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { SagaInstanceMongoDBMapper } from "@/generic/saga-context/saga-instance/infrastructure/database/mongodb/mappers/saga-instance-mongodb.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { BaseMongoMasterRepository } from "@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Injectable, Logger } from '@nestjs/common';
+import { SagaInstanceReadRepository } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { SagaInstanceMongoDBMapper } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/mappers/saga-instance-mongodb.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { BaseMongoMasterRepository } from '@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
 @Injectable()
 export class SagaInstanceMongoRepository
 	extends BaseMongoMasterRepository
 	implements SagaInstanceReadRepository
 {
-	private readonly collectionName = "saga-instances";
+	private readonly collectionName = 'saga-instances';
 
 	constructor(
 		mongoMasterService: MongoMasterService,

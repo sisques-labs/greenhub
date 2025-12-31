@@ -1,5 +1,5 @@
-import { InvalidStringException } from "@/shared/domain/exceptions/value-objects/invalid-string/invalid-string.exception";
-import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
+import { InvalidStringException } from '@/shared/domain/exceptions/value-objects/invalid-string/invalid-string.exception';
+import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
 
 /**
  * Slug Value Object
@@ -62,8 +62,8 @@ export class SlugValueObject extends StringValueObject {
 	 * @returns A URL-friendly slug string
 	 */
 	public static generateSlug(text: string): string {
-		if (!text || typeof text !== "string") {
-			return "";
+		if (!text || typeof text !== 'string') {
+			return '';
 		}
 
 		return (
@@ -71,13 +71,13 @@ export class SlugValueObject extends StringValueObject {
 				.toLowerCase()
 				.trim()
 				// Replace spaces and underscores with hyphens
-				.replace(/[\s_]+/g, "-")
+				.replace(/[\s_]+/g, '-')
 				// Remove all non-alphanumeric characters except hyphens
-				.replace(/[^a-z0-9-]/g, "")
+				.replace(/[^a-z0-9-]/g, '')
 				// Replace multiple consecutive hyphens with single hyphen
-				.replace(/-+/g, "-")
+				.replace(/-+/g, '-')
 				// Remove leading and trailing hyphens
-				.replace(/^-+|-+$/g, "")
+				.replace(/^-+|-+$/g, '')
 		);
 	}
 
@@ -103,7 +103,7 @@ export class SlugValueObject extends StringValueObject {
 	 */
 	public getWordCount(): number {
 		if (this.value.length === 0) return 0;
-		return this.value.split("-").filter((part) => part.length > 0).length;
+		return this.value.split('-').filter((part) => part.length > 0).length;
 	}
 
 	/**
@@ -112,9 +112,9 @@ export class SlugValueObject extends StringValueObject {
 	 */
 	public toHumanReadable(): StringValueObject {
 		const humanReadable = this.value
-			.split("-")
+			.split('-')
 			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-			.join(" ");
+			.join(' ');
 
 		return new StringValueObject(humanReadable);
 	}
@@ -156,18 +156,18 @@ export class SlugValueObject extends StringValueObject {
 	protected validateSlug(): void {
 		if (this.isEmptyOrOnlyHyphens()) {
 			throw new InvalidStringException(
-				"Slug cannot be empty or contain only hyphens",
+				'Slug cannot be empty or contain only hyphens',
 			);
 		}
 
 		if (!this.isValidSlug()) {
 			throw new InvalidStringException(
-				"Slug must contain only lowercase letters, numbers, and hyphens",
+				'Slug must contain only lowercase letters, numbers, and hyphens',
 			);
 		}
 
-		if (this.value.startsWith("-") || this.value.endsWith("-")) {
-			throw new InvalidStringException("Slug cannot start or end with hyphens");
+		if (this.value.startsWith('-') || this.value.endsWith('-')) {
+			throw new InvalidStringException('Slug cannot start or end with hyphens');
 		}
 	}
 }

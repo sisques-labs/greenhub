@@ -1,5 +1,5 @@
-import { InvalidTimezoneException } from "@/shared/domain/exceptions/value-objects/invalid-timezone/invalid-timezone.exception";
-import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
+import { InvalidTimezoneException } from '@/shared/domain/exceptions/value-objects/invalid-timezone/invalid-timezone.exception';
+import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
 
 /**
  * Timezone Value Object
@@ -15,58 +15,58 @@ export class TimezoneValueObject extends StringValueObject {
 
 	// Common timezone identifiers for validation
 	private static readonly COMMON_TIMEZONES = new Set([
-		"UTC",
-		"Europe/London",
-		"Europe/Paris",
-		"Europe/Madrid",
-		"Europe/Berlin",
-		"Europe/Rome",
-		"Europe/Amsterdam",
-		"Europe/Brussels",
-		"Europe/Vienna",
-		"Europe/Zurich",
-		"Europe/Stockholm",
-		"Europe/Oslo",
-		"Europe/Copenhagen",
-		"Europe/Helsinki",
-		"Europe/Warsaw",
-		"Europe/Prague",
-		"Europe/Budapest",
-		"Europe/Bucharest",
-		"Europe/Sofia",
-		"Europe/Athens",
-		"Europe/Istanbul",
-		"Europe/Moscow",
-		"America/New_York",
-		"America/Chicago",
-		"America/Denver",
-		"America/Los_Angeles",
-		"America/Toronto",
-		"America/Vancouver",
-		"America/Mexico_City",
-		"America/Sao_Paulo",
-		"America/Buenos_Aires",
-		"America/Lima",
-		"America/Bogota",
-		"America/Caracas",
-		"America/Santiago",
-		"Asia/Tokyo",
-		"Asia/Seoul",
-		"Asia/Shanghai",
-		"Asia/Hong_Kong",
-		"Asia/Singapore",
-		"Asia/Bangkok",
-		"Asia/Jakarta",
-		"Asia/Manila",
-		"Asia/Kolkata",
-		"Asia/Dubai",
-		"Asia/Tehran",
-		"Asia/Riyadh",
-		"Australia/Sydney",
-		"Australia/Melbourne",
-		"Australia/Perth",
-		"Pacific/Auckland",
-		"Pacific/Honolulu",
+		'UTC',
+		'Europe/London',
+		'Europe/Paris',
+		'Europe/Madrid',
+		'Europe/Berlin',
+		'Europe/Rome',
+		'Europe/Amsterdam',
+		'Europe/Brussels',
+		'Europe/Vienna',
+		'Europe/Zurich',
+		'Europe/Stockholm',
+		'Europe/Oslo',
+		'Europe/Copenhagen',
+		'Europe/Helsinki',
+		'Europe/Warsaw',
+		'Europe/Prague',
+		'Europe/Budapest',
+		'Europe/Bucharest',
+		'Europe/Sofia',
+		'Europe/Athens',
+		'Europe/Istanbul',
+		'Europe/Moscow',
+		'America/New_York',
+		'America/Chicago',
+		'America/Denver',
+		'America/Los_Angeles',
+		'America/Toronto',
+		'America/Vancouver',
+		'America/Mexico_City',
+		'America/Sao_Paulo',
+		'America/Buenos_Aires',
+		'America/Lima',
+		'America/Bogota',
+		'America/Caracas',
+		'America/Santiago',
+		'Asia/Tokyo',
+		'Asia/Seoul',
+		'Asia/Shanghai',
+		'Asia/Hong_Kong',
+		'Asia/Singapore',
+		'Asia/Bangkok',
+		'Asia/Jakarta',
+		'Asia/Manila',
+		'Asia/Kolkata',
+		'Asia/Dubai',
+		'Asia/Tehran',
+		'Asia/Riyadh',
+		'Australia/Sydney',
+		'Australia/Melbourne',
+		'Australia/Perth',
+		'Pacific/Auckland',
+		'Pacific/Honolulu',
 	]);
 
 	constructor(
@@ -115,8 +115,8 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns A normalized timezone string
 	 */
 	public static normalizeTimezone(timezone: string): string {
-		if (!timezone || typeof timezone !== "string") {
-			return "";
+		if (!timezone || typeof timezone !== 'string') {
+			return '';
 		}
 
 		return timezone.trim();
@@ -135,7 +135,7 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns True if UTC
 	 */
 	public isUTC(): boolean {
-		return this.value === "UTC";
+		return this.value === 'UTC';
 	}
 
 	/**
@@ -143,7 +143,7 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns The region or null if invalid format
 	 */
 	public getRegion(): string | null {
-		const parts = this.value.split("/");
+		const parts = this.value.split('/');
 		return parts.length >= 2 ? parts[0] : null;
 	}
 
@@ -152,7 +152,7 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns The city or null if invalid format
 	 */
 	public getCity(): string | null {
-		const parts = this.value.split("/");
+		const parts = this.value.split('/');
 		return parts.length >= 2 ? parts[1] : null;
 	}
 
@@ -161,7 +161,7 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns True if European
 	 */
 	public isEuropean(): boolean {
-		return this.getRegion() === "Europe";
+		return this.getRegion() === 'Europe';
 	}
 
 	/**
@@ -169,7 +169,7 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns True if American
 	 */
 	public isAmerican(): boolean {
-		return this.getRegion() === "America";
+		return this.getRegion() === 'America';
 	}
 
 	/**
@@ -177,7 +177,7 @@ export class TimezoneValueObject extends StringValueObject {
 	 * @returns True if Asian
 	 */
 	public isAsian(): boolean {
-		return this.getRegion() === "Asia";
+		return this.getRegion() === 'Asia';
 	}
 
 	/**

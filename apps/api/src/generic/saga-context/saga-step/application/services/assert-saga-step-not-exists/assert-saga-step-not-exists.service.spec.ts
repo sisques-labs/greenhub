@@ -1,24 +1,24 @@
-import { Test } from "@nestjs/testing";
-import { SagaStepAlreadyExistsException } from "@/generic/saga-context/saga-step/application/exceptions/saga-step-already-exists/saga-step-already-exists.exception";
-import { AssertSagaStepNotExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-not-exists/assert-saga-step-not-exists.service";
-import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { Test } from '@nestjs/testing';
+import { SagaStepAlreadyExistsException } from '@/generic/saga-context/saga-step/application/exceptions/saga-step-already-exists/saga-step-already-exists.exception';
+import { AssertSagaStepNotExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-not-exists/assert-saga-step-not-exists.service';
+import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
-} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository";
-import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
-import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
-import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
-import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
-import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
-import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
-import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
+import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
+import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
+import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
+import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
+import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
+import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
+import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
-describe("AssertSagaStepNotExistsService", () => {
+describe('AssertSagaStepNotExistsService', () => {
 	let service: AssertSagaStepNotExistsService;
 	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
 
@@ -53,11 +53,11 @@ describe("AssertSagaStepNotExistsService", () => {
 		const now = new Date();
 		return new SagaStepAggregate(
 			{
-				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					"223e4567-e89b-12d3-a456-426614174000",
+					'223e4567-e89b-12d3-a456-426614174000',
 				),
-				name: new SagaStepNameValueObject("Test Step"),
+				name: new SagaStepNameValueObject('Test Step'),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
@@ -74,9 +74,9 @@ describe("AssertSagaStepNotExistsService", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should return void when saga step does not exist", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return void when saga step does not exist', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSagaStepWriteRepository.findById.mockResolvedValue(null);
 
@@ -89,8 +89,8 @@ describe("AssertSagaStepNotExistsService", () => {
 			expect(mockSagaStepWriteRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw SagaStepAlreadyExistsException when saga step exists", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaStepAlreadyExistsException when saga step exists', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const existingSagaStep = createSagaStepAggregate();
 
 			mockSagaStepWriteRepository.findById.mockResolvedValue(existingSagaStep);
@@ -103,15 +103,15 @@ describe("AssertSagaStepNotExistsService", () => {
 			);
 		});
 
-		it("should throw SagaStepAlreadyExistsException with correct message", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaStepAlreadyExistsException with correct message', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const existingSagaStep = createSagaStepAggregate();
 
 			mockSagaStepWriteRepository.findById.mockResolvedValue(existingSagaStep);
 
 			try {
 				await service.execute(sagaStepId);
-				fail("Should have thrown SagaStepAlreadyExistsException");
+				fail('Should have thrown SagaStepAlreadyExistsException');
 			} catch (error) {
 				expect(error).toBeInstanceOf(SagaStepAlreadyExistsException);
 				expect(error.message).toContain(sagaStepId);

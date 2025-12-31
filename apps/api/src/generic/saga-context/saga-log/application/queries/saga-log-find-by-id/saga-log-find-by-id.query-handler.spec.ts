@@ -1,18 +1,18 @@
-import { Test } from "@nestjs/testing";
-import { SagaLogNotFoundException } from "@/generic/saga-context/saga-log/application/exceptions/saga-log-not-found/saga-log-not-found.exception";
-import { FindSagaLogByIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-by-id/saga-log-find-by-id.query";
-import { FindSagaLogByIdQueryHandler } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-by-id/saga-log-find-by-id.query-handler";
-import { AssertSagaLogExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service";
-import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
-import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+import { Test } from '@nestjs/testing';
+import { SagaLogNotFoundException } from '@/generic/saga-context/saga-log/application/exceptions/saga-log-not-found/saga-log-not-found.exception';
+import { FindSagaLogByIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-id/saga-log-find-by-id.query';
+import { FindSagaLogByIdQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-id/saga-log-find-by-id.query-handler';
+import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
+import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
+import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
 
-describe("FindSagaLogByIdQueryHandler", () => {
+describe('FindSagaLogByIdQueryHandler', () => {
 	let handler: FindSagaLogByIdQueryHandler;
 	let mockAssertSagaLogExistsService: jest.Mocked<AssertSagaLogExistsService>;
 
@@ -44,15 +44,15 @@ describe("FindSagaLogByIdQueryHandler", () => {
 		const now = new Date();
 		return new SagaLogAggregate(
 			{
-				id: new SagaLogUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+				id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					"223e4567-e89b-12d3-a456-426614174000",
+					'223e4567-e89b-12d3-a456-426614174000',
 				),
 				sagaStepId: new SagaStepUuidValueObject(
-					"323e4567-e89b-12d3-a456-426614174000",
+					'323e4567-e89b-12d3-a456-426614174000',
 				),
 				type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-				message: new SagaLogMessageValueObject("Test log message"),
+				message: new SagaLogMessageValueObject('Test log message'),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
 			},
@@ -60,9 +60,9 @@ describe("FindSagaLogByIdQueryHandler", () => {
 		);
 	};
 
-	describe("execute", () => {
-		it("should return saga log aggregate when saga log exists", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return saga log aggregate when saga log exists', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaLogId };
 			const query = new FindSagaLogByIdQuery(queryDto);
 
@@ -79,8 +79,8 @@ describe("FindSagaLogByIdQueryHandler", () => {
 			expect(mockAssertSagaLogExistsService.execute).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw SagaLogNotFoundException when saga log does not exist", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaLogNotFoundException when saga log does not exist', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto = { id: sagaLogId };
 			const query = new FindSagaLogByIdQuery(queryDto);
 

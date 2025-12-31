@@ -1,11 +1,11 @@
-import { Inject, Logger } from "@nestjs/common";
-import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { AssertSagaLogViewModelExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service";
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
 import {
 	SAGA_LOG_READ_REPOSITORY_TOKEN,
 	SagaLogReadRepository,
-} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository";
-import { SagaLogUpdatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event";
+} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
+import { SagaLogUpdatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event';
 
 @EventsHandler(SagaLogUpdatedEvent)
 export class SagaLogUpdatedEventHandler

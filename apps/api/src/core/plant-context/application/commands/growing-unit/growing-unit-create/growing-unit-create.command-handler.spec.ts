@@ -1,23 +1,23 @@
-import { GrowingUnitCreateCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command";
-import { GrowingUnitCreateCommandHandler } from "@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler";
-import { IGrowingUnitCreateCommandDto } from "@/core/plant-context/application/dtos/commands/growing-unit/growing-unit-create/growing-unit-create-command.dto";
-import { GrowingUnitCreatedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event";
-import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { GrowingUnitAggregateFactory } from "@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory";
+import { GrowingUnitCreateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command';
+import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
+import { IGrowingUnitCreateCommandDto } from '@/core/plant-context/application/dtos/commands/growing-unit/growing-unit-create/growing-unit-create-command.dto';
+import { GrowingUnitCreatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
 import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
-} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository";
-import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
-import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
-import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
-import { PublishIntegrationEventsService } from "@/shared/application/services/publish-integration-events/publish-integration-events.service";
-import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
-import { DimensionsValueObject } from "@/shared/domain/value-objects/dimensions/dimensions.vo";
-import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
+import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 
-describe("GrowingUnitCreateCommandHandler", () => {
+describe('GrowingUnitCreateCommandHandler', () => {
 	let handler: GrowingUnitCreateCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
@@ -50,10 +50,10 @@ describe("GrowingUnitCreateCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should create growing unit successfully", async () => {
+	describe('execute', () => {
+		it('should create growing unit successfully', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				length: 100,
@@ -65,7 +65,7 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: new DimensionsValueObject({
@@ -105,9 +105,9 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			);
 		});
 
-		it("should create growing unit without dimensions", async () => {
+		it('should create growing unit without dimensions', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 			};
@@ -115,7 +115,7 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -139,9 +139,9 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			});
 		});
 
-		it("should publish GrowingUnitCreatedEvent when growing unit is created", async () => {
+		it('should publish GrowingUnitCreatedEvent when growing unit is created', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 			};
@@ -149,7 +149,7 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -168,9 +168,9 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			expect(callArgs).toBeInstanceOf(GrowingUnitCreatedEvent);
 		});
 
-		it("should save growing unit before publishing events", async () => {
+		it('should save growing unit before publishing events', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 			};
@@ -178,7 +178,7 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -198,18 +198,18 @@ describe("GrowingUnitCreateCommandHandler", () => {
 			expect(saveOrder).toBeLessThan(publishOrder);
 		});
 
-		it("should return the created growing unit id", async () => {
+		it('should return the created growing unit id', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 			};
 
 			const command = new GrowingUnitCreateCommand(commandDto);
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,

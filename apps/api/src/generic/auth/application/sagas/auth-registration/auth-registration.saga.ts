@@ -1,12 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { AuthCreateCommand } from "@/generic/auth/application/commands/auth-create/auth-create.command";
-import { AuthDeleteCommand } from "@/generic/auth/application/commands/auth-delete/auth-delete.command";
-import { IAuthCreateCommandDto } from "@/generic/auth/application/dtos/commands/auth-create/auth-create-command.dto";
-import { UserDeleteCommand } from "@/generic/users/application/commands/delete-user/delete-user.command";
-import { UserCreateCommand } from "@/generic/users/application/commands/user-create/user-create.command";
-import { BaseSaga } from "@/shared/application/sagas/base-saga/base-saga";
-import { AuthRegistrationRequestedEvent } from "@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event";
+import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { AuthCreateCommand } from '@/generic/auth/application/commands/auth-create/auth-create.command';
+import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
+import { IAuthCreateCommandDto } from '@/generic/auth/application/dtos/commands/auth-create/auth-create-command.dto';
+import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
+import { UserCreateCommand } from '@/generic/users/application/commands/user-create/user-create.command';
+import { BaseSaga } from '@/shared/application/sagas/base-saga/base-saga';
+import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event';
 
 /**
  * Saga that orchestrates the complete user registration flow:
@@ -44,7 +44,7 @@ export class AuthRegistrationSaga extends BaseSaga {
 		try {
 			// Step 1: Create user
 			const userResult = await this.executeStep(sagaInstanceId, {
-				name: "Create User",
+				name: 'Create User',
 				order: 1,
 				payload: {},
 				action: () => this.createUserStep(),
@@ -66,7 +66,7 @@ export class AuthRegistrationSaga extends BaseSaga {
 
 			// Step 2: Create auth
 			const authResult = await this.executeStep(sagaInstanceId, {
-				name: "Create Auth",
+				name: 'Create Auth',
 				order: 2,
 				payload: { userId, ...(event.data as IAuthCreateCommandDto) },
 				action: () =>

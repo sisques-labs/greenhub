@@ -1,5 +1,5 @@
-import { ISagaLogCreateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto";
-import { ISagaLogUpdateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-update/saga-log-update-view-model.dto";
+import { ISagaLogCreateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto';
+import { ISagaLogUpdateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-update/saga-log-update-view-model.dto';
 
 /**
  * This class is used to represent a saga log view model.

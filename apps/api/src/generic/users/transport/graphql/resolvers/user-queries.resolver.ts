@@ -1,21 +1,21 @@
-import { UseGuards } from "@nestjs/common";
-import { QueryBus } from "@nestjs/cqrs";
-import { Args, Query, Resolver } from "@nestjs/graphql";
-import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
-import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { OwnerGuard } from "@/generic/auth/infrastructure/guards/owner/owner.guard";
-import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
-import { FindUsersByCriteriaQuery } from "@/generic/users/application/queries/find-users-by-criteria/find-users-by-criteria.query";
-import { UserViewModelFindByIdQuery } from "@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query";
-import { UserFindByCriteriaRequestDto } from "@/generic/users/transport/graphql/dtos/requests/user-find-by-criteria.request.dto";
-import { UserFindByIdRequestDto } from "@/generic/users/transport/graphql/dtos/requests/user-find-by-id.request.dto";
+import { UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
+import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
+import { FindUsersByCriteriaQuery } from '@/generic/users/application/queries/find-users-by-criteria/find-users-by-criteria.query';
+import { UserViewModelFindByIdQuery } from '@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query';
+import { UserFindByCriteriaRequestDto } from '@/generic/users/transport/graphql/dtos/requests/user-find-by-criteria.request.dto';
+import { UserFindByIdRequestDto } from '@/generic/users/transport/graphql/dtos/requests/user-find-by-id.request.dto';
 import {
 	PaginatedUserResultDto,
 	UserResponseDto,
-} from "@/generic/users/transport/graphql/dtos/responses/user.response.dto";
-import { UserGraphQLMapper } from "@/generic/users/transport/graphql/mappers/user.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+} from '@/generic/users/transport/graphql/dtos/responses/user.response.dto';
+import { UserGraphQLMapper } from '@/generic/users/transport/graphql/mappers/user.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -28,7 +28,7 @@ export class UserQueryResolver {
 	@Query(() => PaginatedUserResultDto)
 	@Roles(UserRoleEnum.ADMIN)
 	async usersFindByCriteria(
-		@Args("input", { nullable: true }) input?: UserFindByCriteriaRequestDto,
+		@Args('input', { nullable: true }) input?: UserFindByCriteriaRequestDto,
 	): Promise<PaginatedUserResultDto> {
 		// 01: Convert DTO to domain Criteria
 		const criteria = new Criteria(
@@ -49,7 +49,7 @@ export class UserQueryResolver {
 	@Query(() => UserResponseDto)
 	@UseGuards(OwnerGuard)
 	async userFindById(
-		@Args("input") input: UserFindByIdRequestDto,
+		@Args('input') input: UserFindByIdRequestDto,
 	): Promise<UserResponseDto> {
 		// 01: Execute query
 		const result = await this.queryBus.execute(

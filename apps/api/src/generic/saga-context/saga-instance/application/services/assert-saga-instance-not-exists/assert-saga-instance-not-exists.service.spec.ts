@@ -1,18 +1,18 @@
-import { Test } from "@nestjs/testing";
-import { SagaInstanceAlreadyExistsException } from "@/generic/saga-context/saga-instance/application/exceptions/saga-instance-already-exists/saga-instance-already-exists.exception";
-import { AssertSagaInstanceNotExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-not-exists/assert-saga-instance-not-exists.service";
-import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { Test } from '@nestjs/testing';
+import { SagaInstanceAlreadyExistsException } from '@/generic/saga-context/saga-instance/application/exceptions/saga-instance-already-exists/saga-instance-already-exists.exception';
+import { AssertSagaInstanceNotExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-not-exists/assert-saga-instance-not-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
-} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository";
-import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
-import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
+import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 
-describe("AssertSagaInstanceNotExistsService", () => {
+describe('AssertSagaInstanceNotExistsService', () => {
 	let service: AssertSagaInstanceNotExistsService;
 	let mockSagaInstanceWriteRepository: jest.Mocked<SagaInstanceWriteRepository>;
 
@@ -42,9 +42,9 @@ describe("AssertSagaInstanceNotExistsService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return void when saga instance does not exist", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return void when saga instance does not exist', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSagaInstanceWriteRepository.findById.mockResolvedValue(null);
 
@@ -54,12 +54,12 @@ describe("AssertSagaInstanceNotExistsService", () => {
 			);
 		});
 
-		it("should throw SagaInstanceAlreadyExistsException when saga instance exists", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaInstanceAlreadyExistsException when saga instance exists', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const sagaInstance = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaInstanceNameValueObject("Order Processing Saga"),
+					name: new SagaInstanceNameValueObject('Order Processing Saga'),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.PENDING,
 					),

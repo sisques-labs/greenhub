@@ -1,11 +1,11 @@
-import { CommandBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaStepDeletedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event";
-import { SagaStepDeletedEventHandler } from "./saga-step-deleted.event-handler";
+import { CommandBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event';
+import { SagaStepDeletedEventHandler } from './saga-step-deleted.event-handler';
 
-describe("SagaStepDeletedEventHandler", () => {
+describe('SagaStepDeletedEventHandler', () => {
 	let handler: SagaStepDeletedEventHandler;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 
@@ -33,34 +33,34 @@ describe("SagaStepDeletedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should create a saga log when saga step is deleted", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should create a saga log when saga step is deleted', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
 				sagaInstanceId: sagaInstanceId,
-				name: "Test Saga Step",
+				name: 'Test Saga Step',
 				order: 1,
-				status: "COMPLETED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
+				status: 'COMPLETED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { test: "data" },
+				payload: { test: 'data' },
 				result: { success: true },
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaStepDeletedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepDeletedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepDeletedEvent',
 				},
 				eventData,
 			);
@@ -84,10 +84,10 @@ describe("SagaStepDeletedEventHandler", () => {
 			);
 		});
 
-		it("should handle event with different step names", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
-			const names = ["Step 1", "Step 2", "Step 3"];
+		it('should handle event with different step names', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const names = ['Step 1', 'Step 2', 'Step 3'];
 
 			for (const name of names) {
 				const eventData = {
@@ -95,25 +95,25 @@ describe("SagaStepDeletedEventHandler", () => {
 					sagaInstanceId: sagaInstanceId,
 					name: name,
 					order: 1,
-					status: "COMPLETED",
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					status: 'COMPLETED',
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					errorMessage: null,
 					retryCount: 0,
 					maxRetries: 3,
-					payload: { test: "data" },
+					payload: { test: 'data' },
 					result: { success: true },
-					createdAt: new Date("2024-01-01T10:00:00Z"),
-					updatedAt: new Date("2024-01-01T10:00:00Z"),
+					createdAt: new Date('2024-01-01T10:00:00Z'),
+					updatedAt: new Date('2024-01-01T10:00:00Z'),
 				};
 
 				const event = new SagaStepDeletedEvent(
 					{
 						aggregateRootId: aggregateId,
-						aggregateRootType: "SagaStepAggregate",
+						aggregateRootType: 'SagaStepAggregate',
 						entityId: aggregateId,
-						entityType: "SagaStepAggregate",
-						eventType: "SagaStepDeletedEvent",
+						entityType: 'SagaStepAggregate',
+						eventType: 'SagaStepDeletedEvent',
 					},
 					eventData,
 				);
@@ -131,38 +131,38 @@ describe("SagaStepDeletedEventHandler", () => {
 			expect(mockCommandBus.execute).toHaveBeenCalledTimes(names.length);
 		});
 
-		it("should handle errors from command bus", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should handle errors from command bus', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
 				sagaInstanceId: sagaInstanceId,
-				name: "Test Saga Step",
+				name: 'Test Saga Step',
 				order: 1,
-				status: "COMPLETED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
+				status: 'COMPLETED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { test: "data" },
+				payload: { test: 'data' },
 				result: { success: true },
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaStepDeletedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepDeletedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepDeletedEvent',
 				},
 				eventData,
 			);
 
-			const error = new Error("Command execution failed");
+			const error = new Error('Command execution failed');
 			mockCommandBus.execute.mockRejectedValue(error);
 
 			await expect(handler.handle(event)).rejects.toThrow(error);

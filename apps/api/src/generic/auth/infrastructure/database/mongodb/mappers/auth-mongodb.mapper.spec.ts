@@ -1,10 +1,10 @@
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthViewModelFactory } from "@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory";
-import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
-import { AuthMongoDbDto } from "@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto";
-import { AuthMongoDBMapper } from "@/generic/auth/infrastructure/database/mongodb/mappers/auth-mongodb.mapper";
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
+import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
+import { AuthMongoDbDto } from '@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto';
+import { AuthMongoDBMapper } from '@/generic/auth/infrastructure/database/mongodb/mappers/auth-mongodb.mapper';
 
-describe("AuthMongoDBMapper", () => {
+describe('AuthMongoDBMapper', () => {
 	let mapper: AuthMongoDBMapper;
 	let mockAuthViewModelFactory: jest.Mocked<AuthViewModelFactory>;
 
@@ -22,20 +22,20 @@ describe("AuthMongoDBMapper", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("toViewModel", () => {
-		it("should convert MongoDB document to view model with all properties", () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+	describe('toViewModel', () => {
+		it('should convert MongoDB document to view model with all properties', () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const mongoData: AuthMongoDbDto = {
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
-				phoneNumber: "+1234567890",
+				phoneNumber: '+1234567890',
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
+				password: '$2b$12$hashedpassword',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -46,11 +46,11 @@ describe("AuthMongoDBMapper", () => {
 			const mockViewModel = new AuthViewModel({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
-				phoneNumber: "+1234567890",
+				password: '$2b$12$hashedpassword',
+				phoneNumber: '+1234567890',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -66,11 +66,11 @@ describe("AuthMongoDBMapper", () => {
 			expect(mockAuthViewModelFactory.create).toHaveBeenCalledWith({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
-				phoneNumber: "+1234567890",
+				phoneNumber: '+1234567890',
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
+				password: '$2b$12$hashedpassword',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -80,21 +80,21 @@ describe("AuthMongoDBMapper", () => {
 			expect(mockAuthViewModelFactory.create).toHaveBeenCalledTimes(1);
 		});
 
-		it("should convert MongoDB document with null optional properties", () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should convert MongoDB document with null optional properties', () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const mongoData: AuthMongoDbDto = {
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: false,
 				phoneNumber: null,
 				lastLoginAt: null,
 				password: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,
@@ -103,13 +103,13 @@ describe("AuthMongoDBMapper", () => {
 			const mockViewModel = new AuthViewModel({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
 				phoneNumber: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,
@@ -123,13 +123,13 @@ describe("AuthMongoDBMapper", () => {
 			expect(mockAuthViewModelFactory.create).toHaveBeenCalledWith({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: false,
 				phoneNumber: null,
 				lastLoginAt: null,
 				password: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,
@@ -137,20 +137,20 @@ describe("AuthMongoDBMapper", () => {
 		});
 	});
 
-	describe("toMongoData", () => {
-		it("should convert view model to MongoDB document with all properties", () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+	describe('toMongoData', () => {
+		it('should convert view model to MongoDB document with all properties', () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const viewModel = new AuthViewModel({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
-				phoneNumber: "+1234567890",
+				password: '$2b$12$hashedpassword',
+				phoneNumber: '+1234567890',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -163,11 +163,11 @@ describe("AuthMongoDBMapper", () => {
 			expect(result).toEqual({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
-				phoneNumber: "+1234567890",
+				phoneNumber: '+1234567890',
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
+				password: '$2b$12$hashedpassword',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -176,21 +176,21 @@ describe("AuthMongoDBMapper", () => {
 			});
 		});
 
-		it("should convert view model with null optional properties", () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should convert view model with null optional properties', () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const viewModel = new AuthViewModel({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
 				phoneNumber: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,
@@ -201,13 +201,13 @@ describe("AuthMongoDBMapper", () => {
 			expect(result).toEqual({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: false,
 				phoneNumber: null,
 				lastLoginAt: null,
 				password: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,

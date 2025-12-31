@@ -1,16 +1,16 @@
-import { FilterOperator } from "@/shared/domain/enums/filter-operator.enum";
-import { SortDirection } from "@/shared/domain/enums/sort-direction.enum";
-import { BaseFilterInput } from "../base-filter/base-filter.input";
-import { BasePaginationInput } from "../base-pagination/base-pagination.input";
-import { BaseSortInput } from "../base-sort/base-sort.input";
-import { BaseFindByCriteriaInput } from "./base-find-by-criteria.input";
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+import { BaseFilterInput } from '../base-filter/base-filter.input';
+import { BasePaginationInput } from '../base-pagination/base-pagination.input';
+import { BaseSortInput } from '../base-sort/base-sort.input';
+import { BaseFindByCriteriaInput } from './base-find-by-criteria.input';
 
-describe("BaseFindByCriteriaInput", () => {
-	it("should be defined", () => {
+describe('BaseFindByCriteriaInput', () => {
+	it('should be defined', () => {
 		expect(BaseFindByCriteriaInput).toBeDefined();
 	});
 
-	it("should create a criteria input with empty arrays by default", () => {
+	it('should create a criteria input with empty arrays by default', () => {
 		const criteria = new BaseFindByCriteriaInput();
 
 		expect(criteria.filters).toBeUndefined();
@@ -18,11 +18,11 @@ describe("BaseFindByCriteriaInput", () => {
 		expect(criteria.pagination).toBeUndefined();
 	});
 
-	it("should accept filters array", () => {
+	it('should accept filters array', () => {
 		const filter: BaseFilterInput = {
-			field: "status",
+			field: 'status',
 			operator: FilterOperator.EQUALS,
-			value: "active",
+			value: 'active',
 		};
 
 		const criteria = new BaseFindByCriteriaInput();
@@ -32,16 +32,16 @@ describe("BaseFindByCriteriaInput", () => {
 		expect(criteria.filters[0]).toEqual(filter);
 	});
 
-	it("should accept multiple filters", () => {
+	it('should accept multiple filters', () => {
 		const filter1: BaseFilterInput = {
-			field: "status",
+			field: 'status',
 			operator: FilterOperator.EQUALS,
-			value: "active",
+			value: 'active',
 		};
 		const filter2: BaseFilterInput = {
-			field: "age",
+			field: 'age',
 			operator: FilterOperator.GREATER_THAN,
-			value: "18",
+			value: '18',
 		};
 
 		const criteria = new BaseFindByCriteriaInput();
@@ -52,9 +52,9 @@ describe("BaseFindByCriteriaInput", () => {
 		expect(criteria.filters[1]).toEqual(filter2);
 	});
 
-	it("should accept sorts array", () => {
+	it('should accept sorts array', () => {
 		const sort: BaseSortInput = {
-			field: "name",
+			field: 'name',
 			direction: SortDirection.ASC,
 		};
 
@@ -65,13 +65,13 @@ describe("BaseFindByCriteriaInput", () => {
 		expect(criteria.sorts[0]).toEqual(sort);
 	});
 
-	it("should accept multiple sorts", () => {
+	it('should accept multiple sorts', () => {
 		const sort1: BaseSortInput = {
-			field: "name",
+			field: 'name',
 			direction: SortDirection.ASC,
 		};
 		const sort2: BaseSortInput = {
-			field: "createdAt",
+			field: 'createdAt',
 			direction: SortDirection.DESC,
 		};
 
@@ -83,7 +83,7 @@ describe("BaseFindByCriteriaInput", () => {
 		expect(criteria.sorts[1]).toEqual(sort2);
 	});
 
-	it("should accept pagination", () => {
+	it('should accept pagination', () => {
 		const pagination: BasePaginationInput = {
 			page: 1,
 			perPage: 10,
@@ -97,14 +97,14 @@ describe("BaseFindByCriteriaInput", () => {
 		expect(criteria.pagination.perPage).toBe(10);
 	});
 
-	it("should accept all properties together", () => {
+	it('should accept all properties together', () => {
 		const filter: BaseFilterInput = {
-			field: "status",
+			field: 'status',
 			operator: FilterOperator.EQUALS,
-			value: "active",
+			value: 'active',
 		};
 		const sort: BaseSortInput = {
-			field: "name",
+			field: 'name',
 			direction: SortDirection.ASC,
 		};
 		const pagination: BasePaginationInput = {

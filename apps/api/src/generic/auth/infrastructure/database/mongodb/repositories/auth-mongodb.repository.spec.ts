@@ -1,14 +1,14 @@
-import { Collection } from "mongodb";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
-import { AuthMongoDbDto } from "@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto";
-import { AuthMongoDBMapper } from "@/generic/auth/infrastructure/database/mongodb/mappers/auth-mongodb.mapper";
-import { AuthMongoRepository } from "@/generic/auth/infrastructure/database/mongodb/repositories/auth-mongodb.repository";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Collection } from 'mongodb';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
+import { AuthMongoDbDto } from '@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto';
+import { AuthMongoDBMapper } from '@/generic/auth/infrastructure/database/mongodb/mappers/auth-mongodb.mapper';
+import { AuthMongoRepository } from '@/generic/auth/infrastructure/database/mongodb/repositories/auth-mongodb.repository';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
-describe("AuthMongoRepository", () => {
+describe('AuthMongoRepository', () => {
 	let repository: AuthMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockAuthMongoDBMapper: jest.Mocked<AuthMongoDBMapper>;
@@ -49,20 +49,20 @@ describe("AuthMongoRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return auth view model when auth exists", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+	describe('findById', () => {
+		it('should return auth view model when auth exists', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const mongoDoc: AuthMongoDbDto = {
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
-				phoneNumber: "+1234567890",
+				phoneNumber: '+1234567890',
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
+				password: '$2b$12$hashedpassword',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -73,11 +73,11 @@ describe("AuthMongoRepository", () => {
 			const viewModel = new AuthViewModel({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
-				phoneNumber: "+1234567890",
+				password: '$2b$12$hashedpassword',
+				phoneNumber: '+1234567890',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -92,14 +92,14 @@ describe("AuthMongoRepository", () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"auths",
+				'auths',
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({ id: authId });
 			expect(mockAuthMongoDBMapper.toViewModel).toHaveBeenCalledWith(mongoDoc);
 		});
 
-		it("should return null when auth does not exist", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when auth does not exist', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -111,20 +111,20 @@ describe("AuthMongoRepository", () => {
 		});
 	});
 
-	describe("findByCriteria", () => {
-		it("should return paginated result with auths when criteria matches", async () => {
+	describe('findByCriteria', () => {
+		it('should return paginated result with auths when criteria matches', async () => {
 			const now = new Date();
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const mongoDocs: any[] = [
 				{
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					userId: "123e4567-e89b-12d3-a456-426614174001",
-					email: "test1@example.com",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					userId: '123e4567-e89b-12d3-a456-426614174001',
+					email: 'test1@example.com',
 					emailVerified: true,
 					phoneNumber: null,
 					lastLoginAt: now,
-					password: "$2b$12$hashedpassword",
+					password: '$2b$12$hashedpassword',
 					provider: AuthProviderEnum.LOCAL,
 					providerId: null,
 					twoFactorEnabled: false,
@@ -132,15 +132,15 @@ describe("AuthMongoRepository", () => {
 					updatedAt: now,
 				},
 				{
-					id: "223e4567-e89b-12d3-a456-426614174002",
-					userId: "323e4567-e89b-12d3-a456-426614174003",
-					email: "test2@example.com",
+					id: '223e4567-e89b-12d3-a456-426614174002',
+					userId: '323e4567-e89b-12d3-a456-426614174003',
+					email: 'test2@example.com',
 					emailVerified: false,
 					phoneNumber: null,
 					lastLoginAt: null,
 					password: null,
 					provider: AuthProviderEnum.GOOGLE,
-					providerId: "google-123",
+					providerId: 'google-123',
 					twoFactorEnabled: true,
 					createdAt: now,
 					updatedAt: now,
@@ -185,12 +185,12 @@ describe("AuthMongoRepository", () => {
 			expect(result.page).toBe(1);
 			expect(result.perPage).toBe(10);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"auths",
+				'auths',
 			);
 			expect(mockAuthMongoDBMapper.toViewModel).toHaveBeenCalledTimes(2);
 		});
 
-		it("should return empty paginated result when no auths found", async () => {
+		it('should return empty paginated result when no auths found', async () => {
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const findChain = {
@@ -211,19 +211,19 @@ describe("AuthMongoRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save auth view model", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+	describe('save', () => {
+		it('should save auth view model', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const viewModel = new AuthViewModel({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
+				password: '$2b$12$hashedpassword',
 				phoneNumber: null,
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
@@ -235,11 +235,11 @@ describe("AuthMongoRepository", () => {
 			const mongoData: AuthMongoDbDto = {
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				emailVerified: true,
 				phoneNumber: null,
 				lastLoginAt: now,
-				password: "$2b$12$hashedpassword",
+				password: '$2b$12$hashedpassword',
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -259,7 +259,7 @@ describe("AuthMongoRepository", () => {
 			await repository.save(viewModel);
 
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"auths",
+				'auths',
 			);
 			expect(mockAuthMongoDBMapper.toMongoData).toHaveBeenCalledWith(viewModel);
 			expect(mockCollection.replaceOne).toHaveBeenCalledWith(
@@ -270,9 +270,9 @@ describe("AuthMongoRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should delete auth view model and return true", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should delete auth view model and return true', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,
@@ -283,7 +283,7 @@ describe("AuthMongoRepository", () => {
 
 			expect(result).toBe(true);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"auths",
+				'auths',
 			);
 			expect(mockCollection.deleteOne).toHaveBeenCalledWith({ id: authId });
 		});

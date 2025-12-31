@@ -1,10 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
-import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
-import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
-import { CalculateAverageCommand } from "@/support/math/application/commands/calculate-average/calculate-average.command";
-import { CalculateMedianCommand } from "@/support/math/application/commands/calculate-median/calculate-median.command";
+import { Injectable, Logger } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
+import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
+import { CalculateAverageCommand } from '@/support/math/application/commands/calculate-average/calculate-average.command';
+import { CalculateMedianCommand } from '@/support/math/application/commands/calculate-median/calculate-median.command';
 
 /**
  * Service responsible for calculating aggregated metrics for overview.
@@ -20,10 +20,10 @@ export class OverviewCalculateAggregatedMetricsService
 			GrowingUnitViewModel[],
 			Pick<
 				IOverviewViewModelDto,
-				| "averagePlantsPerGrowingUnit"
-				| "minPlantsPerGrowingUnit"
-				| "maxPlantsPerGrowingUnit"
-				| "medianPlantsPerGrowingUnit"
+				| 'averagePlantsPerGrowingUnit'
+				| 'minPlantsPerGrowingUnit'
+				| 'maxPlantsPerGrowingUnit'
+				| 'medianPlantsPerGrowingUnit'
 			>
 		>
 {
@@ -44,10 +44,10 @@ export class OverviewCalculateAggregatedMetricsService
 	): Promise<
 		Pick<
 			IOverviewViewModelDto,
-			| "averagePlantsPerGrowingUnit"
-			| "minPlantsPerGrowingUnit"
-			| "maxPlantsPerGrowingUnit"
-			| "medianPlantsPerGrowingUnit"
+			| 'averagePlantsPerGrowingUnit'
+			| 'minPlantsPerGrowingUnit'
+			| 'maxPlantsPerGrowingUnit'
+			| 'medianPlantsPerGrowingUnit'
 		>
 	> {
 		this.logger.log(

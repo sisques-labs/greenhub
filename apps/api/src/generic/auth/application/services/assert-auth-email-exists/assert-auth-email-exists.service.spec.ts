@@ -1,13 +1,13 @@
-import { AuthNotFoundByEmailException } from "@/generic/auth/application/exceptions/auth-not-found-by-email/auth-not-found-by-email.exception";
-import { AssertAuthEmailExistsService } from "@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
-import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { AuthNotFoundByEmailException } from '@/generic/auth/application/exceptions/auth-not-found-by-email/auth-not-found-by-email.exception';
+import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
-describe("AssertAuthEmailExistsService", () => {
+describe('AssertAuthEmailExistsService', () => {
 	let service: AssertAuthEmailExistsService;
 	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
 
@@ -26,9 +26,9 @@ describe("AssertAuthEmailExistsService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return auth aggregate when auth exists by email", async () => {
-			const email = "test@example.com";
+	describe('execute', () => {
+		it('should return auth aggregate when auth exists by email', async () => {
+			const email = 'test@example.com';
 			const mockAuth = new AuthAggregate(
 				{
 					id: new AuthUuidValueObject(),
@@ -56,8 +56,8 @@ describe("AssertAuthEmailExistsService", () => {
 			expect(mockAuthWriteRepository.findByEmail).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw AuthNotFoundByEmailException when auth does not exist", async () => {
-			const email = "nonexistent@example.com";
+		it('should throw AuthNotFoundByEmailException when auth does not exist', async () => {
+			const email = 'nonexistent@example.com';
 
 			mockAuthWriteRepository.findByEmail.mockResolvedValue(null);
 

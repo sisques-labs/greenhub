@@ -1,4 +1,4 @@
-import { InvalidIpException } from "@/shared/domain/exceptions/value-objects/invalid-ip/invalid-ip.exception";
+import { InvalidIpException } from '@/shared/domain/exceptions/value-objects/invalid-ip/invalid-ip.exception';
 
 /**
  * IP Value Object
@@ -28,7 +28,7 @@ export class IpValueObject {
 	 * @returns True if IPv4
 	 */
 	public isIPv4(): boolean {
-		return this._value.includes(".") && !this._value.includes(":");
+		return this._value.includes('.') && !this._value.includes(':');
 	}
 
 	/**
@@ -36,7 +36,7 @@ export class IpValueObject {
 	 * @returns True if IPv6
 	 */
 	public isIPv6(): boolean {
-		return this._value.includes(":");
+		return this._value.includes(':');
 	}
 
 	/**
@@ -59,10 +59,10 @@ export class IpValueObject {
 	 */
 	public isLoopback(): boolean {
 		if (this.isIPv4()) {
-			return this._value.startsWith("127.") || this._value === "::1";
+			return this._value.startsWith('127.') || this._value === '::1';
 		}
 		if (this.isIPv6()) {
-			return this._value === "::1";
+			return this._value === '::1';
 		}
 		return false;
 	}
@@ -81,8 +81,8 @@ export class IpValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === "") {
-			throw new InvalidIpException("IP address cannot be empty");
+		if (!value || value.trim() === '') {
+			throw new InvalidIpException('IP address cannot be empty');
 		}
 	}
 
@@ -93,7 +93,7 @@ export class IpValueObject {
 			return;
 		}
 
-		throw new InvalidIpException("Invalid IP address format");
+		throw new InvalidIpException('Invalid IP address format');
 	}
 
 	private isValidIPv4(ip: string): boolean {
@@ -118,7 +118,7 @@ export class IpValueObject {
 	}
 
 	private isPrivateIPv4(): boolean {
-		const parts = this._value.split(".").map(Number);
+		const parts = this._value.split('.').map(Number);
 
 		// 10.0.0.0/8
 		if (parts[0] === 10) return true;
@@ -134,6 +134,6 @@ export class IpValueObject {
 
 	private isPrivateIPv6(): boolean {
 		// fc00::/7 (unique local addresses)
-		return this._value.startsWith("fc") || this._value.startsWith("fd");
+		return this._value.startsWith('fc') || this._value.startsWith('fd');
 	}
 }

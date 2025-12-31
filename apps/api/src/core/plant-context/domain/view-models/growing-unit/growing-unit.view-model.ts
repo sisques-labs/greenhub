@@ -1,7 +1,7 @@
-import { IGrowingUnitViewModelDto } from "@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto";
-import { PlantViewModel } from "@/core/plant-context/domain/view-models/plant/plant.view-model";
-import { DimensionsValueObject } from "@/shared/domain/value-objects/dimensions/dimensions.vo";
-import { BaseViewModel } from "@/shared/domain/view-models/base-view-model/base-view-model";
+import { IGrowingUnitViewModelDto } from '@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto';
+import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
+import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
 
 /**
  * Represents a container view model for the presentation layer.

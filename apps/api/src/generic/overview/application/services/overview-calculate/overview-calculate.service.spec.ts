@@ -1,21 +1,21 @@
-import { QueryBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
-import { PlantViewModel } from "@/core/plant-context/domain/view-models/plant/plant.view-model";
-import { OverviewCalculateService } from "@/generic/overview/application/services/overview-calculate/overview-calculate.service";
-import { OverviewCalculateAggregatedMetricsService } from "@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service";
-import { OverviewCalculateCapacityMetricsService } from "@/generic/overview/application/services/overview-calculate-capacity-metrics/overview-calculate-capacity-metrics.service";
-import { OverviewCalculateDimensionsMetricsService } from "@/generic/overview/application/services/overview-calculate-dimensions-metrics/overview-calculate-dimensions-metrics.service";
-import { OverviewCalculateGrowingUnitMetricsService } from "@/generic/overview/application/services/overview-calculate-growing-unit-metrics/overview-calculate-growing-unit-metrics.service";
-import { OverviewCalculatePlantMetricsService } from "@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service";
-import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
-import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
+import { QueryBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
+import { OverviewCalculateAggregatedMetricsService } from '@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service';
+import { OverviewCalculateCapacityMetricsService } from '@/generic/overview/application/services/overview-calculate-capacity-metrics/overview-calculate-capacity-metrics.service';
+import { OverviewCalculateDimensionsMetricsService } from '@/generic/overview/application/services/overview-calculate-dimensions-metrics/overview-calculate-dimensions-metrics.service';
+import { OverviewCalculateGrowingUnitMetricsService } from '@/generic/overview/application/services/overview-calculate-growing-unit-metrics/overview-calculate-growing-unit-metrics.service';
+import { OverviewCalculatePlantMetricsService } from '@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service';
+import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
-describe("OverviewCalculateService", () => {
+describe('OverviewCalculateService', () => {
 	let service: OverviewCalculateService;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockCalculatePlantMetricsService: jest.Mocked<OverviewCalculatePlantMetricsService>;
@@ -87,30 +87,30 @@ describe("OverviewCalculateService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should calculate overview metrics correctly", async () => {
+	describe('execute', () => {
+		it('should calculate overview metrics correctly', async () => {
 			const now = new Date();
 			const sevenDaysAgo = new Date();
 			sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
 			// Create mock plants
 			const plant1 = new PlantViewModel({
-				id: "plant-1",
-				growingUnitId: "gu-1",
-				name: "Basil",
-				species: "Ocimum basilicum",
+				id: 'plant-1',
+				growingUnitId: 'gu-1',
+				name: 'Basil',
+				species: 'Ocimum basilicum',
 				plantedDate: new Date(),
-				notes: "Test notes",
+				notes: 'Test notes',
 				status: PlantStatusEnum.PLANTED,
 				createdAt: now,
 				updatedAt: now,
 			});
 
 			const plant2 = new PlantViewModel({
-				id: "plant-2",
-				growingUnitId: "gu-1",
-				name: "Tomato",
-				species: "Solanum lycopersicum",
+				id: 'plant-2',
+				growingUnitId: 'gu-1',
+				name: 'Tomato',
+				species: 'Solanum lycopersicum',
 				plantedDate: null,
 				notes: null,
 				status: PlantStatusEnum.GROWING,
@@ -119,10 +119,10 @@ describe("OverviewCalculateService", () => {
 			});
 
 			const plant3 = new PlantViewModel({
-				id: "plant-3",
-				growingUnitId: "gu-2",
-				name: "Lettuce",
-				species: "Lactuca sativa",
+				id: 'plant-3',
+				growingUnitId: 'gu-2',
+				name: 'Lettuce',
+				species: 'Lactuca sativa',
 				plantedDate: new Date(),
 				notes: null,
 				status: PlantStatusEnum.HARVESTED,
@@ -132,8 +132,8 @@ describe("OverviewCalculateService", () => {
 
 			// Create mock growing units
 			const growingUnit1 = new GrowingUnitViewModel({
-				id: "gu-1",
-				name: "Garden Bed 1",
+				id: 'gu-1',
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: {
@@ -151,8 +151,8 @@ describe("OverviewCalculateService", () => {
 			});
 
 			const growingUnit2 = new GrowingUnitViewModel({
-				id: "gu-2",
-				name: "Pot 1",
+				id: 'gu-2',
+				name: 'Pot 1',
 				type: GrowingUnitTypeEnum.POT,
 				capacity: 5,
 				dimensions: null,
@@ -165,8 +165,8 @@ describe("OverviewCalculateService", () => {
 			});
 
 			const growingUnit3 = new GrowingUnitViewModel({
-				id: "gu-3",
-				name: "Empty Pot",
+				id: 'gu-3',
+				name: 'Empty Pot',
 				type: GrowingUnitTypeEnum.POT,
 				capacity: 3,
 				dimensions: null,
@@ -249,7 +249,7 @@ describe("OverviewCalculateService", () => {
 			expect(mockCalculateAggregatedMetricsService.execute).toHaveBeenCalled();
 		});
 
-		it("should handle empty data correctly", async () => {
+		it('should handle empty data correctly', async () => {
 			const mockPaginatedResult = new PaginatedResult<GrowingUnitViewModel>(
 				[],
 				0,
@@ -311,7 +311,7 @@ describe("OverviewCalculateService", () => {
 			expect(result.totalCapacity).toBe(0);
 		});
 
-		it("should fetch multiple pages in batches", async () => {
+		it('should fetch multiple pages in batches', async () => {
 			const now = new Date();
 			const growingUnitsPage1: GrowingUnitViewModel[] = Array.from(
 				{ length: 500 },

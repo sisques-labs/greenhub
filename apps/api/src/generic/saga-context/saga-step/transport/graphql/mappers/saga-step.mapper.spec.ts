@@ -1,27 +1,27 @@
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { SagaStepGraphQLMapper } from "@/generic/saga-context/saga-step/transport/graphql/mappers/saga-step.mapper";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { SagaStepGraphQLMapper } from '@/generic/saga-context/saga-step/transport/graphql/mappers/saga-step.mapper';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
-describe("SagaStepGraphQLMapper", () => {
+describe('SagaStepGraphQLMapper', () => {
 	let mapper: SagaStepGraphQLMapper;
 
 	beforeEach(() => {
 		mapper = new SagaStepGraphQLMapper();
 	});
 
-	describe("toResponseDto", () => {
-		it("should map saga step view model to response dto with all properties", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('toResponseDto', () => {
+		it('should map saga step view model to response dto with all properties', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
 				startDate: startDate,
@@ -29,7 +29,7 @@ describe("SagaStepGraphQLMapper", () => {
 				errorMessage: null,
 				retryCount: 2,
 				maxRetries: 5,
-				payload: { orderId: "12345" },
+				payload: { orderId: '12345' },
 				result: { success: true },
 				createdAt: createdAt,
 				updatedAt: updatedAt,
@@ -48,22 +48,22 @@ describe("SagaStepGraphQLMapper", () => {
 				errorMessage: null,
 				retryCount: 2,
 				maxRetries: 5,
-				payload: JSON.stringify({ orderId: "12345" }),
+				payload: JSON.stringify({ orderId: '12345' }),
 				result: JSON.stringify({ success: true }),
 				createdAt: createdAt,
 				updatedAt: updatedAt,
 			});
 		});
 
-		it("should map saga step view model with null optional properties", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+		it('should map saga step view model with null optional properties', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -97,15 +97,15 @@ describe("SagaStepGraphQLMapper", () => {
 			});
 		});
 
-		it("should map saga step view model with null payload and result", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+		it('should map saga step view model with null payload and result', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -125,25 +125,25 @@ describe("SagaStepGraphQLMapper", () => {
 			expect(result.result).toBeNull();
 		});
 
-		it("should map saga step view model with error message", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+		it('should map saga step view model with error message', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.FAILED,
 				startDate: startDate,
 				endDate: endDate,
-				errorMessage: "Payment processing failed",
+				errorMessage: 'Payment processing failed',
 				retryCount: 3,
 				maxRetries: 3,
-				payload: { orderId: "12345" },
+				payload: { orderId: '12345' },
 				result: {},
 				createdAt: createdAt,
 				updatedAt: updatedAt,
@@ -151,21 +151,21 @@ describe("SagaStepGraphQLMapper", () => {
 
 			const result = mapper.toResponseDto(viewModel);
 
-			expect(result.errorMessage).toBe("Payment processing failed");
+			expect(result.errorMessage).toBe('Payment processing failed');
 			expect(result.status).toBe(SagaStepStatusEnum.FAILED);
 			expect(result.retryCount).toBe(3);
 		});
 	});
 
-	describe("toPaginatedResponseDto", () => {
-		it("should map paginated result to paginated response dto", () => {
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('toPaginatedResponseDto', () => {
+		it('should map paginated result to paginated response dto', () => {
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModels: SagaStepViewModel[] = [
 				new SagaStepViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Process Payment",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -179,13 +179,13 @@ describe("SagaStepGraphQLMapper", () => {
 					updatedAt: updatedAt,
 				}),
 				new SagaStepViewModel({
-					id: "323e4567-e89b-12d3-a456-426614174001",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Send Email",
+					id: '323e4567-e89b-12d3-a456-426614174001',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Send Email',
 					order: 2,
 					status: SagaStepStatusEnum.COMPLETED,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					errorMessage: null,
 					retryCount: 0,
 					maxRetries: 3,
@@ -209,7 +209,7 @@ describe("SagaStepGraphQLMapper", () => {
 			expect(result.items[1].id).toBe(viewModels[1].id);
 		});
 
-		it("should map empty paginated result", () => {
+		it('should map empty paginated result', () => {
 			const paginatedResult = new PaginatedResult<SagaStepViewModel>(
 				[],
 				0,
@@ -226,13 +226,13 @@ describe("SagaStepGraphQLMapper", () => {
 			expect(result.totalPages).toBe(0);
 		});
 
-		it("should calculate totalPages correctly", () => {
+		it('should calculate totalPages correctly', () => {
 			const viewModels: SagaStepViewModel[] = Array.from(
 				{ length: 25 },
 				(_, i) =>
 					new SagaStepViewModel({
 						id: `123e4567-e89b-12d3-a456-42661417400${i}`,
-						sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+						sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
 						name: `Step ${i}`,
 						order: i,
 						status: SagaStepStatusEnum.PENDING,
@@ -243,8 +243,8 @@ describe("SagaStepGraphQLMapper", () => {
 						maxRetries: 3,
 						payload: {},
 						result: {},
-						createdAt: new Date("2024-01-01T10:00:00Z"),
-						updatedAt: new Date("2024-01-01T11:00:00Z"),
+						createdAt: new Date('2024-01-01T10:00:00Z'),
+						updatedAt: new Date('2024-01-01T11:00:00Z'),
 					}),
 			);
 

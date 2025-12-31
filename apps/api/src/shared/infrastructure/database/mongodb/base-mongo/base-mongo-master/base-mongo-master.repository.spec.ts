@@ -1,11 +1,11 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { FilterOperator } from "@/shared/domain/enums/filter-operator.enum";
-import { SortDirection } from "@/shared/domain/enums/sort-direction.enum";
-import { BaseMongoMasterRepository } from "@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Test, TestingModule } from '@nestjs/testing';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+import { BaseMongoMasterRepository } from '@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
-describe("BaseMongoMasterRepository", () => {
+describe('BaseMongoMasterRepository', () => {
 	let repository: BaseMongoMasterRepository;
 	let mongoMasterService: MongoMasterService;
 	let module: TestingModule;
@@ -31,7 +31,7 @@ describe("BaseMongoMasterRepository", () => {
 		limitMock.mockReturnValue({
 			toArray: toArrayMock,
 		});
-		toArrayMock.mockResolvedValue([{ id: "1" }, { id: "2" }]);
+		toArrayMock.mockResolvedValue([{ id: '1' }, { id: '2' }]);
 		countDocumentsMock.mockResolvedValue(2);
 
 		mockCollection = {
@@ -74,168 +74,168 @@ describe("BaseMongoMasterRepository", () => {
 		await module.close();
 	});
 
-	it("should be defined", () => {
+	it('should be defined', () => {
 		expect(repository).toBeDefined();
 	});
 
-	it("should have mongoMasterService injected", () => {
-		expect(repository["mongoMasterService"]).toBe(mongoMasterService);
+	it('should have mongoMasterService injected', () => {
+		expect(repository['mongoMasterService']).toBe(mongoMasterService);
 	});
 
-	it("should have logger initialized", () => {
-		expect(repository["logger"]).toBeDefined();
+	it('should have logger initialized', () => {
+		expect(repository['logger']).toBeDefined();
 	});
 
-	describe("buildMongoQuery", () => {
-		it("should build empty query when no filters", () => {
+	describe('buildMongoQuery', () => {
+		it('should build empty query when no filters', () => {
 			const criteria = new Criteria();
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
 			expect(query).toEqual({});
 		});
 
-		it("should build query with EQUALS operator", () => {
+		it('should build query with EQUALS operator', () => {
 			const criteria = new Criteria([
-				{ field: "status", operator: FilterOperator.EQUALS, value: "active" },
+				{ field: 'status', operator: FilterOperator.EQUALS, value: 'active' },
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
-			expect(query).toEqual({ status: "active" });
+			expect(query).toEqual({ status: 'active' });
 		});
 
-		it("should build query with LIKE operator", () => {
+		it('should build query with LIKE operator', () => {
 			const criteria = new Criteria([
-				{ field: "name", operator: FilterOperator.LIKE, value: "test" },
+				{ field: 'name', operator: FilterOperator.LIKE, value: 'test' },
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
 			expect(query).toEqual({
-				name: { $regex: "test", $options: "i" },
+				name: { $regex: 'test', $options: 'i' },
 			});
 		});
 
-		it("should build query with IN operator", () => {
+		it('should build query with IN operator', () => {
 			const criteria = new Criteria([
-				{ field: "id", operator: FilterOperator.IN, value: "123" },
+				{ field: 'id', operator: FilterOperator.IN, value: '123' },
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
 			expect(query).toEqual({
-				id: { $in: ["123"] },
+				id: { $in: ['123'] },
 			});
 		});
 
-		it("should build query with GREATER_THAN operator", () => {
+		it('should build query with GREATER_THAN operator', () => {
 			const criteria = new Criteria([
-				{ field: "age", operator: FilterOperator.GREATER_THAN, value: 18 },
+				{ field: 'age', operator: FilterOperator.GREATER_THAN, value: 18 },
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
 			// Note: The actual implementation has a bug where GREATER_THAN uses regex
 			// This test reflects the actual behavior
 			expect(query.age).toBeDefined();
 		});
 
-		it("should build query with LESS_THAN operator", () => {
+		it('should build query with LESS_THAN operator', () => {
 			const criteria = new Criteria([
-				{ field: "age", operator: FilterOperator.LESS_THAN, value: 65 },
+				{ field: 'age', operator: FilterOperator.LESS_THAN, value: 65 },
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
 			expect(query).toEqual({
 				age: { $lt: 65 },
 			});
 		});
 
-		it("should build query with GREATER_THAN_OR_EQUAL operator", () => {
+		it('should build query with GREATER_THAN_OR_EQUAL operator', () => {
 			const criteria = new Criteria([
 				{
-					field: "age",
+					field: 'age',
 					operator: FilterOperator.GREATER_THAN_OR_EQUAL,
 					value: 18,
 				},
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
 			expect(query).toEqual({
 				age: { $gte: 18 },
 			});
 		});
 
-		it("should build query with multiple filters", () => {
+		it('should build query with multiple filters', () => {
 			const criteria = new Criteria([
-				{ field: "status", operator: FilterOperator.EQUALS, value: "active" },
-				{ field: "age", operator: FilterOperator.GREATER_THAN, value: 18 },
+				{ field: 'status', operator: FilterOperator.EQUALS, value: 'active' },
+				{ field: 'age', operator: FilterOperator.GREATER_THAN, value: 18 },
 			]);
 
-			const query = repository["buildMongoQuery"](criteria);
+			const query = repository['buildMongoQuery'](criteria);
 
-			expect(query.status).toBe("active");
+			expect(query.status).toBe('active');
 			expect(query.age).toBeDefined();
 		});
 	});
 
-	describe("buildSortQuery", () => {
-		it("should return default sort when no sorts provided", () => {
+	describe('buildSortQuery', () => {
+		it('should return default sort when no sorts provided', () => {
 			const criteria = new Criteria();
 
-			const sortQuery = repository["buildSortQuery"](criteria);
+			const sortQuery = repository['buildSortQuery'](criteria);
 
 			expect(sortQuery).toEqual({ createdAt: SortDirection.DESC });
 		});
 
-		it("should build sort query with ASC direction", () => {
+		it('should build sort query with ASC direction', () => {
 			const criteria = new Criteria(
 				[],
-				[{ field: "name", direction: SortDirection.ASC }],
+				[{ field: 'name', direction: SortDirection.ASC }],
 			);
 
-			const sortQuery = repository["buildSortQuery"](criteria);
+			const sortQuery = repository['buildSortQuery'](criteria);
 
 			expect(sortQuery).toEqual({ name: 1 });
 		});
 
-		it("should build sort query with DESC direction", () => {
+		it('should build sort query with DESC direction', () => {
 			const criteria = new Criteria(
 				[],
-				[{ field: "createdAt", direction: SortDirection.DESC }],
+				[{ field: 'createdAt', direction: SortDirection.DESC }],
 			);
 
-			const sortQuery = repository["buildSortQuery"](criteria);
+			const sortQuery = repository['buildSortQuery'](criteria);
 
 			expect(sortQuery).toEqual({ createdAt: -1 });
 		});
 
-		it("should build sort query with multiple fields", () => {
+		it('should build sort query with multiple fields', () => {
 			const criteria = new Criteria(
 				[],
 				[
-					{ field: "name", direction: SortDirection.ASC },
-					{ field: "age", direction: SortDirection.DESC },
+					{ field: 'name', direction: SortDirection.ASC },
+					{ field: 'age', direction: SortDirection.DESC },
 				],
 			);
 
-			const sortQuery = repository["buildSortQuery"](criteria);
+			const sortQuery = repository['buildSortQuery'](criteria);
 
 			expect(sortQuery).toEqual({ name: 1, age: -1 });
 		});
 	});
 
-	describe("executeQueryWithPagination", () => {
-		it("should execute query with pagination", async () => {
-			const mongoQuery = { status: "active" };
+	describe('executeQueryWithPagination', () => {
+		it('should execute query with pagination', async () => {
+			const mongoQuery = { status: 'active' };
 			const sortQuery = { createdAt: -1 };
 			const skip = 0;
 			const limit = 10;
 
-			const [data, total] = await repository["executeQueryWithPagination"](
+			const [data, total] = await repository['executeQueryWithPagination'](
 				mockCollection,
 				mongoQuery,
 				sortQuery,
@@ -249,16 +249,16 @@ describe("BaseMongoMasterRepository", () => {
 			expect(mockCollection.limit).toHaveBeenCalledWith(limit);
 			expect(mockCollection.toArray).toHaveBeenCalled();
 			expect(mockCollection.countDocuments).toHaveBeenCalledWith(mongoQuery);
-			expect(data).toEqual([{ id: "1" }, { id: "2" }]);
+			expect(data).toEqual([{ id: '1' }, { id: '2' }]);
 			expect(total).toBe(2);
 		});
 
-		it("should handle empty results", async () => {
+		it('should handle empty results', async () => {
 			// Reset mocks for this test
 			mockCollection.toArray.mockResolvedValueOnce([]);
 			mockCollection.countDocuments.mockResolvedValueOnce(0);
 
-			const [data, total] = await repository["executeQueryWithPagination"](
+			const [data, total] = await repository['executeQueryWithPagination'](
 				mockCollection,
 				{},
 				{},

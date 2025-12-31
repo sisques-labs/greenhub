@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from '@nestjs/graphql';
 import {
 	IsDate,
 	IsEnum,
@@ -6,13 +6,13 @@ import {
 	IsOptional,
 	IsString,
 	IsUUID,
-} from "class-validator";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+} from 'class-validator';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 
-@InputType("SagaInstanceUpdateRequestDto")
+@InputType('SagaInstanceUpdateRequestDto')
 export class SagaInstanceUpdateRequestDto {
 	@Field(() => String, {
-		description: "The id of the saga instance",
+		description: 'The id of the saga instance',
 		nullable: false,
 	})
 	@IsUUID()
@@ -20,7 +20,7 @@ export class SagaInstanceUpdateRequestDto {
 	id: string;
 
 	@Field(() => String, {
-		description: "The name of the saga instance",
+		description: 'The name of the saga instance',
 		nullable: true,
 	})
 	@IsString()
@@ -28,7 +28,7 @@ export class SagaInstanceUpdateRequestDto {
 	name?: string;
 
 	@Field(() => SagaInstanceStatusEnum, {
-		description: "The status of the saga instance",
+		description: 'The status of the saga instance',
 		nullable: true,
 	})
 	@IsEnum(SagaInstanceStatusEnum)
@@ -36,7 +36,7 @@ export class SagaInstanceUpdateRequestDto {
 	status?: SagaInstanceStatusEnum;
 
 	@Field(() => Date, {
-		description: "The start date of the saga instance",
+		description: 'The start date of the saga instance',
 		nullable: true,
 	})
 	@IsDate()
@@ -44,7 +44,7 @@ export class SagaInstanceUpdateRequestDto {
 	startDate?: Date | null;
 
 	@Field(() => Date, {
-		description: "The end date of the saga instance",
+		description: 'The end date of the saga instance',
 		nullable: true,
 	})
 	@IsDate()

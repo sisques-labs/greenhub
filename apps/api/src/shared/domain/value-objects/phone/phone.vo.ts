@@ -1,4 +1,4 @@
-import { InvalidPhoneException } from "@/shared/domain/exceptions/value-objects/invalid-phone/invalid-phone.exception";
+import { InvalidPhoneException } from '@/shared/domain/exceptions/value-objects/invalid-phone/invalid-phone.exception';
 
 /**
  * Phone Value Object
@@ -39,7 +39,7 @@ export class PhoneValueObject {
 	public getNationalNumber(): string {
 		const countryCode = this.getCountryCode();
 		if (countryCode) {
-			return this._value.replace(`+${countryCode}`, "");
+			return this._value.replace(`+${countryCode}`, '');
 		}
 		return this._value;
 	}
@@ -49,7 +49,7 @@ export class PhoneValueObject {
 	 * @returns The phone number in E.164 format
 	 */
 	public toE164(): string {
-		return this._value.startsWith("+") ? this._value : `+${this._value}`;
+		return this._value.startsWith('+') ? this._value : `+${this._value}`;
 	}
 
 	private validate(value: string): void {
@@ -58,14 +58,14 @@ export class PhoneValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === "") {
-			throw new InvalidPhoneException("Phone number cannot be empty");
+		if (!value || value.trim() === '') {
+			throw new InvalidPhoneException('Phone number cannot be empty');
 		}
 	}
 
 	private checkIsValidPhone(value: string): void {
 		// Remove all non-digit characters except +
-		const cleanValue = value.replace(/[^\d+]/g, "");
+		const cleanValue = value.replace(/[^\d+]/g, '');
 
 		// Check if it's a valid international format
 		const internationalPattern = /^\+[1-9]\d{1,14}$/;
@@ -76,24 +76,24 @@ export class PhoneValueObject {
 			!internationalPattern.test(cleanValue) &&
 			!nationalPattern.test(cleanValue)
 		) {
-			throw new InvalidPhoneException("Invalid phone number format");
+			throw new InvalidPhoneException('Invalid phone number format');
 		}
 
 		// Check length constraints
 		if (cleanValue.length < 7 || cleanValue.length > 16) {
 			throw new InvalidPhoneException(
-				"Phone number must be between 7 and 16 digits",
+				'Phone number must be between 7 and 16 digits',
 			);
 		}
 	}
 
 	private normalize(value: string): string {
 		// Remove all non-digit characters except +
-		let normalized = value.replace(/[^\d+]/g, "");
+		let normalized = value.replace(/[^\d+]/g, '');
 
 		// If it doesn't start with +, add it
-		if (!normalized.startsWith("+")) {
-			normalized = "+" + normalized;
+		if (!normalized.startsWith('+')) {
+			normalized = '+' + normalized;
 		}
 
 		return normalized;

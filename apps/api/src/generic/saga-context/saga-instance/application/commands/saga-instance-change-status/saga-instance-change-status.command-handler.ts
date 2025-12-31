@@ -1,12 +1,12 @@
-import { Inject, Logger } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
-import { AssertSagaInstanceExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
-} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository";
-import { SagaInstanceChangeStatusCommand } from "./saga-instance-change-status.command";
+} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { SagaInstanceChangeStatusCommand } from './saga-instance-change-status.command';
 
 @CommandHandler(SagaInstanceChangeStatusCommand)
 export class SagaInstanceChangeStatusCommandHandler

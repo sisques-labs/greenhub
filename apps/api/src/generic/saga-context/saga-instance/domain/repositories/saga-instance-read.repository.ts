@@ -1,9 +1,9 @@
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 export const SAGA_INSTANCE_READ_REPOSITORY_TOKEN = Symbol(
-	"SagaInstanceReadRepository",
+	'SagaInstanceReadRepository',
 );
 
 export interface SagaInstanceReadRepository {

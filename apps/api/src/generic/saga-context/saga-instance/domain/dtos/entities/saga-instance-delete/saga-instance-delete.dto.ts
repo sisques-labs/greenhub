@@ -1,4 +1,4 @@
-import { ISagaInstanceCreateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto";
+import { ISagaInstanceCreateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto';
 
 /**
  * Data Transfer Object for deleting a saga instance.
@@ -7,4 +7,4 @@ import { ISagaInstanceCreateDto } from "@/generic/saga-context/saga-instance/dom
  * @type ISagaInstanceDeleteDto
  * @property {string} id - The immutable identifier of the saga instance to delete.
  */
-export type ISagaInstanceDeleteDto = Pick<ISagaInstanceCreateDto, "id">;
+export type ISagaInstanceDeleteDto = Pick<ISagaInstanceCreateDto, 'id'>;

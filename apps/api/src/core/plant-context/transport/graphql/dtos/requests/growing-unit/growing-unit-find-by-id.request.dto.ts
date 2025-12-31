@@ -1,10 +1,10 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsNotEmpty, IsUUID } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
-@InputType("GrowingUnitFindByIdRequestDto")
+@InputType('GrowingUnitFindByIdRequestDto')
 export class GrowingUnitFindByIdRequestDto {
 	@Field(() => String, {
-		description: "The id of the growing unit to find",
+		description: 'The id of the growing unit to find',
 	})
 	@IsUUID()
 	@IsNotEmpty()

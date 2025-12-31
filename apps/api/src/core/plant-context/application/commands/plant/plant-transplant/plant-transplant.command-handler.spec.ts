@@ -1,28 +1,28 @@
-import { EventBus } from "@nestjs/cqrs";
-import { PlantTransplantCommand } from "@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command";
-import { PlantTransplantCommandHandler } from "@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command-handler";
-import { IPlantTransplantCommandDto } from "@/core/plant-context/application/dtos/commands/plant/plant-transplant/plant-transplant-command.dto";
-import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
-import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
-import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { IGrowingUnitWriteRepository } from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository";
-import { IPlantWriteRepository } from "@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository";
-import { PlantTransplantService } from "@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service";
-import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
-import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
-import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
-import { PlantNameValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo";
-import { PlantNotesValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo";
-import { PlantPlantedDateValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo";
-import { PlantSpeciesValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo";
-import { PlantStatusValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo";
-import { PublishIntegrationEventsService } from "@/shared/application/services/publish-integration-events/publish-integration-events.service";
-import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
-import { PlantUuidValueObject } from "@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo";
+import { EventBus } from '@nestjs/cqrs';
+import { PlantTransplantCommand } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command';
+import { PlantTransplantCommandHandler } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command-handler';
+import { IPlantTransplantCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-transplant/plant-transplant-command.dto';
+import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { IPlantWriteRepository } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
+import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
+import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
+import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
+import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
+import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
-describe("PlantTransplantCommandHandler", () => {
+describe('PlantTransplantCommandHandler', () => {
 	let handler: PlantTransplantCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
@@ -76,11 +76,11 @@ describe("PlantTransplantCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should transplant plant successfully", async () => {
-			const sourceGrowingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const targetGrowingUnitId = "223e4567-e89b-12d3-a456-426614174000";
-			const plantId = "323e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should transplant plant successfully', async () => {
+			const sourceGrowingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const targetGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const plantId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantTransplantCommandDto = {
 				sourceGrowingUnitId,
 				targetGrowingUnitId,
@@ -90,7 +90,7 @@ describe("PlantTransplantCommandHandler", () => {
 			const command = new PlantTransplantCommand(commandDto);
 			const sourceGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -99,7 +99,7 @@ describe("PlantTransplantCommandHandler", () => {
 
 			const targetGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 2"),
+				name: new GrowingUnitNameValueObject('Garden Bed 2'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -109,10 +109,10 @@ describe("PlantTransplantCommandHandler", () => {
 			const transplantedPlant = new PlantEntity({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-				name: new PlantNameValueObject("Test Plant"),
-				species: new PlantSpeciesValueObject("Test Species"),
+				name: new PlantNameValueObject('Test Plant'),
+				species: new PlantSpeciesValueObject('Test Species'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
-				notes: new PlantNotesValueObject(""),
+				notes: new PlantNotesValueObject(''),
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
@@ -151,10 +151,10 @@ describe("PlantTransplantCommandHandler", () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(2);
 		});
 
-		it("should publish events from both growing units", async () => {
-			const sourceGrowingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const targetGrowingUnitId = "223e4567-e89b-12d3-a456-426614174000";
-			const plantId = "323e4567-e89b-12d3-a456-426614174000";
+		it('should publish events from both growing units', async () => {
+			const sourceGrowingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const targetGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const plantId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantTransplantCommandDto = {
 				sourceGrowingUnitId,
 				targetGrowingUnitId,
@@ -164,7 +164,7 @@ describe("PlantTransplantCommandHandler", () => {
 			const command = new PlantTransplantCommand(commandDto);
 			const sourceGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -173,7 +173,7 @@ describe("PlantTransplantCommandHandler", () => {
 
 			const targetGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 2"),
+				name: new GrowingUnitNameValueObject('Garden Bed 2'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -183,10 +183,10 @@ describe("PlantTransplantCommandHandler", () => {
 			const transplantedPlant = new PlantEntity({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-				name: new PlantNameValueObject("Test Plant"),
-				species: new PlantSpeciesValueObject("Test Species"),
+				name: new PlantNameValueObject('Test Plant'),
+				species: new PlantSpeciesValueObject('Test Species'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
-				notes: new PlantNotesValueObject(""),
+				notes: new PlantNotesValueObject(''),
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
@@ -210,10 +210,10 @@ describe("PlantTransplantCommandHandler", () => {
 			);
 		});
 
-		it("should save growing units before publishing events", async () => {
-			const sourceGrowingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const targetGrowingUnitId = "223e4567-e89b-12d3-a456-426614174000";
-			const plantId = "323e4567-e89b-12d3-a456-426614174000";
+		it('should save growing units before publishing events', async () => {
+			const sourceGrowingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const targetGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const plantId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantTransplantCommandDto = {
 				sourceGrowingUnitId,
 				targetGrowingUnitId,
@@ -223,7 +223,7 @@ describe("PlantTransplantCommandHandler", () => {
 			const command = new PlantTransplantCommand(commandDto);
 			const sourceGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -232,7 +232,7 @@ describe("PlantTransplantCommandHandler", () => {
 
 			const targetGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 2"),
+				name: new GrowingUnitNameValueObject('Garden Bed 2'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -242,10 +242,10 @@ describe("PlantTransplantCommandHandler", () => {
 			const transplantedPlant = new PlantEntity({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
-				name: new PlantNameValueObject("Test Plant"),
-				species: new PlantSpeciesValueObject("Test Species"),
+				name: new PlantNameValueObject('Test Plant'),
+				species: new PlantSpeciesValueObject('Test Species'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
-				notes: new PlantNotesValueObject(""),
+				notes: new PlantNotesValueObject(''),
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 

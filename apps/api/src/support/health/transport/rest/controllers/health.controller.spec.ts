@@ -1,9 +1,9 @@
-import { HealthCheckService } from "@/support/health/application/services/health-check/health-check.service";
-import { HealthViewModel } from "@/support/health/domain/view-models/health.view-model";
-import { HealthController } from "@/support/health/transport/rest/controllers/health.controller";
-import { HealthRestMapper } from "@/support/health/transport/rest/mappers/health-rest.mapper";
+import { HealthCheckService } from '@/support/health/application/services/health-check/health-check.service';
+import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
+import { HealthController } from '@/support/health/transport/rest/controllers/health.controller';
+import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health-rest.mapper';
 
-describe("HealthController", () => {
+describe('HealthController', () => {
 	let controller: HealthController;
 	let mockHealthCheckService: jest.Mocked<HealthCheckService>;
 	let mockHealthRestMapper: jest.Mocked<HealthRestMapper>;
@@ -28,16 +28,16 @@ describe("HealthController", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should return mapped health response", async () => {
+	it('should return mapped health response', async () => {
 		const viewModel = new HealthViewModel({
-			status: "OK",
-			writeDatabaseStatus: "OK",
-			readDatabaseStatus: "OK",
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
 		});
 		const responseDto = {
-			status: "OK",
-			writeDatabaseStatus: "OK",
-			readDatabaseStatus: "OK",
+			status: 'OK',
+			writeDatabaseStatus: 'OK',
+			readDatabaseStatus: 'OK',
 		};
 
 		mockHealthCheckService.execute.mockResolvedValue(viewModel);

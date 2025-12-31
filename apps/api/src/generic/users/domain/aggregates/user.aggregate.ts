@@ -1,19 +1,19 @@
-import { IUserCreateDto } from "@/generic/users/domain/dtos/entities/user-create/user-create.dto";
-import { IUserUpdateDto } from "@/generic/users/domain/dtos/entities/user-update/user-update.dto";
-import { UserPrimitives } from "@/generic/users/domain/primitives/user.primitives";
-import { UserAvatarUrlValueObject } from "@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo";
-import { UserBioValueObject } from "@/generic/users/domain/value-objects/user-bio/user-bio.vo";
-import { UserLastNameValueObject } from "@/generic/users/domain/value-objects/user-last-name/user-last-name.vo";
-import { UserNameValueObject } from "@/generic/users/domain/value-objects/user-name/user-name.vo";
-import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
-import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
-import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
-import { BaseAggregate } from "@/shared/domain/aggregates/base-aggregate/base.aggregate";
-import { UserCreatedEvent } from "@/shared/domain/events/users/user-created/user-created.event";
-import { UserDeletedEvent } from "@/shared/domain/events/users/user-deleted/user-deleted.event";
-import { UserUpdatedEvent } from "@/shared/domain/events/users/user-updated/user-updated.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create/user-create.dto';
+import { IUserUpdateDto } from '@/generic/users/domain/dtos/entities/user-update/user-update.dto';
+import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
+import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
+import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
+import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
+import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
+import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
+import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
+import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { BaseAggregate } from '@/shared/domain/aggregates/base-aggregate/base.aggregate';
+import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
+import { UserDeletedEvent } from '@/shared/domain/events/users/user-deleted/user-deleted.event';
+import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
 export class UserAggregate extends BaseAggregate {
 	private readonly _id: UserUuidValueObject;

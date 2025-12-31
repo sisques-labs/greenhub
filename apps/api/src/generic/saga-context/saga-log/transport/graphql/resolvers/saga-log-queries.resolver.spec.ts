@@ -1,24 +1,24 @@
-import { QueryBus } from "@nestjs/cqrs";
-import { FindSagaLogsByCriteriaQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query";
-import { FindSagaLogViewModelByIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query";
-import { FindSagaLogViewModelsBySagaInstanceIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query";
-import { FindSagaLogViewModelsBySagaStepIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-step-id/saga-log-find-view-model-by-saga-step-id.query";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
-import { SagaLogFindByCriteriaRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-criteria.request.dto";
-import { SagaLogFindByIdRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-id.request.dto";
-import { SagaLogFindBySagaInstanceIdRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-instance-id.request.dto";
-import { SagaLogFindBySagaStepIdRequestDto } from "@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-step-id.request.dto";
+import { QueryBus } from '@nestjs/cqrs';
+import { FindSagaLogsByCriteriaQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query';
+import { FindSagaLogViewModelByIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query';
+import { FindSagaLogViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query';
+import { FindSagaLogViewModelsBySagaStepIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-step-id/saga-log-find-view-model-by-saga-step-id.query';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+import { SagaLogFindByCriteriaRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-criteria.request.dto';
+import { SagaLogFindByIdRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-id.request.dto';
+import { SagaLogFindBySagaInstanceIdRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-instance-id.request.dto';
+import { SagaLogFindBySagaStepIdRequestDto } from '@/generic/saga-context/saga-log/transport/graphql/dtos/requests/saga-log-find-by-saga-step-id.request.dto';
 import {
 	PaginatedSagaLogResultDto,
 	SagaLogResponseDto,
-} from "@/generic/saga-context/saga-log/transport/graphql/dtos/responses/saga-log.response.dto";
-import { SagaLogGraphQLMapper } from "@/generic/saga-context/saga-log/transport/graphql/mappers/saga-log.mapper";
-import { SagaLogQueryResolver } from "@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-queries.resolver";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+} from '@/generic/saga-context/saga-log/transport/graphql/dtos/responses/saga-log.response.dto';
+import { SagaLogGraphQLMapper } from '@/generic/saga-context/saga-log/transport/graphql/mappers/saga-log.mapper';
+import { SagaLogQueryResolver } from '@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-queries.resolver';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
-describe("SagaLogQueryResolver", () => {
+describe('SagaLogQueryResolver', () => {
 	let resolver: SagaLogQueryResolver;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockSagaLogGraphQLMapper: jest.Mocked<SagaLogGraphQLMapper>;
@@ -40,21 +40,21 @@ describe("SagaLogQueryResolver", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("sagaLogFindById", () => {
-		it("should return saga log when found", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaLogFindById', () => {
+		it('should return saga log when found', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogFindByIdRequestDto = {
 				id: sagaLogId,
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModel = new SagaLogViewModel({
 				id: sagaLogId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 				type: SagaLogTypeEnum.INFO,
-				message: "Test log message",
+				message: 'Test log message',
 				createdAt: createdAt,
 				updatedAt: updatedAt,
 			});
@@ -86,8 +86,8 @@ describe("SagaLogQueryResolver", () => {
 			);
 		});
 
-		it("should return null when saga log not found", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when saga log not found', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogFindByIdRequestDto = {
 				id: sagaLogId,
 			};
@@ -104,31 +104,31 @@ describe("SagaLogQueryResolver", () => {
 		});
 	});
 
-	describe("sagaLogFindBySagaInstanceId", () => {
-		it("should return array of saga logs when found", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('sagaLogFindBySagaInstanceId', () => {
+		it('should return array of saga logs when found', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogFindBySagaInstanceIdRequestDto = {
 				sagaInstanceId: sagaInstanceId,
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModels: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
+					id: '123e4567-e89b-12d3-a456-426614174000',
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 					type: SagaLogTypeEnum.INFO,
-					message: "Log message 1",
+					message: 'Log message 1',
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				}),
 				new SagaLogViewModel({
-					id: "323e4567-e89b-12d3-a456-426614174001",
+					id: '323e4567-e89b-12d3-a456-426614174001',
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 					type: SagaLogTypeEnum.ERROR,
-					message: "Log message 2",
+					message: 'Log message 2',
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				}),
@@ -164,22 +164,22 @@ describe("SagaLogQueryResolver", () => {
 		});
 	});
 
-	describe("sagaLogFindBySagaStepId", () => {
-		it("should return array of saga logs when found", async () => {
-			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
+	describe('sagaLogFindBySagaStepId', () => {
+		it('should return array of saga logs when found', async () => {
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
 			const input: SagaLogFindBySagaStepIdRequestDto = {
 				sagaStepId: sagaStepId,
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModels: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
 					sagaStepId: sagaStepId,
 					type: SagaLogTypeEnum.INFO,
-					message: "Log message 1",
+					message: 'Log message 1',
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				}),
@@ -215,23 +215,23 @@ describe("SagaLogQueryResolver", () => {
 		});
 	});
 
-	describe("sagaLogFindByCriteria", () => {
-		it("should return paginated result when found", async () => {
+	describe('sagaLogFindByCriteria', () => {
+		it('should return paginated result when found', async () => {
 			const input: SagaLogFindByCriteriaRequestDto = {
 				filters: [],
 				sorts: [],
 				pagination: { page: 1, perPage: 10 },
 			};
 
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const viewModels: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
 					type: SagaLogTypeEnum.INFO,
-					message: "Log message 1",
+					message: 'Log message 1',
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				}),
@@ -273,7 +273,7 @@ describe("SagaLogQueryResolver", () => {
 			).toHaveBeenCalledWith(paginatedResult);
 		});
 
-		it("should handle undefined input", async () => {
+		it('should handle undefined input', async () => {
 			const viewModels: SagaLogViewModel[] = [];
 
 			const paginatedResult = new PaginatedResult(viewModels, 0, 1, 10);

@@ -1,24 +1,24 @@
-import { AuthUpdatedEvent } from "@/shared/domain/events/auth/auth-updated/auth-updated.event";
-import { IAuthEventData } from "@/shared/domain/events/auth/interfaces/auth-event-data.interface";
-import { BaseEvent } from "@/shared/domain/events/base-event.interface";
-import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
+import { AuthUpdatedEvent } from '@/shared/domain/events/auth/auth-updated/auth-updated.event';
+import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
+import { BaseEvent } from '@/shared/domain/events/base-event.interface';
+import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
-describe("AuthUpdatedEvent", () => {
+describe('AuthUpdatedEvent', () => {
 	const createMetadata = (): IEventMetadata => ({
-		aggregateRootId: "123e4567-e89b-12d3-a456-426614174000",
-		aggregateRootType: "AuthAggregate",
-		entityId: "123e4567-e89b-12d3-a456-426614174000",
-		entityType: "AuthAggregate",
-		eventType: "AuthUpdatedEvent",
+		aggregateRootId: '123e4567-e89b-12d3-a456-426614174000',
+		aggregateRootType: 'AuthAggregate',
+		entityId: '123e4567-e89b-12d3-a456-426614174000',
+		entityType: 'AuthAggregate',
+		eventType: 'AuthUpdatedEvent',
 	});
 
-	const createPartialAuthData = (): Partial<Omit<IAuthEventData, "id">> => ({
-		email: "updated@example.com",
+	const createPartialAuthData = (): Partial<Omit<IAuthEventData, 'id'>> => ({
+		email: 'updated@example.com',
 		emailVerified: true,
 		twoFactorEnabled: true,
 	});
 
-	it("should be an instance of BaseEvent", () => {
+	it('should be an instance of BaseEvent', () => {
 		const metadata = createMetadata();
 		const data = createPartialAuthData();
 
@@ -27,7 +27,7 @@ describe("AuthUpdatedEvent", () => {
 		expect(event).toBeInstanceOf(BaseEvent);
 	});
 
-	it("should create an event with correct metadata", () => {
+	it('should create an event with correct metadata', () => {
 		const metadata = createMetadata();
 		const data = createPartialAuthData();
 
@@ -40,7 +40,7 @@ describe("AuthUpdatedEvent", () => {
 		expect(event.eventType).toBe(metadata.eventType);
 	});
 
-	it("should store partial auth data correctly", () => {
+	it('should store partial auth data correctly', () => {
 		const metadata = createMetadata();
 		const data = createPartialAuthData();
 
@@ -51,17 +51,17 @@ describe("AuthUpdatedEvent", () => {
 		expect(event.data.twoFactorEnabled).toBe(true);
 	});
 
-	it("should allow partial data updates", () => {
+	it('should allow partial data updates', () => {
 		const metadata = createMetadata();
-		const data = { email: "only-email@example.com" };
+		const data = { email: 'only-email@example.com' };
 
 		const event = new AuthUpdatedEvent(metadata, data);
 
 		expect(event.data).toEqual(data);
-		expect(event.data.email).toBe("only-email@example.com");
+		expect(event.data.email).toBe('only-email@example.com');
 	});
 
-	it("should generate a unique eventId", () => {
+	it('should generate a unique eventId', () => {
 		const metadata = createMetadata();
 		const data = createPartialAuthData();
 

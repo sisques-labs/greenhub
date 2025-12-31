@@ -1,11 +1,11 @@
-import { CommandBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaInstanceCreatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event";
-import { SagaInstanceCreatedEventHandler } from "./saga-instance-created.event-handler";
+import { CommandBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event';
+import { SagaInstanceCreatedEventHandler } from './saga-instance-created.event-handler';
 
-describe("SagaInstanceCreatedEventHandler", () => {
+describe('SagaInstanceCreatedEventHandler', () => {
 	let handler: SagaInstanceCreatedEventHandler;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 
@@ -33,26 +33,26 @@ describe("SagaInstanceCreatedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should create a saga log when saga instance is created", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should create a saga log when saga instance is created', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "STARTED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'STARTED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceCreatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceCreatedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceCreatedEvent',
 				},
 				eventData,
 			);
@@ -76,28 +76,28 @@ describe("SagaInstanceCreatedEventHandler", () => {
 			);
 		});
 
-		it("should handle event with different status values", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const statuses = ["STARTED", "RUNNING", "COMPLETED", "FAILED"];
+		it('should handle event with different status values', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const statuses = ['STARTED', 'RUNNING', 'COMPLETED', 'FAILED'];
 
 			for (const status of statuses) {
 				const eventData = {
 					id: aggregateId,
 					name: `Test Saga Instance ${status}`,
 					status: status,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
-					createdAt: new Date("2024-01-01T10:00:00Z"),
-					updatedAt: new Date("2024-01-01T10:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
+					createdAt: new Date('2024-01-01T10:00:00Z'),
+					updatedAt: new Date('2024-01-01T10:00:00Z'),
 				};
 
 				const event = new SagaInstanceCreatedEvent(
 					{
 						aggregateRootId: aggregateId,
-						aggregateRootType: "SagaInstanceAggregate",
+						aggregateRootType: 'SagaInstanceAggregate',
 						entityId: aggregateId,
-						entityType: "SagaInstanceAggregate",
-						eventType: "SagaInstanceCreatedEvent",
+						entityType: 'SagaInstanceAggregate',
+						eventType: 'SagaInstanceCreatedEvent',
 					},
 					eventData,
 				);
@@ -116,30 +116,30 @@ describe("SagaInstanceCreatedEventHandler", () => {
 			expect(mockCommandBus.execute).toHaveBeenCalledTimes(statuses.length);
 		});
 
-		it("should handle errors from command bus", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle errors from command bus', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
 				id: aggregateId,
-				name: "Test Saga Instance",
-				status: "STARTED",
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				name: 'Test Saga Instance',
+				status: 'STARTED',
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			};
 
 			const event = new SagaInstanceCreatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaInstanceAggregate",
+					aggregateRootType: 'SagaInstanceAggregate',
 					entityId: aggregateId,
-					entityType: "SagaInstanceAggregate",
-					eventType: "SagaInstanceCreatedEvent",
+					entityType: 'SagaInstanceAggregate',
+					eventType: 'SagaInstanceCreatedEvent',
 				},
 				eventData,
 			);
 
-			const error = new Error("Command execution failed");
+			const error = new Error('Command execution failed');
 			mockCommandBus.execute.mockRejectedValue(error);
 
 			await expect(handler.handle(event)).rejects.toThrow(error);

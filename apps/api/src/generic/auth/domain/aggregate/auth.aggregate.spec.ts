@@ -1,34 +1,34 @@
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { IAuthCreateDto } from "@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
-import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
-import { AuthLastLoginAtValueObject } from "@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo";
-import { AuthPasswordValueObject } from "@/generic/auth/domain/value-objects/auth-password/auth-password.vo";
-import { AuthPhoneNumberValueObject } from "@/generic/auth/domain/value-objects/auth-phone-number/auth-phone-number.vo";
-import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
-import { AuthProviderIdValueObject } from "@/generic/auth/domain/value-objects/auth-provider-id/auth-provider-id.vo";
-import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
-import { AuthCreatedEvent } from "@/shared/domain/events/auth/auth-created/auth-created.event";
-import { AuthDeletedEvent } from "@/shared/domain/events/auth/auth-deleted/auth-deleted.event";
-import { AuthUpdatedEvent } from "@/shared/domain/events/auth/auth-updated/auth-updated.event";
-import { AuthUpdatedLastLoginAtEvent } from "@/shared/domain/events/auth/auth-updated-last-login-at/auth-updated-last-login-at.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { IAuthCreateDto } from '@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthLastLoginAtValueObject } from '@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo';
+import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
+import { AuthPhoneNumberValueObject } from '@/generic/auth/domain/value-objects/auth-phone-number/auth-phone-number.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
+import { AuthProviderIdValueObject } from '@/generic/auth/domain/value-objects/auth-provider-id/auth-provider-id.vo';
+import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
+import { AuthCreatedEvent } from '@/shared/domain/events/auth/auth-created/auth-created.event';
+import { AuthDeletedEvent } from '@/shared/domain/events/auth/auth-deleted/auth-deleted.event';
+import { AuthUpdatedEvent } from '@/shared/domain/events/auth/auth-updated/auth-updated.event';
+import { AuthUpdatedLastLoginAtEvent } from '@/shared/domain/events/auth/auth-updated-last-login-at/auth-updated-last-login-at.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
-describe("AuthAggregate", () => {
+describe('AuthAggregate', () => {
 	const createAuthDto = (
 		overrides?: Partial<IAuthCreateDto>,
 	): IAuthCreateDto => {
-		const now = new Date("2024-01-01T10:00:00Z");
+		const now = new Date('2024-01-01T10:00:00Z');
 		return {
-			id: new AuthUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
-			userId: new UserUuidValueObject("123e4567-e89b-12d3-a456-426614174001"),
-			email: new AuthEmailValueObject("test@example.com"),
+			id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+			userId: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174001'),
+			email: new AuthEmailValueObject('test@example.com'),
 			emailVerified: new AuthEmailVerifiedValueObject(false),
 			lastLoginAt: null,
-			password: new AuthPasswordValueObject("SecurePass123!"),
+			password: new AuthPasswordValueObject('SecurePass123!'),
 			phoneNumber: null,
 			provider: new AuthProviderValueObject(AuthProviderEnum.LOCAL),
 			providerId: null,
@@ -39,8 +39,8 @@ describe("AuthAggregate", () => {
 		};
 	};
 
-	describe("constructor", () => {
-		it("should create an AuthAggregate with all properties", () => {
+	describe('constructor', () => {
+		it('should create an AuthAggregate with all properties', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -53,7 +53,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.twoFactorEnabled.value).toBe(dto.twoFactorEnabled.value);
 		});
 
-		it("should emit AuthCreatedEvent on creation by default", () => {
+		it('should emit AuthCreatedEvent on creation by default', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto);
 
@@ -69,14 +69,14 @@ describe("AuthAggregate", () => {
 			expect(event.data.userId).toBe(dto.userId.value);
 		});
 
-		it("should not emit AuthCreatedEvent when generateEvent is false", () => {
+		it('should not emit AuthCreatedEvent when generateEvent is false', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
 			expect(aggregate.getUncommittedEvents()).toHaveLength(0);
 		});
 
-		it("should handle null optional fields correctly", () => {
+		it('should handle null optional fields correctly', () => {
 			const dto = createAuthDto({
 				email: null,
 				phoneNumber: null,
@@ -94,8 +94,8 @@ describe("AuthAggregate", () => {
 		});
 	});
 
-	describe("getters", () => {
-		it("should expose id value object via getter", () => {
+	describe('getters', () => {
+		it('should expose id value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -103,7 +103,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.id.value).toBe(dto.id.value);
 		});
 
-		it("should expose userId value object via getter", () => {
+		it('should expose userId value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -111,7 +111,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.userId.value).toBe(dto.userId.value);
 		});
 
-		it("should expose email value object via getter", () => {
+		it('should expose email value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -119,7 +119,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.email?.value).toBe(dto.email?.value);
 		});
 
-		it("should expose emailVerified value object via getter", () => {
+		it('should expose emailVerified value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -129,7 +129,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.emailVerified.value).toBe(dto.emailVerified.value);
 		});
 
-		it("should expose password value object via getter", () => {
+		it('should expose password value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -137,7 +137,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.password?.value).toBe(dto.password?.value);
 		});
 
-		it("should expose provider value object via getter", () => {
+		it('should expose provider value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -145,7 +145,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.provider.value).toBe(dto.provider.value);
 		});
 
-		it("should expose twoFactorEnabled value object via getter", () => {
+		it('should expose twoFactorEnabled value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -155,7 +155,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.twoFactorEnabled.value).toBe(dto.twoFactorEnabled.value);
 		});
 
-		it("should expose createdAt value object via getter", () => {
+		it('should expose createdAt value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -163,7 +163,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.createdAt.value).toEqual(dto.createdAt.value);
 		});
 
-		it("should expose updatedAt value object via getter", () => {
+		it('should expose updatedAt value object via getter', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -172,17 +172,17 @@ describe("AuthAggregate", () => {
 		});
 	});
 
-	describe("update", () => {
-		it("should update email when new value is provided", () => {
+	describe('update', () => {
+		it('should update email when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
-			const newEmail = new AuthEmailValueObject("newemail@example.com");
+			const newEmail = new AuthEmailValueObject('newemail@example.com');
 
 			aggregate.update({ email: newEmail }, false);
 
-			expect(aggregate.email?.value).toBe("newemail@example.com");
+			expect(aggregate.email?.value).toBe('newemail@example.com');
 		});
 
-		it("should keep original email when undefined is provided", () => {
+		it('should keep original email when undefined is provided', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 			const originalEmail = aggregate.email?.value;
@@ -192,7 +192,7 @@ describe("AuthAggregate", () => {
 			expect(aggregate.email?.value).toBe(originalEmail);
 		});
 
-		it("should update emailVerified when new value is provided", () => {
+		it('should update emailVerified when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			const newEmailVerified = new AuthEmailVerifiedValueObject(true);
 
@@ -201,16 +201,16 @@ describe("AuthAggregate", () => {
 			expect(aggregate.emailVerified.value).toBe(true);
 		});
 
-		it("should update password when new value is provided", () => {
+		it('should update password when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
-			const newPassword = new AuthPasswordValueObject("NewSecurePass123!");
+			const newPassword = new AuthPasswordValueObject('NewSecurePass123!');
 
 			aggregate.update({ password: newPassword }, false);
 
-			expect(aggregate.password?.value).toBe("NewSecurePass123!");
+			expect(aggregate.password?.value).toBe('NewSecurePass123!');
 		});
 
-		it("should update provider when new value is provided", () => {
+		it('should update provider when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			const newProvider = new AuthProviderValueObject(AuthProviderEnum.GOOGLE);
 
@@ -219,16 +219,16 @@ describe("AuthAggregate", () => {
 			expect(aggregate.provider.value).toBe(AuthProviderEnum.GOOGLE);
 		});
 
-		it("should update providerId when new value is provided", () => {
+		it('should update providerId when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
-			const newProviderId = new AuthProviderIdValueObject("google-123");
+			const newProviderId = new AuthProviderIdValueObject('google-123');
 
 			aggregate.update({ providerId: newProviderId }, false);
 
-			expect(aggregate.providerId?.value).toBe("google-123");
+			expect(aggregate.providerId?.value).toBe('google-123');
 		});
 
-		it("should update twoFactorEnabled when new value is provided", () => {
+		it('should update twoFactorEnabled when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			const newTwoFactorEnabled = new AuthTwoFactorEnabledValueObject(true);
 
@@ -237,31 +237,31 @@ describe("AuthAggregate", () => {
 			expect(aggregate.twoFactorEnabled.value).toBe(true);
 		});
 
-		it("should update phoneNumber when new value is provided", () => {
+		it('should update phoneNumber when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
-			const newPhoneNumber = new AuthPhoneNumberValueObject("+1234567890");
+			const newPhoneNumber = new AuthPhoneNumberValueObject('+1234567890');
 
 			aggregate.update({ phoneNumber: newPhoneNumber }, false);
 
-			expect(aggregate.phoneNumber?.value).toBe("+1234567890");
+			expect(aggregate.phoneNumber?.value).toBe('+1234567890');
 		});
 
-		it("should update lastLoginAt when new value is provided", () => {
+		it('should update lastLoginAt when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			const newLastLoginAt = new AuthLastLoginAtValueObject(
-				new Date("2024-01-02T10:00:00Z"),
+				new Date('2024-01-02T10:00:00Z'),
 			);
 
 			aggregate.update({ lastLoginAt: newLastLoginAt }, false);
 
 			expect(aggregate.lastLoginAt?.value).toEqual(
-				new Date("2024-01-02T10:00:00Z"),
+				new Date('2024-01-02T10:00:00Z'),
 			);
 		});
 
-		it("should update multiple fields at once", () => {
+		it('should update multiple fields at once', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
-			const newEmail = new AuthEmailValueObject("updated@example.com");
+			const newEmail = new AuthEmailValueObject('updated@example.com');
 			const newEmailVerified = new AuthEmailVerifiedValueObject(true);
 
 			aggregate.update(
@@ -269,17 +269,17 @@ describe("AuthAggregate", () => {
 				false,
 			);
 
-			expect(aggregate.email?.value).toBe("updated@example.com");
+			expect(aggregate.email?.value).toBe('updated@example.com');
 			expect(aggregate.emailVerified.value).toBe(true);
 		});
 
-		it("should update updatedAt timestamp when updating", () => {
+		it('should update updatedAt timestamp when updating', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			const originalUpdatedAt = aggregate.updatedAt.value;
 			const beforeUpdate = new Date();
 
 			aggregate.update(
-				{ email: new AuthEmailValueObject("new@example.com") },
+				{ email: new AuthEmailValueObject('new@example.com') },
 				false,
 			);
 
@@ -295,10 +295,10 @@ describe("AuthAggregate", () => {
 			);
 		});
 
-		it("should generate AuthUpdatedEvent when updating with generateEvent true", () => {
+		it('should generate AuthUpdatedEvent when updating with generateEvent true', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			aggregate.commit(); // Clear creation event
-			const newEmail = new AuthEmailValueObject("updated@example.com");
+			const newEmail = new AuthEmailValueObject('updated@example.com');
 
 			aggregate.update({ email: newEmail }, true);
 
@@ -310,13 +310,13 @@ describe("AuthAggregate", () => {
 			expect(event.aggregateRootId).toBe(aggregate.id.value);
 			expect(event.aggregateRootType).toBe(AuthAggregate.name);
 			expect(event.eventType).toBe(AuthUpdatedEvent.name);
-			expect(event.data.email).toBe("updated@example.com");
+			expect(event.data.email).toBe('updated@example.com');
 		});
 
-		it("should not generate AuthUpdatedEvent when generateEvent is false", () => {
+		it('should not generate AuthUpdatedEvent when generateEvent is false', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			aggregate.commit();
-			const newEmail = new AuthEmailValueObject("updated@example.com");
+			const newEmail = new AuthEmailValueObject('updated@example.com');
 
 			aggregate.update({ email: newEmail }, false);
 
@@ -324,25 +324,25 @@ describe("AuthAggregate", () => {
 		});
 	});
 
-	describe("updateLastLoginAt", () => {
-		it("should update lastLoginAt when new value is provided", () => {
+	describe('updateLastLoginAt', () => {
+		it('should update lastLoginAt when new value is provided', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			const newLastLoginAt = new AuthLastLoginAtValueObject(
-				new Date("2024-01-02T10:00:00Z"),
+				new Date('2024-01-02T10:00:00Z'),
 			);
 
 			aggregate.updateLastLoginAt(newLastLoginAt, false);
 
 			expect(aggregate.lastLoginAt?.value).toEqual(
-				new Date("2024-01-02T10:00:00Z"),
+				new Date('2024-01-02T10:00:00Z'),
 			);
 		});
 
-		it("should generate AuthUpdatedLastLoginAtEvent when updating with generateEvent true", () => {
+		it('should generate AuthUpdatedLastLoginAtEvent when updating with generateEvent true', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			aggregate.commit();
 			const newLastLoginAt = new AuthLastLoginAtValueObject(
-				new Date("2024-01-02T10:00:00Z"),
+				new Date('2024-01-02T10:00:00Z'),
 			);
 
 			aggregate.updateLastLoginAt(newLastLoginAt, true);
@@ -355,14 +355,14 @@ describe("AuthAggregate", () => {
 			expect(event.aggregateRootId).toBe(aggregate.id.value);
 			expect(event.aggregateRootType).toBe(AuthAggregate.name);
 			expect(event.eventType).toBe(AuthUpdatedLastLoginAtEvent.name);
-			expect(event.data.lastLoginAt).toEqual(new Date("2024-01-02T10:00:00Z"));
+			expect(event.data.lastLoginAt).toEqual(new Date('2024-01-02T10:00:00Z'));
 		});
 
-		it("should not generate AuthUpdatedLastLoginAtEvent when generateEvent is false", () => {
+		it('should not generate AuthUpdatedLastLoginAtEvent when generateEvent is false', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			aggregate.commit();
 			const newLastLoginAt = new AuthLastLoginAtValueObject(
-				new Date("2024-01-02T10:00:00Z"),
+				new Date('2024-01-02T10:00:00Z'),
 			);
 
 			aggregate.updateLastLoginAt(newLastLoginAt, false);
@@ -371,8 +371,8 @@ describe("AuthAggregate", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should generate AuthDeletedEvent when deleting with generateEvent true", () => {
+	describe('delete', () => {
+		it('should generate AuthDeletedEvent when deleting with generateEvent true', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			aggregate.commit();
 
@@ -389,7 +389,7 @@ describe("AuthAggregate", () => {
 			expect(event.data.id).toBe(aggregate.id.value);
 		});
 
-		it("should not generate AuthDeletedEvent when generateEvent is false", () => {
+		it('should not generate AuthDeletedEvent when generateEvent is false', () => {
 			const aggregate = new AuthAggregate(createAuthDto(), false);
 			aggregate.commit();
 
@@ -399,8 +399,8 @@ describe("AuthAggregate", () => {
 		});
 	});
 
-	describe("toPrimitives", () => {
-		it("should convert aggregate to primitives correctly", () => {
+	describe('toPrimitives', () => {
+		it('should convert aggregate to primitives correctly', () => {
 			const dto = createAuthDto();
 			const aggregate = new AuthAggregate(dto, false);
 
@@ -417,7 +417,7 @@ describe("AuthAggregate", () => {
 			expect(primitives.updatedAt).toEqual(dto.updatedAt.value);
 		});
 
-		it("should convert aggregate with null optional fields to primitives correctly", () => {
+		it('should convert aggregate with null optional fields to primitives correctly', () => {
 			const dto = createAuthDto({
 				email: null,
 				phoneNumber: null,

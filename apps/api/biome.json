@@ -37,14 +37,14 @@
 		"includes": ["**", "**/.eslintrc.js"]
 	},
 	"javascript": {
-		"formatter": { "quoteStyle": "double" },
+		"formatter": { "quoteStyle": "single" },
 		"parser": { "unsafeParameterDecoratorsEnabled": true }
 	},
 	"overrides": [
 		{
 			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
 			"javascript": {
-				"formatter": { "quoteStyle": "double" },
+				"formatter": { "quoteStyle": "single" },
 				"parser": { "unsafeParameterDecoratorsEnabled": true }
 			},
 			"linter": {

@@ -1,5 +1,5 @@
-import { ISagaLogDeleteCommandDto } from "@/generic/saga-context/saga-log/application/dtos/commands/saga-log-delete/saga-log-delete-command.dto";
-import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
+import { ISagaLogDeleteCommandDto } from '@/generic/saga-context/saga-log/application/dtos/commands/saga-log-delete/saga-log-delete-command.dto';
+import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
 
 export class SagaLogDeleteCommand {
 	readonly id: SagaLogUuidValueObject;

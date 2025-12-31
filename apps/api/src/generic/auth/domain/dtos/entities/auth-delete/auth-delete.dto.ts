@@ -1,4 +1,4 @@
-import { IAuthCreateDto } from "@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto";
+import { IAuthCreateDto } from '@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto';
 
 /**
  * Data Transfer Object for deleting a auth.
@@ -7,4 +7,4 @@ import { IAuthCreateDto } from "@/generic/auth/domain/dtos/entities/auth-create/
  * @type IAuthDeleteDto
  * @property {string} id - The immutable identifier of the auth to delete.
  */
-export type IAuthDeleteDto = Pick<IAuthCreateDto, "id">;
+export type IAuthDeleteDto = Pick<IAuthCreateDto, 'id'>;

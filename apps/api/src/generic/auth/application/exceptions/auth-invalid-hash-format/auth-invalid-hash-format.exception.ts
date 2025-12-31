@@ -1,4 +1,4 @@
-import { BaseDomainException } from "@/shared/domain/exceptions/base-domain.exception";
+import { BaseDomainException } from '@/shared/domain/exceptions/base-domain.exception';
 
 /**
  * Invalid Hash Format Exception
@@ -8,7 +8,7 @@ export class InvalidHashFormatException extends BaseDomainException {
 	constructor(hash?: string) {
 		const message = hash
 			? `Invalid hash format: ${hash}`
-			: "Invalid hash format provided";
+			: 'Invalid hash format provided';
 		super(message);
 	}
 }

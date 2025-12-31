@@ -3,11 +3,11 @@ import {
 	ExecutionContext,
 	ForbiddenException,
 	Injectable,
-} from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { GqlExecutionContext } from "@nestjs/graphql";
-import { ROLES_KEY } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { ROLES_KEY } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 /**
  * Roles Guard
@@ -37,14 +37,14 @@ export class RolesGuard implements CanActivate {
 		const user = request.user;
 
 		if (!user) {
-			throw new ForbiddenException("User not authenticated");
+			throw new ForbiddenException('User not authenticated');
 		}
 
 		// Get user role from JWT payload (added by JwtStrategy)
 		const userRole = (user as any).role;
 
 		if (!userRole) {
-			throw new ForbiddenException("User role not found");
+			throw new ForbiddenException('User role not found');
 		}
 
 		// Check if user has required role
@@ -52,7 +52,7 @@ export class RolesGuard implements CanActivate {
 
 		if (!hasRole) {
 			throw new ForbiddenException(
-				"Insufficient permissions. Required roles: " + requiredRoles.join(", "),
+				'Insufficient permissions. Required roles: ' + requiredRoles.join(', '),
 			);
 		}
 

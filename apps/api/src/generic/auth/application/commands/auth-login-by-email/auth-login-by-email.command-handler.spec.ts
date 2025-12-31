@@ -1,32 +1,32 @@
-import { UnauthorizedException } from "@nestjs/common";
-import { EventBus, QueryBus } from "@nestjs/cqrs";
-import { AuthLoginByEmailCommandHandler } from "@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command-handler";
-import { AssertAuthEmailExistsService } from "@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service";
-import { JwtAuthService } from "@/generic/auth/application/services/jwt-auth/jwt-auth.service";
-import { PasswordHashingService } from "@/generic/auth/application/services/password-hashing/password-hashing.service";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { ITokenPair } from "@/generic/auth/domain/interfaces/token-pair.interface";
-import { AuthReadRepository } from "@/generic/auth/domain/repositories/auth-read.repository";
-import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
-import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
-import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
-import { AuthPasswordValueObject } from "@/generic/auth/domain/value-objects/auth-password/auth-password.vo";
-import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
-import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
-import { UserFindByIdQuery } from "@/generic/users/application/queries/user-find-by-id/user-find-by-id.query";
-import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
-import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
-import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
-import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
-import { AuthLoginByEmailCommand } from "./auth-login-by-email.command";
+import { UnauthorizedException } from '@nestjs/common';
+import { EventBus, QueryBus } from '@nestjs/cqrs';
+import { AuthLoginByEmailCommandHandler } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command-handler';
+import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
+import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
+import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { ITokenPair } from '@/generic/auth/domain/interfaces/token-pair.interface';
+import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
+import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
+import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
+import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
+import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
+import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
+import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
-describe("AuthLoginByEmailCommandHandler", () => {
+describe('AuthLoginByEmailCommandHandler', () => {
 	let handler: AuthLoginByEmailCommandHandler;
 	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
@@ -96,14 +96,14 @@ describe("AuthLoginByEmailCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should login successfully with valid credentials", async () => {
-			const email = "test@example.com";
-			const password = "SecurePass123!";
+	describe('execute', () => {
+		it('should login successfully with valid credentials', async () => {
+			const email = 'test@example.com';
+			const password = 'SecurePass123!';
 			const hashedPassword =
-				"$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqBWVHxkd0u";
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+				'$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqBWVHxkd0u';
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const now = new Date();
 
 			const command = new AuthLoginByEmailCommand({ email, password });
@@ -129,7 +129,7 @@ describe("AuthLoginByEmailCommandHandler", () => {
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -139,8 +139,8 @@ describe("AuthLoginByEmailCommandHandler", () => {
 			);
 
 			const mockTokens: ITokenPair = {
-				accessToken: "access-token",
-				refreshToken: "refresh-token",
+				accessToken: 'access-token',
+				refreshToken: 'refresh-token',
 			};
 
 			mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
@@ -154,10 +154,10 @@ describe("AuthLoginByEmailCommandHandler", () => {
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 			mockJwtAuthService.generateTokenPair.mockReturnValue(mockTokens);
 
-			const updateLastLoginAtSpy = jest.spyOn(mockAuth, "updateLastLoginAt");
-			const commitSpy = jest.spyOn(mockAuth, "commit");
+			const updateLastLoginAtSpy = jest.spyOn(mockAuth, 'updateLastLoginAt');
+			const commitSpy = jest.spyOn(mockAuth, 'commit');
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			const result = await handler.execute(command);
@@ -181,7 +181,7 @@ describe("AuthLoginByEmailCommandHandler", () => {
 				id: authId,
 				userId: userId,
 				email: email,
-				username: "johndoe",
+				username: 'johndoe',
 				role: UserRoleEnum.USER,
 			});
 
@@ -190,18 +190,18 @@ describe("AuthLoginByEmailCommandHandler", () => {
 			getUncommittedEventsSpy.mockRestore();
 		});
 
-		it("should throw UnauthorizedException when auth has no password", async () => {
-			const email = "test@example.com";
-			const password = "SecurePass123!";
+		it('should throw UnauthorizedException when auth has no password', async () => {
+			const email = 'test@example.com';
+			const password = 'SecurePass123!';
 			const now = new Date();
 
 			const command = new AuthLoginByEmailCommand({ email, password });
 
 			const mockAuth = new AuthAggregate(
 				{
-					id: new AuthUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+					id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 					userId: new UserUuidValueObject(
-						"123e4567-e89b-12d3-a456-426614174001",
+						'123e4567-e89b-12d3-a456-426614174001',
 					),
 					email: new AuthEmailValueObject(email),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
@@ -225,20 +225,20 @@ describe("AuthLoginByEmailCommandHandler", () => {
 			expect(mockPasswordHashingService.verifyPassword).not.toHaveBeenCalled();
 		});
 
-		it("should throw UnauthorizedException when password verification fails", async () => {
-			const email = "test@example.com";
-			const password = "SecurePass123!";
+		it('should throw UnauthorizedException when password verification fails', async () => {
+			const email = 'test@example.com';
+			const password = 'SecurePass123!';
 			const hashedPassword =
-				"$2b$12$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012345678901234567890";
+				'$2b$12$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012345678901234567890';
 			const now = new Date();
 
 			const command = new AuthLoginByEmailCommand({ email, password });
 
 			const mockAuth = new AuthAggregate(
 				{
-					id: new AuthUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+					id: new AuthUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
 					userId: new UserUuidValueObject(
-						"123e4567-e89b-12d3-a456-426614174001",
+						'123e4567-e89b-12d3-a456-426614174001',
 					),
 					email: new AuthEmailValueObject(email),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
@@ -256,7 +256,7 @@ describe("AuthLoginByEmailCommandHandler", () => {
 
 			mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
 			mockPasswordHashingService.verifyPassword.mockRejectedValue(
-				new UnauthorizedException("Invalid credentials"),
+				new UnauthorizedException('Invalid credentials'),
 			);
 
 			await expect(handler.execute(command)).rejects.toThrow(

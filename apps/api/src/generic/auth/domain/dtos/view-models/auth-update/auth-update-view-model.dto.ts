@@ -1,4 +1,4 @@
-import { IAuthCreateViewModelDto } from "@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto";
+import { IAuthCreateViewModelDto } from '@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto';
 
 /**
  * Data Transfer Object for updating a auth view model.
@@ -14,5 +14,5 @@ import { IAuthCreateViewModelDto } from "@/generic/auth/domain/dtos/view-models/
  * @property {boolean} twoFactorEnabled - The two factor enabled of the auth.
  */
 export type IAuthUpdateViewModelDto = Partial<
-	Omit<IAuthCreateViewModelDto, "id" | "userId" | "createdAt" | "updatedAt">
+	Omit<IAuthCreateViewModelDto, 'id' | 'userId' | 'createdAt' | 'updatedAt'>
 >;

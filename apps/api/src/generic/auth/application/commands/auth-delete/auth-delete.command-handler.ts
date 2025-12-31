@@ -1,11 +1,11 @@
-import { Inject, Logger } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
-import { AuthDeleteCommand } from "@/generic/auth/application/commands/auth-delete/auth-delete.command";
-import { AssertAuthExistsService } from "@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service";
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
-} from "@/generic/auth/domain/repositories/auth-write.repository";
+} from '@/generic/auth/domain/repositories/auth-write.repository';
 
 @CommandHandler(AuthDeleteCommand)
 export class AuthDeleteCommandHandler

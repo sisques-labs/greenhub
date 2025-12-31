@@ -1,28 +1,28 @@
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
-import { InvalidEnumValueException } from "@/shared/domain/exceptions/value-objects/invalid-enum-value/invalid-enum-value.exception";
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
+import { InvalidEnumValueException } from '@/shared/domain/exceptions/value-objects/invalid-enum-value/invalid-enum-value.exception';
 
-describe("SagaStepStatusValueObject", () => {
-	describe("constructor", () => {
-		it("should create a saga step status value object with PENDING", () => {
+describe('SagaStepStatusValueObject', () => {
+	describe('constructor', () => {
+		it('should create a saga step status value object with PENDING', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
 			expect(status.value).toBe(SagaStepStatusEnum.PENDING);
 		});
 
-		it("should create a saga step status value object with STARTED", () => {
+		it('should create a saga step status value object with STARTED', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.STARTED);
 
 			expect(status.value).toBe(SagaStepStatusEnum.STARTED);
 		});
 
-		it("should create a saga step status value object with RUNNING", () => {
+		it('should create a saga step status value object with RUNNING', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.RUNNING);
 
 			expect(status.value).toBe(SagaStepStatusEnum.RUNNING);
 		});
 
-		it("should create a saga step status value object with COMPLETED", () => {
+		it('should create a saga step status value object with COMPLETED', () => {
 			const status = new SagaStepStatusValueObject(
 				SagaStepStatusEnum.COMPLETED,
 			);
@@ -30,43 +30,43 @@ describe("SagaStepStatusValueObject", () => {
 			expect(status.value).toBe(SagaStepStatusEnum.COMPLETED);
 		});
 
-		it("should create a saga step status value object with FAILED", () => {
+		it('should create a saga step status value object with FAILED', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.FAILED);
 
 			expect(status.value).toBe(SagaStepStatusEnum.FAILED);
 		});
 
-		it("should throw InvalidEnumValueException for invalid status", () => {
-			expect(() => new SagaStepStatusValueObject("INVALID" as any)).toThrow(
+		it('should throw InvalidEnumValueException for invalid status', () => {
+			expect(() => new SagaStepStatusValueObject('INVALID' as any)).toThrow(
 				InvalidEnumValueException,
 			);
 		});
 
-		it("should throw InvalidEnumValueException for empty string", () => {
-			expect(() => new SagaStepStatusValueObject("" as any)).toThrow(
+		it('should throw InvalidEnumValueException for empty string', () => {
+			expect(() => new SagaStepStatusValueObject('' as any)).toThrow(
 				InvalidEnumValueException,
 			);
 		});
 
-		it("should throw InvalidEnumValueException for whitespace only", () => {
-			expect(() => new SagaStepStatusValueObject("   " as any)).toThrow(
+		it('should throw InvalidEnumValueException for whitespace only', () => {
+			expect(() => new SagaStepStatusValueObject('   ' as any)).toThrow(
 				InvalidEnumValueException,
 			);
 		});
 
-		it("should throw InvalidEnumValueException for null", () => {
+		it('should throw InvalidEnumValueException for null', () => {
 			expect(() => new SagaStepStatusValueObject(null as any)).toThrow(
 				InvalidEnumValueException,
 			);
 		});
 
-		it("should throw InvalidEnumValueException for undefined", () => {
+		it('should throw InvalidEnumValueException for undefined', () => {
 			expect(() => new SagaStepStatusValueObject(undefined as any)).toThrow(
 				InvalidEnumValueException,
 			);
 		});
 
-		it("should accept all valid enum values", () => {
+		it('should accept all valid enum values', () => {
 			const validStatuses = Object.values(SagaStepStatusEnum);
 
 			validStatuses.forEach((statusValue) => {
@@ -78,15 +78,15 @@ describe("SagaStepStatusValueObject", () => {
 		});
 	});
 
-	describe("equals", () => {
-		it("should return true for equal statuses", () => {
+	describe('equals', () => {
+		it('should return true for equal statuses', () => {
 			const status1 = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 			const status2 = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
 			expect(status1.equals(status2)).toBe(true);
 		});
 
-		it("should return false for different statuses", () => {
+		it('should return false for different statuses', () => {
 			const status1 = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 			const status2 = new SagaStepStatusValueObject(SagaStepStatusEnum.STARTED);
 
@@ -94,15 +94,15 @@ describe("SagaStepStatusValueObject", () => {
 		});
 	});
 
-	describe("utility methods", () => {
-		it("should check if value equals specific status", () => {
+	describe('utility methods', () => {
+		it('should check if value equals specific status', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
 			expect(status.is(SagaStepStatusEnum.PENDING)).toBe(true);
 			expect(status.is(SagaStepStatusEnum.STARTED)).toBe(false);
 		});
 
-		it("should check if value is one of specified statuses", () => {
+		it('should check if value is one of specified statuses', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
 			expect(
@@ -119,13 +119,13 @@ describe("SagaStepStatusValueObject", () => {
 			).toBe(false);
 		});
 
-		it("should get enum key", () => {
+		it('should get enum key', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
-			expect(status.getKey()).toBe("PENDING");
+			expect(status.getKey()).toBe('PENDING');
 		});
 
-		it("should get all enum values", () => {
+		it('should get all enum values', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
 			const values = status.getAllValues();
@@ -136,11 +136,11 @@ describe("SagaStepStatusValueObject", () => {
 			expect(values).toContain(SagaStepStatusEnum.FAILED);
 		});
 
-		it("should check if value is valid", () => {
+		it('should check if value is valid', () => {
 			const status = new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING);
 
 			expect(status.isValidValue(SagaStepStatusEnum.PENDING)).toBe(true);
-			expect(status.isValidValue("INVALID")).toBe(false);
+			expect(status.isValidValue('INVALID')).toBe(false);
 		});
 	});
 });

@@ -1,4 +1,4 @@
-import { Criteria } from "@/shared/domain/entities/criteria";
+import { Criteria } from '@/shared/domain/entities/criteria';
 
 /**
  * @class FindGrowingUnitsByCriteriaQuery

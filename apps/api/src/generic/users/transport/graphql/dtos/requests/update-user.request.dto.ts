@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from '@nestjs/graphql';
 import {
 	IsEnum,
 	IsNotEmpty,
@@ -6,24 +6,24 @@ import {
 	IsString,
 	IsUrl,
 	IsUUID,
-} from "class-validator";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+} from 'class-validator';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 
-@InputType("UpdateUserRequestDto")
+@InputType('UpdateUserRequestDto')
 export class UpdateUserRequestDto {
-	@Field(() => String, { description: "The unique identifier of the user" })
+	@Field(() => String, { description: 'The unique identifier of the user' })
 	@IsUUID()
 	@IsNotEmpty()
 	id: string;
 
-	@Field(() => String, { description: "The name of the user", nullable: true })
+	@Field(() => String, { description: 'The name of the user', nullable: true })
 	@IsString()
 	@IsOptional()
 	name?: string;
 
 	@Field(() => String, {
-		description: "The bio of the user",
+		description: 'The bio of the user',
 		nullable: true,
 	})
 	@IsString()
@@ -31,7 +31,7 @@ export class UpdateUserRequestDto {
 	bio?: string;
 
 	@Field(() => String, {
-		description: "The avatar url of the user",
+		description: 'The avatar url of the user',
 		nullable: true,
 	})
 	@IsUrl()
@@ -39,7 +39,7 @@ export class UpdateUserRequestDto {
 	avatarUrl?: string;
 
 	@Field(() => String, {
-		description: "The last name of the user",
+		description: 'The last name of the user',
 		nullable: true,
 	})
 	@IsString()
@@ -47,7 +47,7 @@ export class UpdateUserRequestDto {
 	lastName?: string;
 
 	@Field(() => String, {
-		description: "The user name of the user",
+		description: 'The user name of the user',
 		nullable: true,
 	})
 	@IsString()
@@ -55,7 +55,7 @@ export class UpdateUserRequestDto {
 	userName?: string;
 
 	@Field(() => UserRoleEnum, {
-		description: "The role of the user",
+		description: 'The role of the user',
 		nullable: true,
 	})
 	@IsEnum(UserRoleEnum)
@@ -63,7 +63,7 @@ export class UpdateUserRequestDto {
 	role?: UserRoleEnum;
 
 	@Field(() => UserStatusEnum, {
-		description: "The status of the user",
+		description: 'The status of the user',
 		nullable: true,
 	})
 	@IsEnum(UserStatusEnum)

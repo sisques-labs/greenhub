@@ -1,10 +1,10 @@
-import { Logger } from "@nestjs/common";
-import { IQueryHandler, QueryBus, QueryHandler } from "@nestjs/cqrs";
-import { AuthProfileMeQuery } from "@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query";
-import { AssertAuthViewModelExistsByUserIdService } from "@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service";
-import { AuthUserProfileViewModelFactory } from "@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory";
-import { AuthUserProfileViewModel } from "@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model";
-import { UserViewModelFindByIdQuery } from "@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query";
+import { Logger } from '@nestjs/common';
+import { IQueryHandler, QueryBus, QueryHandler } from '@nestjs/cqrs';
+import { AuthProfileMeQuery } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query';
+import { AssertAuthViewModelExistsByUserIdService } from '@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service';
+import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
+import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
+import { UserViewModelFindByIdQuery } from '@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query';
 
 /**
  * Query handler for the {@link AuthProfileMeQuery}.

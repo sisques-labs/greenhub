@@ -1,14 +1,14 @@
-import { Test } from "@nestjs/testing";
-import { SagaInstanceNotFoundException } from "@/generic/saga-context/saga-instance/application/exceptions/saga-instance-not-found/saga-instance-not-found.exception";
-import { AssertSagaInstanceViewModelExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-view-model-exists/assert-saga-instance-view-model-exists.service";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { Test } from '@nestjs/testing';
+import { SagaInstanceNotFoundException } from '@/generic/saga-context/saga-instance/application/exceptions/saga-instance-not-found/saga-instance-not-found.exception';
+import { AssertSagaInstanceViewModelExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-view-model-exists/assert-saga-instance-view-model-exists.service';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import {
 	SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
 	SagaInstanceReadRepository,
-} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
+} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 
-describe("AssertSagaInstanceViewModelExistsService", () => {
+describe('AssertSagaInstanceViewModelExistsService', () => {
 	let service: AssertSagaInstanceViewModelExistsService;
 	let mockSagaInstanceReadRepository: jest.Mocked<SagaInstanceReadRepository>;
 
@@ -39,12 +39,12 @@ describe("AssertSagaInstanceViewModelExistsService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return saga instance view model when saga instance exists", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return saga instance view model when saga instance exists', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 			const viewModel = new SagaInstanceViewModel({
 				id: sagaInstanceId,
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
@@ -62,8 +62,8 @@ describe("AssertSagaInstanceViewModelExistsService", () => {
 			);
 		});
 
-		it("should throw SagaInstanceNotFoundException when saga instance does not exist", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw SagaInstanceNotFoundException when saga instance does not exist', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSagaInstanceReadRepository.findById.mockResolvedValue(null);
 

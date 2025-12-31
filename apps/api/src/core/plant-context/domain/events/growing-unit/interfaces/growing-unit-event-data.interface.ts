@@ -1,4 +1,4 @@
-import { IPlantEventData } from "@/core/plant-context/domain/events/plant/interfaces/plant-event-data.interface";
+import { IPlantEventData } from '@/core/plant-context/domain/events/plant/interfaces/plant-event-data.interface';
 
 /**
  * Represents the event data associated with a growing unit.

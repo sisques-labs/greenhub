@@ -1,6 +1,6 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { InjectDataSource } from "@nestjs/typeorm";
-import { DataSource, Repository } from "typeorm";
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class TypeormMasterService {
@@ -10,7 +10,7 @@ export class TypeormMasterService {
 		@InjectDataSource()
 		private readonly dataSource: DataSource,
 	) {
-		this.logger.log("TypeORM Master database connection initialized");
+		this.logger.log('TypeORM Master database connection initialized');
 	}
 
 	/**

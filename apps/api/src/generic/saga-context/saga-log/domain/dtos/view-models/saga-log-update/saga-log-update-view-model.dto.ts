@@ -1,4 +1,4 @@
-import { ISagaLogCreateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto";
+import { ISagaLogCreateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto';
 
 /**
  * Data Transfer Object for updating a saga log view model.
@@ -10,6 +10,6 @@ import { ISagaLogCreateViewModelDto } from "@/generic/saga-context/saga-log/doma
 export type ISagaLogUpdateViewModelDto = Partial<
 	Omit<
 		ISagaLogCreateViewModelDto,
-		"id" | "sagaInstanceId" | "sagaStepId" | "createdAt" | "updatedAt"
+		'id' | 'sagaInstanceId' | 'sagaStepId' | 'createdAt' | 'updatedAt'
 	>
 >;

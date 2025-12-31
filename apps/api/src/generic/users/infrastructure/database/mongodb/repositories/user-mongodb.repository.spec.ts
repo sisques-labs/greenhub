@@ -1,18 +1,18 @@
-import { Collection } from "mongodb";
-import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
-import { UserMongoDbDto } from "@/generic/users/infrastructure/database/mongodb/dtos/user-mongodb.dto";
-import { UserMongoDBMapper } from "@/generic/users/infrastructure/database/mongodb/mappers/user-mongodb.mapper";
-import { UserMongoRepository } from "@/generic/users/infrastructure/database/mongodb/repositories/user-mongodb.repository";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { FilterOperator } from "@/shared/domain/enums/filter-operator.enum";
-import { SortDirection } from "@/shared/domain/enums/sort-direction.enum";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Collection } from 'mongodb';
+import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
+import { UserMongoDbDto } from '@/generic/users/infrastructure/database/mongodb/dtos/user-mongodb.dto';
+import { UserMongoDBMapper } from '@/generic/users/infrastructure/database/mongodb/mappers/user-mongodb.mapper';
+import { UserMongoRepository } from '@/generic/users/infrastructure/database/mongodb/repositories/user-mongodb.repository';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
-describe("UserMongoRepository", () => {
+describe('UserMongoRepository', () => {
 	let repository: UserMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockUserMongoDBMapper: jest.Mocked<UserMongoDBMapper>;
@@ -46,16 +46,16 @@ describe("UserMongoRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return user view model when user exists", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('findById', () => {
+		it('should return user view model when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 			const mongoDoc: UserMongoDbDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -66,9 +66,9 @@ describe("UserMongoRepository", () => {
 
 			const viewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -85,14 +85,14 @@ describe("UserMongoRepository", () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"users",
+				'users',
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({ id: userId });
 			expect(mockUserMongoDBMapper.toViewModel).toHaveBeenCalledWith({
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -102,8 +102,8 @@ describe("UserMongoRepository", () => {
 			});
 		});
 
-		it("should return null when user does not exist", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -115,18 +115,18 @@ describe("UserMongoRepository", () => {
 		});
 	});
 
-	describe("findByCriteria", () => {
-		it("should return paginated result with users when criteria matches", async () => {
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('findByCriteria', () => {
+		it('should return paginated result with users when criteria matches', async () => {
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const mongoDocs: UserMongoDbDto[] = [
 				{
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					userName: "johndoe",
-					name: "John",
-					lastName: "Doe",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					userName: 'johndoe',
+					name: 'John',
+					lastName: 'Doe',
 					bio: null,
 					avatarUrl: null,
 					role: UserRoleEnum.USER,
@@ -135,10 +135,10 @@ describe("UserMongoRepository", () => {
 					updatedAt,
 				},
 				{
-					id: "223e4567-e89b-12d3-a456-426614174001",
-					userName: "janedoe",
-					name: "Jane",
-					lastName: "Doe",
+					id: '223e4567-e89b-12d3-a456-426614174001',
+					userName: 'janedoe',
+					name: 'Jane',
+					lastName: 'Doe',
 					bio: null,
 					avatarUrl: null,
 					role: UserRoleEnum.USER,
@@ -194,7 +194,7 @@ describe("UserMongoRepository", () => {
 			expect(mockCollection.countDocuments).toHaveBeenCalled();
 		});
 
-		it("should return empty paginated result when no users match criteria", async () => {
+		it('should return empty paginated result when no users match criteria', async () => {
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const mockCursor = {
@@ -216,13 +216,13 @@ describe("UserMongoRepository", () => {
 			expect(result.perPage).toBe(10);
 		});
 
-		it("should handle criteria with filters", async () => {
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+		it('should handle criteria with filters', async () => {
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 			const criteria = new Criteria(
 				[
 					{
-						field: "status",
+						field: 'status',
 						operator: FilterOperator.EQUALS,
 						value: UserStatusEnum.ACTIVE,
 					},
@@ -233,10 +233,10 @@ describe("UserMongoRepository", () => {
 
 			const mongoDocs: UserMongoDbDto[] = [
 				{
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					userName: "johndoe",
-					name: "John",
-					lastName: "Doe",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					userName: 'johndoe',
+					name: 'John',
+					lastName: 'Doe',
 					bio: null,
 					avatarUrl: null,
 					role: UserRoleEnum.USER,
@@ -277,10 +277,10 @@ describe("UserMongoRepository", () => {
 			expect(mockCollection.find).toHaveBeenCalled();
 		});
 
-		it("should handle criteria with sorts", async () => {
+		it('should handle criteria with sorts', async () => {
 			const criteria = new Criteria(
 				[],
-				[{ field: "userName", direction: SortDirection.ASC }],
+				[{ field: 'userName', direction: SortDirection.ASC }],
 				{ page: 1, perPage: 10 },
 			);
 
@@ -299,7 +299,7 @@ describe("UserMongoRepository", () => {
 			expect(mockCursor.sort).toHaveBeenCalled();
 		});
 
-		it("should handle pagination correctly", async () => {
+		it('should handle pagination correctly', async () => {
 			const criteria = new Criteria([], [], { page: 2, perPage: 5 });
 
 			const mockCursor = {
@@ -321,16 +321,16 @@ describe("UserMongoRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save user view model using upsert", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('save', () => {
+		it('should save user view model using upsert', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 			const viewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -342,9 +342,9 @@ describe("UserMongoRepository", () => {
 
 			const mongoData: UserMongoDbDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -373,9 +373,9 @@ describe("UserMongoRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should delete user view model and return true", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should delete user view model and return true', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,
@@ -389,8 +389,8 @@ describe("UserMongoRepository", () => {
 			expect(mockCollection.deleteOne).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return true even when user does not exist", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return true even when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,

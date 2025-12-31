@@ -1,11 +1,11 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
+import { Injectable, Logger } from '@nestjs/common';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import {
 	PaginatedSagaInstanceResultDto,
 	SagaInstanceResponseDto,
-} from "@/generic/saga-context/saga-instance/transport/graphql/dtos/responses/saga-instance.response.dto";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+} from '@/generic/saga-context/saga-instance/transport/graphql/dtos/responses/saga-instance.response.dto';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 @Injectable()
 export class SagaInstanceGraphQLMapper {

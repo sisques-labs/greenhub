@@ -1,9 +1,9 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
-import { HealthAggregate } from "@/support/health/domain/aggregates/health.aggregate";
-import { IHealthCreateViewModelDto } from "@/support/health/domain/dtos/view-models/health-create/health-create.dto";
-import { HealthPrimitives } from "@/support/health/domain/primitives/health.primitives";
-import { HealthViewModel } from "@/support/health/domain/view-models/health.view-model";
+import { Injectable, Logger } from '@nestjs/common';
+import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
+import { HealthAggregate } from '@/support/health/domain/aggregates/health.aggregate';
+import { IHealthCreateViewModelDto } from '@/support/health/domain/dtos/view-models/health-create/health-create.dto';
+import { HealthPrimitives } from '@/support/health/domain/primitives/health.primitives';
+import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
 
 @Injectable()
 export class HealthViewModelFactory

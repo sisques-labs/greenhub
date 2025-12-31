@@ -1,22 +1,22 @@
-import { EventBus } from "@nestjs/cqrs";
-import { IUserUpdateCommandDto } from "@/generic/users/application/dtos/commands/user-update/user-update-command.dto";
-import { UserNotFoundException } from "@/generic/users/application/exceptions/user-not-found/user-not-found.exception";
-import { AssertUserExsistsService } from "@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service";
-import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
-import { UserWriteRepository } from "@/generic/users/domain/repositories/user-write.repository";
-import { UserNameValueObject } from "@/generic/users/domain/value-objects/user-name/user-name.vo";
-import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
-import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
-import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
-import { UserUpdatedEvent } from "@/shared/domain/events/users/user-updated/user-updated.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
-import { UserUpdateCommand } from "./user-update.command";
-import { UserUpdateCommandHandler } from "./user-update.command-handler";
+import { EventBus } from '@nestjs/cqrs';
+import { IUserUpdateCommandDto } from '@/generic/users/application/dtos/commands/user-update/user-update-command.dto';
+import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
+import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
+import { UserWriteRepository } from '@/generic/users/domain/repositories/user-write.repository';
+import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
+import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
+import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
+import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { UserUpdateCommand } from './user-update.command';
+import { UserUpdateCommandHandler } from './user-update.command-handler';
 
-describe("UserUpdateCommandHandler", () => {
+describe('UserUpdateCommandHandler', () => {
 	let handler: UserUpdateCommandHandler;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -50,21 +50,21 @@ describe("UserUpdateCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should update user successfully when user exists", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should update user successfully when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
+				name: 'Jane',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -73,7 +73,7 @@ describe("UserUpdateCommandHandler", () => {
 				false,
 			);
 
-			const updateSpy = jest.spyOn(existingUser, "update");
+			const updateSpy = jest.spyOn(existingUser, 'update');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
@@ -91,11 +91,11 @@ describe("UserUpdateCommandHandler", () => {
 			updateSpy.mockRestore();
 		});
 
-		it("should throw exception when user does not exist", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw exception when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
+				name: 'Jane',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
@@ -109,12 +109,12 @@ describe("UserUpdateCommandHandler", () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it("should update only provided fields", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should update only provided fields', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
-				bio: "Updated bio",
+				name: 'Jane',
+				bio: 'Updated bio',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
@@ -122,7 +122,7 @@ describe("UserUpdateCommandHandler", () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -131,7 +131,7 @@ describe("UserUpdateCommandHandler", () => {
 				false,
 			);
 
-			const updateSpy = jest.spyOn(existingUser, "update");
+			const updateSpy = jest.spyOn(existingUser, 'update');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
@@ -140,26 +140,26 @@ describe("UserUpdateCommandHandler", () => {
 
 			expect(updateSpy).toHaveBeenCalled();
 			const updateCall = updateSpy.mock.calls[0][0];
-			expect(updateCall).toHaveProperty("name");
-			expect(updateCall).toHaveProperty("bio");
-			expect(updateCall).not.toHaveProperty("id");
+			expect(updateCall).toHaveProperty('name');
+			expect(updateCall).toHaveProperty('bio');
+			expect(updateCall).not.toHaveProperty('id');
 
 			updateSpy.mockRestore();
 		});
 
-		it("should exclude id from update data", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should exclude id from update data', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
+				name: 'Jane',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -168,7 +168,7 @@ describe("UserUpdateCommandHandler", () => {
 				false,
 			);
 
-			const updateSpy = jest.spyOn(existingUser, "update");
+			const updateSpy = jest.spyOn(existingUser, 'update');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
@@ -176,16 +176,16 @@ describe("UserUpdateCommandHandler", () => {
 			await handler.execute(command);
 
 			const updateCall = updateSpy.mock.calls[0][0];
-			expect(updateCall).not.toHaveProperty("id");
+			expect(updateCall).not.toHaveProperty('id');
 
 			updateSpy.mockRestore();
 		});
 
-		it("should publish UserUpdatedEvent when user is updated", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should publish UserUpdatedEvent when user is updated', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
+				name: 'Jane',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
@@ -195,7 +195,7 @@ describe("UserUpdateCommandHandler", () => {
 			const testUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -204,7 +204,7 @@ describe("UserUpdateCommandHandler", () => {
 				false,
 			);
 
-			testUser.update({ name: new UserNameValueObject("Jane") });
+			testUser.update({ name: new UserNameValueObject('Jane') });
 			const eventsAfterUpdate = testUser.getUncommittedEvents();
 			expect(eventsAfterUpdate).toHaveLength(1);
 			expect(eventsAfterUpdate[0]).toBeInstanceOf(UserUpdatedEvent);
@@ -213,7 +213,7 @@ describe("UserUpdateCommandHandler", () => {
 			const existingUserForHandler = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -237,20 +237,20 @@ describe("UserUpdateCommandHandler", () => {
 			// But we verified above that update() generates the event correctly
 		});
 
-		it("should save user before publishing events", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should save user before publishing events', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
+				name: 'Jane',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -271,20 +271,20 @@ describe("UserUpdateCommandHandler", () => {
 			expect(saveOrder).toBeLessThan(publishOrder);
 		});
 
-		it("should commit events after publishing", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should commit events after publishing', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const commandDto: IUserUpdateCommandDto = {
 				id: userId,
-				name: "Jane",
+				name: 'Jane',
 			};
 
 			const command = new UserUpdateCommand(commandDto);
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -293,7 +293,7 @@ describe("UserUpdateCommandHandler", () => {
 				false,
 			);
 
-			const commitSpy = jest.spyOn(existingUser, "commit");
+			const commitSpy = jest.spyOn(existingUser, 'commit');
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);

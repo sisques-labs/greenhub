@@ -1,4 +1,4 @@
-import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 
 /**
  * Data transfer object for transplanting a plant between growing units.

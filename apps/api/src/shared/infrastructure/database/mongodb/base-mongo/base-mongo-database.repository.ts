@@ -1,9 +1,9 @@
-import { Logger } from "@nestjs/common";
-import { Collection } from "mongodb";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { FilterOperator } from "@/shared/domain/enums/filter-operator.enum";
-import { SortDirection } from "@/shared/domain/enums/sort-direction.enum";
-import { BaseDatabaseRepository } from "@/shared/infrastructure/database/base-database.repository";
+import { Logger } from '@nestjs/common';
+import { Collection } from 'mongodb';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+import { BaseDatabaseRepository } from '@/shared/infrastructure/database/base-database.repository';
 
 /**
  * Base class for MongoDB database repositories.
@@ -37,7 +37,7 @@ export abstract class BaseMongoDatabaseRepository extends BaseDatabaseRepository
 						query[filter.field] = { $ne: filter.value };
 						break;
 					case FilterOperator.LIKE:
-						query[filter.field] = { $regex: filter.value, $options: "i" };
+						query[filter.field] = { $regex: filter.value, $options: 'i' };
 						break;
 					case FilterOperator.IN:
 						query[filter.field] = {

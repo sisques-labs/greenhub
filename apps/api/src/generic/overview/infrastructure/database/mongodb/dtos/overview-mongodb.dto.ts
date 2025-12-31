@@ -1,4 +1,4 @@
-import { BaseMongoDto } from "@/shared/infrastructure/database/mongodb/dtos/base-mongo.dto";
+import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base-mongo.dto';
 
 /**
  * Data Transfer Object for overview documents stored in the MongoDB read database.

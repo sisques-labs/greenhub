@@ -1,10 +1,10 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
-import { AuthEmailAlreadyExistsException } from "@/generic/auth/application/exceptions/auth-email-already-exists/auth-email-already-exists.exception";
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { AuthEmailAlreadyExistsException } from '@/generic/auth/application/exceptions/auth-email-already-exists/auth-email-already-exists.exception';
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
-} from "@/generic/auth/domain/repositories/auth-write.repository";
-import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
+} from '@/generic/auth/domain/repositories/auth-write.repository';
+import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 
 @Injectable()
 export class AssertAuthEmailNotExistsService

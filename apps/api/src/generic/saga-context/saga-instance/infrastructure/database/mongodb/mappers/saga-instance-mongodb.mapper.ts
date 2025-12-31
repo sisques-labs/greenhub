@@ -1,7 +1,7 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { SagaInstanceViewModelFactory } from "@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { SagaInstanceMongoDbDto } from "@/generic/saga-context/saga-instance/infrastructure/database/mongodb/dtos/saga-instance-mongodb.dto";
+import { Injectable, Logger } from '@nestjs/common';
+import { SagaInstanceViewModelFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { SagaInstanceMongoDbDto } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/dtos/saga-instance-mongodb.dto';
 
 @Injectable()
 export class SagaInstanceMongoDBMapper {

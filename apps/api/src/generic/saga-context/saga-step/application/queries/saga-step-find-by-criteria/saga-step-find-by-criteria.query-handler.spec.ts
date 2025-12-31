@@ -1,16 +1,16 @@
-import { Test } from "@nestjs/testing";
-import { FindSagaStepsByCriteriaQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query";
-import { FindSagaStepsByCriteriaQueryHandler } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query-handler";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { Test } from '@nestjs/testing';
+import { FindSagaStepsByCriteriaQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query';
+import { FindSagaStepsByCriteriaQueryHandler } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query-handler';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import {
 	SAGA_STEP_READ_REPOSITORY_TOKEN,
 	SagaStepReadRepository,
-} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
-describe("FindSagaStepsByCriteriaQueryHandler", () => {
+describe('FindSagaStepsByCriteriaQueryHandler', () => {
 	let handler: FindSagaStepsByCriteriaQueryHandler;
 	let mockSagaStepReadRepository: jest.Mocked<SagaStepReadRepository>;
 
@@ -42,17 +42,17 @@ describe("FindSagaStepsByCriteriaQueryHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return paginated result with saga steps when criteria matches", async () => {
+	describe('execute', () => {
+		it('should return paginated result with saga steps when criteria matches', async () => {
 			const criteria = new Criteria();
 			const queryDto = { criteria };
 			const query = new FindSagaStepsByCriteriaQuery(queryDto);
 
 			const mockSagaSteps: SagaStepViewModel[] = [
 				new SagaStepViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Process Payment",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -62,24 +62,24 @@ describe("FindSagaStepsByCriteriaQueryHandler", () => {
 					maxRetries: 3,
 					payload: {},
 					result: {},
-					createdAt: new Date("2024-01-01T10:00:00Z"),
-					updatedAt: new Date("2024-01-01T10:00:00Z"),
+					createdAt: new Date('2024-01-01T10:00:00Z'),
+					updatedAt: new Date('2024-01-01T10:00:00Z'),
 				}),
 				new SagaStepViewModel({
-					id: "223e4567-e89b-12d3-a456-426614174001",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Send Email",
+					id: '223e4567-e89b-12d3-a456-426614174001',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Send Email',
 					order: 2,
 					status: SagaStepStatusEnum.COMPLETED,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					errorMessage: null,
 					retryCount: 0,
 					maxRetries: 3,
 					payload: {},
 					result: {},
-					createdAt: new Date("2024-01-01T10:00:00Z"),
-					updatedAt: new Date("2024-01-01T11:00:00Z"),
+					createdAt: new Date('2024-01-01T10:00:00Z'),
+					updatedAt: new Date('2024-01-01T11:00:00Z'),
 				}),
 			];
 
@@ -104,7 +104,7 @@ describe("FindSagaStepsByCriteriaQueryHandler", () => {
 			);
 		});
 
-		it("should return empty paginated result when no saga steps match criteria", async () => {
+		it('should return empty paginated result when no saga steps match criteria', async () => {
 			const criteria = new Criteria();
 			const queryDto = { criteria };
 			const query = new FindSagaStepsByCriteriaQuery(queryDto);
@@ -125,16 +125,16 @@ describe("FindSagaStepsByCriteriaQueryHandler", () => {
 			);
 		});
 
-		it("should handle pagination correctly", async () => {
+		it('should handle pagination correctly', async () => {
 			const criteria = new Criteria([], [], { page: 2, perPage: 5 });
 			const queryDto = { criteria };
 			const query = new FindSagaStepsByCriteriaQuery(queryDto);
 
 			const mockSagaSteps: SagaStepViewModel[] = [
 				new SagaStepViewModel({
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-					name: "Process Payment",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					name: 'Process Payment',
 					order: 1,
 					status: SagaStepStatusEnum.PENDING,
 					startDate: null,
@@ -144,8 +144,8 @@ describe("FindSagaStepsByCriteriaQueryHandler", () => {
 					maxRetries: 3,
 					payload: {},
 					result: {},
-					createdAt: new Date("2024-01-01T10:00:00Z"),
-					updatedAt: new Date("2024-01-01T10:00:00Z"),
+					createdAt: new Date('2024-01-01T10:00:00Z'),
+					updatedAt: new Date('2024-01-01T10:00:00Z'),
 				}),
 			];
 

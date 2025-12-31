@@ -1,5 +1,5 @@
-import { PlantMongoDbDto } from "@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto";
-import { BaseMongoDto } from "@/shared/infrastructure/database/mongodb/dtos/base-mongo.dto";
+import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
+import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base-mongo.dto';
 
 /**
  * Data Transfer Object for growing unit documents stored in the MongoDB read database.

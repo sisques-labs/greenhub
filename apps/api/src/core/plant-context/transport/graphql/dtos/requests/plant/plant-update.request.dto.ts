@@ -1,22 +1,22 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from '@nestjs/graphql';
 import {
 	IsEnum,
 	IsNotEmpty,
 	IsOptional,
 	IsString,
 	IsUUID,
-} from "class-validator";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
+} from 'class-validator';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 
-@InputType("PlantUpdateRequestDto")
+@InputType('PlantUpdateRequestDto')
 export class PlantUpdateRequestDto {
-	@Field(() => String, { description: "The id of the plant to update" })
+	@Field(() => String, { description: 'The id of the plant to update' })
 	@IsUUID()
 	@IsNotEmpty()
 	id: string;
 
 	@Field(() => String, {
-		description: "The name of the plant",
+		description: 'The name of the plant',
 		nullable: true,
 	})
 	@IsString()
@@ -24,7 +24,7 @@ export class PlantUpdateRequestDto {
 	name?: string;
 
 	@Field(() => String, {
-		description: "The species of the plant",
+		description: 'The species of the plant',
 		nullable: true,
 	})
 	@IsString()
@@ -34,14 +34,14 @@ export class PlantUpdateRequestDto {
 	@Field(() => Date, {
 		nullable: true,
 		description:
-			"The date when the plant was planted. Can be null to clear the date",
+			'The date when the plant was planted. Can be null to clear the date',
 	})
 	@IsOptional()
 	plantedDate?: Date | null;
 
 	@Field(() => String, {
 		nullable: true,
-		description: "Additional notes about the plant. Can be null to clear notes",
+		description: 'Additional notes about the plant. Can be null to clear notes',
 	})
 	@IsString()
 	@IsOptional()
@@ -49,7 +49,7 @@ export class PlantUpdateRequestDto {
 
 	@Field(() => PlantStatusEnum, {
 		nullable: true,
-		description: "The status of the plant. Defaults to PLANTED if not provided",
+		description: 'The status of the plant. Defaults to PLANTED if not provided',
 	})
 	@IsEnum(PlantStatusEnum)
 	@IsOptional()

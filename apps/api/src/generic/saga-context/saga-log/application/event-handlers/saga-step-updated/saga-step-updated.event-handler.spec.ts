@@ -1,13 +1,13 @@
-import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { Test } from "@nestjs/testing";
-import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { FindSagaStepViewModelByIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { SagaStepUpdatedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event";
-import { SagaStepUpdatedEventHandler } from "./saga-step-updated.event-handler";
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
+import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { FindSagaStepViewModelByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { SagaStepUpdatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event';
+import { SagaStepUpdatedEventHandler } from './saga-step-updated.event-handler';
 
-describe("SagaStepUpdatedEventHandler", () => {
+describe('SagaStepUpdatedEventHandler', () => {
 	let handler: SagaStepUpdatedEventHandler;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 	let mockQueryBus: jest.Mocked<QueryBus>;
@@ -44,22 +44,22 @@ describe("SagaStepUpdatedEventHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("handle", () => {
-		it("should create a saga log when saga step is updated", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('handle', () => {
+		it('should create a saga log when saga step is updated', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
-				name: "Updated Saga Step",
-				status: "RUNNING",
+				name: 'Updated Saga Step',
+				status: 'RUNNING',
 			};
 
 			const event = new SagaStepUpdatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepUpdatedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepUpdatedEvent',
 				},
 				eventData,
 			);
@@ -67,18 +67,18 @@ describe("SagaStepUpdatedEventHandler", () => {
 			const sagaStepViewModel = new SagaStepViewModel({
 				id: aggregateId,
 				sagaInstanceId: sagaInstanceId,
-				name: "Test Saga Step",
+				name: 'Test Saga Step',
 				order: 1,
-				status: "PENDING",
+				status: 'PENDING',
 				startDate: null,
 				endDate: null,
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { test: "data" },
+				payload: { test: 'data' },
 				result: null,
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			mockQueryBus.execute.mockResolvedValue(sagaStepViewModel);
@@ -104,26 +104,26 @@ describe("SagaStepUpdatedEventHandler", () => {
 			expect(command.sagaInstanceId.value).toBe(sagaInstanceId);
 			expect(command.sagaStepId.value).toBe(aggregateId);
 			expect(command.type.value).toBe(SagaLogTypeEnum.INFO);
-			expect(command.message.value).toContain("Saga step updated");
-			expect(command.message.value).toContain("Changed fields:");
-			expect(command.message.value).toContain("name");
-			expect(command.message.value).toContain("status");
+			expect(command.message.value).toContain('Saga step updated');
+			expect(command.message.value).toContain('Changed fields:');
+			expect(command.message.value).toContain('name');
+			expect(command.message.value).toContain('status');
 		});
 
-		it("should handle event with partial update data", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should handle event with partial update data', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
-				status: "COMPLETED",
+				status: 'COMPLETED',
 			};
 
 			const event = new SagaStepUpdatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepUpdatedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepUpdatedEvent',
 				},
 				eventData,
 			);
@@ -131,18 +131,18 @@ describe("SagaStepUpdatedEventHandler", () => {
 			const sagaStepViewModel = new SagaStepViewModel({
 				id: aggregateId,
 				sagaInstanceId: sagaInstanceId,
-				name: "Test Saga Step",
+				name: 'Test Saga Step',
 				order: 1,
-				status: "PENDING",
+				status: 'PENDING',
 				startDate: null,
 				endDate: null,
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { test: "data" },
+				payload: { test: 'data' },
 				result: null,
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			mockQueryBus.execute.mockResolvedValue(sagaStepViewModel);
@@ -151,15 +151,15 @@ describe("SagaStepUpdatedEventHandler", () => {
 			await handler.handle(event);
 
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-			expect(command.message.value).toContain("status");
-			expect(command.message.value).not.toContain("name");
+			expect(command.message.value).toContain('status');
+			expect(command.message.value).not.toContain('name');
 		});
 
-		it("should filter out undefined fields from changed fields", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should filter out undefined fields from changed fields', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
-				name: "Updated Name",
+				name: 'Updated Name',
 				status: undefined,
 				order: 2,
 			};
@@ -167,10 +167,10 @@ describe("SagaStepUpdatedEventHandler", () => {
 			const event = new SagaStepUpdatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepUpdatedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepUpdatedEvent',
 				},
 				eventData,
 			);
@@ -178,18 +178,18 @@ describe("SagaStepUpdatedEventHandler", () => {
 			const sagaStepViewModel = new SagaStepViewModel({
 				id: aggregateId,
 				sagaInstanceId: sagaInstanceId,
-				name: "Test Saga Step",
+				name: 'Test Saga Step',
 				order: 1,
-				status: "PENDING",
+				status: 'PENDING',
 				startDate: null,
 				endDate: null,
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { test: "data" },
+				payload: { test: 'data' },
 				result: null,
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			mockQueryBus.execute.mockResolvedValue(sagaStepViewModel);
@@ -198,29 +198,29 @@ describe("SagaStepUpdatedEventHandler", () => {
 			await handler.handle(event);
 
 			const command = (mockCommandBus.execute as jest.Mock).mock.calls[0][0];
-			expect(command.message.value).toContain("name");
-			expect(command.message.value).toContain("order");
-			expect(command.message.value).not.toContain("status");
+			expect(command.message.value).toContain('name');
+			expect(command.message.value).toContain('order');
+			expect(command.message.value).not.toContain('status');
 		});
 
-		it("should handle errors from query bus", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle errors from query bus', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
-				name: "Updated Saga Step",
+				name: 'Updated Saga Step',
 			};
 
 			const event = new SagaStepUpdatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepUpdatedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepUpdatedEvent',
 				},
 				eventData,
 			);
 
-			const error = new Error("Query execution failed");
+			const error = new Error('Query execution failed');
 			mockQueryBus.execute.mockRejectedValue(error);
 
 			await expect(handler.handle(event)).rejects.toThrow(error);
@@ -228,20 +228,20 @@ describe("SagaStepUpdatedEventHandler", () => {
 			expect(mockCommandBus.execute).not.toHaveBeenCalled();
 		});
 
-		it("should handle errors from command bus", async () => {
-			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should handle errors from command bus', async () => {
+			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 			const eventData = {
-				name: "Updated Saga Step",
+				name: 'Updated Saga Step',
 			};
 
 			const event = new SagaStepUpdatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: "SagaStepAggregate",
+					aggregateRootType: 'SagaStepAggregate',
 					entityId: aggregateId,
-					entityType: "SagaStepAggregate",
-					eventType: "SagaStepUpdatedEvent",
+					entityType: 'SagaStepAggregate',
+					eventType: 'SagaStepUpdatedEvent',
 				},
 				eventData,
 			);
@@ -249,22 +249,22 @@ describe("SagaStepUpdatedEventHandler", () => {
 			const sagaStepViewModel = new SagaStepViewModel({
 				id: aggregateId,
 				sagaInstanceId: sagaInstanceId,
-				name: "Test Saga Step",
+				name: 'Test Saga Step',
 				order: 1,
-				status: "PENDING",
+				status: 'PENDING',
 				startDate: null,
 				endDate: null,
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { test: "data" },
+				payload: { test: 'data' },
 				result: null,
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			mockQueryBus.execute.mockResolvedValue(sagaStepViewModel);
-			const error = new Error("Command execution failed");
+			const error = new Error('Command execution failed');
 			mockCommandBus.execute.mockRejectedValue(error);
 
 			await expect(handler.handle(event)).rejects.toThrow(error);

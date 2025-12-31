@@ -1,5 +1,5 @@
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { EnumValueObject } from "@/shared/domain/value-objects/enum/enum.vo";
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
 
 /**
  * Value object representing the status of a plant.

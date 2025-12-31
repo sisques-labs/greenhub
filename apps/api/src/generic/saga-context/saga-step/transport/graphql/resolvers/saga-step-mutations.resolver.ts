@@ -1,16 +1,16 @@
-import { BadRequestException, Logger } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { SagaStepChangeStatusCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-change-status/saga-step-change-status.command";
-import { SagaStepCreateCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command";
-import { SagaStepDeleteCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command";
-import { SagaStepUpdateCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command";
-import { SagaStepChangeStatusRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-change-status.request.dto";
-import { SagaStepCreateRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-create.request.dto";
-import { SagaStepDeleteRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-delete.request.dto";
-import { SagaStepUpdateRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-update.request.dto";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { BadRequestException, Logger } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { SagaStepChangeStatusCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-change-status/saga-step-change-status.command';
+import { SagaStepCreateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command';
+import { SagaStepDeleteCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command';
+import { SagaStepUpdateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command';
+import { SagaStepChangeStatusRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-change-status.request.dto';
+import { SagaStepCreateRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-create.request.dto';
+import { SagaStepDeleteRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-delete.request.dto';
+import { SagaStepUpdateRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-update.request.dto';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 @Resolver()
 // TODO: Add guards and roles
@@ -24,7 +24,7 @@ export class SagaStepMutationsResolver {
 
 	@Mutation(() => MutationResponseDto)
 	async sagaStepCreate(
-		@Args("input") input: SagaStepCreateRequestDto,
+		@Args('input') input: SagaStepCreateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(
 			`Creating saga step: ${input.name} for saga instance: ${input.sagaInstanceId}`,
@@ -36,7 +36,7 @@ export class SagaStepMutationsResolver {
 			payload = JSON.parse(input.payload);
 		} catch (error) {
 			this.logger.error(`Invalid JSON payload format: ${error.message}`);
-			throw new BadRequestException("Invalid JSON payload format");
+			throw new BadRequestException('Invalid JSON payload format');
 		}
 
 		// 02: Send the command to the command bus
@@ -52,14 +52,14 @@ export class SagaStepMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga step created successfully",
+			message: 'Saga step created successfully',
 			id: sagaStepId,
 		});
 	}
 
 	@Mutation(() => MutationResponseDto)
 	async sagaStepUpdate(
-		@Args("input") input: SagaStepUpdateRequestDto,
+		@Args('input') input: SagaStepUpdateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Updating saga step by id: ${input.id}`);
 
@@ -72,7 +72,7 @@ export class SagaStepMutationsResolver {
 				payload = JSON.parse(input.payload);
 			} catch (error) {
 				this.logger.error(`Invalid JSON payload format: ${error.message}`);
-				throw new BadRequestException("Invalid JSON payload format");
+				throw new BadRequestException('Invalid JSON payload format');
 			}
 		}
 
@@ -81,7 +81,7 @@ export class SagaStepMutationsResolver {
 				result = JSON.parse(input.result);
 			} catch (error) {
 				this.logger.error(`Invalid JSON result format: ${error.message}`);
-				throw new BadRequestException("Invalid JSON result format");
+				throw new BadRequestException('Invalid JSON result format');
 			}
 		}
 
@@ -104,14 +104,14 @@ export class SagaStepMutationsResolver {
 
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga step updated successfully",
+			message: 'Saga step updated successfully',
 			id: input.id,
 		});
 	}
 
 	@Mutation(() => MutationResponseDto)
 	async sagaStepChangeStatus(
-		@Args("input") input: SagaStepChangeStatusRequestDto,
+		@Args('input') input: SagaStepChangeStatusRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Changing status for saga step with id: ${input.id}`);
 
@@ -125,14 +125,14 @@ export class SagaStepMutationsResolver {
 
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga step status changed successfully",
+			message: 'Saga step status changed successfully',
 			id: input.id,
 		});
 	}
 
 	@Mutation(() => MutationResponseDto)
 	async sagaStepDelete(
-		@Args("input") input: SagaStepDeleteRequestDto,
+		@Args('input') input: SagaStepDeleteRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Deleting saga step by id: ${input.id}`);
 
@@ -141,7 +141,7 @@ export class SagaStepMutationsResolver {
 
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: "Saga step deleted successfully",
+			message: 'Saga step deleted successfully',
 			id: input.id,
 		});
 	}

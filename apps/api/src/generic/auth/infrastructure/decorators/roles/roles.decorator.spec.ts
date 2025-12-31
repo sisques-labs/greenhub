@@ -1,21 +1,21 @@
-import { SetMetadata } from "@nestjs/common";
+import { SetMetadata } from '@nestjs/common';
 import {
 	ROLES_KEY,
 	Roles,
-} from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+} from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
-jest.mock("@nestjs/common", () => ({
-	...jest.requireActual("@nestjs/common"),
+jest.mock('@nestjs/common', () => ({
+	...jest.requireActual('@nestjs/common'),
 	SetMetadata: jest.fn(),
 }));
 
-describe("Roles", () => {
+describe('Roles', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 	});
 
-	it("should call SetMetadata with ROLES_KEY and provided roles", () => {
+	it('should call SetMetadata with ROLES_KEY and provided roles', () => {
 		const roles = [UserRoleEnum.ADMIN, UserRoleEnum.USER];
 		const mockSetMetadata = SetMetadata as jest.Mock;
 		mockSetMetadata.mockReturnValue(() => {});
@@ -26,7 +26,7 @@ describe("Roles", () => {
 		expect(SetMetadata).toHaveBeenCalledTimes(1);
 	});
 
-	it("should work with single role", () => {
+	it('should work with single role', () => {
 		const role = UserRoleEnum.ADMIN;
 		const mockSetMetadata = SetMetadata as jest.Mock;
 		mockSetMetadata.mockReturnValue(() => {});
@@ -36,7 +36,7 @@ describe("Roles", () => {
 		expect(SetMetadata).toHaveBeenCalledWith(ROLES_KEY, [role]);
 	});
 
-	it("should work with multiple roles", () => {
+	it('should work with multiple roles', () => {
 		const roles = [UserRoleEnum.ADMIN, UserRoleEnum.USER];
 		const mockSetMetadata = SetMetadata as jest.Mock;
 		mockSetMetadata.mockReturnValue(() => {});
@@ -46,7 +46,7 @@ describe("Roles", () => {
 		expect(SetMetadata).toHaveBeenCalledWith(ROLES_KEY, roles);
 	});
 
-	it("should work with empty roles array", () => {
+	it('should work with empty roles array', () => {
 		const mockSetMetadata = SetMetadata as jest.Mock;
 		mockSetMetadata.mockReturnValue(() => {});
 

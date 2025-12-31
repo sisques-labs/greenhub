@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from '@nestjs/graphql';
 import {
 	IsDate,
 	IsEnum,
@@ -8,13 +8,13 @@ import {
 	IsOptional,
 	IsString,
 	IsUUID,
-} from "class-validator";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+} from 'class-validator';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 
-@InputType("SagaStepUpdateRequestDto")
+@InputType('SagaStepUpdateRequestDto')
 export class SagaStepUpdateRequestDto {
 	@Field(() => String, {
-		description: "The id of the saga step",
+		description: 'The id of the saga step',
 		nullable: false,
 	})
 	@IsUUID()
@@ -22,7 +22,7 @@ export class SagaStepUpdateRequestDto {
 	id: string;
 
 	@Field(() => String, {
-		description: "The name of the saga step",
+		description: 'The name of the saga step',
 		nullable: true,
 	})
 	@IsString()
@@ -30,7 +30,7 @@ export class SagaStepUpdateRequestDto {
 	name?: string;
 
 	@Field(() => Number, {
-		description: "The order of the saga step",
+		description: 'The order of the saga step',
 		nullable: true,
 	})
 	@IsNumber()
@@ -38,7 +38,7 @@ export class SagaStepUpdateRequestDto {
 	order?: number;
 
 	@Field(() => SagaStepStatusEnum, {
-		description: "The status of the saga step",
+		description: 'The status of the saga step',
 		nullable: true,
 	})
 	@IsEnum(SagaStepStatusEnum)
@@ -46,7 +46,7 @@ export class SagaStepUpdateRequestDto {
 	status?: SagaStepStatusEnum;
 
 	@Field(() => Date, {
-		description: "The start date of the saga step",
+		description: 'The start date of the saga step',
 		nullable: true,
 	})
 	@IsDate()
@@ -54,7 +54,7 @@ export class SagaStepUpdateRequestDto {
 	startDate?: Date | null;
 
 	@Field(() => Date, {
-		description: "The end date of the saga step",
+		description: 'The end date of the saga step',
 		nullable: true,
 	})
 	@IsDate()
@@ -62,7 +62,7 @@ export class SagaStepUpdateRequestDto {
 	endDate?: Date | null;
 
 	@Field(() => String, {
-		description: "The error message of the saga step",
+		description: 'The error message of the saga step',
 		nullable: true,
 	})
 	@IsString()
@@ -70,7 +70,7 @@ export class SagaStepUpdateRequestDto {
 	errorMessage?: string | null;
 
 	@Field(() => Number, {
-		description: "The retry count of the saga step",
+		description: 'The retry count of the saga step',
 		nullable: true,
 	})
 	@IsNumber()
@@ -78,7 +78,7 @@ export class SagaStepUpdateRequestDto {
 	retryCount?: number;
 
 	@Field(() => Number, {
-		description: "The max retries of the saga step",
+		description: 'The max retries of the saga step',
 		nullable: true,
 	})
 	@IsNumber()
@@ -86,7 +86,7 @@ export class SagaStepUpdateRequestDto {
 	maxRetries?: number;
 
 	@Field(() => String, {
-		description: "The payload of the saga step (JSON string)",
+		description: 'The payload of the saga step (JSON string)',
 		nullable: true,
 	})
 	@IsJSON()
@@ -94,7 +94,7 @@ export class SagaStepUpdateRequestDto {
 	payload?: string;
 
 	@Field(() => String, {
-		description: "The result of the saga step (JSON string)",
+		description: 'The result of the saga step (JSON string)',
 		nullable: true,
 	})
 	@IsJSON()

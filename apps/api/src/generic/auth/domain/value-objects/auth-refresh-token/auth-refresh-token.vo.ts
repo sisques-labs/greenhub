@@ -1,4 +1,4 @@
-import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
+import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
 
 /**
  * AuthRefreshTokenValueObject represents a JWT refresh token.

@@ -1,14 +1,14 @@
-import { Collection } from "mongodb";
-import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
-import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
-import { SagaInstanceMongoDbDto } from "@/generic/saga-context/saga-instance/infrastructure/database/mongodb/dtos/saga-instance-mongodb.dto";
-import { SagaInstanceMongoDBMapper } from "@/generic/saga-context/saga-instance/infrastructure/database/mongodb/mappers/saga-instance-mongodb.mapper";
-import { SagaInstanceMongoRepository } from "@/generic/saga-context/saga-instance/infrastructure/database/mongodb/repositories/saga-instance-mongodb.repository";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Collection } from 'mongodb';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { SagaInstanceMongoDbDto } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/dtos/saga-instance-mongodb.dto';
+import { SagaInstanceMongoDBMapper } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/mappers/saga-instance-mongodb.mapper';
+import { SagaInstanceMongoRepository } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/repositories/saga-instance-mongodb.repository';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
-describe("SagaInstanceMongoRepository", () => {
+describe('SagaInstanceMongoRepository', () => {
 	let repository: SagaInstanceMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockSagaInstanceMongoDBMapper: jest.Mocked<SagaInstanceMongoDBMapper>;
@@ -42,14 +42,14 @@ describe("SagaInstanceMongoRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return saga instance view model when saga instance exists", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+	describe('findById', () => {
+		it('should return saga instance view model when saga instance exists', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 			const mongoDoc: SagaInstanceMongoDbDto = {
 				id: sagaInstanceId,
-				name: "Order Processing Saga",
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
@@ -74,7 +74,7 @@ describe("SagaInstanceMongoRepository", () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"saga-instances",
+				'saga-instances',
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({
 				id: sagaInstanceId,
@@ -90,8 +90,8 @@ describe("SagaInstanceMongoRepository", () => {
 			});
 		});
 
-		it("should return null when saga instance does not exist", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when saga instance does not exist', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -105,18 +105,18 @@ describe("SagaInstanceMongoRepository", () => {
 		});
 	});
 
-	describe("findByCriteria", () => {
-		it("should return paginated result of saga instance view models", async () => {
+	describe('findByCriteria', () => {
+		it('should return paginated result of saga instance view models', async () => {
 			const criteria = new Criteria();
 			criteria.pagination.page = 1;
 			criteria.pagination.perPage = 10;
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const mongoDocs: SagaInstanceMongoDbDto[] = [
 				{
-					id: "123e4567-e89b-12d3-a456-426614174000",
-					name: "Order Processing Saga",
+					id: '123e4567-e89b-12d3-a456-426614174000',
+					name: 'Order Processing Saga',
 					status: SagaInstanceStatusEnum.PENDING,
 					startDate: null,
 					endDate: null,
@@ -124,11 +124,11 @@ describe("SagaInstanceMongoRepository", () => {
 					updatedAt: updatedAt,
 				},
 				{
-					id: "223e4567-e89b-12d3-a456-426614174001",
-					name: "Payment Processing Saga",
+					id: '223e4567-e89b-12d3-a456-426614174001',
+					name: 'Payment Processing Saga',
 					status: SagaInstanceStatusEnum.COMPLETED,
-					startDate: new Date("2024-01-01T10:00:00Z"),
-					endDate: new Date("2024-01-01T11:00:00Z"),
+					startDate: new Date('2024-01-01T10:00:00Z'),
+					endDate: new Date('2024-01-01T11:00:00Z'),
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				},
@@ -181,16 +181,16 @@ describe("SagaInstanceMongoRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save saga instance view model", async () => {
+	describe('save', () => {
+		it('should save saga instance view model', async () => {
 			const viewModel = new SagaInstanceViewModel({
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Order Processing Saga",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Order Processing Saga',
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
-				createdAt: new Date("2024-01-01T10:00:00Z"),
-				updatedAt: new Date("2024-01-01T10:00:00Z"),
+				createdAt: new Date('2024-01-01T10:00:00Z'),
+				updatedAt: new Date('2024-01-01T10:00:00Z'),
 			});
 
 			const mongoData: SagaInstanceMongoDbDto = {
@@ -225,9 +225,9 @@ describe("SagaInstanceMongoRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should delete saga instance view model by id", async () => {
-			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should delete saga instance view model by id', async () => {
+			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,

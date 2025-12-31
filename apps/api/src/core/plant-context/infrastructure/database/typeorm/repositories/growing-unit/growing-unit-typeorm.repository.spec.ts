@@ -1,18 +1,18 @@
-import { Repository } from "typeorm";
-import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { GrowingUnitAggregateFactory } from "@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory";
-import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
-import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
-import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
-import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
-import { GrowingUnitTypeormEntity } from "@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity";
-import { GrowingUnitTypeormMapper } from "@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper";
-import { GrowingUnitTypeormRepository } from "@/core/plant-context/infrastructure/database/typeorm/repositories/growing-unit/growing-unit-typeorm.repository";
-import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
-import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
+import { Repository } from 'typeorm';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
+import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
+import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper';
+import { GrowingUnitTypeormRepository } from '@/core/plant-context/infrastructure/database/typeorm/repositories/growing-unit/growing-unit-typeorm.repository';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 
-describe("GrowingUnitTypeormRepository", () => {
+describe('GrowingUnitTypeormRepository', () => {
 	let repository: GrowingUnitTypeormRepository;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 	let mockGrowingUnitTypeormMapper: jest.Mocked<GrowingUnitTypeormMapper>;
@@ -57,14 +57,14 @@ describe("GrowingUnitTypeormRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return growing unit aggregate when growing unit exists", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('findById', () => {
+		it('should return growing unit aggregate when growing unit exists', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity = new GrowingUnitTypeormEntity();
 			typeormEntity.id = growingUnitId;
-			typeormEntity.name = "Garden Bed 1";
+			typeormEntity.name = 'Garden Bed 1';
 			typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
 			typeormEntity.capacity = 10;
 			typeormEntity.length = null;
@@ -78,7 +78,7 @@ describe("GrowingUnitTypeormRepository", () => {
 
 			const growingUnitAggregate = growingUnitAggregateFactory.create({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -107,8 +107,8 @@ describe("GrowingUnitTypeormRepository", () => {
 			);
 		});
 
-		it("should return null when growing unit does not exist", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when growing unit does not exist', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -127,14 +127,14 @@ describe("GrowingUnitTypeormRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save growing unit aggregate and return it", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('save', () => {
+		it('should save growing unit aggregate and return it', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const growingUnitAggregate = growingUnitAggregateFactory.create({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject("Garden Bed 1"),
+				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -143,7 +143,7 @@ describe("GrowingUnitTypeormRepository", () => {
 
 			const typeormEntity = new GrowingUnitTypeormEntity();
 			typeormEntity.id = growingUnitId;
-			typeormEntity.name = "Garden Bed 1";
+			typeormEntity.name = 'Garden Bed 1';
 			typeormEntity.type = GrowingUnitTypeEnum.GARDEN_BED;
 			typeormEntity.capacity = 10;
 			typeormEntity.length = null;
@@ -179,9 +179,9 @@ describe("GrowingUnitTypeormRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should soft delete growing unit by id", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should soft delete growing unit by id', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSoftDelete.mockResolvedValue(undefined);
 

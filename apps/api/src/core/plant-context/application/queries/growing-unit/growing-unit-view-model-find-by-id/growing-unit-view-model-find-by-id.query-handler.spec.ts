@@ -1,12 +1,12 @@
-import { IGrowingUnitViewModelFindByIdQueryDto } from "@/core/plant-context/application/dtos/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.dto";
-import { GrowingUnitNotFoundException } from "@/core/plant-context/application/exceptions/growing-unit/growing-unit-not-found/growing-unit-not-found.exception";
-import { GrowingUnitViewModelFindByIdQuery } from "@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query";
-import { GrowingUnitViewModelFindByIdQueryHandler } from "@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler";
-import { AssertGrowingUnitViewModelExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { IGrowingUnitViewModelFindByIdQueryDto } from '@/core/plant-context/application/dtos/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.dto';
+import { GrowingUnitNotFoundException } from '@/core/plant-context/application/exceptions/growing-unit/growing-unit-not-found/growing-unit-not-found.exception';
+import { GrowingUnitViewModelFindByIdQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query';
+import { GrowingUnitViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler';
+import { AssertGrowingUnitViewModelExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 
-describe("GrowingUnitViewModelFindByIdQueryHandler", () => {
+describe('GrowingUnitViewModelFindByIdQueryHandler', () => {
 	let handler: GrowingUnitViewModelFindByIdQueryHandler;
 	let mockAssertGrowingUnitViewModelExistsService: jest.Mocked<AssertGrowingUnitViewModelExistsService>;
 
@@ -24,9 +24,9 @@ describe("GrowingUnitViewModelFindByIdQueryHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return growing unit view model when found", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return growing unit view model when found', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto: IGrowingUnitViewModelFindByIdQueryDto = {
 				id: growingUnitId,
 			};
@@ -35,7 +35,7 @@ describe("GrowingUnitViewModelFindByIdQueryHandler", () => {
 			const now = new Date();
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: "Garden Bed 1",
+				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,
@@ -62,8 +62,8 @@ describe("GrowingUnitViewModelFindByIdQueryHandler", () => {
 			).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw GrowingUnitNotFoundException when growing unit does not exist", async () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw GrowingUnitNotFoundException when growing unit does not exist', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const queryDto: IGrowingUnitViewModelFindByIdQueryDto = {
 				id: growingUnitId,
 			};

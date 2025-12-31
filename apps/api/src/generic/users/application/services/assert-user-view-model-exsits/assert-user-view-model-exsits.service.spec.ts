@@ -1,12 +1,12 @@
-import { UserNotFoundException } from "@/generic/users/application/exceptions/user-not-found/user-not-found.exception";
-import { AssertUserViewModelExsistsService } from "@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service";
-import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
-import { UserReadRepository } from "@/generic/users/domain/repositories/user-read.repository";
-import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
+import { AssertUserViewModelExsistsService } from '@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service';
+import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
+import { UserReadRepository } from '@/generic/users/domain/repositories/user-read.repository';
+import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 
-describe("AssertUserViewModelExsistsService", () => {
+describe('AssertUserViewModelExsistsService', () => {
 	let service: AssertUserViewModelExsistsService;
 	let mockUserReadRepository: jest.Mocked<UserReadRepository>;
 
@@ -25,14 +25,14 @@ describe("AssertUserViewModelExsistsService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return user view model when user exists", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return user view model when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -51,8 +51,8 @@ describe("AssertUserViewModelExsistsService", () => {
 			expect(mockUserReadRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw UserNotFoundException when user view model does not exist", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw UserNotFoundException when user view model does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockUserReadRepository.findById.mockResolvedValue(null);
 
@@ -67,13 +67,13 @@ describe("AssertUserViewModelExsistsService", () => {
 			expect(mockUserReadRepository.findById).toHaveBeenCalledTimes(2);
 		});
 
-		it("should call repository with correct id", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should call repository with correct id', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -91,19 +91,19 @@ describe("AssertUserViewModelExsistsService", () => {
 			expect(mockUserReadRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return user view model with all properties correctly", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return user view model with all properties correctly', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockViewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: "johndoe",
-				name: "John",
-				lastName: "Doe",
+				userName: 'johndoe',
+				name: 'John',
+				lastName: 'Doe',
 				role: UserRoleEnum.ADMIN,
 				status: UserStatusEnum.INACTIVE,
-				bio: "Software developer",
-				avatarUrl: "https://example.com/avatar.jpg",
-				createdAt: new Date("2024-01-01"),
-				updatedAt: new Date("2024-01-02"),
+				bio: 'Software developer',
+				avatarUrl: 'https://example.com/avatar.jpg',
+				createdAt: new Date('2024-01-01'),
+				updatedAt: new Date('2024-01-02'),
 			};
 			const mockViewModel = new UserViewModel(mockViewModelDto);
 
@@ -113,17 +113,17 @@ describe("AssertUserViewModelExsistsService", () => {
 
 			expect(result).toBe(mockViewModel);
 			expect(result.id).toBe(userId);
-			expect(result.userName).toBe("johndoe");
-			expect(result.name).toBe("John");
-			expect(result.lastName).toBe("Doe");
+			expect(result.userName).toBe('johndoe');
+			expect(result.name).toBe('John');
+			expect(result.lastName).toBe('Doe');
 			expect(result.role).toBe(UserRoleEnum.ADMIN);
 			expect(result.status).toBe(UserStatusEnum.INACTIVE);
-			expect(result.bio).toBe("Software developer");
-			expect(result.avatarUrl).toBe("https://example.com/avatar.jpg");
+			expect(result.bio).toBe('Software developer');
+			expect(result.avatarUrl).toBe('https://example.com/avatar.jpg');
 		});
 
-		it("should throw UserNotFoundException with correct error message", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw UserNotFoundException with correct error message', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockUserReadRepository.findById.mockResolvedValue(null);
 
@@ -138,9 +138,9 @@ describe("AssertUserViewModelExsistsService", () => {
 			expect(mockUserReadRepository.findById).toHaveBeenCalledTimes(2);
 		});
 
-		it("should handle repository errors correctly", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
-			const repositoryError = new Error("Database connection error");
+		it('should handle repository errors correctly', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const repositoryError = new Error('Database connection error');
 
 			mockUserReadRepository.findById.mockRejectedValue(repositoryError);
 
@@ -150,8 +150,8 @@ describe("AssertUserViewModelExsistsService", () => {
 			expect(mockUserReadRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return user view model with different roles and statuses", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return user view model with different roles and statuses', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const testCases = [
 				{ role: UserRoleEnum.USER, status: UserStatusEnum.ACTIVE },
 				{ role: UserRoleEnum.ADMIN, status: UserStatusEnum.ACTIVE },
@@ -162,9 +162,9 @@ describe("AssertUserViewModelExsistsService", () => {
 			for (const testCase of testCases) {
 				const mockViewModelDto: IUserCreateViewModelDto = {
 					id: userId,
-					userName: "johndoe",
-					name: "John",
-					lastName: "Doe",
+					userName: 'johndoe',
+					name: 'John',
+					lastName: 'Doe',
 					role: testCase.role,
 					status: testCase.status,
 					bio: null,

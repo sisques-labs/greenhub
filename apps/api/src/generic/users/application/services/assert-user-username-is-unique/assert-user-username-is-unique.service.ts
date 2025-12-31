@@ -1,10 +1,10 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
-import { UserUsernameIsNotUniqueException } from "@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception";
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { UserUsernameIsNotUniqueException } from '@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception';
 import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
-} from "@/generic/users/domain/repositories/user-write.repository";
-import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
+} from '@/generic/users/domain/repositories/user-write.repository';
+import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 
 @Injectable()
 export class AssertUserUsernameIsUniqueService

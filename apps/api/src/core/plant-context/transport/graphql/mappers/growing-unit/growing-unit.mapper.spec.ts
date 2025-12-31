@@ -1,48 +1,48 @@
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
-import { PlantViewModel } from "@/core/plant-context/domain/view-models/plant/plant.view-model";
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import {
 	GrowingUnitResponseDto,
 	PaginatedGrowingUnitResultDto,
-} from "@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto";
-import { GrowingUnitGraphQLMapper } from "@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+} from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
+import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
-describe("GrowingUnitGraphQLMapper", () => {
+describe('GrowingUnitGraphQLMapper', () => {
 	let mapper: GrowingUnitGraphQLMapper;
 
 	beforeEach(() => {
 		mapper = new GrowingUnitGraphQLMapper();
 	});
 
-	describe("toResponseDto", () => {
-		it("should convert growing unit view model to response DTO with all properties", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const plantId = "223e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('toResponseDto', () => {
+		it('should convert growing unit view model to response DTO with all properties', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const plantViewModel = new PlantViewModel({
 				id: plantId,
 				growingUnitId: growingUnitId,
-				name: "Basil",
-				species: "Ocimum basilicum",
+				name: 'Basil',
+				species: 'Ocimum basilicum',
 				plantedDate: null,
 				notes: null,
-				status: "PLANTED",
+				status: 'PLANTED',
 				createdAt,
 				updatedAt,
 			});
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: "Garden Bed 1",
-				type: "GARDEN_BED",
+				name: 'Garden Bed 1',
+				type: 'GARDEN_BED',
 				capacity: 10,
 				dimensions: {
 					length: 2.0,
 					width: 1.0,
 					height: 0.5,
-					unit: "METER",
+					unit: 'METER',
 				},
 				plants: [plantViewModel],
 				remainingCapacity: 9,
@@ -56,24 +56,24 @@ describe("GrowingUnitGraphQLMapper", () => {
 
 			expect(result).toEqual({
 				id: growingUnitId,
-				name: "Garden Bed 1",
-				type: "GARDEN_BED",
+				name: 'Garden Bed 1',
+				type: 'GARDEN_BED',
 				capacity: 10,
 				dimensions: {
 					length: 2.0,
 					width: 1.0,
 					height: 0.5,
-					unit: "METER",
+					unit: 'METER',
 				},
 				plants: [
 					{
 						id: plantId,
 						growingUnitId: growingUnitId,
-						name: "Basil",
-						species: "Ocimum basilicum",
+						name: 'Basil',
+						species: 'Ocimum basilicum',
 						plantedDate: null,
 						notes: null,
-						status: "PLANTED",
+						status: 'PLANTED',
 						createdAt,
 						updatedAt,
 					},
@@ -86,15 +86,15 @@ describe("GrowingUnitGraphQLMapper", () => {
 			});
 		});
 
-		it("should convert growing unit view model with null dimensions and no plants", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+		it('should convert growing unit view model with null dimensions and no plants', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: "Garden Bed 1",
-				type: "GARDEN_BED",
+				name: 'Garden Bed 1',
+				type: 'GARDEN_BED',
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -109,8 +109,8 @@ describe("GrowingUnitGraphQLMapper", () => {
 
 			expect(result).toEqual({
 				id: growingUnitId,
-				name: "Garden Bed 1",
-				type: "GARDEN_BED",
+				name: 'Garden Bed 1',
+				type: 'GARDEN_BED',
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -123,16 +123,16 @@ describe("GrowingUnitGraphQLMapper", () => {
 		});
 	});
 
-	describe("toPaginatedResponseDto", () => {
-		it("should convert paginated result to paginated response DTO", () => {
-			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('toPaginatedResponseDto', () => {
+		it('should convert paginated result to paginated response DTO', () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: "Garden Bed 1",
-				type: "GARDEN_BED",
+				name: 'Garden Bed 1',
+				type: 'GARDEN_BED',
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -151,8 +151,8 @@ describe("GrowingUnitGraphQLMapper", () => {
 				items: [
 					{
 						id: growingUnitId,
-						name: "Garden Bed 1",
-						type: "GARDEN_BED",
+						name: 'Garden Bed 1',
+						type: 'GARDEN_BED',
 						capacity: 10,
 						dimensions: null,
 						plants: [],
@@ -170,7 +170,7 @@ describe("GrowingUnitGraphQLMapper", () => {
 			});
 		});
 
-		it("should convert empty paginated result", () => {
+		it('should convert empty paginated result', () => {
 			const paginatedResult = new PaginatedResult([], 0, 1, 10);
 
 			const result = mapper.toPaginatedResponseDto(paginatedResult);

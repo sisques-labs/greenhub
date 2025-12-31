@@ -1,18 +1,18 @@
-import { Repository } from "typeorm";
-import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
-import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
-import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
-import { PlantNameValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo";
-import { PlantSpeciesValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo";
-import { PlantStatusValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo";
-import { PlantTypeormEntity } from "@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity";
-import { PlantTypeormMapper } from "@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper";
-import { PlantTypeormRepository } from "@/core/plant-context/infrastructure/database/typeorm/repositories/plant/plant-typeorm.repository";
-import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
-import { PlantUuidValueObject } from "@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo";
-import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
+import { Repository } from 'typeorm';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
+import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
+import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
+import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
+import { PlantTypeormRepository } from '@/core/plant-context/infrastructure/database/typeorm/repositories/plant/plant-typeorm.repository';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 
-describe("PlantTypeormRepository", () => {
+describe('PlantTypeormRepository', () => {
 	let repository: PlantTypeormRepository;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 	let mockPlantTypeormMapper: jest.Mocked<PlantTypeormMapper>;
@@ -57,17 +57,17 @@ describe("PlantTypeormRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return plant entity when plant exists", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
-			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('findById', () => {
+		it('should return plant entity when plant exists', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity = new PlantTypeormEntity();
 			typeormEntity.id = plantId;
 			typeormEntity.growingUnitId = growingUnitId;
-			typeormEntity.name = "Basil";
-			typeormEntity.species = "Ocimum basilicum";
+			typeormEntity.name = 'Basil';
+			typeormEntity.species = 'Ocimum basilicum';
 			typeormEntity.plantedDate = null;
 			typeormEntity.notes = null;
 			typeormEntity.status = PlantStatusEnum.PLANTED;
@@ -78,8 +78,8 @@ describe("PlantTypeormRepository", () => {
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject("Basil"),
-				species: new PlantSpeciesValueObject("Ocimum basilicum"),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -100,8 +100,8 @@ describe("PlantTypeormRepository", () => {
 			expect(mockPlantTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return null when plant does not exist", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when plant does not exist', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -115,17 +115,17 @@ describe("PlantTypeormRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save plant entity and return it", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
-			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
+	describe('save', () => {
+		it('should save plant entity and return it', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject("Basil"),
-				species: new PlantSpeciesValueObject("Ocimum basilicum"),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -134,8 +134,8 @@ describe("PlantTypeormRepository", () => {
 			const typeormEntity = new PlantTypeormEntity();
 			typeormEntity.id = plantId;
 			typeormEntity.growingUnitId = growingUnitId;
-			typeormEntity.name = "Basil";
-			typeormEntity.species = "Ocimum basilicum";
+			typeormEntity.name = 'Basil';
+			typeormEntity.species = 'Ocimum basilicum';
 			typeormEntity.plantedDate = null;
 			typeormEntity.notes = null;
 			typeormEntity.status = PlantStatusEnum.PLANTED;
@@ -163,9 +163,9 @@ describe("PlantTypeormRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should soft delete plant by id", async () => {
-			const plantId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should soft delete plant by id', async () => {
+			const plantId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSoftDelete.mockResolvedValue(undefined);
 
@@ -176,18 +176,18 @@ describe("PlantTypeormRepository", () => {
 		});
 	});
 
-	describe("findByGrowingUnitId", () => {
-		it("should return array of plant entities when plants exist", async () => {
-			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
-			const plantId1 = "123e4567-e89b-12d3-a456-426614174000";
-			const plantId2 = "323e4567-e89b-12d3-a456-426614174000";
+	describe('findByGrowingUnitId', () => {
+		it('should return array of plant entities when plants exist', async () => {
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const plantId1 = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId2 = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity1 = new PlantTypeormEntity();
 			typeormEntity1.id = plantId1;
 			typeormEntity1.growingUnitId = growingUnitId;
-			typeormEntity1.name = "Basil";
-			typeormEntity1.species = "Ocimum basilicum";
+			typeormEntity1.name = 'Basil';
+			typeormEntity1.species = 'Ocimum basilicum';
 			typeormEntity1.plantedDate = null;
 			typeormEntity1.notes = null;
 			typeormEntity1.status = PlantStatusEnum.PLANTED;
@@ -198,8 +198,8 @@ describe("PlantTypeormRepository", () => {
 			const typeormEntity2 = new PlantTypeormEntity();
 			typeormEntity2.id = plantId2;
 			typeormEntity2.growingUnitId = growingUnitId;
-			typeormEntity2.name = "Tomato";
-			typeormEntity2.species = "Solanum lycopersicum";
+			typeormEntity2.name = 'Tomato';
+			typeormEntity2.species = 'Solanum lycopersicum';
 			typeormEntity2.plantedDate = null;
 			typeormEntity2.notes = null;
 			typeormEntity2.status = PlantStatusEnum.PLANTED;
@@ -210,8 +210,8 @@ describe("PlantTypeormRepository", () => {
 			const plantEntity1 = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId1),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject("Basil"),
-				species: new PlantSpeciesValueObject("Ocimum basilicum"),
+				name: new PlantNameValueObject('Basil'),
+				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -220,8 +220,8 @@ describe("PlantTypeormRepository", () => {
 			const plantEntity2 = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId2),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject("Tomato"),
-				species: new PlantSpeciesValueObject("Solanum lycopersicum"),
+				name: new PlantNameValueObject('Tomato'),
+				species: new PlantSpeciesValueObject('Solanum lycopersicum'),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -243,8 +243,8 @@ describe("PlantTypeormRepository", () => {
 			expect(mockPlantTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(2);
 		});
 
-		it("should return empty array when no plants exist", async () => {
-			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should return empty array when no plants exist', async () => {
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 
 			mockFind.mockResolvedValue([]);
 

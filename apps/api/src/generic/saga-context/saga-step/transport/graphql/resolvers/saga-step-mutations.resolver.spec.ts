@@ -1,19 +1,19 @@
-import { BadRequestException } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
-import { SagaStepChangeStatusCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-change-status/saga-step-change-status.command";
-import { SagaStepCreateCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command";
-import { SagaStepDeleteCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command";
-import { SagaStepUpdateCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepChangeStatusRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-change-status.request.dto";
-import { SagaStepCreateRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-create.request.dto";
-import { SagaStepDeleteRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-delete.request.dto";
-import { SagaStepUpdateRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-update.request.dto";
-import { SagaStepMutationsResolver } from "@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-mutations.resolver";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
+import { BadRequestException } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { SagaStepChangeStatusCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-change-status/saga-step-change-status.command';
+import { SagaStepCreateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command';
+import { SagaStepDeleteCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command';
+import { SagaStepUpdateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepChangeStatusRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-change-status.request.dto';
+import { SagaStepCreateRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-create.request.dto';
+import { SagaStepDeleteRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-delete.request.dto';
+import { SagaStepUpdateRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-update.request.dto';
+import { SagaStepMutationsResolver } from '@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-mutations.resolver';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
-describe("SagaStepMutationsResolver", () => {
+describe('SagaStepMutationsResolver', () => {
 	let resolver: SagaStepMutationsResolver;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 	let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
@@ -37,19 +37,19 @@ describe("SagaStepMutationsResolver", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("sagaStepCreate", () => {
-		it("should create saga step successfully", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaStepCreate', () => {
+		it('should create saga step successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepCreateRequestDto = {
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
-				payload: JSON.stringify({ orderId: "12345" }),
+				payload: JSON.stringify({ orderId: '12345' }),
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga step created successfully",
+				message: 'Saga step created successfully',
 				id: sagaStepId,
 			};
 
@@ -69,22 +69,22 @@ describe("SagaStepMutationsResolver", () => {
 			expect(command.sagaInstanceId.value).toBe(input.sagaInstanceId);
 			expect(command.name.value).toBe(input.name);
 			expect(command.order.value).toBe(input.order);
-			expect(command.payload.value).toEqual({ orderId: "12345" });
+			expect(command.payload.value).toEqual({ orderId: '12345' });
 			expect(
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga step created successfully",
+				message: 'Saga step created successfully',
 				id: sagaStepId,
 			});
 		});
 
-		it("should throw BadRequestException for invalid JSON payload", async () => {
+		it('should throw BadRequestException for invalid JSON payload', async () => {
 			const input: SagaStepCreateRequestDto = {
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
-				payload: "invalid json",
+				payload: 'invalid json',
 			};
 
 			await expect(resolver.sagaStepCreate(input)).rejects.toThrow(
@@ -93,11 +93,11 @@ describe("SagaStepMutationsResolver", () => {
 			expect(mockCommandBus.execute).not.toHaveBeenCalled();
 		});
 
-		it("should handle empty JSON payload", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle empty JSON payload', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepCreateRequestDto = {
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				payload: JSON.stringify({}),
 			};
@@ -105,7 +105,7 @@ describe("SagaStepMutationsResolver", () => {
 			mockCommandBus.execute.mockResolvedValue(sagaStepId);
 			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
 				success: true,
-				message: "Saga step created successfully",
+				message: 'Saga step created successfully',
 				id: sagaStepId,
 			});
 
@@ -116,21 +116,21 @@ describe("SagaStepMutationsResolver", () => {
 		});
 	});
 
-	describe("sagaStepUpdate", () => {
-		it("should update saga step successfully", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaStepUpdate', () => {
+		it('should update saga step successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepUpdateRequestDto = {
 				id: sagaStepId,
-				name: "Process Payment Updated",
+				name: 'Process Payment Updated',
 				order: 2,
 				status: SagaStepStatusEnum.COMPLETED,
-				payload: JSON.stringify({ orderId: "12345", updated: true }),
+				payload: JSON.stringify({ orderId: '12345', updated: true }),
 				result: JSON.stringify({ success: true }),
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga step updated successfully",
+				message: 'Saga step updated successfully',
 				id: sagaStepId,
 			};
 
@@ -152,7 +152,7 @@ describe("SagaStepMutationsResolver", () => {
 			expect(command.order?.value).toBe(input.order);
 			expect(command.status?.value).toBe(input.status);
 			expect(command.payload?.value).toEqual({
-				orderId: "12345",
+				orderId: '12345',
 				updated: true,
 			});
 			expect(command.result?.value).toEqual({ success: true });
@@ -160,23 +160,23 @@ describe("SagaStepMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga step updated successfully",
+				message: 'Saga step updated successfully',
 				id: sagaStepId,
 			});
 		});
 
-		it("should update saga step without payload and result", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should update saga step without payload and result', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepUpdateRequestDto = {
 				id: sagaStepId,
-				name: "Process Payment Updated",
+				name: 'Process Payment Updated',
 				order: 2,
 			};
 
 			mockCommandBus.execute.mockResolvedValue(undefined);
 			mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
 				success: true,
-				message: "Saga step updated successfully",
+				message: 'Saga step updated successfully',
 				id: sagaStepId,
 			});
 
@@ -187,11 +187,11 @@ describe("SagaStepMutationsResolver", () => {
 			expect(command.result).toBeUndefined();
 		});
 
-		it("should throw BadRequestException for invalid JSON payload", async () => {
+		it('should throw BadRequestException for invalid JSON payload', async () => {
 			const input: SagaStepUpdateRequestDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
-				payload: "invalid json",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				payload: 'invalid json',
 			};
 
 			await expect(resolver.sagaStepUpdate(input)).rejects.toThrow(
@@ -200,11 +200,11 @@ describe("SagaStepMutationsResolver", () => {
 			expect(mockCommandBus.execute).not.toHaveBeenCalled();
 		});
 
-		it("should throw BadRequestException for invalid JSON result", async () => {
+		it('should throw BadRequestException for invalid JSON result', async () => {
 			const input: SagaStepUpdateRequestDto = {
-				id: "123e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
-				result: "invalid json",
+				id: '123e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
+				result: 'invalid json',
 			};
 
 			await expect(resolver.sagaStepUpdate(input)).rejects.toThrow(
@@ -214,9 +214,9 @@ describe("SagaStepMutationsResolver", () => {
 		});
 	});
 
-	describe("sagaStepChangeStatus", () => {
-		it("should change saga step status successfully", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaStepChangeStatus', () => {
+		it('should change saga step status successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepChangeStatusRequestDto = {
 				id: sagaStepId,
 				status: SagaStepStatusEnum.COMPLETED,
@@ -224,7 +224,7 @@ describe("SagaStepMutationsResolver", () => {
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga step status changed successfully",
+				message: 'Saga step status changed successfully',
 				id: sagaStepId,
 			};
 
@@ -247,13 +247,13 @@ describe("SagaStepMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga step status changed successfully",
+				message: 'Saga step status changed successfully',
 				id: sagaStepId,
 			});
 		});
 
-		it("should handle different status values", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should handle different status values', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const statuses = [
 				SagaStepStatusEnum.PENDING,
 				SagaStepStatusEnum.STARTED,
@@ -271,7 +271,7 @@ describe("SagaStepMutationsResolver", () => {
 				mockCommandBus.execute.mockResolvedValue(undefined);
 				mockMutationResponseGraphQLMapper.toResponseDto.mockReturnValue({
 					success: true,
-					message: "Saga step status changed successfully",
+					message: 'Saga step status changed successfully',
 					id: sagaStepId,
 				});
 
@@ -285,16 +285,16 @@ describe("SagaStepMutationsResolver", () => {
 		});
 	});
 
-	describe("sagaStepDelete", () => {
-		it("should delete saga step successfully", async () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('sagaStepDelete', () => {
+		it('should delete saga step successfully', async () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
 			const input: SagaStepDeleteRequestDto = {
 				id: sagaStepId,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: "Saga step deleted successfully",
+				message: 'Saga step deleted successfully',
 				id: sagaStepId,
 			};
 
@@ -316,7 +316,7 @@ describe("SagaStepMutationsResolver", () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: "Saga step deleted successfully",
+				message: 'Saga step deleted successfully',
 				id: sagaStepId,
 			});
 		});

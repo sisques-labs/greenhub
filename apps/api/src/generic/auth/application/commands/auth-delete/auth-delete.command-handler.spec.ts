@@ -1,21 +1,21 @@
-import { EventBus } from "@nestjs/cqrs";
-import { AuthDeleteCommand } from "@/generic/auth/application/commands/auth-delete/auth-delete.command";
-import { AuthDeleteCommandHandler } from "@/generic/auth/application/commands/auth-delete/auth-delete.command-handler";
-import { IAuthDeleteCommandDto } from "@/generic/auth/application/dtos/commands/auth-delete/auth-delete-command.dto";
-import { AuthNotFoundException } from "@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception";
-import { AssertAuthExistsService } from "@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
-import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
-import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
-import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
-import { AuthDeletedEvent } from "@/shared/domain/events/auth/auth-deleted/auth-deleted.event";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { EventBus } from '@nestjs/cqrs';
+import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
+import { AuthDeleteCommandHandler } from '@/generic/auth/application/commands/auth-delete/auth-delete.command-handler';
+import { IAuthDeleteCommandDto } from '@/generic/auth/application/dtos/commands/auth-delete/auth-delete-command.dto';
+import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
+import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
+import { AuthDeletedEvent } from '@/shared/domain/events/auth/auth-deleted/auth-deleted.event';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
-describe("AuthDeleteCommandHandler", () => {
+describe('AuthDeleteCommandHandler', () => {
 	let handler: AuthDeleteCommandHandler;
 	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -50,10 +50,10 @@ describe("AuthDeleteCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should delete auth successfully when auth exists", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+	describe('execute', () => {
+		it('should delete auth successfully when auth exists', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};
@@ -77,7 +77,7 @@ describe("AuthDeleteCommandHandler", () => {
 				false,
 			);
 
-			const deleteSpy = jest.spyOn(existingAuth, "delete");
+			const deleteSpy = jest.spyOn(existingAuth, 'delete');
 			mockAssertAuthExistsService.execute.mockResolvedValue(existingAuth);
 			mockAuthWriteRepository.delete.mockResolvedValue(true);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
@@ -97,8 +97,8 @@ describe("AuthDeleteCommandHandler", () => {
 			deleteSpy.mockRestore();
 		});
 
-		it("should throw exception when auth does not exist", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw exception when auth does not exist', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};
@@ -114,9 +114,9 @@ describe("AuthDeleteCommandHandler", () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it("should publish AuthDeletedEvent when auth is deleted", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should publish AuthDeletedEvent when auth is deleted', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};
@@ -180,9 +180,9 @@ describe("AuthDeleteCommandHandler", () => {
 			// But we verified above that delete() generates the event correctly
 		});
 
-		it("should delete from repository after calling delete on aggregate", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should delete from repository after calling delete on aggregate', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};
@@ -210,7 +210,7 @@ describe("AuthDeleteCommandHandler", () => {
 			mockAuthWriteRepository.delete.mockResolvedValue(true);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-			const deleteSpy = jest.spyOn(existingAuth, "delete");
+			const deleteSpy = jest.spyOn(existingAuth, 'delete');
 			await handler.execute(command);
 
 			expect(deleteSpy).toHaveBeenCalled();
@@ -219,9 +219,9 @@ describe("AuthDeleteCommandHandler", () => {
 			deleteSpy.mockRestore();
 		});
 
-		it("should publish events before committing", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should publish events before committing', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};
@@ -245,7 +245,7 @@ describe("AuthDeleteCommandHandler", () => {
 				false,
 			);
 
-			const commitSpy = jest.spyOn(existingAuth, "commit");
+			const commitSpy = jest.spyOn(existingAuth, 'commit');
 
 			mockAssertAuthExistsService.execute.mockResolvedValue(existingAuth);
 			mockAuthWriteRepository.delete.mockResolvedValue(true);
@@ -258,9 +258,9 @@ describe("AuthDeleteCommandHandler", () => {
 			expect(publishOrder).toBeLessThan(commitOrder);
 		});
 
-		it("should delete from repository before publishing events", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should delete from repository before publishing events', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};
@@ -296,9 +296,9 @@ describe("AuthDeleteCommandHandler", () => {
 			expect(deleteOrder).toBeLessThan(publishOrder);
 		});
 
-		it("should use correct auth id from command", async () => {
-			const authId = "123e4567-e89b-12d3-a456-426614174000";
-			const userId = "123e4567-e89b-12d3-a456-426614174001";
+		it('should use correct auth id from command', async () => {
+			const authId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = '123e4567-e89b-12d3-a456-426614174001';
 			const commandDto: IAuthDeleteCommandDto = {
 				id: authId,
 			};

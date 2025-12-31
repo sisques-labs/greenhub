@@ -4,7 +4,7 @@
  * It provides a common structure for infrastructure-specific errors.
  */
 export class BaseInfrastructureException extends Error {
-	public readonly layer: string = "Infrastructure";
+	public readonly layer: string = 'Infrastructure';
 	public readonly timestamp: Date;
 
 	constructor(message: string) {

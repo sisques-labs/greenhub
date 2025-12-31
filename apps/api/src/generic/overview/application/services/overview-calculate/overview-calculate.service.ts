@@ -1,18 +1,18 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { QueryBus } from "@nestjs/cqrs";
-import { GrowingUnitFindByCriteriaQuery } from "@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
-import { OverviewCalculateAggregatedMetricsService } from "@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service";
-import { OverviewCalculateCapacityMetricsService } from "@/generic/overview/application/services/overview-calculate-capacity-metrics/overview-calculate-capacity-metrics.service";
-import { OverviewCalculateDimensionsMetricsService } from "@/generic/overview/application/services/overview-calculate-dimensions-metrics/overview-calculate-dimensions-metrics.service";
-import { OverviewCalculateGrowingUnitMetricsService } from "@/generic/overview/application/services/overview-calculate-growing-unit-metrics/overview-calculate-growing-unit-metrics.service";
-import { OverviewCalculatePlantMetricsService } from "@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service";
-import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
-import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
-import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
-import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { OverviewUuidValueObject } from "@/shared/domain/value-objects/identifiers/overview-uuid/overview-uuid.vo";
+import { Injectable, Logger } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { OverviewCalculateAggregatedMetricsService } from '@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service';
+import { OverviewCalculateCapacityMetricsService } from '@/generic/overview/application/services/overview-calculate-capacity-metrics/overview-calculate-capacity-metrics.service';
+import { OverviewCalculateDimensionsMetricsService } from '@/generic/overview/application/services/overview-calculate-dimensions-metrics/overview-calculate-dimensions-metrics.service';
+import { OverviewCalculateGrowingUnitMetricsService } from '@/generic/overview/application/services/overview-calculate-growing-unit-metrics/overview-calculate-growing-unit-metrics.service';
+import { OverviewCalculatePlantMetricsService } from '@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service';
+import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
+import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { OverviewUuidValueObject } from '@/shared/domain/value-objects/identifiers/overview-uuid/overview-uuid.vo';
 
 /**
  * Service responsible for calculating overview metrics from plant context data.
@@ -45,7 +45,7 @@ export class OverviewCalculateService
 	 * @returns The calculated overview view model
 	 */
 	async execute(overviewId?: string): Promise<OverviewViewModel> {
-		this.logger.log("Calculating overview metrics");
+		this.logger.log('Calculating overview metrics');
 
 		// 01: Get all growing units in batches
 		const growingUnits = await this.getAllGrowingUnitsInBatches(

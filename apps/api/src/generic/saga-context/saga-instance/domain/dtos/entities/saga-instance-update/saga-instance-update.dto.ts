@@ -1,4 +1,4 @@
-import { ISagaInstanceCreateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto";
+import { ISagaInstanceCreateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto';
 
 /**
  * Data Transfer Object for updating a saga instance.
@@ -8,5 +8,5 @@ import { ISagaInstanceCreateDto } from "@/generic/saga-context/saga-instance/dom
  * @extends Partial<Omit<ISagaInstanceCreateDto, 'id'>>
  */
 export type ISagaInstanceUpdateDto = Partial<
-	Omit<ISagaInstanceCreateDto, "id">
+	Omit<ISagaInstanceCreateDto, 'id'>
 >;

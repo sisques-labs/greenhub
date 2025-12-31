@@ -1,8 +1,8 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
-import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
-import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
-import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
+import { Injectable, Logger } from '@nestjs/common';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
+import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 
 /**
  * Service responsible for calculating growing unit-related metrics for overview.
@@ -18,13 +18,13 @@ export class OverviewCalculateGrowingUnitMetricsService
 			GrowingUnitViewModel[],
 			Pick<
 				IOverviewViewModelDto,
-				| "totalGrowingUnits"
-				| "activeGrowingUnits"
-				| "emptyGrowingUnits"
-				| "growingUnitsPot"
-				| "growingUnitsGardenBed"
-				| "growingUnitsHangingBasket"
-				| "growingUnitsWindowBox"
+				| 'totalGrowingUnits'
+				| 'activeGrowingUnits'
+				| 'emptyGrowingUnits'
+				| 'growingUnitsPot'
+				| 'growingUnitsGardenBed'
+				| 'growingUnitsHangingBasket'
+				| 'growingUnitsWindowBox'
 			>
 		>
 {
@@ -43,13 +43,13 @@ export class OverviewCalculateGrowingUnitMetricsService
 	): Promise<
 		Pick<
 			IOverviewViewModelDto,
-			| "totalGrowingUnits"
-			| "activeGrowingUnits"
-			| "emptyGrowingUnits"
-			| "growingUnitsPot"
-			| "growingUnitsGardenBed"
-			| "growingUnitsHangingBasket"
-			| "growingUnitsWindowBox"
+			| 'totalGrowingUnits'
+			| 'activeGrowingUnits'
+			| 'emptyGrowingUnits'
+			| 'growingUnitsPot'
+			| 'growingUnitsGardenBed'
+			| 'growingUnitsHangingBasket'
+			| 'growingUnitsWindowBox'
 		>
 	> {
 		this.logger.log(

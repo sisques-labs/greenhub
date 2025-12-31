@@ -1,10 +1,10 @@
-import { Inject, Logger } from "@nestjs/common";
-import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { GrowingUnitDeletedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event";
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
-} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository";
+} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 
 /**
  * Event handler for GrowingUnitDeletedEvent.

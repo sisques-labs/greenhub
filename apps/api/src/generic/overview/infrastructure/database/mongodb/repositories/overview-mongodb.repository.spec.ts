@@ -1,13 +1,13 @@
-import { Collection } from "mongodb";
-import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
-import { OverviewMongoDbDto } from "@/generic/overview/infrastructure/database/mongodb/dtos/overview-mongodb.dto";
-import { OverviewMongoDBMapper } from "@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper";
-import { OverviewMongoRepository } from "@/generic/overview/infrastructure/database/mongodb/repositories/overview-mongodb.repository";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Collection } from 'mongodb';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+import { OverviewMongoDbDto } from '@/generic/overview/infrastructure/database/mongodb/dtos/overview-mongodb.dto';
+import { OverviewMongoDBMapper } from '@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper';
+import { OverviewMongoRepository } from '@/generic/overview/infrastructure/database/mongodb/repositories/overview-mongodb.repository';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
-describe("OverviewMongoRepository", () => {
+describe('OverviewMongoRepository', () => {
 	let repository: OverviewMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockOverviewMongoDBMapper: jest.Mocked<OverviewMongoDBMapper>;
@@ -60,11 +60,11 @@ describe("OverviewMongoRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return overview view model when overview exists", async () => {
-			const overviewId = "overview";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('findById', () => {
+		it('should return overview view model when overview exists', async () => {
+			const overviewId = 'overview';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const mongoDoc: OverviewMongoDbDto = {
 				id: overviewId,
@@ -145,7 +145,7 @@ describe("OverviewMongoRepository", () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"overviews",
+				'overviews',
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({
 				id: overviewId,
@@ -187,8 +187,8 @@ describe("OverviewMongoRepository", () => {
 			});
 		});
 
-		it("should return null when overview does not exist", async () => {
-			const overviewId = "overview";
+		it('should return null when overview does not exist', async () => {
+			const overviewId = 'overview';
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -202,15 +202,15 @@ describe("OverviewMongoRepository", () => {
 		});
 	});
 
-	describe("findByCriteria", () => {
-		it("should return paginated result with overviews when criteria matches", async () => {
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('findByCriteria', () => {
+		it('should return paginated result with overviews when criteria matches', async () => {
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const mongoDocs: OverviewMongoDbDto[] = [
 				{
-					id: "overview",
+					id: 'overview',
 					totalPlants: 150,
 					totalActivePlants: 140,
 					averagePlantsPerGrowingUnit: 6.0,
@@ -247,7 +247,7 @@ describe("OverviewMongoRepository", () => {
 			];
 
 			const viewModel = new OverviewViewModel({
-				id: "overview",
+				id: 'overview',
 				totalPlants: 150,
 				totalActivePlants: 140,
 				averagePlantsPerGrowingUnit: 6.0,
@@ -304,11 +304,11 @@ describe("OverviewMongoRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save overview view model using upsert", async () => {
-			const overviewId = "overview";
-			const createdAt = new Date("2024-01-01");
-			const updatedAt = new Date("2024-01-02");
+	describe('save', () => {
+		it('should save overview view model using upsert', async () => {
+			const overviewId = 'overview';
+			const createdAt = new Date('2024-01-01');
+			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = new OverviewViewModel({
 				id: overviewId,
@@ -394,7 +394,7 @@ describe("OverviewMongoRepository", () => {
 			await repository.save(viewModel);
 
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"overviews",
+				'overviews',
 			);
 			expect(mockOverviewMongoDBMapper.toMongoData).toHaveBeenCalledWith(
 				viewModel,
@@ -407,9 +407,9 @@ describe("OverviewMongoRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should delete overview view model by id", async () => {
-			const overviewId = "overview";
+	describe('delete', () => {
+		it('should delete overview view model by id', async () => {
+			const overviewId = 'overview';
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,
@@ -419,7 +419,7 @@ describe("OverviewMongoRepository", () => {
 			await repository.delete(overviewId);
 
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				"overviews",
+				'overviews',
 			);
 			expect(mockCollection.deleteOne).toHaveBeenCalledWith({ id: overviewId });
 		});

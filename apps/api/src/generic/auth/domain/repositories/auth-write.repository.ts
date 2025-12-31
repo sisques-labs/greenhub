@@ -1,6 +1,6 @@
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 
-export const AUTH_WRITE_REPOSITORY_TOKEN = Symbol("AuthWriteRepository");
+export const AUTH_WRITE_REPOSITORY_TOKEN = Symbol('AuthWriteRepository');
 
 export interface AuthWriteRepository {
 	findById(id: string): Promise<AuthAggregate | null>;

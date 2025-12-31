@@ -1,16 +1,16 @@
-import { Logger } from "@nestjs/common";
-import { QueryBus } from "@nestjs/cqrs";
-import { Args, Query, Resolver } from "@nestjs/graphql";
-import { FindSagaInstancesByCriteriaQuery } from "@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query";
-import { FindSagaInstanceViewModelByIdQuery } from "@/generic/saga-context/saga-instance/application/queries/saga-instance-view-model-find-by-id/saga-instance-view-model-find-by-id.query";
-import { SagaInstanceFindByCriteriaRequestDto } from "@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-criteria.request.dto";
-import { SagaInstanceFindByIdRequestDto } from "@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-id.request.dto";
+import { Logger } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { FindSagaInstancesByCriteriaQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
+import { FindSagaInstanceViewModelByIdQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-view-model-find-by-id/saga-instance-view-model-find-by-id.query';
+import { SagaInstanceFindByCriteriaRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-criteria.request.dto';
+import { SagaInstanceFindByIdRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-id.request.dto';
 import {
 	PaginatedSagaInstanceResultDto,
 	SagaInstanceResponseDto,
-} from "@/generic/saga-context/saga-instance/transport/graphql/dtos/responses/saga-instance.response.dto";
-import { SagaInstanceGraphQLMapper } from "@/generic/saga-context/saga-instance/transport/graphql/mappers/saga-instance.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
+} from '@/generic/saga-context/saga-instance/transport/graphql/dtos/responses/saga-instance.response.dto';
+import { SagaInstanceGraphQLMapper } from '@/generic/saga-context/saga-instance/transport/graphql/mappers/saga-instance.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
 
 @Resolver()
 // TODO: Add guards and roles
@@ -24,7 +24,7 @@ export class SagaInstanceQueryResolver {
 
 	@Query(() => SagaInstanceResponseDto, { nullable: true })
 	async sagaInstanceFindById(
-		@Args("input") input: SagaInstanceFindByIdRequestDto,
+		@Args('input') input: SagaInstanceFindByIdRequestDto,
 	): Promise<SagaInstanceResponseDto | null> {
 		this.logger.log(`Finding saga instance by id: ${input.id}`);
 
@@ -39,7 +39,7 @@ export class SagaInstanceQueryResolver {
 
 	@Query(() => PaginatedSagaInstanceResultDto)
 	async sagaInstanceFindByCriteria(
-		@Args("input", { nullable: true })
+		@Args('input', { nullable: true })
 		input?: SagaInstanceFindByCriteriaRequestDto,
 	): Promise<PaginatedSagaInstanceResultDto> {
 		this.logger.log(

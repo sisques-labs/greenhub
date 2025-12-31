@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
-import { MutationResponseArrayDto } from "@/shared/transport/graphql/dtos/success-response-array.dto";
+import { Injectable } from '@nestjs/common';
+import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseArrayDto } from '@/shared/transport/graphql/dtos/success-response-array.dto';
 
 @Injectable()
 export class MutationResponseGraphQLMapper {

@@ -1,19 +1,19 @@
-import { UseGuards } from "@nestjs/common";
-import { QueryBus } from "@nestjs/cqrs";
-import { Args, Query, Resolver } from "@nestjs/graphql";
-import { AuthProfileMeQuery } from "@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query";
-import { FindAuthsByCriteriaQuery } from "@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query";
-import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
-import { CurrentUser } from "@/generic/auth/infrastructure/decorators/current-user/current-user.decorator";
-import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
-import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
-import { AuthFindByCriteriaRequestDto } from "@/generic/auth/transport/graphql/dtos/requests/auth-find-by-criteria.request.dto";
-import { PaginatedAuthResultDto } from "@/generic/auth/transport/graphql/dtos/responses/auth.response.dto";
-import { AuthUserProfileResponseDto } from "@/generic/auth/transport/graphql/dtos/responses/auth-user-profile.response.dto";
-import { AuthGraphQLMapper } from "@/generic/auth/transport/graphql/mappers/auth/auth.mapper";
-import { AuthUserProfileGraphQLMapper } from "@/generic/auth/transport/graphql/mappers/auth-user-profile/auth-user-profile.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { AuthProfileMeQuery } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query';
+import { FindAuthsByCriteriaQuery } from '@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query';
+import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { CurrentUser } from '@/generic/auth/infrastructure/decorators/current-user/current-user.decorator';
+import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
+import { AuthFindByCriteriaRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-find-by-criteria.request.dto';
+import { PaginatedAuthResultDto } from '@/generic/auth/transport/graphql/dtos/responses/auth.response.dto';
+import { AuthUserProfileResponseDto } from '@/generic/auth/transport/graphql/dtos/responses/auth-user-profile.response.dto';
+import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth/auth.mapper';
+import { AuthUserProfileGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth-user-profile/auth-user-profile.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -40,7 +40,7 @@ export class AuthQueryResolver {
 	@Query(() => PaginatedAuthResultDto)
 	@Roles(UserRoleEnum.ADMIN)
 	async findAuthsByCriteria(
-		@Args("input", { nullable: true }) input?: AuthFindByCriteriaRequestDto,
+		@Args('input', { nullable: true }) input?: AuthFindByCriteriaRequestDto,
 	): Promise<PaginatedAuthResultDto> {
 		// 01: Convert DTO to domain Criteria
 		const criteria = new Criteria(

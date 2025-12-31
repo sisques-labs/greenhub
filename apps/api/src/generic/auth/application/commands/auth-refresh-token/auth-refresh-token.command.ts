@@ -1,5 +1,5 @@
-import { IAuthRefreshTokenCommandDto } from "@/generic/auth/application/dtos/commands/auth-refresh-token/auth-refresh-token-command.dto";
-import { AuthRefreshTokenValueObject } from "@/generic/auth/domain/value-objects/auth-refresh-token/auth-refresh-token.vo";
+import { IAuthRefreshTokenCommandDto } from '@/generic/auth/application/dtos/commands/auth-refresh-token/auth-refresh-token-command.dto';
+import { AuthRefreshTokenValueObject } from '@/generic/auth/domain/value-objects/auth-refresh-token/auth-refresh-token.vo';
 
 export class AuthRefreshTokenCommand {
 	readonly refreshToken: AuthRefreshTokenValueObject;

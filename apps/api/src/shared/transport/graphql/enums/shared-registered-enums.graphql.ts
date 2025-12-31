@@ -1,5 +1,5 @@
-import { registerEnumType } from "@nestjs/graphql";
-import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
+import { registerEnumType } from '@nestjs/graphql';
+import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
 /**
  * Registers all GraphQL enums for the growing unit.
@@ -8,8 +8,8 @@ import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.en
 const registeredSharedEnums = [
 	{
 		enum: LengthUnitEnum,
-		name: "LengthUnitEnum",
-		description: "The unit of the length",
+		name: 'LengthUnitEnum',
+		description: 'The unit of the length',
 	},
 ];
 

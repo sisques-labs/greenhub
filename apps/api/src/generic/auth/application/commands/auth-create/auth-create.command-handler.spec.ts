@@ -1,30 +1,30 @@
-import { EventBus } from "@nestjs/cqrs";
-import { AuthCreateCommandHandler } from "@/generic/auth/application/commands/auth-create/auth-create.command-handler";
-import { PasswordHashingService } from "@/generic/auth/application/services/password-hashing/password-hashing.service";
-import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
-import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
-import { AuthAggregateFactory } from "@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory";
-import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
-import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
-import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
-import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
-import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
-import { AuthCreateCommand } from "./auth-create.command";
+import { EventBus } from '@nestjs/cqrs';
+import { AuthCreateCommandHandler } from '@/generic/auth/application/commands/auth-create/auth-create.command-handler';
+import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthAggregateFactory } from '@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory';
+import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
+import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { AuthCreateCommand } from './auth-create.command';
 
-describe("AuthCreateCommandHandler", () => {
+describe('AuthCreateCommandHandler', () => {
 	let handler: AuthCreateCommandHandler;
 	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
 	let mockAuthAggregateFactory: jest.Mocked<AuthAggregateFactory>;
 	let mockEventBus: jest.Mocked<EventBus>;
 	let mockPasswordHashingService: jest.Mocked<PasswordHashingService>;
 
-	const authId = "123e4567-e89b-12d3-a456-426614174000";
-	const userId = "123e4567-e89b-12d3-a456-426614174001";
+	const authId = '123e4567-e89b-12d3-a456-426614174000';
+	const userId = '123e4567-e89b-12d3-a456-426614174001';
 	const hashedPassword =
-		"$2b$12$hashedpassword1234567890123456789012345678901234567890123456789012";
+		'$2b$12$hashedpassword1234567890123456789012345678901234567890123456789012';
 
 	beforeEach(() => {
 		mockAuthWriteRepository = {
@@ -65,13 +65,13 @@ describe("AuthCreateCommandHandler", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should create auth successfully with password", async () => {
-			const password = "SecurePass123!";
+	describe('execute', () => {
+		it('should create auth successfully with password', async () => {
+			const password = 'SecurePass123!';
 			const command = new AuthCreateCommand({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				password: password,
 				emailVerified: false,
 				phoneNumber: null,
@@ -85,7 +85,7 @@ describe("AuthCreateCommandHandler", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -99,9 +99,9 @@ describe("AuthCreateCommandHandler", () => {
 				false,
 			);
 
-			const commitSpy = jest.spyOn(mockAuth, "commit");
+			const commitSpy = jest.spyOn(mockAuth, 'commit');
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			mockPasswordHashingService.hashPassword.mockResolvedValue(hashedPassword);
@@ -125,16 +125,16 @@ describe("AuthCreateCommandHandler", () => {
 			getUncommittedEventsSpy.mockRestore();
 		});
 
-		it("should create auth successfully without password", async () => {
+		it('should create auth successfully without password', async () => {
 			const command = new AuthCreateCommand({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				password: null,
 				emailVerified: false,
 				phoneNumber: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: "google-123",
+				providerId: 'google-123',
 				twoFactorEnabled: false,
 				lastLoginAt: null,
 			});
@@ -143,7 +143,7 @@ describe("AuthCreateCommandHandler", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -157,9 +157,9 @@ describe("AuthCreateCommandHandler", () => {
 				false,
 			);
 
-			const commitSpy = jest.spyOn(mockAuth, "commit");
+			const commitSpy = jest.spyOn(mockAuth, 'commit');
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			mockAuthAggregateFactory.create.mockReturnValue(mockAuth);
@@ -179,12 +179,12 @@ describe("AuthCreateCommandHandler", () => {
 			getUncommittedEventsSpy.mockRestore();
 		});
 
-		it("should hash password before creating auth aggregate", async () => {
-			const password = "SecurePass123!";
+		it('should hash password before creating auth aggregate', async () => {
+			const password = 'SecurePass123!';
 			const command = new AuthCreateCommand({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				password: password,
 				emailVerified: false,
 				phoneNumber: null,
@@ -198,7 +198,7 @@ describe("AuthCreateCommandHandler", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -213,7 +213,7 @@ describe("AuthCreateCommandHandler", () => {
 			);
 
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			mockPasswordHashingService.hashPassword.mockResolvedValue(hashedPassword);
@@ -233,11 +233,11 @@ describe("AuthCreateCommandHandler", () => {
 			getUncommittedEventsSpy.mockRestore();
 		});
 
-		it("should publish events before committing", async () => {
+		it('should publish events before committing', async () => {
 			const command = new AuthCreateCommand({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				password: null,
 				emailVerified: false,
 				phoneNumber: null,
@@ -251,7 +251,7 @@ describe("AuthCreateCommandHandler", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -265,9 +265,9 @@ describe("AuthCreateCommandHandler", () => {
 				false,
 			);
 
-			const commitSpy = jest.spyOn(mockAuth, "commit");
+			const commitSpy = jest.spyOn(mockAuth, 'commit');
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			mockAuthAggregateFactory.create.mockReturnValue(mockAuth);
@@ -284,11 +284,11 @@ describe("AuthCreateCommandHandler", () => {
 			getUncommittedEventsSpy.mockRestore();
 		});
 
-		it("should save auth to repository before publishing events", async () => {
+		it('should save auth to repository before publishing events', async () => {
 			const command = new AuthCreateCommand({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				password: null,
 				emailVerified: false,
 				phoneNumber: null,
@@ -302,7 +302,7 @@ describe("AuthCreateCommandHandler", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -317,7 +317,7 @@ describe("AuthCreateCommandHandler", () => {
 			);
 
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			mockAuthAggregateFactory.create.mockReturnValue(mockAuth);
@@ -334,12 +334,12 @@ describe("AuthCreateCommandHandler", () => {
 			getUncommittedEventsSpy.mockRestore();
 		});
 
-		it("should use hashed password in aggregate when password is provided", async () => {
-			const password = "SecurePass123!";
+		it('should use hashed password in aggregate when password is provided', async () => {
+			const password = 'SecurePass123!';
 			const command = new AuthCreateCommand({
 				id: authId,
 				userId: userId,
-				email: "test@example.com",
+				email: 'test@example.com',
 				password: password,
 				emailVerified: false,
 				phoneNumber: null,
@@ -353,7 +353,7 @@ describe("AuthCreateCommandHandler", () => {
 				{
 					id: new AuthUuidValueObject(authId),
 					userId: new UserUuidValueObject(userId),
-					email: new AuthEmailValueObject("test@example.com"),
+					email: new AuthEmailValueObject('test@example.com'),
 					emailVerified: new AuthEmailVerifiedValueObject(false),
 					lastLoginAt: null,
 					password: null,
@@ -368,7 +368,7 @@ describe("AuthCreateCommandHandler", () => {
 			);
 
 			const getUncommittedEventsSpy = jest
-				.spyOn(mockAuth, "getUncommittedEvents")
+				.spyOn(mockAuth, 'getUncommittedEvents')
 				.mockReturnValue([]);
 
 			mockPasswordHashingService.hashPassword.mockResolvedValue(hashedPassword);

@@ -1,5 +1,5 @@
-import { ISagaInstanceCreateViewModelDto } from "@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto";
-import { ISagaInstanceUpdateViewModelDto } from "@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-update/saga-instance-update-view-model.dto";
+import { ISagaInstanceCreateViewModelDto } from '@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto';
+import { ISagaInstanceUpdateViewModelDto } from '@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-update/saga-instance-update-view-model.dto';
 
 /**
  * This class is used to represent a saga instance view model.

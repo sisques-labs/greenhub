@@ -1,20 +1,20 @@
-import { UserNotFoundException } from "@/generic/users/application/exceptions/user-not-found/user-not-found.exception";
-import { AssertUserExsistsService } from "@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service";
-import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
-import { UserWriteRepository } from "@/generic/users/domain/repositories/user-write.repository";
-import { UserAvatarUrlValueObject } from "@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo";
-import { UserBioValueObject } from "@/generic/users/domain/value-objects/user-bio/user-bio.vo";
-import { UserLastNameValueObject } from "@/generic/users/domain/value-objects/user-last-name/user-last-name.vo";
-import { UserNameValueObject } from "@/generic/users/domain/value-objects/user-name/user-name.vo";
-import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
-import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
-import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
-import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
-import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
+import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
+import { UserWriteRepository } from '@/generic/users/domain/repositories/user-write.repository';
+import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
+import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
+import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
+import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
+import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
+import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
+import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 
-describe("AssertUserExsistsService", () => {
+describe('AssertUserExsistsService', () => {
 	let service: AssertUserExsistsService;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
 
@@ -33,13 +33,13 @@ describe("AssertUserExsistsService", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("execute", () => {
-		it("should return user aggregate when user exists", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('execute', () => {
+		it('should return user aggregate when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -57,8 +57,8 @@ describe("AssertUserExsistsService", () => {
 			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should throw UserNotFoundException when user does not exist", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should throw UserNotFoundException when user does not exist', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockUserWriteRepository.findById.mockResolvedValue(null);
 
@@ -73,12 +73,12 @@ describe("AssertUserExsistsService", () => {
 			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(2);
 		});
 
-		it("should call repository with correct id", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should call repository with correct id', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -95,17 +95,17 @@ describe("AssertUserExsistsService", () => {
 			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return user aggregate with all properties when user exists", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return user aggregate with all properties when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
-					name: new UserNameValueObject("John"),
-					lastName: new UserLastNameValueObject("Doe"),
-					bio: new UserBioValueObject("Software developer"),
+					userName: new UserUserNameValueObject('johndoe'),
+					name: new UserNameValueObject('John'),
+					lastName: new UserLastNameValueObject('Doe'),
+					bio: new UserBioValueObject('Software developer'),
 					avatarUrl: new UserAvatarUrlValueObject(
-						"https://example.com/avatar.jpg",
+						'https://example.com/avatar.jpg',
 					),
 					role: new UserRoleValueObject(UserRoleEnum.ADMIN),
 					status: new UserStatusValueObject(UserStatusEnum.INACTIVE),
@@ -121,21 +121,21 @@ describe("AssertUserExsistsService", () => {
 
 			expect(result).toBe(mockUser);
 			expect(result.id.value).toBe(userId);
-			expect(result.userName.value).toBe("johndoe");
-			expect(result.name?.value).toBe("John");
-			expect(result.lastName?.value).toBe("Doe");
-			expect(result.bio?.value).toBe("Software developer");
-			expect(result.avatarUrl?.value).toBe("https://example.com/avatar.jpg");
+			expect(result.userName.value).toBe('johndoe');
+			expect(result.name?.value).toBe('John');
+			expect(result.lastName?.value).toBe('Doe');
+			expect(result.bio?.value).toBe('Software developer');
+			expect(result.avatarUrl?.value).toBe('https://example.com/avatar.jpg');
 			expect(result.role.value).toBe(UserRoleEnum.ADMIN);
 			expect(result.status.value).toBe(UserStatusEnum.INACTIVE);
 		});
 
-		it("should return user aggregate with minimal properties when user exists", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return user aggregate with minimal properties when user exists', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject("johndoe"),
+					userName: new UserUserNameValueObject('johndoe'),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -150,7 +150,7 @@ describe("AssertUserExsistsService", () => {
 
 			expect(result).toBe(mockUser);
 			expect(result.id.value).toBe(userId);
-			expect(result.userName.value).toBe("johndoe");
+			expect(result.userName.value).toBe('johndoe');
 			expect(result.name).toBeUndefined();
 			expect(result.lastName).toBeUndefined();
 			expect(result.bio).toBeUndefined();
@@ -159,9 +159,9 @@ describe("AssertUserExsistsService", () => {
 			expect(result.status.value).toBe(UserStatusEnum.ACTIVE);
 		});
 
-		it("should handle repository errors correctly", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
-			const repositoryError = new Error("Database connection error");
+		it('should handle repository errors correctly', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const repositoryError = new Error('Database connection error');
 
 			mockUserWriteRepository.findById.mockRejectedValue(repositoryError);
 
@@ -171,8 +171,8 @@ describe("AssertUserExsistsService", () => {
 			expect(mockUserWriteRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it("should return user aggregate with different roles and statuses", async () => {
-			const userId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return user aggregate with different roles and statuses', async () => {
+			const userId = '123e4567-e89b-12d3-a456-426614174000';
 			const testCases = [
 				{ role: UserRoleEnum.USER, status: UserStatusEnum.ACTIVE },
 				{ role: UserRoleEnum.ADMIN, status: UserStatusEnum.ACTIVE },
@@ -184,7 +184,7 @@ describe("AssertUserExsistsService", () => {
 				const mockUser = new UserAggregate(
 					{
 						id: new UserUuidValueObject(userId),
-						userName: new UserUserNameValueObject("johndoe"),
+						userName: new UserUserNameValueObject('johndoe'),
 						role: new UserRoleValueObject(testCase.role),
 						status: new UserStatusValueObject(testCase.status),
 						createdAt: new DateValueObject(new Date()),

@@ -1,11 +1,11 @@
-import { Test } from "@nestjs/testing";
-import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
-import { SagaStepViewModelFactory } from "@/generic/saga-context/saga-step/domain/factories/saga-step-view-model/saga-step-view-model.factory";
-import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
-import { SagaStepMongoDbDto } from "@/generic/saga-context/saga-step/infrastructure/database/mongodb/dtos/saga-step-mongodb.dto";
-import { SagaStepMongoDBMapper } from "@/generic/saga-context/saga-step/infrastructure/database/mongodb/mappers/saga-step-mongodb.mapper";
+import { Test } from '@nestjs/testing';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { SagaStepViewModelFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-view-model/saga-step-view-model.factory';
+import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { SagaStepMongoDbDto } from '@/generic/saga-context/saga-step/infrastructure/database/mongodb/dtos/saga-step-mongodb.dto';
+import { SagaStepMongoDBMapper } from '@/generic/saga-context/saga-step/infrastructure/database/mongodb/mappers/saga-step-mongodb.mapper';
 
-describe("SagaStepMongoDBMapper", () => {
+describe('SagaStepMongoDBMapper', () => {
 	let mapper: SagaStepMongoDBMapper;
 	let mockSagaStepViewModelFactory: jest.Mocked<SagaStepViewModelFactory>;
 
@@ -33,18 +33,18 @@ describe("SagaStepMongoDBMapper", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("toViewModel", () => {
-		it("should convert MongoDB document to view model with all properties", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('toViewModel', () => {
+		it('should convert MongoDB document to view model with all properties', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const mongoDoc: SagaStepMongoDbDto = {
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
 				startDate: startDate,
@@ -52,7 +52,7 @@ describe("SagaStepMongoDBMapper", () => {
 				errorMessage: null,
 				retryCount: 2,
 				maxRetries: 5,
-				payload: { orderId: "12345" },
+				payload: { orderId: '12345' },
 				result: { success: true },
 				createdAt: createdAt,
 				updatedAt: updatedAt,
@@ -99,15 +99,15 @@ describe("SagaStepMongoDBMapper", () => {
 			expect(mockSagaStepViewModelFactory.create).toHaveBeenCalledTimes(1);
 		});
 
-		it("should convert MongoDB document to view model with null optional properties", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+		it('should convert MongoDB document to view model with null optional properties', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const mongoDoc: SagaStepMongoDbDto = {
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -161,25 +161,25 @@ describe("SagaStepMongoDBMapper", () => {
 			});
 		});
 
-		it("should convert MongoDB document with failed status and error message", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+		it('should convert MongoDB document with failed status and error message', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const mongoDoc: SagaStepMongoDbDto = {
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.FAILED,
 				startDate: startDate,
 				endDate: endDate,
-				errorMessage: "Payment processing failed",
+				errorMessage: 'Payment processing failed',
 				retryCount: 3,
 				maxRetries: 3,
-				payload: { orderId: "12345" },
+				payload: { orderId: '12345' },
 				result: {},
 				createdAt: createdAt,
 				updatedAt: updatedAt,
@@ -226,18 +226,18 @@ describe("SagaStepMongoDBMapper", () => {
 		});
 	});
 
-	describe("toMongoData", () => {
-		it("should convert view model to MongoDB data with all properties", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
-			const startDate = new Date("2024-01-01T10:00:00Z");
-			const endDate = new Date("2024-01-01T11:00:00Z");
+	describe('toMongoData', () => {
+		it('should convert view model to MongoDB data with all properties', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date('2024-01-01T10:00:00Z');
+			const endDate = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
 				startDate: startDate,
@@ -245,7 +245,7 @@ describe("SagaStepMongoDBMapper", () => {
 				errorMessage: null,
 				retryCount: 2,
 				maxRetries: 5,
-				payload: { orderId: "12345" },
+				payload: { orderId: '12345' },
 				result: { success: true },
 				createdAt: createdAt,
 				updatedAt: updatedAt,
@@ -271,15 +271,15 @@ describe("SagaStepMongoDBMapper", () => {
 			});
 		});
 
-		it("should convert view model to MongoDB data with null optional properties", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+		it('should convert view model to MongoDB data with null optional properties', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -313,30 +313,30 @@ describe("SagaStepMongoDBMapper", () => {
 			});
 		});
 
-		it("should convert view model with complex payload and result", () => {
-			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
-			const createdAt = new Date("2024-01-01T10:00:00Z");
-			const updatedAt = new Date("2024-01-01T11:00:00Z");
+		it('should convert view model with complex payload and result', () => {
+			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+			const createdAt = new Date('2024-01-01T10:00:00Z');
+			const updatedAt = new Date('2024-01-01T11:00:00Z');
 
 			const complexPayload = {
-				orderId: "12345",
-				userId: "67890",
+				orderId: '12345',
+				userId: '67890',
 				items: [{ id: 1, quantity: 2 }],
 			};
 			const complexResult = {
 				success: true,
-				transactionId: "tx-12345",
+				transactionId: 'tx-12345',
 				data: { processed: true },
 			};
 
 			const viewModel = new SagaStepViewModel({
 				id: sagaStepId,
-				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
-				name: "Process Payment",
+				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+				name: 'Process Payment',
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
-				startDate: new Date("2024-01-01T10:00:00Z"),
-				endDate: new Date("2024-01-01T11:00:00Z"),
+				startDate: new Date('2024-01-01T10:00:00Z'),
+				endDate: new Date('2024-01-01T11:00:00Z'),
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,

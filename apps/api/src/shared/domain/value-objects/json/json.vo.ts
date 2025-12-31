@@ -1,4 +1,4 @@
-import { InvalidJsonException } from "@/shared/domain/exceptions/value-objects/invalid-json/invalid-json.exception";
+import { InvalidJsonException } from '@/shared/domain/exceptions/value-objects/invalid-json/invalid-json.exception';
 
 /**
  * JSON Value Object
@@ -218,7 +218,7 @@ export class JsonValueObject {
 	 * @returns The nested value or undefined
 	 */
 	public getNested(path: string): any {
-		return path.split(".").reduce((obj, key) => obj?.[key], this._value);
+		return path.split('.').reduce((obj, key) => obj?.[key], this._value);
 	}
 
 	/**
@@ -229,7 +229,7 @@ export class JsonValueObject {
 	 */
 	public setNested(path: string, value: any): JsonValueObject {
 		const newValue = { ...this._value };
-		const keys = path.split(".");
+		const keys = path.split('.');
 		const lastKey = keys.pop()!;
 		const target = keys.reduce((obj, key) => {
 			if (!(key in obj)) {
@@ -263,23 +263,23 @@ export class JsonValueObject {
 			return {};
 		}
 
-		if (typeof value === "string") {
+		if (typeof value === 'string') {
 			try {
 				const parsed = JSON.parse(value);
-				if (typeof parsed !== "object" || Array.isArray(parsed)) {
+				if (typeof parsed !== 'object' || Array.isArray(parsed)) {
 					throw new InvalidJsonException(
-						"JSON must be an object, not an array or primitive",
+						'JSON must be an object, not an array or primitive',
 					);
 				}
 				return parsed;
 			} catch {
-				throw new InvalidJsonException("Invalid JSON string format");
+				throw new InvalidJsonException('Invalid JSON string format');
 			}
 		}
 
-		if (typeof value !== "object" || Array.isArray(value)) {
+		if (typeof value !== 'object' || Array.isArray(value)) {
 			throw new InvalidJsonException(
-				"Value must be an object, not an array or primitive",
+				'Value must be an object, not an array or primitive',
 			);
 		}
 
@@ -296,7 +296,7 @@ export class JsonValueObject {
 
 	private checkEmpty(): void {
 		if (this.options.allowEmpty === false && this.isEmpty()) {
-			throw new InvalidJsonException("JSON cannot be empty");
+			throw new InvalidJsonException('JSON cannot be empty');
 		}
 	}
 
@@ -318,7 +318,7 @@ export class JsonValueObject {
 			);
 			if (missingKeys.length > 0) {
 				throw new InvalidJsonException(
-					`Missing required keys: ${missingKeys.join(", ")}`,
+					`Missing required keys: ${missingKeys.join(', ')}`,
 				);
 			}
 		}
@@ -331,7 +331,7 @@ export class JsonValueObject {
 			);
 			if (invalidKeys.length > 0) {
 				throw new InvalidJsonException(
-					`Invalid keys: ${invalidKeys.join(", ")}. Allowed keys: ${this.options.allowedKeys.join(", ")}`,
+					`Invalid keys: ${invalidKeys.join(', ')}. Allowed keys: ${this.options.allowedKeys.join(', ')}`,
 				);
 			}
 		}
@@ -342,12 +342,12 @@ export class JsonValueObject {
 			this.options.schema &&
 			!this.validateAgainstSchema(this._value, this.options.schema)
 		) {
-			throw new InvalidJsonException("JSON does not match required schema");
+			throw new InvalidJsonException('JSON does not match required schema');
 		}
 	}
 
 	private getDepth(obj: any, currentDepth: number = 0): number {
-		if (typeof obj !== "object" || obj === null) {
+		if (typeof obj !== 'object' || obj === null) {
 			return currentDepth;
 		}
 
@@ -366,7 +366,7 @@ export class JsonValueObject {
 		Object.keys(source).forEach((key) => {
 			if (
 				source[key] &&
-				typeof source[key] === "object" &&
+				typeof source[key] === 'object' &&
 				!Array.isArray(source[key])
 			) {
 				result[key] = this.deepMerge(target[key] || {}, source[key]);
@@ -380,7 +380,7 @@ export class JsonValueObject {
 
 	private validateAgainstSchema(obj: any, schema: any): boolean {
 		// Simple schema validation - can be extended for more complex schemas
-		if (typeof schema !== "object" || schema === null) {
+		if (typeof schema !== 'object' || schema === null) {
 			return false;
 		}
 
@@ -390,10 +390,10 @@ export class JsonValueObject {
 			}
 
 			const actualType = typeof obj[key];
-			if (expectedType === "array" && !Array.isArray(obj[key])) {
+			if (expectedType === 'array' && !Array.isArray(obj[key])) {
 				return false;
 			}
-			if (expectedType !== "array" && actualType !== expectedType) {
+			if (expectedType !== 'array' && actualType !== expectedType) {
 				return false;
 			}
 		}

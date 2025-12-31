@@ -12,14 +12,14 @@
  */
 export enum GrowingUnitTypeEnum {
 	/** A pot container for individual plants. */
-	POT = "POT",
+	POT = 'POT',
 
 	/** A garden bed for multiple plants. */
-	GARDEN_BED = "GARDEN_BED",
+	GARDEN_BED = 'GARDEN_BED',
 
 	/** A hanging basket container. */
-	HANGING_BASKET = "HANGING_BASKET",
+	HANGING_BASKET = 'HANGING_BASKET',
 
 	/** A window box container. */
-	WINDOW_BOX = "WINDOW_BOX",
+	WINDOW_BOX = 'WINDOW_BOX',
 }

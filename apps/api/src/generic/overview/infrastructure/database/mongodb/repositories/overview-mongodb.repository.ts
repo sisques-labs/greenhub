@@ -1,11 +1,11 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { IOverviewReadRepository } from "@/generic/overview/domain/repositories/overview-read/overview-read.repository";
-import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
-import { OverviewMongoDBMapper } from "@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper";
-import { Criteria } from "@/shared/domain/entities/criteria";
-import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
-import { BaseMongoMasterRepository } from "@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository";
-import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { Injectable, Logger } from '@nestjs/common';
+import { IOverviewReadRepository } from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
+import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+import { OverviewMongoDBMapper } from '@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper';
+import { Criteria } from '@/shared/domain/entities/criteria';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { BaseMongoMasterRepository } from '@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository';
+import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 
 /**
  * MongoDB implementation of the OverviewReadRepository interface.
@@ -19,7 +19,7 @@ export class OverviewMongoRepository
 	extends BaseMongoMasterRepository
 	implements IOverviewReadRepository
 {
-	private readonly collectionName = "overviews";
+	private readonly collectionName = 'overviews';
 
 	constructor(
 		mongoMasterService: MongoMasterService,

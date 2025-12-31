@@ -1,18 +1,18 @@
-import { Repository } from "typeorm";
-import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
-import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
-import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
-import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
-import { SagaLogTypeormEntity } from "@/generic/saga-context/saga-log/infrastructure/database/typeorm/entities/saga-log-typeorm.entity";
-import { SagaLogTypeormMapper } from "@/generic/saga-context/saga-log/infrastructure/database/typeorm/mappers/saga-log-typeorm.mapper";
-import { SagaLogTypeormRepository } from "@/generic/saga-context/saga-log/infrastructure/database/typeorm/repositories/saga-log-typeorm.repository";
-import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
-import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
-import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
-import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
-import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
+import { Repository } from 'typeorm';
+import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
+import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
+import { SagaLogTypeormEntity } from '@/generic/saga-context/saga-log/infrastructure/database/typeorm/entities/saga-log-typeorm.entity';
+import { SagaLogTypeormMapper } from '@/generic/saga-context/saga-log/infrastructure/database/typeorm/mappers/saga-log-typeorm.mapper';
+import { SagaLogTypeormRepository } from '@/generic/saga-context/saga-log/infrastructure/database/typeorm/repositories/saga-log-typeorm.repository';
+import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
+import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 
-describe("SagaLogTypeormRepository", () => {
+describe('SagaLogTypeormRepository', () => {
 	let repository: SagaLogTypeormRepository;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 	let mockSagaLogTypeormMapper: jest.Mocked<SagaLogTypeormMapper>;
@@ -54,11 +54,11 @@ describe("SagaLogTypeormRepository", () => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return saga log aggregate when saga log exists", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
-			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
+	describe('findById', () => {
+		it('should return saga log aggregate when saga log exists', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity = new SagaLogTypeormEntity();
@@ -66,7 +66,7 @@ describe("SagaLogTypeormRepository", () => {
 			typeormEntity.sagaInstanceId = sagaInstanceId;
 			typeormEntity.sagaStepId = sagaStepId;
 			typeormEntity.type = SagaLogTypeEnum.INFO;
-			typeormEntity.message = "Test message";
+			typeormEntity.message = 'Test message';
 			typeormEntity.createdAt = now;
 			typeormEntity.updatedAt = now;
 
@@ -76,7 +76,7 @@ describe("SagaLogTypeormRepository", () => {
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject("Test message"),
+					message: new SagaLogMessageValueObject('Test message'),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -97,8 +97,8 @@ describe("SagaLogTypeormRepository", () => {
 			);
 		});
 
-		it("should return null when saga log does not exist", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return null when saga log does not exist', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -109,30 +109,30 @@ describe("SagaLogTypeormRepository", () => {
 		});
 	});
 
-	describe("findBySagaInstanceId", () => {
-		it("should return saga log aggregates when saga logs exist", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
-			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
+	describe('findBySagaInstanceId', () => {
+		it('should return saga log aggregates when saga logs exist', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity = new SagaLogTypeormEntity();
-			typeormEntity.id = "123e4567-e89b-12d3-a456-426614174000";
+			typeormEntity.id = '123e4567-e89b-12d3-a456-426614174000';
 			typeormEntity.sagaInstanceId = sagaInstanceId;
 			typeormEntity.sagaStepId = sagaStepId;
 			typeormEntity.type = SagaLogTypeEnum.INFO;
-			typeormEntity.message = "Test message";
+			typeormEntity.message = 'Test message';
 			typeormEntity.createdAt = now;
 			typeormEntity.updatedAt = now;
 
 			const sagaLogAggregate = new SagaLogAggregate(
 				{
 					id: new SagaLogUuidValueObject(
-						"123e4567-e89b-12d3-a456-426614174000",
+						'123e4567-e89b-12d3-a456-426614174000',
 					),
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject("Test message"),
+					message: new SagaLogMessageValueObject('Test message'),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -150,8 +150,8 @@ describe("SagaLogTypeormRepository", () => {
 			});
 		});
 
-		it("should return empty array when no saga logs exist", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+		it('should return empty array when no saga logs exist', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
 
 			mockFind.mockResolvedValue([]);
 
@@ -162,30 +162,30 @@ describe("SagaLogTypeormRepository", () => {
 		});
 	});
 
-	describe("findBySagaStepId", () => {
-		it("should return saga log aggregates when saga logs exist", async () => {
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
-			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
+	describe('findBySagaStepId', () => {
+		it('should return saga log aggregates when saga logs exist', async () => {
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const typeormEntity = new SagaLogTypeormEntity();
-			typeormEntity.id = "123e4567-e89b-12d3-a456-426614174000";
+			typeormEntity.id = '123e4567-e89b-12d3-a456-426614174000';
 			typeormEntity.sagaInstanceId = sagaInstanceId;
 			typeormEntity.sagaStepId = sagaStepId;
 			typeormEntity.type = SagaLogTypeEnum.INFO;
-			typeormEntity.message = "Test message";
+			typeormEntity.message = 'Test message';
 			typeormEntity.createdAt = now;
 			typeormEntity.updatedAt = now;
 
 			const sagaLogAggregate = new SagaLogAggregate(
 				{
 					id: new SagaLogUuidValueObject(
-						"123e4567-e89b-12d3-a456-426614174000",
+						'123e4567-e89b-12d3-a456-426614174000',
 					),
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject("Test message"),
+					message: new SagaLogMessageValueObject('Test message'),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -204,11 +204,11 @@ describe("SagaLogTypeormRepository", () => {
 		});
 	});
 
-	describe("save", () => {
-		it("should save saga log aggregate and return saved aggregate", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
-			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
-			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
+	describe('save', () => {
+		it('should save saga log aggregate and return saved aggregate', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const sagaLogAggregate = new SagaLogAggregate(
@@ -217,7 +217,7 @@ describe("SagaLogTypeormRepository", () => {
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject("Test message"),
+					message: new SagaLogMessageValueObject('Test message'),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -229,14 +229,14 @@ describe("SagaLogTypeormRepository", () => {
 			typeormEntity.sagaInstanceId = sagaInstanceId;
 			typeormEntity.sagaStepId = sagaStepId;
 			typeormEntity.type = SagaLogTypeEnum.INFO;
-			typeormEntity.message = "Test message";
+			typeormEntity.message = 'Test message';
 
 			const savedTypeormEntity = new SagaLogTypeormEntity();
 			savedTypeormEntity.id = sagaLogId;
 			savedTypeormEntity.sagaInstanceId = sagaInstanceId;
 			savedTypeormEntity.sagaStepId = sagaStepId;
 			savedTypeormEntity.type = SagaLogTypeEnum.INFO;
-			savedTypeormEntity.message = "Test message";
+			savedTypeormEntity.message = 'Test message';
 
 			const savedSagaLogAggregate = new SagaLogAggregate(
 				{
@@ -244,7 +244,7 @@ describe("SagaLogTypeormRepository", () => {
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject("Test message"),
+					message: new SagaLogMessageValueObject('Test message'),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -270,9 +270,9 @@ describe("SagaLogTypeormRepository", () => {
 		});
 	});
 
-	describe("delete", () => {
-		it("should soft delete saga log and return true", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+	describe('delete', () => {
+		it('should soft delete saga log and return true', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 1,
@@ -286,8 +286,8 @@ describe("SagaLogTypeormRepository", () => {
 			expect(mockSoftDelete).toHaveBeenCalledWith(sagaLogId);
 		});
 
-		it("should return false when saga log does not exist", async () => {
-			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+		it('should return false when saga log does not exist', async () => {
+			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 0,

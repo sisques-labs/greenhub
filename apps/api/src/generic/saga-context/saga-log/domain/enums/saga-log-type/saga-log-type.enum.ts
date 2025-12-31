@@ -1,6 +1,6 @@
 export enum SagaLogTypeEnum {
-	INFO = "INFO",
-	WARNING = "WARNING",
-	ERROR = "ERROR",
-	DEBUG = "DEBUG",
+	INFO = 'INFO',
+	WARNING = 'WARNING',
+	ERROR = 'ERROR',
+	DEBUG = 'DEBUG',
 }
