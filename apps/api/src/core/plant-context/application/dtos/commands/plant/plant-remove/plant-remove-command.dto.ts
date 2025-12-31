@@ -9,4 +9,3 @@ export interface IPlantRemoveCommandDto {
 	growingUnitId: string;
 	plantId: string;
 }
-

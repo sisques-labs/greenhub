@@ -5,4 +5,3 @@ export class OverviewNotFoundException extends BaseApplicationException {
 		super(`Overview with id ${overviewId} not found`);
 	}
 }
-

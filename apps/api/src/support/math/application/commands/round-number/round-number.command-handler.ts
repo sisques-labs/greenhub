@@ -32,4 +32,3 @@ export class RoundNumberCommandHandler
 		return this.roundNumberService.execute(command.value, command.decimals);
 	}
 }
-

@@ -11,4 +11,3 @@ export interface ICalculatePercentageCommandDto {
 	total: number;
 	decimals?: number;
 }
-

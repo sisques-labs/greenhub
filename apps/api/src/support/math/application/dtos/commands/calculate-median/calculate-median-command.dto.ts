@@ -9,4 +9,3 @@ export interface ICalculateMedianCommandDto {
 	values: number[];
 	decimals?: number;
 }
-

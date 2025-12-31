@@ -9,4 +9,3 @@ export interface IRoundNumberCommandDto {
 	value: number;
 	decimals?: number;
 }
-

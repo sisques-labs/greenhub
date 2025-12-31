@@ -86,4 +86,3 @@ export class CalculatePercentageService {
 		return this.execute(remaining, total, decimals);
 	}
 }
-

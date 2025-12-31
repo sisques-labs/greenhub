@@ -58,4 +58,3 @@ export class RoundNumberService {
 		return Math.floor(value);
 	}
 }
-

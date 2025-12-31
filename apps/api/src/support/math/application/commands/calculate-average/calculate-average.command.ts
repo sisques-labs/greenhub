@@ -16,4 +16,3 @@ export class CalculateAverageCommand {
 		this.decimals = props.decimals ?? 2;
 	}
 }
-

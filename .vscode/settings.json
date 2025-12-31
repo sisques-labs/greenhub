@@ -18,7 +18,7 @@
 			// Organize imports automatically (sort and remove unused)
 			"source.organizeImports.biome": "always",
 			// Apply quick fixes like removing unused variables
-			"source.fixAll": "always"
+			"source.fixAll.biome": "always"
 		}
 	},
 
@@ -26,9 +26,8 @@
 	"[typescript]": {
 		"editor.defaultFormatter": "biomejs.biome",
 		"editor.codeActionsOnSave": {
-			"source.organizeImports": "always",
-			"source.fixAll": "always",
-			"source.fixAll.eslint": "always"
+			"source.organizeImports.biome": "always",
+			"source.fixAll.biome": "always"
 		}
 	},
 

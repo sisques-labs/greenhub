@@ -11,4 +11,3 @@ import { StringValueObject } from '@/shared/domain/value-objects/string/string.v
  * const growingUnitName = new GrowingUnitNameValueObject('Garden Bed 1');
  */
 export class GrowingUnitNameValueObject extends StringValueObject {}
-

@@ -14,4 +14,3 @@ export class GrowingUnitDeleteCommand {
 		this.id = new GrowingUnitUuidValueObject(props.id);
 	}
 }
-

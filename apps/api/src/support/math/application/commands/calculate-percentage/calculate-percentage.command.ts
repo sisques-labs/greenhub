@@ -18,4 +18,3 @@ export class CalculatePercentageCommand {
 		this.decimals = props.decimals ?? 2;
 	}
 }
-

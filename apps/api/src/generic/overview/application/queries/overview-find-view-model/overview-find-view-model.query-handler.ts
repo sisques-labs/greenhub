@@ -41,4 +41,3 @@ export class OverviewFindViewModelQueryHandler
 		return await this.overviewReadRepository.findById(this.OVERVIEW_ID);
 	}
 }
-
