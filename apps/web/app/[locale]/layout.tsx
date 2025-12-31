@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { notFound } from 'next/navigation';
-import { getMessages } from 'next-intl/server';
 import { AppLayoutWithSidebar } from '@/shared/components/templates/app-layout-with-sidebar';
 import { routing } from '@/shared/i18n/routing';
 import Providers from '@/shared/providers/providers';
+import type { Metadata } from 'next';
+import { getMessages } from 'next-intl/server';
+import { Geist, Geist_Mono } from 'next/font/google';
+import { notFound } from 'next/navigation';
 import '../globals.css';
 
 const geistSans = Geist({
@@ -18,8 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: 'Sisques Labs',
-	description: 'Sisques Labs Web App',
+	title: process.env.NEXT_PUBLIC_APP_NAME || 'Sisques Labs',
+	description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || 'Sisques Labs Web App',
+	
 };
 
 export function generateStaticParams() {
