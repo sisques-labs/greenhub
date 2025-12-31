@@ -1,50 +1,50 @@
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepAggregateFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-aggregate/saga-step-aggregate.factory';
-import { SagaStepPrimitives } from '@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives';
-import { SagaStepEndDateValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-end-date/saga-step-end-date.vo';
-import { SagaStepErrorMessageValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-error-message/saga-step-error-message.vo';
-import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
-import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
-import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
-import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
-import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
-import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
-import { SagaStepStartDateValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-start-date/saga-step-start-date.vo';
-import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
-import { SagaStepCreatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-created/saga-step-created.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { ISagaStepCreateDto } from "@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepAggregateFactory } from "@/generic/saga-context/saga-step/domain/factories/saga-step-aggregate/saga-step-aggregate.factory";
+import { SagaStepPrimitives } from "@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives";
+import { SagaStepEndDateValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-end-date/saga-step-end-date.vo";
+import { SagaStepErrorMessageValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-error-message/saga-step-error-message.vo";
+import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
+import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
+import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
+import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
+import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
+import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
+import { SagaStepStartDateValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-start-date/saga-step-start-date.vo";
+import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
+import { SagaStepCreatedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-created/saga-step-created.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaStepAggregateFactory', () => {
+describe("SagaStepAggregateFactory", () => {
 	let factory: SagaStepAggregateFactory;
 
 	beforeEach(() => {
 		factory = new SagaStepAggregateFactory();
 	});
 
-	describe('create', () => {
-		it('should create a SagaStepAggregate from DTO with all fields and generate event by default', () => {
+	describe("create", () => {
+		it("should create a SagaStepAggregate from DTO with all fields and generate event by default", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 
 			const dto: ISagaStepCreateDto = {
-				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
+					"223e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaStepNameValueObject('Process Payment'),
+				name: new SagaStepNameValueObject("Process Payment"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: new SagaStepStartDateValueObject(startDate),
 				endDate: new SagaStepEndDateValueObject(endDate),
-				errorMessage: new SagaStepErrorMessageValueObject('Test error'),
+				errorMessage: new SagaStepErrorMessageValueObject("Test error"),
 				retryCount: new SagaStepRetryCountValueObject(0),
 				maxRetries: new SagaStepMaxRetriesValueObject(3),
-				payload: new SagaStepPayloadValueObject({ orderId: '12345' }),
+				payload: new SagaStepPayloadValueObject({ orderId: "12345" }),
 				result: new SagaStepResultValueObject({ success: true }),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
@@ -74,15 +74,15 @@ describe('SagaStepAggregateFactory', () => {
 			expect(uncommittedEvents[0]).toBeInstanceOf(SagaStepCreatedEvent);
 		});
 
-		it('should create a SagaStepAggregate from DTO without generating event when generateEvent is false', () => {
+		it("should create a SagaStepAggregate from DTO without generating event when generateEvent is false", () => {
 			const now = new Date();
 
 			const dto: ISagaStepCreateDto = {
-				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
+					"223e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaStepNameValueObject('Process Payment'),
+				name: new SagaStepNameValueObject("Process Payment"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
@@ -90,7 +90,7 @@ describe('SagaStepAggregateFactory', () => {
 				errorMessage: null,
 				retryCount: new SagaStepRetryCountValueObject(0),
 				maxRetries: new SagaStepMaxRetriesValueObject(3),
-				payload: new SagaStepPayloadValueObject({ orderId: '12345' }),
+				payload: new SagaStepPayloadValueObject({ orderId: "12345" }),
 				result: new SagaStepResultValueObject({}),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
@@ -107,15 +107,15 @@ describe('SagaStepAggregateFactory', () => {
 			expect(uncommittedEvents).toHaveLength(0);
 		});
 
-		it('should create a SagaStepAggregate from DTO with null optional fields', () => {
+		it("should create a SagaStepAggregate from DTO with null optional fields", () => {
 			const now = new Date();
 
 			const dto: ISagaStepCreateDto = {
-				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
+					"223e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaStepNameValueObject('Process Payment'),
+				name: new SagaStepNameValueObject("Process Payment"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
@@ -138,24 +138,24 @@ describe('SagaStepAggregateFactory', () => {
 		});
 	});
 
-	describe('fromPrimitives', () => {
-		it('should create a SagaStepAggregate from primitives with all fields', () => {
+	describe("fromPrimitives", () => {
+		it("should create a SagaStepAggregate from primitives with all fields", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 
 			const primitives: SagaStepPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: startDate,
 				endDate: endDate,
-				errorMessage: 'Test error',
+				errorMessage: "Test error",
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { orderId: '12345' },
+				payload: { orderId: "12345" },
 				result: { success: true },
 				createdAt: now,
 				updatedAt: now,
@@ -180,13 +180,13 @@ describe('SagaStepAggregateFactory', () => {
 			expect(aggregate.updatedAt.value).toEqual(primitives.updatedAt);
 		});
 
-		it('should create a SagaStepAggregate from primitives with null optional fields', () => {
+		it("should create a SagaStepAggregate from primitives with null optional fields", () => {
 			const now = new Date();
 
 			const primitives: SagaStepPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -208,7 +208,7 @@ describe('SagaStepAggregateFactory', () => {
 			expect(aggregate.errorMessage).toBeNull();
 		});
 
-		it('should create a SagaStepAggregate from primitives with different status values', () => {
+		it("should create a SagaStepAggregate from primitives with different status values", () => {
 			const now = new Date();
 			const statuses = [
 				SagaStepStatusEnum.PENDING,
@@ -220,9 +220,9 @@ describe('SagaStepAggregateFactory', () => {
 
 			statuses.forEach((status) => {
 				const primitives: SagaStepPrimitives = {
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					name: 'Test Step',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					name: "Test Step",
 					order: 1,
 					status: status,
 					startDate: null,
@@ -242,23 +242,23 @@ describe('SagaStepAggregateFactory', () => {
 			});
 		});
 
-		it('should create a SagaStepAggregate from primitives with complex payload and result', () => {
+		it("should create a SagaStepAggregate from primitives with complex payload and result", () => {
 			const now = new Date();
 			const complexPayload = {
-				orderId: '12345',
-				userId: '67890',
+				orderId: "12345",
+				userId: "67890",
 				items: [
 					{ id: 1, quantity: 2 },
 					{ id: 2, quantity: 1 },
 				],
 				metadata: {
-					source: 'web',
-					timestamp: '2024-01-01T10:00:00Z',
+					source: "web",
+					timestamp: "2024-01-01T10:00:00Z",
 				},
 			};
 			const complexResult = {
 				success: true,
-				transactionId: 'tx-12345',
+				transactionId: "tx-12345",
 				data: {
 					processed: true,
 					amount: 100.0,
@@ -266,13 +266,13 @@ describe('SagaStepAggregateFactory', () => {
 			};
 
 			const primitives: SagaStepPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
-				startDate: new Date('2024-01-01T10:00:00Z'),
-				endDate: new Date('2024-01-01T11:00:00Z'),
+				startDate: new Date("2024-01-01T10:00:00Z"),
+				endDate: new Date("2024-01-01T11:00:00Z"),
 				errorMessage: null,
 				retryCount: 0,
 				maxRetries: 3,

@@ -1,14 +1,14 @@
-import { Collection } from 'mongodb';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto copy';
-import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
-import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
-import { GrowingUnitMongoRepository } from '@/core/plant-context/infrastructure/database/mongodb/repositories/growing-unit-mongodb.repository';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
+import { Collection } from "mongodb";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { GrowingUnitMongoDbDto } from "@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto copy";
+import { GrowingUnitMongoDBMapper } from "@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper";
+import { PlantMongoDBMapper } from "@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper";
+import { GrowingUnitMongoRepository } from "@/core/plant-context/infrastructure/database/mongodb/repositories/growing-unit-mongodb.repository";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
 
-describe('GrowingUnitMongoRepository', () => {
+describe("GrowingUnitMongoRepository", () => {
 	let repository: GrowingUnitMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockGrowingUnitMongoDBMapper: jest.Mocked<GrowingUnitMongoDBMapper>;
@@ -68,16 +68,16 @@ describe('GrowingUnitMongoRepository', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('findById', () => {
-		it('should return growing unit view model when growing unit exists', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("findById", () => {
+		it("should return growing unit view model when growing unit exists", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 
 			const mongoDoc: GrowingUnitMongoDbDto = {
 				id: growingUnitId,
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -90,8 +90,8 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -109,7 +109,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				'growing-units',
+				"growing-units",
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({
 				id: growingUnitId,
@@ -117,8 +117,8 @@ describe('GrowingUnitMongoRepository', () => {
 			expect(mockGrowingUnitMongoDBMapper.toViewModel).toHaveBeenCalled();
 		});
 
-		it('should return null when growing unit does not exist', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return null when growing unit does not exist", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -132,17 +132,17 @@ describe('GrowingUnitMongoRepository', () => {
 		});
 	});
 
-	describe('findByCriteria', () => {
-		it('should return paginated result with growing units when criteria matches', async () => {
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("findByCriteria", () => {
+		it("should return paginated result with growing units when criteria matches", async () => {
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
 
 			const mongoDocs: GrowingUnitMongoDbDto[] = [
 				{
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					name: 'Garden Bed 1',
-					type: 'GARDEN_BED',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					name: "Garden Bed 1",
+					type: "GARDEN_BED",
 					capacity: 10,
 					dimensions: null,
 					plants: [],
@@ -153,9 +153,9 @@ describe('GrowingUnitMongoRepository', () => {
 					updatedAt,
 				},
 				{
-					id: '223e4567-e89b-12d3-a456-426614174001',
-					name: 'Garden Bed 2',
-					type: 'GARDEN_BED',
+					id: "223e4567-e89b-12d3-a456-426614174001",
+					name: "Garden Bed 2",
+					type: "GARDEN_BED",
 					capacity: 15,
 					dimensions: null,
 					plants: [],
@@ -168,9 +168,9 @@ describe('GrowingUnitMongoRepository', () => {
 			];
 
 			const viewModel1 = new GrowingUnitViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -182,9 +182,9 @@ describe('GrowingUnitMongoRepository', () => {
 			});
 
 			const viewModel2 = new GrowingUnitViewModel({
-				id: '223e4567-e89b-12d3-a456-426614174001',
-				name: 'Garden Bed 2',
-				type: 'GARDEN_BED',
+				id: "223e4567-e89b-12d3-a456-426614174001",
+				name: "Garden Bed 2",
+				type: "GARDEN_BED",
 				capacity: 15,
 				dimensions: null,
 				plants: [],
@@ -220,16 +220,16 @@ describe('GrowingUnitMongoRepository', () => {
 		});
 	});
 
-	describe('save', () => {
-		it('should save growing unit view model using upsert', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("save", () => {
+		it("should save growing unit view model using upsert", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -242,8 +242,8 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const mongoData: GrowingUnitMongoDbDto = {
 				id: growingUnitId,
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -266,7 +266,7 @@ describe('GrowingUnitMongoRepository', () => {
 			await repository.save(viewModel);
 
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				'growing-units',
+				"growing-units",
 			);
 			expect(mockGrowingUnitMongoDBMapper.toMongoData).toHaveBeenCalledWith(
 				viewModel,
@@ -279,9 +279,9 @@ describe('GrowingUnitMongoRepository', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should delete growing unit view model by id', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("delete", () => {
+		it("should delete growing unit view model by id", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockCollection.deleteOne.mockResolvedValue({
 				acknowledged: true,
@@ -291,7 +291,7 @@ describe('GrowingUnitMongoRepository', () => {
 			await repository.delete(growingUnitId);
 
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				'growing-units',
+				"growing-units",
 			);
 			expect(mockCollection.deleteOne).toHaveBeenCalledWith({
 				id: growingUnitId,
@@ -299,17 +299,17 @@ describe('GrowingUnitMongoRepository', () => {
 		});
 	});
 
-	describe('findByContainerId', () => {
-		it('should return array of growing unit view models when growing units exist', async () => {
-			const containerId = '223e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("findByContainerId", () => {
+		it("should return array of growing unit view models when growing units exist", async () => {
+			const containerId = "223e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 
 			const mongoDocs: GrowingUnitMongoDbDto[] = [
 				{
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					name: 'Garden Bed 1',
-					type: 'GARDEN_BED',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					name: "Garden Bed 1",
+					type: "GARDEN_BED",
 					capacity: 10,
 					dimensions: null,
 					plants: [],
@@ -322,9 +322,9 @@ describe('GrowingUnitMongoRepository', () => {
 			];
 
 			const viewModel = new GrowingUnitViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],

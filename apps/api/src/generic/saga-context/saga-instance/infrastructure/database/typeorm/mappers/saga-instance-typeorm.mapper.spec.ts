@@ -1,16 +1,16 @@
-import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
-import { SagaInstanceAggregateFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-aggregate/saga-instance-aggregate.factory';
-import { SagaInstanceEndDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo';
-import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
-import { SagaInstanceStartDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo';
-import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
-import { SagaInstanceTypeormEntity } from '@/generic/saga-context/saga-instance/infrastructure/database/typeorm/entities/saga-instance-typeorm.entity';
-import { SagaInstanceTypeormMapper } from '@/generic/saga-context/saga-instance/infrastructure/database/typeorm/mappers/saga-instance-typeorm.mapper';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
+import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { SagaInstanceAggregateFactory } from "@/generic/saga-context/saga-instance/domain/factories/saga-instance-aggregate/saga-instance-aggregate.factory";
+import { SagaInstanceEndDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo";
+import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
+import { SagaInstanceStartDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo";
+import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
+import { SagaInstanceTypeormEntity } from "@/generic/saga-context/saga-instance/infrastructure/database/typeorm/entities/saga-instance-typeorm.entity";
+import { SagaInstanceTypeormMapper } from "@/generic/saga-context/saga-instance/infrastructure/database/typeorm/mappers/saga-instance-typeorm.mapper";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
 
-describe('SagaInstanceTypeormMapper', () => {
+describe("SagaInstanceTypeormMapper", () => {
 	let mapper: SagaInstanceTypeormMapper;
 	let mockSagaInstanceAggregateFactory: jest.Mocked<SagaInstanceAggregateFactory>;
 
@@ -27,16 +27,16 @@ describe('SagaInstanceTypeormMapper', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('toDomainEntity', () => {
-		it('should convert TypeORM entity to domain entity with all properties', () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("toDomainEntity", () => {
+		it("should convert TypeORM entity to domain entity with all properties", () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 			const startDate = new Date();
 			const endDate = new Date();
 
 			const typeormEntity = new SagaInstanceTypeormEntity();
 			typeormEntity.id = sagaInstanceId;
-			typeormEntity.name = 'test-saga-instance';
+			typeormEntity.name = "test-saga-instance";
 			typeormEntity.status = SagaInstanceStatusEnum.COMPLETED;
 			typeormEntity.startDate = startDate;
 			typeormEntity.endDate = endDate;
@@ -47,7 +47,7 @@ describe('SagaInstanceTypeormMapper', () => {
 			const mockSagaInstanceAggregate = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaInstanceNameValueObject('test-saga-instance'),
+					name: new SagaInstanceNameValueObject("test-saga-instance"),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.COMPLETED,
 					),
@@ -70,7 +70,7 @@ describe('SagaInstanceTypeormMapper', () => {
 				mockSagaInstanceAggregateFactory.fromPrimitives,
 			).toHaveBeenCalledWith({
 				id: sagaInstanceId,
-				name: 'test-saga-instance',
+				name: "test-saga-instance",
 				status: SagaInstanceStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
@@ -82,13 +82,13 @@ describe('SagaInstanceTypeormMapper', () => {
 			).toHaveBeenCalledTimes(1);
 		});
 
-		it('should convert TypeORM entity with null optional properties', () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should convert TypeORM entity with null optional properties", () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new SagaInstanceTypeormEntity();
 			typeormEntity.id = sagaInstanceId;
-			typeormEntity.name = 'test-saga-instance';
+			typeormEntity.name = "test-saga-instance";
 			typeormEntity.status = SagaInstanceStatusEnum.PENDING;
 			typeormEntity.startDate = null;
 			typeormEntity.endDate = null;
@@ -99,7 +99,7 @@ describe('SagaInstanceTypeormMapper', () => {
 			const mockSagaInstanceAggregate = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaInstanceNameValueObject('test-saga-instance'),
+					name: new SagaInstanceNameValueObject("test-saga-instance"),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.PENDING,
 					),
@@ -122,7 +122,7 @@ describe('SagaInstanceTypeormMapper', () => {
 				mockSagaInstanceAggregateFactory.fromPrimitives,
 			).toHaveBeenCalledWith({
 				id: sagaInstanceId,
-				name: 'test-saga-instance',
+				name: "test-saga-instance",
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
 				endDate: null,
@@ -132,9 +132,9 @@ describe('SagaInstanceTypeormMapper', () => {
 		});
 	});
 
-	describe('toTypeormEntity', () => {
-		it('should convert domain entity to TypeORM entity with all properties', () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("toTypeormEntity", () => {
+		it("should convert domain entity to TypeORM entity with all properties", () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 			const startDate = new Date();
 			const endDate = new Date();
@@ -142,7 +142,7 @@ describe('SagaInstanceTypeormMapper', () => {
 			const mockSagaInstanceAggregate = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaInstanceNameValueObject('test-saga-instance'),
+					name: new SagaInstanceNameValueObject("test-saga-instance"),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.COMPLETED,
 					),
@@ -155,10 +155,10 @@ describe('SagaInstanceTypeormMapper', () => {
 			);
 
 			const toPrimitivesSpy = jest
-				.spyOn(mockSagaInstanceAggregate, 'toPrimitives')
+				.spyOn(mockSagaInstanceAggregate, "toPrimitives")
 				.mockReturnValue({
 					id: sagaInstanceId,
-					name: 'test-saga-instance',
+					name: "test-saga-instance",
 					status: SagaInstanceStatusEnum.COMPLETED,
 					startDate: startDate,
 					endDate: endDate,
@@ -170,7 +170,7 @@ describe('SagaInstanceTypeormMapper', () => {
 
 			expect(result).toBeInstanceOf(SagaInstanceTypeormEntity);
 			expect(result.id).toBe(sagaInstanceId);
-			expect(result.name).toBe('test-saga-instance');
+			expect(result.name).toBe("test-saga-instance");
 			expect(result.status).toBe(SagaInstanceStatusEnum.COMPLETED);
 			expect(result.startDate).toEqual(startDate);
 			expect(result.endDate).toEqual(endDate);
@@ -182,14 +182,14 @@ describe('SagaInstanceTypeormMapper', () => {
 			toPrimitivesSpy.mockRestore();
 		});
 
-		it('should convert domain entity with null optional properties', () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should convert domain entity with null optional properties", () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const mockSagaInstanceAggregate = new SagaInstanceAggregate(
 				{
 					id: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaInstanceNameValueObject('test-saga-instance'),
+					name: new SagaInstanceNameValueObject("test-saga-instance"),
 					status: new SagaInstanceStatusValueObject(
 						SagaInstanceStatusEnum.PENDING,
 					),
@@ -202,10 +202,10 @@ describe('SagaInstanceTypeormMapper', () => {
 			);
 
 			const toPrimitivesSpy = jest
-				.spyOn(mockSagaInstanceAggregate, 'toPrimitives')
+				.spyOn(mockSagaInstanceAggregate, "toPrimitives")
 				.mockReturnValue({
 					id: sagaInstanceId,
-					name: 'test-saga-instance',
+					name: "test-saga-instance",
 					status: SagaInstanceStatusEnum.PENDING,
 					startDate: null,
 					endDate: null,
@@ -217,7 +217,7 @@ describe('SagaInstanceTypeormMapper', () => {
 
 			expect(result).toBeInstanceOf(SagaInstanceTypeormEntity);
 			expect(result.id).toBe(sagaInstanceId);
-			expect(result.name).toBe('test-saga-instance');
+			expect(result.name).toBe("test-saga-instance");
 			expect(result.status).toBe(SagaInstanceStatusEnum.PENDING);
 			expect(result.startDate).toBeNull();
 			expect(result.endDate).toBeNull();

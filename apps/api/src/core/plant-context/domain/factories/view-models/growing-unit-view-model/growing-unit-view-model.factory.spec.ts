@@ -1,22 +1,22 @@
-import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
-import { IGrowingUnitViewModelDto } from '@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto';
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
-import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
-import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
-import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
-import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit.primitives';
-import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
-import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
-import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
-import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
-import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { IGrowingUnitDto } from "@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto";
+import { IGrowingUnitViewModelDto } from "@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto";
+import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
+import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
+import { GrowingUnitAggregateFactory } from "@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory";
+import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
+import { GrowingUnitViewModelFactory } from "@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory";
+import { PlantViewModelFactory } from "@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory";
+import { GrowingUnitPrimitives } from "@/core/plant-context/domain/primitives/growing-unit.primitives";
+import { PlantPrimitives } from "@/core/plant-context/domain/primitives/plant.primitives";
+import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
+import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
+import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
+import { DimensionsValueObject } from "@/shared/domain/value-objects/dimensions/dimensions.vo";
+import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
 
-describe('GrowingUnitViewModelFactory', () => {
+describe("GrowingUnitViewModelFactory", () => {
 	let factory: GrowingUnitViewModelFactory;
 	let plantViewModelFactory: PlantViewModelFactory;
 	let plantEntityFactory: PlantEntityFactory;
@@ -31,11 +31,11 @@ describe('GrowingUnitViewModelFactory', () => {
 		factory = new GrowingUnitViewModelFactory(plantViewModelFactory);
 	});
 
-	describe('create', () => {
-		it('should create a GrowingUnitViewModel from DTO', () => {
+	describe("create", () => {
+		it("should create a GrowingUnitViewModel from DTO", () => {
 			const dto: IGrowingUnitViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: {
@@ -61,10 +61,10 @@ describe('GrowingUnitViewModelFactory', () => {
 			expect(viewModel.capacity).toBe(dto.capacity);
 		});
 
-		it('should create a GrowingUnitViewModel from DTO without dimensions', () => {
+		it("should create a GrowingUnitViewModel from DTO without dimensions", () => {
 			const dto: IGrowingUnitViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,
@@ -83,11 +83,11 @@ describe('GrowingUnitViewModelFactory', () => {
 		});
 	});
 
-	describe('fromPrimitives', () => {
-		it('should create a GrowingUnitViewModel from primitives', () => {
+	describe("fromPrimitives", () => {
+		it("should create a GrowingUnitViewModel from primitives", () => {
 			const primitives: GrowingUnitPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: {
@@ -108,10 +108,10 @@ describe('GrowingUnitViewModelFactory', () => {
 			expect(viewModel.capacity).toBe(primitives.capacity);
 		});
 
-		it('should create a GrowingUnitViewModel from primitives without dimensions', () => {
+		it("should create a GrowingUnitViewModel from primitives without dimensions", () => {
 			const primitives: GrowingUnitPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,
@@ -125,20 +125,20 @@ describe('GrowingUnitViewModelFactory', () => {
 			expect(viewModel.volume).toBe(0);
 		});
 
-		it('should create a GrowingUnitViewModel from primitives with plants', () => {
+		it("should create a GrowingUnitViewModel from primitives with plants", () => {
 			const plantPrimitives: PlantPrimitives = {
-				id: '223e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: new Date('2024-01-15'),
-				notes: 'Keep in indirect sunlight',
+				id: "223e4567-e89b-12d3-a456-426614174000",
+				growingUnitId: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Basil",
+				species: "Ocimum basilicum",
+				plantedDate: new Date("2024-01-15"),
+				notes: "Keep in indirect sunlight",
 				status: PlantStatusEnum.PLANTED,
 			};
 
 			const primitives: GrowingUnitPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
 				dimensions: null,
@@ -153,11 +153,11 @@ describe('GrowingUnitViewModelFactory', () => {
 		});
 	});
 
-	describe('fromAggregate', () => {
-		it('should create a GrowingUnitViewModel from aggregate', () => {
+	describe("fromAggregate", () => {
+		it("should create a GrowingUnitViewModel from aggregate", () => {
 			const dto: IGrowingUnitDto = {
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				name: new GrowingUnitNameValueObject("Garden Bed 1"),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: new DimensionsValueObject({
@@ -179,10 +179,10 @@ describe('GrowingUnitViewModelFactory', () => {
 			expect(viewModel.capacity).toBe(aggregate.capacity.value);
 		});
 
-		it('should create a GrowingUnitViewModel from aggregate without dimensions', () => {
+		it("should create a GrowingUnitViewModel from aggregate without dimensions", () => {
 			const dto: IGrowingUnitDto = {
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				name: new GrowingUnitNameValueObject("Garden Bed 1"),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -197,10 +197,10 @@ describe('GrowingUnitViewModelFactory', () => {
 			expect(viewModel.volume).toBe(0);
 		});
 
-		it('should calculate remaining capacity correctly', () => {
+		it("should calculate remaining capacity correctly", () => {
 			const dto: IGrowingUnitDto = {
 				id: new GrowingUnitUuidValueObject(),
-				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				name: new GrowingUnitNameValueObject("Garden Bed 1"),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,

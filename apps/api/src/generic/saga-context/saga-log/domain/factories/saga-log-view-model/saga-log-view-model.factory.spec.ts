@@ -1,33 +1,33 @@
-import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
-import { ISagaLogCreateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogViewModelFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory';
-import { SagaLogPrimitives } from '@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives';
-import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
-import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
+import { ISagaLogCreateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogViewModelFactory } from "@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory";
+import { SagaLogPrimitives } from "@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives";
+import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
+import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaLogViewModelFactory', () => {
+describe("SagaLogViewModelFactory", () => {
 	let factory: SagaLogViewModelFactory;
 
 	beforeEach(() => {
 		factory = new SagaLogViewModelFactory();
 	});
 
-	describe('create', () => {
-		it('should create a SagaLogViewModel from DTO with all fields', () => {
+	describe("create", () => {
+		it("should create a SagaLogViewModel from DTO with all fields", () => {
 			const now = new Date();
 
 			const dto: ISagaLogCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -45,16 +45,16 @@ describe('SagaLogViewModelFactory', () => {
 		});
 	});
 
-	describe('fromPrimitives', () => {
-		it('should create a SagaLogViewModel from primitives with all fields', () => {
+	describe("fromPrimitives", () => {
+		it("should create a SagaLogViewModel from primitives with all fields", () => {
 			const now = new Date();
 
 			const primitives: SagaLogPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -72,23 +72,23 @@ describe('SagaLogViewModelFactory', () => {
 		});
 	});
 
-	describe('fromAggregate', () => {
-		it('should create a SagaLogViewModel from aggregate with all fields', () => {
+	describe("fromAggregate", () => {
+		it("should create a SagaLogViewModel from aggregate with all fields", () => {
 			const now = new Date();
 
 			const aggregate = new SagaLogAggregate(
 				{
 					id: new SagaLogUuidValueObject(
-						'123e4567-e89b-12d3-a456-426614174000',
+						"123e4567-e89b-12d3-a456-426614174000",
 					),
 					sagaInstanceId: new SagaInstanceUuidValueObject(
-						'223e4567-e89b-12d3-a456-426614174000',
+						"223e4567-e89b-12d3-a456-426614174000",
 					),
 					sagaStepId: new SagaStepUuidValueObject(
-						'323e4567-e89b-12d3-a456-426614174000',
+						"323e4567-e89b-12d3-a456-426614174000",
 					),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject('Test log message'),
+					message: new SagaLogMessageValueObject("Test log message"),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -107,7 +107,7 @@ describe('SagaLogViewModelFactory', () => {
 			expect(viewModel.updatedAt).toEqual(aggregate.updatedAt.value);
 		});
 
-		it('should create a SagaLogViewModel from aggregate with different log types', () => {
+		it("should create a SagaLogViewModel from aggregate with different log types", () => {
 			const now = new Date();
 			const types = [
 				SagaLogTypeEnum.INFO,

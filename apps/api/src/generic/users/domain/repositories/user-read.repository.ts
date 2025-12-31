@@ -1,8 +1,8 @@
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
-export const USER_READ_REPOSITORY_TOKEN = Symbol('UserReadRepository');
+export const USER_READ_REPOSITORY_TOKEN = Symbol("UserReadRepository");
 
 export interface UserReadRepository {
 	findById(id: string): Promise<UserViewModel | null>;

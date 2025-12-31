@@ -1,5 +1,5 @@
-import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
-import { IUserUpdateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-update/user-update-view-model.dto';
+import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
+import { IUserUpdateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-update/user-update-view-model.dto";
 
 /**
  * This class is used to represent a user view model.

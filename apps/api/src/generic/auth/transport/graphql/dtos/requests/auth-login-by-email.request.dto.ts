@@ -1,10 +1,10 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
-@InputType('AuthLoginByEmailRequestDto')
+@InputType("AuthLoginByEmailRequestDto")
 export class AuthLoginByEmailRequestDto {
 	@Field(() => String, {
-		description: 'The email of the auth',
+		description: "The email of the auth",
 		nullable: false,
 	})
 	@IsEmail()
@@ -12,7 +12,7 @@ export class AuthLoginByEmailRequestDto {
 	email: string;
 
 	@Field(() => String, {
-		description: 'The password of the auth',
+		description: "The password of the auth",
 		nullable: false,
 	})
 	@IsString()

@@ -1,13 +1,13 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
-import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
+import { Inject, Logger } from "@nestjs/common";
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
+import { PlantUpdatedEvent } from "@/core/plant-context/application/events/plant/plant-updated/plant-updated.event";
+import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
+import { GrowingUnitViewModelFactory } from "@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory";
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
 
 /**
  * Event handler for PlantUpdatedEvent.

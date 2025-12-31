@@ -1,5 +1,5 @@
 export enum AuthProviderEnum {
-	LOCAL = 'LOCAL',
-	GOOGLE = 'GOOGLE',
-	APPLE = 'APPLE',
+	LOCAL = "LOCAL",
+	GOOGLE = "GOOGLE",
+	APPLE = "APPLE",
 }

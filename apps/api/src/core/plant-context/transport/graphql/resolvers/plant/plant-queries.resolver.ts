@@ -1,14 +1,14 @@
-import { Logger, UseGuards } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { PlantFindByIdQuery } from '@/core/plant-context/application/queries/plant/plant-find-by-id/plant-find-by-id.query';
-import { PlantFindByIdRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-find-by-id.request.dto';
-import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
-import { PlantGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/plant/plant.mapper';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
-import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
-import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { Logger, UseGuards } from "@nestjs/common";
+import { QueryBus } from "@nestjs/cqrs";
+import { Args, Query, Resolver } from "@nestjs/graphql";
+import { PlantFindByIdQuery } from "@/core/plant-context/application/queries/plant/plant-find-by-id/plant-find-by-id.query";
+import { PlantFindByIdRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-find-by-id.request.dto";
+import { PlantResponseDto } from "@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto";
+import { PlantGraphQLMapper } from "@/core/plant-context/transport/graphql/mappers/plant/plant.mapper";
+import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
+import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
+import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
 
 /**
  * GraphQL resolver for plant queries.
@@ -35,7 +35,7 @@ export class PlantQueriesResolver {
 	 */
 	@Query(() => PlantResponseDto, { nullable: true })
 	async plantFindById(
-		@Args('input') input: PlantFindByIdRequestDto,
+		@Args("input") input: PlantFindByIdRequestDto,
 	): Promise<PlantResponseDto | null> {
 		this.logger.log(`Finding plant by id: ${input.id}`);
 

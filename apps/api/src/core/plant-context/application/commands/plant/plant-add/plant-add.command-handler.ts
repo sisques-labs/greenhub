@@ -1,17 +1,17 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
-import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
-import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
-import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
-import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { Inject, Logger } from "@nestjs/common";
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { PlantAddCommand } from "@/core/plant-context/application/commands/plant/plant-add/plant-add.command";
+import { PlantCreatedEvent } from "@/core/plant-context/application/events/plant/plant-created/plant-created.event";
+import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
+import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
+import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
+import { GrowingUnitFullCapacityException } from "@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception";
+import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
 import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository";
+import { PublishIntegrationEventsService } from "@/shared/application/services/publish-integration-events/publish-integration-events.service";
 
 /**
  * Handles the {@link PlantAddCommand} to add a new plant to a growing unit.

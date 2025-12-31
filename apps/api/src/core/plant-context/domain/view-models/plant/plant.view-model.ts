@@ -1,5 +1,5 @@
-import { IPlantViewModelDto } from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
-import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
+import { IPlantViewModelDto } from "@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto";
+import { BaseViewModel } from "@/shared/domain/view-models/base-view-model/base-view-model";
 
 /**
  * Represents a plant view model for the presentation layer.

@@ -1,13 +1,13 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { SagaInstanceUpdateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command';
-import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
-import { ISagaInstanceUpdateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-update/saga-instance-update.dto';
+import { Inject, Logger } from "@nestjs/common";
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { SagaInstanceUpdateCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command";
+import { AssertSagaInstanceExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service";
+import { ISagaInstanceUpdateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-update/saga-instance-update.dto";
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
-} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
-import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
+} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository";
+import { BaseUpdateCommandHandler } from "@/shared/application/commands/update/base-update/base-update.command-handler";
 
 @CommandHandler(SagaInstanceUpdateCommand)
 export class SagaInstanceUpdateCommandHandler
@@ -43,7 +43,7 @@ export class SagaInstanceUpdateCommandHandler
 			await this.assertSagaInstanceExistsService.execute(command.id.value);
 
 		// 02: Extract update data excluding the id field
-		const updateData = this.extractUpdateData(command, ['id']);
+		const updateData = this.extractUpdateData(command, ["id"]);
 		this.logger.debug(`Update data: ${JSON.stringify(updateData)}`);
 
 		// 03: Update the saga instance

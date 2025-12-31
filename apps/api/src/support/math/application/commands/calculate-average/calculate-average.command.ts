@@ -1,4 +1,4 @@
-import { ICalculateAverageCommandDto } from '@/support/math/application/dtos/commands/calculate-average/calculate-average-command.dto';
+import { ICalculateAverageCommandDto } from "@/support/math/application/dtos/commands/calculate-average/calculate-average-command.dto";
 
 /**
  * Command for calculating average.

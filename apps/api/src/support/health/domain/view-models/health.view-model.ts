@@ -1,4 +1,4 @@
-import { IHealthCreateViewModelDto } from '@/support/health/domain/dtos/view-models/health-create/health-create.dto';
+import { IHealthCreateViewModelDto } from "@/support/health/domain/dtos/view-models/health-create/health-create.dto";
 
 export class HealthViewModel {
 	private readonly _status: string;

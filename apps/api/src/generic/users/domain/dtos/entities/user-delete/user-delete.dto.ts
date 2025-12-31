@@ -1,4 +1,4 @@
-import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create/user-create.dto';
+import { IUserCreateDto } from "@/generic/users/domain/dtos/entities/user-create/user-create.dto";
 
 /**
  * Data Transfer Object for deleting a user.
@@ -7,4 +7,4 @@ import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create
  * @type IUserDeleteDto
  * @property {string} id - The immutable identifier of the user to delete.
  */
-export type IUserDeleteDto = Pick<IUserCreateDto, 'id'>;
+export type IUserDeleteDto = Pick<IUserCreateDto, "id">;

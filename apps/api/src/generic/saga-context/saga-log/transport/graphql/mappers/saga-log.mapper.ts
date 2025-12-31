@@ -1,10 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+import { Injectable, Logger } from "@nestjs/common";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
 import {
 	PaginatedSagaLogResultDto,
 	SagaLogResponseDto,
-} from '@/generic/saga-context/saga-log/transport/graphql/dtos/responses/saga-log.response.dto';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+} from "@/generic/saga-context/saga-log/transport/graphql/dtos/responses/saga-log.response.dto";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
 @Injectable()
 export class SagaLogGraphQLMapper {

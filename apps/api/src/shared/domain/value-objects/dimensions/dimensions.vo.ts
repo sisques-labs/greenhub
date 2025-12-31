@@ -1,5 +1,5 @@
-import { InvalidDimensionsException } from '@/shared/domain/exceptions/value-objects/invalid-dimensions/invalid-dimensions.exception';
-import { LengthUnitValueObject } from '@/shared/domain/value-objects/length-unit/length-unit.vo';
+import { InvalidDimensionsException } from "@/shared/domain/exceptions/value-objects/invalid-dimensions/invalid-dimensions.exception";
+import { LengthUnitValueObject } from "@/shared/domain/value-objects/length-unit/length-unit.vo";
 
 /**
  * Dimensions Value Object
@@ -40,9 +40,9 @@ export class DimensionsValueObject {
 		} = {},
 	) {
 		this.validateRequiredFields(dimensions);
-		this._length = this.parseValue(dimensions.length, 'length');
-		this._width = this.parseValue(dimensions.width, 'width');
-		this._height = this.parseValue(dimensions.height, 'height');
+		this._length = this.parseValue(dimensions.length, "length");
+		this._width = this.parseValue(dimensions.width, "width");
+		this._height = this.parseValue(dimensions.height, "height");
 		this._unit = new LengthUnitValueObject(dimensions.unit);
 		this.validate();
 	}
@@ -86,25 +86,25 @@ export class DimensionsValueObject {
 			dimensions.height !== undefined &&
 			dimensions.unit !== null &&
 			dimensions.unit !== undefined &&
-			dimensions.unit.trim() !== '';
+			dimensions.unit.trim() !== "";
 
 		if (!hasAllFields) {
 			if (options.throwOnInvalid) {
 				const missingFields: string[] = [];
 				if (dimensions.length === null || dimensions.length === undefined) {
-					missingFields.push('length');
+					missingFields.push("length");
 				}
 				if (dimensions.width === null || dimensions.width === undefined) {
-					missingFields.push('width');
+					missingFields.push("width");
 				}
 				if (dimensions.height === null || dimensions.height === undefined) {
-					missingFields.push('height');
+					missingFields.push("height");
 				}
-				if (!dimensions.unit || dimensions.unit.trim() === '') {
-					missingFields.push('unit');
+				if (!dimensions.unit || dimensions.unit.trim() === "") {
+					missingFields.push("unit");
 				}
 				throw new InvalidDimensionsException(
-					`Missing required fields: ${missingFields.join(', ')}`,
+					`Missing required fields: ${missingFields.join(", ")}`,
 				);
 			}
 			return null;
@@ -290,24 +290,24 @@ export class DimensionsValueObject {
 		unit: string;
 	}): void {
 		if (dimensions.length === null || dimensions.length === undefined) {
-			throw new InvalidDimensionsException('Length is required');
+			throw new InvalidDimensionsException("Length is required");
 		}
 
 		if (dimensions.width === null || dimensions.width === undefined) {
-			throw new InvalidDimensionsException('Width is required');
+			throw new InvalidDimensionsException("Width is required");
 		}
 
 		if (dimensions.height === null || dimensions.height === undefined) {
-			throw new InvalidDimensionsException('Height is required');
+			throw new InvalidDimensionsException("Height is required");
 		}
 
-		if (!dimensions.unit || dimensions.unit.trim() === '') {
-			throw new InvalidDimensionsException('Unit is required');
+		if (!dimensions.unit || dimensions.unit.trim() === "") {
+			throw new InvalidDimensionsException("Unit is required");
 		}
 	}
 
 	private parseValue(value: number | string, dimensionName: string): number {
-		if (typeof value === 'string') {
+		if (typeof value === "string") {
 			const parsed = parseFloat(value);
 			if (isNaN(parsed)) {
 				throw new InvalidDimensionsException(
@@ -320,9 +320,9 @@ export class DimensionsValueObject {
 	}
 
 	private validate(): void {
-		this.validateDimension(this._length, 'length');
-		this.validateDimension(this._width, 'width');
-		this.validateDimension(this._height, 'height');
+		this.validateDimension(this._length, "length");
+		this.validateDimension(this._width, "width");
+		this.validateDimension(this._height, "height");
 	}
 
 	private validateDimension(value: number, dimensionName: string): void {
@@ -365,7 +365,7 @@ export class DimensionsValueObject {
 		}
 
 		if (this.options.precision !== undefined) {
-			const decimalPlaces = (value.toString().split('.')[1] || '').length;
+			const decimalPlaces = (value.toString().split(".")[1] || "").length;
 			if (decimalPlaces > this.options.precision) {
 				throw new InvalidDimensionsException(
 					`${dimensionName} cannot have more than ${this.options.precision} decimal places`,

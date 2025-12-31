@@ -1,4 +1,4 @@
-import { IAuthUserProfileCreateViewModelDto } from '@/generic/auth/domain/dtos/view-models/auth-user-profile-create/auth-user-profile-create-view-model.dto';
+import { IAuthUserProfileCreateViewModelDto } from "@/generic/auth/domain/dtos/view-models/auth-user-profile-create/auth-user-profile-create-view-model.dto";
 
 /**
  * This class is used to represent a combined auth and user view model for profile.

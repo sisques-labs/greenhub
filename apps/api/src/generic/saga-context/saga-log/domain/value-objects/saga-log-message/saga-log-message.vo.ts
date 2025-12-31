@@ -1,4 +1,4 @@
-import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
+import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
 
 /**
  * SagaLogMessageValueObject represents the message of a saga log.

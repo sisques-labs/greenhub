@@ -1,6 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from "@nestjs/graphql";
 
-@ObjectType('MutationResponseDto')
+@ObjectType("MutationResponseDto")
 export class MutationResponseDto {
 	@Field(() => Boolean)
 	success: boolean;

@@ -1,5 +1,5 @@
-import { ISagaInstanceFindByCriteriaQueryDto } from '@/generic/saga-context/saga-instance/application/dtos/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.dto';
-import { Criteria } from '@/shared/domain/entities/criteria';
+import { ISagaInstanceFindByCriteriaQueryDto } from "@/generic/saga-context/saga-instance/application/dtos/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.dto";
+import { Criteria } from "@/shared/domain/entities/criteria";
 
 export class FindSagaInstancesByCriteriaQuery {
 	readonly criteria: Criteria;

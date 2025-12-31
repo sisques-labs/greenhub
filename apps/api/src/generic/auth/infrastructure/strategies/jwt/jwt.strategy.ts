@@ -3,15 +3,15 @@ import {
 	Injectable,
 	Logger,
 	UnauthorizedException,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';
+} from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { PassportStrategy } from "@nestjs/passport";
+import { ExtractJwt, Strategy } from "passport-jwt";
+import { IJwtPayload } from "@/generic/auth/domain/interfaces/jwt-payload.interface";
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
-} from '@/generic/auth/domain/repositories/auth-write.repository';
+} from "@/generic/auth/domain/repositories/auth-write.repository";
 
 /**
  * JWT Strategy
@@ -30,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			ignoreExpiration: false,
 			secretOrKey:
-				configService.get<string>('JWT_ACCESS_SECRET') || 'access-secret',
+				configService.get<string>("JWT_ACCESS_SECRET") || "access-secret",
 		});
 	}
 
@@ -46,7 +46,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		const auth = await this.authWriteRepository.findById(payload.id);
 
 		if (!auth) {
-			throw new UnauthorizedException('User not found');
+			throw new UnauthorizedException("User not found");
 		}
 
 		// Return the auth aggregate with role and userId from JWT payload

@@ -1,7 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthMongoDbDto } from '@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto';
+import { Injectable, Logger } from "@nestjs/common";
+import { AuthViewModelFactory } from "@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthMongoDbDto } from "@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto";
 
 @Injectable()
 export class AuthMongoDBMapper {

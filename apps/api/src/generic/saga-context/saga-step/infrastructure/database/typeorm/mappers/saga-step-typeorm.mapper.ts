@@ -1,8 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepAggregateFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-aggregate/saga-step-aggregate.factory';
-import { SagaStepTypeormEntity } from '@/generic/saga-context/saga-step/infrastructure/database/typeorm/entities/saga-step-typeorm.entity';
+import { Injectable, Logger } from "@nestjs/common";
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepAggregateFactory } from "@/generic/saga-context/saga-step/domain/factories/saga-step-aggregate/saga-step-aggregate.factory";
+import { SagaStepTypeormEntity } from "@/generic/saga-context/saga-step/infrastructure/database/typeorm/entities/saga-step-typeorm.entity";
 
 @Injectable()
 export class SagaStepTypeormMapper {

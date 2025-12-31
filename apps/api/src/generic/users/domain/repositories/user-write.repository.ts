@@ -1,6 +1,6 @@
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
 
-export const USER_WRITE_REPOSITORY_TOKEN = Symbol('UserWriteRepository');
+export const USER_WRITE_REPOSITORY_TOKEN = Symbol("UserWriteRepository");
 
 export interface UserWriteRepository {
 	findById(id: string): Promise<UserAggregate | null>;

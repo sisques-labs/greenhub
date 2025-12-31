@@ -1,6 +1,6 @@
-import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
 
-export const SAGA_LOG_WRITE_REPOSITORY_TOKEN = Symbol('SagaLogWriteRepository');
+export const SAGA_LOG_WRITE_REPOSITORY_TOKEN = Symbol("SagaLogWriteRepository");
 
 export interface SagaLogWriteRepository {
 	findById(id: string): Promise<SagaLogAggregate | null>;

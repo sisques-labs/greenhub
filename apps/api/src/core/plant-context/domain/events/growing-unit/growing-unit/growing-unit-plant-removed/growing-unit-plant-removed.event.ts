@@ -1,6 +1,6 @@
-import { IGrowingUnitPlantEventData } from '@/core/plant-context/domain/events/growing-unit/interfaces/growing-unit-plant-event-data.interface';
-import { BaseEvent } from '@/shared/domain/events/base-event.interface';
-import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
+import { IGrowingUnitPlantEventData } from "@/core/plant-context/domain/events/growing-unit/interfaces/growing-unit-plant-event-data.interface";
+import { BaseEvent } from "@/shared/domain/events/base-event.interface";
+import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
 
 export class GrowingUnitPlantRemovedEvent extends BaseEvent<IGrowingUnitPlantEventData> {
 	/**

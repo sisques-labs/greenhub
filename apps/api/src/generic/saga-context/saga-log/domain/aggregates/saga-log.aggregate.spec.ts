@@ -1,32 +1,32 @@
-import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
-import { ISagaLogCreateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-create/saga-log-create.dto';
-import { ISagaLogUpdateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
-import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
-import { SagaLogCreatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event';
-import { SagaLogDeletedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event';
-import { SagaLogUpdatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
+import { ISagaLogCreateDto } from "@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-create/saga-log-create.dto";
+import { ISagaLogUpdateDto } from "@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
+import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
+import { SagaLogCreatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event";
+import { SagaLogDeletedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event";
+import { SagaLogUpdatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaLogAggregate', () => {
+describe("SagaLogAggregate", () => {
 	const createBaseAggregate = (
 		generateEvent: boolean = false,
 	): SagaLogAggregate => {
 		const now = new Date();
 		const dto: ISagaLogCreateDto = {
-			id: new SagaLogUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+			id: new SagaLogUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 			sagaInstanceId: new SagaInstanceUuidValueObject(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			),
 			sagaStepId: new SagaStepUuidValueObject(
-				'323e4567-e89b-12d3-a456-426614174000',
+				"323e4567-e89b-12d3-a456-426614174000",
 			),
 			type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-			message: new SagaLogMessageValueObject('Test log message'),
+			message: new SagaLogMessageValueObject("Test log message"),
 			createdAt: new DateValueObject(now),
 			updatedAt: new DateValueObject(now),
 		};
@@ -34,23 +34,23 @@ describe('SagaLogAggregate', () => {
 		return new SagaLogAggregate(dto, generateEvent);
 	};
 
-	describe('constructor', () => {
-		it('should create a SagaLogAggregate with all properties', () => {
+	describe("constructor", () => {
+		it("should create a SagaLogAggregate with all properties", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate).toBeInstanceOf(SagaLogAggregate);
-			expect(aggregate.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(aggregate.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
 			expect(aggregate.sagaInstanceId.value).toBe(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			);
 			expect(aggregate.sagaStepId.value).toBe(
-				'323e4567-e89b-12d3-a456-426614174000',
+				"323e4567-e89b-12d3-a456-426614174000",
 			);
 			expect(aggregate.type.value).toBe(SagaLogTypeEnum.INFO);
-			expect(aggregate.message.value).toBe('Test log message');
+			expect(aggregate.message.value).toBe("Test log message");
 		});
 
-		it('should emit SagaLogCreatedEvent on creation by default', () => {
+		it("should emit SagaLogCreatedEvent on creation by default", () => {
 			const aggregate = createBaseAggregate(true);
 			const events = aggregate.getUncommittedEvents();
 
@@ -64,71 +64,71 @@ describe('SagaLogAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not emit SagaLogCreatedEvent when generateEvent is false', () => {
+		it("should not emit SagaLogCreatedEvent when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.getUncommittedEvents()).toHaveLength(0);
 		});
 	});
 
-	describe('getters', () => {
-		it('should expose id via getter', () => {
+	describe("getters", () => {
+		it("should expose id via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.id).toBeInstanceOf(SagaLogUuidValueObject);
-			expect(aggregate.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(aggregate.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
 		});
 
-		it('should expose sagaInstanceId via getter', () => {
+		it("should expose sagaInstanceId via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.sagaInstanceId).toBeInstanceOf(
 				SagaInstanceUuidValueObject,
 			);
 			expect(aggregate.sagaInstanceId.value).toBe(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			);
 		});
 
-		it('should expose sagaStepId via getter', () => {
+		it("should expose sagaStepId via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.sagaStepId).toBeInstanceOf(SagaStepUuidValueObject);
 			expect(aggregate.sagaStepId.value).toBe(
-				'323e4567-e89b-12d3-a456-426614174000',
+				"323e4567-e89b-12d3-a456-426614174000",
 			);
 		});
 
-		it('should expose type via getter', () => {
+		it("should expose type via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.type).toBeInstanceOf(SagaLogTypeValueObject);
 			expect(aggregate.type.value).toBe(SagaLogTypeEnum.INFO);
 		});
 
-		it('should expose message via getter', () => {
+		it("should expose message via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.message).toBeInstanceOf(SagaLogMessageValueObject);
-			expect(aggregate.message.value).toBe('Test log message');
+			expect(aggregate.message.value).toBe("Test log message");
 		});
 	});
 
-	describe('update', () => {
-		it('should update type and message', () => {
+	describe("update", () => {
+		it("should update type and message", () => {
 			const aggregate = createBaseAggregate(false);
 			const updateDto: ISagaLogUpdateDto = {
 				type: new SagaLogTypeValueObject(SagaLogTypeEnum.ERROR),
-				message: new SagaLogMessageValueObject('Updated message'),
+				message: new SagaLogMessageValueObject("Updated message"),
 			};
 
 			aggregate.update(updateDto);
 
 			expect(aggregate.type.value).toBe(SagaLogTypeEnum.ERROR);
-			expect(aggregate.message.value).toBe('Updated message');
+			expect(aggregate.message.value).toBe("Updated message");
 		});
 
-		it('should update only type when message is not provided', () => {
+		it("should update only type when message is not provided", () => {
 			const aggregate = createBaseAggregate(false);
 			const originalMessage = aggregate.message.value;
 			const updateDto: ISagaLogUpdateDto = {
@@ -141,20 +141,20 @@ describe('SagaLogAggregate', () => {
 			expect(aggregate.message.value).toBe(originalMessage);
 		});
 
-		it('should update only message when type is not provided', () => {
+		it("should update only message when type is not provided", () => {
 			const aggregate = createBaseAggregate(false);
 			const originalType = aggregate.type.value;
 			const updateDto: ISagaLogUpdateDto = {
-				message: new SagaLogMessageValueObject('New message'),
+				message: new SagaLogMessageValueObject("New message"),
 			};
 
 			aggregate.update(updateDto);
 
 			expect(aggregate.type.value).toBe(originalType);
-			expect(aggregate.message.value).toBe('New message');
+			expect(aggregate.message.value).toBe("New message");
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate(false);
 			const originalUpdatedAt = aggregate.updatedAt.value;
 			const updateDto: ISagaLogUpdateDto = {
@@ -174,7 +174,7 @@ describe('SagaLogAggregate', () => {
 			jest.useRealTimers();
 		});
 
-		it('should emit SagaLogUpdatedEvent by default', () => {
+		it("should emit SagaLogUpdatedEvent by default", () => {
 			const aggregate = createBaseAggregate(false);
 			const updateDto: ISagaLogUpdateDto = {
 				type: new SagaLogTypeValueObject(SagaLogTypeEnum.ERROR),
@@ -192,7 +192,7 @@ describe('SagaLogAggregate', () => {
 			expect(event.eventType).toBe(SagaLogUpdatedEvent.name);
 		});
 
-		it('should not emit SagaLogUpdatedEvent when generateEvent is false', () => {
+		it("should not emit SagaLogUpdatedEvent when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 			const updateDto: ISagaLogUpdateDto = {
 				type: new SagaLogTypeValueObject(SagaLogTypeEnum.ERROR),
@@ -204,8 +204,8 @@ describe('SagaLogAggregate', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should emit SagaLogDeletedEvent by default', () => {
+	describe("delete", () => {
+		it("should emit SagaLogDeletedEvent by default", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.delete();
@@ -221,7 +221,7 @@ describe('SagaLogAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not emit SagaLogDeletedEvent when generateEvent is false', () => {
+		it("should not emit SagaLogDeletedEvent when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.delete(false);
@@ -230,8 +230,8 @@ describe('SagaLogAggregate', () => {
 		});
 	});
 
-	describe('toPrimitives', () => {
-		it('should convert aggregate to primitives', () => {
+	describe("toPrimitives", () => {
+		it("should convert aggregate to primitives", () => {
 			const aggregate = createBaseAggregate(false);
 			const primitives = aggregate.toPrimitives();
 
@@ -246,22 +246,22 @@ describe('SagaLogAggregate', () => {
 			});
 		});
 
-		it('should return primitives with correct structure', () => {
+		it("should return primitives with correct structure", () => {
 			const aggregate = createBaseAggregate(false);
 			const primitives = aggregate.toPrimitives();
 
-			expect(primitives).toHaveProperty('id');
-			expect(primitives).toHaveProperty('sagaInstanceId');
-			expect(primitives).toHaveProperty('sagaStepId');
-			expect(primitives).toHaveProperty('type');
-			expect(primitives).toHaveProperty('message');
-			expect(primitives).toHaveProperty('createdAt');
-			expect(primitives).toHaveProperty('updatedAt');
-			expect(typeof primitives.id).toBe('string');
-			expect(typeof primitives.sagaInstanceId).toBe('string');
-			expect(typeof primitives.sagaStepId).toBe('string');
-			expect(typeof primitives.type).toBe('string');
-			expect(typeof primitives.message).toBe('string');
+			expect(primitives).toHaveProperty("id");
+			expect(primitives).toHaveProperty("sagaInstanceId");
+			expect(primitives).toHaveProperty("sagaStepId");
+			expect(primitives).toHaveProperty("type");
+			expect(primitives).toHaveProperty("message");
+			expect(primitives).toHaveProperty("createdAt");
+			expect(primitives).toHaveProperty("updatedAt");
+			expect(typeof primitives.id).toBe("string");
+			expect(typeof primitives.sagaInstanceId).toBe("string");
+			expect(typeof primitives.sagaStepId).toBe("string");
+			expect(typeof primitives.type).toBe("string");
+			expect(typeof primitives.message).toBe("string");
 			expect(primitives.createdAt).toBeInstanceOf(Date);
 			expect(primitives.updatedAt).toBeInstanceOf(Date);
 		});

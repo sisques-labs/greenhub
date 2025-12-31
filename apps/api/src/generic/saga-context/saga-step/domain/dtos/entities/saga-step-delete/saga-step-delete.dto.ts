@@ -1,4 +1,4 @@
-import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto';
+import { ISagaStepCreateDto } from "@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto";
 
 /**
  * Data Transfer Object for deleting a saga step.
@@ -7,4 +7,4 @@ import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos
  * @type ISagaStepDeleteDto
  * @property {string} id - The immutable identifier of the saga step to delete.
  */
-export type ISagaStepDeleteDto = Pick<ISagaStepCreateDto, 'id'>;
+export type ISagaStepDeleteDto = Pick<ISagaStepCreateDto, "id">;

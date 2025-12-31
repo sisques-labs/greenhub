@@ -1,11 +1,11 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsEnum, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
 
-@InputType('SagaLogCreateRequestDto')
+@InputType("SagaLogCreateRequestDto")
 export class SagaLogCreateRequestDto {
 	@Field(() => String, {
-		description: 'The saga instance ID',
+		description: "The saga instance ID",
 		nullable: false,
 	})
 	@IsUUID()
@@ -13,7 +13,7 @@ export class SagaLogCreateRequestDto {
 	sagaInstanceId: string;
 
 	@Field(() => String, {
-		description: 'The saga step ID',
+		description: "The saga step ID",
 		nullable: false,
 	})
 	@IsUUID()
@@ -21,7 +21,7 @@ export class SagaLogCreateRequestDto {
 	sagaStepId: string;
 
 	@Field(() => SagaLogTypeEnum, {
-		description: 'The type of the saga log',
+		description: "The type of the saga log",
 		nullable: false,
 	})
 	@IsEnum(SagaLogTypeEnum)
@@ -29,7 +29,7 @@ export class SagaLogCreateRequestDto {
 	type: SagaLogTypeEnum;
 
 	@Field(() => String, {
-		description: 'The message of the saga log',
+		description: "The message of the saga log",
 		nullable: false,
 	})
 	@IsString()

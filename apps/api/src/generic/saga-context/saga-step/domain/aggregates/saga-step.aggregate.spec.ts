@@ -1,36 +1,36 @@
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto';
-import { ISagaStepUpdateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-update/saga-step-update.dto';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepEndDateValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-end-date/saga-step-end-date.vo';
-import { SagaStepErrorMessageValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-error-message/saga-step-error-message.vo';
-import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
-import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
-import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
-import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
-import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
-import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
-import { SagaStepStartDateValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-start-date/saga-step-start-date.vo';
-import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
-import { SagaStepCreatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-created/saga-step-created.event';
-import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event';
-import { SagaStepStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-status-changed/saga-step-status-changed.event';
-import { SagaStepUpdatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { ISagaStepCreateDto } from "@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto";
+import { ISagaStepUpdateDto } from "@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-update/saga-step-update.dto";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepEndDateValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-end-date/saga-step-end-date.vo";
+import { SagaStepErrorMessageValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-error-message/saga-step-error-message.vo";
+import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
+import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
+import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
+import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
+import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
+import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
+import { SagaStepStartDateValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-start-date/saga-step-start-date.vo";
+import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
+import { SagaStepCreatedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-created/saga-step-created.event";
+import { SagaStepDeletedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event";
+import { SagaStepStatusChangedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-status-changed/saga-step-status-changed.event";
+import { SagaStepUpdatedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaStepAggregate', () => {
+describe("SagaStepAggregate", () => {
 	const createBaseAggregate = (
 		generateEvent: boolean = false,
 	): SagaStepAggregate => {
 		const now = new Date();
 		const dto: ISagaStepCreateDto = {
-			id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+			id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 			sagaInstanceId: new SagaInstanceUuidValueObject(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			),
-			name: new SagaStepNameValueObject('Process Payment'),
+			name: new SagaStepNameValueObject("Process Payment"),
 			order: new SagaStepOrderValueObject(1),
 			status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 			startDate: null,
@@ -38,7 +38,7 @@ describe('SagaStepAggregate', () => {
 			errorMessage: null,
 			retryCount: new SagaStepRetryCountValueObject(0),
 			maxRetries: new SagaStepMaxRetriesValueObject(3),
-			payload: new SagaStepPayloadValueObject({ orderId: '12345' }),
+			payload: new SagaStepPayloadValueObject({ orderId: "12345" }),
 			result: new SagaStepResultValueObject({}),
 			createdAt: new DateValueObject(now),
 			updatedAt: new DateValueObject(now),
@@ -47,16 +47,16 @@ describe('SagaStepAggregate', () => {
 		return new SagaStepAggregate(dto, generateEvent);
 	};
 
-	describe('constructor', () => {
-		it('should create a SagaStepAggregate with all properties', () => {
+	describe("constructor", () => {
+		it("should create a SagaStepAggregate with all properties", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate).toBeInstanceOf(SagaStepAggregate);
-			expect(aggregate.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(aggregate.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
 			expect(aggregate.sagaInstanceId.value).toBe(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			);
-			expect(aggregate.name.value).toBe('Process Payment');
+			expect(aggregate.name.value).toBe("Process Payment");
 			expect(aggregate.order.value).toBe(1);
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.PENDING);
 			expect(aggregate.startDate).toBeNull();
@@ -64,11 +64,11 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.errorMessage).toBeNull();
 			expect(aggregate.retryCount.value).toBe(0);
 			expect(aggregate.maxRetries.value).toBe(3);
-			expect(aggregate.payload.value).toEqual({ orderId: '12345' });
+			expect(aggregate.payload.value).toEqual({ orderId: "12345" });
 			expect(aggregate.result.value).toEqual({});
 		});
 
-		it('should emit SagaStepCreatedEvent on creation by default', () => {
+		it("should emit SagaStepCreatedEvent on creation by default", () => {
 			const aggregate = createBaseAggregate(true);
 			const events = aggregate.getUncommittedEvents();
 
@@ -82,28 +82,28 @@ describe('SagaStepAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not emit SagaStepCreatedEvent when generateEvent is false', () => {
+		it("should not emit SagaStepCreatedEvent when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.getUncommittedEvents()).toHaveLength(0);
 		});
 
-		it('should create aggregate with all optional fields set', () => {
+		it("should create aggregate with all optional fields set", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test Step'),
+				name: new SagaStepNameValueObject("Test Step"),
 				order: new SagaStepOrderValueObject(2),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.COMPLETED),
 				startDate: new SagaStepStartDateValueObject(startDate),
 				endDate: new SagaStepEndDateValueObject(endDate),
-				errorMessage: new SagaStepErrorMessageValueObject('Test error'),
+				errorMessage: new SagaStepErrorMessageValueObject("Test error"),
 				retryCount: new SagaStepRetryCountValueObject(1),
 				maxRetries: new SagaStepMaxRetriesValueObject(5),
-				payload: new SagaStepPayloadValueObject({ test: 'data' }),
+				payload: new SagaStepPayloadValueObject({ test: "data" }),
 				result: new SagaStepResultValueObject({ success: true }),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
@@ -114,70 +114,70 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.startDate).not.toBeNull();
 			expect(aggregate.endDate).not.toBeNull();
 			expect(aggregate.errorMessage).not.toBeNull();
-			expect(aggregate.errorMessage?.value).toBe('Test error');
+			expect(aggregate.errorMessage?.value).toBe("Test error");
 			expect(aggregate.result.value).toEqual({ success: true });
 		});
 	});
 
-	describe('getters', () => {
-		it('should expose id via getter', () => {
+	describe("getters", () => {
+		it("should expose id via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.id).toBeInstanceOf(SagaStepUuidValueObject);
-			expect(aggregate.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(aggregate.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
 		});
 
-		it('should expose sagaInstanceId via getter', () => {
+		it("should expose sagaInstanceId via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.sagaInstanceId).toBeInstanceOf(
 				SagaInstanceUuidValueObject,
 			);
 			expect(aggregate.sagaInstanceId.value).toBe(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			);
 		});
 
-		it('should expose name via getter', () => {
+		it("should expose name via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.name).toBeInstanceOf(SagaStepNameValueObject);
-			expect(aggregate.name.value).toBe('Process Payment');
+			expect(aggregate.name.value).toBe("Process Payment");
 		});
 
-		it('should expose order via getter', () => {
+		it("should expose order via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.order).toBeInstanceOf(SagaStepOrderValueObject);
 			expect(aggregate.order.value).toBe(1);
 		});
 
-		it('should expose status via getter', () => {
+		it("should expose status via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.status).toBeInstanceOf(SagaStepStatusValueObject);
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.PENDING);
 		});
 
-		it('should expose startDate via getter', () => {
+		it("should expose startDate via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.startDate).toBeNull();
 		});
 
-		it('should expose endDate via getter', () => {
+		it("should expose endDate via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should expose errorMessage via getter', () => {
+		it("should expose errorMessage via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.errorMessage).toBeNull();
 		});
 
-		it('should expose retryCount via getter', () => {
+		it("should expose retryCount via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.retryCount).toBeInstanceOf(
@@ -186,7 +186,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.retryCount.value).toBe(0);
 		});
 
-		it('should expose maxRetries via getter', () => {
+		it("should expose maxRetries via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.maxRetries).toBeInstanceOf(
@@ -195,14 +195,14 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.maxRetries.value).toBe(3);
 		});
 
-		it('should expose payload via getter', () => {
+		it("should expose payload via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.payload).toBeInstanceOf(SagaStepPayloadValueObject);
-			expect(aggregate.payload.value).toEqual({ orderId: '12345' });
+			expect(aggregate.payload.value).toEqual({ orderId: "12345" });
 		});
 
-		it('should expose result via getter', () => {
+		it("should expose result via getter", () => {
 			const aggregate = createBaseAggregate();
 
 			expect(aggregate.result).toBeInstanceOf(SagaStepResultValueObject);
@@ -210,19 +210,19 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('update', () => {
-		it('should update name when new value is provided', () => {
+	describe("update", () => {
+		it("should update name when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const originalName = aggregate.name.value;
-			const newName = new SagaStepNameValueObject('Updated Step Name');
+			const newName = new SagaStepNameValueObject("Updated Step Name");
 
 			aggregate.update({ name: newName }, false);
 
-			expect(aggregate.name.value).toBe('Updated Step Name');
+			expect(aggregate.name.value).toBe("Updated Step Name");
 			expect(aggregate.name.value).not.toBe(originalName);
 		});
 
-		it('should keep original name when undefined is provided', () => {
+		it("should keep original name when undefined is provided", () => {
 			const aggregate = createBaseAggregate();
 			const originalName = aggregate.name.value;
 
@@ -231,7 +231,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.name.value).toBe(originalName);
 		});
 
-		it('should update order when new value is provided', () => {
+		it("should update order when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newOrder = new SagaStepOrderValueObject(5);
 
@@ -240,7 +240,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.order.value).toBe(5);
 		});
 
-		it('should update status when new value is provided', () => {
+		it("should update status when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newStatus = new SagaStepStatusValueObject(
 				SagaStepStatusEnum.STARTED,
@@ -251,10 +251,10 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.STARTED);
 		});
 
-		it('should update startDate when new value is provided', () => {
+		it("should update startDate when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newStartDate = new SagaStepStartDateValueObject(
-				new Date('2024-01-01T10:00:00Z'),
+				new Date("2024-01-01T10:00:00Z"),
 			);
 
 			aggregate.update({ startDate: newStartDate }, false);
@@ -263,12 +263,12 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.startDate?.value).toEqual(newStartDate.value);
 		});
 
-		it('should set startDate to null when null is provided', () => {
+		it("should set startDate to null when null is provided", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: new SagaStepStartDateValueObject(now),
@@ -288,10 +288,10 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.startDate).toBeNull();
 		});
 
-		it('should update endDate when new value is provided', () => {
+		it("should update endDate when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newEndDate = new SagaStepEndDateValueObject(
-				new Date('2024-01-01T11:00:00Z'),
+				new Date("2024-01-01T11:00:00Z"),
 			);
 
 			aggregate.update({ endDate: newEndDate }, false);
@@ -300,29 +300,29 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.endDate?.value).toEqual(newEndDate.value);
 		});
 
-		it('should update errorMessage when new value is provided', () => {
+		it("should update errorMessage when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newErrorMessage = new SagaStepErrorMessageValueObject(
-				'New error message',
+				"New error message",
 			);
 
 			aggregate.update({ errorMessage: newErrorMessage }, false);
 
 			expect(aggregate.errorMessage).not.toBeNull();
-			expect(aggregate.errorMessage?.value).toBe('New error message');
+			expect(aggregate.errorMessage?.value).toBe("New error message");
 		});
 
-		it('should set errorMessage to null when null is provided', () => {
+		it("should set errorMessage to null when null is provided", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
 				endDate: null,
-				errorMessage: new SagaStepErrorMessageValueObject('Error'),
+				errorMessage: new SagaStepErrorMessageValueObject("Error"),
 				retryCount: new SagaStepRetryCountValueObject(0),
 				maxRetries: new SagaStepMaxRetriesValueObject(3),
 				payload: new SagaStepPayloadValueObject({}),
@@ -337,7 +337,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.errorMessage).toBeNull();
 		});
 
-		it('should update retryCount when new value is provided', () => {
+		it("should update retryCount when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newRetryCount = new SagaStepRetryCountValueObject(2);
 
@@ -346,7 +346,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.retryCount.value).toBe(2);
 		});
 
-		it('should update maxRetries when new value is provided', () => {
+		it("should update maxRetries when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newMaxRetries = new SagaStepMaxRetriesValueObject(10);
 
@@ -355,16 +355,16 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.maxRetries.value).toBe(10);
 		});
 
-		it('should update payload when new value is provided', () => {
+		it("should update payload when new value is provided", () => {
 			const aggregate = createBaseAggregate();
-			const newPayload = new SagaStepPayloadValueObject({ newKey: 'newValue' });
+			const newPayload = new SagaStepPayloadValueObject({ newKey: "newValue" });
 
 			aggregate.update({ payload: newPayload }, false);
 
-			expect(aggregate.payload.value).toEqual({ newKey: 'newValue' });
+			expect(aggregate.payload.value).toEqual({ newKey: "newValue" });
 		});
 
-		it('should update result when new value is provided', () => {
+		it("should update result when new value is provided", () => {
 			const aggregate = createBaseAggregate();
 			const newResult = new SagaStepResultValueObject({ success: true });
 
@@ -373,28 +373,28 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.result.value).toEqual({ success: true });
 		});
 
-		it('should update multiple fields at once', () => {
+		it("should update multiple fields at once", () => {
 			const aggregate = createBaseAggregate();
 			const updateDto: ISagaStepUpdateDto = {
-				name: new SagaStepNameValueObject('Updated Name'),
+				name: new SagaStepNameValueObject("Updated Name"),
 				order: new SagaStepOrderValueObject(10),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.RUNNING),
 			};
 
 			aggregate.update(updateDto, false);
 
-			expect(aggregate.name.value).toBe('Updated Name');
+			expect(aggregate.name.value).toBe("Updated Name");
 			expect(aggregate.order.value).toBe(10);
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.RUNNING);
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 			// Wait a bit to ensure different timestamp
 			const beforeUpdate = new Date();
 
-			aggregate.update({ name: new SagaStepNameValueObject('Updated') }, false);
+			aggregate.update({ name: new SagaStepNameValueObject("Updated") }, false);
 
 			const afterUpdate = new Date();
 			expect(aggregate.updatedAt.value.getTime()).toBeGreaterThanOrEqual(
@@ -408,10 +408,10 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should generate SagaStepUpdatedEvent when updating with generateEvent true', () => {
+		it("should generate SagaStepUpdatedEvent when updating with generateEvent true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit(); // Clear creation event
-			const newName = new SagaStepNameValueObject('Updated Name');
+			const newName = new SagaStepNameValueObject("Updated Name");
 
 			aggregate.update({ name: newName }, true);
 
@@ -423,21 +423,21 @@ describe('SagaStepAggregate', () => {
 			expect(event.aggregateRootId).toBe(aggregate.id.value);
 			expect(event.aggregateRootType).toBe(SagaStepAggregate.name);
 			expect(event.eventType).toBe(SagaStepUpdatedEvent.name);
-			expect(event.data.name).toBe('Updated Name');
+			expect(event.data.name).toBe("Updated Name");
 		});
 
-		it('should not generate event when generateEvent is false', () => {
+		it("should not generate event when generateEvent is false", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
-			aggregate.update({ name: new SagaStepNameValueObject('Updated') }, false);
+			aggregate.update({ name: new SagaStepNameValueObject("Updated") }, false);
 
 			expect(aggregate.getUncommittedEvents()).toHaveLength(0);
 		});
 	});
 
-	describe('delete', () => {
-		it('should generate SagaStepDeletedEvent when deleting with generateEvent true', () => {
+	describe("delete", () => {
+		it("should generate SagaStepDeletedEvent when deleting with generateEvent true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit(); // Clear creation event
 
@@ -454,7 +454,7 @@ describe('SagaStepAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not generate event when generateEvent is false', () => {
+		it("should not generate event when generateEvent is false", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -464,8 +464,8 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('markAsCompleted', () => {
-		it('should set status to COMPLETED', () => {
+	describe("markAsCompleted", () => {
+		it("should set status to COMPLETED", () => {
 			const aggregate = createBaseAggregate();
 
 			aggregate.markAsCompleted(false);
@@ -473,7 +473,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.COMPLETED);
 		});
 
-		it('should set endDate to current date', () => {
+		it("should set endDate to current date", () => {
 			const aggregate = createBaseAggregate();
 			const beforeMark = new Date();
 
@@ -489,7 +489,7 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 			const beforeMark = new Date();
@@ -508,7 +508,7 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should generate SagaStepStatusChangedEvent when generateEvent is true', () => {
+		it("should generate SagaStepStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -524,8 +524,8 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('markAsFailed', () => {
-		it('should set status to FAILED', () => {
+	describe("markAsFailed", () => {
+		it("should set status to FAILED", () => {
 			const aggregate = createBaseAggregate();
 
 			aggregate.markAsFailed(undefined, false);
@@ -533,7 +533,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.FAILED);
 		});
 
-		it('should set endDate to current date', () => {
+		it("should set endDate to current date", () => {
 			const aggregate = createBaseAggregate();
 			const beforeMark = new Date();
 
@@ -549,16 +549,16 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should set errorMessage when provided', () => {
+		it("should set errorMessage when provided", () => {
 			const aggregate = createBaseAggregate();
 
-			aggregate.markAsFailed('Payment processing failed', false);
+			aggregate.markAsFailed("Payment processing failed", false);
 
 			expect(aggregate.errorMessage).not.toBeNull();
-			expect(aggregate.errorMessage?.value).toBe('Payment processing failed');
+			expect(aggregate.errorMessage?.value).toBe("Payment processing failed");
 		});
 
-		it('should not set errorMessage when not provided', () => {
+		it("should not set errorMessage when not provided", () => {
 			const aggregate = createBaseAggregate();
 
 			aggregate.markAsFailed(undefined, false);
@@ -566,22 +566,22 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.errorMessage).toBeNull();
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 
-			aggregate.markAsFailed('Error', false);
+			aggregate.markAsFailed("Error", false);
 
 			expect(aggregate.updatedAt.value.getTime()).toBeGreaterThanOrEqual(
 				originalUpdatedAt.getTime(),
 			);
 		});
 
-		it('should generate SagaStepStatusChangedEvent when generateEvent is true', () => {
+		it("should generate SagaStepStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
-			aggregate.markAsFailed('Error message', true);
+			aggregate.markAsFailed("Error message", true);
 
 			const events = aggregate.getUncommittedEvents();
 			expect(events).toHaveLength(1);
@@ -590,12 +590,12 @@ describe('SagaStepAggregate', () => {
 			const event = events[0] as SagaStepStatusChangedEvent;
 			expect(event.aggregateRootId).toBe(aggregate.id.value);
 			expect(event.data.status).toBe(SagaStepStatusEnum.FAILED);
-			expect(event.data.errorMessage).toBe('Error message');
+			expect(event.data.errorMessage).toBe("Error message");
 		});
 	});
 
-	describe('markAsPending', () => {
-		it('should set status to PENDING', () => {
+	describe("markAsPending", () => {
+		it("should set status to PENDING", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.update(
 				{ status: new SagaStepStatusValueObject(SagaStepStatusEnum.STARTED) },
@@ -607,12 +607,12 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.PENDING);
 		});
 
-		it('should set startDate to null', () => {
+		it("should set startDate to null", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.STARTED),
 				startDate: new SagaStepStartDateValueObject(now),
@@ -632,12 +632,12 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.startDate).toBeNull();
 		});
 
-		it('should set endDate to null', () => {
+		it("should set endDate to null", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.COMPLETED),
 				startDate: null,
@@ -657,17 +657,17 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should set errorMessage to null', () => {
+		it("should set errorMessage to null", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.FAILED),
 				startDate: null,
 				endDate: null,
-				errorMessage: new SagaStepErrorMessageValueObject('Error'),
+				errorMessage: new SagaStepErrorMessageValueObject("Error"),
 				retryCount: new SagaStepRetryCountValueObject(0),
 				maxRetries: new SagaStepMaxRetriesValueObject(3),
 				payload: new SagaStepPayloadValueObject({}),
@@ -682,7 +682,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.errorMessage).toBeNull();
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 
@@ -693,7 +693,7 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should generate SagaStepStatusChangedEvent when generateEvent is true', () => {
+		it("should generate SagaStepStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -708,8 +708,8 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('markAsStarted', () => {
-		it('should set status to STARTED', () => {
+	describe("markAsStarted", () => {
+		it("should set status to STARTED", () => {
 			const aggregate = createBaseAggregate();
 
 			aggregate.markAsStarted(false);
@@ -717,7 +717,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.STARTED);
 		});
 
-		it('should set startDate to current date', () => {
+		it("should set startDate to current date", () => {
 			const aggregate = createBaseAggregate();
 			const beforeMark = new Date();
 
@@ -733,12 +733,12 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should set endDate to null', () => {
+		it("should set endDate to null", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.COMPLETED),
 				startDate: null,
@@ -758,7 +758,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 
@@ -769,7 +769,7 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should generate SagaStepStatusChangedEvent when generateEvent is true', () => {
+		it("should generate SagaStepStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -784,8 +784,8 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('markAsRunning', () => {
-		it('should set status to RUNNING', () => {
+	describe("markAsRunning", () => {
+		it("should set status to RUNNING", () => {
 			const aggregate = createBaseAggregate();
 
 			aggregate.markAsRunning(false);
@@ -793,12 +793,12 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaStepStatusEnum.RUNNING);
 		});
 
-		it('should set endDate to null', () => {
+		it("should set endDate to null", () => {
 			const now = new Date();
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test'),
+				name: new SagaStepNameValueObject("Test"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.COMPLETED),
 				startDate: null,
@@ -818,7 +818,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 
@@ -829,7 +829,7 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should generate SagaStepStatusChangedEvent when generateEvent is true', () => {
+		it("should generate SagaStepStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -844,8 +844,8 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('incrementRetryCount', () => {
-		it('should increment retry count by 1', () => {
+	describe("incrementRetryCount", () => {
+		it("should increment retry count by 1", () => {
 			const aggregate = createBaseAggregate();
 			const originalRetryCount = aggregate.retryCount.value;
 
@@ -854,7 +854,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.retryCount.value).toBe(originalRetryCount + 1);
 		});
 
-		it('should increment retry count multiple times', () => {
+		it("should increment retry count multiple times", () => {
 			const aggregate = createBaseAggregate();
 
 			aggregate.incrementRetryCount(false);
@@ -864,7 +864,7 @@ describe('SagaStepAggregate', () => {
 			expect(aggregate.retryCount.value).toBe(3);
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const aggregate = createBaseAggregate();
 			const originalUpdatedAt = aggregate.updatedAt.value;
 
@@ -875,7 +875,7 @@ describe('SagaStepAggregate', () => {
 			);
 		});
 
-		it('should generate SagaStepUpdatedEvent when generateEvent is true', () => {
+		it("should generate SagaStepUpdatedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -890,7 +890,7 @@ describe('SagaStepAggregate', () => {
 			expect(event.data.retryCount).toBe(1);
 		});
 
-		it('should not generate event when generateEvent is false', () => {
+		it("should not generate event when generateEvent is false", () => {
 			const aggregate = createBaseAggregate();
 			aggregate.commit();
 
@@ -900,8 +900,8 @@ describe('SagaStepAggregate', () => {
 		});
 	});
 
-	describe('toPrimitives', () => {
-		it('should convert aggregate to primitive representation', () => {
+	describe("toPrimitives", () => {
+		it("should convert aggregate to primitive representation", () => {
 			const aggregate = createBaseAggregate();
 			const primitives = aggregate.toPrimitives();
 
@@ -923,22 +923,22 @@ describe('SagaStepAggregate', () => {
 			});
 		});
 
-		it('should include all fields in primitives when they are set', () => {
+		it("should include all fields in primitives when they are set", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 			const dto: ISagaStepCreateDto = {
 				id: new SagaStepUuidValueObject(),
 				sagaInstanceId: new SagaInstanceUuidValueObject(),
-				name: new SagaStepNameValueObject('Test Step'),
+				name: new SagaStepNameValueObject("Test Step"),
 				order: new SagaStepOrderValueObject(5),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.COMPLETED),
 				startDate: new SagaStepStartDateValueObject(startDate),
 				endDate: new SagaStepEndDateValueObject(endDate),
-				errorMessage: new SagaStepErrorMessageValueObject('Test error'),
+				errorMessage: new SagaStepErrorMessageValueObject("Test error"),
 				retryCount: new SagaStepRetryCountValueObject(2),
 				maxRetries: new SagaStepMaxRetriesValueObject(10),
-				payload: new SagaStepPayloadValueObject({ key: 'value' }),
+				payload: new SagaStepPayloadValueObject({ key: "value" }),
 				result: new SagaStepResultValueObject({ success: true }),
 				createdAt: new DateValueObject(now),
 				updatedAt: new DateValueObject(now),
@@ -948,10 +948,10 @@ describe('SagaStepAggregate', () => {
 
 			expect(primitives.startDate).toEqual(startDate);
 			expect(primitives.endDate).toEqual(endDate);
-			expect(primitives.errorMessage).toBe('Test error');
+			expect(primitives.errorMessage).toBe("Test error");
 			expect(primitives.retryCount).toBe(2);
 			expect(primitives.maxRetries).toBe(10);
-			expect(primitives.payload).toEqual({ key: 'value' });
+			expect(primitives.payload).toEqual({ key: "value" });
 			expect(primitives.result).toEqual({ success: true });
 		});
 	});

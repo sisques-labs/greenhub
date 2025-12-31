@@ -1,4 +1,4 @@
-import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
+import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
 
 /**
  * SagaStepErrorMessageValueObject represents the error message of a saga step.

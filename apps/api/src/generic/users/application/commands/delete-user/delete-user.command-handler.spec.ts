@@ -1,21 +1,21 @@
-import { EventBus } from '@nestjs/cqrs';
-import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
-import { UserDeleteCommandHandler } from '@/generic/users/application/commands/delete-user/delete-user.command-handler';
-import { IUserDeleteCommandDto } from '@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto';
-import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
-import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { UserWriteRepository } from '@/generic/users/domain/repositories/user-write.repository';
-import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
-import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
-import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
-import { UserDeletedEvent } from '@/shared/domain/events/users/user-deleted/user-deleted.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { EventBus } from "@nestjs/cqrs";
+import { UserDeleteCommand } from "@/generic/users/application/commands/delete-user/delete-user.command";
+import { UserDeleteCommandHandler } from "@/generic/users/application/commands/delete-user/delete-user.command-handler";
+import { IUserDeleteCommandDto } from "@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto";
+import { UserNotFoundException } from "@/generic/users/application/exceptions/user-not-found/user-not-found.exception";
+import { AssertUserExsistsService } from "@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service";
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { UserWriteRepository } from "@/generic/users/domain/repositories/user-write.repository";
+import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
+import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
+import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { UserDeletedEvent } from "@/shared/domain/events/users/user-deleted/user-deleted.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
-describe('UserDeleteCommandHandler', () => {
+describe("UserDeleteCommandHandler", () => {
 	let handler: UserDeleteCommandHandler;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -49,9 +49,9 @@ describe('UserDeleteCommandHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should delete user successfully when user exists', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should delete user successfully when user exists", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -60,7 +60,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -69,7 +69,7 @@ describe('UserDeleteCommandHandler', () => {
 				false,
 			);
 
-			const deleteSpy = jest.spyOn(existingUser, 'delete');
+			const deleteSpy = jest.spyOn(existingUser, "delete");
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
@@ -89,8 +89,8 @@ describe('UserDeleteCommandHandler', () => {
 			deleteSpy.mockRestore();
 		});
 
-		it('should throw exception when user does not exist', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw exception when user does not exist", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -106,8 +106,8 @@ describe('UserDeleteCommandHandler', () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it('should publish UserDeletedEvent when user is deleted', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should publish UserDeletedEvent when user is deleted", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -116,7 +116,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -135,7 +135,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUserForHandler = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -159,8 +159,8 @@ describe('UserDeleteCommandHandler', () => {
 			// But we verified above that delete() generates the event correctly
 		});
 
-		it('should delete from repository after calling delete on aggregate', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should delete from repository after calling delete on aggregate", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -169,7 +169,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -182,7 +182,7 @@ describe('UserDeleteCommandHandler', () => {
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
-			const deleteSpy = jest.spyOn(existingUser, 'delete');
+			const deleteSpy = jest.spyOn(existingUser, "delete");
 			await handler.execute(command);
 
 			expect(deleteSpy).toHaveBeenCalled();
@@ -191,8 +191,8 @@ describe('UserDeleteCommandHandler', () => {
 			deleteSpy.mockRestore();
 		});
 
-		it('should publish events before committing', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should publish events before committing", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -201,7 +201,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -210,7 +210,7 @@ describe('UserDeleteCommandHandler', () => {
 				false,
 			);
 
-			const commitSpy = jest.spyOn(existingUser, 'commit');
+			const commitSpy = jest.spyOn(existingUser, "commit");
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
@@ -223,8 +223,8 @@ describe('UserDeleteCommandHandler', () => {
 			expect(publishOrder).toBeLessThan(commitOrder);
 		});
 
-		it('should delete from repository before publishing events', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should delete from repository before publishing events", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -233,7 +233,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -254,8 +254,8 @@ describe('UserDeleteCommandHandler', () => {
 			expect(deleteOrder).toBeLessThan(publishOrder);
 		});
 
-		it('should use correct user id from command', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should use correct user id from command", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IUserDeleteCommandDto = {
 				id: userId,
 			};
@@ -264,7 +264,7 @@ describe('UserDeleteCommandHandler', () => {
 			const existingUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),

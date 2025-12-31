@@ -1,14 +1,14 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
-import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
-import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { Inject, Logger } from "@nestjs/common";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { GrowingUnitDeleteCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command";
+import { GrowingUnitDeletedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event";
+import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
+import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
 import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository";
+import { PublishIntegrationEventsService } from "@/shared/application/services/publish-integration-events/publish-integration-events.service";
 
 /**
  * Command handler for deleting a growing unit.

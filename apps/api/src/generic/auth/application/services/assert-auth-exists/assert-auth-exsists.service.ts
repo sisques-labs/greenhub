@@ -1,11 +1,11 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
-import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { Inject, Injectable, Logger } from "@nestjs/common";
+import { AuthNotFoundException } from "@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
-} from '@/generic/auth/domain/repositories/auth-write.repository';
-import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
+} from "@/generic/auth/domain/repositories/auth-write.repository";
+import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
 
 @Injectable()
 export class AssertAuthExistsService

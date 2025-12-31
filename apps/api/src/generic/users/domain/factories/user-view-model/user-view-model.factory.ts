@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
-import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
+import { Injectable, Logger } from "@nestjs/common";
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
+import { UserPrimitives } from "@/generic/users/domain/primitives/user.primitives";
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
 
 /**
  * This factory class is used to create a new user entity.

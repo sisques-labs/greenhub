@@ -3,9 +3,9 @@ import {
 	Logger,
 	OnModuleDestroy,
 	OnModuleInit,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Db, MongoClient } from 'mongodb';
+} from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Db, MongoClient } from "mongodb";
 
 @Injectable()
 export class MongoMasterService implements OnModuleInit, OnModuleDestroy {
@@ -18,12 +18,12 @@ export class MongoMasterService implements OnModuleInit, OnModuleDestroy {
 	async onModuleInit() {
 		this.logger.log(`🚀 Initializing MongoDB Master`);
 
-		const mongoUrl = this.configService.get<string>('MONGODB_URI');
-		const dbName = this.configService.get<string>('MONGODB_DATABASE');
+		const mongoUrl = this.configService.get<string>("MONGODB_URI");
+		const dbName = this.configService.get<string>("MONGODB_DATABASE");
 
 		try {
 			this.client = new MongoClient(mongoUrl, {
-				authSource: 'admin',
+				authSource: "admin",
 			});
 
 			await this.client.connect();

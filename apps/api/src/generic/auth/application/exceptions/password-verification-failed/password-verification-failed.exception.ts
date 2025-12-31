@@ -1,4 +1,4 @@
-import { BaseApplicationException } from '@/shared/application/exceptions/base-application/base-application.exception';
+import { BaseApplicationException } from "@/shared/application/exceptions/base-application/base-application.exception";
 
 /**
  * Password Verification Failed Exception
@@ -6,6 +6,6 @@ import { BaseApplicationException } from '@/shared/application/exceptions/base-a
  */
 export class PasswordVerificationFailedException extends BaseApplicationException {
 	constructor() {
-		super('Password verification failed');
+		super("Password verification failed");
 	}
 }

@@ -1,24 +1,24 @@
-import { Logger, UseGuards } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { GrowingUnitCreateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command';
-import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
-import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
-import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
-import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
-import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
-import { GrowingUnitCreateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-create.request.dto';
-import { GrowingUnitDeleteRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-delete.request.dto';
-import { GrowingUnitUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-update.request.dto';
-import { PlantAddRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto';
-import { PlantRemoveRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto';
-import { PlantUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
-import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
-import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
-import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
+import { Logger, UseGuards } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
+import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { GrowingUnitCreateCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command";
+import { GrowingUnitDeleteCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command";
+import { GrowingUnitUpdateCommand } from "@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command";
+import { PlantAddCommand } from "@/core/plant-context/application/commands/plant/plant-add/plant-add.command";
+import { PlantRemoveCommand } from "@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command";
+import { PlantUpdateCommand } from "@/core/plant-context/application/commands/plant/plant-update/plant-update.command";
+import { GrowingUnitCreateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-create.request.dto";
+import { GrowingUnitDeleteRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-delete.request.dto";
+import { GrowingUnitUpdateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-update.request.dto";
+import { PlantAddRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto";
+import { PlantRemoveRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto";
+import { PlantUpdateRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto";
+import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
+import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
+import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
+import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
 
 /**
  * GraphQL resolver for growing unit mutations.
@@ -45,7 +45,7 @@ export class GrowingUnitMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async growingUnitCreate(
-		@Args('input') input: GrowingUnitCreateRequestDto,
+		@Args("input") input: GrowingUnitCreateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(
 			`Creating growing unit with input: ${JSON.stringify(input)}`,
@@ -67,7 +67,7 @@ export class GrowingUnitMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'Growing unit created successfully',
+			message: "Growing unit created successfully",
 			id: createdGrowingUnitId,
 		});
 	}
@@ -80,7 +80,7 @@ export class GrowingUnitMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async growingUnitUpdate(
-		@Args('input') input: GrowingUnitUpdateRequestDto,
+		@Args("input") input: GrowingUnitUpdateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(
 			`Updating growing unit with input: ${JSON.stringify(input)}`,
@@ -108,7 +108,7 @@ export class GrowingUnitMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'Growing unit updated successfully',
+			message: "Growing unit updated successfully",
 			id: input.id,
 		});
 	}
@@ -121,7 +121,7 @@ export class GrowingUnitMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async growingUnitDelete(
-		@Args('input') input: GrowingUnitDeleteRequestDto,
+		@Args("input") input: GrowingUnitDeleteRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(
 			`Deleting growing unit with input: ${JSON.stringify(input)}`,
@@ -135,7 +135,7 @@ export class GrowingUnitMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'Growing unit deleted successfully',
+			message: "Growing unit deleted successfully",
 			id: input.id,
 		});
 	}
@@ -148,7 +148,7 @@ export class GrowingUnitMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantAdd(
-		@Args('input') input: PlantAddRequestDto,
+		@Args("input") input: PlantAddRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Adding plant with input: ${JSON.stringify(input)}`);
 
@@ -167,7 +167,7 @@ export class GrowingUnitMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'Plant added successfully',
+			message: "Plant added successfully",
 			id: createdPlantId,
 		});
 	}
@@ -180,7 +180,7 @@ export class GrowingUnitMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantUpdate(
-		@Args('input') input: PlantUpdateRequestDto,
+		@Args("input") input: PlantUpdateRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Updating plant with input: ${JSON.stringify(input)}`);
 
@@ -199,7 +199,7 @@ export class GrowingUnitMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'Plant updated successfully',
+			message: "Plant updated successfully",
 			id: input.id,
 		});
 	}
@@ -212,7 +212,7 @@ export class GrowingUnitMutationsResolver {
 	 */
 	@Mutation(() => MutationResponseDto)
 	async plantRemove(
-		@Args('input') input: PlantRemoveRequestDto,
+		@Args("input") input: PlantRemoveRequestDto,
 	): Promise<MutationResponseDto> {
 		this.logger.log(`Removing plant with input: ${JSON.stringify(input)}`);
 
@@ -227,7 +227,7 @@ export class GrowingUnitMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'Plant removed successfully',
+			message: "Plant removed successfully",
 			id: input.plantId,
 		});
 	}

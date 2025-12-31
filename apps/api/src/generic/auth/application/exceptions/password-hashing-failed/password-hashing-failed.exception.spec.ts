@@ -1,33 +1,33 @@
-import { PasswordHashingFailedException } from '@/generic/auth/application/exceptions/password-hashing-failed/password-hashing-failed.exception';
-import { BaseApplicationException } from '@/shared/application/exceptions/base-application/base-application.exception';
+import { PasswordHashingFailedException } from "@/generic/auth/application/exceptions/password-hashing-failed/password-hashing-failed.exception";
+import { BaseApplicationException } from "@/shared/application/exceptions/base-application/base-application.exception";
 
-describe('PasswordHashingFailedException', () => {
-	it('should be an instance of BaseApplicationException', () => {
+describe("PasswordHashingFailedException", () => {
+	it("should be an instance of BaseApplicationException", () => {
 		const exception = new PasswordHashingFailedException();
 
 		expect(exception).toBeInstanceOf(BaseApplicationException);
 		expect(exception).toBeInstanceOf(Error);
 	});
 
-	it('should create an exception with the correct message', () => {
+	it("should create an exception with the correct message", () => {
 		const exception = new PasswordHashingFailedException();
 
-		expect(exception.message).toBe('Password hashing failed');
+		expect(exception.message).toBe("Password hashing failed");
 	});
 
-	it('should set the name to PasswordHashingFailedException', () => {
+	it("should set the name to PasswordHashingFailedException", () => {
 		const exception = new PasswordHashingFailedException();
 
-		expect(exception.name).toBe('PasswordHashingFailedException');
+		expect(exception.name).toBe("PasswordHashingFailedException");
 	});
 
-	it('should set the domain to Application', () => {
+	it("should set the domain to Application", () => {
 		const exception = new PasswordHashingFailedException();
 
-		expect(exception.layer).toBe('Application');
+		expect(exception.layer).toBe("Application");
 	});
 
-	it('should have a timestamp', () => {
+	it("should have a timestamp", () => {
 		const before = new Date();
 		const exception = new PasswordHashingFailedException();
 		const after = new Date();
@@ -39,12 +39,12 @@ describe('PasswordHashingFailedException', () => {
 		expect(exception.timestamp.getTime()).toBeLessThanOrEqual(after.getTime());
 	});
 
-	it('should return a detailed message', () => {
+	it("should return a detailed message", () => {
 		const exception = new PasswordHashingFailedException();
 		const detailedMessage = exception.getDetailedMessage();
 
 		expect(detailedMessage).toBe(
-			'[Application] PasswordHashingFailedException: Password hashing failed',
+			"[Application] PasswordHashingFailedException: Password hashing failed",
 		);
 	});
 });

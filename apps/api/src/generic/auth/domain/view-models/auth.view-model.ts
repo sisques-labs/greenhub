@@ -1,5 +1,5 @@
-import { IAuthCreateViewModelDto } from '@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto';
-import { IAuthUpdateViewModelDto } from '@/generic/auth/domain/dtos/view-models/auth-update/auth-update-view-model.dto';
+import { IAuthCreateViewModelDto } from "@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto";
+import { IAuthUpdateViewModelDto } from "@/generic/auth/domain/dtos/view-models/auth-update/auth-update-view-model.dto";
 
 /**
  * This class is used to represent a user view model.

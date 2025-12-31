@@ -1,4 +1,4 @@
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
 
 /**
  * Value object representing the planted date of a plant.

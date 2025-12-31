@@ -1,4 +1,4 @@
-import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create/user-create.dto';
+import { IUserCreateDto } from "@/generic/users/domain/dtos/entities/user-create/user-create.dto";
 
 /**
  * Data Transfer Object for updating a user.
@@ -7,4 +7,4 @@ import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create
  * @type IUserUpdateDto
  * @extends Partial<Omit<IUserCreateDto, 'id'>>
  */
-export type IUserUpdateDto = Partial<Omit<IUserCreateDto, 'id'>>;
+export type IUserUpdateDto = Partial<Omit<IUserCreateDto, "id">>;

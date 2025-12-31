@@ -1,4 +1,4 @@
-import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto';
+import { ISagaStepCreateDto } from "@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto";
 
 /**
  * Data Transfer Object for updating a saga step.
@@ -8,5 +8,5 @@ import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos
  * @extends Partial<Omit<ISagaStepCreateDto, 'id' | 'sagaInstanceId'>>
  */
 export type ISagaStepUpdateDto = Partial<
-	Omit<ISagaStepCreateDto, 'id' | 'sagaInstanceId'>
+	Omit<ISagaStepCreateDto, "id" | "sagaInstanceId">
 >;

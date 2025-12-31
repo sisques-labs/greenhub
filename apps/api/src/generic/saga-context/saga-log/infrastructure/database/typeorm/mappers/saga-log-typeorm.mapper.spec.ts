@@ -1,16 +1,16 @@
-import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogAggregateFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-aggregate/saga-log-aggregate.factory';
-import { SagaLogMessageValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo';
-import { SagaLogTypeValueObject } from '@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo';
-import { SagaLogTypeormEntity } from '@/generic/saga-context/saga-log/infrastructure/database/typeorm/entities/saga-log-typeorm.entity';
-import { SagaLogTypeormMapper } from '@/generic/saga-context/saga-log/infrastructure/database/typeorm/mappers/saga-log-typeorm.mapper';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogAggregateFactory } from "@/generic/saga-context/saga-log/domain/factories/saga-log-aggregate/saga-log-aggregate.factory";
+import { SagaLogMessageValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-message/saga-log-message.vo";
+import { SagaLogTypeValueObject } from "@/generic/saga-context/saga-log/domain/value-objects/saga-log-type/saga-log-type.vo";
+import { SagaLogTypeormEntity } from "@/generic/saga-context/saga-log/infrastructure/database/typeorm/entities/saga-log-typeorm.entity";
+import { SagaLogTypeormMapper } from "@/generic/saga-context/saga-log/infrastructure/database/typeorm/mappers/saga-log-typeorm.mapper";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaLogUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaLogTypeormMapper', () => {
+describe("SagaLogTypeormMapper", () => {
 	let mapper: SagaLogTypeormMapper;
 	let mockSagaLogAggregateFactory: jest.Mocked<SagaLogAggregateFactory>;
 
@@ -27,11 +27,11 @@ describe('SagaLogTypeormMapper', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('toDomainEntity', () => {
-		it('should convert TypeORM entity to domain entity with all properties', () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
-			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
+	describe("toDomainEntity", () => {
+		it("should convert TypeORM entity to domain entity with all properties", () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new SagaLogTypeormEntity();
@@ -39,7 +39,7 @@ describe('SagaLogTypeormMapper', () => {
 			typeormEntity.sagaInstanceId = sagaInstanceId;
 			typeormEntity.sagaStepId = sagaStepId;
 			typeormEntity.type = SagaLogTypeEnum.INFO;
-			typeormEntity.message = 'Test message';
+			typeormEntity.message = "Test message";
 			typeormEntity.createdAt = now;
 			typeormEntity.updatedAt = now;
 			typeormEntity.deletedAt = null;
@@ -50,7 +50,7 @@ describe('SagaLogTypeormMapper', () => {
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject('Test message'),
+					message: new SagaLogMessageValueObject("Test message"),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -69,7 +69,7 @@ describe('SagaLogTypeormMapper', () => {
 				sagaInstanceId: sagaInstanceId,
 				sagaStepId: sagaStepId,
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test message',
+				message: "Test message",
 				createdAt: now,
 				updatedAt: now,
 			});
@@ -79,11 +79,11 @@ describe('SagaLogTypeormMapper', () => {
 		});
 	});
 
-	describe('toTypeormEntity', () => {
-		it('should convert domain entity to TypeORM entity with all properties', () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
-			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
+	describe("toTypeormEntity", () => {
+		it("should convert domain entity to TypeORM entity with all properties", () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const mockSagaLogAggregate = new SagaLogAggregate(
@@ -92,7 +92,7 @@ describe('SagaLogTypeormMapper', () => {
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
 					sagaStepId: new SagaStepUuidValueObject(sagaStepId),
 					type: new SagaLogTypeValueObject(SagaLogTypeEnum.INFO),
-					message: new SagaLogMessageValueObject('Test message'),
+					message: new SagaLogMessageValueObject("Test message"),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
 				},
@@ -100,13 +100,13 @@ describe('SagaLogTypeormMapper', () => {
 			);
 
 			const toPrimitivesSpy = jest
-				.spyOn(mockSagaLogAggregate, 'toPrimitives')
+				.spyOn(mockSagaLogAggregate, "toPrimitives")
 				.mockReturnValue({
 					id: sagaLogId,
 					sagaInstanceId: sagaInstanceId,
 					sagaStepId: sagaStepId,
 					type: SagaLogTypeEnum.INFO,
-					message: 'Test message',
+					message: "Test message",
 					createdAt: now,
 					updatedAt: now,
 				});
@@ -118,7 +118,7 @@ describe('SagaLogTypeormMapper', () => {
 			expect(result.sagaInstanceId).toBe(sagaInstanceId);
 			expect(result.sagaStepId).toBe(sagaStepId);
 			expect(result.type).toBe(SagaLogTypeEnum.INFO);
-			expect(result.message).toBe('Test message');
+			expect(result.message).toBe("Test message");
 			expect(result.createdAt).toEqual(now);
 			expect(result.updatedAt).toEqual(now);
 			expect(result.deletedAt).toBeNull();

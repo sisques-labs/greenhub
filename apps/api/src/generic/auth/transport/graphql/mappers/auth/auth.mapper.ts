@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
+import { Injectable } from "@nestjs/common";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
 import {
 	AuthResponseDto,
 	PaginatedAuthResultDto,
-} from '@/generic/auth/transport/graphql/dtos/responses/auth.response.dto';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+} from "@/generic/auth/transport/graphql/dtos/responses/auth.response.dto";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
 @Injectable()
 export class AuthGraphQLMapper {

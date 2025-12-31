@@ -1,8 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
-import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
+import { Injectable, Logger } from "@nestjs/common";
+import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
+import { PlantViewModel } from "@/core/plant-context/domain/view-models/plant/plant.view-model";
+import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
+import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
 
 /**
  * Service responsible for calculating plant-related metrics for overview.
@@ -18,16 +18,16 @@ export class OverviewCalculatePlantMetricsService
 			PlantViewModel[],
 			Pick<
 				IOverviewViewModelDto,
-				| 'totalPlants'
-				| 'totalActivePlants'
-				| 'plantsPlanted'
-				| 'plantsGrowing'
-				| 'plantsHarvested'
-				| 'plantsDead'
-				| 'plantsArchived'
-				| 'plantsWithoutPlantedDate'
-				| 'plantsWithNotes'
-				| 'recentPlants'
+				| "totalPlants"
+				| "totalActivePlants"
+				| "plantsPlanted"
+				| "plantsGrowing"
+				| "plantsHarvested"
+				| "plantsDead"
+				| "plantsArchived"
+				| "plantsWithoutPlantedDate"
+				| "plantsWithNotes"
+				| "recentPlants"
 			>
 		>
 {
@@ -46,16 +46,16 @@ export class OverviewCalculatePlantMetricsService
 	): Promise<
 		Pick<
 			IOverviewViewModelDto,
-			| 'totalPlants'
-			| 'totalActivePlants'
-			| 'plantsPlanted'
-			| 'plantsGrowing'
-			| 'plantsHarvested'
-			| 'plantsDead'
-			| 'plantsArchived'
-			| 'plantsWithoutPlantedDate'
-			| 'plantsWithNotes'
-			| 'recentPlants'
+			| "totalPlants"
+			| "totalActivePlants"
+			| "plantsPlanted"
+			| "plantsGrowing"
+			| "plantsHarvested"
+			| "plantsDead"
+			| "plantsArchived"
+			| "plantsWithoutPlantedDate"
+			| "plantsWithNotes"
+			| "recentPlants"
 		>
 	> {
 		this.logger.log(`Calculating plant metrics for ${plants.length} plants`);

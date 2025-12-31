@@ -1,5 +1,5 @@
-import { ISagaInstanceFindViewModelByIdQueryDto } from '@/generic/saga-context/saga-instance/application/dtos/queries/saga-instance-find-view-model-by-id/saga-instance-find-view-model-by-id.dto';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { ISagaInstanceFindViewModelByIdQueryDto } from "@/generic/saga-context/saga-instance/application/dtos/queries/saga-instance-find-view-model-by-id/saga-instance-find-view-model-by-id.dto";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
 
 export class FindSagaInstanceViewModelByIdQuery {
 	readonly id: SagaInstanceUuidValueObject;

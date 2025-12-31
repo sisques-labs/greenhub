@@ -3,9 +3,9 @@ import {
 	ExecutionContext,
 	ForbiddenException,
 	Injectable,
-} from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+} from "@nestjs/common";
+import { GqlExecutionContext } from "@nestjs/graphql";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
 
 /**
  * Owner Guard
@@ -23,7 +23,7 @@ export class OwnerGuard implements CanActivate {
 		const user = request.user;
 
 		if (!user) {
-			throw new ForbiddenException('User not authenticated');
+			throw new ForbiddenException("User not authenticated");
 		}
 
 		// Get user role
@@ -39,20 +39,20 @@ export class OwnerGuard implements CanActivate {
 		const resourceId = args?.input?.id;
 
 		if (!resourceId) {
-			throw new ForbiddenException('Resource ID is required');
+			throw new ForbiddenException("Resource ID is required");
 		}
 
 		// Get the authenticated user's ID
 		const authenticatedUserId = (user as any).userId;
 
 		if (!authenticatedUserId) {
-			throw new ForbiddenException('User ID not found in token');
+			throw new ForbiddenException("User ID not found in token");
 		}
 
 		// Check if the user is trying to modify their own resource
 		if (resourceId !== authenticatedUserId) {
 			throw new ForbiddenException(
-				'You can only access/modify your own resources',
+				"You can only access/modify your own resources",
 			);
 		}
 

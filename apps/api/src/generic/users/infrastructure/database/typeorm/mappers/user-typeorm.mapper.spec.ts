@@ -1,16 +1,16 @@
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { UserAggregateFactory } from '@/generic/users/domain/factories/user-aggregate/user-aggregate.factory';
-import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
-import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
-import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
-import { UserTypeormEntity } from '@/generic/users/infrastructure/database/typeorm/entities/user-typeorm.entity';
-import { UserTypeOrmMapper } from '@/generic/users/infrastructure/database/typeorm/mappers/user-typeorm.mapper';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { UserAggregateFactory } from "@/generic/users/domain/factories/user-aggregate/user-aggregate.factory";
+import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
+import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
+import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
+import { UserTypeormEntity } from "@/generic/users/infrastructure/database/typeorm/entities/user-typeorm.entity";
+import { UserTypeOrmMapper } from "@/generic/users/infrastructure/database/typeorm/mappers/user-typeorm.mapper";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
-describe('UserTypeOrmMapper', () => {
+describe("UserTypeOrmMapper", () => {
 	let mapper: UserTypeOrmMapper;
 	let mockUserAggregateFactory: jest.Mocked<UserAggregateFactory>;
 
@@ -27,18 +27,18 @@ describe('UserTypeOrmMapper', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('toDomainEntity', () => {
-		it('should convert TypeORM entity to domain entity with all properties', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("toDomainEntity", () => {
+		it("should convert TypeORM entity to domain entity with all properties", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new UserTypeormEntity();
 			typeormEntity.id = userId;
-			typeormEntity.userName = 'johndoe';
-			typeormEntity.name = 'John';
-			typeormEntity.lastName = 'Doe';
-			typeormEntity.bio = 'Software developer';
-			typeormEntity.avatarUrl = 'https://example.com/avatar.jpg';
+			typeormEntity.userName = "johndoe";
+			typeormEntity.name = "John";
+			typeormEntity.lastName = "Doe";
+			typeormEntity.bio = "Software developer";
+			typeormEntity.avatarUrl = "https://example.com/avatar.jpg";
 			typeormEntity.role = UserRoleEnum.USER;
 			typeormEntity.status = UserStatusEnum.ACTIVE;
 			typeormEntity.createdAt = now;
@@ -48,7 +48,7 @@ describe('UserTypeOrmMapper', () => {
 			const mockUserAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -66,11 +66,11 @@ describe('UserTypeOrmMapper', () => {
 			expect(result).toBe(mockUserAggregate);
 			expect(mockUserAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
-				bio: 'Software developer',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
+				bio: "Software developer",
+				avatarUrl: "https://example.com/avatar.jpg",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				createdAt: now,
@@ -79,13 +79,13 @@ describe('UserTypeOrmMapper', () => {
 			expect(mockUserAggregateFactory.fromPrimitives).toHaveBeenCalledTimes(1);
 		});
 
-		it('should convert TypeORM entity to domain entity with null optional properties', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should convert TypeORM entity to domain entity with null optional properties", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new UserTypeormEntity();
 			typeormEntity.id = userId;
-			typeormEntity.userName = 'johndoe';
+			typeormEntity.userName = "johndoe";
 			typeormEntity.name = null;
 			typeormEntity.lastName = null;
 			typeormEntity.bio = null;
@@ -99,7 +99,7 @@ describe('UserTypeOrmMapper', () => {
 			const mockUserAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -117,7 +117,7 @@ describe('UserTypeOrmMapper', () => {
 			expect(result).toBe(mockUserAggregate);
 			expect(mockUserAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
 				id: userId,
-				userName: 'johndoe',
+				userName: "johndoe",
 				name: null,
 				lastName: null,
 				bio: null,
@@ -129,15 +129,15 @@ describe('UserTypeOrmMapper', () => {
 			});
 		});
 
-		it('should convert TypeORM entity with ADMIN role and INACTIVE status', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should convert TypeORM entity with ADMIN role and INACTIVE status", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new UserTypeormEntity();
 			typeormEntity.id = userId;
-			typeormEntity.userName = 'johndoe';
-			typeormEntity.name = 'John';
-			typeormEntity.lastName = 'Doe';
+			typeormEntity.userName = "johndoe";
+			typeormEntity.name = "John";
+			typeormEntity.lastName = "Doe";
 			typeormEntity.bio = null;
 			typeormEntity.avatarUrl = null;
 			typeormEntity.role = UserRoleEnum.ADMIN;
@@ -149,7 +149,7 @@ describe('UserTypeOrmMapper', () => {
 			const mockUserAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.ADMIN),
 					status: new UserStatusValueObject(UserStatusEnum.INACTIVE),
 					createdAt: new DateValueObject(now),
@@ -167,9 +167,9 @@ describe('UserTypeOrmMapper', () => {
 			expect(result).toBe(mockUserAggregate);
 			expect(mockUserAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.ADMIN,
@@ -180,15 +180,15 @@ describe('UserTypeOrmMapper', () => {
 		});
 	});
 
-	describe('toTypeormEntity', () => {
-		it('should convert domain entity to TypeORM entity with all properties', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("toTypeormEntity", () => {
+		it("should convert domain entity to TypeORM entity with all properties", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const userAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -198,13 +198,13 @@ describe('UserTypeOrmMapper', () => {
 			);
 
 			// Mock toPrimitives to return expected data
-			jest.spyOn(userAggregate, 'toPrimitives').mockReturnValue({
+			jest.spyOn(userAggregate, "toPrimitives").mockReturnValue({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
-				bio: 'Software developer',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
+				bio: "Software developer",
+				avatarUrl: "https://example.com/avatar.jpg",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				createdAt: now,
@@ -215,11 +215,11 @@ describe('UserTypeOrmMapper', () => {
 
 			expect(result).toBeInstanceOf(UserTypeormEntity);
 			expect(result.id).toBe(userId);
-			expect(result.userName).toBe('johndoe');
-			expect(result.name).toBe('John');
-			expect(result.lastName).toBe('Doe');
-			expect(result.bio).toBe('Software developer');
-			expect(result.avatarUrl).toBe('https://example.com/avatar.jpg');
+			expect(result.userName).toBe("johndoe");
+			expect(result.name).toBe("John");
+			expect(result.lastName).toBe("Doe");
+			expect(result.bio).toBe("Software developer");
+			expect(result.avatarUrl).toBe("https://example.com/avatar.jpg");
 			expect(result.role).toBe(UserRoleEnum.USER);
 			expect(result.status).toBe(UserStatusEnum.ACTIVE);
 			expect(result.createdAt).toEqual(now);
@@ -228,14 +228,14 @@ describe('UserTypeOrmMapper', () => {
 			expect(userAggregate.toPrimitives).toHaveBeenCalledTimes(1);
 		});
 
-		it('should convert domain entity to TypeORM entity with null optional properties', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should convert domain entity to TypeORM entity with null optional properties", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const userAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -244,9 +244,9 @@ describe('UserTypeOrmMapper', () => {
 				false,
 			);
 
-			jest.spyOn(userAggregate, 'toPrimitives').mockReturnValue({
+			jest.spyOn(userAggregate, "toPrimitives").mockReturnValue({
 				id: userId,
-				userName: 'johndoe',
+				userName: "johndoe",
 				name: null,
 				lastName: null,
 				bio: null,
@@ -261,7 +261,7 @@ describe('UserTypeOrmMapper', () => {
 
 			expect(result).toBeInstanceOf(UserTypeormEntity);
 			expect(result.id).toBe(userId);
-			expect(result.userName).toBe('johndoe');
+			expect(result.userName).toBe("johndoe");
 			expect(result.name).toBeNull();
 			expect(result.lastName).toBeNull();
 			expect(result.bio).toBeNull();
@@ -271,14 +271,14 @@ describe('UserTypeOrmMapper', () => {
 			expect(result.deletedAt).toBeNull();
 		});
 
-		it('should convert domain entity with ADMIN role and INACTIVE status', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should convert domain entity with ADMIN role and INACTIVE status", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const userAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.ADMIN),
 					status: new UserStatusValueObject(UserStatusEnum.INACTIVE),
 					createdAt: new DateValueObject(now),
@@ -287,11 +287,11 @@ describe('UserTypeOrmMapper', () => {
 				false,
 			);
 
-			jest.spyOn(userAggregate, 'toPrimitives').mockReturnValue({
+			jest.spyOn(userAggregate, "toPrimitives").mockReturnValue({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.ADMIN,

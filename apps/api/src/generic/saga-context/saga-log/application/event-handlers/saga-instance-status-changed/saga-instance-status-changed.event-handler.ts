@@ -1,8 +1,8 @@
-import { Logger } from '@nestjs/common';
-import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
+import { Logger } from "@nestjs/common";
+import { CommandBus, EventsHandler, IEventHandler } from "@nestjs/cqrs";
+import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaInstanceStatusChangedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event";
 
 @EventsHandler(SagaInstanceStatusChangedEvent)
 export class SagaInstanceStatusChangedEventHandler
@@ -27,13 +27,13 @@ export class SagaInstanceStatusChangedEventHandler
 		// 01: Determine log type based on status
 		let logType = SagaLogTypeEnum.INFO;
 		if (
-			event.data.status === 'FAILED' ||
-			event.data.status === 'COMPENSATING'
+			event.data.status === "FAILED" ||
+			event.data.status === "COMPENSATING"
 		) {
 			logType = SagaLogTypeEnum.ERROR;
 		} else if (
-			event.data.status === 'RUNNING' ||
-			event.data.status === 'STARTED'
+			event.data.status === "RUNNING" ||
+			event.data.status === "STARTED"
 		) {
 			logType = SagaLogTypeEnum.DEBUG;
 		}

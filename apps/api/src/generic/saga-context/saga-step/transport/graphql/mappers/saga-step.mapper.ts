@@ -1,11 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { Injectable, Logger } from "@nestjs/common";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
 import {
 	PaginatedSagaStepResultDto,
 	SagaStepResponseDto,
-} from '@/generic/saga-context/saga-step/transport/graphql/dtos/responses/saga-step.response.dto';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+} from "@/generic/saga-context/saga-step/transport/graphql/dtos/responses/saga-step.response.dto";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
 @Injectable()
 export class SagaStepGraphQLMapper {

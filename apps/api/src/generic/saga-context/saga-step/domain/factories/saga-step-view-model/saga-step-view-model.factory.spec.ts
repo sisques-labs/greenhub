@@ -1,48 +1,48 @@
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { ISagaStepCreateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepViewModelFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-view-model/saga-step-view-model.factory';
-import { SagaStepPrimitives } from '@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives';
-import { SagaStepEndDateValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-end-date/saga-step-end-date.vo';
-import { SagaStepErrorMessageValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-error-message/saga-step-error-message.vo';
-import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
-import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
-import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
-import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
-import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
-import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
-import { SagaStepStartDateValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-start-date/saga-step-start-date.vo';
-import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
-import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { ISagaStepCreateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepViewModelFactory } from "@/generic/saga-context/saga-step/domain/factories/saga-step-view-model/saga-step-view-model.factory";
+import { SagaStepPrimitives } from "@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives";
+import { SagaStepEndDateValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-end-date/saga-step-end-date.vo";
+import { SagaStepErrorMessageValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-error-message/saga-step-error-message.vo";
+import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
+import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
+import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
+import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
+import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
+import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
+import { SagaStepStartDateValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-start-date/saga-step-start-date.vo";
+import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
+import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaStepViewModelFactory', () => {
+describe("SagaStepViewModelFactory", () => {
 	let factory: SagaStepViewModelFactory;
 
 	beforeEach(() => {
 		factory = new SagaStepViewModelFactory();
 	});
 
-	describe('create', () => {
-		it('should create a SagaStepViewModel from DTO with all fields', () => {
+	describe("create", () => {
+		it("should create a SagaStepViewModel from DTO with all fields", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 
 			const dto: ISagaStepCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: startDate,
 				endDate: endDate,
-				errorMessage: 'Test error',
+				errorMessage: "Test error",
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { orderId: '12345' },
+				payload: { orderId: "12345" },
 				result: { success: true },
 				createdAt: now,
 				updatedAt: now,
@@ -67,13 +67,13 @@ describe('SagaStepViewModelFactory', () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should create a SagaStepViewModel from DTO with null optional fields', () => {
+		it("should create a SagaStepViewModel from DTO with null optional fields", () => {
 			const now = new Date();
 
 			const dto: ISagaStepCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -96,24 +96,24 @@ describe('SagaStepViewModelFactory', () => {
 		});
 	});
 
-	describe('fromPrimitives', () => {
-		it('should create a SagaStepViewModel from primitives with all fields', () => {
+	describe("fromPrimitives", () => {
+		it("should create a SagaStepViewModel from primitives with all fields", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 
 			const primitives: SagaStepPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: startDate,
 				endDate: endDate,
-				errorMessage: 'Test error',
+				errorMessage: "Test error",
 				retryCount: 0,
 				maxRetries: 3,
-				payload: { orderId: '12345' },
+				payload: { orderId: "12345" },
 				result: { success: true },
 				createdAt: now,
 				updatedAt: now,
@@ -138,13 +138,13 @@ describe('SagaStepViewModelFactory', () => {
 			expect(viewModel.updatedAt).toEqual(primitives.updatedAt);
 		});
 
-		it('should create a SagaStepViewModel from primitives with null optional fields', () => {
+		it("should create a SagaStepViewModel from primitives with null optional fields", () => {
 			const now = new Date();
 
 			const primitives: SagaStepPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.PENDING,
 				startDate: null,
@@ -167,29 +167,29 @@ describe('SagaStepViewModelFactory', () => {
 		});
 	});
 
-	describe('fromAggregate', () => {
-		it('should create a SagaStepViewModel from aggregate with all fields', () => {
+	describe("fromAggregate", () => {
+		it("should create a SagaStepViewModel from aggregate with all fields", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 
 			const aggregate = new SagaStepAggregate(
 				{
 					id: new SagaStepUuidValueObject(
-						'123e4567-e89b-12d3-a456-426614174000',
+						"123e4567-e89b-12d3-a456-426614174000",
 					),
 					sagaInstanceId: new SagaInstanceUuidValueObject(
-						'223e4567-e89b-12d3-a456-426614174000',
+						"223e4567-e89b-12d3-a456-426614174000",
 					),
-					name: new SagaStepNameValueObject('Process Payment'),
+					name: new SagaStepNameValueObject("Process Payment"),
 					order: new SagaStepOrderValueObject(1),
 					status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 					startDate: new SagaStepStartDateValueObject(startDate),
 					endDate: new SagaStepEndDateValueObject(endDate),
-					errorMessage: new SagaStepErrorMessageValueObject('Test error'),
+					errorMessage: new SagaStepErrorMessageValueObject("Test error"),
 					retryCount: new SagaStepRetryCountValueObject(0),
 					maxRetries: new SagaStepMaxRetriesValueObject(3),
-					payload: new SagaStepPayloadValueObject({ orderId: '12345' }),
+					payload: new SagaStepPayloadValueObject({ orderId: "12345" }),
 					result: new SagaStepResultValueObject({ success: true }),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
@@ -216,18 +216,18 @@ describe('SagaStepViewModelFactory', () => {
 			expect(viewModel.updatedAt).toEqual(aggregate.updatedAt.value);
 		});
 
-		it('should create a SagaStepViewModel from aggregate with null optional fields', () => {
+		it("should create a SagaStepViewModel from aggregate with null optional fields", () => {
 			const now = new Date();
 
 			const aggregate = new SagaStepAggregate(
 				{
 					id: new SagaStepUuidValueObject(
-						'123e4567-e89b-12d3-a456-426614174000',
+						"123e4567-e89b-12d3-a456-426614174000",
 					),
 					sagaInstanceId: new SagaInstanceUuidValueObject(
-						'223e4567-e89b-12d3-a456-426614174000',
+						"223e4567-e89b-12d3-a456-426614174000",
 					),
-					name: new SagaStepNameValueObject('Process Payment'),
+					name: new SagaStepNameValueObject("Process Payment"),
 					order: new SagaStepOrderValueObject(1),
 					status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 					startDate: null,
@@ -251,7 +251,7 @@ describe('SagaStepViewModelFactory', () => {
 			expect(viewModel.errorMessage).toBeNull();
 		});
 
-		it('should create a SagaStepViewModel from aggregate with different status values', () => {
+		it("should create a SagaStepViewModel from aggregate with different status values", () => {
 			const now = new Date();
 			const statuses = [
 				SagaStepStatusEnum.PENDING,
@@ -266,7 +266,7 @@ describe('SagaStepViewModelFactory', () => {
 					{
 						id: new SagaStepUuidValueObject(),
 						sagaInstanceId: new SagaInstanceUuidValueObject(),
-						name: new SagaStepNameValueObject('Test Step'),
+						name: new SagaStepNameValueObject("Test Step"),
 						order: new SagaStepOrderValueObject(1),
 						status: new SagaStepStatusValueObject(status),
 						startDate: null,

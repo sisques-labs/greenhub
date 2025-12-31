@@ -1,13 +1,13 @@
-import { AuthEmailAlreadyExistsException } from '@/generic/auth/application/exceptions/auth-email-already-exists/auth-email-already-exists.exception';
-import { AssertAuthEmailNotExistsService } from '@/generic/auth/application/services/assert-auth-email-not-exists/assert-auth-email-not-exists.service';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
-import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { AuthEmailAlreadyExistsException } from "@/generic/auth/application/exceptions/auth-email-already-exists/auth-email-already-exists.exception";
+import { AssertAuthEmailNotExistsService } from "@/generic/auth/application/services/assert-auth-email-not-exists/assert-auth-email-not-exists.service";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
+import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
-describe('AssertAuthEmailNotExistsService', () => {
+describe("AssertAuthEmailNotExistsService", () => {
 	let service: AssertAuthEmailNotExistsService;
 	let mockAuthWriteRepository: jest.Mocked<AuthWriteRepository>;
 
@@ -26,9 +26,9 @@ describe('AssertAuthEmailNotExistsService', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should not throw when auth email does not exist', async () => {
-			const email = 'new@example.com';
+	describe("execute", () => {
+		it("should not throw when auth email does not exist", async () => {
+			const email = "new@example.com";
 
 			mockAuthWriteRepository.findByEmail.mockResolvedValue(null);
 
@@ -37,8 +37,8 @@ describe('AssertAuthEmailNotExistsService', () => {
 			expect(mockAuthWriteRepository.findByEmail).toHaveBeenCalledTimes(1);
 		});
 
-		it('should throw AuthEmailAlreadyExistsException when auth email exists', async () => {
-			const email = 'existing@example.com';
+		it("should throw AuthEmailAlreadyExistsException when auth email exists", async () => {
+			const email = "existing@example.com";
 			const mockAuth = new AuthAggregate(
 				{
 					id: new AuthUuidValueObject(),

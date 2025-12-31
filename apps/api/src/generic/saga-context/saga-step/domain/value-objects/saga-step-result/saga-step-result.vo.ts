@@ -1,4 +1,4 @@
-import { JsonValueObject } from '@/shared/domain/value-objects/json/json.vo';
+import { JsonValueObject } from "@/shared/domain/value-objects/json/json.vo";
 
 /**
  * SagaStepResultValueObject represents the result of a saga step.

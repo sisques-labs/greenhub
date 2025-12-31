@@ -1,10 +1,10 @@
-import { QueryBus } from '@nestjs/cqrs';
-import { HealthCheckQuery } from '@/support/health/application/queries/health-check/health-check.query';
-import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
-import { HealthGraphQLMapper } from '@/support/health/transport/graphql/mappers/health.mapper';
-import { HealthQueryResolver } from '@/support/health/transport/graphql/resolvers/health-queries.resolver';
+import { QueryBus } from "@nestjs/cqrs";
+import { HealthCheckQuery } from "@/support/health/application/queries/health-check/health-check.query";
+import { HealthViewModel } from "@/support/health/domain/view-models/health.view-model";
+import { HealthGraphQLMapper } from "@/support/health/transport/graphql/mappers/health.mapper";
+import { HealthQueryResolver } from "@/support/health/transport/graphql/resolvers/health-queries.resolver";
 
-describe('HealthQueryResolver', () => {
+describe("HealthQueryResolver", () => {
 	let resolver: HealthQueryResolver;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockHealthGraphQLMapper: jest.Mocked<HealthGraphQLMapper>;
@@ -26,16 +26,16 @@ describe('HealthQueryResolver', () => {
 		jest.clearAllMocks();
 	});
 
-	it('should execute health check query and map result', async () => {
+	it("should execute health check query and map result", async () => {
 		const viewModel = new HealthViewModel({
-			status: 'OK',
-			writeDatabaseStatus: 'OK',
-			readDatabaseStatus: 'OK',
+			status: "OK",
+			writeDatabaseStatus: "OK",
+			readDatabaseStatus: "OK",
 		});
 		const responseDto = {
-			status: 'OK',
-			writeDatabaseStatus: 'OK',
-			readDatabaseStatus: 'OK',
+			status: "OK",
+			writeDatabaseStatus: "OK",
+			readDatabaseStatus: "OK",
 		};
 
 		mockQueryBus.execute.mockResolvedValue(viewModel);

@@ -1,15 +1,15 @@
-import { ISagaStepCreateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto';
-import { ISagaStepUpdateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-update/saga-step-update-view-model.dto';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
+import { ISagaStepCreateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto";
+import { ISagaStepUpdateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-update/saga-step-update-view-model.dto";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
 
-describe('SagaStepViewModel', () => {
+describe("SagaStepViewModel", () => {
 	const createViewModelDto = (): ISagaStepCreateViewModelDto => {
 		const now = new Date();
 		return {
-			id: '123e4567-e89b-12d3-a456-426614174000',
-			sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-			name: 'Process Payment',
+			id: "123e4567-e89b-12d3-a456-426614174000",
+			sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+			name: "Process Payment",
 			order: 1,
 			status: SagaStepStatusEnum.PENDING,
 			startDate: null,
@@ -17,15 +17,15 @@ describe('SagaStepViewModel', () => {
 			errorMessage: null,
 			retryCount: 0,
 			maxRetries: 3,
-			payload: { orderId: '12345' },
+			payload: { orderId: "12345" },
 			result: {},
 			createdAt: now,
 			updatedAt: now,
 		};
 	};
 
-	describe('constructor', () => {
-		it('should create a SagaStepViewModel with all properties', () => {
+	describe("constructor", () => {
+		it("should create a SagaStepViewModel with all properties", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -45,23 +45,23 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should create a SagaStepViewModel with all optional fields set', () => {
+		it("should create a SagaStepViewModel with all optional fields set", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 			const dto: ISagaStepCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				name: 'Process Payment',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				name: "Process Payment",
 				order: 1,
 				status: SagaStepStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
-				errorMessage: 'Test error',
+				errorMessage: "Test error",
 				retryCount: 2,
 				maxRetries: 5,
-				payload: { orderId: '12345', userId: '67890' },
-				result: { success: true, transactionId: 'tx-123' },
+				payload: { orderId: "12345", userId: "67890" },
+				result: { success: true, transactionId: "tx-123" },
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -70,110 +70,110 @@ describe('SagaStepViewModel', () => {
 
 			expect(viewModel.startDate).toEqual(startDate);
 			expect(viewModel.endDate).toEqual(endDate);
-			expect(viewModel.errorMessage).toBe('Test error');
+			expect(viewModel.errorMessage).toBe("Test error");
 			expect(viewModel.retryCount).toBe(2);
 			expect(viewModel.maxRetries).toBe(5);
-			expect(viewModel.payload).toEqual({ orderId: '12345', userId: '67890' });
+			expect(viewModel.payload).toEqual({ orderId: "12345", userId: "67890" });
 			expect(viewModel.result).toEqual({
 				success: true,
-				transactionId: 'tx-123',
+				transactionId: "tx-123",
 			});
 		});
 	});
 
-	describe('getters', () => {
-		it('should expose id via getter', () => {
+	describe("getters", () => {
+		it("should expose id via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.id).toBe(dto.id);
 		});
 
-		it('should expose sagaInstanceId via getter', () => {
+		it("should expose sagaInstanceId via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.sagaInstanceId).toBe(dto.sagaInstanceId);
 		});
 
-		it('should expose name via getter', () => {
+		it("should expose name via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.name).toBe(dto.name);
 		});
 
-		it('should expose order via getter', () => {
+		it("should expose order via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.order).toBe(dto.order);
 		});
 
-		it('should expose status via getter', () => {
+		it("should expose status via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.status).toBe(dto.status);
 		});
 
-		it('should expose startDate via getter', () => {
+		it("should expose startDate via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.startDate).toBe(dto.startDate);
 		});
 
-		it('should expose endDate via getter', () => {
+		it("should expose endDate via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.endDate).toBe(dto.endDate);
 		});
 
-		it('should expose errorMessage via getter', () => {
+		it("should expose errorMessage via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.errorMessage).toBe(dto.errorMessage);
 		});
 
-		it('should expose retryCount via getter', () => {
+		it("should expose retryCount via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.retryCount).toBe(dto.retryCount);
 		});
 
-		it('should expose maxRetries via getter', () => {
+		it("should expose maxRetries via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.maxRetries).toBe(dto.maxRetries);
 		});
 
-		it('should expose payload via getter', () => {
+		it("should expose payload via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.payload).toEqual(dto.payload);
 		});
 
-		it('should expose result via getter', () => {
+		it("should expose result via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.result).toEqual(dto.result);
 		});
 
-		it('should expose createdAt via getter', () => {
+		it("should expose createdAt via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
 			expect(viewModel.createdAt).toEqual(dto.createdAt);
 		});
 
-		it('should expose updatedAt via getter', () => {
+		it("should expose updatedAt via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -181,23 +181,23 @@ describe('SagaStepViewModel', () => {
 		});
 	});
 
-	describe('update', () => {
-		it('should update name when new value is provided', () => {
+	describe("update", () => {
+		it("should update name when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 			const originalName = viewModel.name;
 			const beforeUpdate = new Date();
 
-			viewModel.update({ name: 'Updated Step Name' });
+			viewModel.update({ name: "Updated Step Name" });
 
-			expect(viewModel.name).toBe('Updated Step Name');
+			expect(viewModel.name).toBe("Updated Step Name");
 			expect(viewModel.name).not.toBe(originalName);
 			expect(viewModel.updatedAt.getTime()).toBeGreaterThanOrEqual(
 				beforeUpdate.getTime(),
 			);
 		});
 
-		it('should keep original name when undefined is provided', () => {
+		it("should keep original name when undefined is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 			const originalName = viewModel.name;
@@ -207,7 +207,7 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.name).toBe(originalName);
 		});
 
-		it('should update order when new value is provided', () => {
+		it("should update order when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -216,7 +216,7 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.order).toBe(5);
 		});
 
-		it('should update status when new value is provided', () => {
+		it("should update status when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -225,20 +225,20 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.status).toBe(SagaStepStatusEnum.STARTED);
 		});
 
-		it('should update startDate when new value is provided', () => {
+		it("should update startDate when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
-			const newStartDate = new Date('2024-01-01T10:00:00Z');
+			const newStartDate = new Date("2024-01-01T10:00:00Z");
 
 			viewModel.update({ startDate: newStartDate });
 
 			expect(viewModel.startDate).toEqual(newStartDate);
 		});
 
-		it('should set startDate to null when null is provided', () => {
+		it("should set startDate to null when null is provided", () => {
 			const dto: ISagaStepCreateViewModelDto = {
 				...createViewModelDto(),
-				startDate: new Date('2024-01-01T10:00:00Z'),
+				startDate: new Date("2024-01-01T10:00:00Z"),
 			};
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -247,29 +247,29 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.startDate).toBeNull();
 		});
 
-		it('should update endDate when new value is provided', () => {
+		it("should update endDate when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
-			const newEndDate = new Date('2024-01-01T11:00:00Z');
+			const newEndDate = new Date("2024-01-01T11:00:00Z");
 
 			viewModel.update({ endDate: newEndDate });
 
 			expect(viewModel.endDate).toEqual(newEndDate);
 		});
 
-		it('should update errorMessage when new value is provided', () => {
+		it("should update errorMessage when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
-			viewModel.update({ errorMessage: 'New error message' });
+			viewModel.update({ errorMessage: "New error message" });
 
-			expect(viewModel.errorMessage).toBe('New error message');
+			expect(viewModel.errorMessage).toBe("New error message");
 		});
 
-		it('should set errorMessage to null when null is provided', () => {
+		it("should set errorMessage to null when null is provided", () => {
 			const dto: ISagaStepCreateViewModelDto = {
 				...createViewModelDto(),
-				errorMessage: 'Existing error',
+				errorMessage: "Existing error",
 			};
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -278,7 +278,7 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.errorMessage).toBeNull();
 		});
 
-		it('should update retryCount when new value is provided', () => {
+		it("should update retryCount when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -287,7 +287,7 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.retryCount).toBe(5);
 		});
 
-		it('should update maxRetries when new value is provided', () => {
+		it("should update maxRetries when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 
@@ -296,17 +296,17 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.maxRetries).toBe(10);
 		});
 
-		it('should update payload when new value is provided', () => {
+		it("should update payload when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
-			const newPayload = { newKey: 'newValue' };
+			const newPayload = { newKey: "newValue" };
 
 			viewModel.update({ payload: newPayload });
 
 			expect(viewModel.payload).toEqual(newPayload);
 		});
 
-		it('should update result when new value is provided', () => {
+		it("should update result when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 			const newResult = { success: true };
@@ -316,11 +316,11 @@ describe('SagaStepViewModel', () => {
 			expect(viewModel.result).toEqual(newResult);
 		});
 
-		it('should update multiple fields at once', () => {
+		it("should update multiple fields at once", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 			const updateData: ISagaStepUpdateViewModelDto = {
-				name: 'Updated Name',
+				name: "Updated Name",
 				order: 10,
 				status: SagaStepStatusEnum.RUNNING,
 				retryCount: 2,
@@ -328,19 +328,19 @@ describe('SagaStepViewModel', () => {
 
 			viewModel.update(updateData);
 
-			expect(viewModel.name).toBe('Updated Name');
+			expect(viewModel.name).toBe("Updated Name");
 			expect(viewModel.order).toBe(10);
 			expect(viewModel.status).toBe(SagaStepStatusEnum.RUNNING);
 			expect(viewModel.retryCount).toBe(2);
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 			const originalUpdatedAt = viewModel.updatedAt;
 			const beforeUpdate = new Date();
 
-			viewModel.update({ name: 'Updated' });
+			viewModel.update({ name: "Updated" });
 
 			const afterUpdate = new Date();
 			expect(viewModel.updatedAt.getTime()).toBeGreaterThanOrEqual(
@@ -354,7 +354,7 @@ describe('SagaStepViewModel', () => {
 			);
 		});
 
-		it('should not update immutable fields (id, sagaInstanceId, createdAt)', () => {
+		it("should not update immutable fields (id, sagaInstanceId, createdAt)", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaStepViewModel(dto);
 			const originalId = viewModel.id;
@@ -362,7 +362,7 @@ describe('SagaStepViewModel', () => {
 			const originalCreatedAt = viewModel.createdAt;
 
 			viewModel.update({
-				name: 'Updated',
+				name: "Updated",
 			});
 
 			// Verify immutable fields remain unchanged

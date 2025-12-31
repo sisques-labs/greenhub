@@ -1,12 +1,12 @@
-import { Test } from '@nestjs/testing';
-import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
-import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
+import { Test } from "@nestjs/testing";
+import { GrowingUnitDeletedEventHandler } from "@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler";
+import { GrowingUnitDeletedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event";
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
+} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository";
 
-describe('GrowingUnitDeletedEventHandler', () => {
+describe("GrowingUnitDeletedEventHandler", () => {
 	let handler: GrowingUnitDeletedEventHandler;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 
@@ -37,21 +37,21 @@ describe('GrowingUnitDeletedEventHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('handle', () => {
-		it('should delete growing unit view model when event is handled', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("handle", () => {
+		it("should delete growing unit view model when event is handled", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
 			const event = new GrowingUnitDeletedEvent(
 				{
 					aggregateRootId: growingUnitId,
-					aggregateRootType: 'GrowingUnitAggregate',
+					aggregateRootType: "GrowingUnitAggregate",
 					entityId: growingUnitId,
-					entityType: 'GrowingUnitAggregate',
-					eventType: 'GrowingUnitDeletedEvent',
+					entityType: "GrowingUnitAggregate",
+					eventType: "GrowingUnitDeletedEvent",
 				},
 				{
 					id: growingUnitId,
-					name: 'Garden Bed 1',
-					type: 'GARDEN_BED',
+					name: "Garden Bed 1",
+					type: "GARDEN_BED",
 					capacity: 10,
 					dimensions: null,
 					plants: [],

@@ -1,20 +1,20 @@
-import { Test } from '@nestjs/testing';
-import { PlantNotFoundException } from '@/core/plant-context/application/exceptions/plant/plant-not-found/plant-not-found.exception';
-import { AssertPlantExistsService } from '@/core/plant-context/application/services/plant/assert-plant-exists/assert-plant-exists.service';
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { Test } from "@nestjs/testing";
+import { PlantNotFoundException } from "@/core/plant-context/application/exceptions/plant/plant-not-found/plant-not-found.exception";
+import { AssertPlantExistsService } from "@/core/plant-context/application/services/plant/assert-plant-exists/assert-plant-exists.service";
+import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
+import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
+import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
 import {
 	IPlantWriteRepository,
 	PLANT_WRITE_REPOSITORY_TOKEN,
-} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
-import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
-import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
-import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
-import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+} from "@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository";
+import { PlantNameValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo";
+import { PlantSpeciesValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo";
+import { PlantStatusValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo";
+import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
+import { PlantUuidValueObject } from "@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo";
 
-describe('AssertPlantExistsService', () => {
+describe("AssertPlantExistsService", () => {
 	let service: AssertPlantExistsService;
 	let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
 	let plantEntityFactory: PlantEntityFactory;
@@ -44,15 +44,15 @@ describe('AssertPlantExistsService', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return plant entity when found', async () => {
-			const plantId = '123e4567-e89b-12d3-a456-426614174000';
-			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should return plant entity when found", async () => {
+			const plantId = "123e4567-e89b-12d3-a456-426614174000";
+			const growingUnitId = "223e4567-e89b-12d3-a456-426614174000";
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject('Basil'),
-				species: new PlantSpeciesValueObject('Ocimum basilicum'),
+				name: new PlantNameValueObject("Basil"),
+				species: new PlantSpeciesValueObject("Ocimum basilicum"),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -67,8 +67,8 @@ describe('AssertPlantExistsService', () => {
 			expect(mockPlantWriteRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it('should throw PlantNotFoundException when plant does not exist', async () => {
-			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw PlantNotFoundException when plant does not exist", async () => {
+			const plantId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockPlantWriteRepository.findById.mockResolvedValue(null);
 
@@ -78,8 +78,8 @@ describe('AssertPlantExistsService', () => {
 			expect(mockPlantWriteRepository.findById).toHaveBeenCalledWith(plantId);
 		});
 
-		it('should throw exception with correct message', async () => {
-			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw exception with correct message", async () => {
+			const plantId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockPlantWriteRepository.findById.mockResolvedValue(null);
 

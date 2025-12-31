@@ -1,4 +1,4 @@
-import { BasePrimitives } from '@/shared/domain/primitives/base-primitives/base.primitives';
+import { BasePrimitives } from "@/shared/domain/primitives/base-primitives/base.primitives";
 
 export type SagaStepPrimitives = BasePrimitives & {
 	id: string;

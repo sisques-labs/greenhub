@@ -1,18 +1,18 @@
-import { QueryBus } from '@nestjs/cqrs';
-import { FindUsersByCriteriaQuery } from '@/generic/users/application/queries/find-users-by-criteria/find-users-by-criteria.query';
-import { UserViewModelFindByIdQuery } from '@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query';
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { UserFindByCriteriaRequestDto } from '@/generic/users/transport/graphql/dtos/requests/user-find-by-criteria.request.dto';
-import { UserFindByIdRequestDto } from '@/generic/users/transport/graphql/dtos/requests/user-find-by-id.request.dto';
-import { PaginatedUserResultDto } from '@/generic/users/transport/graphql/dtos/responses/user.response.dto';
-import { UserGraphQLMapper } from '@/generic/users/transport/graphql/mappers/user.mapper';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
-import { UserQueryResolver } from './user-queries.resolver';
+import { QueryBus } from "@nestjs/cqrs";
+import { FindUsersByCriteriaQuery } from "@/generic/users/application/queries/find-users-by-criteria/find-users-by-criteria.query";
+import { UserViewModelFindByIdQuery } from "@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query";
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { UserFindByCriteriaRequestDto } from "@/generic/users/transport/graphql/dtos/requests/user-find-by-criteria.request.dto";
+import { UserFindByIdRequestDto } from "@/generic/users/transport/graphql/dtos/requests/user-find-by-id.request.dto";
+import { PaginatedUserResultDto } from "@/generic/users/transport/graphql/dtos/responses/user.response.dto";
+import { UserGraphQLMapper } from "@/generic/users/transport/graphql/mappers/user.mapper";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { UserQueryResolver } from "./user-queries.resolver";
 
-describe('UserQueryResolver', () => {
+describe("UserQueryResolver", () => {
 	let resolver: UserQueryResolver;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockUserGraphQLMapper: jest.Mocked<UserGraphQLMapper>;
@@ -34,22 +34,22 @@ describe('UserQueryResolver', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('usersFindByCriteria', () => {
-		it('should return paginated users when criteria matches', async () => {
+	describe("usersFindByCriteria", () => {
+		it("should return paginated users when criteria matches", async () => {
 			const input: UserFindByCriteriaRequestDto = {
 				filters: [],
 				sorts: [],
 				pagination: { page: 1, perPage: 10 },
 			};
 
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModels: UserViewModel[] = [
 				new UserViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					userName: 'johndoe',
-					name: 'John',
-					lastName: 'Doe',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					userName: "johndoe",
+					name: "John",
+					lastName: "Doe",
 					bio: null,
 					avatarUrl: null,
 					role: UserRoleEnum.USER,
@@ -63,10 +63,10 @@ describe('UserQueryResolver', () => {
 			const paginatedResponseDto: PaginatedUserResultDto = {
 				items: [
 					{
-						id: '123e4567-e89b-12d3-a456-426614174000',
-						userName: 'johndoe',
-						name: 'John',
-						lastName: 'Doe',
+						id: "123e4567-e89b-12d3-a456-426614174000",
+						userName: "johndoe",
+						name: "John",
+						lastName: "Doe",
 						bio: null,
 						avatarUrl: null,
 						role: UserRoleEnum.USER,
@@ -98,7 +98,7 @@ describe('UserQueryResolver', () => {
 			);
 		});
 
-		it('should return paginated users when input is undefined', async () => {
+		it("should return paginated users when input is undefined", async () => {
 			const viewModels: UserViewModel[] = [];
 			const paginatedResult = new PaginatedResult(viewModels, 0, 1, 10);
 			const paginatedResponseDto: PaginatedUserResultDto = {
@@ -127,16 +127,16 @@ describe('UserQueryResolver', () => {
 			);
 		});
 
-		it('should handle criteria with filters and sorts', async () => {
+		it("should handle criteria with filters and sorts", async () => {
 			const input: UserFindByCriteriaRequestDto = {
 				filters: [
 					{
-						field: 'status',
-						operator: 'eq' as any,
+						field: "status",
+						operator: "eq" as any,
 						value: UserStatusEnum.ACTIVE,
 					},
 				],
-				sorts: [{ field: 'userName', direction: 'ASC' as any }],
+				sorts: [{ field: "userName", direction: "ASC" as any }],
 				pagination: { page: 1, perPage: 10 },
 			};
 
@@ -164,20 +164,20 @@ describe('UserQueryResolver', () => {
 		});
 	});
 
-	describe('userFindById', () => {
-		it('should return user when user exists', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("userFindById", () => {
+		it("should return user when user exists", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const input: UserFindByIdRequestDto = {
 				id: userId,
 			};
 
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModel = new UserViewModel({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -188,9 +188,9 @@ describe('UserQueryResolver', () => {
 
 			const responseDto = {
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -214,13 +214,13 @@ describe('UserQueryResolver', () => {
 			);
 		});
 
-		it('should handle errors from query bus', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should handle errors from query bus", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const input: UserFindByIdRequestDto = {
 				id: userId,
 			};
 
-			const error = new Error('User not found');
+			const error = new Error("User not found");
 			mockQueryBus.execute.mockRejectedValue(error);
 
 			await expect(resolver.userFindById(input)).rejects.toThrow(error);

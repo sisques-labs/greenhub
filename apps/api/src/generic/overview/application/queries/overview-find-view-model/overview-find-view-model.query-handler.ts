@@ -1,11 +1,11 @@
-import { Inject, Logger } from '@nestjs/common';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { OverviewFindViewModelQuery } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query';
+import { Inject, Logger } from "@nestjs/common";
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
+import { OverviewFindViewModelQuery } from "@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query";
 import {
 	IOverviewReadRepository,
 	OVERVIEW_READ_REPOSITORY_TOKEN,
-} from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+} from "@/generic/overview/domain/repositories/overview-read/overview-read.repository";
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
 
 /**
  * Handles the {@link OverviewFindViewModelQuery} query.
@@ -19,7 +19,7 @@ export class OverviewFindViewModelQueryHandler
 	implements IQueryHandler<OverviewFindViewModelQuery>
 {
 	private readonly logger = new Logger(OverviewFindViewModelQueryHandler.name);
-	private readonly OVERVIEW_ID = 'overview';
+	private readonly OVERVIEW_ID = "overview";
 
 	constructor(
 		@Inject(OVERVIEW_READ_REPOSITORY_TOKEN)
@@ -35,7 +35,7 @@ export class OverviewFindViewModelQueryHandler
 	async execute(
 		query: OverviewFindViewModelQuery,
 	): Promise<OverviewViewModel | null> {
-		this.logger.log('Executing overview find view model query');
+		this.logger.log("Executing overview find view model query");
 
 		// 01: Find the overview view model by the constant ID
 		return await this.overviewReadRepository.findById(this.OVERVIEW_ID);

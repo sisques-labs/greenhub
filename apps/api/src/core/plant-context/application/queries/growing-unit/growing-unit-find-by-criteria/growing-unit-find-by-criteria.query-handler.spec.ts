@@ -1,16 +1,16 @@
-import { Test } from '@nestjs/testing';
-import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
-import { GrowingUnitFindByCriteriaQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler';
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { Test } from "@nestjs/testing";
+import { GrowingUnitFindByCriteriaQuery } from "@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query";
+import { GrowingUnitFindByCriteriaQueryHandler } from "@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler";
+import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
-describe('GrowingUnitFindByCriteriaQueryHandler', () => {
+describe("GrowingUnitFindByCriteriaQueryHandler", () => {
 	let handler: GrowingUnitFindByCriteriaQueryHandler;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 
@@ -41,15 +41,15 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return paginated result when criteria matches', async () => {
+	describe("execute", () => {
+		it("should return paginated result when criteria matches", async () => {
 			const criteria = new Criteria();
 			const query = new GrowingUnitFindByCriteriaQuery(criteria);
 			const now = new Date();
 			const mockViewModels = [
 				new GrowingUnitViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					name: 'Garden Bed 1',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					name: "Garden Bed 1",
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
 					dimensions: null,
@@ -61,8 +61,8 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 					updatedAt: now,
 				}),
 				new GrowingUnitViewModel({
-					id: '223e4567-e89b-12d3-a456-426614174000',
-					name: 'Garden Bed 2',
+					id: "223e4567-e89b-12d3-a456-426614174000",
+					name: "Garden Bed 2",
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
 					dimensions: null,
@@ -97,7 +97,7 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 			).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return empty paginated result when no matches found', async () => {
+		it("should return empty paginated result when no matches found", async () => {
 			const criteria = new Criteria();
 			const query = new GrowingUnitFindByCriteriaQuery(criteria);
 			const mockPaginatedResult = new PaginatedResult<GrowingUnitViewModel>(

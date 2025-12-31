@@ -1,7 +1,7 @@
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
-import { IBaseReadRepository } from '@/shared/domain/interfaces/base-read-repository.interface';
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
+import { IBaseReadRepository } from "@/shared/domain/interfaces/base-read-repository.interface";
 
-export const OVERVIEW_READ_REPOSITORY_TOKEN = Symbol('OverviewReadRepository');
+export const OVERVIEW_READ_REPOSITORY_TOKEN = Symbol("OverviewReadRepository");
 
 /**
  * Type alias for the overview read repository.

@@ -1,4 +1,4 @@
-import { IRoundNumberCommandDto } from '@/support/math/application/dtos/commands/round-number/round-number-command.dto';
+import { IRoundNumberCommandDto } from "@/support/math/application/dtos/commands/round-number/round-number-command.dto";
 
 /**
  * Command for rounding number.

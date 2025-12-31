@@ -1,50 +1,50 @@
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthUserProfileViewModelFactory } from "@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthUserProfileViewModel } from "@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model";
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
 
-describe('AuthUserProfileViewModelFactory', () => {
+describe("AuthUserProfileViewModelFactory", () => {
 	let factory: AuthUserProfileViewModelFactory;
 
 	beforeEach(() => {
 		factory = new AuthUserProfileViewModelFactory();
 	});
 
-	describe('create', () => {
-		it('should create an AuthUserProfileViewModel from auth and user view models with all fields', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
-			const lastLoginAt = new Date('2024-01-01T09:00:00Z');
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("create", () => {
+		it("should create an AuthUserProfileViewModel from auth and user view models with all fields", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
+			const lastLoginAt = new Date("2024-01-01T09:00:00Z");
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 
 			const authViewModel = new AuthViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 				userId: userId,
-				email: 'test@example.com',
+				email: "test@example.com",
 				emailVerified: true,
 				lastLoginAt: lastLoginAt,
 				password: null,
-				phoneNumber: '+1234567890',
+				phoneNumber: "+1234567890",
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: true,
 				createdAt: now,
-				updatedAt: new Date('2024-01-01T11:00:00Z'),
+				updatedAt: new Date("2024-01-01T11:00:00Z"),
 			});
 
 			const userViewModel = new UserViewModel({
 				id: userId,
-				userName: 'testuser',
-				name: 'Test',
-				lastName: 'User',
-				bio: 'Test bio',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				userName: "testuser",
+				name: "Test",
+				lastName: "User",
+				bio: "Test bio",
+				avatarUrl: "https://example.com/avatar.jpg",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				createdAt: now,
-				updatedAt: new Date('2024-01-01T12:00:00Z'),
+				updatedAt: new Date("2024-01-01T12:00:00Z"),
 			});
 
 			const profileViewModel = factory.create(authViewModel, userViewModel);
@@ -73,28 +73,28 @@ describe('AuthUserProfileViewModelFactory', () => {
 			expect(profileViewModel.updatedAt).toEqual(userViewModel.updatedAt);
 		});
 
-		it('should use auth updatedAt when it is later than user updatedAt', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+		it("should use auth updatedAt when it is later than user updatedAt", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 
 			const authViewModel = new AuthViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 				userId: userId,
-				email: 'test@example.com',
+				email: "test@example.com",
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
 				phoneNumber: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: 'google-123',
+				providerId: "google-123",
 				twoFactorEnabled: false,
 				createdAt: now,
-				updatedAt: new Date('2024-01-01T12:00:00Z'),
+				updatedAt: new Date("2024-01-01T12:00:00Z"),
 			});
 
 			const userViewModel = new UserViewModel({
 				id: userId,
-				userName: 'testuser',
+				userName: "testuser",
 				name: null,
 				lastName: null,
 				bio: null,
@@ -102,7 +102,7 @@ describe('AuthUserProfileViewModelFactory', () => {
 				role: UserRoleEnum.ADMIN,
 				status: UserStatusEnum.ACTIVE,
 				createdAt: now,
-				updatedAt: new Date('2024-01-01T11:00:00Z'),
+				updatedAt: new Date("2024-01-01T11:00:00Z"),
 			});
 
 			const profileViewModel = factory.create(authViewModel, userViewModel);
@@ -111,12 +111,12 @@ describe('AuthUserProfileViewModelFactory', () => {
 			expect(profileViewModel.updatedAt).toEqual(authViewModel.updatedAt);
 		});
 
-		it('should handle null optional fields correctly', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+		it("should handle null optional fields correctly", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 
 			const authViewModel = new AuthViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 				userId: userId,
 				email: null,
 				emailVerified: false,
@@ -124,7 +124,7 @@ describe('AuthUserProfileViewModelFactory', () => {
 				password: null,
 				phoneNumber: null,
 				provider: AuthProviderEnum.APPLE,
-				providerId: 'apple-123',
+				providerId: "apple-123",
 				twoFactorEnabled: false,
 				createdAt: now,
 				updatedAt: now,
@@ -132,7 +132,7 @@ describe('AuthUserProfileViewModelFactory', () => {
 
 			const userViewModel = new UserViewModel({
 				id: userId,
-				userName: 'testuser',
+				userName: "testuser",
 				name: null,
 				lastName: null,
 				bio: null,

@@ -4,7 +4,7 @@
  * It provides a common structure for application-specific errors.
  */
 export class BaseApplicationException extends Error {
-	public readonly layer: string = 'Application';
+	public readonly layer: string = "Application";
 	public readonly timestamp: Date;
 
 	constructor(message: string) {

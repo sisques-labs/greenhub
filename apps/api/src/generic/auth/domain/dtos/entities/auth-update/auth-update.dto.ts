@@ -1,4 +1,4 @@
-import { IAuthCreateDto } from '@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto';
+import { IAuthCreateDto } from "@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto";
 
 /**
  * Data Transfer Object for updating a auth.
@@ -7,4 +7,4 @@ import { IAuthCreateDto } from '@/generic/auth/domain/dtos/entities/auth-create/
  * @type IAuthUpdateDto
  * @extends Partial<Omit<IAuthCreateDto, 'id'>>
  */
-export type IAuthUpdateDto = Partial<Omit<IAuthCreateDto, 'id' | 'userId'>>;
+export type IAuthUpdateDto = Partial<Omit<IAuthCreateDto, "id" | "userId">>;

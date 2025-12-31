@@ -1,8 +1,8 @@
-import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
-import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { AppModule } from '@/app.module';
+import { ValidationPipe, VersioningType } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.mjs";
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
+import { AppModule } from "@/app.module";
 
 async function bootstrap() {
 	let app;
@@ -18,7 +18,7 @@ async function bootstrap() {
 
 		// GraphQL Upload middleware (must be before other middleware)
 		app.use(
-			'/graphql',
+			"/graphql",
 			graphqlUploadExpress({
 				maxFileSize: 10000000, // 10MB
 				maxFiles: 10,
@@ -26,12 +26,12 @@ async function bootstrap() {
 		);
 
 		// Global prefix
-		app.setGlobalPrefix('api');
+		app.setGlobalPrefix("api");
 
 		// API versioning
 		app.enableVersioning({
 			type: VersioningType.URI,
-			defaultVersion: '1',
+			defaultVersion: "1",
 		});
 
 		// Global validation pipe
@@ -48,10 +48,10 @@ async function bootstrap() {
 
 		// CORS
 		app.enableCors({
-			origin: process.env.FRONTEND_URL || '*',
+			origin: process.env.FRONTEND_URL || "*",
 			credentials: true,
-			methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-			allowedHeaders: ['Content-Type', 'Authorization'],
+			methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+			allowedHeaders: ["Content-Type", "Authorization"],
 		});
 
 		const port = process.env.PORT || 4100;

@@ -1,19 +1,19 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
-import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
-import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { Inject, Logger } from "@nestjs/common";
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { PlantRemoveCommand } from "@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command";
+import { PlantDeletedEvent } from "@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event";
+import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
+import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
+import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
 import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+} from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository";
 import {
 	IPlantWriteRepository,
 	PLANT_WRITE_REPOSITORY_TOKEN,
-} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+} from "@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository";
+import { PublishIntegrationEventsService } from "@/shared/application/services/publish-integration-events/publish-integration-events.service";
 
 /**
  * Handles the {@link PlantRemoveCommand} to remove a plant from a growing unit.

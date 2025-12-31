@@ -1,26 +1,26 @@
-import { EventBus } from '@nestjs/cqrs';
-import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
-import { PlantAddCommandHandler } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command-handler';
-import { IPlantAddCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-add/plant-add-command.dto';
-import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
-import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
-import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
-import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
-import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
-import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
-import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
-import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
-import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
-import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+import { EventBus } from "@nestjs/cqrs";
+import { PlantAddCommand } from "@/core/plant-context/application/commands/plant/plant-add/plant-add.command";
+import { PlantAddCommandHandler } from "@/core/plant-context/application/commands/plant/plant-add/plant-add.command-handler";
+import { IPlantAddCommandDto } from "@/core/plant-context/application/dtos/commands/plant/plant-add/plant-add-command.dto";
+import { AssertGrowingUnitExistsService } from "@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service";
+import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
+import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
+import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
+import { GrowingUnitPlantAddedEvent } from "@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event";
+import { GrowingUnitFullCapacityException } from "@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception";
+import { PlantEntityFactory } from "@/core/plant-context/domain/factories/entities/plant/plant-entity.factory";
+import { IGrowingUnitWriteRepository } from "@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository";
+import { GrowingUnitCapacityValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo";
+import { GrowingUnitNameValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo";
+import { GrowingUnitTypeValueObject } from "@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo";
+import { PlantNameValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo";
+import { PlantSpeciesValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo";
+import { PlantStatusValueObject } from "@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo";
+import { PublishIntegrationEventsService } from "@/shared/application/services/publish-integration-events/publish-integration-events.service";
+import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
+import { PlantUuidValueObject } from "@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo";
 
-describe('PlantAddCommandHandler', () => {
+describe("PlantAddCommandHandler", () => {
 	let handler: PlantAddCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -66,22 +66,22 @@ describe('PlantAddCommandHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should add plant to growing unit successfully', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should add plant to growing unit successfully", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IPlantAddCommandDto = {
 				growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: new Date('2024-01-15'),
-				notes: 'Keep in indirect sunlight',
+				name: "Basil",
+				species: "Ocimum basilicum",
+				plantedDate: new Date("2024-01-15"),
+				notes: "Keep in indirect sunlight",
 				status: PlantStatusEnum.PLANTED,
 			};
 
 			const command = new PlantAddCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				name: new GrowingUnitNameValueObject("Garden Bed 1"),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
@@ -129,13 +129,13 @@ describe('PlantAddCommandHandler', () => {
 			);
 		});
 
-		it('should throw exception when growing unit is at full capacity', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw exception when growing unit is at full capacity", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IPlantAddCommandDto = {
 				growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: new Date('2024-01-15'),
+				name: "Basil",
+				species: "Ocimum basilicum",
+				plantedDate: new Date("2024-01-15"),
 				notes: null,
 				status: PlantStatusEnum.PLANTED,
 			};
@@ -143,7 +143,7 @@ describe('PlantAddCommandHandler', () => {
 			const command = new PlantAddCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				name: new GrowingUnitNameValueObject("Garden Bed 1"),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(1),
 				dimensions: null,
@@ -154,8 +154,8 @@ describe('PlantAddCommandHandler', () => {
 			const existingPlant = {
 				id: new PlantUuidValueObject(),
 				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new PlantNameValueObject('Existing Plant'),
-				species: new PlantSpeciesValueObject('Existing Species'),
+				name: new PlantNameValueObject("Existing Plant"),
+				species: new PlantSpeciesValueObject("Existing Species"),
 				plantedDate: null,
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
@@ -174,13 +174,13 @@ describe('PlantAddCommandHandler', () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it('should publish GrowingUnitPlantAddedEvent when plant is added', async () => {
-			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should publish GrowingUnitPlantAddedEvent when plant is added", async () => {
+			const growingUnitId = "123e4567-e89b-12d3-a456-426614174000";
 			const commandDto: IPlantAddCommandDto = {
 				growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: new Date('2024-01-15'),
+				name: "Basil",
+				species: "Ocimum basilicum",
+				plantedDate: new Date("2024-01-15"),
 				notes: null,
 				status: PlantStatusEnum.PLANTED,
 			};
@@ -188,7 +188,7 @@ describe('PlantAddCommandHandler', () => {
 			const command = new PlantAddCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
-				name: new GrowingUnitNameValueObject('Garden Bed 1'),
+				name: new GrowingUnitNameValueObject("Garden Bed 1"),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,

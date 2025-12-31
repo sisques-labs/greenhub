@@ -1,12 +1,12 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
+import { Inject, Logger } from "@nestjs/common";
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
+import { AuthViewModelFactory } from "@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory";
 import {
 	AUTH_READ_REPOSITORY_TOKEN,
 	AuthReadRepository,
-} from '@/generic/auth/domain/repositories/auth-read.repository';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthRegisteredByEmailEvent } from '@/shared/domain/events/auth/auth-registered-by-email/auth-registered-by-email.event';
+} from "@/generic/auth/domain/repositories/auth-read.repository";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthRegisteredByEmailEvent } from "@/shared/domain/events/auth/auth-registered-by-email/auth-registered-by-email.event";
 
 @EventsHandler(AuthRegisteredByEmailEvent)
 export class AuthRegisteredByEmailEventHandler

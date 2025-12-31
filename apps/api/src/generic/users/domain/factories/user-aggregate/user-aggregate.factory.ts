@@ -1,17 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create/user-create.dto';
-import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
-import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
-import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
-import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
-import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
-import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
-import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
-import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
-import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { Injectable } from "@nestjs/common";
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { IUserCreateDto } from "@/generic/users/domain/dtos/entities/user-create/user-create.dto";
+import { UserPrimitives } from "@/generic/users/domain/primitives/user.primitives";
+import { UserAvatarUrlValueObject } from "@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo";
+import { UserBioValueObject } from "@/generic/users/domain/value-objects/user-bio/user-bio.vo";
+import { UserLastNameValueObject } from "@/generic/users/domain/value-objects/user-last-name/user-last-name.vo";
+import { UserNameValueObject } from "@/generic/users/domain/value-objects/user-name/user-name.vo";
+import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
+import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
+import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
+import { IWriteFactory } from "@/shared/domain/interfaces/write-factory.interface";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
 /**
  * Factory class responsible for creating UserAggregate entities.

@@ -1,7 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
-import { OverviewMongoDbDto } from '@/generic/overview/infrastructure/database/mongodb/dtos/overview-mongodb.dto';
+import { Injectable, Logger } from "@nestjs/common";
+import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
+import { OverviewMongoDbDto } from "@/generic/overview/infrastructure/database/mongodb/dtos/overview-mongodb.dto";
 
 /**
  * Mapper for converting between OverviewViewModel domain entities and MongoDB documents.

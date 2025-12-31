@@ -1,4 +1,4 @@
-import { IUserDeleteCommandDto } from '@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto';
+import { IUserDeleteCommandDto } from "@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto";
 
 export class UserDeleteCommand {
 	readonly id: string;

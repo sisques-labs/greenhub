@@ -1,14 +1,14 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { AuthUpdateCommand } from '@/generic/auth/application/commands/auth-update/auth-update.command';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { IAuthUpdateDto } from '@/generic/auth/domain/dtos/entities/auth-update/auth-update.dto';
+import { Inject, Logger } from "@nestjs/common";
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { AuthUpdateCommand } from "@/generic/auth/application/commands/auth-update/auth-update.command";
+import { AssertAuthExistsService } from "@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { IAuthUpdateDto } from "@/generic/auth/domain/dtos/entities/auth-update/auth-update.dto";
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
-} from '@/generic/auth/domain/repositories/auth-write.repository';
-import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
+} from "@/generic/auth/domain/repositories/auth-write.repository";
+import { BaseUpdateCommandHandler } from "@/shared/application/commands/update/base-update/base-update.command-handler";
 
 @CommandHandler(AuthUpdateCommand)
 export class AuthUpdateCommandHandler
@@ -39,7 +39,7 @@ export class AuthUpdateCommandHandler
 			await this.assertAuthExistsService.execute(command.id.value);
 
 		// 02: Extract update data excluding the id field
-		const updateData = this.extractUpdateData(command, ['id']);
+		const updateData = this.extractUpdateData(command, ["id"]);
 		this.logger.debug(`Update data: ${JSON.stringify(updateData)}`);
 
 		// 03: Update the auth

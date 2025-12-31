@@ -1,14 +1,14 @@
-import { Test } from '@nestjs/testing';
-import { OverviewNotFoundException } from '@/generic/overview/application/exceptions/overview-not-found/overview-not-found.exception';
-import { AssertOverviewViewModelExistsService } from '@/generic/overview/application/services/assert-overview-view-model-exists/assert-overview-view-model-exists.service';
-import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
+import { Test } from "@nestjs/testing";
+import { OverviewNotFoundException } from "@/generic/overview/application/exceptions/overview-not-found/overview-not-found.exception";
+import { AssertOverviewViewModelExistsService } from "@/generic/overview/application/services/assert-overview-view-model-exists/assert-overview-view-model-exists.service";
+import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
 import {
 	IOverviewReadRepository,
 	OVERVIEW_READ_REPOSITORY_TOKEN,
-} from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+} from "@/generic/overview/domain/repositories/overview-read/overview-read.repository";
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
 
-describe('AssertOverviewViewModelExistsService', () => {
+describe("AssertOverviewViewModelExistsService", () => {
 	let service: AssertOverviewViewModelExistsService;
 	let mockOverviewReadRepository: jest.Mocked<IOverviewReadRepository>;
 	let factory: OverviewViewModelFactory;
@@ -41,9 +41,9 @@ describe('AssertOverviewViewModelExistsService', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return overview view model when found', async () => {
-			const overviewId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should return overview view model when found", async () => {
+			const overviewId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 			const mockViewModel = factory.create({
 				id: overviewId,
@@ -92,8 +92,8 @@ describe('AssertOverviewViewModelExistsService', () => {
 			expect(mockOverviewReadRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it('should throw OverviewNotFoundException when overview does not exist', async () => {
-			const overviewId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw OverviewNotFoundException when overview does not exist", async () => {
+			const overviewId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockOverviewReadRepository.findById.mockResolvedValue(null);
 
@@ -105,8 +105,8 @@ describe('AssertOverviewViewModelExistsService', () => {
 			);
 		});
 
-		it('should throw exception with correct message', async () => {
-			const overviewId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw exception with correct message", async () => {
+			const overviewId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockOverviewReadRepository.findById.mockResolvedValue(null);
 

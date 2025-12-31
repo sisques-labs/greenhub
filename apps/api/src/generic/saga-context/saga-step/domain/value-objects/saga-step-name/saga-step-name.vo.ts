@@ -1,4 +1,4 @@
-import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
+import { StringValueObject } from "@/shared/domain/value-objects/string/string.vo";
 
 /**
  * SagaStepNameValueObject represents the name of a saga step.

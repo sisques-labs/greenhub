@@ -1,14 +1,14 @@
-import { ISagaInstanceCreateViewModelDto } from '@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto';
-import { ISagaInstanceUpdateViewModelDto } from '@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-update/saga-instance-update-view-model.dto';
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
-import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
+import { ISagaInstanceCreateViewModelDto } from "@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-create/saga-instance-create-view-model.dto";
+import { ISagaInstanceUpdateViewModelDto } from "@/generic/saga-context/saga-instance/domain/dtos/view-models/saga-instance-update/saga-instance-update-view-model.dto";
+import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
 
-describe('SagaInstanceViewModel', () => {
+describe("SagaInstanceViewModel", () => {
 	const createViewModelDto = (): ISagaInstanceCreateViewModelDto => {
 		const now = new Date();
 		return {
-			id: '123e4567-e89b-12d3-a456-426614174000',
-			name: 'Order Processing Saga',
+			id: "123e4567-e89b-12d3-a456-426614174000",
+			name: "Order Processing Saga",
 			status: SagaInstanceStatusEnum.PENDING,
 			startDate: null,
 			endDate: null,
@@ -17,8 +17,8 @@ describe('SagaInstanceViewModel', () => {
 		};
 	};
 
-	describe('constructor', () => {
-		it('should create a SagaInstanceViewModel with all properties', () => {
+	describe("constructor", () => {
+		it("should create a SagaInstanceViewModel with all properties", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
@@ -31,13 +31,13 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should create a SagaInstanceViewModel with all optional fields set', () => {
+		it("should create a SagaInstanceViewModel with all optional fields set", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 			const dto: ISagaInstanceCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Order Processing Saga',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Order Processing Saga",
 				status: SagaInstanceStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
@@ -53,50 +53,50 @@ describe('SagaInstanceViewModel', () => {
 		});
 	});
 
-	describe('getters', () => {
-		it('should expose id via getter', () => {
+	describe("getters", () => {
+		it("should expose id via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
 			expect(viewModel.id).toBe(dto.id);
 		});
 
-		it('should expose name via getter', () => {
+		it("should expose name via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
 			expect(viewModel.name).toBe(dto.name);
 		});
 
-		it('should expose status via getter', () => {
+		it("should expose status via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
 			expect(viewModel.status).toBe(dto.status);
 		});
 
-		it('should expose startDate via getter', () => {
+		it("should expose startDate via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
 			expect(viewModel.startDate).toBe(dto.startDate);
 		});
 
-		it('should expose endDate via getter', () => {
+		it("should expose endDate via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
 			expect(viewModel.endDate).toBe(dto.endDate);
 		});
 
-		it('should expose createdAt via getter', () => {
+		it("should expose createdAt via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
 			expect(viewModel.createdAt).toEqual(dto.createdAt);
 		});
 
-		it('should expose updatedAt via getter', () => {
+		it("should expose updatedAt via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaInstanceViewModel(dto);
 
@@ -104,26 +104,26 @@ describe('SagaInstanceViewModel', () => {
 		});
 	});
 
-	describe('update', () => {
-		it('should update name', () => {
+	describe("update", () => {
+		it("should update name", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
 			const originalName = viewModel.name;
 			const originalUpdatedAt = viewModel.updatedAt;
 
 			const updateData: ISagaInstanceUpdateViewModelDto = {
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 			};
 
 			viewModel.update(updateData);
 
-			expect(viewModel.name).toBe('Updated Saga Name');
+			expect(viewModel.name).toBe("Updated Saga Name");
 			expect(viewModel.name).not.toBe(originalName);
 			expect(viewModel.updatedAt.getTime()).toBeGreaterThanOrEqual(
 				originalUpdatedAt.getTime(),
 			);
 		});
 
-		it('should update status', () => {
+		it("should update status", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
 			const originalStatus = viewModel.status;
 
@@ -137,9 +137,9 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.status).not.toBe(originalStatus);
 		});
 
-		it('should update startDate', () => {
+		it("should update startDate", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
-			const newStartDate = new Date('2024-01-01T10:00:00Z');
+			const newStartDate = new Date("2024-01-01T10:00:00Z");
 
 			const updateData: ISagaInstanceUpdateViewModelDto = {
 				startDate: newStartDate,
@@ -150,9 +150,9 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.startDate).toEqual(newStartDate);
 		});
 
-		it('should update endDate', () => {
+		it("should update endDate", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
-			const newEndDate = new Date('2024-01-01T11:00:00Z');
+			const newEndDate = new Date("2024-01-01T11:00:00Z");
 
 			const updateData: ISagaInstanceUpdateViewModelDto = {
 				endDate: newEndDate,
@@ -163,13 +163,13 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.endDate).toEqual(newEndDate);
 		});
 
-		it('should update multiple fields at once', () => {
+		it("should update multiple fields at once", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
-			const newStartDate = new Date('2024-01-01T10:00:00Z');
-			const newEndDate = new Date('2024-01-01T11:00:00Z');
+			const newStartDate = new Date("2024-01-01T10:00:00Z");
+			const newEndDate = new Date("2024-01-01T11:00:00Z");
 
 			const updateData: ISagaInstanceUpdateViewModelDto = {
-				name: 'Multi Updated Saga',
+				name: "Multi Updated Saga",
 				status: SagaInstanceStatusEnum.RUNNING,
 				startDate: newStartDate,
 				endDate: newEndDate,
@@ -177,13 +177,13 @@ describe('SagaInstanceViewModel', () => {
 
 			viewModel.update(updateData);
 
-			expect(viewModel.name).toBe('Multi Updated Saga');
+			expect(viewModel.name).toBe("Multi Updated Saga");
 			expect(viewModel.status).toBe(SagaInstanceStatusEnum.RUNNING);
 			expect(viewModel.startDate).toEqual(newStartDate);
 			expect(viewModel.endDate).toEqual(newEndDate);
 		});
 
-		it('should not update fields that are undefined', () => {
+		it("should not update fields that are undefined", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
 			const originalName = viewModel.name;
 			const originalStatus = viewModel.status;
@@ -196,13 +196,13 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.status).toBe(originalStatus);
 		});
 
-		it('should set startDate to null when null is provided', () => {
+		it("should set startDate to null when null is provided", () => {
 			const now = new Date();
 			const dto: ISagaInstanceCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Order Processing Saga',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Order Processing Saga",
 				status: SagaInstanceStatusEnum.PENDING,
-				startDate: new Date('2024-01-01T10:00:00Z'),
+				startDate: new Date("2024-01-01T10:00:00Z"),
 				endDate: null,
 				createdAt: now,
 				updatedAt: now,
@@ -214,14 +214,14 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.startDate).toBeNull();
 		});
 
-		it('should set endDate to null when null is provided', () => {
+		it("should set endDate to null when null is provided", () => {
 			const now = new Date();
 			const dto: ISagaInstanceCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Order Processing Saga',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Order Processing Saga",
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null,
-				endDate: new Date('2024-01-01T11:00:00Z'),
+				endDate: new Date("2024-01-01T11:00:00Z"),
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -232,13 +232,13 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.endDate).toBeNull();
 		});
 
-		it('should always update updatedAt timestamp', () => {
+		it("should always update updatedAt timestamp", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
 			const originalUpdatedAt = viewModel.updatedAt;
 
 			// Wait a bit to ensure timestamp difference
 			const updateData: ISagaInstanceUpdateViewModelDto = {
-				name: 'Updated Name',
+				name: "Updated Name",
 			};
 
 			viewModel.update(updateData);
@@ -249,8 +249,8 @@ describe('SagaInstanceViewModel', () => {
 		});
 	});
 
-	describe('immutability', () => {
-		it('should not allow id to be changed', () => {
+	describe("immutability", () => {
+		it("should not allow id to be changed", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
 			const originalId = viewModel.id;
 
@@ -258,7 +258,7 @@ describe('SagaInstanceViewModel', () => {
 			expect(viewModel.id).toBe(originalId);
 		});
 
-		it('should not allow createdAt to be changed', () => {
+		it("should not allow createdAt to be changed", () => {
 			const viewModel = new SagaInstanceViewModel(createViewModelDto());
 			const originalCreatedAt = viewModel.createdAt;
 

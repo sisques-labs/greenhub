@@ -1,7 +1,7 @@
-import { Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CalculatePercentageCommand } from '@/support/math/application/commands/calculate-percentage/calculate-percentage.command';
-import { CalculatePercentageService } from '@/support/math/application/services/calculate-percentage/calculate-percentage.service';
+import { Logger } from "@nestjs/common";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { CalculatePercentageCommand } from "@/support/math/application/commands/calculate-percentage/calculate-percentage.command";
+import { CalculatePercentageService } from "@/support/math/application/services/calculate-percentage/calculate-percentage.service";
 
 /**
  * Command handler for calculating percentage.

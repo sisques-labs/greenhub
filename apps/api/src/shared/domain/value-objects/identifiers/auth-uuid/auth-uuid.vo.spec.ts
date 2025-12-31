@@ -1,23 +1,23 @@
-import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
-import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
-import { UuidValueObject } from '@/shared/domain/value-objects/uuid/uuid.vo';
+import { InvalidUuidException } from "@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception";
+import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
+import { UuidValueObject } from "@/shared/domain/value-objects/uuid/uuid.vo";
 
-describe('AuthUuidValueObject', () => {
-	const validUuid = '123e4567-e89b-12d3-a456-426614174000';
+describe("AuthUuidValueObject", () => {
+	const validUuid = "123e4567-e89b-12d3-a456-426614174000";
 
-	it('should be an instance of UuidValueObject', () => {
+	it("should be an instance of UuidValueObject", () => {
 		const authUuid = new AuthUuidValueObject(validUuid);
 
 		expect(authUuid).toBeInstanceOf(UuidValueObject);
 	});
 
-	it('should create an auth UUID value object with valid UUID', () => {
+	it("should create an auth UUID value object with valid UUID", () => {
 		const authUuid = new AuthUuidValueObject(validUuid);
 
 		expect(authUuid.value).toBe(validUuid);
 	});
 
-	it('should generate a random UUID when no value is provided', () => {
+	it("should generate a random UUID when no value is provided", () => {
 		const authUuid = new AuthUuidValueObject();
 
 		expect(authUuid.value).toBeDefined();
@@ -26,13 +26,13 @@ describe('AuthUuidValueObject', () => {
 		);
 	});
 
-	it('should throw InvalidUuidException for invalid UUID', () => {
-		expect(() => new AuthUuidValueObject('invalid')).toThrow(
+	it("should throw InvalidUuidException for invalid UUID", () => {
+		expect(() => new AuthUuidValueObject("invalid")).toThrow(
 			InvalidUuidException,
 		);
 	});
 
-	it('should support equals method from UuidValueObject', () => {
+	it("should support equals method from UuidValueObject", () => {
 		const authUuid1 = new AuthUuidValueObject(validUuid);
 		const authUuid2 = new AuthUuidValueObject(validUuid);
 

@@ -1,4 +1,4 @@
-import { InvalidBooleanException } from '@/shared/domain/exceptions/value-objects/invalid-boolean/invalid-boolean.exception';
+import { InvalidBooleanException } from "@/shared/domain/exceptions/value-objects/invalid-boolean/invalid-boolean.exception";
 
 /**
  * Boolean Value Object
@@ -133,24 +133,24 @@ export class BooleanValueObject {
 	}
 
 	private parseValue(value: boolean | string | number): boolean {
-		if (typeof value === 'boolean') {
+		if (typeof value === "boolean") {
 			return value;
 		}
 
-		if (typeof value === 'string') {
+		if (typeof value === "string") {
 			const lowerValue = value.toLowerCase().trim();
 
 			if (this.options.strictMode) {
-				if (lowerValue === 'true') return true;
-				if (lowerValue === 'false') return false;
+				if (lowerValue === "true") return true;
+				if (lowerValue === "false") return false;
 				throw new InvalidBooleanException(`Invalid boolean string: ${value}`);
 			}
 
 			// More flexible parsing
-			if (['true', '1', 'yes', 'on', 'enabled'].includes(lowerValue)) {
+			if (["true", "1", "yes", "on", "enabled"].includes(lowerValue)) {
 				return true;
 			}
-			if (['false', '0', 'no', 'off', 'disabled'].includes(lowerValue)) {
+			if (["false", "0", "no", "off", "disabled"].includes(lowerValue)) {
 				return false;
 			}
 
@@ -159,7 +159,7 @@ export class BooleanValueObject {
 			);
 		}
 
-		if (typeof value === 'number') {
+		if (typeof value === "number") {
 			if (this.options.strictMode) {
 				if (value === 1) return true;
 				if (value === 0) return false;

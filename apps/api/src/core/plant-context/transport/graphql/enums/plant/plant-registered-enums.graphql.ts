@@ -1,5 +1,5 @@
-import { registerEnumType } from '@nestjs/graphql';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { registerEnumType } from "@nestjs/graphql";
+import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
 
 /**
  * Registers all GraphQL enums for the plant.
@@ -8,8 +8,8 @@ import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-s
 const registeredPlantEnums = [
 	{
 		enum: PlantStatusEnum,
-		name: 'PlantStatusEnum',
-		description: 'The status of the plant',
+		name: "PlantStatusEnum",
+		description: "The status of the plant",
 	},
 ];
 

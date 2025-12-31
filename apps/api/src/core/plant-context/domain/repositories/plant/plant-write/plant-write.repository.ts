@@ -1,7 +1,7 @@
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
-import { IBaseWriteRepository } from '@/shared/domain/interfaces/base-write-repository.interface';
+import { PlantEntity } from "@/core/plant-context/domain/entities/plant/plant.entity";
+import { IBaseWriteRepository } from "@/shared/domain/interfaces/base-write-repository.interface";
 
-export const PLANT_WRITE_REPOSITORY_TOKEN = Symbol('PlantWriteRepository');
+export const PLANT_WRITE_REPOSITORY_TOKEN = Symbol("PlantWriteRepository");
 
 /**
  * Write repository interface for Plant aggregate.

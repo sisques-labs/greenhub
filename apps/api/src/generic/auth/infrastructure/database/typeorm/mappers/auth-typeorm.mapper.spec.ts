@@ -1,12 +1,12 @@
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthAggregateFactory } from '@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory';
-import { AuthTypeormEntity } from '@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity';
-import { AuthTypeormMapper } from '@/generic/auth/infrastructure/database/typeorm/mappers/auth-typeorm.mapper';
-import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthAggregateFactory } from "@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory";
+import { AuthTypeormEntity } from "@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity";
+import { AuthTypeormMapper } from "@/generic/auth/infrastructure/database/typeorm/mappers/auth-typeorm.mapper";
+import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
-describe('AuthTypeormMapper', () => {
+describe("AuthTypeormMapper", () => {
 	let mapper: AuthTypeormMapper;
 	let mockAuthAggregateFactory: jest.Mocked<AuthAggregateFactory>;
 
@@ -23,20 +23,20 @@ describe('AuthTypeormMapper', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('toDomainEntity', () => {
-		it('should convert TypeORM entity to domain entity with all properties', () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("toDomainEntity", () => {
+		it("should convert TypeORM entity to domain entity with all properties", () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const now = new Date();
 
 			const typeormEntity = new AuthTypeormEntity();
 			typeormEntity.id = authId;
 			typeormEntity.userId = userId;
-			typeormEntity.email = 'test@example.com';
+			typeormEntity.email = "test@example.com";
 			typeormEntity.emailVerified = true;
-			typeormEntity.phoneNumber = '+1234567890';
+			typeormEntity.phoneNumber = "+1234567890";
 			typeormEntity.lastLoginAt = now;
-			typeormEntity.password = '$2b$12$hashedpassword';
+			typeormEntity.password = "$2b$12$hashedpassword";
 			typeormEntity.provider = AuthProviderEnum.LOCAL;
 			typeormEntity.providerId = null;
 			typeormEntity.twoFactorEnabled = false;
@@ -72,11 +72,11 @@ describe('AuthTypeormMapper', () => {
 			expect(mockAuthAggregateFactory.fromPrimitives).toHaveBeenCalledWith({
 				id: authId,
 				userId: userId,
-				email: 'test@example.com',
+				email: "test@example.com",
 				emailVerified: true,
-				phoneNumber: '+1234567890',
+				phoneNumber: "+1234567890",
 				lastLoginAt: now,
-				password: '$2b$12$hashedpassword',
+				password: "$2b$12$hashedpassword",
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -86,9 +86,9 @@ describe('AuthTypeormMapper', () => {
 			expect(mockAuthAggregateFactory.fromPrimitives).toHaveBeenCalledTimes(1);
 		});
 
-		it('should convert TypeORM entity with null optional properties', () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+		it("should convert TypeORM entity with null optional properties", () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const now = new Date();
 
 			const typeormEntity = new AuthTypeormEntity();
@@ -100,7 +100,7 @@ describe('AuthTypeormMapper', () => {
 			typeormEntity.lastLoginAt = null;
 			typeormEntity.password = null;
 			typeormEntity.provider = AuthProviderEnum.GOOGLE;
-			typeormEntity.providerId = 'google-123';
+			typeormEntity.providerId = "google-123";
 			typeormEntity.twoFactorEnabled = true;
 			typeormEntity.createdAt = now;
 			typeormEntity.updatedAt = now;
@@ -140,7 +140,7 @@ describe('AuthTypeormMapper', () => {
 				lastLoginAt: null,
 				password: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: 'google-123',
+				providerId: "google-123",
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,
@@ -148,10 +148,10 @@ describe('AuthTypeormMapper', () => {
 		});
 	});
 
-	describe('toTypeormEntity', () => {
-		it('should convert domain entity to TypeORM entity with all properties', () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("toTypeormEntity", () => {
+		it("should convert domain entity to TypeORM entity with all properties", () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const now = new Date();
 
 			const mockAuthAggregate = new AuthAggregate(
@@ -173,15 +173,15 @@ describe('AuthTypeormMapper', () => {
 			);
 
 			const toPrimitivesSpy = jest
-				.spyOn(mockAuthAggregate, 'toPrimitives')
+				.spyOn(mockAuthAggregate, "toPrimitives")
 				.mockReturnValue({
 					id: authId,
 					userId: userId,
-					email: 'test@example.com',
+					email: "test@example.com",
 					emailVerified: true,
-					phoneNumber: '+1234567890',
+					phoneNumber: "+1234567890",
 					lastLoginAt: now,
-					password: '$2b$12$hashedpassword',
+					password: "$2b$12$hashedpassword",
 					provider: AuthProviderEnum.LOCAL,
 					providerId: null,
 					twoFactorEnabled: false,
@@ -194,11 +194,11 @@ describe('AuthTypeormMapper', () => {
 			expect(result).toBeInstanceOf(AuthTypeormEntity);
 			expect(result.id).toBe(authId);
 			expect(result.userId).toBe(userId);
-			expect(result.email).toBe('test@example.com');
+			expect(result.email).toBe("test@example.com");
 			expect(result.emailVerified).toBe(true);
-			expect(result.phoneNumber).toBe('+1234567890');
+			expect(result.phoneNumber).toBe("+1234567890");
 			expect(result.lastLoginAt).toEqual(now);
-			expect(result.password).toBe('$2b$12$hashedpassword');
+			expect(result.password).toBe("$2b$12$hashedpassword");
 			expect(result.provider).toBe(AuthProviderEnum.LOCAL);
 			expect(result.providerId).toBeNull();
 			expect(result.twoFactorEnabled).toBe(false);
@@ -210,9 +210,9 @@ describe('AuthTypeormMapper', () => {
 			toPrimitivesSpy.mockRestore();
 		});
 
-		it('should convert domain entity with null optional properties', () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+		it("should convert domain entity with null optional properties", () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const now = new Date();
 
 			const mockAuthAggregate = new AuthAggregate(
@@ -234,7 +234,7 @@ describe('AuthTypeormMapper', () => {
 			);
 
 			const toPrimitivesSpy = jest
-				.spyOn(mockAuthAggregate, 'toPrimitives')
+				.spyOn(mockAuthAggregate, "toPrimitives")
 				.mockReturnValue({
 					id: authId,
 					userId: userId,
@@ -244,7 +244,7 @@ describe('AuthTypeormMapper', () => {
 					lastLoginAt: null,
 					password: null,
 					provider: AuthProviderEnum.GOOGLE,
-					providerId: 'google-123',
+					providerId: "google-123",
 					twoFactorEnabled: true,
 					createdAt: now,
 					updatedAt: now,
@@ -261,7 +261,7 @@ describe('AuthTypeormMapper', () => {
 			expect(result.lastLoginAt).toBeNull();
 			expect(result.password).toBeNull();
 			expect(result.provider).toBe(AuthProviderEnum.GOOGLE);
-			expect(result.providerId).toBe('google-123');
+			expect(result.providerId).toBe("google-123");
 			expect(result.twoFactorEnabled).toBe(true);
 			expect(result.deletedAt).toBeNull();
 

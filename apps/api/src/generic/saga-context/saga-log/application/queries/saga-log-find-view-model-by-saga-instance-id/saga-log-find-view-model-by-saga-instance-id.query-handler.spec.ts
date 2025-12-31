@@ -1,14 +1,14 @@
-import { Test } from '@nestjs/testing';
-import { FindSagaLogViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query';
-import { FindSagaLogViewModelsBySagaInstanceIdQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query-handler';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { Test } from "@nestjs/testing";
+import { FindSagaLogViewModelsBySagaInstanceIdQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query";
+import { FindSagaLogViewModelsBySagaInstanceIdQueryHandler } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query-handler";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
 import {
 	SAGA_LOG_READ_REPOSITORY_TOKEN,
 	SagaLogReadRepository,
-} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
 
-describe('FindSagaLogViewModelsBySagaInstanceIdQueryHandler', () => {
+describe("FindSagaLogViewModelsBySagaInstanceIdQueryHandler", () => {
 	let handler: FindSagaLogViewModelsBySagaInstanceIdQueryHandler;
 	let mockSagaLogReadRepository: jest.Mocked<SagaLogReadRepository>;
 
@@ -41,30 +41,30 @@ describe('FindSagaLogViewModelsBySagaInstanceIdQueryHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return array of saga log view models when saga logs exist', async () => {
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should return array of saga log view models when saga logs exist", async () => {
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 			const queryDto = { sagaInstanceId };
 			const query = new FindSagaLogViewModelsBySagaInstanceIdQuery(queryDto);
 
 			const mockViewModels: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.INFO,
-					message: 'Log message 1',
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					message: "Log message 1",
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				}),
 				new SagaLogViewModel({
-					id: '223e4567-e89b-12d3-a456-426614174001',
+					id: "223e4567-e89b-12d3-a456-426614174001",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.ERROR,
-					message: 'Log message 2',
-					createdAt: new Date('2024-01-01T11:00:00Z'),
-					updatedAt: new Date('2024-01-01T11:00:00Z'),
+					message: "Log message 2",
+					createdAt: new Date("2024-01-01T11:00:00Z"),
+					updatedAt: new Date("2024-01-01T11:00:00Z"),
 				}),
 			];
 
@@ -86,8 +86,8 @@ describe('FindSagaLogViewModelsBySagaInstanceIdQueryHandler', () => {
 			).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return empty array when no saga logs exist for saga instance', async () => {
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+		it("should return empty array when no saga logs exist for saga instance", async () => {
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 			const queryDto = { sagaInstanceId };
 			const query = new FindSagaLogViewModelsBySagaInstanceIdQuery(queryDto);
 
@@ -102,38 +102,38 @@ describe('FindSagaLogViewModelsBySagaInstanceIdQueryHandler', () => {
 			).toHaveBeenCalledWith(sagaInstanceId);
 		});
 
-		it('should return view models with different log types', async () => {
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+		it("should return view models with different log types", async () => {
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 			const queryDto = { sagaInstanceId };
 			const query = new FindSagaLogViewModelsBySagaInstanceIdQuery(queryDto);
 
 			const mockViewModels: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.INFO,
-					message: 'Info message',
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					message: "Info message",
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				}),
 				new SagaLogViewModel({
-					id: '223e4567-e89b-12d3-a456-426614174001',
+					id: "223e4567-e89b-12d3-a456-426614174001",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.WARNING,
-					message: 'Warning message',
-					createdAt: new Date('2024-01-01T11:00:00Z'),
-					updatedAt: new Date('2024-01-01T11:00:00Z'),
+					message: "Warning message",
+					createdAt: new Date("2024-01-01T11:00:00Z"),
+					updatedAt: new Date("2024-01-01T11:00:00Z"),
 				}),
 				new SagaLogViewModel({
-					id: '323e4567-e89b-12d3-a456-426614174002',
+					id: "323e4567-e89b-12d3-a456-426614174002",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.ERROR,
-					message: 'Error message',
-					createdAt: new Date('2024-01-01T12:00:00Z'),
-					updatedAt: new Date('2024-01-01T12:00:00Z'),
+					message: "Error message",
+					createdAt: new Date("2024-01-01T12:00:00Z"),
+					updatedAt: new Date("2024-01-01T12:00:00Z"),
 				}),
 			];
 

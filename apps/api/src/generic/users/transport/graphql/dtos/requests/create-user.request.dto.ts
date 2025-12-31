@@ -1,17 +1,17 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsEnum, IsOptional, IsString, IsUrl } from 'class-validator';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsEnum, IsOptional, IsString, IsUrl } from "class-validator";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
 
-@InputType('CreateUserRequestDto')
+@InputType("CreateUserRequestDto")
 export class CreateUserRequestDto {
-	@Field(() => String, { description: 'The name of the user', nullable: true })
+	@Field(() => String, { description: "The name of the user", nullable: true })
 	@IsString()
 	@IsOptional()
 	name: string;
 
 	@Field(() => String, {
-		description: 'The bio of the user',
+		description: "The bio of the user",
 		nullable: true,
 	})
 	@IsString()
@@ -19,7 +19,7 @@ export class CreateUserRequestDto {
 	bio: string;
 
 	@Field(() => String, {
-		description: 'The avatar url of the user',
+		description: "The avatar url of the user",
 		nullable: true,
 	})
 	@IsUrl()
@@ -27,7 +27,7 @@ export class CreateUserRequestDto {
 	avatarUrl: string;
 
 	@Field(() => String, {
-		description: 'The last name of the user',
+		description: "The last name of the user",
 		nullable: true,
 	})
 	@IsString()
@@ -35,7 +35,7 @@ export class CreateUserRequestDto {
 	lastName: string;
 
 	@Field(() => String, {
-		description: 'The user name of the user',
+		description: "The user name of the user",
 		nullable: true,
 	})
 	@IsString()
@@ -43,14 +43,14 @@ export class CreateUserRequestDto {
 	userName?: string;
 
 	@Field(() => UserRoleEnum, {
-		description: 'The role of the user',
+		description: "The role of the user",
 		nullable: false,
 	})
 	@IsEnum(UserRoleEnum)
 	role: UserRoleEnum;
 
 	@Field(() => UserStatusEnum, {
-		description: 'The status of the user',
+		description: "The status of the user",
 		nullable: false,
 	})
 	@IsEnum(UserStatusEnum)

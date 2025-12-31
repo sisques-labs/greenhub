@@ -1,22 +1,22 @@
-import { Test } from '@nestjs/testing';
-import { SagaStepNotFoundException } from '@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception';
-import { FindSagaStepByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-id/saga-step-find-by-id.query';
-import { FindSagaStepByIdQueryHandler } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-id/saga-step-find-by-id.query-handler';
-import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
-import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
-import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
-import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
-import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
-import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
-import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { Test } from "@nestjs/testing";
+import { SagaStepNotFoundException } from "@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception";
+import { FindSagaStepByIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-id/saga-step-find-by-id.query";
+import { FindSagaStepByIdQueryHandler } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-id/saga-step-find-by-id.query-handler";
+import { AssertSagaStepExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service";
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
+import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
+import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
+import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
+import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
+import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
+import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('FindSagaStepByIdQueryHandler', () => {
+describe("FindSagaStepByIdQueryHandler", () => {
 	let handler: FindSagaStepByIdQueryHandler;
 	let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
 
@@ -48,11 +48,11 @@ describe('FindSagaStepByIdQueryHandler', () => {
 		const now = new Date();
 		return new SagaStepAggregate(
 			{
-				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
+					"223e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaStepNameValueObject('Test Step'),
+				name: new SagaStepNameValueObject("Test Step"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
@@ -69,9 +69,9 @@ describe('FindSagaStepByIdQueryHandler', () => {
 		);
 	};
 
-	describe('execute', () => {
-		it('should return saga step aggregate when saga step exists', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should return saga step aggregate when saga step exists", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
 			const queryDto = { id: sagaStepId };
 			const query = new FindSagaStepByIdQuery(queryDto);
 
@@ -88,8 +88,8 @@ describe('FindSagaStepByIdQueryHandler', () => {
 			expect(mockAssertSagaStepExistsService.execute).toHaveBeenCalledTimes(1);
 		});
 
-		it('should throw SagaStepNotFoundException when saga step does not exist', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw SagaStepNotFoundException when saga step does not exist", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
 			const queryDto = { id: sagaStepId };
 			const query = new FindSagaStepByIdQuery(queryDto);
 

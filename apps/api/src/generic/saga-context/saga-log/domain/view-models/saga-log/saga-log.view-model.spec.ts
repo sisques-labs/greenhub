@@ -1,24 +1,24 @@
-import { ISagaLogCreateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto';
-import { ISagaLogUpdateViewModelDto } from '@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-update/saga-log-update-view-model.dto';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+import { ISagaLogCreateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-create/saga-log-create-view-model.dto";
+import { ISagaLogUpdateViewModelDto } from "@/generic/saga-context/saga-log/domain/dtos/view-models/saga-log-update/saga-log-update-view-model.dto";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
 
-describe('SagaLogViewModel', () => {
+describe("SagaLogViewModel", () => {
 	const createViewModelDto = (): ISagaLogCreateViewModelDto => {
 		const now = new Date();
 		return {
-			id: '123e4567-e89b-12d3-a456-426614174000',
-			sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-			sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+			id: "123e4567-e89b-12d3-a456-426614174000",
+			sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+			sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 			type: SagaLogTypeEnum.INFO,
-			message: 'Test log message',
+			message: "Test log message",
 			createdAt: now,
 			updatedAt: now,
 		};
 	};
 
-	describe('constructor', () => {
-		it('should create a SagaLogViewModel with all properties', () => {
+	describe("constructor", () => {
+		it("should create a SagaLogViewModel with all properties", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
@@ -31,7 +31,7 @@ describe('SagaLogViewModel', () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should create a SagaLogViewModel with different log types', () => {
+		it("should create a SagaLogViewModel with different log types", () => {
 			const now = new Date();
 			const types = [
 				SagaLogTypeEnum.INFO,
@@ -42,9 +42,9 @@ describe('SagaLogViewModel', () => {
 
 			types.forEach((type) => {
 				const dto: ISagaLogCreateViewModelDto = {
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: type,
 					message: `Test message for ${type}`,
 					createdAt: now,
@@ -59,57 +59,57 @@ describe('SagaLogViewModel', () => {
 		});
 	});
 
-	describe('getters', () => {
-		it('should expose id via getter', () => {
+	describe("getters", () => {
+		it("should expose id via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.id).toBe(dto.id);
 		});
 
-		it('should expose sagaInstanceId via getter', () => {
+		it("should expose sagaInstanceId via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.sagaInstanceId).toBe(dto.sagaInstanceId);
 		});
 
-		it('should expose sagaStepId via getter', () => {
+		it("should expose sagaStepId via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.sagaStepId).toBe(dto.sagaStepId);
 		});
 
-		it('should expose type via getter', () => {
+		it("should expose type via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.type).toBe(dto.type);
 		});
 
-		it('should expose message via getter', () => {
+		it("should expose message via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.message).toBe(dto.message);
 		});
 
-		it('should expose createdAt via getter', () => {
+		it("should expose createdAt via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.createdAt).toEqual(dto.createdAt);
 		});
 
-		it('should expose updatedAt via getter', () => {
+		it("should expose updatedAt via getter", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should not allow modification of immutable fields', () => {
+		it("should not allow modification of immutable fields", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalId = viewModel.id;
@@ -125,8 +125,8 @@ describe('SagaLogViewModel', () => {
 		});
 	});
 
-	describe('update', () => {
-		it('should update type when new value is provided', () => {
+	describe("update", () => {
+		it("should update type when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalType = viewModel.type;
@@ -141,7 +141,7 @@ describe('SagaLogViewModel', () => {
 			);
 		});
 
-		it('should keep original type when undefined is provided', () => {
+		it("should keep original type when undefined is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalType = viewModel.type;
@@ -151,22 +151,22 @@ describe('SagaLogViewModel', () => {
 			expect(viewModel.type).toBe(originalType);
 		});
 
-		it('should update message when new value is provided', () => {
+		it("should update message when new value is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalMessage = viewModel.message;
 			const beforeUpdate = new Date();
 
-			viewModel.update({ message: 'Updated message' });
+			viewModel.update({ message: "Updated message" });
 
-			expect(viewModel.message).toBe('Updated message');
+			expect(viewModel.message).toBe("Updated message");
 			expect(viewModel.message).not.toBe(originalMessage);
 			expect(viewModel.updatedAt.getTime()).toBeGreaterThanOrEqual(
 				beforeUpdate.getTime(),
 			);
 		});
 
-		it('should keep original message when undefined is provided', () => {
+		it("should keep original message when undefined is provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalMessage = viewModel.message;
@@ -176,7 +176,7 @@ describe('SagaLogViewModel', () => {
 			expect(viewModel.message).toBe(originalMessage);
 		});
 
-		it('should update both type and message when both are provided', () => {
+		it("should update both type and message when both are provided", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalType = viewModel.type;
@@ -184,18 +184,18 @@ describe('SagaLogViewModel', () => {
 
 			const updateDto: ISagaLogUpdateViewModelDto = {
 				type: SagaLogTypeEnum.WARNING,
-				message: 'Updated message',
+				message: "Updated message",
 			};
 
 			viewModel.update(updateDto);
 
 			expect(viewModel.type).toBe(SagaLogTypeEnum.WARNING);
 			expect(viewModel.type).not.toBe(originalType);
-			expect(viewModel.message).toBe('Updated message');
+			expect(viewModel.message).toBe("Updated message");
 			expect(viewModel.message).not.toBe(originalMessage);
 		});
 
-		it('should update updatedAt timestamp on any update', () => {
+		it("should update updatedAt timestamp on any update", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalUpdatedAt = viewModel.updatedAt;
@@ -213,7 +213,7 @@ describe('SagaLogViewModel', () => {
 			jest.useRealTimers();
 		});
 
-		it('should not modify immutable fields during update', () => {
+		it("should not modify immutable fields during update", () => {
 			const dto = createViewModelDto();
 			const viewModel = new SagaLogViewModel(dto);
 			const originalId = viewModel.id;

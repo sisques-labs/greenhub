@@ -1,11 +1,11 @@
-import { HealthCheckService } from '@/support/health/application/services/health-check/health-check.service';
-import { HealthReadDatabaseCheckService } from '@/support/health/application/services/health-read-database-check/health-read-database-check.service';
-import { HealthWriteDatabaseCheckService } from '@/support/health/application/services/health-write-database-check/health-write-database-check.service';
-import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
-import { HealthViewModelFactory } from '@/support/health/domain/factories/health-view-model.factory';
-import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
+import { HealthCheckService } from "@/support/health/application/services/health-check/health-check.service";
+import { HealthReadDatabaseCheckService } from "@/support/health/application/services/health-read-database-check/health-read-database-check.service";
+import { HealthWriteDatabaseCheckService } from "@/support/health/application/services/health-write-database-check/health-write-database-check.service";
+import { HealthStatusEnum } from "@/support/health/domain/enum/health-status.enum";
+import { HealthViewModelFactory } from "@/support/health/domain/factories/health-view-model.factory";
+import { HealthViewModel } from "@/support/health/domain/view-models/health.view-model";
 
-describe('HealthCheckService', () => {
+describe("HealthCheckService", () => {
 	let service: HealthCheckService;
 	let mockHealthViewModelFactory: jest.Mocked<HealthViewModelFactory>;
 	let mockHealthWriteDatabaseCheckService: jest.Mocked<HealthWriteDatabaseCheckService>;
@@ -37,7 +37,7 @@ describe('HealthCheckService', () => {
 		jest.clearAllMocks();
 	});
 
-	it('should create health view model with OK status', async () => {
+	it("should create health view model with OK status", async () => {
 		const expectedViewModel = new HealthViewModel({
 			status: HealthStatusEnum.OK,
 			writeDatabaseStatus: HealthStatusEnum.OK,

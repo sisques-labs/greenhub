@@ -1,40 +1,40 @@
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
-import { UserViewModelFactory } from '@/generic/users/domain/factories/user-view-model/user-view-model.factory';
-import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
-import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
-import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
-import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
-import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
-import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
-import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
-import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
+import { UserViewModelFactory } from "@/generic/users/domain/factories/user-view-model/user-view-model.factory";
+import { UserPrimitives } from "@/generic/users/domain/primitives/user.primitives";
+import { UserAvatarUrlValueObject } from "@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo";
+import { UserBioValueObject } from "@/generic/users/domain/value-objects/user-bio/user-bio.vo";
+import { UserLastNameValueObject } from "@/generic/users/domain/value-objects/user-last-name/user-last-name.vo";
+import { UserNameValueObject } from "@/generic/users/domain/value-objects/user-name/user-name.vo";
+import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
+import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
+import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
-describe('UserViewModelFactory', () => {
+describe("UserViewModelFactory", () => {
 	let factory: UserViewModelFactory;
 
 	beforeEach(() => {
 		factory = new UserViewModelFactory();
 	});
 
-	describe('create', () => {
-		it('should create a UserViewModel from a DTO with all fields', () => {
+	describe("create", () => {
+		it("should create a UserViewModel from a DTO with all fields", () => {
 			const now = new Date();
 
 			const dto: IUserCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
-				bio: 'Software developer',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				bio: "Software developer",
+				avatarUrl: "https://example.com/avatar.jpg",
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -54,12 +54,12 @@ describe('UserViewModelFactory', () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should create a UserViewModel from a DTO with null fields', () => {
+		it("should create a UserViewModel from a DTO with null fields", () => {
 			const now = new Date();
 
 			const dto: IUserCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userName: 'johndoe',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userName: "johndoe",
 				name: null,
 				lastName: null,
 				role: UserRoleEnum.ADMIN,
@@ -84,19 +84,19 @@ describe('UserViewModelFactory', () => {
 		});
 	});
 
-	describe('fromPrimitives', () => {
-		it('should create a UserViewModel from primitives with all fields', () => {
+	describe("fromPrimitives", () => {
+		it("should create a UserViewModel from primitives with all fields", () => {
 			const now = new Date();
 
 			const primitives: UserPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
-				bio: 'Software developer',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				bio: "Software developer",
+				avatarUrl: "https://example.com/avatar.jpg",
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -116,12 +116,12 @@ describe('UserViewModelFactory', () => {
 			expect(viewModel.updatedAt).toBe(primitives.updatedAt);
 		});
 
-		it('should create a UserViewModel from primitives with null fields', () => {
+		it("should create a UserViewModel from primitives with null fields", () => {
 			const now = new Date();
 
 			const primitives: UserPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userName: 'johndoe',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userName: "johndoe",
 				name: null,
 				lastName: null,
 				role: UserRoleEnum.ADMIN,
@@ -147,14 +147,14 @@ describe('UserViewModelFactory', () => {
 			expect(viewModel.updatedAt).toBe(now);
 		});
 
-		it('should set createdAt and updatedAt to current date', () => {
+		it("should set createdAt and updatedAt to current date", () => {
 			const now = new Date();
 
 			const primitives: UserPrimitives = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				bio: null,
@@ -171,21 +171,21 @@ describe('UserViewModelFactory', () => {
 		});
 	});
 
-	describe('fromAggregate', () => {
-		it('should create a UserViewModel from aggregate with all fields', () => {
+	describe("fromAggregate", () => {
+		it("should create a UserViewModel from aggregate with all fields", () => {
 			const now = new Date();
 
 			const aggregate = new UserAggregate(
 				{
-					id: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-					userName: new UserUserNameValueObject('johndoe'),
-					name: new UserNameValueObject('John'),
-					lastName: new UserLastNameValueObject('Doe'),
+					id: new UserUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+					userName: new UserUserNameValueObject("johndoe"),
+					name: new UserNameValueObject("John"),
+					lastName: new UserLastNameValueObject("Doe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
-					bio: new UserBioValueObject('Software developer'),
+					bio: new UserBioValueObject("Software developer"),
 					avatarUrl: new UserAvatarUrlValueObject(
-						'https://example.com/avatar.jpg',
+						"https://example.com/avatar.jpg",
 					),
 					createdAt: new DateValueObject(now),
 					updatedAt: new DateValueObject(now),
@@ -208,13 +208,13 @@ describe('UserViewModelFactory', () => {
 			expect(viewModel.updatedAt).toBe(aggregate.updatedAt.value);
 		});
 
-		it('should create a UserViewModel from aggregate with null fields', () => {
+		it("should create a UserViewModel from aggregate with null fields", () => {
 			const now = new Date();
 
 			const aggregate = new UserAggregate(
 				{
-					id: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-					userName: new UserUserNameValueObject('johndoe'),
+					id: new UserUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+					userName: new UserUserNameValueObject("johndoe"),
 					name: null,
 					lastName: null,
 					role: new UserRoleValueObject(UserRoleEnum.ADMIN),
@@ -240,15 +240,15 @@ describe('UserViewModelFactory', () => {
 			expect(viewModel.status).toBe(aggregate.status.value);
 		});
 
-		it('should set createdAt and updatedAt to current date', () => {
+		it("should set createdAt and updatedAt to current date", () => {
 			const now = new Date();
 
 			const aggregate = new UserAggregate(
 				{
-					id: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-					userName: new UserUserNameValueObject('johndoe'),
-					name: new UserNameValueObject('John'),
-					lastName: new UserLastNameValueObject('Doe'),
+					id: new UserUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+					userName: new UserUserNameValueObject("johndoe"),
+					name: new UserNameValueObject("John"),
+					lastName: new UserLastNameValueObject("Doe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -264,13 +264,13 @@ describe('UserViewModelFactory', () => {
 			expect(viewModel.createdAt.getTime()).toBe(viewModel.updatedAt.getTime());
 		});
 
-		it('should handle optional fields that are null correctly', () => {
+		it("should handle optional fields that are null correctly", () => {
 			const now = new Date();
 
 			const aggregate = new UserAggregate(
 				{
-					id: new UserUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-					userName: new UserUserNameValueObject('johndoe'),
+					id: new UserUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),

@@ -1,11 +1,11 @@
-import { AuthLoggedInByEmailEventHandler } from '@/generic/auth/application/event-handlers/auth-logged-in-by-email/auth-logged-in-by-email.event-handler';
-import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthLoggedInByEmailEvent } from '@/shared/domain/events/auth/auth-logged-in-by-email/auth-logged-in-by-email.event';
+import { AuthLoggedInByEmailEventHandler } from "@/generic/auth/application/event-handlers/auth-logged-in-by-email/auth-logged-in-by-email.event-handler";
+import { AssertAuthViewModelExistsService } from "@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthReadRepository } from "@/generic/auth/domain/repositories/auth-read.repository";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthLoggedInByEmailEvent } from "@/shared/domain/events/auth/auth-logged-in-by-email/auth-logged-in-by-email.event";
 
-describe('AuthLoggedInByEmailEventHandler', () => {
+describe("AuthLoggedInByEmailEventHandler", () => {
 	let handler: AuthLoggedInByEmailEventHandler;
 	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 	let mockAssertAuthViewModelExistsService: jest.Mocked<AssertAuthViewModelExistsService>;
@@ -32,13 +32,13 @@ describe('AuthLoggedInByEmailEventHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('handle', () => {
-		it('should update and save auth view model when event is handled', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("handle", () => {
+		it("should update and save auth view model when event is handled", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
 			const eventData = {
 				id: authId,
-				userId: '123e4567-e89b-12d3-a456-426614174001',
-				email: 'test@example.com',
+				userId: "123e4567-e89b-12d3-a456-426614174001",
+				email: "test@example.com",
 				emailVerified: false,
 				lastLoginAt: new Date(),
 				password: null,
@@ -53,10 +53,10 @@ describe('AuthLoggedInByEmailEventHandler', () => {
 			const event = new AuthLoggedInByEmailEvent(
 				{
 					aggregateRootId: authId,
-					aggregateRootType: 'AuthAggregate',
+					aggregateRootType: "AuthAggregate",
 					entityId: authId,
-					entityType: 'AuthAggregate',
-					eventType: 'AuthLoggedInByEmailEvent',
+					entityType: "AuthAggregate",
+					eventType: "AuthLoggedInByEmailEvent",
 				},
 				eventData,
 			);
@@ -76,7 +76,7 @@ describe('AuthLoggedInByEmailEventHandler', () => {
 				updatedAt: eventData.updatedAt,
 			});
 
-			const updateSpy = jest.spyOn(mockViewModel, 'update');
+			const updateSpy = jest.spyOn(mockViewModel, "update");
 
 			mockAssertAuthViewModelExistsService.execute.mockResolvedValue(
 				mockViewModel,

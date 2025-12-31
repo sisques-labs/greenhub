@@ -1,8 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthAggregateFactory } from '@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory';
-import { AuthTypeormEntity } from '@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity';
+import { Injectable, Logger } from "@nestjs/common";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthAggregateFactory } from "@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory";
+import { AuthTypeormEntity } from "@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity";
 
 @Injectable()
 export class AuthTypeormMapper {

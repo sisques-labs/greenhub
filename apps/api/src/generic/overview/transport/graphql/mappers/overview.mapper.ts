@@ -1,6 +1,6 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
-import { OverviewResponseDto } from '@/generic/overview/transport/graphql/dtos/responses/overview.response.dto';
+import { Injectable, Logger } from "@nestjs/common";
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
+import { OverviewResponseDto } from "@/generic/overview/transport/graphql/dtos/responses/overview.response.dto";
 
 /**
  * Mapper for converting between OverviewViewModel domain entities and GraphQL DTOs.

@@ -1,10 +1,10 @@
-import { ExecutionContext } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ExecutionContext } from "@nestjs/common";
+import { GqlExecutionContext } from "@nestjs/graphql";
+import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
 
-jest.mock('@nestjs/graphql');
+jest.mock("@nestjs/graphql");
 
-describe('JwtAuthGuard', () => {
+describe("JwtAuthGuard", () => {
 	let guard: JwtAuthGuard;
 	let mockContext: ExecutionContext;
 	let mockGqlContext: any;
@@ -44,8 +44,8 @@ describe('JwtAuthGuard', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('getRequest', () => {
-		it('should extract request from GraphQL context', () => {
+	describe("getRequest", () => {
+		it("should extract request from GraphQL context", () => {
 			const result = guard.getRequest(mockContext);
 
 			expect(GqlExecutionContext.create).toHaveBeenCalledWith(mockContext);
@@ -53,8 +53,8 @@ describe('JwtAuthGuard', () => {
 			expect(result).toBe(mockRequest);
 		});
 
-		it('should return the request object from GraphQL context', () => {
-			const customRequest = { headers: { authorization: 'Bearer token' } };
+		it("should return the request object from GraphQL context", () => {
+			const customRequest = { headers: { authorization: "Bearer token" } };
 			mockGqlContext.getContext.mockReturnValue({ req: customRequest });
 
 			const result = guard.getRequest(mockContext);

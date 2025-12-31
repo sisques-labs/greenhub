@@ -1,15 +1,15 @@
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { BaseDatabaseRepository } from './base-database.repository';
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { BaseDatabaseRepository } from "./base-database.repository";
 
-describe('BaseDatabaseRepository', () => {
+describe("BaseDatabaseRepository", () => {
 	let repository: BaseDatabaseRepository;
 
 	beforeEach(() => {
 		repository = new BaseDatabaseRepository();
 	});
 
-	describe('calculatePagination', () => {
-		it('should calculate pagination with default values', async () => {
+	describe("calculatePagination", () => {
+		it("should calculate pagination with default values", async () => {
 			const criteria = new Criteria();
 
 			const result = await repository.calculatePagination(criteria);
@@ -19,7 +19,7 @@ describe('BaseDatabaseRepository', () => {
 			expect(result.skip).toBe(0);
 		});
 
-		it('should calculate pagination with custom page and perPage', async () => {
+		it("should calculate pagination with custom page and perPage", async () => {
 			const criteria = new Criteria([], [], { page: 3, perPage: 20 });
 
 			const result = await repository.calculatePagination(criteria);
@@ -29,7 +29,7 @@ describe('BaseDatabaseRepository', () => {
 			expect(result.skip).toBe(40); // (3 - 1) * 20
 		});
 
-		it('should calculate pagination for first page', async () => {
+		it("should calculate pagination for first page", async () => {
 			const criteria = new Criteria([], [], { page: 1, perPage: 5 });
 
 			const result = await repository.calculatePagination(criteria);
@@ -39,7 +39,7 @@ describe('BaseDatabaseRepository', () => {
 			expect(result.skip).toBe(0);
 		});
 
-		it('should calculate pagination for second page', async () => {
+		it("should calculate pagination for second page", async () => {
 			const criteria = new Criteria([], [], { page: 2, perPage: 15 });
 
 			const result = await repository.calculatePagination(criteria);
@@ -49,7 +49,7 @@ describe('BaseDatabaseRepository', () => {
 			expect(result.skip).toBe(15); // (2 - 1) * 15
 		});
 
-		it('should handle large page numbers', async () => {
+		it("should handle large page numbers", async () => {
 			const criteria = new Criteria([], [], { page: 100, perPage: 50 });
 
 			const result = await repository.calculatePagination(criteria);

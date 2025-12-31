@@ -1,18 +1,18 @@
-import { CommandBus } from '@nestjs/cqrs';
-import { SagaInstanceChangeStatusCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command';
-import { SagaInstanceCreateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command';
-import { SagaInstanceDeleteCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command';
-import { SagaInstanceUpdateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command';
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
-import { SagaInstanceChangeStatusRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-change-status.request.dto';
-import { SagaInstanceCreateRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-create.request.dto';
-import { SagaInstanceDeleteRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-delete.request.dto';
-import { SagaInstanceUpdateRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-update.request.dto';
-import { SagaInstanceMutationsResolver } from '@/generic/saga-context/saga-instance/transport/graphql/resolvers/saga-instance-mutations.resolver';
-import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
-import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
+import { CommandBus } from "@nestjs/cqrs";
+import { SagaInstanceChangeStatusCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command";
+import { SagaInstanceCreateCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command";
+import { SagaInstanceDeleteCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command";
+import { SagaInstanceUpdateCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command";
+import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { SagaInstanceChangeStatusRequestDto } from "@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-change-status.request.dto";
+import { SagaInstanceCreateRequestDto } from "@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-create.request.dto";
+import { SagaInstanceDeleteRequestDto } from "@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-delete.request.dto";
+import { SagaInstanceUpdateRequestDto } from "@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-update.request.dto";
+import { SagaInstanceMutationsResolver } from "@/generic/saga-context/saga-instance/transport/graphql/resolvers/saga-instance-mutations.resolver";
+import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
+import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
 
-describe('SagaInstanceMutationsResolver', () => {
+describe("SagaInstanceMutationsResolver", () => {
 	let resolver: SagaInstanceMutationsResolver;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 	let mockMutationResponseGraphQLMapper: jest.Mocked<MutationResponseGraphQLMapper>;
@@ -37,16 +37,16 @@ describe('SagaInstanceMutationsResolver', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('sagaInstanceCreate', () => {
-		it('should create saga instance successfully', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("sagaInstanceCreate", () => {
+		it("should create saga instance successfully", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const input: SagaInstanceCreateRequestDto = {
-				name: 'Order Processing Saga',
+				name: "Order Processing Saga",
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: 'Saga instance created successfully',
+				message: "Saga instance created successfully",
 				id: sagaInstanceId,
 			};
 
@@ -68,26 +68,26 @@ describe('SagaInstanceMutationsResolver', () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: 'Saga instance created successfully',
+				message: "Saga instance created successfully",
 				id: sagaInstanceId,
 			});
 		});
 	});
 
-	describe('sagaInstanceUpdate', () => {
-		it('should update saga instance successfully', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("sagaInstanceUpdate", () => {
+		it("should update saga instance successfully", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const input: SagaInstanceUpdateRequestDto = {
 				id: sagaInstanceId,
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 				status: SagaInstanceStatusEnum.COMPLETED,
-				startDate: new Date('2024-01-01T10:00:00Z'),
-				endDate: new Date('2024-01-01T11:00:00Z'),
+				startDate: new Date("2024-01-01T10:00:00Z"),
+				endDate: new Date("2024-01-01T11:00:00Z"),
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: 'Saga instance updated successfully',
+				message: "Saga instance updated successfully",
 				id: sagaInstanceId,
 			};
 
@@ -111,15 +111,15 @@ describe('SagaInstanceMutationsResolver', () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: 'Saga instance updated successfully',
+				message: "Saga instance updated successfully",
 				id: sagaInstanceId,
 			});
 		});
 	});
 
-	describe('sagaInstanceChangeStatus', () => {
-		it('should change saga instance status successfully', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("sagaInstanceChangeStatus", () => {
+		it("should change saga instance status successfully", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const input: SagaInstanceChangeStatusRequestDto = {
 				id: sagaInstanceId,
 				status: SagaInstanceStatusEnum.COMPLETED,
@@ -127,7 +127,7 @@ describe('SagaInstanceMutationsResolver', () => {
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: 'Saga instance deleted successfully',
+				message: "Saga instance deleted successfully",
 				id: sagaInstanceId,
 			};
 
@@ -150,22 +150,22 @@ describe('SagaInstanceMutationsResolver', () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: 'Saga instance deleted successfully',
+				message: "Saga instance deleted successfully",
 				id: sagaInstanceId,
 			});
 		});
 	});
 
-	describe('sagaInstanceDelete', () => {
-		it('should delete saga instance successfully', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("sagaInstanceDelete", () => {
+		it("should delete saga instance successfully", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const input: SagaInstanceDeleteRequestDto = {
 				id: sagaInstanceId,
 			};
 
 			const mutationResponse: MutationResponseDto = {
 				success: true,
-				message: 'Saga instance deleted successfully',
+				message: "Saga instance deleted successfully",
 				id: sagaInstanceId,
 			};
 
@@ -187,7 +187,7 @@ describe('SagaInstanceMutationsResolver', () => {
 				mockMutationResponseGraphQLMapper.toResponseDto,
 			).toHaveBeenCalledWith({
 				success: true,
-				message: 'Saga instance deleted successfully',
+				message: "Saga instance deleted successfully",
 				id: sagaInstanceId,
 			});
 		});

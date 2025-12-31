@@ -1,12 +1,12 @@
-import { AuthCreatedEventHandler } from '@/generic/auth/application/event-handlers/auth-created/auth-created.event-handler';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
-import { AuthPrimitives } from '@/generic/auth/domain/primitives/auth.primitives';
-import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthCreatedEvent } from '@/shared/domain/events/auth/auth-created/auth-created.event';
+import { AuthCreatedEventHandler } from "@/generic/auth/application/event-handlers/auth-created/auth-created.event-handler";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthViewModelFactory } from "@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory";
+import { AuthPrimitives } from "@/generic/auth/domain/primitives/auth.primitives";
+import { AuthReadRepository } from "@/generic/auth/domain/repositories/auth-read.repository";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthCreatedEvent } from "@/shared/domain/events/auth/auth-created/auth-created.event";
 
-describe('AuthCreatedEventHandler', () => {
+describe("AuthCreatedEventHandler", () => {
 	let handler: AuthCreatedEventHandler;
 	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 	let mockAuthViewModelFactory: jest.Mocked<AuthViewModelFactory>;
@@ -35,13 +35,13 @@ describe('AuthCreatedEventHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('handle', () => {
-		it('should create and save auth view model when event is handled', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("handle", () => {
+		it("should create and save auth view model when event is handled", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
 			const authPrimitives: AuthPrimitives = {
 				id: authId,
-				userId: '123e4567-e89b-12d3-a456-426614174001',
-				email: 'test@example.com',
+				userId: "123e4567-e89b-12d3-a456-426614174001",
+				email: "test@example.com",
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
@@ -56,10 +56,10 @@ describe('AuthCreatedEventHandler', () => {
 			const event = new AuthCreatedEvent(
 				{
 					aggregateRootId: authId,
-					aggregateRootType: 'AuthAggregate',
+					aggregateRootType: "AuthAggregate",
 					entityId: authId,
-					entityType: 'AuthAggregate',
-					eventType: 'AuthCreatedEvent',
+					entityType: "AuthAggregate",
+					eventType: "AuthCreatedEvent",
 				},
 				authPrimitives,
 			);

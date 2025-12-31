@@ -1,5 +1,5 @@
-import { randomUUID } from 'crypto';
-import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
+import { randomUUID } from "crypto";
+import { InvalidUuidException } from "@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception";
 
 /**
  * UUID Value Object
@@ -43,7 +43,7 @@ export class UuidValueObject {
 	 * @returns True if it's a nil UUID
 	 */
 	public isNil(): boolean {
-		return this._value === '00000000-0000-0000-0000-000000000000';
+		return this._value === "00000000-0000-0000-0000-000000000000";
 	}
 
 	/**
@@ -60,8 +60,8 @@ export class UuidValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === '') {
-			throw new InvalidUuidException('UUID cannot be empty');
+		if (!value || value.trim() === "") {
+			throw new InvalidUuidException("UUID cannot be empty");
 		}
 	}
 
@@ -71,7 +71,7 @@ export class UuidValueObject {
 			/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 		if (!uuidPattern.test(value)) {
-			throw new InvalidUuidException('Invalid UUID format');
+			throw new InvalidUuidException("Invalid UUID format");
 		}
 	}
 }

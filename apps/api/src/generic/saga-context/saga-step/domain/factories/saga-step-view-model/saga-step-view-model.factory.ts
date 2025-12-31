@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { ISagaStepCreateViewModelDto } from '@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto';
-import { SagaStepPrimitives } from '@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives';
-import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
-import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
+import { Injectable, Logger } from "@nestjs/common";
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { ISagaStepCreateViewModelDto } from "@/generic/saga-context/saga-step/domain/dtos/view-models/saga-step-create/saga-step-create-view-model.dto";
+import { SagaStepPrimitives } from "@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives";
+import { SagaStepViewModel } from "@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model";
+import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
 
 /**
  * This factory class is used to create a new saga step view model.

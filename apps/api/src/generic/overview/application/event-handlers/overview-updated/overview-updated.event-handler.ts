@@ -1,16 +1,16 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { GrowingUnitCreatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event';
-import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
-import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
-import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
-import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
-import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
-import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
+import { Inject, Logger } from "@nestjs/common";
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
+import { GrowingUnitCreatedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event";
+import { GrowingUnitDeletedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event";
+import { GrowingUnitUpdatedEvent } from "@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event";
+import { PlantCreatedEvent } from "@/core/plant-context/application/events/plant/plant-created/plant-created.event";
+import { PlantDeletedEvent } from "@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event";
+import { PlantUpdatedEvent } from "@/core/plant-context/application/events/plant/plant-updated/plant-updated.event";
+import { OverviewCalculateService } from "@/generic/overview/application/services/overview-calculate/overview-calculate.service";
 import {
 	IOverviewReadRepository,
 	OVERVIEW_READ_REPOSITORY_TOKEN,
-} from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
+} from "@/generic/overview/domain/repositories/overview-read/overview-read.repository";
 
 /**
  * Event handler that updates the overview view model when plant context events occur.
@@ -41,7 +41,7 @@ export class OverviewUpdatedEventHandler
 		>
 {
 	private readonly logger = new Logger(OverviewUpdatedEventHandler.name);
-	private readonly OVERVIEW_ID = 'overview';
+	private readonly OVERVIEW_ID = "overview";
 
 	constructor(
 		private readonly overviewCalculateService: OverviewCalculateService,

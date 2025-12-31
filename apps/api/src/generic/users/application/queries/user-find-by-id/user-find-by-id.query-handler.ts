@@ -1,8 +1,8 @@
-import { Logger } from '@nestjs/common';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
-import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
+import { Logger } from "@nestjs/common";
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
+import { UserFindByIdQuery } from "@/generic/users/application/queries/user-find-by-id/user-find-by-id.query";
+import { AssertUserExsistsService } from "@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service";
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
 
 @QueryHandler(UserFindByIdQuery)
 export class UserFindByIdQueryHandler

@@ -1,33 +1,33 @@
-import { AuthCreatedEvent } from '@/shared/domain/events/auth/auth-created/auth-created.event';
-import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
-import { BaseEvent } from '@/shared/domain/events/base-event.interface';
-import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
+import { AuthCreatedEvent } from "@/shared/domain/events/auth/auth-created/auth-created.event";
+import { IAuthEventData } from "@/shared/domain/events/auth/interfaces/auth-event-data.interface";
+import { BaseEvent } from "@/shared/domain/events/base-event.interface";
+import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
 
-describe('AuthCreatedEvent', () => {
+describe("AuthCreatedEvent", () => {
 	const createMetadata = (): IEventMetadata => ({
-		aggregateRootId: '123e4567-e89b-12d3-a456-426614174000',
-		aggregateRootType: 'AuthAggregate',
-		entityId: '123e4567-e89b-12d3-a456-426614174000',
-		entityType: 'AuthAggregate',
-		eventType: 'AuthCreatedEvent',
+		aggregateRootId: "123e4567-e89b-12d3-a456-426614174000",
+		aggregateRootType: "AuthAggregate",
+		entityId: "123e4567-e89b-12d3-a456-426614174000",
+		entityType: "AuthAggregate",
+		eventType: "AuthCreatedEvent",
 	});
 
 	const createAuthData = (): IAuthEventData => ({
-		id: '123e4567-e89b-12d3-a456-426614174000',
-		userId: '123e4567-e89b-12d3-a456-426614174001',
-		email: 'test@example.com',
+		id: "123e4567-e89b-12d3-a456-426614174000",
+		userId: "123e4567-e89b-12d3-a456-426614174001",
+		email: "test@example.com",
 		emailVerified: true,
-		phoneNumber: '+1234567890',
-		lastLoginAt: new Date('2024-01-01T10:00:00Z'),
-		password: 'hashed-password',
-		provider: 'local',
+		phoneNumber: "+1234567890",
+		lastLoginAt: new Date("2024-01-01T10:00:00Z"),
+		password: "hashed-password",
+		provider: "local",
 		providerId: null,
 		twoFactorEnabled: false,
-		createdAt: new Date('2024-01-01T10:00:00Z'),
-		updatedAt: new Date('2024-01-01T10:00:00Z'),
+		createdAt: new Date("2024-01-01T10:00:00Z"),
+		updatedAt: new Date("2024-01-01T10:00:00Z"),
 	});
 
-	it('should be an instance of BaseEvent', () => {
+	it("should be an instance of BaseEvent", () => {
 		const metadata = createMetadata();
 		const data = createAuthData();
 
@@ -36,7 +36,7 @@ describe('AuthCreatedEvent', () => {
 		expect(event).toBeInstanceOf(BaseEvent);
 	});
 
-	it('should create an event with correct metadata', () => {
+	it("should create an event with correct metadata", () => {
 		const metadata = createMetadata();
 		const data = createAuthData();
 
@@ -49,7 +49,7 @@ describe('AuthCreatedEvent', () => {
 		expect(event.eventType).toBe(metadata.eventType);
 	});
 
-	it('should store the auth data correctly', () => {
+	it("should store the auth data correctly", () => {
 		const metadata = createMetadata();
 		const data = createAuthData();
 
@@ -61,7 +61,7 @@ describe('AuthCreatedEvent', () => {
 		expect(event.data.email).toBe(data.email);
 	});
 
-	it('should generate a unique eventId', () => {
+	it("should generate a unique eventId", () => {
 		const metadata = createMetadata();
 		const data = createAuthData();
 
@@ -71,7 +71,7 @@ describe('AuthCreatedEvent', () => {
 		expect(event1.eventId).not.toBe(event2.eventId);
 	});
 
-	it('should set ocurredAt timestamp', () => {
+	it("should set ocurredAt timestamp", () => {
 		const metadata = createMetadata();
 		const data = createAuthData();
 		const beforeCreation = new Date();

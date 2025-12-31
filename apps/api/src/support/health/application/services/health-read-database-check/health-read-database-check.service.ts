@@ -1,6 +1,6 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
+import { Injectable, Logger } from "@nestjs/common";
+import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { HealthStatusEnum } from "@/support/health/domain/enum/health-status.enum";
 
 @Injectable()
 export class HealthReadDatabaseCheckService {
@@ -17,7 +17,7 @@ export class HealthReadDatabaseCheckService {
 	 * @returns {Promise<HealthStatusEnum>} The status of the read database connection.
 	 */
 	async execute(): Promise<HealthStatusEnum> {
-		this.logger.log('Checking read database connection');
+		this.logger.log("Checking read database connection");
 
 		try {
 			// Execute a simple ping command to verify the database connection
@@ -25,7 +25,7 @@ export class HealthReadDatabaseCheckService {
 			const db = this.mongoMasterService.getDatabase();
 			await db.admin().ping();
 
-			this.logger.log('Read database connection is healthy');
+			this.logger.log("Read database connection is healthy");
 			return HealthStatusEnum.OK;
 		} catch (error) {
 			this.logger.error(

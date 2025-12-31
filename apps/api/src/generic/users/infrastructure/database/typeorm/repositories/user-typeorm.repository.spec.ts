@@ -1,18 +1,18 @@
-import { Repository } from 'typeorm';
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
-import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
-import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
-import { UserTypeormEntity } from '@/generic/users/infrastructure/database/typeorm/entities/user-typeorm.entity';
-import { UserTypeOrmMapper } from '@/generic/users/infrastructure/database/typeorm/mappers/user-typeorm.mapper';
-import { UserTypeormRepository } from '@/generic/users/infrastructure/database/typeorm/repositories/user-typeorm.repository';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { Repository } from "typeorm";
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
+import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
+import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
+import { UserTypeormEntity } from "@/generic/users/infrastructure/database/typeorm/entities/user-typeorm.entity";
+import { UserTypeOrmMapper } from "@/generic/users/infrastructure/database/typeorm/mappers/user-typeorm.mapper";
+import { UserTypeormRepository } from "@/generic/users/infrastructure/database/typeorm/repositories/user-typeorm.repository";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
 
-describe('UserTypeormRepository', () => {
+describe("UserTypeormRepository", () => {
 	let repository: UserTypeormRepository;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 	let mockUserTypeormMapper: jest.Mocked<UserTypeOrmMapper>;
@@ -51,16 +51,16 @@ describe('UserTypeormRepository', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('findById', () => {
-		it('should return user aggregate when user exists', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("findById", () => {
+		it("should return user aggregate when user exists", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new UserTypeormEntity();
 			typeormEntity.id = userId;
-			typeormEntity.userName = 'johndoe';
-			typeormEntity.name = 'John';
-			typeormEntity.lastName = 'Doe';
+			typeormEntity.userName = "johndoe";
+			typeormEntity.name = "John";
+			typeormEntity.lastName = "Doe";
 			typeormEntity.bio = null;
 			typeormEntity.avatarUrl = null;
 			typeormEntity.role = UserRoleEnum.USER;
@@ -72,7 +72,7 @@ describe('UserTypeormRepository', () => {
 			const userAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -96,8 +96,8 @@ describe('UserTypeormRepository', () => {
 			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return null when user does not exist', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return null when user does not exist", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -111,17 +111,17 @@ describe('UserTypeormRepository', () => {
 		});
 	});
 
-	describe('findByUserName', () => {
-		it('should return user aggregate when user exists', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
-			const userName = 'johndoe';
+	describe("findByUserName", () => {
+		it("should return user aggregate when user exists", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
+			const userName = "johndoe";
 			const now = new Date();
 
 			const typeormEntity = new UserTypeormEntity();
 			typeormEntity.id = userId;
 			typeormEntity.userName = userName;
-			typeormEntity.name = 'John';
-			typeormEntity.lastName = 'Doe';
+			typeormEntity.name = "John";
+			typeormEntity.lastName = "Doe";
 			typeormEntity.bio = null;
 			typeormEntity.avatarUrl = null;
 			typeormEntity.role = UserRoleEnum.USER;
@@ -157,8 +157,8 @@ describe('UserTypeormRepository', () => {
 			expect(mockUserTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return null when user does not exist', async () => {
-			const userName = 'johndoe';
+		it("should return null when user does not exist", async () => {
+			const userName = "johndoe";
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -172,15 +172,15 @@ describe('UserTypeormRepository', () => {
 		});
 	});
 
-	describe('save', () => {
-		it('should save user aggregate and return saved aggregate', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("save", () => {
+		it("should save user aggregate and return saved aggregate", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const userAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -191,22 +191,22 @@ describe('UserTypeormRepository', () => {
 
 			const typeormEntity = new UserTypeormEntity();
 			typeormEntity.id = userId;
-			typeormEntity.userName = 'johndoe';
+			typeormEntity.userName = "johndoe";
 			typeormEntity.role = UserRoleEnum.USER;
 			typeormEntity.status = UserStatusEnum.ACTIVE;
 
 			const savedTypeormEntity = new UserTypeormEntity();
 			savedTypeormEntity.id = userId;
-			savedTypeormEntity.userName = 'johndoe';
-			savedTypeormEntity.name = 'John';
-			savedTypeormEntity.lastName = 'Doe';
+			savedTypeormEntity.userName = "johndoe";
+			savedTypeormEntity.name = "John";
+			savedTypeormEntity.lastName = "Doe";
 			savedTypeormEntity.role = UserRoleEnum.USER;
 			savedTypeormEntity.status = UserStatusEnum.ACTIVE;
 
 			const savedUserAggregate = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(now),
@@ -233,9 +233,9 @@ describe('UserTypeormRepository', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should soft delete user and return true', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("delete", () => {
+		it("should soft delete user and return true", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 1,
@@ -250,8 +250,8 @@ describe('UserTypeormRepository', () => {
 			expect(mockSoftDelete).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return false when user does not exist', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return false when user does not exist", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 0,
@@ -265,9 +265,9 @@ describe('UserTypeormRepository', () => {
 			expect(mockSoftDelete).toHaveBeenCalledWith(userId);
 		});
 
-		it('should handle delete errors correctly', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
-			const error = new Error('User not found');
+		it("should handle delete errors correctly", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
+			const error = new Error("User not found");
 
 			mockSoftDelete.mockRejectedValue(error);
 

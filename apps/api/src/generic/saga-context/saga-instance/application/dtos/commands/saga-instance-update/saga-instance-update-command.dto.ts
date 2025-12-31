@@ -1,4 +1,4 @@
-import { ISagaInstanceCreateCommandDto } from '@/generic/saga-context/saga-instance/application/dtos/commands/saga-instance-create/saga-instance-create-command.dto';
+import { ISagaInstanceCreateCommandDto } from "@/generic/saga-context/saga-instance/application/dtos/commands/saga-instance-create/saga-instance-create-command.dto";
 
 /**
  * Data Transfer Object f r updating a saga instance via command layer.
@@ -8,7 +8,7 @@ import { ISagaInstanceCreateCommandDto } from '@/generic/saga-context/saga-insta
  * @extends Partial<ISagaInstanceCreateCommandDto>
  */
 export interface ISagaInstanceUpdateCommandDto
-	extends Partial<Omit<ISagaInstanceCreateCommandDto, 'id'>> {
+	extends Partial<Omit<ISagaInstanceCreateCommandDto, "id">> {
 	id: string;
 	status?: string;
 	startDate?: Date | null;

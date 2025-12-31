@@ -1,8 +1,8 @@
-import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { HealthReadDatabaseCheckService } from '@/support/health/application/services/health-read-database-check/health-read-database-check.service';
-import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
+import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
+import { HealthReadDatabaseCheckService } from "@/support/health/application/services/health-read-database-check/health-read-database-check.service";
+import { HealthStatusEnum } from "@/support/health/domain/enum/health-status.enum";
 
-describe('HealthReadDatabaseCheckService', () => {
+describe("HealthReadDatabaseCheckService", () => {
 	let service: HealthReadDatabaseCheckService;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 
@@ -24,7 +24,7 @@ describe('HealthReadDatabaseCheckService', () => {
 		jest.clearAllMocks();
 	});
 
-	it('should return OK when database connection is healthy', async () => {
+	it("should return OK when database connection is healthy", async () => {
 		const mockAdmin = {
 			ping: jest.fn().mockResolvedValue({ ok: 1 }),
 		};
@@ -40,8 +40,8 @@ describe('HealthReadDatabaseCheckService', () => {
 		expect(result).toBe(HealthStatusEnum.OK);
 	});
 
-	it('should return ERROR when database connection fails', async () => {
-		const error = new Error('Database connection failed');
+	it("should return ERROR when database connection fails", async () => {
+		const error = new Error("Database connection failed");
 		const mockAdmin = {
 			ping: jest.fn().mockRejectedValue(error),
 		};

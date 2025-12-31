@@ -1,16 +1,16 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType } from "@nestjs/graphql";
 import {
 	IsJSON,
 	IsNotEmpty,
 	IsNumber,
 	IsString,
 	IsUUID,
-} from 'class-validator';
+} from "class-validator";
 
-@InputType('SagaStepCreateRequestDto')
+@InputType("SagaStepCreateRequestDto")
 export class SagaStepCreateRequestDto {
 	@Field(() => String, {
-		description: 'The saga instance ID',
+		description: "The saga instance ID",
 		nullable: false,
 	})
 	@IsUUID()
@@ -18,7 +18,7 @@ export class SagaStepCreateRequestDto {
 	sagaInstanceId: string;
 
 	@Field(() => String, {
-		description: 'The name of the saga step',
+		description: "The name of the saga step",
 		nullable: false,
 	})
 	@IsString()
@@ -26,7 +26,7 @@ export class SagaStepCreateRequestDto {
 	name: string;
 
 	@Field(() => Number, {
-		description: 'The order of the saga step',
+		description: "The order of the saga step",
 		nullable: false,
 	})
 	@IsNumber()
@@ -34,7 +34,7 @@ export class SagaStepCreateRequestDto {
 	order: number;
 
 	@Field(() => String, {
-		description: 'The payload of the saga step (JSON string)',
+		description: "The payload of the saga step (JSON string)",
 		nullable: false,
 	})
 	@IsJSON()

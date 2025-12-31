@@ -1,11 +1,11 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
-import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/entities/base-typeorm.entity';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { PlantStatusEnum } from "@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum";
+import { GrowingUnitTypeormEntity } from "@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity";
+import { BaseTypeormEntity } from "@/shared/infrastructure/database/typeorm/entities/base-typeorm.entity";
 
-@Entity('plants')
+@Entity("plants")
 export class PlantTypeormEntity extends BaseTypeormEntity {
-	@Column({ type: 'uuid' })
+	@Column({ type: "uuid" })
 	@Index()
 	growingUnitId: string;
 
@@ -13,26 +13,26 @@ export class PlantTypeormEntity extends BaseTypeormEntity {
 		() => GrowingUnitTypeormEntity,
 		(growingUnit) => growingUnit.plants,
 		{
-			onDelete: 'CASCADE',
+			onDelete: "CASCADE",
 		},
 	)
-	@JoinColumn({ name: 'growingUnitId' })
+	@JoinColumn({ name: "growingUnitId" })
 	growingUnit: GrowingUnitTypeormEntity;
 
-	@Column({ type: 'varchar' })
+	@Column({ type: "varchar" })
 	name: string;
 
-	@Column({ type: 'varchar' })
+	@Column({ type: "varchar" })
 	species: string;
 
-	@Column({ type: 'date', nullable: true })
+	@Column({ type: "date", nullable: true })
 	plantedDate: Date | null;
 
-	@Column({ type: 'text', nullable: true })
+	@Column({ type: "text", nullable: true })
 	notes: string | null;
 
 	@Column({
-		type: 'enum',
+		type: "enum",
 		enum: PlantStatusEnum,
 	})
 	status: PlantStatusEnum;

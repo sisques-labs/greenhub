@@ -1,4 +1,4 @@
-import { InvalidColorException } from '@/shared/domain/exceptions/value-objects/invalid-color/invalid-color.exception';
+import { InvalidColorException } from "@/shared/domain/exceptions/value-objects/invalid-color/invalid-color.exception";
 
 /**
  * Color Value Object
@@ -113,8 +113,8 @@ export class ColorValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === '') {
-			throw new InvalidColorException('Color cannot be empty');
+		if (!value || value.trim() === "") {
+			throw new InvalidColorException("Color cannot be empty");
 		}
 	}
 
@@ -124,20 +124,20 @@ export class ColorValueObject {
 		const hslPattern = /^hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)$/;
 
 		const namedColors = [
-			'red',
-			'green',
-			'blue',
-			'yellow',
-			'orange',
-			'purple',
-			'pink',
-			'black',
-			'white',
-			'gray',
-			'grey',
-			'brown',
-			'cyan',
-			'magenta',
+			"red",
+			"green",
+			"blue",
+			"yellow",
+			"orange",
+			"purple",
+			"pink",
+			"black",
+			"white",
+			"gray",
+			"grey",
+			"brown",
+			"cyan",
+			"magenta",
 		];
 
 		const isHex = hexPattern.test(value);
@@ -147,7 +147,7 @@ export class ColorValueObject {
 
 		if (!isHex && !isRgb && !isHsl && !isNamed) {
 			throw new InvalidColorException(
-				'Invalid color format. Supported formats: hex (#fff, #ffffff), rgb(r,g,b), hsl(h,s%,l%), or named colors',
+				"Invalid color format. Supported formats: hex (#fff, #ffffff), rgb(r,g,b), hsl(h,s%,l%), or named colors",
 			);
 		}
 	}
@@ -168,7 +168,7 @@ export class ColorValueObject {
 	}
 
 	private hexToRgb(): string {
-		const hex = this._value.replace('#', '');
+		const hex = this._value.replace("#", "");
 		const r = parseInt(hex.substr(0, 2), 16);
 		const g = parseInt(hex.substr(2, 2), 16);
 		const b = parseInt(hex.substr(4, 2), 16);

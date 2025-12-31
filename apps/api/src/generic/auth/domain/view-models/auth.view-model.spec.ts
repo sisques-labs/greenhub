@@ -1,40 +1,40 @@
-import { IAuthCreateViewModelDto } from '@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
+import { IAuthCreateViewModelDto } from "@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
 
-describe('AuthViewModel', () => {
+describe("AuthViewModel", () => {
 	const createBaseViewModel = (): AuthViewModel => {
 		return new AuthViewModel({
-			id: '123e4567-e89b-12d3-a456-426614174000',
-			userId: '123e4567-e89b-12d3-a456-426614174001',
-			email: 'test@example.com',
+			id: "123e4567-e89b-12d3-a456-426614174000",
+			userId: "123e4567-e89b-12d3-a456-426614174001",
+			email: "test@example.com",
 			emailVerified: false,
 			lastLoginAt: null,
-			password: 'SecurePass123!',
+			password: "SecurePass123!",
 			phoneNumber: null,
 			provider: AuthProviderEnum.LOCAL,
 			providerId: null,
 			twoFactorEnabled: false,
-			createdAt: new Date('2024-01-01T10:00:00Z'),
-			updatedAt: new Date('2024-01-01T10:00:00Z'),
+			createdAt: new Date("2024-01-01T10:00:00Z"),
+			updatedAt: new Date("2024-01-01T10:00:00Z"),
 		});
 	};
 
-	describe('constructor', () => {
-		it('should create an AuthViewModel with all properties', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
-			const lastLoginAt = new Date('2024-01-01T09:00:00Z');
+	describe("constructor", () => {
+		it("should create an AuthViewModel with all properties", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
+			const lastLoginAt = new Date("2024-01-01T09:00:00Z");
 
 			const dto: IAuthCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userId: '123e4567-e89b-12d3-a456-426614174001',
-				email: 'test@example.com',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userId: "123e4567-e89b-12d3-a456-426614174001",
+				email: "test@example.com",
 				emailVerified: true,
 				lastLoginAt: lastLoginAt,
-				password: 'SecurePass123!',
-				phoneNumber: '+1234567890',
+				password: "SecurePass123!",
+				phoneNumber: "+1234567890",
 				provider: AuthProviderEnum.LOCAL,
-				providerId: 'local-123',
+				providerId: "local-123",
 				twoFactorEnabled: true,
 				createdAt: now,
 				updatedAt: now,
@@ -56,19 +56,19 @@ describe('AuthViewModel', () => {
 			expect(viewModel.updatedAt).toEqual(dto.updatedAt);
 		});
 
-		it('should create an AuthViewModel with null optional fields', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
+		it("should create an AuthViewModel with null optional fields", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
 
 			const dto: IAuthCreateViewModelDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userId: '123e4567-e89b-12d3-a456-426614174001',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userId: "123e4567-e89b-12d3-a456-426614174001",
 				email: null,
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
 				phoneNumber: null,
 				provider: AuthProviderEnum.GOOGLE,
-				providerId: 'google-123',
+				providerId: "google-123",
 				twoFactorEnabled: false,
 				createdAt: now,
 				updatedAt: now,
@@ -87,81 +87,81 @@ describe('AuthViewModel', () => {
 		});
 	});
 
-	describe('getters', () => {
-		it('should expose id via getter', () => {
+	describe("getters", () => {
+		it("should expose id via getter", () => {
 			const viewModel = createBaseViewModel();
-			expect(viewModel.id).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(viewModel.id).toBe("123e4567-e89b-12d3-a456-426614174000");
 		});
 
-		it('should expose userId via getter', () => {
+		it("should expose userId via getter", () => {
 			const viewModel = createBaseViewModel();
-			expect(viewModel.userId).toBe('123e4567-e89b-12d3-a456-426614174001');
+			expect(viewModel.userId).toBe("123e4567-e89b-12d3-a456-426614174001");
 		});
 
-		it('should expose email via getter', () => {
+		it("should expose email via getter", () => {
 			const viewModel = createBaseViewModel();
-			expect(viewModel.email).toBe('test@example.com');
+			expect(viewModel.email).toBe("test@example.com");
 		});
 
-		it('should expose emailVerified via getter', () => {
+		it("should expose emailVerified via getter", () => {
 			const viewModel = createBaseViewModel();
 			expect(viewModel.emailVerified).toBe(false);
 		});
 
-		it('should expose phoneNumber via getter', () => {
+		it("should expose phoneNumber via getter", () => {
 			const viewModel = createBaseViewModel();
 			expect(viewModel.phoneNumber).toBeNull();
 		});
 
-		it('should expose lastLoginAt via getter', () => {
+		it("should expose lastLoginAt via getter", () => {
 			const viewModel = createBaseViewModel();
 			expect(viewModel.lastLoginAt).toBeNull();
 		});
 
-		it('should expose password via getter', () => {
+		it("should expose password via getter", () => {
 			const viewModel = createBaseViewModel();
-			expect(viewModel.password).toBe('SecurePass123!');
+			expect(viewModel.password).toBe("SecurePass123!");
 		});
 
-		it('should expose provider via getter', () => {
+		it("should expose provider via getter", () => {
 			const viewModel = createBaseViewModel();
 			expect(viewModel.provider).toBe(AuthProviderEnum.LOCAL);
 		});
 
-		it('should expose providerId via getter', () => {
+		it("should expose providerId via getter", () => {
 			const viewModel = createBaseViewModel();
 			expect(viewModel.providerId).toBeNull();
 		});
 
-		it('should expose twoFactorEnabled via getter', () => {
+		it("should expose twoFactorEnabled via getter", () => {
 			const viewModel = createBaseViewModel();
 			expect(viewModel.twoFactorEnabled).toBe(false);
 		});
 
-		it('should expose createdAt via getter', () => {
+		it("should expose createdAt via getter", () => {
 			const viewModel = createBaseViewModel();
-			expect(viewModel.createdAt).toEqual(new Date('2024-01-01T10:00:00Z'));
+			expect(viewModel.createdAt).toEqual(new Date("2024-01-01T10:00:00Z"));
 		});
 
-		it('should expose updatedAt via getter', () => {
+		it("should expose updatedAt via getter", () => {
 			const viewModel = createBaseViewModel();
-			expect(viewModel.updatedAt).toEqual(new Date('2024-01-01T10:00:00Z'));
+			expect(viewModel.updatedAt).toEqual(new Date("2024-01-01T10:00:00Z"));
 		});
 	});
 
-	describe('update', () => {
-		describe('email field', () => {
-			it('should update email when new value is provided', () => {
+	describe("update", () => {
+		describe("email field", () => {
+			it("should update email when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalEmail = viewModel.email;
 
-				viewModel.update({ email: 'updated@example.com' });
+				viewModel.update({ email: "updated@example.com" });
 
-				expect(viewModel.email).toBe('updated@example.com');
+				expect(viewModel.email).toBe("updated@example.com");
 				expect(viewModel.email).not.toBe(originalEmail);
 			});
 
-			it('should keep original email when undefined is provided', () => {
+			it("should keep original email when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalEmail = viewModel.email;
 
@@ -170,7 +170,7 @@ describe('AuthViewModel', () => {
 				expect(viewModel.email).toBe(originalEmail);
 			});
 
-			it('should allow setting email to null', () => {
+			it("should allow setting email to null", () => {
 				const viewModel = createBaseViewModel();
 
 				viewModel.update({ email: null });
@@ -179,8 +179,8 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('emailVerified field', () => {
-			it('should update emailVerified when new value is provided', () => {
+		describe("emailVerified field", () => {
+			it("should update emailVerified when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalEmailVerified = viewModel.emailVerified;
 
@@ -190,7 +190,7 @@ describe('AuthViewModel', () => {
 				expect(viewModel.emailVerified).not.toBe(originalEmailVerified);
 			});
 
-			it('should keep original emailVerified when undefined is provided', () => {
+			it("should keep original emailVerified when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalEmailVerified = viewModel.emailVerified;
 
@@ -200,17 +200,17 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('lastLoginAt field', () => {
-			it('should update lastLoginAt when new value is provided', () => {
+		describe("lastLoginAt field", () => {
+			it("should update lastLoginAt when new value is provided", () => {
 				const viewModel = createBaseViewModel();
-				const newLastLoginAt = new Date('2024-01-02T10:00:00Z');
+				const newLastLoginAt = new Date("2024-01-02T10:00:00Z");
 
 				viewModel.update({ lastLoginAt: newLastLoginAt });
 
 				expect(viewModel.lastLoginAt).toEqual(newLastLoginAt);
 			});
 
-			it('should keep original lastLoginAt when undefined is provided', () => {
+			it("should keep original lastLoginAt when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalLastLoginAt = viewModel.lastLoginAt;
 
@@ -219,20 +219,20 @@ describe('AuthViewModel', () => {
 				expect(viewModel.lastLoginAt).toBe(originalLastLoginAt);
 			});
 
-			it('should allow setting lastLoginAt to null', () => {
+			it("should allow setting lastLoginAt to null", () => {
 				const viewModel = new AuthViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					userId: '123e4567-e89b-12d3-a456-426614174001',
-					email: 'test@example.com',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					userId: "123e4567-e89b-12d3-a456-426614174001",
+					email: "test@example.com",
 					emailVerified: false,
-					lastLoginAt: new Date('2024-01-01T09:00:00Z'),
-					password: 'SecurePass123!',
+					lastLoginAt: new Date("2024-01-01T09:00:00Z"),
+					password: "SecurePass123!",
 					phoneNumber: null,
 					provider: AuthProviderEnum.LOCAL,
 					providerId: null,
 					twoFactorEnabled: false,
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				});
 
 				viewModel.update({ lastLoginAt: null });
@@ -241,18 +241,18 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('password field', () => {
-			it('should update password when new value is provided', () => {
+		describe("password field", () => {
+			it("should update password when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalPassword = viewModel.password;
 
-				viewModel.update({ password: 'NewSecurePass123!' });
+				viewModel.update({ password: "NewSecurePass123!" });
 
-				expect(viewModel.password).toBe('NewSecurePass123!');
+				expect(viewModel.password).toBe("NewSecurePass123!");
 				expect(viewModel.password).not.toBe(originalPassword);
 			});
 
-			it('should keep original password when undefined is provided', () => {
+			it("should keep original password when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalPassword = viewModel.password;
 
@@ -261,7 +261,7 @@ describe('AuthViewModel', () => {
 				expect(viewModel.password).toBe(originalPassword);
 			});
 
-			it('should allow setting password to null', () => {
+			it("should allow setting password to null", () => {
 				const viewModel = createBaseViewModel();
 
 				viewModel.update({ password: null });
@@ -270,8 +270,8 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('provider field', () => {
-			it('should update provider when new value is provided', () => {
+		describe("provider field", () => {
+			it("should update provider when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalProvider = viewModel.provider;
 
@@ -281,7 +281,7 @@ describe('AuthViewModel', () => {
 				expect(viewModel.provider).not.toBe(originalProvider);
 			});
 
-			it('should keep original provider when undefined is provided', () => {
+			it("should keep original provider when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalProvider = viewModel.provider;
 
@@ -291,18 +291,18 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('providerId field', () => {
-			it('should update providerId when new value is provided', () => {
+		describe("providerId field", () => {
+			it("should update providerId when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalProviderId = viewModel.providerId;
 
-				viewModel.update({ providerId: 'google-123' });
+				viewModel.update({ providerId: "google-123" });
 
-				expect(viewModel.providerId).toBe('google-123');
+				expect(viewModel.providerId).toBe("google-123");
 				expect(viewModel.providerId).not.toBe(originalProviderId);
 			});
 
-			it('should keep original providerId when undefined is provided', () => {
+			it("should keep original providerId when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalProviderId = viewModel.providerId;
 
@@ -311,20 +311,20 @@ describe('AuthViewModel', () => {
 				expect(viewModel.providerId).toBe(originalProviderId);
 			});
 
-			it('should allow setting providerId to null', () => {
+			it("should allow setting providerId to null", () => {
 				const viewModel = new AuthViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					userId: '123e4567-e89b-12d3-a456-426614174001',
-					email: 'test@example.com',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					userId: "123e4567-e89b-12d3-a456-426614174001",
+					email: "test@example.com",
 					emailVerified: false,
 					lastLoginAt: null,
-					password: 'SecurePass123!',
+					password: "SecurePass123!",
 					phoneNumber: null,
 					provider: AuthProviderEnum.LOCAL,
-					providerId: 'local-123',
+					providerId: "local-123",
 					twoFactorEnabled: false,
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				});
 
 				viewModel.update({ providerId: null });
@@ -333,8 +333,8 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('twoFactorEnabled field', () => {
-			it('should update twoFactorEnabled when new value is provided', () => {
+		describe("twoFactorEnabled field", () => {
+			it("should update twoFactorEnabled when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalTwoFactorEnabled = viewModel.twoFactorEnabled;
 
@@ -344,7 +344,7 @@ describe('AuthViewModel', () => {
 				expect(viewModel.twoFactorEnabled).not.toBe(originalTwoFactorEnabled);
 			});
 
-			it('should keep original twoFactorEnabled when undefined is provided', () => {
+			it("should keep original twoFactorEnabled when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalTwoFactorEnabled = viewModel.twoFactorEnabled;
 
@@ -354,18 +354,18 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		describe('phoneNumber field', () => {
-			it('should update phoneNumber when new value is provided', () => {
+		describe("phoneNumber field", () => {
+			it("should update phoneNumber when new value is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalPhoneNumber = viewModel.phoneNumber;
 
-				viewModel.update({ phoneNumber: '+9876543210' });
+				viewModel.update({ phoneNumber: "+9876543210" });
 
-				expect(viewModel.phoneNumber).toBe('+9876543210');
+				expect(viewModel.phoneNumber).toBe("+9876543210");
 				expect(viewModel.phoneNumber).not.toBe(originalPhoneNumber);
 			});
 
-			it('should keep original phoneNumber when undefined is provided', () => {
+			it("should keep original phoneNumber when undefined is provided", () => {
 				const viewModel = createBaseViewModel();
 				const originalPhoneNumber = viewModel.phoneNumber;
 
@@ -374,20 +374,20 @@ describe('AuthViewModel', () => {
 				expect(viewModel.phoneNumber).toBe(originalPhoneNumber);
 			});
 
-			it('should allow setting phoneNumber to null', () => {
+			it("should allow setting phoneNumber to null", () => {
 				const viewModel = new AuthViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					userId: '123e4567-e89b-12d3-a456-426614174001',
-					email: 'test@example.com',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					userId: "123e4567-e89b-12d3-a456-426614174001",
+					email: "test@example.com",
 					emailVerified: false,
 					lastLoginAt: null,
-					password: 'SecurePass123!',
-					phoneNumber: '+1234567890',
+					password: "SecurePass123!",
+					phoneNumber: "+1234567890",
 					provider: AuthProviderEnum.LOCAL,
 					providerId: null,
 					twoFactorEnabled: false,
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				});
 
 				viewModel.update({ phoneNumber: null });
@@ -396,9 +396,9 @@ describe('AuthViewModel', () => {
 			});
 		});
 
-		it('should update multiple fields at once', () => {
+		it("should update multiple fields at once", () => {
 			const viewModel = createBaseViewModel();
-			const newEmail = 'updated@example.com';
+			const newEmail = "updated@example.com";
 			const newEmailVerified = true;
 
 			viewModel.update({
@@ -410,12 +410,12 @@ describe('AuthViewModel', () => {
 			expect(viewModel.emailVerified).toBe(newEmailVerified);
 		});
 
-		it('should update updatedAt timestamp when updating', () => {
+		it("should update updatedAt timestamp when updating", () => {
 			const viewModel = createBaseViewModel();
 			const originalUpdatedAt = viewModel.updatedAt;
 			const beforeUpdate = new Date();
 
-			viewModel.update({ email: 'new@example.com' });
+			viewModel.update({ email: "new@example.com" });
 
 			const afterUpdate = new Date();
 			expect(viewModel.updatedAt.getTime()).toBeGreaterThanOrEqual(

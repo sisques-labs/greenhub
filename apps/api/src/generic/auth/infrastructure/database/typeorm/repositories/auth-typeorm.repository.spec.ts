@@ -1,14 +1,14 @@
-import { Repository } from 'typeorm';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthTypeormEntity } from '@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity';
-import { AuthTypeormMapper } from '@/generic/auth/infrastructure/database/typeorm/mappers/auth-typeorm.mapper';
-import { AuthTypeormRepository } from '@/generic/auth/infrastructure/database/typeorm/repositories/auth-typeorm.repository';
-import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { Repository } from "typeorm";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthTypeormEntity } from "@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity";
+import { AuthTypeormMapper } from "@/generic/auth/infrastructure/database/typeorm/mappers/auth-typeorm.mapper";
+import { AuthTypeormRepository } from "@/generic/auth/infrastructure/database/typeorm/repositories/auth-typeorm.repository";
+import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
 
-describe('AuthTypeormRepository', () => {
+describe("AuthTypeormRepository", () => {
 	let repository: AuthTypeormRepository;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 	let mockAuthTypeormMapper: jest.Mocked<AuthTypeormMapper>;
@@ -47,16 +47,16 @@ describe('AuthTypeormRepository', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('findById', () => {
-		it('should return auth aggregate when auth exists', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("findById", () => {
+		it("should return auth aggregate when auth exists", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const now = new Date();
 
 			const typeormEntity = new AuthTypeormEntity();
 			typeormEntity.id = authId;
 			typeormEntity.userId = userId;
-			typeormEntity.email = 'test@example.com';
+			typeormEntity.email = "test@example.com";
 			typeormEntity.emailVerified = true;
 			typeormEntity.provider = AuthProviderEnum.LOCAL;
 			typeormEntity.createdAt = now;
@@ -95,8 +95,8 @@ describe('AuthTypeormRepository', () => {
 			expect(mockAuthTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return null when auth does not exist', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return null when auth does not exist", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -110,11 +110,11 @@ describe('AuthTypeormRepository', () => {
 		});
 	});
 
-	describe('findByEmail', () => {
-		it('should return auth aggregate when auth exists', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
-			const email = 'test@example.com';
+	describe("findByEmail", () => {
+		it("should return auth aggregate when auth exists", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
+			const email = "test@example.com";
 			const now = new Date();
 
 			const typeormEntity = new AuthTypeormEntity();
@@ -159,8 +159,8 @@ describe('AuthTypeormRepository', () => {
 			expect(mockAuthTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return null when auth does not exist', async () => {
-			const email = 'test@example.com';
+		it("should return null when auth does not exist", async () => {
+			const email = "test@example.com";
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -174,16 +174,16 @@ describe('AuthTypeormRepository', () => {
 		});
 	});
 
-	describe('findByUserId', () => {
-		it('should return auth aggregate when auth exists', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("findByUserId", () => {
+		it("should return auth aggregate when auth exists", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const now = new Date();
 
 			const typeormEntity = new AuthTypeormEntity();
 			typeormEntity.id = authId;
 			typeormEntity.userId = userId;
-			typeormEntity.email = 'test@example.com';
+			typeormEntity.email = "test@example.com";
 			typeormEntity.emailVerified = true;
 			typeormEntity.provider = AuthProviderEnum.LOCAL;
 			typeormEntity.createdAt = now;
@@ -222,8 +222,8 @@ describe('AuthTypeormRepository', () => {
 			expect(mockAuthTypeormMapper.toDomainEntity).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return null when auth does not exist', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+		it("should return null when auth does not exist", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -237,10 +237,10 @@ describe('AuthTypeormRepository', () => {
 		});
 	});
 
-	describe('save', () => {
-		it('should save auth aggregate and return saved aggregate', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("save", () => {
+		it("should save auth aggregate and return saved aggregate", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 
 			const authAggregate = new AuthAggregate(
 				{
@@ -268,7 +268,7 @@ describe('AuthTypeormRepository', () => {
 			const savedTypeormEntity = new AuthTypeormEntity();
 			savedTypeormEntity.id = authId;
 			savedTypeormEntity.userId = userId;
-			savedTypeormEntity.email = 'test@example.com';
+			savedTypeormEntity.email = "test@example.com";
 			savedTypeormEntity.provider = AuthProviderEnum.LOCAL;
 
 			const savedAuthAggregate = new AuthAggregate(
@@ -307,9 +307,9 @@ describe('AuthTypeormRepository', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should soft delete auth and return true', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("delete", () => {
+		it("should soft delete auth and return true", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 1,
@@ -324,8 +324,8 @@ describe('AuthTypeormRepository', () => {
 			expect(mockSoftDelete).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return false when auth does not exist', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return false when auth does not exist", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 0,
@@ -339,9 +339,9 @@ describe('AuthTypeormRepository', () => {
 			expect(mockSoftDelete).toHaveBeenCalledWith(authId);
 		});
 
-		it('should handle delete errors correctly', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
-			const error = new Error('Auth not found');
+		it("should handle delete errors correctly", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
+			const error = new Error("Auth not found");
 
 			mockSoftDelete.mockRejectedValue(error);
 

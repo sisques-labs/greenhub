@@ -1,19 +1,19 @@
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
-import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
-import { SagaLogCreateCommandHandler } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command-handler';
-import { AssertSagaLogNotExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-not-exists/assert-saga-log-not-exists.service';
-import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogAggregateFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-aggregate/saga-log-aggregate.factory';
+import { EventBus } from "@nestjs/cqrs";
+import { Test } from "@nestjs/testing";
+import { SagaLogCreateCommand } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command";
+import { SagaLogCreateCommandHandler } from "@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command-handler";
+import { AssertSagaLogNotExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-not-exists/assert-saga-log-not-exists.service";
+import { SagaLogAggregate } from "@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogAggregateFactory } from "@/generic/saga-context/saga-log/domain/factories/saga-log-aggregate/saga-log-aggregate.factory";
 import {
 	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
 	SagaLogWriteRepository,
-} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
-import { SagaLogCreatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository";
+import { SagaLogCreatedEvent } from "@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
 
-describe('SagaLogCreateCommandHandler', () => {
+describe("SagaLogCreateCommandHandler", () => {
 	let handler: SagaLogCreateCommandHandler;
 	let mockSagaLogWriteRepository: jest.Mocked<SagaLogWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -74,13 +74,13 @@ describe('SagaLogCreateCommandHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should create saga log successfully when saga log does not exist', async () => {
+	describe("execute", () => {
+		it("should create saga log successfully when saga log does not exist", async () => {
 			const commandDto = {
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 			};
 
 			const command = new SagaLogCreateCommand(commandDto);
@@ -129,12 +129,12 @@ describe('SagaLogCreateCommandHandler', () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
 		});
 
-		it('should publish SagaLogCreatedEvent after creating', async () => {
+		it("should publish SagaLogCreatedEvent after creating", async () => {
 			const commandDto = {
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.ERROR,
-				message: 'Error log message',
+				message: "Error log message",
 			};
 
 			const command = new SagaLogCreateCommand(commandDto);
@@ -168,22 +168,22 @@ describe('SagaLogCreateCommandHandler', () => {
 			}
 		});
 
-		it('should throw error when saga log already exists', async () => {
+		it("should throw error when saga log already exists", async () => {
 			const commandDto = {
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 			};
 
 			const command = new SagaLogCreateCommand(commandDto);
 
 			mockAssertSagaLogNotExistsService.execute.mockRejectedValue(
-				new Error('Saga log already exists'),
+				new Error("Saga log already exists"),
 			);
 
 			await expect(handler.execute(command)).rejects.toThrow(
-				'Saga log already exists',
+				"Saga log already exists",
 			);
 			expect(mockAssertSagaLogNotExistsService.execute).toHaveBeenCalledWith(
 				command.id.value,

@@ -1,19 +1,19 @@
-import { UseGuards } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
-import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
-import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
-import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
-import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
-import { UserCreateCommand } from '@/generic/users/application/commands/user-create/user-create.command';
-import { UserUpdateCommand } from '@/generic/users/application/commands/user-update/user-update.command';
-import { CreateUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/create-user.request.dto';
-import { DeleteUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/delete-user.request.dto';
-import { UpdateUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/update-user.request.dto';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
-import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
+import { UseGuards } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
+import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { JwtAuthGuard } from "@/generic/auth/infrastructure/auth/jwt-auth.guard";
+import { Roles } from "@/generic/auth/infrastructure/decorators/roles/roles.decorator";
+import { OwnerGuard } from "@/generic/auth/infrastructure/guards/owner/owner.guard";
+import { RolesGuard } from "@/generic/auth/infrastructure/guards/roles/roles.guard";
+import { UserDeleteCommand } from "@/generic/users/application/commands/delete-user/delete-user.command";
+import { UserCreateCommand } from "@/generic/users/application/commands/user-create/user-create.command";
+import { UserUpdateCommand } from "@/generic/users/application/commands/user-update/user-update.command";
+import { CreateUserRequestDto } from "@/generic/users/transport/graphql/dtos/requests/create-user.request.dto";
+import { DeleteUserRequestDto } from "@/generic/users/transport/graphql/dtos/requests/delete-user.request.dto";
+import { UpdateUserRequestDto } from "@/generic/users/transport/graphql/dtos/requests/update-user.request.dto";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
+import { MutationResponseGraphQLMapper } from "@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper";
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -26,7 +26,7 @@ export class UserMutationsResolver {
 	@Mutation(() => MutationResponseDto)
 	@Roles(UserRoleEnum.ADMIN)
 	async createUser(
-		@Args('input') input: CreateUserRequestDto,
+		@Args("input") input: CreateUserRequestDto,
 	): Promise<MutationResponseDto> {
 		// 01: Send the command to the command bus
 		const createdUserId = await this.commandBus.execute(
@@ -43,7 +43,7 @@ export class UserMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'User created successfully',
+			message: "User created successfully",
 			id: createdUserId,
 		});
 	}
@@ -51,7 +51,7 @@ export class UserMutationsResolver {
 	@Mutation(() => MutationResponseDto)
 	@UseGuards(OwnerGuard)
 	async updateUser(
-		@Args('input') input: UpdateUserRequestDto,
+		@Args("input") input: UpdateUserRequestDto,
 	): Promise<MutationResponseDto> {
 		// 01: Send the command to the command bus
 		await this.commandBus.execute(
@@ -70,7 +70,7 @@ export class UserMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'User updated successfully',
+			message: "User updated successfully",
 			id: input.id,
 		});
 	}
@@ -78,7 +78,7 @@ export class UserMutationsResolver {
 	@Mutation(() => MutationResponseDto)
 	@Roles(UserRoleEnum.ADMIN)
 	async deleteUser(
-		@Args('input') input: DeleteUserRequestDto,
+		@Args("input") input: DeleteUserRequestDto,
 	): Promise<MutationResponseDto> {
 		// 01: Send the command to the command bus
 		await this.commandBus.execute(new UserDeleteCommand({ id: input.id }));
@@ -86,7 +86,7 @@ export class UserMutationsResolver {
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
 			success: true,
-			message: 'User deleted successfully',
+			message: "User deleted successfully",
 			id: input.id,
 		});
 	}

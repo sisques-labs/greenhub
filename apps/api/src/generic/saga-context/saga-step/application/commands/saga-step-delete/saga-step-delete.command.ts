@@ -1,5 +1,5 @@
-import { ISagaStepDeleteCommandDto } from '@/generic/saga-context/saga-step/application/dtos/commands/saga-step-delete/saga-step-delete-command.dto';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+import { ISagaStepDeleteCommandDto } from "@/generic/saga-context/saga-step/application/dtos/commands/saga-step-delete/saga-step-delete-command.dto";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
 export class SagaStepDeleteCommand {
 	readonly id: SagaStepUuidValueObject;

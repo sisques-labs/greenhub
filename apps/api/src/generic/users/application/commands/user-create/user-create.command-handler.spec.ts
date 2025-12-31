@@ -1,22 +1,22 @@
-import { EventBus } from '@nestjs/cqrs';
-import { IUserCreateCommandDto } from '@/generic/users/application/dtos/commands/user-create/user-create-command.dto';
-import { UserUsernameIsNotUniqueException } from '@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception';
-import { AssertUserUsernameIsUniqueService } from '@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service';
-import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
-import { UserAggregateFactory } from '@/generic/users/domain/factories/user-aggregate/user-aggregate.factory';
-import { UserWriteRepository } from '@/generic/users/domain/repositories/user-write.repository';
-import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
-import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
-import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
-import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { UserCreateCommand } from './user-create.command';
-import { UserCreateCommandHandler } from './user-create.command-handler';
+import { EventBus } from "@nestjs/cqrs";
+import { IUserCreateCommandDto } from "@/generic/users/application/dtos/commands/user-create/user-create-command.dto";
+import { UserUsernameIsNotUniqueException } from "@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception";
+import { AssertUserUsernameIsUniqueService } from "@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service";
+import { UserAggregate } from "@/generic/users/domain/aggregates/user.aggregate";
+import { UserAggregateFactory } from "@/generic/users/domain/factories/user-aggregate/user-aggregate.factory";
+import { UserWriteRepository } from "@/generic/users/domain/repositories/user-write.repository";
+import { UserRoleValueObject } from "@/generic/users/domain/value-objects/user-role/user-role.vo";
+import { UserStatusValueObject } from "@/generic/users/domain/value-objects/user-status/user-status.vo";
+import { UserUserNameValueObject } from "@/generic/users/domain/value-objects/user-user-name/user-user-name.vo";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
+import { UserCreatedEvent } from "@/shared/domain/events/users/user-created/user-created.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
+import { UserCreateCommand } from "./user-create.command";
+import { UserCreateCommandHandler } from "./user-create.command-handler";
 
-describe('UserCreateCommandHandler', () => {
+describe("UserCreateCommandHandler", () => {
 	let handler: UserCreateCommandHandler;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -57,12 +57,12 @@ describe('UserCreateCommandHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should create user successfully when username is unique', async () => {
+	describe("execute", () => {
+		it("should create user successfully when username is unique", async () => {
 			const commandDto: IUserCreateCommandDto = {
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 			};
@@ -71,7 +71,7 @@ describe('UserCreateCommandHandler', () => {
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -92,7 +92,7 @@ describe('UserCreateCommandHandler', () => {
 			expect(result).toBe(mockUser.id.value);
 			expect(
 				mockAssertUserUsernameIsUniqueService.execute,
-			).toHaveBeenCalledWith('johndoe');
+			).toHaveBeenCalledWith("johndoe");
 			expect(
 				mockAssertUserUsernameIsUniqueService.execute,
 			).toHaveBeenCalledTimes(1);
@@ -122,11 +122,11 @@ describe('UserCreateCommandHandler', () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
 		});
 
-		it('should create user successfully when username is null', async () => {
+		it("should create user successfully when username is null", async () => {
 			const commandDto: IUserCreateCommandDto = {
 				userName: null,
-				name: 'John',
-				lastName: 'Doe',
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 			};
@@ -159,34 +159,34 @@ describe('UserCreateCommandHandler', () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
-		it('should throw exception when username is not unique', async () => {
+		it("should throw exception when username is not unique", async () => {
 			const commandDto: IUserCreateCommandDto = {
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 			};
 
 			const command = new UserCreateCommand(commandDto);
-			const error = new UserUsernameIsNotUniqueException('johndoe');
+			const error = new UserUsernameIsNotUniqueException("johndoe");
 
 			mockAssertUserUsernameIsUniqueService.execute.mockRejectedValue(error);
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
 			expect(
 				mockAssertUserUsernameIsUniqueService.execute,
-			).toHaveBeenCalledWith('johndoe');
+			).toHaveBeenCalledWith("johndoe");
 			expect(mockUserAggregateFactory.create).not.toHaveBeenCalled();
 			expect(mockUserWriteRepository.save).not.toHaveBeenCalled();
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it('should publish UserCreatedEvent when user is created', async () => {
+		it("should publish UserCreatedEvent when user is created", async () => {
 			const commandDto: IUserCreateCommandDto = {
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 			};
@@ -195,7 +195,7 @@ describe('UserCreateCommandHandler', () => {
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -219,11 +219,11 @@ describe('UserCreateCommandHandler', () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalledWith(uncommittedEvents);
 		});
 
-		it('should save user before publishing events', async () => {
+		it("should save user before publishing events", async () => {
 			const commandDto: IUserCreateCommandDto = {
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 			};
@@ -232,7 +232,7 @@ describe('UserCreateCommandHandler', () => {
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),
@@ -256,21 +256,21 @@ describe('UserCreateCommandHandler', () => {
 			expect(saveOrder).toBeLessThan(publishOrder);
 		});
 
-		it('should return the created user id', async () => {
+		it("should return the created user id", async () => {
 			const commandDto: IUserCreateCommandDto = {
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 			};
 
 			const command = new UserCreateCommand(commandDto);
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
 			const mockUser = new UserAggregate(
 				{
 					id: new UserUuidValueObject(userId),
-					userName: new UserUserNameValueObject('johndoe'),
+					userName: new UserUserNameValueObject("johndoe"),
 					role: new UserRoleValueObject(UserRoleEnum.USER),
 					status: new UserStatusValueObject(UserStatusEnum.ACTIVE),
 					createdAt: new DateValueObject(new Date()),

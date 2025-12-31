@@ -1,6 +1,6 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { GqlExecutionContext } from "@nestjs/graphql";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
 
 /**
  * Current User Decorator

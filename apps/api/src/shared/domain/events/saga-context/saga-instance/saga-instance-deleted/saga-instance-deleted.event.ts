@@ -1,6 +1,6 @@
-import { BaseEvent } from '@/shared/domain/events/base-event.interface';
-import { ISagaInstanceEventData } from '@/shared/domain/events/saga-context/saga-instance/interfaces/saga-instance-event-data.interface';
-import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
+import { BaseEvent } from "@/shared/domain/events/base-event.interface";
+import { ISagaInstanceEventData } from "@/shared/domain/events/saga-context/saga-instance/interfaces/saga-instance-event-data.interface";
+import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
 
 /**
  * Saga instance deleted event

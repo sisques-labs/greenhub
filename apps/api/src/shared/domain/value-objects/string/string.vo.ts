@@ -1,4 +1,4 @@
-import { InvalidStringException } from '@/shared/domain/exceptions/value-objects/invalid-string/invalid-string.exception';
+import { InvalidStringException } from "@/shared/domain/exceptions/value-objects/invalid-string/invalid-string.exception";
 
 /**
  * String Value Object
@@ -144,13 +144,13 @@ export class StringValueObject {
 		let result = this._value;
 		if (this.options.caseSensitive === false) {
 			const regex = new RegExp(
-				searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-				'gi',
+				searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+				"gi",
 			);
 			result = this._value.replace(regex, replaceValue);
 		} else {
 			result = this._value.replace(
-				new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+				new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
 				replaceValue,
 			);
 		}
@@ -226,7 +226,7 @@ export class StringValueObject {
 
 	private processValue(value: string): string {
 		if (value === null || value === undefined) {
-			return '';
+			return "";
 		}
 
 		let processedValue = String(value);
@@ -246,7 +246,7 @@ export class StringValueObject {
 
 	private checkEmpty(): void {
 		if (this.options.allowEmpty === false && this._value.length === 0) {
-			throw new InvalidStringException('String cannot be empty');
+			throw new InvalidStringException("String cannot be empty");
 		}
 	}
 
@@ -280,7 +280,7 @@ export class StringValueObject {
 			!(this.options.allowEmpty === true && this._value.length === 0)
 		) {
 			throw new InvalidStringException(
-				'String does not match required pattern',
+				"String does not match required pattern",
 			);
 		}
 	}

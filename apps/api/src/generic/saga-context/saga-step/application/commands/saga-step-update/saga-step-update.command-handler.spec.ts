@@ -1,28 +1,28 @@
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
-import { SagaStepUpdateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command';
-import { SagaStepUpdateCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command-handler';
-import { ISagaStepUpdateCommandDto } from '@/generic/saga-context/saga-step/application/dtos/commands/saga-step-update/saga-step-update-command.dto';
-import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
+import { EventBus } from "@nestjs/cqrs";
+import { Test } from "@nestjs/testing";
+import { SagaStepUpdateCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command";
+import { SagaStepUpdateCommandHandler } from "@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command-handler";
+import { ISagaStepUpdateCommandDto } from "@/generic/saga-context/saga-step/application/dtos/commands/saga-step-update/saga-step-update-command.dto";
+import { AssertSagaStepExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service";
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
 import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
-} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
-import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
-import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
-import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
-import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
-import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
-import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
-import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
-import { SagaStepUpdatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
+} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository";
+import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
+import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
+import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
+import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
+import { SagaStepResultValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo";
+import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
+import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
+import { SagaStepUpdatedEvent } from "@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
 
-describe('SagaStepUpdateCommandHandler', () => {
+describe("SagaStepUpdateCommandHandler", () => {
 	let handler: SagaStepUpdateCommandHandler;
 	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -76,11 +76,11 @@ describe('SagaStepUpdateCommandHandler', () => {
 		const now = new Date();
 		return new SagaStepAggregate(
 			{
-				id: new SagaStepUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
+				id: new SagaStepUuidValueObject("123e4567-e89b-12d3-a456-426614174000"),
 				sagaInstanceId: new SagaInstanceUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
+					"223e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaStepNameValueObject('Original Name'),
+				name: new SagaStepNameValueObject("Original Name"),
 				order: new SagaStepOrderValueObject(1),
 				status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 				startDate: null,
@@ -97,19 +97,19 @@ describe('SagaStepUpdateCommandHandler', () => {
 		);
 	};
 
-	describe('execute', () => {
-		it('should update saga step successfully when saga step exists', async () => {
+	describe("execute", () => {
+		it("should update saga step successfully when saga step exists", async () => {
 			const existingSagaStep = createSagaStepAggregate();
 
 			const updateCommandDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Updated Name',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Updated Name",
 			};
 
 			const command = new SagaStepUpdateCommand(updateCommandDto);
 
-			const updateSpy = jest.spyOn(existingSagaStep, 'update');
-			const commitSpy = jest.spyOn(existingSagaStep, 'commit');
+			const updateSpy = jest.spyOn(existingSagaStep, "update");
+			const commitSpy = jest.spyOn(existingSagaStep, "commit");
 
 			mockAssertSagaStepExistsService.execute.mockResolvedValue(
 				existingSagaStep,
@@ -136,14 +136,14 @@ describe('SagaStepUpdateCommandHandler', () => {
 			expect(commitSpy).toHaveBeenCalled();
 		});
 
-		it('should throw error when saga step does not exist', async () => {
+		it("should throw error when saga step does not exist", async () => {
 			const updateCommandDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Updated Name',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Updated Name",
 			};
 
 			const command = new SagaStepUpdateCommand(updateCommandDto);
-			const error = new Error('Saga step not found');
+			const error = new Error("Saga step not found");
 
 			mockAssertSagaStepExistsService.execute.mockRejectedValue(error);
 
@@ -155,18 +155,18 @@ describe('SagaStepUpdateCommandHandler', () => {
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
-		it('should update multiple fields at once', async () => {
+		it("should update multiple fields at once", async () => {
 			const existingSagaStep = createSagaStepAggregate();
 
 			const updateCommandDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Updated Name',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Updated Name",
 				order: 5,
 				retryCount: 2,
 			};
 
 			const command = new SagaStepUpdateCommand(updateCommandDto);
-			const updateSpy = jest.spyOn(existingSagaStep, 'update');
+			const updateSpy = jest.spyOn(existingSagaStep, "update");
 
 			mockAssertSagaStepExistsService.execute.mockResolvedValue(
 				existingSagaStep,
@@ -185,16 +185,16 @@ describe('SagaStepUpdateCommandHandler', () => {
 			);
 		});
 
-		it('should exclude id and sagaInstanceId from update data', async () => {
+		it("should exclude id and sagaInstanceId from update data", async () => {
 			const existingSagaStep = createSagaStepAggregate();
 
 			const updateCommandDto: ISagaStepUpdateCommandDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Updated Name',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Updated Name",
 			};
 
 			const command = new SagaStepUpdateCommand(updateCommandDto);
-			const updateSpy = jest.spyOn(existingSagaStep, 'update');
+			const updateSpy = jest.spyOn(existingSagaStep, "update");
 
 			mockAssertSagaStepExistsService.execute.mockResolvedValue(
 				existingSagaStep,
@@ -205,16 +205,16 @@ describe('SagaStepUpdateCommandHandler', () => {
 			await handler.execute(command);
 
 			const updateCall = updateSpy.mock.calls[0][0];
-			expect(updateCall).not.toHaveProperty('id');
-			expect(updateCall).not.toHaveProperty('sagaInstanceId');
+			expect(updateCall).not.toHaveProperty("id");
+			expect(updateCall).not.toHaveProperty("sagaInstanceId");
 		});
 
-		it('should publish SagaStepUpdatedEvent after updating', async () => {
+		it("should publish SagaStepUpdatedEvent after updating", async () => {
 			const existingSagaStep = createSagaStepAggregate();
 
 			const updateCommandDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Updated Name',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Updated Name",
 			};
 
 			const command = new SagaStepUpdateCommand(updateCommandDto);

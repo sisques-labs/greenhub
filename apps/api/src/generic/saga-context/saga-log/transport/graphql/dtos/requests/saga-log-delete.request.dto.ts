@@ -1,10 +1,10 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsNotEmpty, IsUUID } from "class-validator";
 
-@InputType('SagaLogDeleteRequestDto')
+@InputType("SagaLogDeleteRequestDto")
 export class SagaLogDeleteRequestDto {
 	@Field(() => String, {
-		description: 'The id of the saga log',
+		description: "The id of the saga log",
 		nullable: false,
 	})
 	@IsUUID()

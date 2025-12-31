@@ -1,12 +1,12 @@
-import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
+import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
 
-describe('OverviewViewModel', () => {
+describe("OverviewViewModel", () => {
 	let viewModelDto: IOverviewViewModelDto;
 
 	beforeEach(() => {
 		viewModelDto = {
-			id: 'overview-1',
+			id: "overview-1",
 			// Plants metrics
 			totalPlants: 150,
 			totalActivePlants: 120,
@@ -45,13 +45,13 @@ describe('OverviewViewModel', () => {
 			minPlantsPerGrowingUnit: 0,
 			maxPlantsPerGrowingUnit: 12,
 			medianPlantsPerGrowingUnit: 6,
-			createdAt: new Date('2024-01-15'),
-			updatedAt: new Date('2024-01-15'),
+			createdAt: new Date("2024-01-15"),
+			updatedAt: new Date("2024-01-15"),
 		};
 	});
 
-	describe('constructor', () => {
-		it('should create a view model with all properties', () => {
+	describe("constructor", () => {
+		it("should create a view model with all properties", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 
 			expect(viewModel.id).toBe(viewModelDto.id);
@@ -111,9 +111,9 @@ describe('OverviewViewModel', () => {
 			);
 		});
 
-		it('should create a view model with zero values', () => {
+		it("should create a view model with zero values", () => {
 			const dtoWithZeros: IOverviewViewModelDto = {
-				id: 'overview-empty',
+				id: "overview-empty",
 				totalPlants: 0,
 				totalActivePlants: 0,
 				averagePlantsPerGrowingUnit: 0,
@@ -156,152 +156,152 @@ describe('OverviewViewModel', () => {
 		});
 	});
 
-	describe('getters', () => {
+	describe("getters", () => {
 		let viewModel: OverviewViewModel;
 
 		beforeEach(() => {
 			viewModel = new OverviewViewModel(viewModelDto);
 		});
 
-		describe('plants metrics getters', () => {
-			it('should return correct totalPlants', () => {
+		describe("plants metrics getters", () => {
+			it("should return correct totalPlants", () => {
 				expect(viewModel.totalPlants).toBe(150);
 			});
 
-			it('should return correct totalActivePlants', () => {
+			it("should return correct totalActivePlants", () => {
 				expect(viewModel.totalActivePlants).toBe(120);
 			});
 
-			it('should return correct averagePlantsPerGrowingUnit', () => {
+			it("should return correct averagePlantsPerGrowingUnit", () => {
 				expect(viewModel.averagePlantsPerGrowingUnit).toBe(6);
 			});
 		});
 
-		describe('plants by status getters', () => {
-			it('should return correct plantsPlanted', () => {
+		describe("plants by status getters", () => {
+			it("should return correct plantsPlanted", () => {
 				expect(viewModel.plantsPlanted).toBe(30);
 			});
 
-			it('should return correct plantsGrowing', () => {
+			it("should return correct plantsGrowing", () => {
 				expect(viewModel.plantsGrowing).toBe(80);
 			});
 
-			it('should return correct plantsHarvested', () => {
+			it("should return correct plantsHarvested", () => {
 				expect(viewModel.plantsHarvested).toBe(20);
 			});
 
-			it('should return correct plantsDead', () => {
+			it("should return correct plantsDead", () => {
 				expect(viewModel.plantsDead).toBe(10);
 			});
 
-			it('should return correct plantsArchived', () => {
+			it("should return correct plantsArchived", () => {
 				expect(viewModel.plantsArchived).toBe(10);
 			});
 		});
 
-		describe('additional plant metrics getters', () => {
-			it('should return correct plantsWithoutPlantedDate', () => {
+		describe("additional plant metrics getters", () => {
+			it("should return correct plantsWithoutPlantedDate", () => {
 				expect(viewModel.plantsWithoutPlantedDate).toBe(5);
 			});
 
-			it('should return correct plantsWithNotes', () => {
+			it("should return correct plantsWithNotes", () => {
 				expect(viewModel.plantsWithNotes).toBe(50);
 			});
 
-			it('should return correct recentPlants', () => {
+			it("should return correct recentPlants", () => {
 				expect(viewModel.recentPlants).toBe(15);
 			});
 		});
 
-		describe('growing units metrics getters', () => {
-			it('should return correct totalGrowingUnits', () => {
+		describe("growing units metrics getters", () => {
+			it("should return correct totalGrowingUnits", () => {
 				expect(viewModel.totalGrowingUnits).toBe(25);
 			});
 
-			it('should return correct activeGrowingUnits', () => {
+			it("should return correct activeGrowingUnits", () => {
 				expect(viewModel.activeGrowingUnits).toBe(20);
 			});
 
-			it('should return correct emptyGrowingUnits', () => {
+			it("should return correct emptyGrowingUnits", () => {
 				expect(viewModel.emptyGrowingUnits).toBe(5);
 			});
 		});
 
-		describe('growing units by type getters', () => {
-			it('should return correct growingUnitsPot', () => {
+		describe("growing units by type getters", () => {
+			it("should return correct growingUnitsPot", () => {
 				expect(viewModel.growingUnitsPot).toBe(10);
 			});
 
-			it('should return correct growingUnitsGardenBed', () => {
+			it("should return correct growingUnitsGardenBed", () => {
 				expect(viewModel.growingUnitsGardenBed).toBe(8);
 			});
 
-			it('should return correct growingUnitsHangingBasket', () => {
+			it("should return correct growingUnitsHangingBasket", () => {
 				expect(viewModel.growingUnitsHangingBasket).toBe(4);
 			});
 
-			it('should return correct growingUnitsWindowBox', () => {
+			it("should return correct growingUnitsWindowBox", () => {
 				expect(viewModel.growingUnitsWindowBox).toBe(3);
 			});
 		});
 
-		describe('capacity metrics getters', () => {
-			it('should return correct totalCapacity', () => {
+		describe("capacity metrics getters", () => {
+			it("should return correct totalCapacity", () => {
 				expect(viewModel.totalCapacity).toBe(300);
 			});
 
-			it('should return correct totalCapacityUsed', () => {
+			it("should return correct totalCapacityUsed", () => {
 				expect(viewModel.totalCapacityUsed).toBe(150);
 			});
 
-			it('should return correct averageOccupancy', () => {
+			it("should return correct averageOccupancy", () => {
 				expect(viewModel.averageOccupancy).toBe(50.0);
 			});
 
-			it('should return correct growingUnitsAtLimit', () => {
+			it("should return correct growingUnitsAtLimit", () => {
 				expect(viewModel.growingUnitsAtLimit).toBe(5);
 			});
 
-			it('should return correct growingUnitsFull', () => {
+			it("should return correct growingUnitsFull", () => {
 				expect(viewModel.growingUnitsFull).toBe(2);
 			});
 
-			it('should return correct totalRemainingCapacity', () => {
+			it("should return correct totalRemainingCapacity", () => {
 				expect(viewModel.totalRemainingCapacity).toBe(150);
 			});
 		});
 
-		describe('dimensions metrics getters', () => {
-			it('should return correct growingUnitsWithDimensions', () => {
+		describe("dimensions metrics getters", () => {
+			it("should return correct growingUnitsWithDimensions", () => {
 				expect(viewModel.growingUnitsWithDimensions).toBe(15);
 			});
 
-			it('should return correct totalVolume', () => {
+			it("should return correct totalVolume", () => {
 				expect(viewModel.totalVolume).toBe(5000);
 			});
 
-			it('should return correct averageVolume', () => {
+			it("should return correct averageVolume", () => {
 				expect(viewModel.averageVolume).toBe(333.33);
 			});
 		});
 
-		describe('aggregated metrics getters', () => {
-			it('should return correct minPlantsPerGrowingUnit', () => {
+		describe("aggregated metrics getters", () => {
+			it("should return correct minPlantsPerGrowingUnit", () => {
 				expect(viewModel.minPlantsPerGrowingUnit).toBe(0);
 			});
 
-			it('should return correct maxPlantsPerGrowingUnit', () => {
+			it("should return correct maxPlantsPerGrowingUnit", () => {
 				expect(viewModel.maxPlantsPerGrowingUnit).toBe(12);
 			});
 
-			it('should return correct medianPlantsPerGrowingUnit', () => {
+			it("should return correct medianPlantsPerGrowingUnit", () => {
 				expect(viewModel.medianPlantsPerGrowingUnit).toBe(6);
 			});
 		});
 	});
 
-	describe('update', () => {
-		it('should update view model properties', () => {
+	describe("update", () => {
+		it("should update view model properties", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const updateData: IOverviewViewModelDto = {
 				...viewModelDto,
@@ -317,7 +317,7 @@ describe('OverviewViewModel', () => {
 			expect(viewModel.averagePlantsPerGrowingUnit).toBe(6.67);
 		});
 
-		it('should update all plants metrics', () => {
+		it("should update all plants metrics", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const updateData: IOverviewViewModelDto = {
 				...viewModelDto,
@@ -343,7 +343,7 @@ describe('OverviewViewModel', () => {
 			expect(viewModel.plantsArchived).toBe(15);
 		});
 
-		it('should update all growing units metrics', () => {
+		it("should update all growing units metrics", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const updateData: IOverviewViewModelDto = {
 				...viewModelDto,
@@ -367,7 +367,7 @@ describe('OverviewViewModel', () => {
 			expect(viewModel.growingUnitsWindowBox).toBe(2);
 		});
 
-		it('should update all capacity metrics', () => {
+		it("should update all capacity metrics", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const updateData: IOverviewViewModelDto = {
 				...viewModelDto,
@@ -389,7 +389,7 @@ describe('OverviewViewModel', () => {
 			expect(viewModel.totalRemainingCapacity).toBe(200);
 		});
 
-		it('should update all dimensions metrics', () => {
+		it("should update all dimensions metrics", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const updateData: IOverviewViewModelDto = {
 				...viewModelDto,
@@ -405,7 +405,7 @@ describe('OverviewViewModel', () => {
 			expect(viewModel.averageVolume).toBe(300);
 		});
 
-		it('should update all aggregated metrics', () => {
+		it("should update all aggregated metrics", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const updateData: IOverviewViewModelDto = {
 				...viewModelDto,
@@ -421,7 +421,7 @@ describe('OverviewViewModel', () => {
 			expect(viewModel.medianPlantsPerGrowingUnit).toBe(7);
 		});
 
-		it('should update updatedAt timestamp', () => {
+		it("should update updatedAt timestamp", () => {
 			const viewModel = new OverviewViewModel(viewModelDto);
 			const beforeUpdate = viewModel.updatedAt;
 			const updateData: IOverviewViewModelDto = {

@@ -1,4 +1,4 @@
-import { NumberValueObject } from '@/shared/domain/value-objects/number/number.vo';
+import { NumberValueObject } from "@/shared/domain/value-objects/number/number.vo";
 
 /**
  * SagaStepMaxRetriesValueObject represents the maximum retries of a saga step.

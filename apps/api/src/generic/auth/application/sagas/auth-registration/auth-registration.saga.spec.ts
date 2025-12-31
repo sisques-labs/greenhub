@@ -1,30 +1,30 @@
-import { CommandBus } from '@nestjs/cqrs';
-import { AuthCreateCommand } from '@/generic/auth/application/commands/auth-create/auth-create.command';
-import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
-import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { SagaInstanceChangeStatusCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command';
-import { SagaInstanceCreateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command';
-import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
-import { UserCreateCommand } from '@/generic/users/application/commands/user-create/user-create.command';
-import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event';
-import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
+import { CommandBus } from "@nestjs/cqrs";
+import { AuthCreateCommand } from "@/generic/auth/application/commands/auth-create/auth-create.command";
+import { AuthDeleteCommand } from "@/generic/auth/application/commands/auth-delete/auth-delete.command";
+import { AuthRegistrationSaga } from "@/generic/auth/application/sagas/auth-registration/auth-registration.saga";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { SagaInstanceChangeStatusCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command";
+import { SagaInstanceCreateCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command";
+import { UserDeleteCommand } from "@/generic/users/application/commands/delete-user/delete-user.command";
+import { UserCreateCommand } from "@/generic/users/application/commands/user-create/user-create.command";
+import { AuthRegistrationRequestedEvent } from "@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event";
+import { IAuthEventData } from "@/shared/domain/events/auth/interfaces/auth-event-data.interface";
 
-describe('AuthRegistrationSaga', () => {
+describe("AuthRegistrationSaga", () => {
 	let saga: AuthRegistrationSaga;
 	let mockCommandBus: jest.Mocked<CommandBus>;
 
-	const authId = '123e4567-e89b-12d3-a456-426614174000';
-	const userId = '123e4567-e89b-12d3-a456-426614174001';
-	const sagaInstanceId = '423e4567-e89b-12d3-a456-426614174000';
-	const sagaStepId = '523e4567-e89b-12d3-a456-426614174000';
+	const authId = "123e4567-e89b-12d3-a456-426614174000";
+	const userId = "123e4567-e89b-12d3-a456-426614174001";
+	const sagaInstanceId = "423e4567-e89b-12d3-a456-426614174000";
+	const sagaStepId = "523e4567-e89b-12d3-a456-426614174000";
 
 	const createEvent = (): AuthRegistrationRequestedEvent => {
 		const eventData: IAuthEventData = {
 			id: authId,
 			userId: userId,
-			email: 'test@example.com',
+			email: "test@example.com",
 			emailVerified: false,
 			phoneNumber: null,
 			lastLoginAt: null,
@@ -60,8 +60,8 @@ describe('AuthRegistrationSaga', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('handle', () => {
-		it('should complete registration successfully', async () => {
+	describe("handle", () => {
+		it("should complete registration successfully", async () => {
 			const event = createEvent();
 
 			// Mock saga instance creation
@@ -105,9 +105,9 @@ describe('AuthRegistrationSaga', () => {
 			expect(completeCalls.length).toBeGreaterThan(0);
 		});
 
-		it('should execute compensation actions when user creation fails', async () => {
+		it("should execute compensation actions when user creation fails", async () => {
 			const event = createEvent();
-			const error = new Error('User creation failed');
+			const error = new Error("User creation failed");
 
 			// Mock saga instance creation and user creation failure
 			mockCommandBus.execute
@@ -128,9 +128,9 @@ describe('AuthRegistrationSaga', () => {
 			expect(failCalls.length).toBeGreaterThan(0);
 		});
 
-		it('should execute compensation actions when auth creation fails', async () => {
+		it("should execute compensation actions when auth creation fails", async () => {
 			const event = createEvent();
-			const error = new Error('Auth creation failed');
+			const error = new Error("Auth creation failed");
 
 			// Mock saga instance creation, user creation success, auth creation failure
 			mockCommandBus.execute
@@ -155,9 +155,9 @@ describe('AuthRegistrationSaga', () => {
 			);
 		});
 
-		it('should execute compensation actions in reverse order', async () => {
+		it("should execute compensation actions in reverse order", async () => {
 			const event = createEvent();
-			const error = new Error('Saga completion failed');
+			const error = new Error("Saga completion failed");
 
 			const compensationOrder: string[] = [];
 
@@ -177,13 +177,13 @@ describe('AuthRegistrationSaga', () => {
 				.mockImplementationOnce((command) => {
 					// Track compensation order
 					if (command instanceof AuthDeleteCommand) {
-						compensationOrder.push('auth');
+						compensationOrder.push("auth");
 					}
 					return Promise.resolve(undefined);
 				})
 				.mockImplementationOnce((command) => {
 					if (command instanceof UserDeleteCommand) {
-						compensationOrder.push('user');
+						compensationOrder.push("user");
 					}
 					return Promise.resolve(undefined);
 				})
@@ -192,7 +192,7 @@ describe('AuthRegistrationSaga', () => {
 			await expect(saga.handle(event)).rejects.toThrow(error);
 
 			// Verify compensation order is reverse (auth -> user)
-			expect(compensationOrder).toEqual(['auth', 'user']);
+			expect(compensationOrder).toEqual(["auth", "user"]);
 		});
 	});
 });

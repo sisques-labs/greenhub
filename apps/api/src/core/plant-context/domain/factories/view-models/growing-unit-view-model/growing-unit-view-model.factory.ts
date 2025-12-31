@@ -1,11 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
-import { IGrowingUnitViewModelDto } from '@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto';
-import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
-import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit.primitives';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
-import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
+import { Injectable, Logger } from "@nestjs/common";
+import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
+import { IGrowingUnitViewModelDto } from "@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto";
+import { PlantViewModelFactory } from "@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory";
+import { GrowingUnitPrimitives } from "@/core/plant-context/domain/primitives/growing-unit.primitives";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
+import { DimensionsValueObject } from "@/shared/domain/value-objects/dimensions/dimensions.vo";
 
 /**
  * Factory class for constructing {@link GrowingUnitViewModel} instances from

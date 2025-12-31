@@ -1,4 +1,4 @@
-import { InvalidPasswordException } from '@/shared/domain/exceptions/value-objects/invalid-password/invalid-password.exception';
+import { InvalidPasswordException } from "@/shared/domain/exceptions/value-objects/invalid-password/invalid-password.exception";
 
 /**
  * Password Value Object
@@ -52,12 +52,12 @@ export class PasswordValueObject {
 	 * Gets the strength level of the password
 	 * @returns The password strength level
 	 */
-	public getStrengthLevel(): 'weak' | 'medium' | 'strong' | 'very-strong' {
+	public getStrengthLevel(): "weak" | "medium" | "strong" | "very-strong" {
 		const score = this.getStrengthScore();
-		if (score < 30) return 'weak';
-		if (score < 60) return 'medium';
-		if (score < 80) return 'strong';
-		return 'very-strong';
+		if (score < 30) return "weak";
+		if (score < 60) return "medium";
+		if (score < 80) return "strong";
+		return "very-strong";
 	}
 
 	/**
@@ -80,36 +80,36 @@ export class PasswordValueObject {
 	}
 
 	private checkIsEmpty(value: string): void {
-		if (!value || value.trim() === '') {
-			throw new InvalidPasswordException('Password cannot be empty');
+		if (!value || value.trim() === "") {
+			throw new InvalidPasswordException("Password cannot be empty");
 		}
 	}
 
 	private checkMinimumLength(value: string): void {
 		if (value.length < 8) {
 			throw new InvalidPasswordException(
-				'Password must be at least 8 characters long',
+				"Password must be at least 8 characters long",
 			);
 		}
 	}
 
 	private checkCommonPasswords(value: string): void {
 		const commonPasswords = [
-			'password',
-			'123456',
-			'123456789',
-			'qwerty',
-			'abc123',
-			'password123',
-			'admin',
-			'letmein',
-			'welcome',
-			'monkey',
+			"password",
+			"123456",
+			"123456789",
+			"qwerty",
+			"abc123",
+			"password123",
+			"admin",
+			"letmein",
+			"welcome",
+			"monkey",
 		];
 
 		if (commonPasswords.includes(value.toLowerCase())) {
 			throw new InvalidPasswordException(
-				'Password is too common, please choose a stronger password',
+				"Password is too common, please choose a stronger password",
 			);
 		}
 	}

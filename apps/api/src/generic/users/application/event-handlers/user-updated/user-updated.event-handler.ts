@@ -1,11 +1,11 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { AssertUserViewModelExsistsService } from '@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service';
+import { Inject, Logger } from "@nestjs/common";
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
+import { AssertUserViewModelExsistsService } from "@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service";
 import {
 	USER_READ_REPOSITORY_TOKEN,
 	UserReadRepository,
-} from '@/generic/users/domain/repositories/user-read.repository';
-import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
+} from "@/generic/users/domain/repositories/user-read.repository";
+import { UserUpdatedEvent } from "@/shared/domain/events/users/user-updated/user-updated.event";
 
 @EventsHandler(UserUpdatedEvent)
 export class UserUpdatedEventHandler

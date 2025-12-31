@@ -1,19 +1,19 @@
-import { QueryBus } from '@nestjs/cqrs';
-import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
-import { GrowingUnitViewModelFindByIdQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { GrowingUnitFindByCriteriaRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-criteria.request.dto';
-import { GrowingUnitFindByIdRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-id.request.dto';
+import { QueryBus } from "@nestjs/cqrs";
+import { GrowingUnitFindByCriteriaQuery } from "@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query";
+import { GrowingUnitViewModelFindByIdQuery } from "@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { GrowingUnitFindByCriteriaRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-criteria.request.dto";
+import { GrowingUnitFindByIdRequestDto } from "@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-id.request.dto";
 import {
 	GrowingUnitResponseDto,
 	PaginatedGrowingUnitResultDto,
-} from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
-import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
-import { GrowingUnitQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-queries.resolver';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+} from "@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto";
+import { GrowingUnitGraphQLMapper } from "@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper";
+import { GrowingUnitQueriesResolver } from "@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-queries.resolver";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
-describe('GrowingUnitQueriesResolver', () => {
+describe("GrowingUnitQueriesResolver", () => {
 	let resolver: GrowingUnitQueriesResolver;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockGrowingUnitGraphQLMapper: jest.Mocked<GrowingUnitGraphQLMapper>;
@@ -38,21 +38,21 @@ describe('GrowingUnitQueriesResolver', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('growingUnitsFindByCriteria', () => {
-		it('should return paginated growing units when criteria matches', async () => {
+	describe("growingUnitsFindByCriteria", () => {
+		it("should return paginated growing units when criteria matches", async () => {
 			const input: GrowingUnitFindByCriteriaRequestDto = {
 				filters: [],
 				sorts: [],
 				pagination: { page: 1, perPage: 10 },
 			};
 
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModels: GrowingUnitViewModel[] = [
 				new GrowingUnitViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					name: 'Garden Bed 1',
-					type: 'GARDEN_BED',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					name: "Garden Bed 1",
+					type: "GARDEN_BED",
 					capacity: 10,
 					dimensions: null,
 					plants: [],
@@ -68,9 +68,9 @@ describe('GrowingUnitQueriesResolver', () => {
 			const paginatedResponseDto: PaginatedGrowingUnitResultDto = {
 				items: [
 					{
-						id: '123e4567-e89b-12d3-a456-426614174000',
-						name: 'Garden Bed 1',
-						type: 'GARDEN_BED',
+						id: "123e4567-e89b-12d3-a456-426614174000",
+						name: "Garden Bed 1",
+						type: "GARDEN_BED",
 						capacity: 10,
 						dimensions: null,
 						plants: [],
@@ -106,7 +106,7 @@ describe('GrowingUnitQueriesResolver', () => {
 			).toHaveBeenCalledWith(paginatedResult);
 		});
 
-		it('should return paginated growing units when input is undefined', async () => {
+		it("should return paginated growing units when input is undefined", async () => {
 			const viewModels: GrowingUnitViewModel[] = [];
 			const paginatedResult = new PaginatedResult(viewModels, 0, 1, 10);
 			const paginatedResponseDto: PaginatedGrowingUnitResultDto = {
@@ -137,18 +137,18 @@ describe('GrowingUnitQueriesResolver', () => {
 		});
 	});
 
-	describe('growingUnitFindById', () => {
-		it('should return growing unit when found', async () => {
+	describe("growingUnitFindById", () => {
+		it("should return growing unit when found", async () => {
 			const input: GrowingUnitFindByIdRequestDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 			};
 
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModel = new GrowingUnitViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -160,9 +160,9 @@ describe('GrowingUnitQueriesResolver', () => {
 			});
 
 			const responseDto: GrowingUnitResponseDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Garden Bed 1',
-				type: 'GARDEN_BED',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Garden Bed 1",
+				type: "GARDEN_BED",
 				capacity: 10,
 				dimensions: null,
 				plants: [],
@@ -184,15 +184,15 @@ describe('GrowingUnitQueriesResolver', () => {
 			);
 			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
 			expect(query).toBeInstanceOf(GrowingUnitViewModelFindByIdQuery);
-			expect(query.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(query.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
 			expect(mockGrowingUnitGraphQLMapper.toResponseDto).toHaveBeenCalledWith(
 				viewModel,
 			);
 		});
 
-		it('should return null when growing unit not found', async () => {
+		it("should return null when growing unit not found", async () => {
 			const input: GrowingUnitFindByIdRequestDto = {
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 			};
 
 			mockQueryBus.execute.mockResolvedValue(null);

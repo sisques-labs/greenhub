@@ -1,4 +1,4 @@
-import { InvalidNumberException } from '@/shared/domain/exceptions/value-objects/invalid-number/invalid-number.exception';
+import { InvalidNumberException } from "@/shared/domain/exceptions/value-objects/invalid-number/invalid-number.exception";
 
 /**
  * Number Value Object
@@ -78,10 +78,10 @@ export class NumberValueObject {
 	}
 
 	private parseValue(value: number | string): number {
-		if (typeof value === 'string') {
+		if (typeof value === "string") {
 			const parsed = parseFloat(value);
 			if (isNaN(parsed)) {
-				throw new InvalidNumberException('Invalid number format');
+				throw new InvalidNumberException("Invalid number format");
 			}
 			return parsed;
 		}
@@ -96,7 +96,7 @@ export class NumberValueObject {
 
 	private checkIsFinite(): void {
 		if (!isFinite(this._value)) {
-			throw new InvalidNumberException('Number must be finite');
+			throw new InvalidNumberException("Number must be finite");
 		}
 	}
 
@@ -119,11 +119,11 @@ export class NumberValueObject {
 			this.options.allowDecimals === false &&
 			!Number.isInteger(this._value)
 		) {
-			throw new InvalidNumberException('Number must be an integer');
+			throw new InvalidNumberException("Number must be an integer");
 		}
 
 		if (this.options.precision !== undefined) {
-			const decimalPlaces = (this._value.toString().split('.')[1] || '').length;
+			const decimalPlaces = (this._value.toString().split(".")[1] || "").length;
 			if (decimalPlaces > this.options.precision) {
 				throw new InvalidNumberException(
 					`Number cannot have more than ${this.options.precision} decimal places`,

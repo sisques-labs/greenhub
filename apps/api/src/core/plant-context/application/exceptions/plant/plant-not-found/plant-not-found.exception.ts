@@ -1,4 +1,4 @@
-import { BaseApplicationException } from '@/shared/application/exceptions/base-application/base-application.exception';
+import { BaseApplicationException } from "@/shared/application/exceptions/base-application/base-application.exception";
 
 /**
  * Exception thrown when a plant is not found.

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from "@nestjs/common";
 
 /**
  * Service for calculating averages.
@@ -29,7 +29,7 @@ export class CalculateAverageService {
 		);
 
 		if (values.length === 0) {
-			this.logger.warn('Empty array provided, returning 0');
+			this.logger.warn("Empty array provided, returning 0");
 			return 0;
 		}
 

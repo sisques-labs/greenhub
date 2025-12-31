@@ -1,11 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
-import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
-import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
-import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
-import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
+import { Injectable, Logger } from "@nestjs/common";
+import { GrowingUnitAggregate } from "@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate";
+import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
+import { GrowingUnitAggregateFactory } from "@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory";
+import { GrowingUnitTypeormEntity } from "@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity";
+import { PlantTypeormMapper } from "@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper";
+import { LengthUnitEnum } from "@/shared/domain/enums/length-unit/length-unit.enum";
+import { DimensionsValueObject } from "@/shared/domain/value-objects/dimensions/dimensions.vo";
 
 /**
  * Mapper for converting between PlantAggregate domain entities and PlantTypeormEntity database entities.

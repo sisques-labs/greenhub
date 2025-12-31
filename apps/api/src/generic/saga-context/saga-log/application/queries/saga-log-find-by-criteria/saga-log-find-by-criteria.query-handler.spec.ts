@@ -1,16 +1,16 @@
-import { Test } from '@nestjs/testing';
-import { FindSagaLogsByCriteriaQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query';
-import { FindSagaLogsByCriteriaQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query-handler';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { Test } from "@nestjs/testing";
+import { FindSagaLogsByCriteriaQuery } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query";
+import { FindSagaLogsByCriteriaQueryHandler } from "@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query-handler";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
 import {
 	SAGA_LOG_READ_REPOSITORY_TOKEN,
 	SagaLogReadRepository,
-} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
 
-describe('FindSagaLogsByCriteriaQueryHandler', () => {
+describe("FindSagaLogsByCriteriaQueryHandler", () => {
 	let handler: FindSagaLogsByCriteriaQueryHandler;
 	let mockSagaLogReadRepository: jest.Mocked<SagaLogReadRepository>;
 
@@ -43,30 +43,30 @@ describe('FindSagaLogsByCriteriaQueryHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return paginated result with saga logs when criteria matches', async () => {
+	describe("execute", () => {
+		it("should return paginated result with saga logs when criteria matches", async () => {
 			const criteria = new Criteria();
 			const queryDto = { criteria };
 			const query = new FindSagaLogsByCriteriaQuery(queryDto);
 
 			const mockSagaLogs: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.INFO,
-					message: 'Test log message 1',
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					message: "Test log message 1",
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				}),
 				new SagaLogViewModel({
-					id: '223e4567-e89b-12d3-a456-426614174001',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					id: "223e4567-e89b-12d3-a456-426614174001",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.ERROR,
-					message: 'Test log message 2',
-					createdAt: new Date('2024-01-01T11:00:00Z'),
-					updatedAt: new Date('2024-01-01T11:00:00Z'),
+					message: "Test log message 2",
+					createdAt: new Date("2024-01-01T11:00:00Z"),
+					updatedAt: new Date("2024-01-01T11:00:00Z"),
 				}),
 			];
 
@@ -89,7 +89,7 @@ describe('FindSagaLogsByCriteriaQueryHandler', () => {
 			expect(mockSagaLogReadRepository.findByCriteria).toHaveBeenCalledTimes(1);
 		});
 
-		it('should return empty paginated result when no saga logs match criteria', async () => {
+		it("should return empty paginated result when no saga logs match criteria", async () => {
 			const criteria = new Criteria();
 			const queryDto = { criteria };
 			const query = new FindSagaLogsByCriteriaQuery(queryDto);
@@ -110,20 +110,20 @@ describe('FindSagaLogsByCriteriaQueryHandler', () => {
 			);
 		});
 
-		it('should handle pagination correctly', async () => {
+		it("should handle pagination correctly", async () => {
 			const criteria = new Criteria([], [], { page: 2, perPage: 5 });
 			const queryDto = { criteria };
 			const query = new FindSagaLogsByCriteriaQuery(queryDto);
 
 			const mockSagaLogs: SagaLogViewModel[] = [
 				new SagaLogViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.INFO,
-					message: 'Test log message',
-					createdAt: new Date('2024-01-01T10:00:00Z'),
-					updatedAt: new Date('2024-01-01T10:00:00Z'),
+					message: "Test log message",
+					createdAt: new Date("2024-01-01T10:00:00Z"),
+					updatedAt: new Date("2024-01-01T10:00:00Z"),
 				}),
 			];
 

@@ -1,6 +1,6 @@
-import { BaseEvent } from '@/shared/domain/events/base-event.interface';
-import { IUserEventData } from '@/shared/domain/events/users/interfaces/user-event-data.interface';
-import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
+import { BaseEvent } from "@/shared/domain/events/base-event.interface";
+import { IUserEventData } from "@/shared/domain/events/users/interfaces/user-event-data.interface";
+import { IEventMetadata } from "@/shared/domain/interfaces/event-metadata.interface";
 
 export class UserCreatedEvent extends BaseEvent<IUserEventData> {
 	/**

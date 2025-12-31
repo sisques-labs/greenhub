@@ -1,7 +1,7 @@
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
 
 export const SAGA_STEP_WRITE_REPOSITORY_TOKEN = Symbol(
-	'SagaStepWriteRepository',
+	"SagaStepWriteRepository",
 );
 
 export interface SagaStepWriteRepository {

@@ -1,21 +1,21 @@
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
-import { SagaInstanceUpdateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command';
-import { SagaInstanceUpdateCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command-handler';
-import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
-import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
+import { EventBus } from "@nestjs/cqrs";
+import { Test } from "@nestjs/testing";
+import { SagaInstanceUpdateCommand } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command";
+import { SagaInstanceUpdateCommandHandler } from "@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command-handler";
+import { AssertSagaInstanceExistsService } from "@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service";
+import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
+import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
-} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
-import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
-import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
-import { SagaInstanceUpdatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository";
+import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
+import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
+import { SagaInstanceUpdatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
 
-describe('SagaInstanceUpdateCommandHandler', () => {
+describe("SagaInstanceUpdateCommandHandler", () => {
 	let handler: SagaInstanceUpdateCommandHandler;
 	let mockSagaInstanceWriteRepository: jest.Mocked<SagaInstanceWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
@@ -26,9 +26,9 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 		return new SagaInstanceAggregate(
 			{
 				id: new SagaInstanceUuidValueObject(
-					'123e4567-e89b-12d3-a456-426614174000',
+					"123e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaInstanceNameValueObject('Order Processing Saga'),
+				name: new SagaInstanceNameValueObject("Order Processing Saga"),
 				status: new SagaInstanceStatusValueObject(
 					SagaInstanceStatusEnum.PENDING,
 				),
@@ -84,12 +84,12 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should update saga instance successfully', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should update saga instance successfully", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const command = new SagaInstanceUpdateCommand({
 				id: sagaInstanceId,
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 				status: SagaInstanceStatusEnum.COMPLETED,
 			});
 
@@ -108,7 +108,7 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 			expect(mockAssertSagaInstanceExistsService.execute).toHaveBeenCalledWith(
 				sagaInstanceId,
 			);
-			expect(existingSagaInstance.name.value).toBe('Updated Saga Name');
+			expect(existingSagaInstance.name.value).toBe("Updated Saga Name");
 			expect(existingSagaInstance.status.value).toBe(
 				SagaInstanceStatusEnum.COMPLETED,
 			);
@@ -118,11 +118,11 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
-		it('should update only provided fields', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should update only provided fields", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const command = new SagaInstanceUpdateCommand({
 				id: sagaInstanceId,
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 			});
 
 			const existingSagaInstance = createSagaInstanceAggregate();
@@ -138,15 +138,15 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 
 			await handler.execute(command);
 
-			expect(existingSagaInstance.name.value).toBe('Updated Saga Name');
+			expect(existingSagaInstance.name.value).toBe("Updated Saga Name");
 			expect(existingSagaInstance.status.value).toBe(originalStatus);
 		});
 
-		it('should extract update data excluding id field', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should extract update data excluding id field", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const command = new SagaInstanceUpdateCommand({
 				id: sagaInstanceId,
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 				status: SagaInstanceStatusEnum.COMPLETED,
 			});
 
@@ -162,15 +162,15 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 
 			await handler.execute(command);
 
-			const updateCall = (handler as any).extractUpdateData(command, ['id']);
-			expect(updateCall).not.toHaveProperty('id');
+			const updateCall = (handler as any).extractUpdateData(command, ["id"]);
+			expect(updateCall).not.toHaveProperty("id");
 		});
 
-		it('should publish SagaInstanceUpdatedEvent after updating', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should publish SagaInstanceUpdatedEvent after updating", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const command = new SagaInstanceUpdateCommand({
 				id: sagaInstanceId,
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 			});
 
 			const existingSagaInstance = createSagaInstanceAggregate();
@@ -192,14 +192,14 @@ describe('SagaInstanceUpdateCommandHandler', () => {
 			}
 		});
 
-		it('should throw error if saga instance does not exist', async () => {
-			const sagaInstanceId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw error if saga instance does not exist", async () => {
+			const sagaInstanceId = "123e4567-e89b-12d3-a456-426614174000";
 			const command = new SagaInstanceUpdateCommand({
 				id: sagaInstanceId,
-				name: 'Updated Saga Name',
+				name: "Updated Saga Name",
 			});
 
-			const error = new Error('Saga instance not found');
+			const error = new Error("Saga instance not found");
 
 			mockAssertSagaInstanceExistsService.execute.mockRejectedValue(error);
 

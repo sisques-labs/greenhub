@@ -1,5 +1,5 @@
-import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
+import { GrowingUnitTypeEnum } from "@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum";
+import { EnumValueObject } from "@/shared/domain/value-objects/enum/enum.vo";
 
 /**
  * Value object representing the type of a growing unit.

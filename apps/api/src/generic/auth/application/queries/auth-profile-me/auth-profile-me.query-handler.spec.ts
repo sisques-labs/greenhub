@@ -1,16 +1,16 @@
-import { QueryBus } from '@nestjs/cqrs';
-import { AuthProfileMeQuery } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query';
-import { AuthProfileMeQueryHandler } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query-handler';
-import { AssertAuthViewModelExistsByUserIdService } from '@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { QueryBus } from "@nestjs/cqrs";
+import { AuthProfileMeQuery } from "@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query";
+import { AuthProfileMeQueryHandler } from "@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query-handler";
+import { AssertAuthViewModelExistsByUserIdService } from "@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthUserProfileViewModelFactory } from "@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthUserProfileViewModel } from "@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model";
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
 
-describe('AuthProfileMeQueryHandler', () => {
+describe("AuthProfileMeQueryHandler", () => {
 	let handler: AuthProfileMeQueryHandler;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockAssertAuthViewModelExistsByUserIdService: jest.Mocked<AssertAuthViewModelExistsByUserIdService>;
@@ -40,9 +40,9 @@ describe('AuthProfileMeQueryHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return auth user profile view model when both user and auth exist', async () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174001';
+	describe("execute", () => {
+		it("should return auth user profile view model when both user and auth exist", async () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174001";
 			const query = new AuthProfileMeQuery({ userId });
 
 			const now = new Date();
@@ -50,13 +50,13 @@ describe('AuthProfileMeQueryHandler', () => {
 			const userUpdatedAt = new Date(now.getTime() + 2000);
 
 			const mockAuthViewModel = new AuthViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 				userId: userId,
-				email: 'test@example.com',
+				email: "test@example.com",
 				emailVerified: true,
 				lastLoginAt: now,
 				password: null,
-				phoneNumber: '+1234567890',
+				phoneNumber: "+1234567890",
 				provider: AuthProviderEnum.LOCAL,
 				providerId: null,
 				twoFactorEnabled: false,
@@ -66,11 +66,11 @@ describe('AuthProfileMeQueryHandler', () => {
 
 			const mockUserViewModel = new UserViewModel({
 				id: userId,
-				userName: 'testuser',
-				name: 'Test',
-				lastName: 'User',
-				bio: 'Test bio',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				userName: "testuser",
+				name: "Test",
+				lastName: "User",
+				bio: "Test bio",
+				avatarUrl: "https://example.com/avatar.jpg",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				createdAt: now,
@@ -87,7 +87,7 @@ describe('AuthProfileMeQueryHandler', () => {
 				provider: mockAuthViewModel.provider,
 				providerId: mockAuthViewModel.providerId,
 				twoFactorEnabled: mockAuthViewModel.twoFactorEnabled,
-				userName: mockUserViewModel.userName || '',
+				userName: mockUserViewModel.userName || "",
 				name: mockUserViewModel.name,
 				lastName: mockUserViewModel.lastName,
 				bio: mockUserViewModel.bio,

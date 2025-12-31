@@ -1,15 +1,15 @@
-import { Test } from '@nestjs/testing';
-import { SagaInstanceCreatedEventHandler } from '@/generic/saga-context/saga-instance/application/event-handlers/saga-instance-created/saga-instance-created.event-handler';
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
-import { SagaInstanceViewModelFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory';
+import { Test } from "@nestjs/testing";
+import { SagaInstanceCreatedEventHandler } from "@/generic/saga-context/saga-instance/application/event-handlers/saga-instance-created/saga-instance-created.event-handler";
+import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { SagaInstanceViewModelFactory } from "@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory";
 import {
 	SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
 	SagaInstanceReadRepository,
-} from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
-import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
-import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event';
+} from "@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository";
+import { SagaInstanceViewModel } from "@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model";
+import { SagaInstanceCreatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event";
 
-describe('SagaInstanceCreatedEventHandler', () => {
+describe("SagaInstanceCreatedEventHandler", () => {
 	let handler: SagaInstanceCreatedEventHandler;
 	let mockSagaInstanceReadRepository: jest.Mocked<SagaInstanceReadRepository>;
 	let mockSagaInstanceViewModelFactory: jest.Mocked<SagaInstanceViewModelFactory>;
@@ -51,26 +51,26 @@ describe('SagaInstanceCreatedEventHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('handle', () => {
-		it('should create and save saga instance view model from event data', async () => {
-			const aggregateId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("handle", () => {
+		it("should create and save saga instance view model from event data", async () => {
+			const aggregateId = "123e4567-e89b-12d3-a456-426614174000";
 			const eventData = {
 				id: aggregateId,
-				name: 'Order Processing Saga',
+				name: "Order Processing Saga",
 				status: SagaInstanceStatusEnum.PENDING,
 				startDate: null as any,
 				endDate: null as any,
-				createdAt: new Date('2024-01-01T10:00:00Z'),
-				updatedAt: new Date('2024-01-01T10:00:00Z'),
+				createdAt: new Date("2024-01-01T10:00:00Z"),
+				updatedAt: new Date("2024-01-01T10:00:00Z"),
 			};
 
 			const event = new SagaInstanceCreatedEvent(
 				{
 					aggregateRootId: aggregateId,
-					aggregateRootType: 'SagaInstanceAggregate',
+					aggregateRootType: "SagaInstanceAggregate",
 					entityId: aggregateId,
-					entityType: 'SagaInstanceAggregate',
-					eventType: 'SagaInstanceCreatedEvent',
+					entityType: "SagaInstanceAggregate",
+					eventType: "SagaInstanceCreatedEvent",
 				},
 				eventData,
 			);

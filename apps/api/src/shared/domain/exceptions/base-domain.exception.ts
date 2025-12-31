@@ -4,7 +4,7 @@
  * It provides a common structure for domain layer-specific errors.
  */
 export class BaseDomainException extends Error {
-	public readonly layer: string = 'Domain';
+	public readonly layer: string = "Domain";
 	public readonly timestamp: Date;
 
 	constructor(message: string) {

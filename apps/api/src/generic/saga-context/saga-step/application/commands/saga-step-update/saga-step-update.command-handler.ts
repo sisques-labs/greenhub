@@ -1,13 +1,13 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { SagaStepUpdateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command';
-import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
-import { ISagaStepUpdateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-update/saga-step-update.dto';
+import { Inject, Logger } from "@nestjs/common";
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { SagaStepUpdateCommand } from "@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command";
+import { AssertSagaStepExistsService } from "@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service";
+import { ISagaStepUpdateDto } from "@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-update/saga-step-update.dto";
 import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
-} from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
-import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
+} from "@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository";
+import { BaseUpdateCommandHandler } from "@/shared/application/commands/update/base-update/base-update.command-handler";
 
 @CommandHandler(SagaStepUpdateCommand)
 export class SagaStepUpdateCommandHandler
@@ -42,8 +42,8 @@ export class SagaStepUpdateCommandHandler
 
 		// 02: Extract update data excluding the id and sagaInstanceId fields
 		const updateData = this.extractUpdateData(command, [
-			'id',
-			'sagaInstanceId',
+			"id",
+			"sagaInstanceId",
 		]);
 		this.logger.debug(`Update data: ${JSON.stringify(updateData)}`);
 

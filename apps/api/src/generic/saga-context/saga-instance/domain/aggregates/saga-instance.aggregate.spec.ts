@@ -1,28 +1,28 @@
-import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
-import { ISagaInstanceCreateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto';
-import { ISagaInstanceUpdateDto } from '@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-update/saga-instance-update.dto';
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
-import { SagaInstanceEndDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo';
-import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo';
-import { SagaInstanceStartDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo';
-import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
-import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event';
-import { SagaInstanceDeletedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-deleted/saga-instance-deleted.event';
-import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
-import { SagaInstanceUpdatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
+import { SagaInstanceAggregate } from "@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate";
+import { ISagaInstanceCreateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-create/saga-instance-create.dto";
+import { ISagaInstanceUpdateDto } from "@/generic/saga-context/saga-instance/domain/dtos/entities/saga-instance-update/saga-instance-update.dto";
+import { SagaInstanceStatusEnum } from "@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum";
+import { SagaInstanceEndDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo";
+import { SagaInstanceNameValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-name/saga-instance-name.vo";
+import { SagaInstanceStartDateValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-start-date/saga-instance-start-date.vo";
+import { SagaInstanceStatusValueObject } from "@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo";
+import { SagaInstanceCreatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event";
+import { SagaInstanceDeletedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-deleted/saga-instance-deleted.event";
+import { SagaInstanceStatusChangedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event";
+import { SagaInstanceUpdatedEvent } from "@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
 
-describe('SagaInstanceAggregate', () => {
+describe("SagaInstanceAggregate", () => {
 	const createBaseAggregate = (
 		generateEvent: boolean = false,
 	): SagaInstanceAggregate => {
 		const now = new Date();
 		const dto: ISagaInstanceCreateDto = {
 			id: new SagaInstanceUuidValueObject(
-				'123e4567-e89b-12d3-a456-426614174000',
+				"123e4567-e89b-12d3-a456-426614174000",
 			),
-			name: new SagaInstanceNameValueObject('Order Processing Saga'),
+			name: new SagaInstanceNameValueObject("Order Processing Saga"),
 			status: new SagaInstanceStatusValueObject(SagaInstanceStatusEnum.PENDING),
 			startDate: null,
 			endDate: null,
@@ -33,19 +33,19 @@ describe('SagaInstanceAggregate', () => {
 		return new SagaInstanceAggregate(dto, generateEvent);
 	};
 
-	describe('constructor', () => {
-		it('should create a SagaInstanceAggregate with all properties', () => {
+	describe("constructor", () => {
+		it("should create a SagaInstanceAggregate with all properties", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate).toBeInstanceOf(SagaInstanceAggregate);
-			expect(aggregate.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
-			expect(aggregate.name.value).toBe('Order Processing Saga');
+			expect(aggregate.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
+			expect(aggregate.name.value).toBe("Order Processing Saga");
 			expect(aggregate.status.value).toBe(SagaInstanceStatusEnum.PENDING);
 			expect(aggregate.startDate).toBeNull();
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should emit SagaInstanceCreatedEvent on creation by default', () => {
+		it("should emit SagaInstanceCreatedEvent on creation by default", () => {
 			const aggregate = createBaseAggregate(true);
 			const events = aggregate.getUncommittedEvents();
 
@@ -59,19 +59,19 @@ describe('SagaInstanceAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not emit SagaInstanceCreatedEvent when generateEvent is false', () => {
+		it("should not emit SagaInstanceCreatedEvent when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.getUncommittedEvents()).toHaveLength(0);
 		});
 
-		it('should create aggregate with all optional fields set', () => {
+		it("should create aggregate with all optional fields set", () => {
 			const now = new Date();
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 			const dto: ISagaInstanceCreateDto = {
 				id: new SagaInstanceUuidValueObject(),
-				name: new SagaInstanceNameValueObject('Test Saga'),
+				name: new SagaInstanceNameValueObject("Test Saga"),
 				status: new SagaInstanceStatusValueObject(
 					SagaInstanceStatusEnum.COMPLETED,
 				),
@@ -89,21 +89,21 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('update', () => {
-		it('should update saga instance name', () => {
+	describe("update", () => {
+		it("should update saga instance name", () => {
 			const aggregate = createBaseAggregate(false);
 			const originalUpdatedAt = aggregate.updatedAt.value;
-			const newName = new SagaInstanceNameValueObject('Updated Saga Name');
+			const newName = new SagaInstanceNameValueObject("Updated Saga Name");
 
 			aggregate.update({ name: newName }, false);
 
-			expect(aggregate.name.value).toBe('Updated Saga Name');
+			expect(aggregate.name.value).toBe("Updated Saga Name");
 			expect(aggregate.updatedAt.value.getTime()).toBeGreaterThanOrEqual(
 				originalUpdatedAt.getTime(),
 			);
 		});
 
-		it('should update saga instance status', () => {
+		it("should update saga instance status", () => {
 			const aggregate = createBaseAggregate(false);
 			const newStatus = new SagaInstanceStatusValueObject(
 				SagaInstanceStatusEnum.STARTED,
@@ -114,10 +114,10 @@ describe('SagaInstanceAggregate', () => {
 			expect(aggregate.status.value).toBe(SagaInstanceStatusEnum.STARTED);
 		});
 
-		it('should update start date', () => {
+		it("should update start date", () => {
 			const aggregate = createBaseAggregate(false);
 			const newStartDate = new SagaInstanceStartDateValueObject(
-				new Date('2024-01-01T10:00:00Z'),
+				new Date("2024-01-01T10:00:00Z"),
 			);
 
 			aggregate.update({ startDate: newStartDate }, false);
@@ -125,10 +125,10 @@ describe('SagaInstanceAggregate', () => {
 			expect(aggregate.startDate?.value).toEqual(newStartDate.value);
 		});
 
-		it('should update end date', () => {
+		it("should update end date", () => {
 			const aggregate = createBaseAggregate(false);
 			const newEndDate = new SagaInstanceEndDateValueObject(
-				new Date('2024-01-01T11:00:00Z'),
+				new Date("2024-01-01T11:00:00Z"),
 			);
 
 			aggregate.update({ endDate: newEndDate }, false);
@@ -136,28 +136,28 @@ describe('SagaInstanceAggregate', () => {
 			expect(aggregate.endDate?.value).toEqual(newEndDate.value);
 		});
 
-		it('should update multiple fields at once', () => {
+		it("should update multiple fields at once", () => {
 			const aggregate = createBaseAggregate(false);
 			const updateDto: ISagaInstanceUpdateDto = {
-				name: new SagaInstanceNameValueObject('Multi Updated Saga'),
+				name: new SagaInstanceNameValueObject("Multi Updated Saga"),
 				status: new SagaInstanceStatusValueObject(
 					SagaInstanceStatusEnum.RUNNING,
 				),
 				startDate: new SagaInstanceStartDateValueObject(
-					new Date('2024-01-01T10:00:00Z'),
+					new Date("2024-01-01T10:00:00Z"),
 				),
 			};
 
 			aggregate.update(updateDto, false);
 
-			expect(aggregate.name.value).toBe('Multi Updated Saga');
+			expect(aggregate.name.value).toBe("Multi Updated Saga");
 			expect(aggregate.status.value).toBe(SagaInstanceStatusEnum.RUNNING);
 			expect(aggregate.startDate?.value).toEqual(
-				new Date('2024-01-01T10:00:00Z'),
+				new Date("2024-01-01T10:00:00Z"),
 			);
 		});
 
-		it('should not update fields that are undefined', () => {
+		it("should not update fields that are undefined", () => {
 			const aggregate = createBaseAggregate(false);
 			const originalName = aggregate.name.value;
 			const originalStatus = aggregate.status.value;
@@ -168,10 +168,10 @@ describe('SagaInstanceAggregate', () => {
 			expect(aggregate.status.value).toBe(originalStatus);
 		});
 
-		it('should emit SagaInstanceUpdatedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceUpdatedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 			const updateDto: ISagaInstanceUpdateDto = {
-				name: new SagaInstanceNameValueObject('Updated Saga'),
+				name: new SagaInstanceNameValueObject("Updated Saga"),
 			};
 
 			aggregate.update(updateDto, true);
@@ -185,10 +185,10 @@ describe('SagaInstanceAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not emit event when generateEvent is false', () => {
+		it("should not emit event when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 			const updateDto: ISagaInstanceUpdateDto = {
-				name: new SagaInstanceNameValueObject('Updated Saga'),
+				name: new SagaInstanceNameValueObject("Updated Saga"),
 			};
 
 			aggregate.update(updateDto, false);
@@ -197,8 +197,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should emit SagaInstanceDeletedEvent when generateEvent is true', () => {
+	describe("delete", () => {
+		it("should emit SagaInstanceDeletedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.delete(true);
@@ -214,7 +214,7 @@ describe('SagaInstanceAggregate', () => {
 			expect(event.data).toEqual(aggregate.toPrimitives());
 		});
 
-		it('should not emit event when generateEvent is false', () => {
+		it("should not emit event when generateEvent is false", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.delete(false);
@@ -223,8 +223,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsCompleted', () => {
-		it('should mark saga instance as completed and set end date', () => {
+	describe("markAsCompleted", () => {
+		it("should mark saga instance as completed and set end date", () => {
 			const aggregate = createBaseAggregate(false);
 			const beforeUpdate = new Date();
 
@@ -240,7 +240,7 @@ describe('SagaInstanceAggregate', () => {
 			);
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsCompleted(true);
@@ -251,8 +251,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsFailed', () => {
-		it('should mark saga instance as failed and set end date', () => {
+	describe("markAsFailed", () => {
+		it("should mark saga instance as failed and set end date", () => {
 			const aggregate = createBaseAggregate(false);
 			const beforeUpdate = new Date();
 
@@ -268,7 +268,7 @@ describe('SagaInstanceAggregate', () => {
 			);
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsFailed(true);
@@ -279,8 +279,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsCompensated', () => {
-		it('should mark saga instance as compensated and set end date', () => {
+	describe("markAsCompensated", () => {
+		it("should mark saga instance as compensated and set end date", () => {
 			const aggregate = createBaseAggregate(false);
 			const beforeUpdate = new Date();
 
@@ -296,7 +296,7 @@ describe('SagaInstanceAggregate', () => {
 			);
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsCompensated(true);
@@ -307,8 +307,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsCompensating', () => {
-		it('should mark saga instance as compensating', () => {
+	describe("markAsCompensating", () => {
+		it("should mark saga instance as compensating", () => {
 			const aggregate = createBaseAggregate(false);
 			const beforeUpdate = new Date();
 
@@ -320,7 +320,7 @@ describe('SagaInstanceAggregate', () => {
 			);
 		});
 
-		it('should not set end date when marking as compensating', () => {
+		it("should not set end date when marking as compensating", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsCompensating(false);
@@ -328,7 +328,7 @@ describe('SagaInstanceAggregate', () => {
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsCompensating(true);
@@ -339,17 +339,17 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsPending', () => {
-		it('should mark saga instance as pending and clear dates', () => {
+	describe("markAsPending", () => {
+		it("should mark saga instance as pending and clear dates", () => {
 			const aggregate = createBaseAggregate(false);
 			// Set some dates first
 			aggregate.update(
 				{
 					startDate: new SagaInstanceStartDateValueObject(
-						new Date('2024-01-01T10:00:00Z'),
+						new Date("2024-01-01T10:00:00Z"),
 					),
 					endDate: new SagaInstanceEndDateValueObject(
-						new Date('2024-01-01T11:00:00Z'),
+						new Date("2024-01-01T11:00:00Z"),
 					),
 				},
 				false,
@@ -362,7 +362,7 @@ describe('SagaInstanceAggregate', () => {
 			expect(aggregate.endDate).toBeNull();
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsPending(true);
@@ -373,8 +373,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsStarted', () => {
-		it('should mark saga instance as started and set start date', () => {
+	describe("markAsStarted", () => {
+		it("should mark saga instance as started and set start date", () => {
 			const aggregate = createBaseAggregate(false);
 			const beforeUpdate = new Date();
 
@@ -391,7 +391,7 @@ describe('SagaInstanceAggregate', () => {
 			);
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsStarted(true);
@@ -402,8 +402,8 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('markAsRunning', () => {
-		it('should mark saga instance as running', () => {
+	describe("markAsRunning", () => {
+		it("should mark saga instance as running", () => {
 			const aggregate = createBaseAggregate(false);
 			const beforeUpdate = new Date();
 
@@ -416,7 +416,7 @@ describe('SagaInstanceAggregate', () => {
 			);
 		});
 
-		it('should emit SagaInstanceStatusChangedEvent when generateEvent is true', () => {
+		it("should emit SagaInstanceStatusChangedEvent when generateEvent is true", () => {
 			const aggregate = createBaseAggregate(false);
 
 			aggregate.markAsRunning(true);
@@ -427,16 +427,16 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('toPrimitives', () => {
-		it('should convert aggregate to primitives with all fields', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
-			const startDate = new Date('2024-01-01T10:00:00Z');
-			const endDate = new Date('2024-01-01T11:00:00Z');
+	describe("toPrimitives", () => {
+		it("should convert aggregate to primitives with all fields", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
+			const startDate = new Date("2024-01-01T10:00:00Z");
+			const endDate = new Date("2024-01-01T11:00:00Z");
 			const dto: ISagaInstanceCreateDto = {
 				id: new SagaInstanceUuidValueObject(
-					'123e4567-e89b-12d3-a456-426614174000',
+					"123e4567-e89b-12d3-a456-426614174000",
 				),
-				name: new SagaInstanceNameValueObject('Test Saga'),
+				name: new SagaInstanceNameValueObject("Test Saga"),
 				status: new SagaInstanceStatusValueObject(
 					SagaInstanceStatusEnum.COMPLETED,
 				),
@@ -450,8 +450,8 @@ describe('SagaInstanceAggregate', () => {
 			const primitives = aggregate.toPrimitives();
 
 			expect(primitives).toEqual({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				name: 'Test Saga',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				name: "Test Saga",
 				status: SagaInstanceStatusEnum.COMPLETED,
 				startDate: startDate,
 				endDate: endDate,
@@ -460,7 +460,7 @@ describe('SagaInstanceAggregate', () => {
 			});
 		});
 
-		it('should convert aggregate to primitives with null optional fields', () => {
+		it("should convert aggregate to primitives with null optional fields", () => {
 			const aggregate = createBaseAggregate(false);
 			const primitives = aggregate.toPrimitives();
 
@@ -469,35 +469,35 @@ describe('SagaInstanceAggregate', () => {
 		});
 	});
 
-	describe('getters', () => {
-		it('should return correct id', () => {
+	describe("getters", () => {
+		it("should return correct id", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.id).toBeInstanceOf(SagaInstanceUuidValueObject);
-			expect(aggregate.id.value).toBe('123e4567-e89b-12d3-a456-426614174000');
+			expect(aggregate.id.value).toBe("123e4567-e89b-12d3-a456-426614174000");
 		});
 
-		it('should return correct name', () => {
+		it("should return correct name", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.name).toBeInstanceOf(SagaInstanceNameValueObject);
-			expect(aggregate.name.value).toBe('Order Processing Saga');
+			expect(aggregate.name.value).toBe("Order Processing Saga");
 		});
 
-		it('should return correct status', () => {
+		it("should return correct status", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.status).toBeInstanceOf(SagaInstanceStatusValueObject);
 			expect(aggregate.status.value).toBe(SagaInstanceStatusEnum.PENDING);
 		});
 
-		it('should return correct startDate', () => {
+		it("should return correct startDate", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.startDate).toBeNull();
 		});
 
-		it('should return correct endDate', () => {
+		it("should return correct endDate", () => {
 			const aggregate = createBaseAggregate(false);
 
 			expect(aggregate.endDate).toBeNull();

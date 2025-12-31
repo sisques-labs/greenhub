@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
-import { MutationResponseGraphQLMapper } from './mutation-response.mapper';
+import type { MutationResponseDto } from "@/shared/transport/graphql/dtos/responses/success-response/success-response.dto";
+import { Test, type TestingModule } from "@nestjs/testing";
+import { MutationResponseGraphQLMapper } from "./mutation-response.mapper";
 
-describe('MutationResponseGraphQLMapper', () => {
+describe("MutationResponseGraphQLMapper", () => {
 	let mapper: MutationResponseGraphQLMapper;
 	let module: TestingModule;
 
@@ -20,12 +20,12 @@ describe('MutationResponseGraphQLMapper', () => {
 		await module.close();
 	});
 
-	it('should be defined', () => {
+	it("should be defined", () => {
 		expect(mapper).toBeDefined();
 	});
 
-	describe('toResponseDto', () => {
-		it('should map mutation response with success only', () => {
+	describe("toResponseDto", () => {
+		it("should map mutation response with success only", () => {
 			const props: MutationResponseDto = {
 				success: true,
 			};
@@ -39,56 +39,56 @@ describe('MutationResponseGraphQLMapper', () => {
 			});
 		});
 
-		it('should map mutation response with success and message', () => {
+		it("should map mutation response with success and message", () => {
 			const props: MutationResponseDto = {
 				success: true,
-				message: 'Operation completed successfully',
+				message: "Operation completed successfully",
 			};
 
 			const result = mapper.toResponseDto(props);
 
 			expect(result).toEqual({
 				success: true,
-				message: 'Operation completed successfully',
+				message: "Operation completed successfully",
 				id: undefined,
 			});
 		});
 
-		it('should map mutation response with success, message and id', () => {
+		it("should map mutation response with success, message and id", () => {
 			const props: MutationResponseDto = {
 				success: true,
-				message: 'Entity created',
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				message: "Entity created",
+				id: "123e4567-e89b-12d3-a456-426614174000",
 			};
 
 			const result = mapper.toResponseDto(props);
 
 			expect(result).toEqual({
 				success: true,
-				message: 'Entity created',
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				message: "Entity created",
+				id: "123e4567-e89b-12d3-a456-426614174000",
 			});
 		});
 
-		it('should map failed mutation response', () => {
+		it("should map failed mutation response", () => {
 			const props: MutationResponseDto = {
 				success: false,
-				message: 'Operation failed',
+				message: "Operation failed",
 			};
 
 			const result = mapper.toResponseDto(props);
 
 			expect(result).toEqual({
 				success: false,
-				message: 'Operation failed',
+				message: "Operation failed",
 				id: undefined,
 			});
 		});
 
-		it('should map mutation response with id only', () => {
+		it("should map mutation response with id only", () => {
 			const props: MutationResponseDto = {
 				success: true,
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 			};
 
 			const result = mapper.toResponseDto(props);
@@ -96,14 +96,14 @@ describe('MutationResponseGraphQLMapper', () => {
 			expect(result).toEqual({
 				success: true,
 				message: undefined,
-				id: '123e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
 			});
 		});
 
-		it('should return a new object', () => {
+		it("should return a new object", () => {
 			const props: MutationResponseDto = {
 				success: true,
-				message: 'Test',
+				message: "Test",
 			};
 
 			const result = mapper.toResponseDto(props);

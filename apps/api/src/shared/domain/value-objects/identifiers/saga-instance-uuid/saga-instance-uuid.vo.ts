@@ -1,3 +1,3 @@
-import { UuidValueObject } from '@/shared/domain/value-objects/uuid/uuid.vo';
+import { UuidValueObject } from "@/shared/domain/value-objects/uuid/uuid.vo";
 
 export class SagaInstanceUuidValueObject extends UuidValueObject {}

@@ -1,14 +1,14 @@
-import { Test } from '@nestjs/testing';
-import { SagaLogNotFoundException } from '@/generic/saga-context/saga-log/application/exceptions/saga-log-not-found/saga-log-not-found.exception';
-import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
+import { Test } from "@nestjs/testing";
+import { SagaLogNotFoundException } from "@/generic/saga-context/saga-log/application/exceptions/saga-log-not-found/saga-log-not-found.exception";
+import { AssertSagaLogViewModelExistsService } from "@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
 import {
 	SAGA_LOG_READ_REPOSITORY_TOKEN,
 	SagaLogReadRepository,
-} from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+} from "@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
 
-describe('AssertSagaLogViewModelExistsService', () => {
+describe("AssertSagaLogViewModelExistsService", () => {
 	let service: AssertSagaLogViewModelExistsService;
 	let mockSagaLogReadRepository: jest.Mocked<SagaLogReadRepository>;
 
@@ -41,17 +41,17 @@ describe('AssertSagaLogViewModelExistsService', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('execute', () => {
-		it('should return saga log view model when it exists', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("execute", () => {
+		it("should return saga log view model when it exists", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
 			const existingViewModel = new SagaLogViewModel({
 				id: sagaLogId,
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
-				createdAt: new Date('2024-01-01T10:00:00Z'),
-				updatedAt: new Date('2024-01-01T10:00:00Z'),
+				message: "Test log message",
+				createdAt: new Date("2024-01-01T10:00:00Z"),
+				updatedAt: new Date("2024-01-01T10:00:00Z"),
 			});
 
 			mockSagaLogReadRepository.findById.mockResolvedValue(existingViewModel);
@@ -65,8 +65,8 @@ describe('AssertSagaLogViewModelExistsService', () => {
 			expect(mockSagaLogReadRepository.findById).toHaveBeenCalledTimes(1);
 		});
 
-		it('should throw SagaLogNotFoundException when saga log view model does not exist', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw SagaLogNotFoundException when saga log view model does not exist", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSagaLogReadRepository.findById.mockResolvedValue(null);
 
@@ -78,30 +78,30 @@ describe('AssertSagaLogViewModelExistsService', () => {
 			);
 		});
 
-		it('should throw SagaLogNotFoundException with correct message', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should throw SagaLogNotFoundException with correct message", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSagaLogReadRepository.findById.mockResolvedValue(null);
 
 			try {
 				await service.execute(sagaLogId);
-				fail('Should have thrown SagaLogNotFoundException');
+				fail("Should have thrown SagaLogNotFoundException");
 			} catch (error) {
 				expect(error).toBeInstanceOf(SagaLogNotFoundException);
 				expect(error.message).toContain(sagaLogId);
 			}
 		});
 
-		it('should return view model with all fields populated', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return view model with all fields populated", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
 			const existingViewModel = new SagaLogViewModel({
 				id: sagaLogId,
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.ERROR,
-				message: 'Error log message',
-				createdAt: new Date('2024-01-01T10:00:00Z'),
-				updatedAt: new Date('2024-01-01T11:00:00Z'),
+				message: "Error log message",
+				createdAt: new Date("2024-01-01T10:00:00Z"),
+				updatedAt: new Date("2024-01-01T11:00:00Z"),
 			});
 
 			mockSagaLogReadRepository.findById.mockResolvedValue(existingViewModel);
@@ -110,11 +110,11 @@ describe('AssertSagaLogViewModelExistsService', () => {
 
 			expect(result.id).toBe(sagaLogId);
 			expect(result.sagaInstanceId).toBe(
-				'223e4567-e89b-12d3-a456-426614174000',
+				"223e4567-e89b-12d3-a456-426614174000",
 			);
-			expect(result.sagaStepId).toBe('323e4567-e89b-12d3-a456-426614174000');
+			expect(result.sagaStepId).toBe("323e4567-e89b-12d3-a456-426614174000");
 			expect(result.type).toBe(SagaLogTypeEnum.ERROR);
-			expect(result.message).toBe('Error log message');
+			expect(result.message).toBe("Error log message");
 		});
 	});
 });

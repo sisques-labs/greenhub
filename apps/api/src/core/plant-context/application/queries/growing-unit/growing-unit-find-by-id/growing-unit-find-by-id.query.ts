@@ -1,5 +1,5 @@
-import { IGrowingUnitFindByIdQueryDto } from '@/core/plant-context/application/dtos/queries/growing-unit/growing-unit-find-by-id/growing-unit-find-by-id.dto';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { IGrowingUnitFindByIdQueryDto } from "@/core/plant-context/application/dtos/queries/growing-unit/growing-unit-find-by-id/growing-unit-find-by-id.dto";
+import { GrowingUnitUuidValueObject } from "@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo";
 
 /**
  * Query object used to find a growing unit by its unique identifier.

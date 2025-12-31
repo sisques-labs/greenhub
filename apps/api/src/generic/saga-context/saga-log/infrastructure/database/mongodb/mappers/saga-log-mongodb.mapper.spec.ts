@@ -1,11 +1,11 @@
-import { Test } from '@nestjs/testing';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogViewModelFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
-import { SagaLogMongoDbDto } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/dtos/saga-log-mongodb.dto';
-import { SagaLogMongoDBMapper } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/mappers/saga-log-mongodb.mapper';
+import { Test } from "@nestjs/testing";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogViewModelFactory } from "@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
+import { SagaLogMongoDbDto } from "@/generic/saga-context/saga-log/infrastructure/database/mongodb/dtos/saga-log-mongodb.dto";
+import { SagaLogMongoDBMapper } from "@/generic/saga-context/saga-log/infrastructure/database/mongodb/mappers/saga-log-mongodb.mapper";
 
-describe('SagaLogMongoDBMapper', () => {
+describe("SagaLogMongoDBMapper", () => {
 	let mapper: SagaLogMongoDBMapper;
 	let mockSagaLogViewModelFactory: jest.Mocked<SagaLogViewModelFactory>;
 
@@ -33,17 +33,17 @@ describe('SagaLogMongoDBMapper', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('toViewModel', () => {
-		it('should convert MongoDB document to view model with all properties', () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-			const now = new Date('2024-01-01T10:00:00Z');
+	describe("toViewModel", () => {
+		it("should convert MongoDB document to view model with all properties", () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+			const now = new Date("2024-01-01T10:00:00Z");
 
 			const mongoData: SagaLogMongoDbDto = {
 				id: sagaLogId,
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 				createdAt: now,
 				updatedAt: now,
 			};
@@ -75,9 +75,9 @@ describe('SagaLogMongoDBMapper', () => {
 			expect(mockSagaLogViewModelFactory.create).toHaveBeenCalledTimes(1);
 		});
 
-		it('should convert MongoDB document with different log types', () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-			const now = new Date('2024-01-01T10:00:00Z');
+		it("should convert MongoDB document with different log types", () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+			const now = new Date("2024-01-01T10:00:00Z");
 			const types = [
 				SagaLogTypeEnum.INFO,
 				SagaLogTypeEnum.WARNING,
@@ -88,8 +88,8 @@ describe('SagaLogMongoDBMapper', () => {
 			types.forEach((type) => {
 				const mongoData: SagaLogMongoDbDto = {
 					id: sagaLogId,
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: type,
 					message: `Test message for ${type}`,
 					createdAt: now,
@@ -124,15 +124,15 @@ describe('SagaLogMongoDBMapper', () => {
 		});
 	});
 
-	describe('toMongoData', () => {
-		it('should convert view model to MongoDB data with all properties', () => {
-			const now = new Date('2024-01-01T10:00:00Z');
+	describe("toMongoData", () => {
+		it("should convert view model to MongoDB data with all properties", () => {
+			const now = new Date("2024-01-01T10:00:00Z");
 			const viewModel = new SagaLogViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 				createdAt: now,
 				updatedAt: now,
 			});
@@ -150,7 +150,7 @@ describe('SagaLogMongoDBMapper', () => {
 			});
 		});
 
-		it('should convert view model with different log types', () => {
+		it("should convert view model with different log types", () => {
 			const now = new Date();
 			const types = [
 				SagaLogTypeEnum.INFO,
@@ -161,9 +161,9 @@ describe('SagaLogMongoDBMapper', () => {
 
 			types.forEach((type) => {
 				const viewModel = new SagaLogViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: type,
 					message: `Test message for ${type}`,
 					createdAt: now,

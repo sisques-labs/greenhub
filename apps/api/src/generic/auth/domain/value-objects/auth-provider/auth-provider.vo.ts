@@ -1,5 +1,5 @@
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { EnumValueObject } from "@/shared/domain/value-objects/enum/enum.vo";
 
 /**
  * AuthProviderValueObject represents the provider of the authentication.

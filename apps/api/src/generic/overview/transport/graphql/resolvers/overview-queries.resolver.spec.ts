@@ -1,12 +1,12 @@
-import { QueryBus } from '@nestjs/cqrs';
-import { OverviewFindViewModelQuery } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query';
-import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
-import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
-import { OverviewResponseDto } from '@/generic/overview/transport/graphql/dtos/responses/overview.response.dto';
-import { OverviewGraphQLMapper } from '@/generic/overview/transport/graphql/mappers/overview.mapper';
-import { OverviewQueriesResolver } from '@/generic/overview/transport/graphql/resolvers/overview-queries.resolver';
+import { QueryBus } from "@nestjs/cqrs";
+import { OverviewFindViewModelQuery } from "@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query";
+import { OverviewViewModelFactory } from "@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory";
+import { OverviewViewModel } from "@/generic/overview/domain/view-models/plant/overview.view-model";
+import { OverviewResponseDto } from "@/generic/overview/transport/graphql/dtos/responses/overview.response.dto";
+import { OverviewGraphQLMapper } from "@/generic/overview/transport/graphql/mappers/overview.mapper";
+import { OverviewQueriesResolver } from "@/generic/overview/transport/graphql/resolvers/overview-queries.resolver";
 
-describe('OverviewQueriesResolver', () => {
+describe("OverviewQueriesResolver", () => {
 	let resolver: OverviewQueriesResolver;
 	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockOverviewGraphQLMapper: jest.Mocked<OverviewGraphQLMapper>;
@@ -33,11 +33,11 @@ describe('OverviewQueriesResolver', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('overviewFind', () => {
-		it('should return overview when found', async () => {
-			const overviewId = 'overview';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("overviewFind", () => {
+		it("should return overview when found", async () => {
+			const overviewId = "overview";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 
 			const viewModel = overviewViewModelFactory.create({
 				id: overviewId,
@@ -127,7 +127,7 @@ describe('OverviewQueriesResolver', () => {
 			);
 		});
 
-		it('should return null when overview not found', async () => {
+		it("should return null when overview not found", async () => {
 			mockQueryBus.execute.mockResolvedValue(null);
 
 			const result = await resolver.overviewFind();

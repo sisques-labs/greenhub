@@ -1,14 +1,14 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsArray, IsOptional, ValidateNested } from 'class-validator';
-import { BaseFilterInput } from '@/shared/transport/graphql/dtos/requests/base-filter/base-filter.input';
-import { BasePaginationInput } from '@/shared/transport/graphql/dtos/requests/base-pagination/base-pagination.input';
-import { BaseSortInput } from '@/shared/transport/graphql/dtos/requests/base-sort/base-sort.input';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsArray, IsOptional, ValidateNested } from "class-validator";
+import { BaseFilterInput } from "@/shared/transport/graphql/dtos/requests/base-filter/base-filter.input";
+import { BasePaginationInput } from "@/shared/transport/graphql/dtos/requests/base-pagination/base-pagination.input";
+import { BaseSortInput } from "@/shared/transport/graphql/dtos/requests/base-sort/base-sort.input";
 
-@InputType('BaseFindByCriteriaInput')
+@InputType("BaseFindByCriteriaInput")
 export class BaseFindByCriteriaInput {
 	@Field(() => [BaseFilterInput], {
 		nullable: true,
-		description: 'The filters to find by',
+		description: "The filters to find by",
 		defaultValue: [],
 	})
 	@IsArray()
@@ -18,7 +18,7 @@ export class BaseFindByCriteriaInput {
 
 	@Field(() => [BaseSortInput], {
 		nullable: true,
-		description: 'The sorts to find by',
+		description: "The sorts to find by",
 		defaultValue: [],
 	})
 	@IsArray()
@@ -28,7 +28,7 @@ export class BaseFindByCriteriaInput {
 
 	@Field(() => BasePaginationInput, {
 		nullable: true,
-		description: 'The pagination to find by',
+		description: "The pagination to find by",
 		defaultValue: { page: 1, perPage: 10 },
 	})
 	@IsOptional()

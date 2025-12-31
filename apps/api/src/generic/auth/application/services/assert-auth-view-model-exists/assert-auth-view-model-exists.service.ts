@@ -1,11 +1,11 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
-import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
+import { Inject, Injectable, Logger } from "@nestjs/common";
+import { AuthNotFoundException } from "@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception";
 import {
 	AUTH_READ_REPOSITORY_TOKEN,
 	AuthReadRepository,
-} from '@/generic/auth/domain/repositories/auth-read.repository';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
+} from "@/generic/auth/domain/repositories/auth-read.repository";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
 
 @Injectable()
 export class AssertAuthViewModelExistsService

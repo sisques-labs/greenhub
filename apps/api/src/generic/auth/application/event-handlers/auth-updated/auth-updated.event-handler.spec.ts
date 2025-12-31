@@ -1,11 +1,11 @@
-import { AuthUpdatedEventHandler } from '@/generic/auth/application/event-handlers/auth-updated/auth-updated.event-handler';
-import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
-import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
-import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthUpdatedEvent } from '@/shared/domain/events/auth/auth-updated/auth-updated.event';
+import { AuthUpdatedEventHandler } from "@/generic/auth/application/event-handlers/auth-updated/auth-updated.event-handler";
+import { AssertAuthViewModelExistsService } from "@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service";
+import { AuthProviderEnum } from "@/generic/auth/domain/enums/auth-provider.enum";
+import { AuthReadRepository } from "@/generic/auth/domain/repositories/auth-read.repository";
+import { AuthViewModel } from "@/generic/auth/domain/view-models/auth.view-model";
+import { AuthUpdatedEvent } from "@/shared/domain/events/auth/auth-updated/auth-updated.event";
 
-describe('AuthUpdatedEventHandler', () => {
+describe("AuthUpdatedEventHandler", () => {
 	let handler: AuthUpdatedEventHandler;
 	let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 	let mockAssertAuthViewModelExistsService: jest.Mocked<AssertAuthViewModelExistsService>;
@@ -32,13 +32,13 @@ describe('AuthUpdatedEventHandler', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('handle', () => {
-		it('should update and save auth view model when event is handled', async () => {
-			const authId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("handle", () => {
+		it("should update and save auth view model when event is handled", async () => {
+			const authId = "123e4567-e89b-12d3-a456-426614174000";
 			const eventData = {
 				id: authId,
-				userId: '123e4567-e89b-12d3-a456-426614174001',
-				email: 'updated@example.com',
+				userId: "123e4567-e89b-12d3-a456-426614174001",
+				email: "updated@example.com",
 				emailVerified: true,
 				lastLoginAt: null,
 				password: null,
@@ -53,10 +53,10 @@ describe('AuthUpdatedEventHandler', () => {
 			const event = new AuthUpdatedEvent(
 				{
 					aggregateRootId: authId,
-					aggregateRootType: 'AuthAggregate',
+					aggregateRootType: "AuthAggregate",
 					entityId: authId,
-					entityType: 'AuthAggregate',
-					eventType: 'AuthUpdatedEvent',
+					entityType: "AuthAggregate",
+					eventType: "AuthUpdatedEvent",
 				},
 				eventData,
 			);
@@ -64,7 +64,7 @@ describe('AuthUpdatedEventHandler', () => {
 			const mockViewModel = new AuthViewModel({
 				id: authId,
 				userId: eventData.userId,
-				email: 'old@example.com',
+				email: "old@example.com",
 				emailVerified: false,
 				lastLoginAt: null,
 				password: null,
@@ -76,7 +76,7 @@ describe('AuthUpdatedEventHandler', () => {
 				updatedAt: eventData.updatedAt,
 			});
 
-			const updateSpy = jest.spyOn(mockViewModel, 'update');
+			const updateSpy = jest.spyOn(mockViewModel, "update");
 
 			mockAssertAuthViewModelExistsService.execute.mockResolvedValue(
 				mockViewModel,

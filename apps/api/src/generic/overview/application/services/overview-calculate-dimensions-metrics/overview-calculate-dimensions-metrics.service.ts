@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
-import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
-import { CalculateAverageCommand } from '@/support/math/application/commands/calculate-average/calculate-average.command';
+import { Injectable, Logger } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
+import { GrowingUnitViewModel } from "@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model";
+import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
+import { IBaseService } from "@/shared/application/services/base-service/base-service.interface";
+import { CalculateAverageCommand } from "@/support/math/application/commands/calculate-average/calculate-average.command";
 
 /**
  * Service responsible for calculating dimensions-related metrics for overview.
@@ -19,7 +19,7 @@ export class OverviewCalculateDimensionsMetricsService
 			GrowingUnitViewModel[],
 			Pick<
 				IOverviewViewModelDto,
-				'growingUnitsWithDimensions' | 'totalVolume' | 'averageVolume'
+				"growingUnitsWithDimensions" | "totalVolume" | "averageVolume"
 			>
 		>
 {
@@ -40,7 +40,7 @@ export class OverviewCalculateDimensionsMetricsService
 	): Promise<
 		Pick<
 			IOverviewViewModelDto,
-			'growingUnitsWithDimensions' | 'totalVolume' | 'averageVolume'
+			"growingUnitsWithDimensions" | "totalVolume" | "averageVolume"
 		>
 	> {
 		this.logger.log(

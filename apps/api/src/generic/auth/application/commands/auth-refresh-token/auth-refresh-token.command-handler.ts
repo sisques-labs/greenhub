@@ -1,10 +1,10 @@
-import { Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
-import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
-import { AuthRefreshTokenCommand } from './auth-refresh-token.command';
+import { Logger } from "@nestjs/common";
+import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
+import { AssertAuthExistsService } from "@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service";
+import { JwtAuthService } from "@/generic/auth/application/services/jwt-auth/jwt-auth.service";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { UserFindByIdQuery } from "@/generic/users/application/queries/user-find-by-id/user-find-by-id.query";
+import { AuthRefreshTokenCommand } from "./auth-refresh-token.command";
 
 @CommandHandler(AuthRefreshTokenCommand)
 export class AuthRefreshTokenCommandHandler
@@ -25,7 +25,7 @@ export class AuthRefreshTokenCommandHandler
 	 * @returns The new access token
 	 */
 	async execute(command: AuthRefreshTokenCommand): Promise<string> {
-		this.logger.log('Executing refresh token command');
+		this.logger.log("Executing refresh token command");
 
 		// 01: Verify and decode the refresh token
 		const payload = this.jwtAuthService.verifyRefreshToken(

@@ -1,10 +1,10 @@
-import { HealthAggregate } from '@/support/health/domain/aggregates/health.aggregate';
-import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
-import { HealthViewModelFactory } from '@/support/health/domain/factories/health-view-model.factory';
-import { HealthStatusValueObject } from '@/support/health/domain/value-objects/health-status/health-status.vo';
-import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
+import { HealthAggregate } from "@/support/health/domain/aggregates/health.aggregate";
+import { HealthStatusEnum } from "@/support/health/domain/enum/health-status.enum";
+import { HealthViewModelFactory } from "@/support/health/domain/factories/health-view-model.factory";
+import { HealthStatusValueObject } from "@/support/health/domain/value-objects/health-status/health-status.vo";
+import { HealthViewModel } from "@/support/health/domain/view-models/health.view-model";
 
-describe('HealthViewModelFactory', () => {
+describe("HealthViewModelFactory", () => {
 	let factory: HealthViewModelFactory;
 
 	beforeEach(() => {
@@ -22,7 +22,7 @@ describe('HealthViewModelFactory', () => {
 			readDatabaseStatus: new HealthStatusValueObject(readDatabaseStatus),
 		});
 
-	it('should create view model from dto', () => {
+	it("should create view model from dto", () => {
 		const viewModel = factory.create({
 			status: HealthStatusEnum.OK,
 			writeDatabaseStatus: HealthStatusEnum.OK,
@@ -35,7 +35,7 @@ describe('HealthViewModelFactory', () => {
 		expect(viewModel.readDatabaseStatus).toBe(HealthStatusEnum.OK);
 	});
 
-	it('should create view model from aggregate', () => {
+	it("should create view model from aggregate", () => {
 		const aggregate = createAggregate(
 			HealthStatusEnum.WARNING,
 			HealthStatusEnum.WARNING,
@@ -50,7 +50,7 @@ describe('HealthViewModelFactory', () => {
 		expect(viewModel.readDatabaseStatus).toBe(HealthStatusEnum.WARNING);
 	});
 
-	it('should create view model from primitives', () => {
+	it("should create view model from primitives", () => {
 		const primitives = {
 			status: HealthStatusEnum.ERROR,
 			writeDatabaseStatus: HealthStatusEnum.ERROR,

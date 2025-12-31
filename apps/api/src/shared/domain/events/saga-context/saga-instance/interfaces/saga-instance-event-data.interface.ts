@@ -1,4 +1,4 @@
-import { IBaseEventData } from '@/shared/domain/interfaces/base-event-data.interface';
+import { IBaseEventData } from "@/shared/domain/interfaces/base-event-data.interface";
 
 export interface ISagaInstanceEventData extends IBaseEventData {
 	id: string;

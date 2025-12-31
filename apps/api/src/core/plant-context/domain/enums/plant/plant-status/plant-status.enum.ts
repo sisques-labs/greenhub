@@ -13,17 +13,17 @@
  */
 export enum PlantStatusEnum {
 	/** The plant has been planted (initial state). */
-	PLANTED = 'PLANTED',
+	PLANTED = "PLANTED",
 
 	/** The plant is actively growing (normal/active state). */
-	GROWING = 'GROWING',
+	GROWING = "GROWING",
 
 	/** The plant has been harvested (for harvestable plants). */
-	HARVESTED = 'HARVESTED',
+	HARVESTED = "HARVESTED",
 
 	/** The plant has died. */
-	DEAD = 'DEAD',
+	DEAD = "DEAD",
 
 	/** The plant has been archived (soft delete, not exposed in API). */
-	ARCHIVED = 'ARCHIVED',
+	ARCHIVED = "ARCHIVED",
 }

@@ -1,18 +1,18 @@
-import { Logger } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { FindSagaStepsByCriteriaQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query';
-import { FindSagaStepViewModelByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query';
-import { FindSagaStepViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-saga-instance-id/saga-step-find-view-model-by-saga-instance-id.query';
-import { SagaStepFindByCriteriaRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-criteria.request.dto';
-import { SagaStepFindByIdRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-id.request.dto';
-import { SagaStepFindBySagaInstanceIdRequestDto } from '@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-saga-instance-id.request.dto';
+import { Logger } from "@nestjs/common";
+import { QueryBus } from "@nestjs/cqrs";
+import { Args, Query, Resolver } from "@nestjs/graphql";
+import { FindSagaStepsByCriteriaQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query";
+import { FindSagaStepViewModelByIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query";
+import { FindSagaStepViewModelsBySagaInstanceIdQuery } from "@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-saga-instance-id/saga-step-find-view-model-by-saga-instance-id.query";
+import { SagaStepFindByCriteriaRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-criteria.request.dto";
+import { SagaStepFindByIdRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-id.request.dto";
+import { SagaStepFindBySagaInstanceIdRequestDto } from "@/generic/saga-context/saga-step/transport/graphql/dtos/requests/saga-step-find-by-saga-instance-id.request.dto";
 import {
 	PaginatedSagaStepResultDto,
 	SagaStepResponseDto,
-} from '@/generic/saga-context/saga-step/transport/graphql/dtos/responses/saga-step.response.dto';
-import { SagaStepGraphQLMapper } from '@/generic/saga-context/saga-step/transport/graphql/mappers/saga-step.mapper';
-import { Criteria } from '@/shared/domain/entities/criteria';
+} from "@/generic/saga-context/saga-step/transport/graphql/dtos/responses/saga-step.response.dto";
+import { SagaStepGraphQLMapper } from "@/generic/saga-context/saga-step/transport/graphql/mappers/saga-step.mapper";
+import { Criteria } from "@/shared/domain/entities/criteria";
 
 @Resolver()
 // TODO: Add guards and roles
@@ -26,7 +26,7 @@ export class SagaStepQueryResolver {
 
 	@Query(() => SagaStepResponseDto, { nullable: true })
 	async sagaStepFindById(
-		@Args('input') input: SagaStepFindByIdRequestDto,
+		@Args("input") input: SagaStepFindByIdRequestDto,
 	): Promise<SagaStepResponseDto | null> {
 		this.logger.log(`Finding saga step by id: ${input.id}`);
 
@@ -39,7 +39,7 @@ export class SagaStepQueryResolver {
 
 	@Query(() => [SagaStepResponseDto])
 	async sagaStepFindBySagaInstanceId(
-		@Args('input') input: SagaStepFindBySagaInstanceIdRequestDto,
+		@Args("input") input: SagaStepFindBySagaInstanceIdRequestDto,
 	): Promise<SagaStepResponseDto[]> {
 		this.logger.log(
 			`Finding saga steps by saga instance id: ${input.sagaInstanceId}`,
@@ -58,7 +58,7 @@ export class SagaStepQueryResolver {
 
 	@Query(() => PaginatedSagaStepResultDto)
 	async sagaStepFindByCriteria(
-		@Args('input', { nullable: true })
+		@Args("input", { nullable: true })
 		input?: SagaStepFindByCriteriaRequestDto,
 	): Promise<PaginatedSagaStepResultDto> {
 		this.logger.log(`Finding saga steps by criteria: ${JSON.stringify(input)}`);

@@ -1,10 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
-import { AuthTypeormEntity } from '@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity';
-import { AuthTypeormMapper } from '@/generic/auth/infrastructure/database/typeorm/mappers/auth-typeorm.mapper';
-import { BaseTypeormMasterRepository } from '@/shared/infrastructure/database/typeorm/base-typeorm/base-typeorm-master/base-typeorm-master.repository';
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { Injectable, Logger } from "@nestjs/common";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { AuthWriteRepository } from "@/generic/auth/domain/repositories/auth-write.repository";
+import { AuthTypeormEntity } from "@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity";
+import { AuthTypeormMapper } from "@/generic/auth/infrastructure/database/typeorm/mappers/auth-typeorm.mapper";
+import { BaseTypeormMasterRepository } from "@/shared/infrastructure/database/typeorm/base-typeorm/base-typeorm-master/base-typeorm-master.repository";
+import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
 
 @Injectable()
 export class AuthTypeormRepository

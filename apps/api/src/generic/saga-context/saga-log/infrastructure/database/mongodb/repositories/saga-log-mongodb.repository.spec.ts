@@ -1,14 +1,14 @@
-import { Collection } from 'mongodb';
-import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
-import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
-import { SagaLogMongoDbDto } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/dtos/saga-log-mongodb.dto';
-import { SagaLogMongoDBMapper } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/mappers/saga-log-mongodb.mapper';
-import { SagaLogMongoRepository } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/repositories/saga-log-mongodb.repository';
-import { Criteria } from '@/shared/domain/entities/criteria';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
+import { Collection } from "mongodb";
+import { SagaLogTypeEnum } from "@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum";
+import { SagaLogViewModel } from "@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model";
+import { SagaLogMongoDbDto } from "@/generic/saga-context/saga-log/infrastructure/database/mongodb/dtos/saga-log-mongodb.dto";
+import { SagaLogMongoDBMapper } from "@/generic/saga-context/saga-log/infrastructure/database/mongodb/mappers/saga-log-mongodb.mapper";
+import { SagaLogMongoRepository } from "@/generic/saga-context/saga-log/infrastructure/database/mongodb/repositories/saga-log-mongodb.repository";
+import { Criteria } from "@/shared/domain/entities/criteria";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { MongoMasterService } from "@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service";
 
-describe('SagaLogMongoRepository', () => {
+describe("SagaLogMongoRepository", () => {
 	let repository: SagaLogMongoRepository;
 	let mockMongoMasterService: jest.Mocked<MongoMasterService>;
 	let mockSagaLogMongoDBMapper: jest.Mocked<SagaLogMongoDBMapper>;
@@ -51,17 +51,17 @@ describe('SagaLogMongoRepository', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('findById', () => {
-		it('should return saga log view model when saga log exists', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01T10:00:00Z');
-			const updatedAt = new Date('2024-01-01T11:00:00Z');
+	describe("findById", () => {
+		it("should return saga log view model when saga log exists", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01T10:00:00Z");
+			const updatedAt = new Date("2024-01-01T11:00:00Z");
 			const mongoDoc: SagaLogMongoDbDto = {
 				id: sagaLogId,
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 				createdAt: createdAt,
 				updatedAt: updatedAt,
 			};
@@ -83,7 +83,7 @@ describe('SagaLogMongoRepository', () => {
 
 			expect(result).toBe(viewModel);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				'saga-logs',
+				"saga-logs",
 			);
 			expect(mockCollection.findOne).toHaveBeenCalledWith({ id: sagaLogId });
 			expect(mockSagaLogMongoDBMapper.toViewModel).toHaveBeenCalledWith({
@@ -97,8 +97,8 @@ describe('SagaLogMongoRepository', () => {
 			});
 		});
 
-		it('should return null when saga log does not exist', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return null when saga log does not exist", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockCollection.findOne.mockResolvedValue(null);
 
@@ -110,27 +110,27 @@ describe('SagaLogMongoRepository', () => {
 		});
 	});
 
-	describe('findBySagaInstanceId', () => {
-		it('should return array of saga log view models when saga logs exist', async () => {
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01T10:00:00Z');
-			const updatedAt = new Date('2024-01-01T11:00:00Z');
+	describe("findBySagaInstanceId", () => {
+		it("should return array of saga log view models when saga logs exist", async () => {
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01T10:00:00Z");
+			const updatedAt = new Date("2024-01-01T11:00:00Z");
 			const mongoDocs: SagaLogMongoDbDto[] = [
 				{
-					id: '123e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.INFO,
-					message: 'Log message 1',
+					message: "Log message 1",
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				},
 				{
-					id: '223e4567-e89b-12d3-a456-426614174001',
+					id: "223e4567-e89b-12d3-a456-426614174001",
 					sagaInstanceId: sagaInstanceId,
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.ERROR,
-					message: 'Log message 2',
+					message: "Log message 2",
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				},
@@ -164,25 +164,25 @@ describe('SagaLogMongoRepository', () => {
 
 			expect(result).toHaveLength(2);
 			expect(mockMongoMasterService.getCollection).toHaveBeenCalledWith(
-				'saga-logs',
+				"saga-logs",
 			);
 			expect(mockCollection.find).toHaveBeenCalledWith({ sagaInstanceId });
 			expect(mockSagaLogMongoDBMapper.toViewModel).toHaveBeenCalledTimes(2);
 		});
 	});
 
-	describe('findBySagaStepId', () => {
-		it('should return array of saga log view models when saga logs exist', async () => {
-			const sagaStepId = '323e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01T10:00:00Z');
-			const updatedAt = new Date('2024-01-01T11:00:00Z');
+	describe("findBySagaStepId", () => {
+		it("should return array of saga log view models when saga logs exist", async () => {
+			const sagaStepId = "323e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01T10:00:00Z");
+			const updatedAt = new Date("2024-01-01T11:00:00Z");
 			const mongoDocs: SagaLogMongoDbDto[] = [
 				{
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
 					sagaStepId: sagaStepId,
 					type: SagaLogTypeEnum.INFO,
-					message: 'Log message 1',
+					message: "Log message 1",
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				},
@@ -220,18 +220,18 @@ describe('SagaLogMongoRepository', () => {
 		});
 	});
 
-	describe('findByCriteria', () => {
-		it('should return paginated result with saga log view models', async () => {
+	describe("findByCriteria", () => {
+		it("should return paginated result with saga log view models", async () => {
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
-			const createdAt = new Date('2024-01-01T10:00:00Z');
-			const updatedAt = new Date('2024-01-01T11:00:00Z');
+			const createdAt = new Date("2024-01-01T10:00:00Z");
+			const updatedAt = new Date("2024-01-01T11:00:00Z");
 			const mongoDocs: SagaLogMongoDbDto[] = [
 				{
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-					sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+					sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 					type: SagaLogTypeEnum.INFO,
-					message: 'Log message 1',
+					message: "Log message 1",
 					createdAt: createdAt,
 					updatedAt: updatedAt,
 				},
@@ -275,15 +275,15 @@ describe('SagaLogMongoRepository', () => {
 		});
 	});
 
-	describe('save', () => {
-		it('should save saga log view model', async () => {
-			const now = new Date('2024-01-01T10:00:00Z');
+	describe("save", () => {
+		it("should save saga log view model", async () => {
+			const now = new Date("2024-01-01T10:00:00Z");
 			const viewModel = new SagaLogViewModel({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				sagaInstanceId: '223e4567-e89b-12d3-a456-426614174000',
-				sagaStepId: '323e4567-e89b-12d3-a456-426614174000',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				sagaInstanceId: "223e4567-e89b-12d3-a456-426614174000",
+				sagaStepId: "323e4567-e89b-12d3-a456-426614174000",
 				type: SagaLogTypeEnum.INFO,
-				message: 'Test log message',
+				message: "Test log message",
 				createdAt: now,
 				updatedAt: now,
 			});
@@ -314,9 +314,9 @@ describe('SagaLogMongoRepository', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should delete saga log view model by id', async () => {
-			const sagaLogId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("delete", () => {
+		it("should delete saga log view model by id", async () => {
+			const sagaLogId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockCollection.deleteOne.mockResolvedValue({ deletedCount: 1 } as any);
 

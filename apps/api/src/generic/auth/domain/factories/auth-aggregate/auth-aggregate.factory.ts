@@ -1,19 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
-import { IAuthCreateDto } from '@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto';
-import { AuthPrimitives } from '@/generic/auth/domain/primitives/auth.primitives';
-import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
-import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
-import { AuthLastLoginAtValueObject } from '@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo';
-import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
-import { AuthPhoneNumberValueObject } from '@/generic/auth/domain/value-objects/auth-phone-number/auth-phone-number.vo';
-import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
-import { AuthProviderIdValueObject } from '@/generic/auth/domain/value-objects/auth-provider-id/auth-provider-id.vo';
-import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
-import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
-import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { Injectable } from "@nestjs/common";
+import { AuthAggregate } from "@/generic/auth/domain/aggregate/auth.aggregate";
+import { IAuthCreateDto } from "@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto";
+import { AuthPrimitives } from "@/generic/auth/domain/primitives/auth.primitives";
+import { AuthEmailValueObject } from "@/generic/auth/domain/value-objects/auth-email/auth-email.vo";
+import { AuthEmailVerifiedValueObject } from "@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo";
+import { AuthLastLoginAtValueObject } from "@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo";
+import { AuthPasswordValueObject } from "@/generic/auth/domain/value-objects/auth-password/auth-password.vo";
+import { AuthPhoneNumberValueObject } from "@/generic/auth/domain/value-objects/auth-phone-number/auth-phone-number.vo";
+import { AuthProviderValueObject } from "@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo";
+import { AuthProviderIdValueObject } from "@/generic/auth/domain/value-objects/auth-provider-id/auth-provider-id.vo";
+import { AuthTwoFactorEnabledValueObject } from "@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo";
+import { IWriteFactory } from "@/shared/domain/interfaces/write-factory.interface";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { AuthUuidValueObject } from "@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo";
+import { UserUuidValueObject } from "@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo";
 
 /**
  * Factory class responsible for creating AuthAggregate entities.

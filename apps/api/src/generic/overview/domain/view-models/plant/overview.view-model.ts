@@ -1,5 +1,5 @@
-import { IOverviewViewModelDto } from '@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto';
-import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
+import { IOverviewViewModelDto } from "@/generic/overview/domain/dtos/view-models/overview/overview-view-model.dto";
+import { BaseViewModel } from "@/shared/domain/view-models/base-view-model/base-view-model";
 
 /**
  * Represents an overview view model for the presentation layer.

@@ -1,21 +1,21 @@
-import { Repository } from 'typeorm';
-import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-import { SagaStepMaxRetriesValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo';
-import { SagaStepNameValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo';
-import { SagaStepOrderValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo';
-import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo';
-import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
-import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
-import { SagaStepTypeormEntity } from '@/generic/saga-context/saga-step/infrastructure/database/typeorm/entities/saga-step-typeorm.entity';
-import { SagaStepTypeormMapper } from '@/generic/saga-context/saga-step/infrastructure/database/typeorm/mappers/saga-step-typeorm.mapper';
-import { SagaStepTypeormRepository } from '@/generic/saga-context/saga-step/infrastructure/database/typeorm/repositories/saga-step-typeorm.repository';
-import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
-import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { Repository } from "typeorm";
+import { SagaStepAggregate } from "@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate";
+import { SagaStepStatusEnum } from "@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum";
+import { SagaStepMaxRetriesValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-max-retries/saga-step-max-retries.vo";
+import { SagaStepNameValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-name/saga-step-name.vo";
+import { SagaStepOrderValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-order/saga-step-order.vo";
+import { SagaStepPayloadValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-payload/saga-step-payload.vo";
+import { SagaStepRetryCountValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo";
+import { SagaStepStatusValueObject } from "@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo";
+import { SagaStepTypeormEntity } from "@/generic/saga-context/saga-step/infrastructure/database/typeorm/entities/saga-step-typeorm.entity";
+import { SagaStepTypeormMapper } from "@/generic/saga-context/saga-step/infrastructure/database/typeorm/mappers/saga-step-typeorm.mapper";
+import { SagaStepTypeormRepository } from "@/generic/saga-context/saga-step/infrastructure/database/typeorm/repositories/saga-step-typeorm.repository";
+import { DateValueObject } from "@/shared/domain/value-objects/date/date.vo";
+import { SagaInstanceUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo";
+import { SagaStepUuidValueObject } from "@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo";
+import { TypeormMasterService } from "@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service";
 
-describe('SagaStepTypeormRepository', () => {
+describe("SagaStepTypeormRepository", () => {
 	let repository: SagaStepTypeormRepository;
 	let mockTypeormMasterService: jest.Mocked<TypeormMasterService>;
 	let mockSagaStepTypeormMapper: jest.Mocked<SagaStepTypeormMapper>;
@@ -57,16 +57,16 @@ describe('SagaStepTypeormRepository', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('findById', () => {
-		it('should return saga step aggregate when saga step exists', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+	describe("findById", () => {
+		it("should return saga step aggregate when saga step exists", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new SagaStepTypeormEntity();
 			typeormEntity.id = sagaStepId;
 			typeormEntity.sagaInstanceId = sagaInstanceId;
-			typeormEntity.name = 'test-step';
+			typeormEntity.name = "test-step";
 			typeormEntity.order = 1;
 			typeormEntity.status = SagaStepStatusEnum.PENDING;
 			typeormEntity.createdAt = now;
@@ -76,7 +76,7 @@ describe('SagaStepTypeormRepository', () => {
 				{
 					id: new SagaStepUuidValueObject(sagaStepId),
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaStepNameValueObject('test-step'),
+					name: new SagaStepNameValueObject("test-step"),
 					order: new SagaStepOrderValueObject(1),
 					status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 					startDate: null,
@@ -108,8 +108,8 @@ describe('SagaStepTypeormRepository', () => {
 			);
 		});
 
-		it('should return null when saga step does not exist', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return null when saga step does not exist", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockFindOne.mockResolvedValue(null);
 
@@ -120,15 +120,15 @@ describe('SagaStepTypeormRepository', () => {
 		});
 	});
 
-	describe('findBySagaInstanceId', () => {
-		it('should return saga step aggregates when saga steps exist', async () => {
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+	describe("findBySagaInstanceId", () => {
+		it("should return saga step aggregates when saga steps exist", async () => {
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const typeormEntity = new SagaStepTypeormEntity();
-			typeormEntity.id = '123e4567-e89b-12d3-a456-426614174000';
+			typeormEntity.id = "123e4567-e89b-12d3-a456-426614174000";
 			typeormEntity.sagaInstanceId = sagaInstanceId;
-			typeormEntity.name = 'test-step';
+			typeormEntity.name = "test-step";
 			typeormEntity.order = 1;
 			typeormEntity.status = SagaStepStatusEnum.PENDING;
 			typeormEntity.createdAt = now;
@@ -137,10 +137,10 @@ describe('SagaStepTypeormRepository', () => {
 			const sagaStepAggregate = new SagaStepAggregate(
 				{
 					id: new SagaStepUuidValueObject(
-						'123e4567-e89b-12d3-a456-426614174000',
+						"123e4567-e89b-12d3-a456-426614174000",
 					),
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaStepNameValueObject('test-step'),
+					name: new SagaStepNameValueObject("test-step"),
 					order: new SagaStepOrderValueObject(1),
 					status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 					startDate: null,
@@ -169,8 +169,8 @@ describe('SagaStepTypeormRepository', () => {
 			});
 		});
 
-		it('should return empty array when no saga steps exist', async () => {
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+		it("should return empty array when no saga steps exist", async () => {
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 
 			mockFind.mockResolvedValue([]);
 
@@ -181,17 +181,17 @@ describe('SagaStepTypeormRepository', () => {
 		});
 	});
 
-	describe('save', () => {
-		it('should save saga step aggregate and return saved aggregate', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
-			const sagaInstanceId = '223e4567-e89b-12d3-a456-426614174000';
+	describe("save", () => {
+		it("should save saga step aggregate and return saved aggregate", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
+			const sagaInstanceId = "223e4567-e89b-12d3-a456-426614174000";
 			const now = new Date();
 
 			const sagaStepAggregate = new SagaStepAggregate(
 				{
 					id: new SagaStepUuidValueObject(sagaStepId),
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaStepNameValueObject('test-step'),
+					name: new SagaStepNameValueObject("test-step"),
 					order: new SagaStepOrderValueObject(1),
 					status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 					startDate: null,
@@ -210,14 +210,14 @@ describe('SagaStepTypeormRepository', () => {
 			const typeormEntity = new SagaStepTypeormEntity();
 			typeormEntity.id = sagaStepId;
 			typeormEntity.sagaInstanceId = sagaInstanceId;
-			typeormEntity.name = 'test-step';
+			typeormEntity.name = "test-step";
 			typeormEntity.order = 1;
 			typeormEntity.status = SagaStepStatusEnum.PENDING;
 
 			const savedTypeormEntity = new SagaStepTypeormEntity();
 			savedTypeormEntity.id = sagaStepId;
 			savedTypeormEntity.sagaInstanceId = sagaInstanceId;
-			savedTypeormEntity.name = 'test-step';
+			savedTypeormEntity.name = "test-step";
 			savedTypeormEntity.order = 1;
 			savedTypeormEntity.status = SagaStepStatusEnum.PENDING;
 
@@ -225,7 +225,7 @@ describe('SagaStepTypeormRepository', () => {
 				{
 					id: new SagaStepUuidValueObject(sagaStepId),
 					sagaInstanceId: new SagaInstanceUuidValueObject(sagaInstanceId),
-					name: new SagaStepNameValueObject('test-step'),
+					name: new SagaStepNameValueObject("test-step"),
 					order: new SagaStepOrderValueObject(1),
 					status: new SagaStepStatusValueObject(SagaStepStatusEnum.PENDING),
 					startDate: null,
@@ -260,9 +260,9 @@ describe('SagaStepTypeormRepository', () => {
 		});
 	});
 
-	describe('delete', () => {
-		it('should soft delete saga step and return true', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+	describe("delete", () => {
+		it("should soft delete saga step and return true", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 1,
@@ -276,8 +276,8 @@ describe('SagaStepTypeormRepository', () => {
 			expect(mockSoftDelete).toHaveBeenCalledWith(sagaStepId);
 		});
 
-		it('should return false when saga step does not exist', async () => {
-			const sagaStepId = '123e4567-e89b-12d3-a456-426614174000';
+		it("should return false when saga step does not exist", async () => {
+			const sagaStepId = "123e4567-e89b-12d3-a456-426614174000";
 
 			mockSoftDelete.mockResolvedValue({
 				affected: 0,

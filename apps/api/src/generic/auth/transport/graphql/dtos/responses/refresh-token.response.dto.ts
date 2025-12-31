@@ -1,7 +1,7 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from "@nestjs/graphql";
 
-@ObjectType('RefreshTokenResponseDto')
+@ObjectType("RefreshTokenResponseDto")
 export class RefreshTokenResponseDto {
-	@Field(() => String, { description: 'The new access token' })
+	@Field(() => String, { description: "The new access token" })
 	accessToken: string;
 }

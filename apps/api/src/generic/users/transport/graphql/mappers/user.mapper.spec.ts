@@ -1,29 +1,29 @@
-import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
-import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
-import { UserGraphQLMapper } from '@/generic/users/transport/graphql/mappers/user.mapper';
-import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+import { IUserCreateViewModelDto } from "@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto";
+import { UserViewModel } from "@/generic/users/domain/view-models/user.view-model";
+import { UserGraphQLMapper } from "@/generic/users/transport/graphql/mappers/user.mapper";
+import { PaginatedResult } from "@/shared/domain/entities/paginated-result.entity";
+import { UserRoleEnum } from "@/shared/domain/enums/user-context/user/user-role/user-role.enum";
+import { UserStatusEnum } from "@/shared/domain/enums/user-context/user/user-status/user-status.enum";
 
-describe('UserGraphQLMapper', () => {
+describe("UserGraphQLMapper", () => {
 	let mapper: UserGraphQLMapper;
 
 	beforeEach(() => {
 		mapper = new UserGraphQLMapper();
 	});
 
-	describe('toResponseDto', () => {
-		it('should convert user view model to response DTO with all properties', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("toResponseDto", () => {
+		it("should convert user view model to response DTO with all properties", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
-				bio: 'Software developer',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
+				bio: "Software developer",
+				avatarUrl: "https://example.com/avatar.jpg",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				createdAt,
@@ -35,11 +35,11 @@ describe('UserGraphQLMapper', () => {
 
 			expect(result).toEqual({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
-				bio: 'Software developer',
-				avatarUrl: 'https://example.com/avatar.jpg',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
+				bio: "Software developer",
+				avatarUrl: "https://example.com/avatar.jpg",
 				role: UserRoleEnum.USER,
 				status: UserStatusEnum.ACTIVE,
 				createdAt,
@@ -47,13 +47,13 @@ describe('UserGraphQLMapper', () => {
 			});
 		});
 
-		it('should convert user view model to response DTO with null optional properties', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+		it("should convert user view model to response DTO with null optional properties", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: 'johndoe',
+				userName: "johndoe",
 				name: null,
 				lastName: null,
 				bio: null,
@@ -69,7 +69,7 @@ describe('UserGraphQLMapper', () => {
 
 			expect(result).toEqual({
 				id: userId,
-				userName: 'johndoe',
+				userName: "johndoe",
 				name: null,
 				lastName: null,
 				bio: null,
@@ -81,15 +81,15 @@ describe('UserGraphQLMapper', () => {
 			});
 		});
 
-		it('should convert user view model with ADMIN role and INACTIVE status', () => {
-			const userId = '123e4567-e89b-12d3-a456-426614174000';
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+		it("should convert user view model with ADMIN role and INACTIVE status", () => {
+			const userId = "123e4567-e89b-12d3-a456-426614174000";
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModelDto: IUserCreateViewModelDto = {
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.ADMIN,
@@ -103,9 +103,9 @@ describe('UserGraphQLMapper', () => {
 
 			expect(result).toEqual({
 				id: userId,
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.ADMIN,
@@ -116,16 +116,16 @@ describe('UserGraphQLMapper', () => {
 		});
 	});
 
-	describe('toPaginatedResponseDto', () => {
-		it('should convert paginated result to paginated response DTO', () => {
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+	describe("toPaginatedResponseDto", () => {
+		it("should convert paginated result to paginated response DTO", () => {
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModels: UserViewModel[] = [
 				new UserViewModel({
-					id: '123e4567-e89b-12d3-a456-426614174000',
-					userName: 'johndoe',
-					name: 'John',
-					lastName: 'Doe',
+					id: "123e4567-e89b-12d3-a456-426614174000",
+					userName: "johndoe",
+					name: "John",
+					lastName: "Doe",
 					bio: null,
 					avatarUrl: null,
 					role: UserRoleEnum.USER,
@@ -134,10 +134,10 @@ describe('UserGraphQLMapper', () => {
 					updatedAt,
 				}),
 				new UserViewModel({
-					id: '223e4567-e89b-12d3-a456-426614174001',
-					userName: 'janedoe',
-					name: 'Jane',
-					lastName: 'Doe',
+					id: "223e4567-e89b-12d3-a456-426614174001",
+					userName: "janedoe",
+					name: "Jane",
+					lastName: "Doe",
 					bio: null,
 					avatarUrl: null,
 					role: UserRoleEnum.USER,
@@ -157,10 +157,10 @@ describe('UserGraphQLMapper', () => {
 			expect(result.perPage).toBe(10);
 			expect(result.totalPages).toBe(1);
 			expect(result.items[0]).toEqual({
-				id: '123e4567-e89b-12d3-a456-426614174000',
-				userName: 'johndoe',
-				name: 'John',
-				lastName: 'Doe',
+				id: "123e4567-e89b-12d3-a456-426614174000",
+				userName: "johndoe",
+				name: "John",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -169,10 +169,10 @@ describe('UserGraphQLMapper', () => {
 				updatedAt,
 			});
 			expect(result.items[1]).toEqual({
-				id: '223e4567-e89b-12d3-a456-426614174001',
-				userName: 'janedoe',
-				name: 'Jane',
-				lastName: 'Doe',
+				id: "223e4567-e89b-12d3-a456-426614174001",
+				userName: "janedoe",
+				name: "Jane",
+				lastName: "Doe",
 				bio: null,
 				avatarUrl: null,
 				role: UserRoleEnum.USER,
@@ -182,7 +182,7 @@ describe('UserGraphQLMapper', () => {
 			});
 		});
 
-		it('should convert empty paginated result to paginated response DTO', () => {
+		it("should convert empty paginated result to paginated response DTO", () => {
 			const paginatedResult = new PaginatedResult<UserViewModel>([], 0, 1, 10);
 
 			const result = mapper.toPaginatedResponseDto(paginatedResult);
@@ -194,9 +194,9 @@ describe('UserGraphQLMapper', () => {
 			expect(result.totalPages).toBe(0);
 		});
 
-		it('should convert paginated result with pagination metadata', () => {
-			const createdAt = new Date('2024-01-01');
-			const updatedAt = new Date('2024-01-02');
+		it("should convert paginated result with pagination metadata", () => {
+			const createdAt = new Date("2024-01-01");
+			const updatedAt = new Date("2024-01-02");
 			const viewModels: UserViewModel[] = Array.from(
 				{ length: 5 },
 				(_, i) =>
