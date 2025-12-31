@@ -79,25 +79,25 @@ export function GrowingUnitsPage() {
 	const { handleDelete } = useGrowingUnitDelete();
 
 	const filterOptions: FilterOption[] = [
-		{ value: 'all', label: t('growingUnit.filters.all') },
+		{ value: 'all', label: t('pages.growingUnits.list.filters.all') },
 		{
 			value: 'indoor',
-			label: t('growingUnit.filters.indoor'),
+			label: t('pages.growingUnits.list.filters.indoor'),
 			icon: HomeIcon,
 		},
 		{
 			value: 'outdoor',
-			label: t('growingUnit.filters.outdoor'),
+			label: t('pages.growingUnits.list.filters.outdoor'),
 			icon: Building2Icon,
 		},
 		{
 			value: 'pots',
-			label: t('growingUnit.filters.pots'),
+			label: t('pages.growingUnits.list.filters.pots'),
 			icon: FlowerIcon,
 		},
 		{
 			value: 'beds',
-			label: t('growingUnit.filters.beds'),
+			label: t('pages.growingUnits.list.filters.beds'),
 			icon: PackageIcon,
 		},
 	];
@@ -141,7 +141,7 @@ export function GrowingUnitsPage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('growingUnit.error.loading', {
+						{t('pages.growingUnits.list.error.loading', {
 							message: growingUnitsError.message,
 						})}
 					</p>
@@ -154,19 +154,19 @@ export function GrowingUnitsPage() {
 		<div className="mx-auto space-y-6">
 			{/* Header */}
 			<PageHeader
-				title={t('growingUnit.page.title')}
-				description={t('growingUnit.page.description')}
+				title={t('pages.growingUnits.list.title')}
+				description={t('pages.growingUnits.list.description')}
 				actions={[
 					<Button key="create" onClick={handleAddClick}>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t('growingUnit.actions.create.button')}
+						{t('pages.growingUnits.list.actions.create.button')}
 					</Button>,
 				]}
 			/>
 
 			{/* Search and Filters */}
 			<SearchAndFilters
-				searchPlaceholder={t('growingUnit.search.placeholder')}
+				searchPlaceholder={t('pages.growingUnits.list.search.placeholder')}
 				searchValue={searchQuery}
 				onSearchChange={setSearchQuery}
 				filterOptions={filterOptions}
@@ -188,7 +188,7 @@ export function GrowingUnitsPage() {
 					{growingUnits.totalPages > 1 && (
 						<>
 							<div className="text-sm text-muted-foreground text-center">
-								{t('growingUnit.pagination.info', {
+								{t('shared.pagination.info', {
 									page: growingUnits.page,
 									totalPages: growingUnits.totalPages,
 									total: growingUnits.total,

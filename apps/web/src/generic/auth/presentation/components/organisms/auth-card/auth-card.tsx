@@ -26,10 +26,10 @@ export function AuthCard({ children, isLoading, error, mode }: AuthCardProps) {
 		<Card className="w-full max-w-md">
 			<CardHeader className="space-y-1">
 				<CardTitle className="text-2xl font-bold text-center">
-					{t(`authPage.title.${mode}`)}
+					{t(`pages.auth.title.${mode}`)}
 				</CardTitle>
 				<CardDescription className="text-center">
-					{t(`authPage.description.${mode}`)}
+					{t(`pages.auth.description.${mode}`)}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

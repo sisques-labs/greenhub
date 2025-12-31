@@ -34,11 +34,11 @@ export function AuthConfirmPasswordField<T extends FieldValues>({
 			name={name as any}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>{t('authPage.fields.confirmPassword.label')}</FormLabel>
+					<FormLabel>{t('pages.auth.fields.confirmPassword.label')}</FormLabel>
 					<FormControl>
 						<Input
 							type="password"
-							placeholder={t('authPage.fields.confirmPassword.placeholder')}
+							placeholder={t('pages.auth.fields.confirmPassword.placeholder')}
 							disabled={disabled}
 							{...field}
 							onChange={(e) => {

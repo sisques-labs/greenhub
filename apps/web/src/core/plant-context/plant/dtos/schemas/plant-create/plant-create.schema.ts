@@ -11,10 +11,10 @@ import { z } from 'zod';
  */
 export function createPlantCreateSchema(translations: (key: string) => string) {
 	return z.object({
-		name: z.string().min(1, translations('plant.validation.name.required')),
+		name: z.string().min(1, translations('shared.validation.name.required')),
 		species: z
 			.string()
-			.min(1, translations('plant.validation.species.required')),
+			.min(1, translations('shared.validation.species.required')),
 		plantedDate: z.date().optional(),
 		notes: z.string().optional(),
 		status: z
@@ -23,13 +23,13 @@ export function createPlantCreateSchema(translations: (key: string) => string) {
 				(value) =>
 					Object.values(PLANT_STATUS as Record<string, string>).includes(value),
 				{
-					message: translations('plant.validation.status.invalid'),
+					message: translations('shared.validation.status.invalid'),
 				},
 			)
 			.optional(),
 		growingUnitId: z
 			.string()
-			.min(1, translations('plant.validation.growingUnitId.required')),
+			.min(1, translations('shared.validation.growingUnitId.required')),
 	});
 }
 

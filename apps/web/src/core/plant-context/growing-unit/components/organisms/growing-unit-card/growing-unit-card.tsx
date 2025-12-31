@@ -57,7 +57,7 @@ export function GrowingUnitCard({
 					{/* Image placeholder - TODO: Replace with actual image when available */}
 					<div className="w-full h-full flex items-center justify-center">
 						<span className="text-muted-foreground text-sm">
-							{t(`growingUnit.type.${growingUnit.type}`)}
+							{t(`shared.types.growingUnit.${growingUnit.type}`)}
 						</span>
 					</div>
 					{/* Badge overlay in top-right corner */}
@@ -77,7 +77,7 @@ export function GrowingUnitCard({
 							{growingUnit.name}
 						</CardTitle>
 						<CardDescription className="text-xs uppercase mt-1">
-							{t(`growingUnit.type.${growingUnit.type}`)}
+							{t(`shared.types.growingUnit.${growingUnit.type}`)}
 						</CardDescription>
 					</div>
 				</div>
@@ -86,7 +86,7 @@ export function GrowingUnitCard({
 				{growingUnit.plants.length > 0 ? (
 					<div>
 						<div className="text-sm font-medium mb-2">
-							{t('growingUnit.fields.plants.label')}:
+							{t('shared.fields.plants.label')}:
 						</div>
 						<div className="space-y-1">
 							{visiblePlants.map((plant) => (
@@ -96,20 +96,20 @@ export function GrowingUnitCard({
 								>
 									<div className="h-1.5 w-1.5 rounded-full bg-current" />
 									<span>
-										{plant.name || plant.species || t('plant.common.unnamed')}
+										{plant.name || plant.species || t('pages.plants.detail.unnamed')}
 									</span>
 								</div>
 							))}
 							{remainingPlantsCount > 0 && (
 								<div className="text-sm text-muted-foreground font-medium">
-									+{remainingPlantsCount} {t('growingUnit.common.more')}
+									+{remainingPlantsCount} {t('common.more')}
 								</div>
 							)}
 						</div>
 					</div>
 				) : (
 					<div className="text-sm text-muted-foreground">
-						{t('growingUnit.noPlants')}
+						{t('pages.growingUnits.list.noPlants')}
 					</div>
 				)}
 			</CardContent>

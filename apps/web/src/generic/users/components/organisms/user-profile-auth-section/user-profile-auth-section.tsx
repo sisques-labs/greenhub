@@ -35,10 +35,10 @@ export function UserProfileAuthSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Shield className="size-5" />
-					{t('user.profile.sections.authInfo')}
+					{t('pages.user.profile.sections.authInfo.title')}
 				</CardTitle>
 				<CardDescription>
-					{t('user.profile.sections.authInfoDescription')}
+					{t('pages.user.profile.sections.authInfo.description')}
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
@@ -47,7 +47,7 @@ export function UserProfileAuthSection({
 						<div className="flex items-center gap-2">
 							<Mail className="size-4 text-muted-foreground" />
 							<p className="text-sm font-medium text-muted-foreground">
-								{t('user.profile.email')}
+								{t('pages.user.profile.fields.email')}
 							</p>
 						</div>
 						<div className="flex items-center gap-2">
@@ -60,12 +60,12 @@ export function UserProfileAuthSection({
 									{profile.emailVerified ? (
 										<>
 											<CheckCircle2 className="size-3" />
-											{t('user.profile.verified')}
+											{t('pages.user.profile.fields.verified')}
 										</>
 									) : (
 										<>
 											<XCircle className="size-3" />
-											{t('user.profile.unverified')}
+											{t('pages.user.profile.fields.unverified')}
 										</>
 									)}
 								</Badge>
@@ -79,7 +79,7 @@ export function UserProfileAuthSection({
 				{profile.provider && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('user.profile.provider')}
+							{t('pages.user.profile.fields.provider')}
 						</p>
 						<Badge variant="secondary">{profile.provider}</Badge>
 					</div>

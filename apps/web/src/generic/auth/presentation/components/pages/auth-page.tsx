@@ -56,7 +56,7 @@ const AuthPage = () => {
 					{isLoginMode ? (
 						<>
 							<span className="text-muted-foreground">
-								{t('authPage.messages.switchToSignup')}{' '}
+								{t('pages.auth.messages.switchToSignup')}{' '}
 							</span>
 							<Button
 								variant="link"
@@ -64,13 +64,13 @@ const AuthPage = () => {
 								onClick={() => setIsLoginMode(false)}
 								disabled={isLoading}
 							>
-								{t('authPage.actions.switchToSignup')}
+								{t('pages.auth.actions.switchToSignup')}
 							</Button>
 						</>
 					) : (
 						<>
 							<span className="text-muted-foreground">
-								{t('authPage.messages.switchToLogin')}{' '}
+								{t('pages.auth.messages.switchToLogin')}{' '}
 							</span>
 							<Button
 								variant="link"
@@ -78,7 +78,7 @@ const AuthPage = () => {
 								onClick={() => setIsLoginMode(true)}
 								disabled={isLoading}
 							>
-								{t('authPage.actions.switchToLogin')}
+								{t('pages.auth.actions.switchToLogin')}
 							</Button>
 						</>
 					)}

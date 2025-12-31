@@ -1,5 +1,14 @@
 'use client';
 
+import { GrowingUnitUpdateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-update-form/growing-unit-update-form';
+import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
+import { useGrowingUnitFindById } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
+import { useGrowingUnitUpdate } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-update/use-growing-unit-update';
+import { useGrowingUnitDetailPageStore } from '@/core/plant-context/growing-unit/stores/growing-unit-detail-page-store';
+import { PlantCreateForm } from '@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
+import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
+import { usePlantAdd } from '@/core/plant-context/plant/hooks/use-plant-add/use-plant-add';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -25,17 +34,8 @@ import {
 	PlusIcon,
 	SunIcon,
 } from 'lucide-react';
-import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { GrowingUnitUpdateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-update-form/growing-unit-update-form';
-import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
-import { useGrowingUnitFindById } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
-import { useGrowingUnitUpdate } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-update/use-growing-unit-update';
-import { useGrowingUnitDetailPageStore } from '@/core/plant-context/growing-unit/stores/growing-unit-detail-page-store';
-import { PlantCreateForm } from '@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
-import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
-import { usePlantAdd } from '@/core/plant-context/plant/hooks/use-plant-add/use-plant-add';
+import { useParams } from 'next/navigation';
 
 export function GrowingUnitDetailPage() {
 	const t = useTranslations();
@@ -132,16 +132,16 @@ export function GrowingUnitDetailPage() {
 						<div className="flex items-center gap-3">
 							<Badge variant="default" className="bg-green-500">
 								<span className="h-2 w-2 rounded-full bg-green-600 mr-2 inline-block" />
-								{t('growingUnit.detail.status.active')}
+								{t('shared.status.growingUnit.active')}
 							</Badge>
 							<span className="text-sm text-muted-foreground">
-								{t('growingUnit.detail.location.label')}:{' '}
-								{t(`growingUnit.detail.location.${location}`)}
+								{t('pages.growingUnits.detail.location.label')}:{' '}
+								{t(`shared.status.location.${location}`)}
 							</span>
 							<span className="text-sm text-muted-foreground">|</span>
 							<span className="text-sm text-muted-foreground">
-								{t('growingUnit.fields.type.label')}:{' '}
-								{t(`growingUnit.type.${growingUnit.type}`)}
+								{t('shared.fields.type.label')}:{' '}
+								{t(`shared.types.growingUnit.${growingUnit.type}`)}
 							</span>
 						</div>
 					</div>
@@ -153,11 +153,11 @@ export function GrowingUnitDetailPage() {
 						onClick={() => setUpdateDialogOpen(true)}
 					>
 						<PencilIcon className="mr-2 h-4 w-4" />
-						{t('growingUnit.detail.actions.editUnit')}
+						{t('pages.growingUnits.detail.actions.editUnit')}
 					</Button>,
 					<Button key="add-plant" onClick={handleAddPlant}>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t('growingUnit.detail.actions.addPlant')}
+						{t('pages.growingUnits.detail.actions.addPlant')}
 					</Button>,
 				]}
 			/>
@@ -167,13 +167,13 @@ export function GrowingUnitDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('growingUnit.detail.summary.substrate.label')}
+							{t('pages.growingUnits.detail.summary.substrate.label')}
 						</CardTitle>
 						<MountainIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">
-							{t('growingUnit.detail.summary.substrate.value')}
+							{t('pages.growingUnits.detail.summary.substrate.value')}
 						</div>
 					</CardContent>
 				</Card>
@@ -181,13 +181,13 @@ export function GrowingUnitDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('growingUnit.detail.summary.exposure.label')}
+							{t('pages.growingUnits.detail.summary.exposure.label')}
 						</CardTitle>
 						<SunIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">
-							{t('growingUnit.detail.summary.exposure.directSun')}
+							{t('pages.growingUnits.detail.summary.exposure.directSun')}
 						</div>
 					</CardContent>
 				</Card>
@@ -195,13 +195,13 @@ export function GrowingUnitDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('growingUnit.detail.summary.lastWatering.label')}
+							{t('pages.growingUnits.detail.summary.lastWatering.label')}
 						</CardTitle>
 						<DropletsIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">
-							{t('growingUnit.detail.summary.lastWatering.today')}
+							{t('pages.growingUnits.detail.summary.lastWatering.today')}
 						</div>
 						<p className="text-xs text-muted-foreground">08:30 AM</p>
 					</CardContent>
@@ -210,7 +210,7 @@ export function GrowingUnitDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('growingUnit.detail.summary.occupancy.label')}
+							{t('pages.growingUnits.detail.summary.occupancy.label')}
 						</CardTitle>
 						<Grid3x3Icon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
@@ -227,9 +227,9 @@ export function GrowingUnitDetailPage() {
 			<Card>
 				<CardHeader>
 					<div className="flex items-center justify-between">
-						<CardTitle>{t('growingUnit.detail.plants.title')}</CardTitle>
+						<CardTitle>{t('pages.growingUnits.detail.sections.plants.title')}</CardTitle>
 						<Button variant="link" className="h-auto p-0">
-							{t('growingUnit.detail.plants.viewAll')}
+							{t('common.viewAll')}
 						</Button>
 					</div>
 				</CardHeader>
@@ -240,14 +240,14 @@ export function GrowingUnitDetailPage() {
 								<TableHeader>
 									<TableRow>
 										<TableHead className="w-[80px]">IMG</TableHead>
-										<TableHead>{t('plants.table.columns.plant')}</TableHead>
-										<TableHead>{t('plants.table.columns.location')}</TableHead>
-										<TableHead>{t('plants.table.columns.status')}</TableHead>
+										<TableHead>{t('pages.plants.list.table.columns.plant')}</TableHead>
+										<TableHead>{t('pages.plants.list.table.columns.location')}</TableHead>
+										<TableHead>{t('pages.plants.list.table.columns.status')}</TableHead>
 										<TableHead>
-											{t('plants.table.columns.lastWatering')}
+											{t('pages.plants.list.table.columns.lastWatering')}
 										</TableHead>
 										<TableHead className="w-[80px]">
-											{t('plants.table.columns.actions')}
+											{t('pages.plants.list.table.columns.actions')}
 										</TableHead>
 									</TableRow>
 								</TableHeader>
@@ -264,7 +264,7 @@ export function GrowingUnitDetailPage() {
 						</div>
 					) : (
 						<div className="text-center py-8 text-muted-foreground">
-							{t('growingUnit.noPlants')}
+							{t('pages.growingUnits.list.noPlants')}
 						</div>
 					)}
 				</CardContent>
@@ -275,9 +275,9 @@ export function GrowingUnitDetailPage() {
 			<Card>
 				<CardHeader>
 					<div className="flex items-center justify-between">
-						<CardTitle>{t('growingUnit.detail.history.title')}</CardTitle>
+						<CardTitle>{t('pages.growingUnits.detail.sections.history.title')}</CardTitle>
 						<Button variant="link" className="h-auto p-0">
-							{t('growingUnit.detail.history.viewAll')}
+							{t('common.viewAll')}
 						</Button>
 					</div>
 				</CardHeader>

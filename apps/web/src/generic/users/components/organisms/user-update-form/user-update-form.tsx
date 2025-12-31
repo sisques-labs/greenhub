@@ -69,10 +69,10 @@ export function UserUpdateForm({
 					name="name"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('user.fields.name.label')}</FormLabel>
+							<FormLabel>{t('pages.user.profile.fields.name.label')}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t('user.fields.name.placeholder')}
+									placeholder={t('pages.user.profile.fields.name.placeholder')}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -88,10 +88,10 @@ export function UserUpdateForm({
 					name="lastName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('user.fields.lastName.label')}</FormLabel>
+							<FormLabel>{t('pages.user.profile.fields.lastName.label')}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t('user.fields.lastName.placeholder')}
+									placeholder={t('pages.user.profile.fields.lastName.placeholder')}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -107,10 +107,10 @@ export function UserUpdateForm({
 					name="userName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('user.fields.userName.label')}</FormLabel>
+							<FormLabel>{t('pages.user.profile.fields.userName.label')}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t('user.fields.userName.placeholder')}
+									placeholder={t('pages.user.profile.fields.userName.placeholder')}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -126,10 +126,10 @@ export function UserUpdateForm({
 					name="bio"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('user.fields.bio.label')}</FormLabel>
+							<FormLabel>{t('pages.user.profile.fields.bio.label')}</FormLabel>
 							<FormControl>
 								<Textarea
-									placeholder={t('user.fields.bio.placeholder')}
+									placeholder={t('pages.user.profile.fields.bio.placeholder')}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -145,11 +145,11 @@ export function UserUpdateForm({
 					name="avatarUrl"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('user.fields.avatarUrl.label')}</FormLabel>
+							<FormLabel>{t('pages.user.profile.fields.avatarUrl.label')}</FormLabel>
 							<FormControl>
 								<Input
 									type="url"
-									placeholder={t('user.fields.avatarUrl.placeholder')}
+									placeholder={t('pages.user.profile.fields.avatarUrl.placeholder')}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -166,8 +166,8 @@ export function UserUpdateForm({
 				<div className="flex justify-end pt-2">
 					<Button type="submit" disabled={!isDirty || isSubmitting}>
 						{isSubmitting
-							? t('user.actions.update.loading')
-							: t('user.actions.update.label')}
+							? t('pages.user.profile.actions.update.loading')
+							: t('pages.user.profile.actions.update.label')}
 					</Button>
 				</div>
 			</form>

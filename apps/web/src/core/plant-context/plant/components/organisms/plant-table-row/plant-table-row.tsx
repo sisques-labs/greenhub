@@ -45,12 +45,12 @@ export function PlantTableRow({
 		const diffTime = Math.abs(now.getTime() - plantDate.getTime());
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-		if (diffDays === 0) return t('plants.table.lastWatering.today');
-		if (diffDays === 1) return t('plants.table.lastWatering.yesterday');
+		if (diffDays === 0) return t('pages.plants.list.table.lastWatering.today');
+		if (diffDays === 1) return t('pages.plants.list.table.lastWatering.yesterday');
 		if (diffDays < 7)
-			return t('plants.table.lastWatering.daysAgo', { days: diffDays });
+			return t('pages.plants.list.table.lastWatering.daysAgo', { days: diffDays });
 		if (diffDays < 14)
-			return t('plants.table.lastWatering.weeksAgo', {
+			return t('pages.plants.list.table.lastWatering.weeksAgo', {
 				weeks: Math.floor(diffDays / 7),
 			});
 		return plantDate.toLocaleDateString();
@@ -90,7 +90,7 @@ export function PlantTableRow({
 			<TableCell>
 				<div>
 					<div className="font-medium">
-						{plant.name || t('plant.common.unnamed')}
+						{plant.name || t('pages.plants.detail.unnamed')}
 					</div>
 					<div className="text-sm text-muted-foreground">
 						{plant.species || '-'}
@@ -122,11 +122,11 @@ export function PlantTableRow({
 						<DropdownMenuItem
 							onClick={() => router.push(`/${locale}/plants/${plant.id}`)}
 						>
-							{t('plants.actions.view')}
+							{t('pages.plants.list.actions.view')}
 						</DropdownMenuItem>
 						{onEdit && (
 							<DropdownMenuItem onClick={() => onEdit(plant)}>
-								{t('plants.actions.edit')}
+								{t('pages.plants.list.actions.edit')}
 							</DropdownMenuItem>
 						)}
 						{onDelete && (
@@ -134,7 +134,7 @@ export function PlantTableRow({
 								onClick={() => onDelete(plant.id)}
 								className="text-destructive"
 							>
-								{t('plants.actions.delete')}
+								{t('pages.plants.list.actions.delete')}
 							</DropdownMenuItem>
 						)}
 					</DropdownMenuContent>

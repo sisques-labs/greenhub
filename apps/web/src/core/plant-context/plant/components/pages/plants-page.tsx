@@ -49,25 +49,25 @@ export function PlantsPage() {
 	} = usePlantsPage();
 
 	const filterOptions: FilterOption[] = [
-		{ value: 'all', label: t('plants.filters.all') },
+		{ value: 'all', label: t('pages.plants.list.filters.all') },
 		{
 			value: 'indoor',
-			label: t('plants.filters.indoor'),
+			label: t('pages.plants.list.filters.indoor'),
 			icon: HomeIcon,
 		},
 		{
 			value: 'outdoor',
-			label: t('plants.filters.outdoor'),
+			label: t('pages.plants.list.filters.outdoor'),
 			icon: Building2Icon,
 		},
 		{
 			value: 'needsWater',
-			label: t('plants.filters.needsWater'),
+			label: t('pages.plants.list.filters.needsWater'),
 			icon: DropletsIcon,
 		},
 		{
 			value: 'healthy',
-			label: t('plants.filters.healthy'),
+			label: t('pages.plants.list.filters.healthy'),
 			icon: CheckCircleIcon,
 		},
 	];
@@ -81,7 +81,7 @@ export function PlantsPage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('plant.error.loading', { message: (error as Error).message })}
+						{t('pages.plants.list.error.loading', { message: (error as Error).message })}
 					</p>
 				</div>
 			</div>
@@ -92,19 +92,19 @@ export function PlantsPage() {
 		<div className="mx-auto space-y-6">
 			{/* Header */}
 			<PageHeader
-				title={t('plants.title')}
-				description={t('plants.description')}
+				title={t('pages.plants.list.title')}
+				description={t('pages.plants.list.description')}
 				actions={[
 					<Button key="create">
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t('plants.actions.create.button')}
+						{t('pages.plants.list.actions.create.button')}
 					</Button>,
 				]}
 			/>
 
 			{/* Search and Filters */}
 			<SearchAndFilters
-				searchPlaceholder={t('plants.search.placeholder')}
+				searchPlaceholder={t('pages.plants.list.search.placeholder')}
 				searchValue={searchQuery}
 				onSearchChange={setSearchQuery}
 				filterOptions={filterOptions}
@@ -126,14 +126,14 @@ export function PlantsPage() {
 							<TableHeader>
 								<TableRow>
 									<TableHead className="w-[80px]">IMG</TableHead>
-									<TableHead>{t('plants.table.columns.plant')}</TableHead>
-									<TableHead>{t('plants.table.columns.location')}</TableHead>
-									<TableHead>{t('plants.table.columns.status')}</TableHead>
+									<TableHead>{t('pages.plants.list.table.columns.plant')}</TableHead>
+									<TableHead>{t('pages.plants.list.table.columns.location')}</TableHead>
+									<TableHead>{t('pages.plants.list.table.columns.status')}</TableHead>
 									<TableHead>
-										{t('plants.table.columns.lastWatering')}
+										{t('pages.plants.list.table.columns.lastWatering')}
 									</TableHead>
 									<TableHead className="w-[80px]">
-										{t('plants.table.columns.actions')}
+										{t('pages.plants.list.table.columns.actions')}
 									</TableHead>
 								</TableRow>
 							</TableHeader>
@@ -153,7 +153,7 @@ export function PlantsPage() {
 				) : (
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-muted-foreground">
-							{hasAnyPlants ? t('plants.empty.filtered') : t('plants.empty')}
+							{hasAnyPlants ? t('pages.plants.list.empty.filtered') : t('pages.plants.list.empty')}
 						</p>
 					</div>
 				)}

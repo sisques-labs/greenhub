@@ -10,7 +10,7 @@ import { z } from 'zod';
  */
 export function createUserUpdateSchema(translations: (key: string) => string) {
 	return z.object({
-		id: z.string().min(1, translations('user.validation.id.required')),
+		id: z.string().min(1, translations('shared.validation.id.required')),
 		name: z.string().optional(),
 		lastName: z.string().optional(),
 		userName: z.string().optional(),

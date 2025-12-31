@@ -14,18 +14,18 @@ export function createAuthRegisterByEmailSchema(
 		.object({
 			email: z
 				.string()
-				.min(1, translations('authPage.validation.email.required'))
-				.email(translations('authPage.validation.email.invalid')),
+				.min(1, translations('pages.auth.validation.email.required'))
+				.email(translations('pages.auth.validation.email.invalid')),
 			password: z
 				.string()
-				.min(1, translations('authPage.validation.password.required'))
-				.min(8, translations('authPage.validation.password.minLength')),
+				.min(1, translations('pages.auth.validation.password.required'))
+				.min(8, translations('pages.auth.validation.password.minLength')),
 			confirmPassword: z
 				.string()
-				.min(1, translations('authPage.validation.confirmPassword.required')),
+				.min(1, translations('pages.auth.validation.confirmPassword.required')),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
-			message: translations('authPage.validation.confirmPassword.mismatch'),
+			message: translations('pages.auth.validation.confirmPassword.mismatch'),
 			path: ['confirmPassword'],
 		});
 }

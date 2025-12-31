@@ -51,7 +51,7 @@ export function UserProfilePage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('user.error.loading', { message: profileError.message })}
+						{t('pages.user.profile.error.loading', { message: profileError.message })}
 					</p>
 				</div>
 			</div>
@@ -62,7 +62,7 @@ export function UserProfilePage() {
 		return (
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-muted-foreground">{t('user.notFound')}</p>
+					<p className="text-muted-foreground">{t('common.notFound')}</p>
 				</div>
 			</div>
 		);
@@ -104,9 +104,9 @@ export function UserProfilePage() {
 				{/* Edit Form Section */}
 				<Card>
 					<CardHeader>
-						<CardTitle>{t('user.profile.sections.editProfile')}</CardTitle>
+						<CardTitle>{t('pages.user.profile.sections.editProfile.title')}</CardTitle>
 						<CardDescription>
-							{t('user.profile.sections.editProfileDescription')}
+							{t('pages.user.profile.sections.editProfile.description')}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>

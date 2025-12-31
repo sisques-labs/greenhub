@@ -114,9 +114,9 @@ export function GrowingUnitUpdateForm({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>{t('growingUnit.actions.update.title')}</DialogTitle>
+					<DialogTitle>{t('pages.growingUnits.detail.actions.update.title')}</DialogTitle>
 					<DialogDescription>
-						{t('growingUnit.actions.update.description')}
+						{t('pages.growingUnits.detail.actions.update.description')}
 					</DialogDescription>
 				</DialogHeader>
 				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
@@ -131,10 +131,10 @@ export function GrowingUnitUpdateForm({
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t('growingUnit.fields.name.label')}</FormLabel>
+									<FormLabel>{t('shared.fields.name.label')}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t('growingUnit.fields.name.placeholder')}
+											placeholder={t('pages.growingUnits.detail.fields.name.placeholder')}
 											disabled={isLoading}
 											{...field}
 										/>
@@ -151,7 +151,7 @@ export function GrowingUnitUpdateForm({
 								name="type"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('growingUnit.fields.type.label')}</FormLabel>
+										<FormLabel>{t('shared.fields.type.label')}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											value={field.value}
@@ -161,23 +161,23 @@ export function GrowingUnitUpdateForm({
 												<SelectTrigger>
 													<SelectValue
 														placeholder={t(
-															'growingUnit.fields.type.placeholder',
+															'shared.fields.type.placeholder',
 														)}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value="POT">
-													{t('growingUnit.type.POT')}
+													{t('shared.types.growingUnit.POT')}
 												</SelectItem>
 												<SelectItem value="GARDEN_BED">
-													{t('growingUnit.type.GARDEN_BED')}
+													{t('shared.types.growingUnit.GARDEN_BED')}
 												</SelectItem>
 												<SelectItem value="HANGING_BASKET">
-													{t('growingUnit.type.HANGING_BASKET')}
+													{t('shared.types.growingUnit.HANGING_BASKET')}
 												</SelectItem>
 												<SelectItem value="WINDOW_BOX">
-													{t('growingUnit.type.WINDOW_BOX')}
+													{t('shared.types.growingUnit.WINDOW_BOX')}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -193,14 +193,14 @@ export function GrowingUnitUpdateForm({
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{t('growingUnit.fields.capacity.label')}
+											{t('shared.fields.capacity.label')}
 										</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												min="1"
 												placeholder={t(
-													'growingUnit.fields.capacity.placeholder',
+													'shared.fields.capacity.placeholder',
 												)}
 												disabled={isLoading}
 												{...field}
@@ -222,13 +222,13 @@ export function GrowingUnitUpdateForm({
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{t('growingUnit.fields.length.label')}
+											{t('shared.fields.length.label')}
 										</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder={t('growingUnit.fields.length.placeholder')}
+												placeholder={t('shared.fields.length.placeholder')}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) =>
@@ -250,12 +250,12 @@ export function GrowingUnitUpdateForm({
 								name="width"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('growingUnit.fields.width.label')}</FormLabel>
+										<FormLabel>{t('shared.fields.width.label')}</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder={t('growingUnit.fields.width.placeholder')}
+												placeholder={t('shared.fields.width.placeholder')}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) =>
@@ -278,13 +278,13 @@ export function GrowingUnitUpdateForm({
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{t('growingUnit.fields.height.label')}
+											{t('shared.fields.height.label')}
 										</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder={t('growingUnit.fields.height.placeholder')}
+												placeholder={t('shared.fields.height.placeholder')}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) =>
@@ -306,7 +306,7 @@ export function GrowingUnitUpdateForm({
 								name="unit"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('growingUnit.fields.unit.label')}</FormLabel>
+										<FormLabel>{t('shared.fields.unit.label')}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											value={field.value}
@@ -316,26 +316,26 @@ export function GrowingUnitUpdateForm({
 												<SelectTrigger>
 													<SelectValue
 														placeholder={t(
-															'growingUnit.fields.unit.placeholder',
+															'shared.fields.unit.placeholder',
 														)}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value="MILLIMETER">
-													{t('growingUnit.unit.MILLIMETER')}
+													{t('shared.units.length.MILLIMETER')}
 												</SelectItem>
 												<SelectItem value="CENTIMETER">
-													{t('growingUnit.unit.CENTIMETER')}
+													{t('shared.units.length.CENTIMETER')}
 												</SelectItem>
 												<SelectItem value="METER">
-													{t('growingUnit.unit.METER')}
+													{t('shared.units.length.METER')}
 												</SelectItem>
 												<SelectItem value="INCH">
-													{t('growingUnit.unit.INCH')}
+													{t('shared.units.length.INCH')}
 												</SelectItem>
 												<SelectItem value="FOOT">
-													{t('growingUnit.unit.FOOT')}
+													{t('shared.units.length.FOOT')}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -360,8 +360,8 @@ export function GrowingUnitUpdateForm({
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('growingUnit.actions.update.loading')
-									: t('growingUnit.actions.update.submit')}
+									? t('pages.growingUnits.detail.actions.update.loading')
+									: t('pages.growingUnits.detail.actions.update.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

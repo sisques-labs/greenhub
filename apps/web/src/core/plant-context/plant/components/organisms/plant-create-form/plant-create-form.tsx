@@ -111,10 +111,10 @@ export function PlantCreateForm({
 								name="name"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('plant.fields.name.label')}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t('plant.fields.name.placeholder')}
+									<FormLabel>{t('pages.plants.detail.fields.name.label')}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t('pages.plants.detail.fields.name.placeholder')}
 												disabled={isLoading}
 												{...field}
 											/>
@@ -130,10 +130,10 @@ export function PlantCreateForm({
 								name="species"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('plant.fields.species.label')}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t('plant.fields.species.placeholder')}
+									<FormLabel>{t('shared.fields.species.label')}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t('shared.fields.species.placeholder')}
 												disabled={isLoading}
 												{...field}
 											/>
@@ -182,7 +182,7 @@ export function PlantCreateForm({
 								name="status"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('plant.fields.status.label')}</FormLabel>
+										<FormLabel>{t('shared.fields.status.label')}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											defaultValue={field.value}
@@ -191,25 +191,25 @@ export function PlantCreateForm({
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue
-														placeholder={t('plant.fields.status.placeholder')}
+														placeholder={t('shared.fields.status.placeholder')}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value={PLANT_STATUS.PLANTED}>
-													{t('plant.status.PLANTED')}
+													{t('shared.status.plant.PLANTED')}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.GROWING}>
-													{t('plant.status.GROWING')}
+													{t('shared.status.plant.GROWING')}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.HARVESTED}>
-													{t('plant.status.HARVESTED')}
+													{t('shared.status.plant.HARVESTED')}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.DEAD}>
-													{t('plant.status.DEAD')}
+													{t('shared.status.plant.DEAD')}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.ARCHIVED}>
-													{t('plant.status.ARCHIVED')}
+													{t('shared.status.plant.ARCHIVED')}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -225,10 +225,10 @@ export function PlantCreateForm({
 							name="notes"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t('plant.fields.notes.label')}</FormLabel>
+									<FormLabel>{t('shared.fields.notes.label')}</FormLabel>
 									<FormControl>
 										<Textarea
-											placeholder={t('plant.fields.notes.placeholder')}
+											placeholder={t('shared.fields.notes.placeholder')}
 											disabled={isLoading}
 											rows={4}
 											{...field}
@@ -254,8 +254,8 @@ export function PlantCreateForm({
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('plants.actions.create.loading')
-									: t('plants.actions.create.submit')}
+									? t('pages.plants.list.actions.create.loading')
+									: t('pages.plants.list.actions.create.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

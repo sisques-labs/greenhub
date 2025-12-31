@@ -43,23 +43,23 @@ export function UserProfileInfoSection({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>{t('user.profile.sections.personalInfo')}</CardTitle>
+				<CardTitle>{t('pages.user.profile.sections.personalInfo.title')}</CardTitle>
 				<CardDescription>
-					{t('user.profile.sections.personalInfoDescription')}
+					{t('pages.user.profile.sections.personalInfo.description')}
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<InfoItem label={t('user.fields.name.label')} value={profile.name} />
+				<InfoItem label={t('pages.user.profile.fields.name.label')} value={profile.name} />
 				{profile.name && profile.lastName && <Separator />}
 				<InfoItem
-					label={t('user.fields.lastName.label')}
+					label={t('pages.user.profile.fields.lastName.label')}
 					value={profile.lastName}
 				/>
 				{(profile.name || profile.lastName) && profile.userName && (
 					<Separator />
 				)}
 				<InfoItem
-					label={t('user.fields.userName.label')}
+					label={t('pages.user.profile.fields.userName.label')}
 					value={profile.userName}
 				/>
 			</CardContent>

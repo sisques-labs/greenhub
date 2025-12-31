@@ -51,6 +51,73 @@
       },
       "updatedAt": {
         "label": "Fecha de actualización"
+      },
+      "type": {
+        "label": "Tipo",
+        "placeholder": "Selecciona el tipo"
+      },
+      "capacity": {
+        "label": "Capacidad",
+        "placeholder": "Número de elementos"
+      },
+      "remainingCapacity": {
+        "label": "Capacidad Restante"
+      },
+      "volume": {
+        "label": "Volumen"
+      },
+      "dimensions": {
+        "label": "Dimensiones"
+      },
+      "length": {
+        "label": "Longitud",
+        "placeholder": "Longitud"
+      },
+      "width": {
+        "label": "Ancho",
+        "placeholder": "Ancho"
+      },
+      "height": {
+        "label": "Altura",
+        "placeholder": "Altura"
+      },
+      "unit": {
+        "label": "Unidad",
+        "placeholder": "Selecciona la unidad"
+      },
+      "plants": {
+        "label": "Plantas activas"
+      },
+      "species": {
+        "label": "Especie",
+        "placeholder": "Especie"
+      },
+      "plantedDate": {
+        "label": "Fecha de plantación"
+      },
+      "notes": {
+        "label": "Notas",
+        "placeholder": "Notas adicionales"
+      },
+      "growingUnitId": {
+        "label": "Unidad de Cultivo"
+      }
+    },
+    "types": {
+      "growingUnit": {
+        "POT": "Maceta",
+        "GARDEN_BED": "Cama de jardín",
+        "HANGING_BASKET": "Cesta colgante",
+        "WINDOW_BOX": "Jardín de ventana"
+      }
+    },
+    "units": {
+      "length": {
+        "MILLIMETER": "Milímetro",
+        "CENTIMETER": "Centímetro",
+        "METER": "Metro",
+        "INCH": "Pulgada",
+        "FOOT": "Pie"
       }
     },
     "status": {
@@ -78,6 +145,33 @@
       },
       "name": {
         "required": "El nombre es requerido"
+      },
+      "species": {
+        "required": "La especie es requerida"
+      },
+      "status": {
+        "invalid": "Estado inválido"
+      },
+      "growingUnitId": {
+        "required": "El ID de la unidad de cultivo es requerido"
+      },
+      "plantId": {
+        "required": "El ID de la planta es requerido"
+      },
+      "sourceGrowingUnitId": {
+        "required": "El ID de la unidad de cultivo origen es requerido"
+      },
+      "targetGrowingUnitId": {
+        "required": "El ID de la unidad de cultivo destino es requerido"
+      },
+      "type": {
+        "invalid": "Tipo inválido"
+      },
+      "capacity": {
+        "required": "La capacidad es requerida"
+      },
+      "unit": {
+        "invalid": "Unidad inválida"
       }
     },
     "pagination": {
@@ -287,7 +381,9 @@
           },
           "lastWatering": {
             "today": "Hoy",
-            "yesterday": "Ayer"
+            "yesterday": "Ayer",
+            "daysAgo": "Hace {days} días",
+            "weeksAgo": "Hace {weeks} semanas"
           }
         },
         "actions": {
@@ -297,7 +393,13 @@
             "description": "Agrega una nueva planta a tu colección",
             "submit": "Crear",
             "loading": "Creando..."
-          }
+          },
+          "view": "Ver",
+          "edit": "Editar",
+          "delete": "Eliminar"
+        },
+        "error": {
+          "loading": "Error al cargar plantas: {message}"
         },
         "growingUnit": {
           "plantCount": "{count} de {total} plantas"
@@ -504,6 +606,8 @@
           },
           "lastWatering": {
             "label": "Último Riego",
+            "today": "Hoy",
+            "yesterday": "Ayer",
             "never": "Nunca"
           },
           "occupancy": {

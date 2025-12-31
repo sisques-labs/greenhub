@@ -22,10 +22,10 @@ export function GrowingUnitAddCard({ onClick }: GrowingUnitAddCardProps) {
 			<CardContent className="flex flex-col items-center justify-center min-h-[300px] p-6">
 				<PlusIcon className="h-12 w-12 text-muted-foreground mb-4" />
 				<h3 className="text-lg font-semibold mb-2">
-					{t('growingUnit.actions.create.button')}
+					{t('pages.growingUnits.list.actions.create.button')}
 				</h3>
 				<p className="text-sm text-muted-foreground text-center">
-					{t('growingUnit.actions.create.description')}
+					{t('pages.growingUnits.list.actions.create.description')}
 				</p>
 			</CardContent>
 		</Card>
