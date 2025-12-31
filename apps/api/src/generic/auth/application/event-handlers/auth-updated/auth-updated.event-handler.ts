@@ -1,11 +1,11 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
 import {
   AUTH_READ_REPOSITORY_TOKEN,
   AuthReadRepository,
 } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthUpdatedEvent } from '@/shared/domain/events/auth/auth-updated/auth-updated.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(AuthUpdatedEvent)
 export class AuthUpdatedEventHandler
@@ -25,11 +25,11 @@ export class AuthUpdatedEventHandler
    * @param event - The AuthUpdatedEvent event to handle.
    */
   async handle(event: AuthUpdatedEvent) {
-    this.logger.log(`Handling auth updated event: ${event.aggregateId}`);
+    this.logger.log(`Handling auth updated event: ${event.entityId}`);
 
     // 01: Assert the auth view model exists
     const existingAuthViewModel =
-      await this.assertAuthViewModelExistsService.execute(event.aggregateId);
+      await this.assertAuthViewModelExistsService.execute(event.entityId);
 
     // 02: Update the existing view model with new data
     existingAuthViewModel.update(event.data);

@@ -1,5 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { UserViewModelFactory } from '@/generic/users/domain/factories/user-view-model/user-view-model.factory';
 import {
   USER_READ_REPOSITORY_TOKEN,
@@ -7,6 +5,8 @@ import {
 } from '@/generic/users/domain/repositories/user-read.repository';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(UserCreatedEvent)
 export class UserCreatedEventHandler
@@ -26,7 +26,7 @@ export class UserCreatedEventHandler
    * @param event - The UserCreatedEvent event to handle.
    */
   async handle(event: UserCreatedEvent) {
-    this.logger.log(`Handling user created event: ${event.aggregateId}`);
+    this.logger.log(`Handling user created event: ${event.aggregateRootId}`);
 
     this.logger.debug(`User created event data: ${JSON.stringify(event.data)}`);
 

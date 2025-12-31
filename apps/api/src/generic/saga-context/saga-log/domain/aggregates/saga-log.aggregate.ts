@@ -31,8 +31,10 @@ export class SagaLogAggregate extends BaseAggregate {
       this.apply(
         new SagaLogCreatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaLogAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaLogAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaLogAggregate.name,
             eventType: SagaLogCreatedEvent.name,
           },
           this.toPrimitives(),
@@ -57,8 +59,10 @@ export class SagaLogAggregate extends BaseAggregate {
       this.apply(
         new SagaLogUpdatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaLogAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaLogAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaLogAggregate.name,
             eventType: SagaLogUpdatedEvent.name,
           },
           this.toPrimitives(),
@@ -77,8 +81,10 @@ export class SagaLogAggregate extends BaseAggregate {
       this.apply(
         new SagaLogDeletedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaLogAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaLogAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaLogAggregate.name,
             eventType: SagaLogDeletedEvent.name,
           },
           this.toPrimitives(),

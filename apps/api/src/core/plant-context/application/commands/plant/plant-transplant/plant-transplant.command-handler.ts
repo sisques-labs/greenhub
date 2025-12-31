@@ -1,6 +1,9 @@
 import { PlantTransplantCommand } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command';
+import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
+import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
@@ -10,6 +13,7 @@ import {
   PLANT_WRITE_REPOSITORY_TOKEN,
 } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
@@ -49,6 +53,7 @@ export class PlantTransplantCommandHandler
     private readonly eventBus: EventBus,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
     private readonly plantTransplantService: PlantTransplantService,
+    private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
   ) {}
 
   /**
@@ -101,6 +106,30 @@ export class PlantTransplantCommandHandler
       targetGrowingUnitAggregate.getUncommittedEvents(),
     );
     await targetGrowingUnitAggregate.commit();
+
+    // 09: Publish the PlantUpdatedEvent and GrowingUpdatedEVent integration event
+    await this.publishIntegrationEventsService.execute([
+      new PlantUpdatedEvent(
+        {
+          aggregateRootId: transplantedPlant.growingUnitId.value,
+          aggregateRootType: GrowingUnitAggregate.name,
+          entityId: transplantedPlant.id.value,
+          entityType: PlantEntity.name,
+          eventType: PlantUpdatedEvent.name,
+        },
+        transplantedPlant.toPrimitives(),
+      ),
+      new GrowingUnitUpdatedEvent(
+        {
+          aggregateRootId: sourceGrowingUnitAggregate.id.value,
+          aggregateRootType: GrowingUnitAggregate.name,
+          entityId: sourceGrowingUnitAggregate.id.value,
+          entityType: GrowingUnitAggregate.name,
+          eventType: GrowingUnitUpdatedEvent.name,
+        },
+        sourceGrowingUnitAggregate.toPrimitives(),
+      ),
+    ]);
 
     this.logger.log(
       `Successfully transplanted plant ${command.plantId.value} from growing unit ${command.sourceGrowingUnitId.value} to ${command.targetGrowingUnitId.value}`,

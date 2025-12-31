@@ -54,8 +54,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepCreatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepCreatedEvent.name,
           },
           this.toPrimitives(),
@@ -97,8 +99,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepUpdatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepUpdatedEvent.name,
           },
           this.toPrimitives(),
@@ -117,8 +121,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepDeletedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepDeletedEvent.name,
           },
           this.toPrimitives(),
@@ -141,8 +147,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepStatusChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepStatusChangedEvent.name,
           },
           this.toPrimitives(),
@@ -172,8 +180,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepStatusChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepStatusChangedEvent.name,
           },
           this.toPrimitives(),
@@ -199,8 +209,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepStatusChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepStatusChangedEvent.name,
           },
           this.toPrimitives(),
@@ -225,8 +237,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepStatusChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepStatusChangedEvent.name,
           },
           this.toPrimitives(),
@@ -250,8 +264,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepStatusChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepStatusChangedEvent.name,
           },
           this.toPrimitives(),
@@ -275,8 +291,10 @@ export class SagaStepAggregate extends BaseAggregate {
       this.apply(
         new SagaStepUpdatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: SagaStepAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: SagaStepAggregate.name,
+            entityId: this._id.value,
+            entityType: SagaStepAggregate.name,
             eventType: SagaStepUpdatedEvent.name,
           },
           this.toPrimitives(),

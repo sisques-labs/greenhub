@@ -1,8 +1,8 @@
-import { Logger } from '@nestjs/common';
-import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaStepStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-status-changed/saga-step-status-changed.event';
+import { Logger } from '@nestjs/common';
+import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(SagaStepStatusChangedEvent)
 export class SagaStepStatusChangedEventHandler
@@ -19,7 +19,7 @@ export class SagaStepStatusChangedEventHandler
    */
   async handle(event: SagaStepStatusChangedEvent) {
     this.logger.log(
-      `Handling saga step status changed event: ${event.aggregateId}`,
+      `Handling saga step status changed event: ${event.aggregateRootId}`,
     );
 
     // 01: Determine log type based on status
@@ -37,7 +37,7 @@ export class SagaStepStatusChangedEventHandler
     await this.commandBus.execute(
       new SagaLogCreateCommand({
         sagaInstanceId: event.data.sagaInstanceId,
-        sagaStepId: event.aggregateId,
+        sagaStepId: event.data.id,
         type: logType,
         message: `Saga step status changed to "${event.data.status}"${
           event.data.errorMessage ? `. Error: ${event.data.errorMessage}` : ''

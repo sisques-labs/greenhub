@@ -1,5 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
 import {
   AUTH_READ_REPOSITORY_TOKEN,
@@ -7,6 +5,8 @@ import {
 } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthRegisteredByEmailEvent } from '@/shared/domain/events/auth/auth-registered-by-email/auth-registered-by-email.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(AuthRegisteredByEmailEvent)
 export class AuthRegisteredByEmailEventHandler
@@ -27,7 +27,7 @@ export class AuthRegisteredByEmailEventHandler
    */
   async handle(event: AuthRegisteredByEmailEvent) {
     this.logger.log(
-      `Handling auth registered by email event: ${event.aggregateId}`,
+      `Handling auth registered by email event: ${event.entityId}`,
     );
 
     // 01: Create the auth view model

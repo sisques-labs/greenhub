@@ -43,8 +43,10 @@ export class UserAggregate extends BaseAggregate {
       this.apply(
         new UserCreatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: UserAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: UserAggregate.name,
+            entityId: this._id.value,
+            entityType: UserAggregate.name,
             eventType: UserCreatedEvent.name,
           },
           this.toPrimitives(),
@@ -81,8 +83,10 @@ export class UserAggregate extends BaseAggregate {
       this.apply(
         new UserUpdatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: UserAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: UserAggregate.name,
+            entityId: this._id.value,
+            entityType: UserAggregate.name,
             eventType: UserUpdatedEvent.name,
           },
           this.toPrimitives(),
@@ -101,8 +105,10 @@ export class UserAggregate extends BaseAggregate {
       this.apply(
         new UserDeletedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: UserAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: UserAggregate.name,
+            entityId: this._id.value,
+            entityType: UserAggregate.name,
             eventType: UserDeletedEvent.name,
           },
           this.toPrimitives(),

@@ -1,11 +1,11 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
 import {
   SAGA_LOG_READ_REPOSITORY_TOKEN,
   SagaLogReadRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
 import { SagaLogDeletedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-deleted/saga-log-deleted.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(SagaLogDeletedEvent)
 export class SagaLogDeletedEventHandler
@@ -25,11 +25,15 @@ export class SagaLogDeletedEventHandler
    * @param event - The SagaLogDeletedEvent event to handle.
    */
   async handle(event: SagaLogDeletedEvent) {
-    this.logger.log(`Handling saga log deleted event: ${event.aggregateId}`);
+    this.logger.log(
+      `Handling saga log deleted event: ${event.aggregateRootId}`,
+    );
 
     // 01: Assert the saga log view model exists
     const existingSagaLogViewModel =
-      await this.assertSagaLogViewModelExistsService.execute(event.aggregateId);
+      await this.assertSagaLogViewModelExistsService.execute(
+        event.aggregateRootId,
+      );
 
     // 02: Delete the saga log view model
     await this.sagaLogReadRepository.delete(existingSagaLogViewModel.id);

@@ -1,6 +1,18 @@
-import { AggregateRoot } from '@nestjs/cqrs';
+import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { GrowingUnitCapacityChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-capacity-changed/growing-unit-capacity-changed.event';
+import { GrowingUnitDimensionsChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-dimensions-changed/growing-unit-dimensions-changed.event';
+import { GrowingUnitNameChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-name-changed/growing-unit-name-changed.event';
+import { GrowingUnitTypeChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-type-changed/growing-unit-type-changed.event';
+import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
+import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
+import { PlantGrowingUnitChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-growing-unit-changed/plant-growing-unit-changed.event';
+import { PlantNameChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-name-changed/plant-name-changed.event';
+import { PlantNotesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-notes-changed/plant-notes-changed.event';
+import { PlantPlantedDateChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-planted-date-changed/plant-planted-date-changed.event';
+import { PlantSpeciesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-species-changed/plant-species-changed.event';
+import { PlantStatusChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-status-changed/plant-status-changed.event';
 import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit.primitives';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
@@ -10,22 +22,9 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitCapacityChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-capacity-changed/growing-unit-capacity-changed.event';
-import { GrowingUnitDimensionsChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-dimensions-changed/growing-unit-dimensions-changed.event';
-import { GrowingUnitNameChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-name-changed/growing-unit-name-changed.event';
-import { GrowingUnitTypeChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-type-changed/growing-unit-type-changed.event';
-import { GrowingUnitCreatedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-created/growing-unit-created.event';
-import { GrowingUnitDeletedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
-import { GrowingUnitPlantAddedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
-import { GrowingUnitPlantRemovedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
-import { GrowingUnitPlantGrowingUnitChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-growing-unit-changed/growing-unit-plant-growing-unit-changed.event';
-import { GrowingUnitPlantNameChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-name-changed/growing-unit-plant-name-changed.event';
-import { GrowingUnitPlantNotesChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-notes-changed/growing-unit-plant-notes-changed.event';
-import { GrowingUnitPlantPlantedDateChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-planted-date-changed/growing-unit-plant-planted-date-changed.event';
-import { GrowingUnitPlantSpeciesChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-species-changed/growing-unit-plant-species-changed.event';
-import { GrowingUnitPlantStatusChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { AggregateRoot } from '@nestjs/cqrs';
 
 /**
  * The aggregate root representing a growing unit, which manages a collection of plants
@@ -69,7 +68,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
    * @param props - The properties to initialize the growing unit with.
    * @param generateEvent - Whether or not to generate a GrowingUnitCreatedEvent.
    */
-  constructor(props: IGrowingUnitDto, generateEvent: boolean = true) {
+  constructor(props: IGrowingUnitDto) {
     super();
 
     this._id = props.id;
@@ -78,19 +77,6 @@ export class GrowingUnitAggregate extends AggregateRoot {
     this._capacity = props.capacity;
     this._dimensions = props.dimensions ?? null;
     this._plants = props.plants;
-
-    if (generateEvent) {
-      this.apply(
-        new GrowingUnitCreatedEvent(
-          {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitCreatedEvent.name,
-          },
-          this.toPrimitives(),
-        ),
-      );
-    }
   }
 
   /**
@@ -104,8 +90,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitPlantAddedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantToAdd.id.value,
+            entityType: PlantEntity.name,
             eventType: GrowingUnitPlantAddedEvent.name,
           },
           {
@@ -134,8 +122,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitPlantRemovedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantToRemove.id.value,
+            entityType: PlantEntity.name,
             eventType: GrowingUnitPlantRemovedEvent.name,
           },
           {
@@ -168,11 +158,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
     if (generateEvent) {
       this.apply(
-        new GrowingUnitPlantStatusChangedEvent(
+        new PlantStatusChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitPlantStatusChangedEvent.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantId,
+            entityType: PlantEntity.name,
+            eventType: PlantStatusChangedEvent.name,
           },
           {
             id: plantId,
@@ -205,11 +197,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
     if (generateEvent) {
       this.apply(
-        new GrowingUnitPlantNameChangedEvent(
+        new PlantNameChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitPlantNameChangedEvent.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantId,
+            entityType: PlantEntity.name,
+            eventType: PlantNameChangedEvent.name,
           },
           {
             id: plantId,
@@ -242,11 +236,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
     if (generateEvent) {
       this.apply(
-        new GrowingUnitPlantSpeciesChangedEvent(
+        new PlantSpeciesChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitPlantSpeciesChangedEvent.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantId,
+            entityType: PlantEntity.name,
+            eventType: PlantSpeciesChangedEvent.name,
           },
           {
             id: plantId,
@@ -279,11 +275,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
     if (generateEvent) {
       this.apply(
-        new GrowingUnitPlantPlantedDateChangedEvent(
+        new PlantPlantedDateChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitPlantPlantedDateChangedEvent.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantId,
+            entityType: PlantEntity.name,
+            eventType: PlantPlantedDateChangedEvent.name,
           },
           {
             id: plantId,
@@ -316,11 +314,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
     if (generateEvent) {
       this.apply(
-        new GrowingUnitPlantNotesChangedEvent(
+        new PlantNotesChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitPlantNotesChangedEvent.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantId,
+            entityType: PlantEntity.name,
+            eventType: PlantNotesChangedEvent.name,
           },
           {
             id: plantId,
@@ -353,11 +353,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
     if (generateEvent) {
       this.apply(
-        new GrowingUnitPlantGrowingUnitChangedEvent(
+        new PlantGrowingUnitChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
-            eventType: GrowingUnitPlantGrowingUnitChangedEvent.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: plantId,
+            entityType: PlantEntity.name,
+            eventType: PlantGrowingUnitChangedEvent.name,
           },
           {
             id: plantId,
@@ -384,8 +386,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitNameChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: this._id.value,
+            entityType: GrowingUnitAggregate.name,
             eventType: GrowingUnitNameChangedEvent.name,
           },
           {
@@ -414,8 +418,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitTypeChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: this._id.value,
+            entityType: GrowingUnitAggregate.name,
             eventType: GrowingUnitTypeChangedEvent.name,
           },
           {
@@ -444,8 +450,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitCapacityChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: this._id.value,
+            entityType: GrowingUnitAggregate.name,
             eventType: GrowingUnitCapacityChangedEvent.name,
           },
           {
@@ -474,8 +482,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitDimensionsChangedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: this._id.value,
+            entityType: GrowingUnitAggregate.name,
             eventType: GrowingUnitDimensionsChangedEvent.name,
           },
           {
@@ -497,8 +507,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
       this.apply(
         new GrowingUnitDeletedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: GrowingUnitAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: GrowingUnitAggregate.name,
+            entityId: this._id.value,
+            entityType: GrowingUnitAggregate.name,
             eventType: GrowingUnitDeletedEvent.name,
           },
           this.toPrimitives(),

@@ -1,5 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AssertSagaStepViewModelExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service';
 import { SagaStepViewModelFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-view-model/saga-step-view-model.factory';
 import {
@@ -7,6 +5,8 @@ import {
   SagaStepReadRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository';
 import { SagaStepStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-status-changed/saga-step-status-changed.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(SagaStepStatusChangedEvent)
 export class SagaStepStatusChangedEventHandler
@@ -28,13 +28,13 @@ export class SagaStepStatusChangedEventHandler
    */
   async handle(event: SagaStepStatusChangedEvent) {
     this.logger.log(
-      `Handling saga step status changed event: ${event.aggregateId}`,
+      `Handling saga step status changed event: ${event.aggregateRootId}`,
     );
 
     // 01: Assert the saga step view model exists
     const existingSagaStepViewModel =
       await this.assertSagaStepViewModelExistsService.execute(
-        event.aggregateId,
+        event.aggregateRootId,
       );
 
     // 02: Update the saga step view model with status change data

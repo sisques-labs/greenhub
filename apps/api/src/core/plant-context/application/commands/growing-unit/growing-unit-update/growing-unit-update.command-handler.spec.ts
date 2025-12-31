@@ -13,7 +13,7 @@ import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/valu
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
-import { GrowingUnitNameChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-name-changed/growing-unit-name-changed.event';
+import { GrowingUnitNameChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-name-changed/growing-unit-name-changed.event';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 

@@ -1,11 +1,14 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
+import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link GrowingUnitUpdateCommand} to update an existing growing unit (container) entity.
@@ -35,8 +38,9 @@ export class GrowingUnitUpdateCommandHandler
   constructor(
     @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
     private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-    private readonly eventBus: EventBus,
+    private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+    private eventBus: EventBus,
   ) {}
 
   /**
@@ -75,8 +79,22 @@ export class GrowingUnitUpdateCommandHandler
     // 03: Save the growing unit entity
     await this.growingUnitWriteRepository.save(existingGrowingUnit);
 
-    // 04: Publish all events
+    // 04: Publish all domain events
     await this.eventBus.publishAll(existingGrowingUnit.getUncommittedEvents());
     await existingGrowingUnit.commit();
+
+    // 05: Publish the integration event for the GrowingUnitUpdatedEvent
+    await this.publishIntegrationEventsService.execute(
+      new GrowingUnitUpdatedEvent(
+        {
+          aggregateRootId: existingGrowingUnit.id.value,
+          aggregateRootType: GrowingUnitAggregate.name,
+          entityId: existingGrowingUnit.id.value,
+          entityType: GrowingUnitAggregate.name,
+          eventType: GrowingUnitUpdatedEvent.name,
+        },
+        existingGrowingUnit.toPrimitives(),
+      ),
+    );
   }
 }

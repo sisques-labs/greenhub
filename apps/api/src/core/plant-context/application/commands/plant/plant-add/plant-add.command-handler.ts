@@ -1,14 +1,17 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
+import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link PlantAddCommand} to add a new plant to a growing unit.
@@ -35,6 +38,7 @@ export class PlantAddCommandHandler
    * @param eventBus - The event bus for publishing domain events.
    * @param assertGrowingUnitExistsService - Service that ensures the growing unit exists.
    * @param plantEntityFactory - Factory for creating plant entities.
+   * @param publishIntegrationEventsService - Service for publishing integration events.
    */
   constructor(
     @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
@@ -42,6 +46,7 @@ export class PlantAddCommandHandler
     private readonly eventBus: EventBus,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
     private readonly plantEntityFactory: PlantEntityFactory,
+    private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
   ) {}
 
   /**
@@ -86,11 +91,25 @@ export class PlantAddCommandHandler
     // 05: Save the growing unit aggregate
     await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
-    // 06: Publish all events
+    // 06: Publish all domain events
     await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
     await growingUnitAggregate.commit();
 
-    // 07: Return the created plant id
+    // 07: Publish the PlantCreatedEvent integration event
+    await this.publishIntegrationEventsService.execute(
+      new PlantCreatedEvent(
+        {
+          aggregateRootId: growingUnitAggregate.id.value,
+          aggregateRootType: GrowingUnitAggregate.name,
+          entityId: plantEntity.id.value,
+          entityType: PlantEntity.name,
+          eventType: PlantCreatedEvent.name,
+        },
+        plantEntity.toPrimitives(),
+      ),
+    );
+
+    // 08: Return the created plant id
     return command.id.value;
   }
 }

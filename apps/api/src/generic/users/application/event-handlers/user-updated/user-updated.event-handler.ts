@@ -1,11 +1,11 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AssertUserViewModelExsistsService } from '@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service';
 import {
   USER_READ_REPOSITORY_TOKEN,
   UserReadRepository,
 } from '@/generic/users/domain/repositories/user-read.repository';
 import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(UserUpdatedEvent)
 export class UserUpdatedEventHandler
@@ -25,11 +25,13 @@ export class UserUpdatedEventHandler
    * @param event - The UserUpdatedEvent event to handle.
    */
   async handle(event: UserUpdatedEvent) {
-    this.logger.log(`Handling user updated event: ${event.aggregateId}`);
+    this.logger.log(`Handling user updated event: ${event.aggregateRootId}`);
 
     // 01: Assert the user view model exists
     const existingUserViewModel =
-      await this.assertUserViewModelExsistsService.execute(event.aggregateId);
+      await this.assertUserViewModelExsistsService.execute(
+        event.aggregateRootId,
+      );
 
     // 02: Update the existing view model with new data
     existingUserViewModel.update(event.data);

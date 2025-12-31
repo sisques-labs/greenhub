@@ -1,10 +1,10 @@
-import { Test } from '@nestjs/testing';
 import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
+import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import {
   GROWING_UNIT_READ_REPOSITORY_TOKEN,
   IGrowingUnitReadRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
-import { GrowingUnitDeletedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
+import { Test } from '@nestjs/testing';
 
 describe('GrowingUnitDeletedEventHandler', () => {
   let handler: GrowingUnitDeletedEventHandler;

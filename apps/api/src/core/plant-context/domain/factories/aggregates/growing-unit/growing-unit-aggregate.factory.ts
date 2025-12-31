@@ -1,4 +1,3 @@
-import { Injectable, Logger } from '@nestjs/common';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
@@ -9,6 +8,7 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Factory responsible for creating {@link GrowingUnitAggregate} entities.
@@ -45,14 +45,11 @@ export class GrowingUnitAggregateFactory
    * @param generateEvent - Whether to generate a creation event for the aggregate (default: true).
    * @returns The created GrowingUnitAggregate entity.
    */
-  public create(
-    data: IGrowingUnitDto,
-    generateEvent: boolean = true,
-  ): GrowingUnitAggregate {
+  public create(data: IGrowingUnitDto): GrowingUnitAggregate {
     this.logger.log(
       `Creating GrowingUnitAggregate from DTO: ${JSON.stringify(data)}`,
     );
-    return new GrowingUnitAggregate(data, generateEvent);
+    return new GrowingUnitAggregate(data);
   }
 
   /**
@@ -71,20 +68,17 @@ export class GrowingUnitAggregateFactory
     this.logger.log(
       `Creating GrowingUnitAggregate from primitives: ${JSON.stringify(data)}`,
     );
-    return new GrowingUnitAggregate(
-      {
-        id: new GrowingUnitUuidValueObject(data.id),
-        name: new GrowingUnitNameValueObject(data.name),
-        type: new GrowingUnitTypeValueObject(data.type),
-        capacity: new GrowingUnitCapacityValueObject(data.capacity),
-        dimensions: data.dimensions
-          ? new DimensionsValueObject(data.dimensions)
-          : null,
-        plants: data.plants.map((plant) =>
-          this.plantEntityFactory.fromPrimitives(plant),
-        ),
-      },
-      false,
-    );
+    return new GrowingUnitAggregate({
+      id: new GrowingUnitUuidValueObject(data.id),
+      name: new GrowingUnitNameValueObject(data.name),
+      type: new GrowingUnitTypeValueObject(data.type),
+      capacity: new GrowingUnitCapacityValueObject(data.capacity),
+      dimensions: data.dimensions
+        ? new DimensionsValueObject(data.dimensions)
+        : null,
+      plants: data.plants.map((plant) =>
+        this.plantEntityFactory.fromPrimitives(plant),
+      ),
+    });
   }
 }

@@ -1,5 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AssertSagaInstanceViewModelExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-view-model-exists/assert-saga-instance-view-model-exists.service';
 import { SagaInstanceViewModelFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory';
 import {
@@ -7,6 +5,8 @@ import {
   SagaInstanceReadRepository,
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
 import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(SagaInstanceStatusChangedEvent)
 export class SagaInstanceStatusChangedEventHandler
@@ -30,13 +30,13 @@ export class SagaInstanceStatusChangedEventHandler
    */
   async handle(event: SagaInstanceStatusChangedEvent) {
     this.logger.log(
-      `Handling saga instance status changed event: ${event.aggregateId}`,
+      `Handling saga instance status changed event: ${event.aggregateRootId}`,
     );
 
     // 01: Assert the saga instance view model exists
     const existingSagaInstanceViewModel =
       await this.assertSagaInstanceViewModelExistsService.execute(
-        event.aggregateId,
+        event.aggregateRootId,
       );
 
     // 02: Save the saga instance view model

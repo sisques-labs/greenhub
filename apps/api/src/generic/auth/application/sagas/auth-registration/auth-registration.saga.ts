@@ -1,5 +1,3 @@
-import { Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
 import { AuthCreateCommand } from '@/generic/auth/application/commands/auth-create/auth-create.command';
 import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
 import { IAuthCreateCommandDto } from '@/generic/auth/application/dtos/commands/auth-create/auth-create-command.dto';
@@ -7,6 +5,8 @@ import { UserDeleteCommand } from '@/generic/users/application/commands/delete-u
 import { UserCreateCommand } from '@/generic/users/application/commands/user-create/user-create.command';
 import { BaseSaga } from '@/shared/application/sagas/base-saga/base-saga';
 import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event';
+import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 
 /**
  * Saga that orchestrates the complete user registration flow:
@@ -30,7 +30,7 @@ export class AuthRegistrationSaga extends BaseSaga {
   }
 
   async handle(event: AuthRegistrationRequestedEvent): Promise<void> {
-    const authId = event.aggregateId;
+    const authId = event.entityId;
     const userId = event.data.userId;
 
     this.logger.log(

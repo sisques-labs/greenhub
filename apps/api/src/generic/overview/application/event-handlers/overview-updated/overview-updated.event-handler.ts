@@ -1,24 +1,16 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { GrowingUnitCreatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event';
+import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
+import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
+import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
+import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
+import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
 import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import {
   IOverviewReadRepository,
   OVERVIEW_READ_REPOSITORY_TOKEN,
 } from '@/generic/overview/domain/repositories/overview-read/overview-read.repository';
-import { GrowingUnitCapacityChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-capacity-changed/growing-unit-capacity-changed.event';
-import { GrowingUnitDimensionsChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-dimensions-changed/growing-unit-dimensions-changed.event';
-import { GrowingUnitNameChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-name-changed/growing-unit-name-changed.event';
-import { GrowingUnitTypeChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/field-changed/growing-unit-type-changed/growing-unit-type-changed.event';
-import { GrowingUnitCreatedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-created/growing-unit-created.event';
-import { GrowingUnitDeletedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
-import { GrowingUnitPlantAddedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
-import { GrowingUnitPlantRemovedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
-import { GrowingUnitPlantGrowingUnitChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-growing-unit-changed/growing-unit-plant-growing-unit-changed.event';
-import { GrowingUnitPlantNameChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-name-changed/growing-unit-plant-name-changed.event';
-import { GrowingUnitPlantNotesChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-notes-changed/growing-unit-plant-notes-changed.event';
-import { GrowingUnitPlantPlantedDateChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-planted-date-changed/growing-unit-plant-planted-date-changed.event';
-import { GrowingUnitPlantSpeciesChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-species-changed/growing-unit-plant-species-changed.event';
-import { GrowingUnitPlantStatusChangedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/plant/field-changed/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 /**
  * Event handler that updates the overview view model when plant context events occur.
@@ -31,37 +23,21 @@ import { GrowingUnitPlantStatusChangedEvent } from '@/shared/domain/events/featu
  */
 @EventsHandler(
   GrowingUnitCreatedEvent,
+  GrowingUnitUpdatedEvent,
   GrowingUnitDeletedEvent,
-  GrowingUnitNameChangedEvent,
-  GrowingUnitTypeChangedEvent,
-  GrowingUnitCapacityChangedEvent,
-  GrowingUnitDimensionsChangedEvent,
-  GrowingUnitPlantAddedEvent,
-  GrowingUnitPlantRemovedEvent,
-  GrowingUnitPlantNameChangedEvent,
-  GrowingUnitPlantSpeciesChangedEvent,
-  GrowingUnitPlantStatusChangedEvent,
-  GrowingUnitPlantPlantedDateChangedEvent,
-  GrowingUnitPlantNotesChangedEvent,
-  GrowingUnitPlantGrowingUnitChangedEvent,
+  PlantCreatedEvent,
+  PlantUpdatedEvent,
+  PlantDeletedEvent,
 )
 export class OverviewUpdatedEventHandler
   implements
     IEventHandler<
       | GrowingUnitCreatedEvent
+      | GrowingUnitUpdatedEvent
       | GrowingUnitDeletedEvent
-      | GrowingUnitNameChangedEvent
-      | GrowingUnitTypeChangedEvent
-      | GrowingUnitCapacityChangedEvent
-      | GrowingUnitDimensionsChangedEvent
-      | GrowingUnitPlantAddedEvent
-      | GrowingUnitPlantRemovedEvent
-      | GrowingUnitPlantNameChangedEvent
-      | GrowingUnitPlantSpeciesChangedEvent
-      | GrowingUnitPlantStatusChangedEvent
-      | GrowingUnitPlantPlantedDateChangedEvent
-      | GrowingUnitPlantNotesChangedEvent
-      | GrowingUnitPlantGrowingUnitChangedEvent
+      | PlantCreatedEvent
+      | PlantUpdatedEvent
+      | PlantDeletedEvent
     >
 {
   private readonly logger = new Logger(OverviewUpdatedEventHandler.name);
@@ -82,21 +58,13 @@ export class OverviewUpdatedEventHandler
     event:
       | GrowingUnitCreatedEvent
       | GrowingUnitDeletedEvent
-      | GrowingUnitNameChangedEvent
-      | GrowingUnitTypeChangedEvent
-      | GrowingUnitCapacityChangedEvent
-      | GrowingUnitDimensionsChangedEvent
-      | GrowingUnitPlantAddedEvent
-      | GrowingUnitPlantRemovedEvent
-      | GrowingUnitPlantNameChangedEvent
-      | GrowingUnitPlantSpeciesChangedEvent
-      | GrowingUnitPlantStatusChangedEvent
-      | GrowingUnitPlantPlantedDateChangedEvent
-      | GrowingUnitPlantNotesChangedEvent
-      | GrowingUnitPlantGrowingUnitChangedEvent,
+      | GrowingUnitUpdatedEvent
+      | PlantCreatedEvent
+      | PlantUpdatedEvent
+      | PlantDeletedEvent,
   ) {
     this.logger.log(
-      `Handling overview update event: ${event.eventType} for aggregate ${event.aggregateId}`,
+      `Handling overview update event: ${event.eventType} for aggregate ${event.aggregateRootId}`,
     );
 
     try {

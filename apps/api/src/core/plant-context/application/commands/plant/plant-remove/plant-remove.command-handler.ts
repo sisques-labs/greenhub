@@ -1,8 +1,8 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
+import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
@@ -11,6 +11,9 @@ import {
   IPlantWriteRepository,
   PLANT_WRITE_REPOSITORY_TOKEN,
 } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link PlantRemoveCommand} to remove a plant from a growing unit.
@@ -37,6 +40,7 @@ export class PlantRemoveCommandHandler
    * @param plantWriteRepository - The write repository for persisting plant entities.
    * @param eventBus - The event bus for publishing domain events.
    * @param assertGrowingUnitExistsService - Service that ensures the growing unit exists.
+   * @param publishIntegrationEventsService - Service for publishing integration events.
    */
   constructor(
     @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
@@ -45,6 +49,7 @@ export class PlantRemoveCommandHandler
     private readonly plantWriteRepository: IPlantWriteRepository,
     private readonly eventBus: EventBus,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+    private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
   ) {}
 
   /**
@@ -85,8 +90,22 @@ export class PlantRemoveCommandHandler
     // 05: Save the growing unit aggregate
     await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
-    // 06: Publish all events
+    // 06: Publish all domain events
     await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
     await growingUnitAggregate.commit();
+
+    // 07: Publish the PlantDeletedEvent integration event
+    await this.publishIntegrationEventsService.execute(
+      new PlantDeletedEvent(
+        {
+          aggregateRootId: growingUnitAggregate.id.value,
+          aggregateRootType: GrowingUnitAggregate.name,
+          entityId: plantEntity.id.value,
+          entityType: PlantEntity.name,
+          eventType: PlantDeletedEvent.name,
+        },
+        plantEntity.toPrimitives(),
+      ),
+    );
   }
 }

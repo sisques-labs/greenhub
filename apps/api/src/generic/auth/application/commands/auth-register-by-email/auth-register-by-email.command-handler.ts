@@ -1,5 +1,3 @@
-import { Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';
 import { AssertAuthEmailNotExistsService } from '@/generic/auth/application/services/assert-auth-email-not-exists/assert-auth-email-not-exists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
@@ -8,6 +6,8 @@ import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth
 import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { Logger } from '@nestjs/common';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthRegisterByEmailCommand } from './auth-register-by-email.command';
 
 @CommandHandler(AuthRegisterByEmailCommand)
@@ -52,8 +52,10 @@ export class AuthRegisterByEmailCommandHandler
 
     const registrationEvent = new AuthRegistrationRequestedEvent(
       {
-        aggregateId: eventData.id,
-        aggregateType: AuthAggregate.name,
+        aggregateRootId: eventData.id,
+        aggregateRootType: AuthAggregate.name,
+        entityId: eventData.id,
+        entityType: AuthAggregate.name,
         eventType: AuthRegistrationRequestedEvent.name,
       },
       eventData,

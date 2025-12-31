@@ -1,4 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
 import { PlantRemoveCommandHandler } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command-handler';
 import { IPlantRemoveCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-remove/plant-remove-command.dto';
@@ -6,24 +5,20 @@ import { AssertGrowingUnitExistsService } from '@/core/plant-context/application
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
-import {
-  GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
-  IGrowingUnitWriteRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import {
-  IPlantWriteRepository,
-  PLANT_WRITE_REPOSITORY_TOKEN,
-} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
+import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { IPlantWriteRepository } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitPlantRemovedEvent } from '@/shared/domain/events/features/plant-context/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+import { EventBus } from '@nestjs/cqrs';
 
 describe('PlantRemoveCommandHandler', () => {
   let handler: PlantRemoveCommandHandler;
@@ -31,6 +26,7 @@ describe('PlantRemoveCommandHandler', () => {
   let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
   let mockEventBus: jest.Mocked<EventBus>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
   let plantEntityFactory: PlantEntityFactory;
 
   beforeEach(() => {
@@ -56,11 +52,16 @@ describe('PlantRemoveCommandHandler', () => {
       execute: jest.fn(),
     } as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
+
     handler = new PlantRemoveCommandHandler(
       mockGrowingUnitWriteRepository,
       mockPlantWriteRepository,
       mockEventBus,
       mockAssertGrowingUnitExistsService,
+      mockPublishIntegrationEventsService,
     );
   });
 
@@ -78,17 +79,14 @@ describe('PlantRemoveCommandHandler', () => {
       };
 
       const command = new PlantRemoveCommand(commandDto);
-      const mockGrowingUnit = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
-        false,
-      );
+      const mockGrowingUnit = new GrowingUnitAggregate({
+        id: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new GrowingUnitNameValueObject('Garden Bed 1'),
+        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+        capacity: new GrowingUnitCapacityValueObject(10),
+        dimensions: null,
+        plants: [],
+      });
 
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(plantId),
@@ -132,17 +130,14 @@ describe('PlantRemoveCommandHandler', () => {
       };
 
       const command = new PlantRemoveCommand(commandDto);
-      const mockGrowingUnit = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
-        false,
-      );
+      const mockGrowingUnit = new GrowingUnitAggregate({
+        id: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new GrowingUnitNameValueObject('Garden Bed 1'),
+        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+        capacity: new GrowingUnitCapacityValueObject(10),
+        dimensions: null,
+        plants: [],
+      });
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
         mockGrowingUnit,
@@ -164,17 +159,14 @@ describe('PlantRemoveCommandHandler', () => {
       };
 
       const command = new PlantRemoveCommand(commandDto);
-      const mockGrowingUnit = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
-        false,
-      );
+      const mockGrowingUnit = new GrowingUnitAggregate({
+        id: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new GrowingUnitNameValueObject('Garden Bed 1'),
+        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+        capacity: new GrowingUnitCapacityValueObject(10),
+        dimensions: null,
+        plants: [],
+      });
 
       const plant = plantEntityFactory.create({
         id: new PlantUuidValueObject(plantId),

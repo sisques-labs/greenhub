@@ -1,11 +1,14 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
+import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Command handler for deleting a growing unit.
@@ -23,8 +26,8 @@ export class GrowingUnitDeleteCommandHandler
   constructor(
     @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
     private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-    private readonly eventBus: EventBus,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+    private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
   ) {}
 
   /**
@@ -39,7 +42,7 @@ export class GrowingUnitDeleteCommandHandler
     );
 
     // 01: Find the growing unit by id
-    const existingGrowingUnit =
+    const existingGrowingUnit: GrowingUnitAggregate =
       await this.assertGrowingUnitExistsService.execute(command.id.value);
 
     // 02: Delete the growing unit
@@ -49,6 +52,17 @@ export class GrowingUnitDeleteCommandHandler
     await this.growingUnitWriteRepository.delete(existingGrowingUnit.id.value);
 
     // 04: Publish all events
-    await this.eventBus.publishAll(existingGrowingUnit.getUncommittedEvents());
+    await this.publishIntegrationEventsService.execute(
+      new GrowingUnitDeletedEvent(
+        {
+          aggregateRootId: existingGrowingUnit.id.value,
+          aggregateRootType: GrowingUnitAggregate.name,
+          entityId: existingGrowingUnit.id.value,
+          entityType: GrowingUnitAggregate.name,
+          eventType: GrowingUnitDeletedEvent.name,
+        },
+        existingGrowingUnit.toPrimitives(),
+      ),
+    );
   }
 }

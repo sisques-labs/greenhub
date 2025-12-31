@@ -1,20 +1,20 @@
 import { IAuthCreateDto } from '@/generic/auth/domain/dtos/entities/auth-create/auth-create.dto';
 import { IAuthUpdateDto } from '@/generic/auth/domain/dtos/entities/auth-update/auth-update.dto';
 import { AuthPrimitives } from '@/generic/auth/domain/primitives/auth.primitives';
-import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
 import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
+import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
 import { AuthLastLoginAtValueObject } from '@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo';
 import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
 import { AuthPhoneNumberValueObject } from '@/generic/auth/domain/value-objects/auth-phone-number/auth-phone-number.vo';
-import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
 import { AuthProviderIdValueObject } from '@/generic/auth/domain/value-objects/auth-provider-id/auth-provider-id.vo';
+import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
 import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
 import { BaseAggregate } from '@/shared/domain/aggregates/base-aggregate/base.aggregate';
 import { AuthCreatedEvent } from '@/shared/domain/events/auth/auth-created/auth-created.event';
 import { AuthDeletedEvent } from '@/shared/domain/events/auth/auth-deleted/auth-deleted.event';
 import { AuthRegisteredByEmailEvent } from '@/shared/domain/events/auth/auth-registered-by-email/auth-registered-by-email.event';
-import { AuthUpdatedEvent } from '@/shared/domain/events/auth/auth-updated/auth-updated.event';
 import { AuthUpdatedLastLoginAtEvent } from '@/shared/domain/events/auth/auth-updated-last-login-at/auth-updated-last-login-at.event';
+import { AuthUpdatedEvent } from '@/shared/domain/events/auth/auth-updated/auth-updated.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
@@ -51,8 +51,10 @@ export class AuthAggregate extends BaseAggregate {
       this.apply(
         new AuthCreatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: AuthAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: AuthAggregate.name,
+            entityId: this._id.value,
+            entityType: AuthAggregate.name,
             eventType: AuthCreatedEvent.name,
           },
           this.toPrimitives(),
@@ -101,8 +103,10 @@ export class AuthAggregate extends BaseAggregate {
       this.apply(
         new AuthUpdatedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: AuthAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: AuthAggregate.name,
+            entityId: this._id.value,
+            entityType: AuthAggregate.name,
             eventType: AuthUpdatedEvent.name,
           },
           this.toPrimitives(),
@@ -127,8 +131,10 @@ export class AuthAggregate extends BaseAggregate {
       this.apply(
         new AuthUpdatedLastLoginAtEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: AuthAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: AuthAggregate.name,
+            entityId: this._id.value,
+            entityType: AuthAggregate.name,
             eventType: AuthUpdatedLastLoginAtEvent.name,
           },
           this.toPrimitives(),
@@ -147,8 +153,10 @@ export class AuthAggregate extends BaseAggregate {
       this.apply(
         new AuthDeletedEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: AuthAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: AuthAggregate.name,
+            entityId: this._id.value,
+            entityType: AuthAggregate.name,
             eventType: AuthDeletedEvent.name,
           },
           this.toPrimitives(),
@@ -169,8 +177,10 @@ export class AuthAggregate extends BaseAggregate {
       this.apply(
         new AuthRegisteredByEmailEvent(
           {
-            aggregateId: this._id.value,
-            aggregateType: AuthAggregate.name,
+            aggregateRootId: this._id.value,
+            aggregateRootType: AuthAggregate.name,
+            entityId: this._id.value,
+            entityType: AuthAggregate.name,
             eventType: AuthRegisteredByEmailEvent.name,
           },
           {

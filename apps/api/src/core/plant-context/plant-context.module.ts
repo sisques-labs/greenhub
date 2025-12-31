@@ -1,5 +1,3 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
 import { GrowingUnitDeleteCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command-handler';
 import { GrowingUnitUpdateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command-handler';
@@ -7,20 +5,9 @@ import { PlantAddCommandHandler } from '@/core/plant-context/application/command
 import { PlantRemoveCommandHandler } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command-handler';
 import { PlantTransplantCommandHandler } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command-handler';
 import { PlantUpdateCommandHandler } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command-handler';
-import { GrowingUnitCapacityChangedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-capacity-changed/growing-unit-capacity-changed.event-handler';
 import { GrowingUnitCreatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-created/growing-unit-created.event-handler';
 import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
-import { GrowingUnitDimensionsChangedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-dimensions-changed/growing-unit-dimensions-changed.event-handler';
-import { GrowingUnitNameChangedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-name-changed/growing-unit-name-changed.event-handler';
-import { GrowingUnitTypeChangedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-type-changed/growing-unit-type-changed.event-handler';
-import { GrowingUnitPlantAddedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-added/growing-unit-plant-added.event-handler';
-import { GrowingUnitPlantGrowingUnitChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-growing-unit-changed/growing-unit-plant-growing-unit-changed.event-handler';
-import { GrowingUnitPlantNameChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-name-changed/growing-unit-plant-name-changed.event-handler';
-import { GrowingUnitPlantNotesChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-notes-changed/growing-unit-plant-notes-changed.event-handler';
-import { GrowingUnitPlantPlantedDateChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-planted-date-changed/growing-unit-plant-planted-date-changed.event-handler';
-import { GrowingUnitPlantRemovedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-removed/growing-unit-plant-removed.event-handler';
-import { GrowingUnitPlantSpeciesChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-species-changed/growing-unit-plant-species-changed.event-handler';
-import { GrowingUnitPlantStatusChangedEventHandler } from '@/core/plant-context/application/event-handlers/plant/growing-unit-plant-status-changed/growing-unit-plant-status-changed.event-handler';
+import { GrowingUnitUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-updated/growing-unit-updated.event-handler';
 import { GrowingUnitFindByCriteriaQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler';
 import { GrowingUnitFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-id/growing-unit-find-by-id.query-handler';
 import { GrowingUnitViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler';
@@ -52,8 +39,13 @@ import { GrowingUnitQueriesResolver } from '@/core/plant-context/transport/graph
 import { PlantMutationsResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-mutations.resolver';
 import { PlantQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Import enums for GraphQL
+import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
+import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-removed/plant-removed.event-handler';
+import { PlantUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-updated/plant-updated.event-handler';
 import '@/core/plant-context/transport/graphql/enums/growing-unit/growing-unit-registered-enums.graphql';
 import '@/core/plant-context/transport/graphql/enums/plant/plant-registered-enums.graphql';
 
@@ -108,20 +100,12 @@ const EVENT_HANDLERS = [
   // Growing Unit event handlers
   GrowingUnitCreatedEventHandler,
   GrowingUnitDeletedEventHandler,
-  GrowingUnitNameChangedEventHandler,
-  GrowingUnitTypeChangedEventHandler,
-  GrowingUnitCapacityChangedEventHandler,
-  GrowingUnitDimensionsChangedEventHandler,
+  GrowingUnitUpdatedEventHandler,
 
   // Plant event handlers
-  GrowingUnitPlantAddedEventHandler,
-  GrowingUnitPlantRemovedEventHandler,
-  GrowingUnitPlantNameChangedEventHandler,
-  GrowingUnitPlantSpeciesChangedEventHandler,
-  GrowingUnitPlantNotesChangedEventHandler,
-  GrowingUnitPlantStatusChangedEventHandler,
-  GrowingUnitPlantPlantedDateChangedEventHandler,
-  GrowingUnitPlantGrowingUnitChangedEventHandler,
+  PlantCreatedEventHandler,
+  PlantDeletedEventHandler,
+  PlantUpdatedEventHandler,
 ];
 
 const FACTORIES = [
