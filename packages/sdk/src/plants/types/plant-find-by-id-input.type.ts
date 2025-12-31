@@ -1,6 +1,3 @@
 export type PlantFindByIdInput = {
-  id: string;
+	id: string;
 };
-
-
-

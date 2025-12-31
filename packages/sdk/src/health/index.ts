@@ -1,8 +1,8 @@
 // Client
-export * from './client/health-client.js';
+export * from "./client/health-client.js";
 
 // Hooks
-export * from './hooks/use-health.js';
+export * from "./hooks/use-health.js";
 
 // Types
-export * from './types/health-response.type.js';
+export * from "./types/health-response.type.js";

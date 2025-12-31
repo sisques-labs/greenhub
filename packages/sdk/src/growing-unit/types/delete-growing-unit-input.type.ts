@@ -1,6 +1,3 @@
 export type DeleteGrowingUnitInput = {
-  id: string;
+	id: string;
 };
-
-
-

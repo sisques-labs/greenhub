@@ -1,6 +1,6 @@
-import type { SagaInstanceStatus } from './saga-instance-status.type.js';
+import type { SagaInstanceStatus } from "./saga-instance-status.type.js";
 
 export type SagaInstanceChangeStatusInput = {
-  id: string;
-  status: SagaInstanceStatus;
+	id: string;
+	status: SagaInstanceStatus;
 };

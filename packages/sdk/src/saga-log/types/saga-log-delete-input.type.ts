@@ -1,3 +1,3 @@
 export type SagaLogDeleteInput = {
-  id: string;
+	id: string;
 };

@@ -1,6 +1,6 @@
-import type { SagaStepStatus } from './saga-step-status.type.js';
+import type { SagaStepStatus } from "./saga-step-status.type.js";
 
 export type SagaStepChangeStatusInput = {
-  id: string;
-  status: SagaStepStatus;
+	id: string;
+	status: SagaStepStatus;
 };

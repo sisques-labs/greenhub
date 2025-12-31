@@ -3,8 +3,8 @@
  * @template T - The type of the data
  */
 export type ServiceResult<T> = {
-  data: T | null;
-  error: Error | null;
-  loading: boolean;
-  success: boolean;
+	data: T | null;
+	error: Error | null;
+	loading: boolean;
+	success: boolean;
 };

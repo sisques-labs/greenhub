@@ -69,6 +69,3 @@ export const GROWING_UNITS_FIND_BY_CRITERIA_QUERY = `
     }
   }
 `;
-
-
-

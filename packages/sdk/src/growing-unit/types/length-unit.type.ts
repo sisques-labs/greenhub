@@ -1,9 +1,6 @@
 export type LengthUnit =
-  | 'MILLIMETER'
-  | 'CENTIMETER'
-  | 'METER'
-  | 'INCH'
-  | 'FOOT';
-
-
-
+	| "MILLIMETER"
+	| "CENTIMETER"
+	| "METER"
+	| "INCH"
+	| "FOOT";

@@ -1,6 +1,3 @@
 export type GrowingUnitFindByIdInput = {
-  id: string;
+	id: string;
 };
-
-
-

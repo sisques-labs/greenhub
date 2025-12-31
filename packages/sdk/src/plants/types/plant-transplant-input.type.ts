@@ -1,8 +1,5 @@
 export type PlantTransplantInput = {
-  sourceGrowingUnitId: string;
-  targetGrowingUnitId: string;
-  plantId: string;
+	sourceGrowingUnitId: string;
+	targetGrowingUnitId: string;
+	plantId: string;
 };
-
-
-

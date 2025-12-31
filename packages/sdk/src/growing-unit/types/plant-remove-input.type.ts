@@ -1,7 +1,4 @@
 export type PlantRemoveInput = {
-  growingUnitId: string;
-  plantId: string;
+	growingUnitId: string;
+	plantId: string;
 };
-
-
-
