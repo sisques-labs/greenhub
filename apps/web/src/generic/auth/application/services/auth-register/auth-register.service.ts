@@ -39,7 +39,7 @@ export class AuthRegisterService {
 			}
 		} catch (error) {
 			const registerError =
-				error instanceof Error ? error : new Error('Registration failed');
+				error instanceof Error ? error : new Error("Registration failed");
 			input.onError?.(registerError);
 			throw registerError;
 		}

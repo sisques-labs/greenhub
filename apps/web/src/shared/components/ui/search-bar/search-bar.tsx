@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Input } from '@repo/shared/presentation/components/ui/input';
-import { SearchIcon } from 'lucide-react';
-import type { ChangeEvent } from 'react';
+import { Input } from "@repo/shared/presentation/components/ui/input";
+import { SearchIcon } from "lucide-react";
+import type { ChangeEvent } from "react";
 
 interface SearchBarProps {
 	placeholder: string;
@@ -25,7 +25,7 @@ export function SearchBar({
 	};
 
 	return (
-		<div className={`relative ${className || ''}`}>
+		<div className={`relative ${className || ""}`}>
 			<SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 			<Input
 				type="text"

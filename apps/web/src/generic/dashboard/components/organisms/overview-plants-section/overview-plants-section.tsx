@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import type { OverviewResponse } from '@repo/sdk';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import type { OverviewResponse } from "@repo/sdk";
+import { Badge } from "@repo/shared/presentation/components/ui/badge";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Progress } from '@repo/shared/presentation/components/ui/progress';
+} from "@repo/shared/presentation/components/ui/card";
+import { Progress } from "@repo/shared/presentation/components/ui/progress";
 import {
 	ArchiveIcon,
 	CalendarIcon,
@@ -17,8 +17,8 @@ import {
 	FileTextIcon,
 	FlowerIcon,
 	XCircleIcon,
-} from 'lucide-react';
-import { useTranslations } from 'next-intl';
+} from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface OverviewPlantsSectionProps {
 	overview: OverviewResponse | null;
@@ -33,7 +33,7 @@ export function OverviewPlantsSection({
 	overview,
 	isLoading = false,
 }: OverviewPlantsSectionProps) {
-	const t = useTranslations('dashboard.sections.plants');
+	const t = useTranslations("dashboard.sections.plants");
 
 	if (isLoading || !overview) {
 		return (
@@ -59,55 +59,55 @@ export function OverviewPlantsSection({
 
 	const statusBreakdown = [
 		{
-			label: t('planted'),
+			label: t("planted"),
 			value: overview.plantsPlanted,
-			color: 'bg-blue-500',
+			color: "bg-blue-500",
 			icon: FlowerIcon,
 		},
 		{
-			label: t('growing'),
+			label: t("growing"),
 			value: overview.plantsGrowing,
-			color: 'bg-green-500',
+			color: "bg-green-500",
 			icon: FlowerIcon,
 		},
 		{
-			label: t('harvested'),
+			label: t("harvested"),
 			value: overview.plantsHarvested,
-			color: 'bg-orange-500',
+			color: "bg-orange-500",
 			icon: CheckCircleIcon,
 		},
 		{
-			label: t('dead'),
+			label: t("dead"),
 			value: overview.plantsDead,
-			color: 'bg-red-500',
+			color: "bg-red-500",
 			icon: XCircleIcon,
 		},
 		{
-			label: t('archived'),
+			label: t("archived"),
 			value: overview.plantsArchived,
-			color: 'bg-gray-500',
+			color: "bg-gray-500",
 			icon: ArchiveIcon,
 		},
 	];
 
 	const additionalMetrics = [
 		{
-			label: t('withoutPlantedDate'),
+			label: t("withoutPlantedDate"),
 			value: overview.plantsWithoutPlantedDate,
 			icon: CalendarIcon,
-			color: 'text-yellow-600',
+			color: "text-yellow-600",
 		},
 		{
-			label: t('withNotes'),
+			label: t("withNotes"),
 			value: overview.plantsWithNotes,
 			icon: FileTextIcon,
-			color: 'text-blue-600',
+			color: "text-blue-600",
 		},
 		{
-			label: t('recent7Days'),
+			label: t("recent7Days"),
 			value: overview.recentPlants,
 			icon: ClockIcon,
-			color: 'text-green-600',
+			color: "text-green-600",
 		},
 	];
 
@@ -116,7 +116,7 @@ export function OverviewPlantsSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<FlowerIcon className="h-5 w-5 text-green-600" />
-					{t('title')}
+					{t("title")}
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-6">
@@ -124,25 +124,27 @@ export function OverviewPlantsSection({
 				<div className="grid gap-4 md:grid-cols-3">
 					<div className="space-y-2">
 						<div className="flex items-center justify-between text-sm">
-							<span className="text-muted-foreground">{t('totalPlants')}</span>
+							<span className="text-muted-foreground">{t("totalPlants")}</span>
 							<span className="font-semibold">
 								{totalPlants.toLocaleString()}
 							</span>
 						</div>
 						<div className="flex items-center justify-between text-sm">
-							<span className="text-muted-foreground">{t('activePlants')}</span>
+							<span className="text-muted-foreground">{t("activePlants")}</span>
 							<span className="font-semibold text-green-600">
 								{overview.totalActivePlants.toLocaleString()}
 							</span>
 						</div>
 						<Progress value={activePercentage} className="h-2" />
 						<p className="text-xs text-muted-foreground">
-							{t('activePercentage', { percentage: activePercentage })}
+							{t("activePercentage", { percentage: activePercentage })}
 						</p>
 					</div>
 
 					<div className="space-y-2">
-						<div className="text-sm font-medium mb-3">{t('statusBreakdown')}</div>
+						<div className="text-sm font-medium mb-3">
+							{t("statusBreakdown")}
+						</div>
 						<div className="space-y-2">
 							{statusBreakdown.map((status) => {
 								const Icon = status.icon;
@@ -172,7 +174,9 @@ export function OverviewPlantsSection({
 					</div>
 
 					<div className="space-y-2">
-						<div className="text-sm font-medium mb-3">{t('additionalMetrics')}</div>
+						<div className="text-sm font-medium mb-3">
+							{t("additionalMetrics")}
+						</div>
 						<div className="space-y-3">
 							{additionalMetrics.map((metric) => {
 								const Icon = metric.icon;

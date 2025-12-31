@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { cn } from '@repo/shared/presentation/lib/utils';
-import type { LucideIcon } from 'lucide-react';
+import { Button } from "@repo/shared/presentation/components/ui/button";
+import { cn } from "@repo/shared/presentation/lib/utils";
+import type { LucideIcon } from "lucide-react";
 
 export interface FilterOption {
 	value: string;
@@ -27,7 +27,7 @@ export function FilterButtons({
 	className,
 }: FilterButtonsProps) {
 	return (
-		<div className={cn('flex gap-2 flex-wrap', className)}>
+		<div className={cn("flex gap-2 flex-wrap", className)}>
 			{options.map((option) => {
 				const Icon = option.icon;
 				const isSelected = selectedValue === option.value;
@@ -35,10 +35,10 @@ export function FilterButtons({
 				return (
 					<Button
 						key={option.value}
-						variant={isSelected ? 'default' : 'outline'}
+						variant={isSelected ? "default" : "outline"}
 						size="sm"
 						onClick={() => onValueChange(option.value)}
-						className={cn(isSelected && 'bg-primary text-primary-foreground')}
+						className={cn(isSelected && "bg-primary text-primary-foreground")}
 					>
 						{Icon && <Icon className="mr-2 h-4 w-4" />}
 						{option.label}

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { useTranslations } from 'next-intl';
-import { AuthCard } from '@/generic/auth/presentation/components/organisms/auth-card/auth-card';
-import { AuthLoginForm } from '@/generic/auth/presentation/components/organisms/auth-login-form/auth-login-form';
-import { AuthRegisterForm } from '@/generic/auth/presentation/components/organisms/auth-register-form/auth-register-form';
-import { useAuthLogin } from '@/generic/auth/presentation/hooks/use-auth-login/use-auth-login';
-import { useAuthRegister } from '@/generic/auth/presentation/hooks/use-auth-register/use-auth-register';
-import { useAuthPageStore } from '@/generic/auth/presentation/stores/auth-page-store';
+import { Button } from "@repo/shared/presentation/components/ui/button";
+import { useTranslations } from "next-intl";
+import { AuthCard } from "@/generic/auth/presentation/components/organisms/auth-card/auth-card";
+import { AuthLoginForm } from "@/generic/auth/presentation/components/organisms/auth-login-form/auth-login-form";
+import { AuthRegisterForm } from "@/generic/auth/presentation/components/organisms/auth-register-form/auth-register-form";
+import { useAuthLogin } from "@/generic/auth/presentation/hooks/use-auth-login/use-auth-login";
+import { useAuthRegister } from "@/generic/auth/presentation/hooks/use-auth-register/use-auth-register";
+import { useAuthPageStore } from "@/generic/auth/presentation/stores/auth-page-store";
 
 /**
  * Authentication page component
@@ -36,7 +36,7 @@ const AuthPage = () => {
 			<AuthCard
 				isLoading={isLoading}
 				error={error}
-				mode={isLoginMode ? 'login' : 'signup'}
+				mode={isLoginMode ? "login" : "signup"}
 			>
 				{isLoginMode ? (
 					<AuthLoginForm
@@ -56,7 +56,7 @@ const AuthPage = () => {
 					{isLoginMode ? (
 						<>
 							<span className="text-muted-foreground">
-								{t('pages.auth.messages.switchToSignup')}{' '}
+								{t("pages.auth.messages.switchToSignup")}{" "}
 							</span>
 							<Button
 								variant="link"
@@ -64,13 +64,13 @@ const AuthPage = () => {
 								onClick={() => setIsLoginMode(false)}
 								disabled={isLoading}
 							>
-								{t('pages.auth.actions.switchToSignup')}
+								{t("pages.auth.actions.switchToSignup")}
 							</Button>
 						</>
 					) : (
 						<>
 							<span className="text-muted-foreground">
-								{t('pages.auth.messages.switchToLogin')}{' '}
+								{t("pages.auth.messages.switchToLogin")}{" "}
 							</span>
 							<Button
 								variant="link"
@@ -78,7 +78,7 @@ const AuthPage = () => {
 								onClick={() => setIsLoginMode(true)}
 								disabled={isLoading}
 							>
-								{t('pages.auth.actions.switchToLogin')}
+								{t("pages.auth.actions.switchToLogin")}
 							</Button>
 						</>
 					)}

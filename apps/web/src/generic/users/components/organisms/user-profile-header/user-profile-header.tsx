@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import type { AuthUserProfileResponse } from '@repo/sdk';
+import type { AuthUserProfileResponse } from "@repo/sdk";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from '@repo/shared/presentation/components/ui/avatar';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+} from "@repo/shared/presentation/components/ui/avatar";
+import { Badge } from "@repo/shared/presentation/components/ui/badge";
 import {
 	Card,
 	CardContent,
-} from '@repo/shared/presentation/components/ui/card';
-import { useTranslations } from 'next-intl';
+} from "@repo/shared/presentation/components/ui/card";
+import { useTranslations } from "next-intl";
 
 interface UserProfileHeaderProps {
 	profile: AuthUserProfileResponse;
@@ -21,18 +21,18 @@ export function UserProfileHeader({ profile }: UserProfileHeaderProps) {
 	const t = useTranslations();
 
 	const fullName =
-		[profile.name, profile.lastName].filter(Boolean).join(' ') ||
+		[profile.name, profile.lastName].filter(Boolean).join(" ") ||
 		profile.userName ||
-		t('pages.user.profile.anonymous');
+		t("pages.user.profile.anonymous");
 
 	const initials =
 		[profile.name, profile.lastName]
 			.filter(Boolean)
 			.map((n) => n?.[0])
-			.join('')
+			.join("")
 			.toUpperCase() ||
 		profile.userName?.[0]?.toUpperCase() ||
-		'?';
+		"?";
 
 	return (
 		<Card>
@@ -52,7 +52,7 @@ export function UserProfileHeader({ profile }: UserProfileHeaderProps) {
 							)}
 							{profile.status && (
 								<Badge
-									variant={profile.status === 'ACTIVE' ? 'default' : 'outline'}
+									variant={profile.status === "ACTIVE" ? "default" : "outline"}
 								>
 									{profile.status}
 								</Badge>

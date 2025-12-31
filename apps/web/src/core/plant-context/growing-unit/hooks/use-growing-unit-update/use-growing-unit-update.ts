@@ -1,6 +1,6 @@
-import type { UpdateGrowingUnitInput } from '@repo/sdk';
-import { useGrowingUnits } from '@repo/sdk';
-import type { GrowingUnitUpdateFormValues } from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
+import type { UpdateGrowingUnitInput } from "@repo/sdk";
+import { useGrowingUnits } from "@repo/sdk";
+import type { GrowingUnitUpdateFormValues } from "@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema";
 
 /**
  * Hook that provides growing unit update functionality
@@ -35,7 +35,7 @@ export function useGrowingUnitUpdate() {
 			const updateError =
 				error instanceof Error
 					? error
-					: new Error('Growing unit update failed');
+					: new Error("Growing unit update failed");
 			onError?.(updateError);
 		}
 	};

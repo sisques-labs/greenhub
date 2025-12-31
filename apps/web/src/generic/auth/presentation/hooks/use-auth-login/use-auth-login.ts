@@ -1,9 +1,9 @@
-import { useAuth } from '@repo/sdk';
-import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
-import { AuthLoginService } from '@/generic/auth/application/services/auth-login/auth-login.service';
-import { AuthLoginByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
+import { useAuth } from "@repo/sdk";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { AuthLoginService } from "@/generic/auth/application/services/auth-login/auth-login.service";
+import { AuthLoginByEmailFormValues } from "@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema";
+import { useAppRoutes } from "@/shared/hooks/use-routes";
 
 /**
  * Hook that provides login functionality using the AuthLoginService
@@ -34,7 +34,7 @@ export function useAuthLogin() {
 			},
 			onError: (error) => {
 				// Error handling is delegated to the SDK hook state
-				console.error('Login error:', error);
+				console.error("Login error:", error);
 			},
 		});
 	};

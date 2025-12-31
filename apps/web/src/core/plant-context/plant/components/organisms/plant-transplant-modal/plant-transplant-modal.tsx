@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import type { GrowingUnitResponse, PlantResponse } from '@repo/sdk';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { GrowingUnitResponse, PlantResponse } from "@repo/sdk";
+import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -10,7 +10,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from "@repo/shared/presentation/components/ui/dialog";
 import {
 	Form,
 	FormControl,
@@ -18,24 +18,26 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@repo/shared/presentation/components/ui/select";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const createPlantTransplantSchema = (translations: (key: string) => string) =>
 	z.object({
 		targetGrowingUnitId: z.string().min(1, {
-			message: translations('pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.required'),
+			message: translations(
+				"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.required",
+			),
 		}),
 	});
 
@@ -76,7 +78,7 @@ export function PlantTransplantModal({
 	const form = useForm<PlantTransplantFormValues>({
 		resolver: zodResolver(transplantSchema),
 		defaultValues: {
-			targetGrowingUnitId: '',
+			targetGrowingUnitId: "",
 		},
 	});
 
@@ -84,7 +86,7 @@ export function PlantTransplantModal({
 		await onSubmit(values.targetGrowingUnitId);
 		if (!error) {
 			form.reset({
-				targetGrowingUnitId: '',
+				targetGrowingUnitId: "",
 			});
 			onOpenChange(false);
 		}
@@ -93,72 +95,93 @@ export function PlantTransplantModal({
 	// Filter out the source growing unit from target options
 	const availableTargetGrowingUnits = useMemo(() => {
 		if (!sourceGrowingUnit) return targetGrowingUnits;
-		return targetGrowingUnits.filter(
-			(gu) => gu.id !== sourceGrowingUnit.id,
-		);
+		return targetGrowingUnits.filter((gu) => gu.id !== sourceGrowingUnit.id);
 	}, [targetGrowingUnits, sourceGrowingUnit]);
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent>
-			<DialogHeader>
-				<DialogTitle>{t('pages.plants.detail.modals.transplant.title')}</DialogTitle>
-				<DialogDescription>
-					{t('pages.plants.detail.modals.transplant.description')}
-				</DialogDescription>
-			</DialogHeader>
+				<DialogHeader>
+					<DialogTitle>
+						{t("pages.plants.detail.modals.transplant.title")}
+					</DialogTitle>
+					<DialogDescription>
+						{t("pages.plants.detail.modals.transplant.description")}
+					</DialogDescription>
+				</DialogHeader>
 
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-					{/* Source Growing Unit (read-only) */}
-					<FormItem>
-						<FormLabel>{t('pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.label')}</FormLabel>
-						<Input
-							value={sourceGrowingUnit?.name || t('pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.unknown')}
-							disabled
-							className="bg-muted"
-						/>
-						<p className="text-xs text-muted-foreground">
-							{t('pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.helper')}
-						</p>
-					</FormItem>
+					<form
+						onSubmit={form.handleSubmit(handleSubmit)}
+						className="space-y-4"
+					>
+						{/* Source Growing Unit (read-only) */}
+						<FormItem>
+							<FormLabel>
+								{t(
+									"pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.label",
+								)}
+							</FormLabel>
+							<Input
+								value={
+									sourceGrowingUnit?.name ||
+									t(
+										"pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.unknown",
+									)
+								}
+								disabled
+								className="bg-muted"
+							/>
+							<p className="text-xs text-muted-foreground">
+								{t(
+									"pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.helper",
+								)}
+							</p>
+						</FormItem>
 
-					{/* Target Growing Unit (select) */}
-					<FormField
-						// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-						control={form.control as any}
-						name="targetGrowingUnitId"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>
-									{t('pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label')}
-								</FormLabel>
-								<Select
-									onValueChange={field.onChange}
-									value={field.value}
-									disabled={isLoading}
-								>
-									<FormControl>
-										<SelectTrigger>
-											<SelectValue
-												placeholder={t(
-													'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder',
-												)}
-											/>
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										{availableTargetGrowingUnits.map((growingUnit) => (
-											<SelectItem key={growingUnit.id} value={growingUnit.id}>
-												{growingUnit.name} ({growingUnit.remainingCapacity}/{growingUnit.capacity} {t('pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable')})
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+						{/* Target Growing Unit (select) */}
+						<FormField
+							// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
+							control={form.control as any}
+							name="targetGrowingUnitId"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										{t(
+											"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label",
+										)}
+									</FormLabel>
+									<Select
+										onValueChange={field.onChange}
+										value={field.value}
+										disabled={isLoading}
+									>
+										<FormControl>
+											<SelectTrigger>
+												<SelectValue
+													placeholder={t(
+														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder",
+													)}
+												/>
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											{availableTargetGrowingUnits.map((growingUnit) => (
+												<SelectItem key={growingUnit.id} value={growingUnit.id}>
+													{growingUnit.name} ({growingUnit.remainingCapacity}/
+													{growingUnit.capacity}{" "}
+													{t(
+														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable",
+													)}
+													)
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
 						{error && (
 							<div className="text-sm text-destructive">{error.message}</div>
@@ -171,12 +194,16 @@ export function PlantTransplantModal({
 								onClick={() => onOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t('common.cancel')}
+								{t("common.cancel")}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.plants.detail.modals.transplant.actions.submit.loading')
-									: t('pages.plants.detail.modals.transplant.actions.submit.label')}
+									? t(
+											"pages.plants.detail.modals.transplant.actions.submit.loading",
+										)
+									: t(
+											"pages.plants.detail.modals.transplant.actions.submit.label",
+										)}
 							</Button>
 						</DialogFooter>
 					</form>
@@ -185,4 +212,3 @@ export function PlantTransplantModal({
 		</Dialog>
 	);
 }
-

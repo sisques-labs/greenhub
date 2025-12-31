@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
 import {
 	type GrowingUnitResponse,
 	PLANT_STATUS,
 	type PlantResponse,
-} from '@repo/sdk';
+} from "@repo/sdk";
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
+} from "@repo/shared/presentation/components/ui/table";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { PlantTableRow } from "@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row";
 
 interface PlantsByGrowingUnitSectionProps {
 	growingUnit: GrowingUnitResponse;
@@ -26,8 +26,8 @@ interface PlantsByGrowingUnitSectionProps {
 
 export function PlantsByGrowingUnitSection({
 	growingUnit,
-	searchQuery = '',
-	selectedFilter = 'all',
+	searchQuery = "",
+	selectedFilter = "all",
 	onEdit,
 	onDelete,
 }: PlantsByGrowingUnitSectionProps) {
@@ -49,12 +49,12 @@ export function PlantsByGrowingUnitSection({
 		}
 
 		// Apply status filter
-		if (selectedFilter !== 'all') {
+		if (selectedFilter !== "all") {
 			switch (selectedFilter) {
-				case 'needsWater':
+				case "needsWater":
 					// TODO: Implement needs water filter when status logic is available
 					break;
-				case 'healthy':
+				case "healthy":
 					// TODO: Implement healthy filter when health status logic is available
 					plants = plants.filter(
 						(plant) => plant.status === PLANT_STATUS.GROWING,
@@ -80,7 +80,7 @@ export function PlantsByGrowingUnitSection({
 				<div>
 					<h3 className="text-lg font-semibold">{growingUnit.name}</h3>
 					<p className="text-sm text-muted-foreground">
-						{t('pages.plants.list.growingUnit.plantCount', {
+						{t("pages.plants.list.growingUnit.plantCount", {
 							count: filteredPlants.length,
 							total: growingUnit.numberOfPlants,
 						})}
@@ -94,12 +94,20 @@ export function PlantsByGrowingUnitSection({
 					<TableHeader>
 						<TableRow>
 							<TableHead className="w-[80px]">IMG</TableHead>
-							<TableHead>{t('pages.plants.list.table.columns.plant')}</TableHead>
-							<TableHead>{t('pages.plants.list.table.columns.location')}</TableHead>
-							<TableHead>{t('pages.plants.list.table.columns.status')}</TableHead>
-							<TableHead>{t('pages.plants.list.table.columns.lastWatering')}</TableHead>
+							<TableHead>
+								{t("pages.plants.list.table.columns.plant")}
+							</TableHead>
+							<TableHead>
+								{t("pages.plants.list.table.columns.location")}
+							</TableHead>
+							<TableHead>
+								{t("pages.plants.list.table.columns.status")}
+							</TableHead>
+							<TableHead>
+								{t("pages.plants.list.table.columns.lastWatering")}
+							</TableHead>
 							<TableHead className="w-[80px]">
-								{t('pages.plants.list.table.columns.actions')}
+								{t("pages.plants.list.table.columns.actions")}
 							</TableHead>
 						</TableRow>
 					</TableHeader>

@@ -1,9 +1,9 @@
-import { useAuth } from '@repo/sdk';
-import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
-import { AuthRegisterService } from '@/generic/auth/application/services/auth-register/auth-register.service';
-import type { AuthRegisterByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-register-by-email/auth-register-by-email.schema';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
+import { useAuth } from "@repo/sdk";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { AuthRegisterService } from "@/generic/auth/application/services/auth-register/auth-register.service";
+import type { AuthRegisterByEmailFormValues } from "@/generic/auth/presentation/dtos/schemas/auth-register-by-email/auth-register-by-email.schema";
+import { useAppRoutes } from "@/shared/hooks/use-routes";
 
 /**
  * Hook that provides registration functionality using the AuthRegisterService
@@ -48,13 +48,13 @@ export function useAuthRegister() {
 				} catch (error) {
 					// If auto-login fails, still redirect to auth page
 					// The user can manually log in with their credentials
-					console.error('Auto-login after registration error:', error);
+					console.error("Auto-login after registration error:", error);
 					router.push(`${routes.auth}`);
 				}
 			},
 			onError: (error) => {
 				// Error handling is delegated to the SDK hook state
-				console.error('Registration error:', error);
+				console.error("Registration error:", error);
 			},
 		});
 	};

@@ -1,5 +1,5 @@
-import type { DeleteGrowingUnitInput } from '@repo/sdk';
-import { useGrowingUnits } from '@repo/sdk';
+import type { DeleteGrowingUnitInput } from "@repo/sdk";
+import { useGrowingUnits } from "@repo/sdk";
 
 /**
  * Hook that provides growing unit delete functionality
@@ -25,7 +25,7 @@ export function useGrowingUnitDelete() {
 			const deleteError =
 				error instanceof Error
 					? error
-					: new Error('Growing unit delete failed');
+					: new Error("Growing unit delete failed");
 			onError?.(deleteError);
 		}
 	};

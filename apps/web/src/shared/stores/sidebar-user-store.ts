@@ -1,5 +1,5 @@
-import type { AuthUserProfileResponse } from '@repo/sdk';
-import { create } from 'zustand';
+import type { AuthUserProfileResponse } from "@repo/sdk";
+import { create } from "zustand";
 
 interface SidebarUserStore {
 	profile: AuthUserProfileResponse | null;

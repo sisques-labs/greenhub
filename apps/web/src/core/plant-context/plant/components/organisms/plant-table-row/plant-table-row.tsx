@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import type { PlantResponse } from '@repo/sdk';
+import type { PlantResponse } from "@repo/sdk";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from '@repo/shared/presentation/components/ui/avatar';
+} from "@repo/shared/presentation/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@repo/shared/presentation/components/ui/dropdown-menu';
+} from "@repo/shared/presentation/components/ui/dropdown-menu";
 import {
 	TableCell,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
-import { HomeIcon, MoreVerticalIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
-import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
+} from "@repo/shared/presentation/components/ui/table";
+import { HomeIcon, MoreVerticalIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { getPlantStatusBadge } from "@/core/plant-context/plant/utils/plant-status.utils";
 
 interface PlantTableRowProps {
 	plant: PlantResponse;
@@ -39,18 +39,21 @@ export function PlantTableRow({
 	const router = useRouter();
 
 	const formatDate = (date?: Date | null): string => {
-		if (!date) return '-';
+		if (!date) return "-";
 		const now = new Date();
 		const plantDate = new Date(date);
 		const diffTime = Math.abs(now.getTime() - plantDate.getTime());
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-		if (diffDays === 0) return t('pages.plants.list.table.lastWatering.today');
-		if (diffDays === 1) return t('pages.plants.list.table.lastWatering.yesterday');
+		if (diffDays === 0) return t("pages.plants.list.table.lastWatering.today");
+		if (diffDays === 1)
+			return t("pages.plants.list.table.lastWatering.yesterday");
 		if (diffDays < 7)
-			return t('pages.plants.list.table.lastWatering.daysAgo', { days: diffDays });
+			return t("pages.plants.list.table.lastWatering.daysAgo", {
+				days: diffDays,
+			});
 		if (diffDays < 14)
-			return t('pages.plants.list.table.lastWatering.weeksAgo', {
+			return t("pages.plants.list.table.lastWatering.weeksAgo", {
 				weeks: Math.floor(diffDays / 7),
 			});
 		return plantDate.toLocaleDateString();
@@ -61,10 +64,10 @@ export function PlantTableRow({
 		return <HomeIcon className="h-4 w-4" />;
 	};
 
-	const initials = (plant.name || plant.species || 'P')
-		.split(' ')
+	const initials = (plant.name || plant.species || "P")
+		.split(" ")
 		.map((n) => n[0])
-		.join('')
+		.join("")
 		.toUpperCase()
 		.slice(0, 2);
 
@@ -90,10 +93,10 @@ export function PlantTableRow({
 			<TableCell>
 				<div>
 					<div className="font-medium">
-						{plant.name || t('pages.plants.detail.unnamed')}
+						{plant.name || t("pages.plants.detail.unnamed")}
 					</div>
 					<div className="text-sm text-muted-foreground">
-						{plant.species || '-'}
+						{plant.species || "-"}
 					</div>
 				</div>
 			</TableCell>
@@ -101,7 +104,7 @@ export function PlantTableRow({
 				<div className="flex items-center gap-2">
 					{getLocationIcon()}
 					<span className="text-sm">
-						{growingUnitName || plant.growingUnitId || t('common.unknown')}
+						{growingUnitName || plant.growingUnitId || t("common.unknown")}
 					</span>
 				</div>
 			</TableCell>
@@ -122,11 +125,11 @@ export function PlantTableRow({
 						<DropdownMenuItem
 							onClick={() => router.push(`/${locale}/plants/${plant.id}`)}
 						>
-							{t('pages.plants.list.actions.view')}
+							{t("pages.plants.list.actions.view")}
 						</DropdownMenuItem>
 						{onEdit && (
 							<DropdownMenuItem onClick={() => onEdit(plant)}>
-								{t('pages.plants.list.actions.edit')}
+								{t("pages.plants.list.actions.edit")}
 							</DropdownMenuItem>
 						)}
 						{onDelete && (
@@ -134,7 +137,7 @@ export function PlantTableRow({
 								onClick={() => onDelete(plant.id)}
 								className="text-destructive"
 							>
-								{t('pages.plants.list.actions.delete')}
+								{t("pages.plants.list.actions.delete")}
 							</DropdownMenuItem>
 						)}
 					</DropdownMenuContent>

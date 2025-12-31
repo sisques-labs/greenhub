@@ -1,11 +1,11 @@
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import { Badge } from "@repo/shared/presentation/components/ui/badge";
 
 /**
  * Status configuration type for plant status badges.
  */
 type StatusConfig = {
 	label: string;
-	variant: 'default' | 'secondary' | 'destructive' | 'outline';
+	variant: "default" | "secondary" | "destructive" | "outline";
 };
 
 /**
@@ -21,31 +21,31 @@ function getStatusConfig(
 ): StatusConfig {
 	const statusTranslations: Record<string, StatusConfig> = {
 		PLANTED: {
-			label: t('shared.status.plant.PLANTED'),
-			variant: 'outline',
+			label: t("shared.status.plant.PLANTED"),
+			variant: "outline",
 		},
 		GROWING: {
-			label: t('shared.status.plant.GROWING'),
-			variant: 'default',
+			label: t("shared.status.plant.GROWING"),
+			variant: "default",
 		},
 		HARVESTED: {
-			label: t('shared.status.plant.HARVESTED'),
-			variant: 'secondary',
+			label: t("shared.status.plant.HARVESTED"),
+			variant: "secondary",
 		},
 		DEAD: {
-			label: t('shared.status.plant.DEAD'),
-			variant: 'destructive',
+			label: t("shared.status.plant.DEAD"),
+			variant: "destructive",
 		},
 		ARCHIVED: {
-			label: t('shared.status.plant.ARCHIVED'),
-			variant: 'outline',
+			label: t("shared.status.plant.ARCHIVED"),
+			variant: "outline",
 		},
 	};
 
 	return (
 		statusTranslations[status] || {
 			label: status,
-			variant: 'outline' as const,
+			variant: "outline" as const,
 		}
 	);
 }

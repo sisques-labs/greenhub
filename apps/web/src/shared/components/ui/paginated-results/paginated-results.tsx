@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
 	Pagination,
@@ -8,7 +8,7 @@ import {
 	PaginationLink,
 	PaginationNext,
 	PaginationPrevious,
-} from '@repo/shared/presentation/components/ui/pagination';
+} from "@repo/shared/presentation/components/ui/pagination";
 
 interface PaginatedResultsProps {
 	currentPage: number;
@@ -31,7 +31,7 @@ export function PaginatedResults({
 	}
 
 	const getPageNumbers = () => {
-		const pages: (number | 'ellipsis')[] = [];
+		const pages: (number | "ellipsis")[] = [];
 		const maxVisible = 5;
 
 		if (totalPages <= maxVisible) {
@@ -59,7 +59,7 @@ export function PaginatedResults({
 
 			// Add ellipsis before middle section if needed
 			if (start > 2) {
-				pages.push('ellipsis');
+				pages.push("ellipsis");
 			}
 
 			// Add middle pages
@@ -69,7 +69,7 @@ export function PaginatedResults({
 
 			// Add ellipsis after middle section if needed
 			if (end < totalPages - 1) {
-				pages.push('ellipsis');
+				pages.push("ellipsis");
 			}
 
 			// Always show last page
@@ -109,14 +109,14 @@ export function PaginatedResults({
 						onClick={handlePrevious}
 						className={
 							currentPage === 1
-								? 'pointer-events-none opacity-50'
-								: 'cursor-pointer'
+								? "pointer-events-none opacity-50"
+								: "cursor-pointer"
 						}
 					/>
 				</PaginationItem>
 
 				{pageNumbers.map((page, index) => {
-					if (page === 'ellipsis') {
+					if (page === "ellipsis") {
 						return (
 							<PaginationItem key={`ellipsis-${index}`}>
 								<PaginationEllipsis />
@@ -142,8 +142,8 @@ export function PaginatedResults({
 						onClick={handleNext}
 						className={
 							currentPage === totalPages
-								? 'pointer-events-none opacity-50'
-								: 'cursor-pointer'
+								? "pointer-events-none opacity-50"
+								: "cursor-pointer"
 						}
 					/>
 				</PaginationItem>

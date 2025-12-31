@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import type { GrowingUnitResponse } from '@repo/sdk';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import type { GrowingUnitResponse } from "@repo/sdk";
+import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { ArrowRightIcon } from 'lucide-react';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { GrowingUnitCard } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-card/growing-unit-card';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
+} from "@repo/shared/presentation/components/ui/card";
+import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { GrowingUnitCard } from "@/core/plant-context/growing-unit/components/organisms/growing-unit-card/growing-unit-card";
+import { useAppRoutes } from "@/shared/hooks/use-routes";
 
 interface GrowingUnitsStatusSectionProps {
 	growingUnits: GrowingUnitResponse[];
@@ -27,7 +27,7 @@ export function GrowingUnitsStatusSection({
 	growingUnits,
 	isLoading = false,
 }: GrowingUnitsStatusSectionProps) {
-	const t = useTranslations('dashboard.growingUnitsStatus');
+	const t = useTranslations("dashboard.growingUnitsStatus");
 	const { routes } = useAppRoutes();
 
 	if (isLoading) {
@@ -54,10 +54,10 @@ export function GrowingUnitsStatusSection({
 		return (
 			<Card>
 				<CardHeader>
-					<CardTitle>{t('title')}</CardTitle>
+					<CardTitle>{t("title")}</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p className="text-muted-foreground text-center py-8">{t('empty')}</p>
+					<p className="text-muted-foreground text-center py-8">{t("empty")}</p>
 				</CardContent>
 			</Card>
 		);
@@ -67,10 +67,10 @@ export function GrowingUnitsStatusSection({
 		<Card>
 			<CardHeader>
 				<CardTitle className="flex items-center justify-between">
-					<span>{t('title')}</span>
+					<span>{t("title")}</span>
 					<Button variant="link" asChild className="text-green-600">
 						<Link href={routes.growingUnits}>
-							{t('seeAll')}
+							{t("seeAll")}
 							<ArrowRightIcon className="ml-1 h-4 w-4" />
 						</Link>
 					</Button>

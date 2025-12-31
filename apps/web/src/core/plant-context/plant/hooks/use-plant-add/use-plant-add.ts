@@ -1,6 +1,6 @@
-import type { PlantAddInput, PlantStatus } from '@repo/sdk';
-import { useGrowingUnits } from '@repo/sdk';
-import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
+import type { PlantAddInput, PlantStatus } from "@repo/sdk";
+import { useGrowingUnits } from "@repo/sdk";
+import type { PlantCreateFormValues } from "@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema";
 
 /**
  * Hook that provides plant create functionality
@@ -32,7 +32,7 @@ export function usePlantAdd() {
 			}
 		} catch (error) {
 			const createError =
-				error instanceof Error ? error : new Error('Plant create failed');
+				error instanceof Error ? error : new Error("Plant create failed");
 			onError?.(createError);
 		}
 	};

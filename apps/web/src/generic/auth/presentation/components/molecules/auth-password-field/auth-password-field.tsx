@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
 	FormControl,
@@ -6,16 +6,16 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
-import { useTranslations } from 'next-intl';
-import type { Control, FieldPath, FieldValues } from 'react-hook-form';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
+import { useTranslations } from "next-intl";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
 interface AuthPasswordFieldProps<T extends FieldValues> {
 	control: Control<T>;
 	name: FieldPath<T>;
 	disabled?: boolean;
-	placeholder?: 'login' | 'signup';
+	placeholder?: "login" | "signup";
 	onPasswordChange?: (value: string) => void;
 }
 
@@ -23,7 +23,7 @@ export function AuthPasswordField<T extends FieldValues>({
 	control,
 	name,
 	disabled = false,
-	placeholder = 'login',
+	placeholder = "login",
 	onPasswordChange,
 }: AuthPasswordFieldProps<T>) {
 	const t = useTranslations();
@@ -36,7 +36,7 @@ export function AuthPasswordField<T extends FieldValues>({
 			name={name as any}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>{t('pages.auth.fields.password.label')}</FormLabel>
+					<FormLabel>{t("pages.auth.fields.password.label")}</FormLabel>
 					<FormControl>
 						<Input
 							type="password"

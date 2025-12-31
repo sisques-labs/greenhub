@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
 	FormControl,
@@ -6,10 +6,10 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
-import { useTranslations } from 'next-intl';
-import type { Control, FieldPath, FieldValues } from 'react-hook-form';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
+import { useTranslations } from "next-intl";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
 interface AuthEmailFieldProps<T extends FieldValues> {
 	control: Control<T>;
@@ -32,11 +32,11 @@ export function AuthEmailField<T extends FieldValues>({
 			name={name as any}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>{t('pages.auth.fields.email.label')}</FormLabel>
+					<FormLabel>{t("pages.auth.fields.email.label")}</FormLabel>
 					<FormControl>
 						<Input
 							type="email"
-							placeholder={t('pages.auth.fields.email.placeholder')}
+							placeholder={t("pages.auth.fields.email.placeholder")}
 							disabled={disabled}
 							{...field}
 							onChange={(e) => {

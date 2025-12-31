@@ -1,6 +1,6 @@
-import { useAuth } from '@repo/sdk';
-import { useRouter } from 'next/navigation';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
+import { useAuth } from "@repo/sdk";
+import { useRouter } from "next/navigation";
+import { useAppRoutes } from "@/shared/hooks/use-routes";
 
 /**
  * Hook that provides logout functionality
@@ -20,7 +20,7 @@ export function useAuthLogout() {
 			router.push(`${routes.auth}`);
 		} catch (error) {
 			// Error handling - even if logout fails on backend, we should still redirect
-			console.error('Logout error:', error);
+			console.error("Logout error:", error);
 			router.push(`${routes.auth}`);
 		}
 	};

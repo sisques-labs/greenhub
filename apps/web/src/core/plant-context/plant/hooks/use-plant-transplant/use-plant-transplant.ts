@@ -1,5 +1,5 @@
-import type { PlantTransplantInput } from '@repo/sdk';
-import { usePlants } from '@repo/sdk';
+import type { PlantTransplantInput } from "@repo/sdk";
+import { usePlants } from "@repo/sdk";
 
 /**
  * Hook that provides plant transplant functionality
@@ -21,9 +21,7 @@ export function usePlantTransplant() {
 			}
 		} catch (error) {
 			const transplantError =
-				error instanceof Error
-					? error
-					: new Error('Plant transplant failed');
+				error instanceof Error ? error : new Error("Plant transplant failed");
 			onError?.(transplantError);
 		}
 	};
@@ -34,4 +32,3 @@ export function usePlantTransplant() {
 		error: transplant.error,
 	};
 }
-

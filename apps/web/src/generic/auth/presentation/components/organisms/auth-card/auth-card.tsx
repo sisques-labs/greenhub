@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
 	Card,
@@ -6,17 +6,17 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Spinner } from '@repo/shared/presentation/components/ui/spinner';
-import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
-import { AuthErrorMessage } from '@/generic/auth/presentation/components/molecules/auth-error-message/auth-error-message';
+} from "@repo/shared/presentation/components/ui/card";
+import { Spinner } from "@repo/shared/presentation/components/ui/spinner";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import { AuthErrorMessage } from "@/generic/auth/presentation/components/molecules/auth-error-message/auth-error-message";
 
 interface AuthCardProps {
 	children: ReactNode;
 	isLoading: boolean;
 	error: Error | null;
-	mode: 'login' | 'signup';
+	mode: "login" | "signup";
 }
 
 export function AuthCard({ children, isLoading, error, mode }: AuthCardProps) {

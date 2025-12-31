@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import type { AuthUserProfileResponse } from '@repo/sdk';
+import type { AuthUserProfileResponse } from "@repo/sdk";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Separator } from '@repo/shared/presentation/components/ui/separator';
-import { Calendar, Clock } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+} from "@repo/shared/presentation/components/ui/card";
+import { Separator } from "@repo/shared/presentation/components/ui/separator";
+import { Calendar, Clock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface UserProfileAccountSectionProps {
 	profile: AuthUserProfileResponse;
 }
 
 function formatDate(date: Date | null | undefined): string {
-	if (!date) return '-';
-	return new Date(date).toLocaleDateString('es-ES', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
+	if (!date) return "-";
+	return new Date(date).toLocaleDateString("es-ES", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
 	});
 }
 
@@ -42,17 +42,17 @@ export function UserProfileAccountSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Calendar className="size-5" />
-					{t('pages.user.profile.sections.accountInfo.title')}
+					{t("pages.user.profile.sections.accountInfo.title")}
 				</CardTitle>
 				<CardDescription>
-					{t('pages.user.profile.sections.accountInfo.description')}
+					{t("pages.user.profile.sections.accountInfo.description")}
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{profile.role && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('pages.user.profile.fields.role.label')}
+							{t("pages.user.profile.fields.role.label")}
 						</p>
 						<p className="text-sm">{profile.role}</p>
 					</div>
@@ -63,7 +63,7 @@ export function UserProfileAccountSection({
 				{profile.status && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('pages.user.profile.fields.status.label')}
+							{t("pages.user.profile.fields.status.label")}
 						</p>
 						<p className="text-sm">{profile.status}</p>
 					</div>
@@ -76,7 +76,7 @@ export function UserProfileAccountSection({
 						<div className="flex items-center gap-2">
 							<Calendar className="size-4 text-muted-foreground" />
 							<p className="text-sm font-medium text-muted-foreground">
-								{t('pages.user.profile.fields.createdAt')}
+								{t("pages.user.profile.fields.createdAt")}
 							</p>
 						</div>
 						<p className="text-sm">{formatDate(profile.createdAt)}</p>
@@ -90,7 +90,7 @@ export function UserProfileAccountSection({
 						<div className="flex items-center gap-2">
 							<Clock className="size-4 text-muted-foreground" />
 							<p className="text-sm font-medium text-muted-foreground">
-								{t('pages.user.profile.fields.lastLoginAt')}
+								{t("pages.user.profile.fields.lastLoginAt")}
 							</p>
 						</div>
 						<p className="text-sm">{formatDate(profile.lastLoginAt)}</p>

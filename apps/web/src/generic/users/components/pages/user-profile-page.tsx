@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { UserResponse } from '@repo/sdk';
+import { UserResponse } from "@repo/sdk";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { useTranslations } from 'next-intl';
-import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
-import { UserProfileAccountSection } from '@/generic/users/components/organisms/user-profile-account-section/user-profile-account-section';
-import { UserProfileAuthSection } from '@/generic/users/components/organisms/user-profile-auth-section/user-profile-auth-section';
-import { UserProfileContactSection } from '@/generic/users/components/organisms/user-profile-contact-section/user-profile-contact-section';
-import { UserProfileHeader } from '@/generic/users/components/organisms/user-profile-header/user-profile-header';
-import { UserProfileInfoSection } from '@/generic/users/components/organisms/user-profile-info-section/user-profile-info-section';
-import { UserProfilePageSkeleton } from '@/generic/users/components/organisms/user-profile-page-skeleton/user-profile-page-skeleton';
-import { UserUpdateForm } from '@/generic/users/components/organisms/user-update-form/user-update-form';
-import type { UserUpdateFormValues } from '@/generic/users/dtos/schemas/user-update/user-update.schema';
-import { useUserUpdate } from '@/generic/users/hooks/use-user-update/use-user-update';
+} from "@repo/shared/presentation/components/ui/card";
+import { useTranslations } from "next-intl";
+import { useAuthProfileMe } from "@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me";
+import { UserProfileAccountSection } from "@/generic/users/components/organisms/user-profile-account-section/user-profile-account-section";
+import { UserProfileAuthSection } from "@/generic/users/components/organisms/user-profile-auth-section/user-profile-auth-section";
+import { UserProfileContactSection } from "@/generic/users/components/organisms/user-profile-contact-section/user-profile-contact-section";
+import { UserProfileHeader } from "@/generic/users/components/organisms/user-profile-header/user-profile-header";
+import { UserProfileInfoSection } from "@/generic/users/components/organisms/user-profile-info-section/user-profile-info-section";
+import { UserProfilePageSkeleton } from "@/generic/users/components/organisms/user-profile-page-skeleton/user-profile-page-skeleton";
+import { UserUpdateForm } from "@/generic/users/components/organisms/user-update-form/user-update-form";
+import type { UserUpdateFormValues } from "@/generic/users/dtos/schemas/user-update/user-update.schema";
+import { useUserUpdate } from "@/generic/users/hooks/use-user-update/use-user-update";
 
 export function UserProfilePage() {
 	const t = useTranslations();
@@ -52,7 +52,9 @@ export function UserProfilePage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('pages.user.profile.error.loading', { message: profileError.message })}
+						{t("pages.user.profile.error.loading", {
+							message: profileError.message,
+						})}
 					</p>
 				</div>
 			</div>
@@ -63,7 +65,7 @@ export function UserProfilePage() {
 		return (
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-muted-foreground">{t('common.notFound')}</p>
+					<p className="text-muted-foreground">{t("common.notFound")}</p>
 				</div>
 			</div>
 		);
@@ -105,9 +107,11 @@ export function UserProfilePage() {
 				{/* Edit Form Section */}
 				<Card>
 					<CardHeader>
-						<CardTitle>{t('pages.user.profile.sections.editProfile.title')}</CardTitle>
+						<CardTitle>
+							{t("pages.user.profile.sections.editProfile.title")}
+						</CardTitle>
 						<CardDescription>
-							{t('pages.user.profile.sections.editProfile.description')}
+							{t("pages.user.profile.sections.editProfile.description")}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>

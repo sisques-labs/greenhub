@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
 	Card,
@@ -6,8 +6,8 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Skeleton } from '@repo/shared/presentation/components/ui/skeleton';
+} from "@repo/shared/presentation/components/ui/card";
+import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
 
 /**
  * Skeleton component for the user profile page

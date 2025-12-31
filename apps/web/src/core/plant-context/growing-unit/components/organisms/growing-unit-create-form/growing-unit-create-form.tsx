@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -9,7 +9,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from "@repo/shared/presentation/components/ui/dialog";
 import {
 	Form,
 	FormControl,
@@ -17,22 +17,22 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+} from "@repo/shared/presentation/components/ui/select";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { useForm } from "react-hook-form";
 import {
 	createGrowingUnitCreateSchema,
 	GrowingUnitCreateFormValues,
-} from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-create/growing-unit-create.schema';
+} from "@/core/plant-context/growing-unit/dtos/schemas/growing-unit-create/growing-unit-create.schema";
 
 interface GrowingUnitCreateFormProps {
 	open: boolean;
@@ -61,13 +61,13 @@ export function GrowingUnitCreateForm({
 	const form = useForm<GrowingUnitCreateFormValues>({
 		resolver: zodResolver(createSchema),
 		defaultValues: {
-			name: '',
-			type: 'POT',
+			name: "",
+			type: "POT",
 			capacity: 1,
 			length: undefined,
 			width: undefined,
 			height: undefined,
-			unit: 'CENTIMETER',
+			unit: "CENTIMETER",
 		},
 	});
 
@@ -83,9 +83,11 @@ export function GrowingUnitCreateForm({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>{t('pages.growingUnits.list.actions.create.title')}</DialogTitle>
+					<DialogTitle>
+						{t("pages.growingUnits.list.actions.create.title")}
+					</DialogTitle>
 					<DialogDescription>
-						{t('pages.growingUnits.list.actions.create.description')}
+						{t("pages.growingUnits.list.actions.create.description")}
 					</DialogDescription>
 				</DialogHeader>
 				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
@@ -100,10 +102,12 @@ export function GrowingUnitCreateForm({
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t('shared.fields.name.label')}</FormLabel>
+									<FormLabel>{t("shared.fields.name.label")}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t('pages.growingUnits.detail.fields.name.placeholder')}
+											placeholder={t(
+												"pages.growingUnits.detail.fields.name.placeholder",
+											)}
 											disabled={isLoading}
 											{...field}
 										/>
@@ -120,7 +124,7 @@ export function GrowingUnitCreateForm({
 								name="type"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('shared.fields.type.label')}</FormLabel>
+										<FormLabel>{t("shared.fields.type.label")}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											defaultValue={field.value}
@@ -129,24 +133,22 @@ export function GrowingUnitCreateForm({
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue
-														placeholder={t(
-															'shared.fields.type.placeholder',
-														)}
+														placeholder={t("shared.fields.type.placeholder")}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value="POT">
-													{t('shared.types.growingUnit.POT')}
+													{t("shared.types.growingUnit.POT")}
 												</SelectItem>
 												<SelectItem value="GARDEN_BED">
-													{t('shared.types.growingUnit.GARDEN_BED')}
+													{t("shared.types.growingUnit.GARDEN_BED")}
 												</SelectItem>
 												<SelectItem value="HANGING_BASKET">
-													{t('shared.types.growingUnit.HANGING_BASKET')}
+													{t("shared.types.growingUnit.HANGING_BASKET")}
 												</SelectItem>
 												<SelectItem value="WINDOW_BOX">
-													{t('shared.types.growingUnit.WINDOW_BOX')}
+													{t("shared.types.growingUnit.WINDOW_BOX")}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -161,16 +163,12 @@ export function GrowingUnitCreateForm({
 								name="capacity"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t('shared.fields.capacity.label')}
-										</FormLabel>
+										<FormLabel>{t("shared.fields.capacity.label")}</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												min="1"
-												placeholder={t(
-													'shared.fields.capacity.placeholder',
-												)}
+												placeholder={t("shared.fields.capacity.placeholder")}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) => field.onChange(Number(e.target.value))}
@@ -189,14 +187,12 @@ export function GrowingUnitCreateForm({
 								name="length"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t('shared.fields.length.label')}
-										</FormLabel>
+										<FormLabel>{t("shared.fields.length.label")}</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder={t('shared.fields.length.placeholder')}
+												placeholder={t("shared.fields.length.placeholder")}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) =>
@@ -204,7 +200,7 @@ export function GrowingUnitCreateForm({
 														e.target.value ? Number(e.target.value) : undefined,
 													)
 												}
-												value={field.value || ''}
+												value={field.value || ""}
 											/>
 										</FormControl>
 										<FormMessage />
@@ -218,12 +214,12 @@ export function GrowingUnitCreateForm({
 								name="width"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('shared.fields.width.label')}</FormLabel>
+										<FormLabel>{t("shared.fields.width.label")}</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder={t('shared.fields.width.placeholder')}
+												placeholder={t("shared.fields.width.placeholder")}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) =>
@@ -231,7 +227,7 @@ export function GrowingUnitCreateForm({
 														e.target.value ? Number(e.target.value) : undefined,
 													)
 												}
-												value={field.value || ''}
+												value={field.value || ""}
 											/>
 										</FormControl>
 										<FormMessage />
@@ -245,14 +241,12 @@ export function GrowingUnitCreateForm({
 								name="height"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t('shared.fields.height.label')}
-										</FormLabel>
+										<FormLabel>{t("shared.fields.height.label")}</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												step="0.01"
-												placeholder={t('shared.fields.height.placeholder')}
+												placeholder={t("shared.fields.height.placeholder")}
 												disabled={isLoading}
 												{...field}
 												onChange={(e) =>
@@ -260,7 +254,7 @@ export function GrowingUnitCreateForm({
 														e.target.value ? Number(e.target.value) : undefined,
 													)
 												}
-												value={field.value || ''}
+												value={field.value || ""}
 											/>
 										</FormControl>
 										<FormMessage />
@@ -274,7 +268,7 @@ export function GrowingUnitCreateForm({
 								name="unit"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('shared.fields.unit.label')}</FormLabel>
+										<FormLabel>{t("shared.fields.unit.label")}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											defaultValue={field.value}
@@ -283,27 +277,25 @@ export function GrowingUnitCreateForm({
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue
-														placeholder={t(
-															'shared.fields.unit.placeholder',
-														)}
+														placeholder={t("shared.fields.unit.placeholder")}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value="MILLIMETER">
-													{t('shared.units.length.MILLIMETER')}
+													{t("shared.units.length.MILLIMETER")}
 												</SelectItem>
 												<SelectItem value="CENTIMETER">
-													{t('shared.units.length.CENTIMETER')}
+													{t("shared.units.length.CENTIMETER")}
 												</SelectItem>
 												<SelectItem value="METER">
-													{t('shared.units.length.METER')}
+													{t("shared.units.length.METER")}
 												</SelectItem>
 												<SelectItem value="INCH">
-													{t('shared.units.length.INCH')}
+													{t("shared.units.length.INCH")}
 												</SelectItem>
 												<SelectItem value="FOOT">
-													{t('shared.units.length.FOOT')}
+													{t("shared.units.length.FOOT")}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -324,12 +316,12 @@ export function GrowingUnitCreateForm({
 								onClick={() => onOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t('common.cancel')}
+								{t("common.cancel")}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.growingUnits.list.actions.create.loading')
-									: t('pages.growingUnits.list.actions.create.submit')}
+									? t("pages.growingUnits.list.actions.create.loading")
+									: t("pages.growingUnits.list.actions.create.submit")}
 							</Button>
 						</DialogFooter>
 					</form>

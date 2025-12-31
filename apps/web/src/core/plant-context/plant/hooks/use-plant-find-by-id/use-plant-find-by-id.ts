@@ -1,5 +1,5 @@
-import { usePlants } from '@repo/sdk';
-import { useEffect, useRef } from 'react';
+import { usePlants } from "@repo/sdk";
+import { useEffect, useRef } from "react";
 
 /**
  * Hook that provides plant find by ID functionality

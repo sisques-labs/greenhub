@@ -1,4 +1,4 @@
-import { GrowingUnitDetailPage } from '@/core/plant-context/growing-unit/components/pages/growing-unit-detail-page';
+import { GrowingUnitDetailPage } from "@/core/plant-context/growing-unit/components/pages/growing-unit-detail-page";
 
 const Page = () => {
 	return <GrowingUnitDetailPage />;

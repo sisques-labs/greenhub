@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface AuthPageStore {
 	email: string;
@@ -15,15 +15,15 @@ interface AuthPageStore {
 export const useAuthPageStore = create<AuthPageStore>()(
 	persist(
 		(set) => ({
-			email: '',
+			email: "",
 			setEmail: (email) => set({ email }),
-			password: '',
+			password: "",
 			setPassword: (password) => set({ password }),
-			confirmPassword: '',
+			confirmPassword: "",
 			setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
 			isLoginMode: true,
 			setIsLoginMode: (isLoginMode) => set({ isLoginMode }),
 		}),
-		{ name: 'auth-page-store' },
+		{ name: "auth-page-store" },
 	),
 );

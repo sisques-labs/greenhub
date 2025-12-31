@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 interface AuthErrorMessageProps {
 	error: Error | null;
@@ -15,7 +15,7 @@ export function AuthErrorMessage({ error }: AuthErrorMessageProps) {
 
 	return (
 		<div className="text-sm text-destructive text-center">
-			{error instanceof Error ? error.message : t('authPage.messages.error')}
+			{error instanceof Error ? error.message : t("authPage.messages.error")}
 		</div>
 	);
 }

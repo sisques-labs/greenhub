@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { AlertTriangleIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+} from "@repo/shared/presentation/components/ui/card";
+import { AlertTriangleIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Alert {
 	id: string;
 	title: string;
 	description: string;
-	severity: 'critical' | 'warning' | 'info';
+	severity: "critical" | "warning" | "info";
 	location: string;
 	timeAgo: string;
 }
@@ -31,7 +31,7 @@ export function RecentAlertsSection({
 	alerts,
 	isLoading = false,
 }: RecentAlertsSectionProps) {
-	const t = useTranslations('dashboard.recentAlerts');
+	const t = useTranslations("dashboard.recentAlerts");
 
 	if (isLoading) {
 		return (
@@ -54,37 +54,37 @@ export function RecentAlertsSection({
 		return (
 			<Card>
 				<CardHeader>
-					<CardTitle>{t('title')}</CardTitle>
+					<CardTitle>{t("title")}</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p className="text-muted-foreground text-center py-8">{t('empty')}</p>
+					<p className="text-muted-foreground text-center py-8">{t("empty")}</p>
 				</CardContent>
 			</Card>
 		);
 	}
 
-	const getAlertStyles = (severity: Alert['severity']) => {
+	const getAlertStyles = (severity: Alert["severity"]) => {
 		switch (severity) {
-			case 'critical':
+			case "critical":
 				return {
-					bg: 'bg-red-50',
-					border: 'border-red-200',
-					icon: 'text-red-600',
-					text: 'text-red-900',
+					bg: "bg-red-50",
+					border: "border-red-200",
+					icon: "text-red-600",
+					text: "text-red-900",
 				};
-			case 'warning':
+			case "warning":
 				return {
-					bg: 'bg-orange-50',
-					border: 'border-orange-200',
-					icon: 'text-orange-600',
-					text: 'text-orange-900',
+					bg: "bg-orange-50",
+					border: "border-orange-200",
+					icon: "text-orange-600",
+					text: "text-orange-900",
 				};
 			default:
 				return {
-					bg: 'bg-blue-50',
-					border: 'border-blue-200',
-					icon: 'text-blue-600',
-					text: 'text-blue-900',
+					bg: "bg-blue-50",
+					border: "border-blue-200",
+					icon: "text-blue-600",
+					text: "text-blue-900",
 				};
 		}
 	};
@@ -92,7 +92,7 @@ export function RecentAlertsSection({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>{t('title')}</CardTitle>
+				<CardTitle>{t("title")}</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-3">
 				{alerts.map((alert) => {

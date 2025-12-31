@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * Schema factory for auth register by email form validation
@@ -14,19 +14,19 @@ export function createAuthRegisterByEmailSchema(
 		.object({
 			email: z
 				.string()
-				.min(1, translations('pages.auth.validation.email.required'))
-				.email(translations('pages.auth.validation.email.invalid')),
+				.min(1, translations("pages.auth.validation.email.required"))
+				.email(translations("pages.auth.validation.email.invalid")),
 			password: z
 				.string()
-				.min(1, translations('pages.auth.validation.password.required'))
-				.min(8, translations('pages.auth.validation.password.minLength')),
+				.min(1, translations("pages.auth.validation.password.required"))
+				.min(8, translations("pages.auth.validation.password.minLength")),
 			confirmPassword: z
 				.string()
-				.min(1, translations('pages.auth.validation.confirmPassword.required')),
+				.min(1, translations("pages.auth.validation.confirmPassword.required")),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
-			message: translations('pages.auth.validation.confirmPassword.mismatch'),
-			path: ['confirmPassword'],
+			message: translations("pages.auth.validation.confirmPassword.mismatch"),
+			path: ["confirmPassword"],
 		});
 }
 

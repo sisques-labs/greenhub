@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { PLANT_STATUS } from '@repo/sdk';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PLANT_STATUS } from "@repo/sdk";
+import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -10,7 +10,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from "@repo/shared/presentation/components/ui/dialog";
 import {
 	Form,
 	FormControl,
@@ -18,23 +18,23 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
-import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+} from "@repo/shared/presentation/components/ui/select";
+import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { useForm } from "react-hook-form";
 import {
 	createPlantCreateSchema,
 	PlantCreateFormValues,
-} from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
+} from "@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema";
 
 interface PlantCreateFormProps {
 	open: boolean;
@@ -65,10 +65,10 @@ export function PlantCreateForm({
 	const form = useForm<PlantCreateFormValues>({
 		resolver: zodResolver(createSchema),
 		defaultValues: {
-			name: '',
-			species: '',
+			name: "",
+			species: "",
 			plantedDate: new Date(),
-			notes: '',
+			notes: "",
 			status: PLANT_STATUS.PLANTED,
 			growingUnitId: growingUnitId,
 		},
@@ -78,10 +78,10 @@ export function PlantCreateForm({
 		await onSubmit(values);
 		if (!error) {
 			form.reset({
-				name: '',
-				species: '',
+				name: "",
+				species: "",
 				plantedDate: new Date(),
-				notes: '',
+				notes: "",
 				status: PLANT_STATUS.PLANTED,
 				growingUnitId: growingUnitId,
 			});
@@ -93,9 +93,9 @@ export function PlantCreateForm({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>{t('plants.actions.create.title')}</DialogTitle>
+					<DialogTitle>{t("plants.actions.create.title")}</DialogTitle>
 					<DialogDescription>
-						{t('plants.actions.create.description')}
+						{t("plants.actions.create.description")}
 					</DialogDescription>
 				</DialogHeader>
 				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
@@ -111,10 +111,14 @@ export function PlantCreateForm({
 								name="name"
 								render={({ field }) => (
 									<FormItem>
-									<FormLabel>{t('pages.plants.detail.fields.name.label')}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t('pages.plants.detail.fields.name.placeholder')}
+										<FormLabel>
+											{t("pages.plants.detail.fields.name.label")}
+										</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t(
+													"pages.plants.detail.fields.name.placeholder",
+												)}
 												disabled={isLoading}
 												{...field}
 											/>
@@ -130,10 +134,10 @@ export function PlantCreateForm({
 								name="species"
 								render={({ field }) => (
 									<FormItem>
-									<FormLabel>{t('shared.fields.species.label')}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t('shared.fields.species.placeholder')}
+										<FormLabel>{t("shared.fields.species.label")}</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t("shared.fields.species.placeholder")}
 												disabled={isLoading}
 												{...field}
 											/>
@@ -151,7 +155,7 @@ export function PlantCreateForm({
 								name="plantedDate"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('plant.fields.plantedDate.label')}</FormLabel>
+										<FormLabel>{t("plant.fields.plantedDate.label")}</FormLabel>
 										<FormControl>
 											<Input
 												type="date"
@@ -159,8 +163,8 @@ export function PlantCreateForm({
 												{...field}
 												value={
 													field.value
-														? new Date(field.value).toISOString().split('T')[0]
-														: ''
+														? new Date(field.value).toISOString().split("T")[0]
+														: ""
 												}
 												onChange={(e) =>
 													field.onChange(
@@ -182,7 +186,7 @@ export function PlantCreateForm({
 								name="status"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t('shared.fields.status.label')}</FormLabel>
+										<FormLabel>{t("shared.fields.status.label")}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											defaultValue={field.value}
@@ -191,25 +195,25 @@ export function PlantCreateForm({
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue
-														placeholder={t('shared.fields.status.placeholder')}
+														placeholder={t("shared.fields.status.placeholder")}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value={PLANT_STATUS.PLANTED}>
-													{t('shared.status.plant.PLANTED')}
+													{t("shared.status.plant.PLANTED")}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.GROWING}>
-													{t('shared.status.plant.GROWING')}
+													{t("shared.status.plant.GROWING")}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.HARVESTED}>
-													{t('shared.status.plant.HARVESTED')}
+													{t("shared.status.plant.HARVESTED")}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.DEAD}>
-													{t('shared.status.plant.DEAD')}
+													{t("shared.status.plant.DEAD")}
 												</SelectItem>
 												<SelectItem value={PLANT_STATUS.ARCHIVED}>
-													{t('shared.status.plant.ARCHIVED')}
+													{t("shared.status.plant.ARCHIVED")}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -225,10 +229,10 @@ export function PlantCreateForm({
 							name="notes"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t('shared.fields.notes.label')}</FormLabel>
+									<FormLabel>{t("shared.fields.notes.label")}</FormLabel>
 									<FormControl>
 										<Textarea
-											placeholder={t('shared.fields.notes.placeholder')}
+											placeholder={t("shared.fields.notes.placeholder")}
 											disabled={isLoading}
 											rows={4}
 											{...field}
@@ -250,12 +254,12 @@ export function PlantCreateForm({
 								onClick={() => onOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t('common.cancel')}
+								{t("common.cancel")}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.plants.list.actions.create.loading')
-									: t('pages.plants.list.actions.create.submit')}
+									? t("pages.plants.list.actions.create.loading")
+									: t("pages.plants.list.actions.create.submit")}
 							</Button>
 						</DialogFooter>
 					</form>

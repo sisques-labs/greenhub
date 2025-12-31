@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface PlantDetailPageStore {
 	// Dialog states
@@ -14,4 +14,3 @@ export const usePlantDetailPageStore = create<PlantDetailPageStore>((set) => ({
 	transplantDialogOpen: false,
 	setTransplantDialogOpen: (open) => set({ transplantDialogOpen: open }),
 }));
-

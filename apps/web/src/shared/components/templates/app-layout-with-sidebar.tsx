@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
-import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { useAuthLogout } from '@/generic/auth/presentation/hooks/use-auth-logout/use-auth-logout';
-import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
-import { useAppRoutes } from '@/shared/hooks/use-routes';
-import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
+import PageWithSidebarTemplate from "@repo/shared/presentation/components/templates/page-with-sidebar-template";
+import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { useAuthLogout } from "@/generic/auth/presentation/hooks/use-auth-logout/use-auth-logout";
+import { useAuthProfileMe } from "@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me";
+import { useAppRoutes } from "@/shared/hooks/use-routes";
+import { useSidebarUserStore } from "@/shared/stores/sidebar-user-store";
 
 interface AppLayoutWithSidebarProps {
 	children: React.ReactNode;
@@ -19,11 +19,11 @@ interface AppLayoutWithSidebarProps {
 export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
 	const pathname = usePathname();
 	const { getSidebarData, routes } = useAppRoutes();
-	const t = useTranslations('nav');
+	const t = useTranslations("nav");
 
 	// Check if current route is auth (should not show sidebar)
 	const isAuthRoute = useMemo(() => {
-		return pathname?.includes('/auth') ?? false;
+		return pathname?.includes("/auth") ?? false;
 	}, [pathname]);
 
 	// Get sidebar navigation data
@@ -43,15 +43,15 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
 		return {
 			...sidebarNavData,
 			header: {
-				appName: process.env.NEXT_PUBLIC_APP_NAME || 'App Name',
-				logoSrc: '/favicon.ico',
+				appName: process.env.NEXT_PUBLIC_APP_NAME || "App Name",
+				logoSrc: "/favicon.ico",
 				url: routes.home,
 			},
 			footer: {
 				avatarSrc: profile?.avatarUrl || undefined,
 				avatarFallback:
-					profile?.name?.charAt(0) || profile?.userName?.charAt(0) || 'U',
-				name: profile?.name || profile?.userName || 'User',
+					profile?.name?.charAt(0) || profile?.userName?.charAt(0) || "U",
+				name: profile?.name || profile?.userName || "User",
 				profileUrl: routes.userProfile,
 			},
 		};
@@ -74,8 +74,8 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
 			sidebarProps={{
 				data: sidebarData,
 				onLogout,
-				searchLabel: t('search'),
-				searchPlaceholder: t('searchPlaceholder'),
+				searchLabel: t("search"),
+				searchPlaceholder: t("searchPlaceholder"),
 			}}
 		>
 			{children}

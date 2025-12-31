@@ -1,11 +1,11 @@
-import type { TimelineSequenceGroup } from '@repo/shared/presentation/components/molecules/timeline-sequence';
-import { useTranslations } from 'next-intl';
-import { useCallback, useMemo } from 'react';
-import { usePlantFindById } from '@/core/plant-context/plant/hooks/use-plant-find-by-id/use-plant-find-by-id';
-import { usePlantTransplant } from '@/core/plant-context/plant/hooks/use-plant-transplant/use-plant-transplant';
-import { usePlantDetailPageStore } from '@/core/plant-context/plant/stores/plant-detail-page-store';
-import { useGrowingUnitFindById } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
-import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import type { TimelineSequenceGroup } from "@repo/shared/presentation/components/molecules/timeline-sequence";
+import { useTranslations } from "next-intl";
+import { useCallback, useMemo } from "react";
+import { useGrowingUnitFindById } from "@/core/plant-context/growing-unit/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id";
+import { useGrowingUnitsFindByCriteria } from "@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria";
+import { usePlantFindById } from "@/core/plant-context/plant/hooks/use-plant-find-by-id/use-plant-find-by-id";
+import { usePlantTransplant } from "@/core/plant-context/plant/hooks/use-plant-transplant/use-plant-transplant";
+import { usePlantDetailPageStore } from "@/core/plant-context/plant/stores/plant-detail-page-store";
 
 /**
  * Hook that provides plant detail page functionality
@@ -13,19 +13,18 @@ import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit
  */
 export function usePlantDetailPage(id: string) {
 	const t = useTranslations();
-	const { transplantDialogOpen, setTransplantDialogOpen } = usePlantDetailPageStore();
+	const { transplantDialogOpen, setTransplantDialogOpen } =
+		usePlantDetailPageStore();
 
-	const { plant, isLoading, error, refetch } = usePlantFindById(id || '');
+	const { plant, isLoading, error, refetch } = usePlantFindById(id || "");
 	const {
 		growingUnit: sourceGrowingUnit,
 		isLoading: isLoadingSourceGrowingUnit,
-	} = useGrowingUnitFindById(plant?.growingUnitId || '', {
+	} = useGrowingUnitFindById(plant?.growingUnitId || "", {
 		enabled: !!plant?.growingUnitId,
 	});
-	const {
-		growingUnits,
-		isLoading: isLoadingGrowingUnits,
-	} = useGrowingUnitsFindByCriteria();
+	const { growingUnits, isLoading: isLoadingGrowingUnits } =
+		useGrowingUnitsFindByCriteria();
 	const {
 		handleTransplant,
 		isLoading: isTransplanting,
@@ -60,13 +59,13 @@ export function usePlantDetailPage(id: string) {
 		const months = Math.floor((diffDays % 365) / 30);
 
 		if (years > 0 && months > 0) {
-			return { years, months, type: 'yearsMonths' as const };
+			return { years, months, type: "yearsMonths" as const };
 		} else if (years > 0) {
-			return { years, type: 'years' as const };
+			return { years, type: "years" as const };
 		} else if (months > 0) {
-			return { months, type: 'months' as const };
+			return { months, type: "months" as const };
 		} else {
-			return { days: diffDays, type: 'days' as const };
+			return { days: diffDays, type: "days" as const };
 		}
 	}, [plant?.plantedDate]);
 
@@ -76,17 +75,17 @@ export function usePlantDetailPage(id: string) {
 	const plantAgeText = useMemo(() => {
 		if (!plantAge) return null;
 		switch (plantAge.type) {
-			case 'yearsMonths':
-				return t('pages.plants.detail.age.yearsMonths', {
+			case "yearsMonths":
+				return t("pages.plants.detail.age.yearsMonths", {
 					years: plantAge.years,
 					months: plantAge.months,
 				});
-			case 'years':
-				return t('pages.plants.detail.age.years', { years: plantAge.years });
-			case 'months':
-				return t('pages.plants.detail.age.months', { months: plantAge.months });
-			case 'days':
-				return t('pages.plants.detail.age.days', { days: plantAge.days });
+			case "years":
+				return t("pages.plants.detail.age.years", { years: plantAge.years });
+			case "months":
+				return t("pages.plants.detail.age.months", { months: plantAge.months });
+			case "days":
+				return t("pages.plants.detail.age.days", { days: plantAge.days });
 			default:
 				return null;
 		}
@@ -97,36 +96,36 @@ export function usePlantDetailPage(id: string) {
 	const upcomingCareGroups: TimelineSequenceGroup[] = useMemo(() => {
 		return [
 			{
-				id: 'tomorrow',
-				label: t('pages.plants.detail.sections.upcomingCare.tomorrow'),
+				id: "tomorrow",
+				label: t("pages.plants.detail.sections.upcomingCare.tomorrow"),
 				isActive: true,
 				items: [
 					{
-						id: 'tomorrow-watering',
-						title: t('pages.plants.detail.sections.upcomingCare.lightWatering'),
-						subtitle: '10:00 AM',
+						id: "tomorrow-watering",
+						title: t("pages.plants.detail.sections.upcomingCare.lightWatering"),
+						subtitle: "10:00 AM",
 					},
 				],
 			},
 			{
-				id: 'in5days',
-				label: t('pages.plants.detail.sections.upcomingCare.in5Days'),
+				id: "in5days",
+				label: t("pages.plants.detail.sections.upcomingCare.in5Days"),
 				items: [
 					{
-						id: 'in5days-cleaning',
-						title: t('pages.plants.detail.sections.upcomingCare.cleanLeaves'),
-						subtitle: t('pages.plants.detail.sections.upcomingCare.duringDay'),
+						id: "in5days-cleaning",
+						title: t("pages.plants.detail.sections.upcomingCare.cleanLeaves"),
+						subtitle: t("pages.plants.detail.sections.upcomingCare.duringDay"),
 					},
 				],
 			},
 			{
-				id: 'in2weeks',
-				label: t('pages.plants.detail.sections.upcomingCare.in2Weeks'),
+				id: "in2weeks",
+				label: t("pages.plants.detail.sections.upcomingCare.in2Weeks"),
 				items: [
 					{
-						id: 'in2weeks-fertilization',
-						title: t('pages.plants.detail.sections.upcomingCare.fertilization'),
-						subtitle: t('pages.plants.detail.sections.upcomingCare.spring'),
+						id: "in2weeks-fertilization",
+						title: t("pages.plants.detail.sections.upcomingCare.fertilization"),
+						subtitle: t("pages.plants.detail.sections.upcomingCare.spring"),
 					},
 				],
 			},
@@ -163,4 +162,3 @@ export function usePlantDetailPage(id: string) {
 		handleTransplantSubmit,
 	};
 }
-

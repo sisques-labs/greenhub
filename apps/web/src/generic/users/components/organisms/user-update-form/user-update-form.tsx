@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { UserResponse } from '@repo/sdk';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { UserResponse } from "@repo/sdk";
+import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -10,16 +10,16 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
-import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
-import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
+import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { useForm } from "react-hook-form";
 import {
 	createUserUpdateSchema,
 	UserUpdateFormValues,
-} from '@/generic/users/dtos/schemas/user-update/user-update.schema';
+} from "@/generic/users/dtos/schemas/user-update/user-update.schema";
 
 interface UserUpdateFormProps {
 	user: UserResponse;
@@ -47,11 +47,11 @@ export function UserUpdateForm({
 		resolver: zodResolver(updateSchema),
 		defaultValues: {
 			id: user.id,
-			name: user.name || '',
-			lastName: user.lastName || '',
-			userName: user.userName || '',
-			bio: user.bio || '',
-			avatarUrl: user.avatarUrl || '',
+			name: user.name || "",
+			lastName: user.lastName || "",
+			userName: user.userName || "",
+			bio: user.bio || "",
+			avatarUrl: user.avatarUrl || "",
 		},
 	});
 
@@ -69,10 +69,10 @@ export function UserUpdateForm({
 					name="name"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('pages.user.profile.fields.name.label')}</FormLabel>
+							<FormLabel>{t("pages.user.profile.fields.name.label")}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t('pages.user.profile.fields.name.placeholder')}
+									placeholder={t("pages.user.profile.fields.name.placeholder")}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -88,10 +88,14 @@ export function UserUpdateForm({
 					name="lastName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('pages.user.profile.fields.lastName.label')}</FormLabel>
+							<FormLabel>
+								{t("pages.user.profile.fields.lastName.label")}
+							</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t('pages.user.profile.fields.lastName.placeholder')}
+									placeholder={t(
+										"pages.user.profile.fields.lastName.placeholder",
+									)}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -107,10 +111,14 @@ export function UserUpdateForm({
 					name="userName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('pages.user.profile.fields.userName.label')}</FormLabel>
+							<FormLabel>
+								{t("pages.user.profile.fields.userName.label")}
+							</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t('pages.user.profile.fields.userName.placeholder')}
+									placeholder={t(
+										"pages.user.profile.fields.userName.placeholder",
+									)}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -126,10 +134,10 @@ export function UserUpdateForm({
 					name="bio"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('pages.user.profile.fields.bio.label')}</FormLabel>
+							<FormLabel>{t("pages.user.profile.fields.bio.label")}</FormLabel>
 							<FormControl>
 								<Textarea
-									placeholder={t('pages.user.profile.fields.bio.placeholder')}
+									placeholder={t("pages.user.profile.fields.bio.placeholder")}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -145,11 +153,15 @@ export function UserUpdateForm({
 					name="avatarUrl"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t('pages.user.profile.fields.avatarUrl.label')}</FormLabel>
+							<FormLabel>
+								{t("pages.user.profile.fields.avatarUrl.label")}
+							</FormLabel>
 							<FormControl>
 								<Input
 									type="url"
-									placeholder={t('pages.user.profile.fields.avatarUrl.placeholder')}
+									placeholder={t(
+										"pages.user.profile.fields.avatarUrl.placeholder",
+									)}
 									disabled={isLoading}
 									{...field}
 								/>
@@ -166,8 +178,8 @@ export function UserUpdateForm({
 				<div className="flex justify-end pt-2">
 					<Button type="submit" disabled={!isDirty || isSubmitting}>
 						{isSubmitting
-							? t('pages.user.profile.actions.update.loading')
-							: t('pages.user.profile.actions.update.label')}
+							? t("pages.user.profile.actions.update.loading")
+							: t("pages.user.profile.actions.update.label")}
 					</Button>
 				</div>
 			</form>

@@ -1,5 +1,5 @@
-import { useUsers } from '@repo/sdk';
-import { useEffect } from 'react';
+import { useUsers } from "@repo/sdk";
+import { useEffect } from "react";
 
 /**
  * Hook that provides user find by id functionality

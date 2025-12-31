@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import type { AuthUserProfileResponse } from '@repo/sdk';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import type { AuthUserProfileResponse } from "@repo/sdk";
+import { Badge } from "@repo/shared/presentation/components/ui/badge";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Separator } from '@repo/shared/presentation/components/ui/separator';
-import { CheckCircle2, Mail, Shield, XCircle } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+} from "@repo/shared/presentation/components/ui/card";
+import { Separator } from "@repo/shared/presentation/components/ui/separator";
+import { CheckCircle2, Mail, Shield, XCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface UserProfileAuthSectionProps {
 	profile: AuthUserProfileResponse;
@@ -35,10 +35,10 @@ export function UserProfileAuthSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Shield className="size-5" />
-					{t('pages.user.profile.sections.authInfo.title')}
+					{t("pages.user.profile.sections.authInfo.title")}
 				</CardTitle>
 				<CardDescription>
-					{t('pages.user.profile.sections.authInfo.description')}
+					{t("pages.user.profile.sections.authInfo.description")}
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
@@ -47,25 +47,25 @@ export function UserProfileAuthSection({
 						<div className="flex items-center gap-2">
 							<Mail className="size-4 text-muted-foreground" />
 							<p className="text-sm font-medium text-muted-foreground">
-								{t('pages.user.profile.fields.email')}
+								{t("pages.user.profile.fields.email")}
 							</p>
 						</div>
 						<div className="flex items-center gap-2">
 							<p className="text-sm">{profile.email}</p>
 							{profile.emailVerified !== null && (
 								<Badge
-									variant={profile.emailVerified ? 'default' : 'outline'}
+									variant={profile.emailVerified ? "default" : "outline"}
 									className="gap-1"
 								>
 									{profile.emailVerified ? (
 										<>
 											<CheckCircle2 className="size-3" />
-											{t('pages.user.profile.fields.verified')}
+											{t("pages.user.profile.fields.verified")}
 										</>
 									) : (
 										<>
 											<XCircle className="size-3" />
-											{t('pages.user.profile.fields.unverified')}
+											{t("pages.user.profile.fields.unverified")}
 										</>
 									)}
 								</Badge>
@@ -79,7 +79,7 @@ export function UserProfileAuthSection({
 				{profile.provider && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('pages.user.profile.fields.provider')}
+							{t("pages.user.profile.fields.provider")}
 						</p>
 						<Badge variant="secondary">{profile.provider}</Badge>
 					</div>
@@ -91,21 +91,21 @@ export function UserProfileAuthSection({
 				{profile.twoFactorEnabled !== null && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('user.profile.twoFactor')}
+							{t("user.profile.twoFactor")}
 						</p>
 						<Badge
-							variant={profile.twoFactorEnabled ? 'default' : 'outline'}
+							variant={profile.twoFactorEnabled ? "default" : "outline"}
 							className="gap-1"
 						>
 							{profile.twoFactorEnabled ? (
 								<>
 									<CheckCircle2 className="size-3" />
-									{t('user.profile.enabled')}
+									{t("user.profile.enabled")}
 								</>
 							) : (
 								<>
 									<XCircle className="size-3" />
-									{t('user.profile.disabled')}
+									{t("user.profile.disabled")}
 								</>
 							)}
 						</Badge>

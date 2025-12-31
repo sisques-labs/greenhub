@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * Schema factory for user update form validation
@@ -10,7 +10,7 @@ import { z } from 'zod';
  */
 export function createUserUpdateSchema(translations: (key: string) => string) {
 	return z.object({
-		id: z.string().min(1, translations('shared.validation.id.required')),
+		id: z.string().min(1, translations("shared.validation.id.required")),
 		name: z.string().optional(),
 		lastName: z.string().optional(),
 		userName: z.string().optional(),

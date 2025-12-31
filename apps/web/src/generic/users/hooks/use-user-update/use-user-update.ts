@@ -1,7 +1,7 @@
-import type { UpdateUserInput, UserRole, UserStatus } from '@repo/sdk';
-import { useUsers } from '@repo/sdk';
-import type { UserUpdateFormValues } from '@/generic/users/dtos/schemas/user-update/user-update.schema';
-import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
+import type { UpdateUserInput, UserRole, UserStatus } from "@repo/sdk";
+import { useUsers } from "@repo/sdk";
+import type { UserUpdateFormValues } from "@/generic/users/dtos/schemas/user-update/user-update.schema";
+import { useSidebarUserStore } from "@/shared/stores/sidebar-user-store";
 
 /**
  * Hook that provides user update functionality
@@ -24,7 +24,7 @@ export function useUserUpdate() {
 				lastName: values.lastName,
 				userName: values.userName,
 				bio: values.bio,
-				avatarUrl: values.avatarUrl === '' ? undefined : values.avatarUrl,
+				avatarUrl: values.avatarUrl === "" ? undefined : values.avatarUrl,
 				role: values.role as UserRole,
 				status: values.status as UserStatus,
 			};
@@ -38,7 +38,7 @@ export function useUserUpdate() {
 					lastName: values.lastName || null,
 					userName: values.userName || null,
 					bio: values.bio || null,
-					avatarUrl: values.avatarUrl === '' ? null : values.avatarUrl || null,
+					avatarUrl: values.avatarUrl === "" ? null : values.avatarUrl || null,
 					role: values.role as UserRole,
 					status: values.status as UserStatus,
 				});
@@ -47,7 +47,7 @@ export function useUserUpdate() {
 			}
 		} catch (error) {
 			const updateError =
-				error instanceof Error ? error : new Error('User update failed');
+				error instanceof Error ? error : new Error("User update failed");
 			onError?.(updateError);
 		}
 	};

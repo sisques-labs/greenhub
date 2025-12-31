@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
 	FormControl,
@@ -6,10 +6,10 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
-import { useTranslations } from 'next-intl';
-import type { Control, FieldPath, FieldValues } from 'react-hook-form';
+} from "@repo/shared/presentation/components/ui/form";
+import { Input } from "@repo/shared/presentation/components/ui/input";
+import { useTranslations } from "next-intl";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
 interface AuthConfirmPasswordFieldProps<T extends FieldValues> {
 	control: Control<T>;
@@ -34,11 +34,11 @@ export function AuthConfirmPasswordField<T extends FieldValues>({
 			name={name as any}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>{t('pages.auth.fields.confirmPassword.label')}</FormLabel>
+					<FormLabel>{t("pages.auth.fields.confirmPassword.label")}</FormLabel>
 					<FormControl>
 						<Input
 							type="password"
-							placeholder={t('pages.auth.fields.confirmPassword.placeholder')}
+							placeholder={t("pages.auth.fields.confirmPassword.placeholder")}
 							disabled={disabled}
 							{...field}
 							onChange={(e) => {

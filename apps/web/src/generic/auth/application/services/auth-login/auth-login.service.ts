@@ -39,7 +39,7 @@ export class AuthLoginService {
 			}
 		} catch (error) {
 			const loginError =
-				error instanceof Error ? error : new Error('Login failed');
+				error instanceof Error ? error : new Error("Login failed");
 			input.onError?.(loginError);
 			throw loginError;
 		}

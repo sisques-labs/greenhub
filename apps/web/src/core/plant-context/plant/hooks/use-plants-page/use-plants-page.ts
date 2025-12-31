@@ -1,7 +1,7 @@
-import { PLANT_STATUS, type PlantResponse } from '@repo/sdk';
-import { paginate } from '@repo/shared/presentation/lib/utils';
-import { useEffect, useMemo, useState } from 'react';
-import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import { PLANT_STATUS, type PlantResponse } from "@repo/sdk";
+import { paginate } from "@repo/shared/presentation/lib/utils";
+import { useEffect, useMemo, useState } from "react";
+import { useGrowingUnitsFindByCriteria } from "@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria";
 
 const PLANTS_PER_PAGE = 10;
 
@@ -10,8 +10,8 @@ export type PlantWithGrowingUnit = PlantResponse & {
 };
 
 export function usePlantsPage() {
-	const [searchQuery, setSearchQuery] = useState('');
-	const [selectedFilter, setSelectedFilter] = useState('all');
+	const [searchQuery, setSearchQuery] = useState("");
+	const [selectedFilter, setSelectedFilter] = useState("all");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
 
@@ -62,9 +62,9 @@ export function usePlantsPage() {
 		}
 
 		// Apply status filter
-		if (selectedFilter !== 'all') {
+		if (selectedFilter !== "all") {
 			switch (selectedFilter) {
-				case 'healthy':
+				case "healthy":
 					filtered = filtered.filter(
 						(plant) => plant.status === PLANT_STATUS.GROWING,
 					);
@@ -92,18 +92,18 @@ export function usePlantsPage() {
 
 	const handleEdit = (plant: PlantResponse) => {
 		// TODO: Open edit dialog
-		console.log('Edit plant:', plant);
+		console.log("Edit plant:", plant);
 	};
 
 	const handleDelete = (id: string) => {
 		// TODO: Open delete confirmation
-		console.log('Delete plant:', id);
+		console.log("Delete plant:", id);
 	};
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
 		// Scroll to top when page changes
-		window.scrollTo({ top: 0, behavior: 'smooth' });
+		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
 
 	const hasAnyPlants = useMemo(() => {

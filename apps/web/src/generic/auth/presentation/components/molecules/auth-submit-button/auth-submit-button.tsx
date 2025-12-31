@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { Loader2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface AuthSubmitButtonProps {
 	isLoading: boolean;
 	disabled?: boolean;
-	mode: 'login' | 'signup';
+	mode: "login" | "signup";
 }
 
 export function AuthSubmitButton({

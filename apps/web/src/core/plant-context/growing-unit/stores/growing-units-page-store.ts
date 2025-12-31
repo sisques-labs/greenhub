@@ -1,5 +1,5 @@
-import type { GrowingUnitResponse } from '@repo/sdk';
-import { create } from 'zustand';
+import type { GrowingUnitResponse } from "@repo/sdk";
+import { create } from "zustand";
 
 interface GrowingUnitsPageStore {
 	// Dialog states
@@ -41,9 +41,9 @@ export const useGrowingUnitsPageStore = create<GrowingUnitsPageStore>(
 			set({ selectedGrowingUnit: growingUnit }),
 
 		// Search and filters
-		searchQuery: '',
+		searchQuery: "",
 		setSearchQuery: (query) => set({ searchQuery: query }),
-		selectedFilter: 'all',
+		selectedFilter: "all",
 		setSelectedFilter: (filter) => set({ selectedFilter: filter }),
 
 		// Pagination

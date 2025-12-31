@@ -2,9 +2,9 @@ import type {
 	CreateGrowingUnitInput,
 	GrowingUnitType,
 	LengthUnit,
-} from '@repo/sdk';
-import { useGrowingUnits } from '@repo/sdk';
-import type { GrowingUnitCreateFormValues } from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-create/growing-unit-create.schema';
+} from "@repo/sdk";
+import { useGrowingUnits } from "@repo/sdk";
+import type { GrowingUnitCreateFormValues } from "@/core/plant-context/growing-unit/dtos/schemas/growing-unit-create/growing-unit-create.schema";
 
 /**
  * Hook that provides growing unit create functionality
@@ -38,7 +38,7 @@ export function useGrowingUnitCreate() {
 			const createError =
 				error instanceof Error
 					? error
-					: new Error('Growing unit create failed');
+					: new Error("Growing unit create failed");
 			onError?.(createError);
 		}
 	};

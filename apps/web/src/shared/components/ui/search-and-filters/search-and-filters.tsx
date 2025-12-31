@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 import {
 	FilterButtons,
 	type FilterOption,
-} from '@/shared/components/ui/filter-buttons/filter-buttons';
-import { SearchBar } from '@/shared/components/ui/search-bar/search-bar';
+} from "@/shared/components/ui/filter-buttons/filter-buttons";
+import { SearchBar } from "@/shared/components/ui/search-bar/search-bar";
 
 export type { FilterOption };
 
@@ -35,12 +35,12 @@ export function SearchAndFilters({
 	className,
 }: SearchAndFiltersProps) {
 	return (
-		<div className={`flex gap-4 items-center flex-wrap ${className || ''}`}>
+		<div className={`flex gap-4 items-center flex-wrap ${className || ""}`}>
 			<SearchBar
 				placeholder={searchPlaceholder}
 				value={searchValue}
 				onChange={onSearchChange}
-				className={`flex-1 min-w-[300px] ${searchBarClassName || ''}`}
+				className={`flex-1 min-w-[300px] ${searchBarClassName || ""}`}
 			/>
 			<FilterButtons
 				options={filterOptions}
