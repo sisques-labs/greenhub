@@ -5,7 +5,7 @@ updates:
     directory: "/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot"
@@ -17,7 +17,7 @@ updates:
     directory: "/apps/api/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot api"
@@ -29,7 +29,7 @@ updates:
     directory: "/apps/web/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot web"
@@ -41,7 +41,7 @@ updates:
     directory: "/apps/admin/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot admin"
@@ -53,7 +53,7 @@ updates:
     directory: "/apps/mobile/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot mobile"
@@ -65,7 +65,7 @@ updates:
     directory: "/apps/docs/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot docs"
@@ -78,7 +78,7 @@ updates:
     directory: "/packages/sdk/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot sdk"
@@ -90,7 +90,7 @@ updates:
     directory: "/packages/shared/"
     target-branch: "dev"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "[PULL REQUEST] - Dependabot shared"
