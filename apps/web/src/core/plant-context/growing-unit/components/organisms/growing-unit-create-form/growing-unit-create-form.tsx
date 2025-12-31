@@ -1,6 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Dialog,
@@ -13,7 +12,6 @@ import {
 import {
 	Form,
 	FormControl,
-	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
@@ -27,11 +25,10 @@ import {
 	SelectValue,
 } from "@repo/shared/presentation/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
 import {
 	createGrowingUnitCreateSchema,
-	GrowingUnitCreateFormValues,
+	type GrowingUnitCreateFormValues,
 } from "@/core/plant-context/growing-unit/dtos/schemas/growing-unit-create/growing-unit-create.schema";
 
 interface GrowingUnitCreateFormProps {
@@ -57,30 +54,76 @@ export function GrowingUnitCreateForm({
 		[t],
 	);
 
-	// Form - initialized with empty values
-	const form = useForm<GrowingUnitCreateFormValues>({
-		resolver: zodResolver(createSchema),
-		defaultValues: {
-			name: "",
-			type: "POT",
-			capacity: 1,
-			length: undefined,
-			width: undefined,
-			height: undefined,
-			unit: "CENTIMETER",
-		},
-	});
+	// Form state
+	const [name, setName] = useState("");
+	const [type, setType] = useState<GrowingUnitCreateFormValues["type"]>("POT");
+	const [capacity, setCapacity] = useState(1);
+	const [length, setLength] = useState<number | undefined>(undefined);
+	const [width, setWidth] = useState<number | undefined>(undefined);
+	const [height, setHeight] = useState<number | undefined>(undefined);
+	const [unit, setUnit] =
+		useState<GrowingUnitCreateFormValues["unit"]>("CENTIMETER");
+	const [formErrors, setFormErrors] = useState<
+		Record<string, { message?: string }>
+	>({});
 
-	const handleSubmit = async (values: GrowingUnitCreateFormValues) => {
-		await onSubmit(values);
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		// Validate form
+		const result = createSchema.safeParse({
+			name,
+			type,
+			capacity,
+			length,
+			width,
+			height,
+			unit,
+		});
+
+		if (!result.success) {
+			const errors: Record<string, { message?: string }> = {};
+			result.error.issues.forEach((err) => {
+				if (err.path[0]) {
+					errors[err.path[0] as string] = { message: err.message };
+				}
+			});
+			setFormErrors(errors);
+			return;
+		}
+
+		setFormErrors({});
+		await onSubmit(result.data);
 		if (!error) {
-			form.reset();
+			// Reset form
+			setName("");
+			setType("POT");
+			setCapacity(1);
+			setLength(undefined);
+			setWidth(undefined);
+			setHeight(undefined);
+			setUnit("CENTIMETER");
 			onOpenChange(false);
 		}
 	};
 
+	const handleOpenChange = (newOpen: boolean) => {
+		if (!newOpen) {
+			// Reset form
+			setName("");
+			setType("POT");
+			setCapacity(1);
+			setLength(undefined);
+			setWidth(undefined);
+			setHeight(undefined);
+			setUnit("CENTIMETER");
+			setFormErrors({});
+		}
+		onOpenChange(newOpen);
+	};
+
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
@@ -90,219 +133,168 @@ export function GrowingUnitCreateForm({
 						{t("pages.growingUnits.list.actions.create.description")}
 					</DialogDescription>
 				</DialogHeader>
-				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
-				<Form {...(form as any)}>
-					<form
-						onSubmit={form.handleSubmit(handleSubmit)}
-						className="space-y-4"
-					>
-						<FormField
-							// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-							control={form.control as any}
-							name="name"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("shared.fields.name.label")}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t(
-												"pages.growingUnits.detail.fields.name.placeholder",
-											)}
-											disabled={isLoading}
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+				<Form errors={formErrors}>
+					<form onSubmit={handleSubmit} className="space-y-4">
+						<FormItem>
+							<FormLabel>{t("shared.fields.name.label")}</FormLabel>
+							<FormControl>
+								<Input
+									placeholder={t(
+										"pages.growingUnits.detail.fields.name.placeholder",
+									)}
+									disabled={isLoading}
+									value={name}
+									onChange={(e) => setName(e.target.value)}
+								/>
+							</FormControl>
+							<FormMessage fieldName="name" />
+						</FormItem>
 
 						<div className="grid grid-cols-2 gap-4">
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="type"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.type.label")}</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-											disabled={isLoading}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue
-														placeholder={t("shared.fields.type.placeholder")}
-													/>
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												<SelectItem value="POT">
-													{t("shared.types.growingUnit.POT")}
-												</SelectItem>
-												<SelectItem value="GARDEN_BED">
-													{t("shared.types.growingUnit.GARDEN_BED")}
-												</SelectItem>
-												<SelectItem value="HANGING_BASKET">
-													{t("shared.types.growingUnit.HANGING_BASKET")}
-												</SelectItem>
-												<SelectItem value="WINDOW_BOX">
-													{t("shared.types.growingUnit.WINDOW_BOX")}
-												</SelectItem>
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="capacity"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.capacity.label")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												min="1"
-												placeholder={t("shared.fields.capacity.placeholder")}
-												disabled={isLoading}
-												{...field}
-												onChange={(e) => field.onChange(Number(e.target.value))}
+							<FormItem>
+								<FormLabel>{t("shared.fields.type.label")}</FormLabel>
+								<Select
+									onValueChange={(value) =>
+										setType(value as GrowingUnitCreateFormValues["type"])
+									}
+									value={type}
+									disabled={isLoading}
+								>
+									<FormControl>
+										<SelectTrigger>
+											<SelectValue
+												placeholder={t("shared.fields.type.placeholder")}
 											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value="POT">
+											{t("shared.types.growingUnit.POT")}
+										</SelectItem>
+										<SelectItem value="GARDEN_BED">
+											{t("shared.types.growingUnit.GARDEN_BED")}
+										</SelectItem>
+										<SelectItem value="HANGING_BASKET">
+											{t("shared.types.growingUnit.HANGING_BASKET")}
+										</SelectItem>
+										<SelectItem value="WINDOW_BOX">
+											{t("shared.types.growingUnit.WINDOW_BOX")}
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage fieldName="type" />
+							</FormItem>
+
+							<FormItem>
+								<FormLabel>{t("shared.fields.capacity.label")}</FormLabel>
+								<FormControl>
+									<Input
+										type="number"
+										min="1"
+										placeholder={t("shared.fields.capacity.placeholder")}
+										disabled={isLoading}
+										value={capacity}
+										onChange={(e) => setCapacity(Number(e.target.value) || 1)}
+									/>
+								</FormControl>
+								<FormMessage fieldName="capacity" />
+							</FormItem>
 						</div>
 
 						<div className="grid grid-cols-4 gap-4">
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="length"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.length.label")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												step="0.01"
-												placeholder={t("shared.fields.length.placeholder")}
-												disabled={isLoading}
-												{...field}
-												onChange={(e) =>
-													field.onChange(
-														e.target.value ? Number(e.target.value) : undefined,
-													)
-												}
-												value={field.value || ""}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>{t("shared.fields.length.label")}</FormLabel>
+								<FormControl>
+									<Input
+										type="number"
+										step="0.01"
+										placeholder={t("shared.fields.length.placeholder")}
+										disabled={isLoading}
+										value={length || ""}
+										onChange={(e) =>
+											setLength(
+												e.target.value ? Number(e.target.value) : undefined,
+											)
+										}
+									/>
+								</FormControl>
+								<FormMessage fieldName="length" />
+							</FormItem>
 
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="width"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.width.label")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												step="0.01"
-												placeholder={t("shared.fields.width.placeholder")}
-												disabled={isLoading}
-												{...field}
-												onChange={(e) =>
-													field.onChange(
-														e.target.value ? Number(e.target.value) : undefined,
-													)
-												}
-												value={field.value || ""}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>{t("shared.fields.width.label")}</FormLabel>
+								<FormControl>
+									<Input
+										type="number"
+										step="0.01"
+										placeholder={t("shared.fields.width.placeholder")}
+										disabled={isLoading}
+										value={width || ""}
+										onChange={(e) =>
+											setWidth(
+												e.target.value ? Number(e.target.value) : undefined,
+											)
+										}
+									/>
+								</FormControl>
+								<FormMessage fieldName="width" />
+							</FormItem>
 
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="height"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.height.label")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												step="0.01"
-												placeholder={t("shared.fields.height.placeholder")}
-												disabled={isLoading}
-												{...field}
-												onChange={(e) =>
-													field.onChange(
-														e.target.value ? Number(e.target.value) : undefined,
-													)
-												}
-												value={field.value || ""}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>{t("shared.fields.height.label")}</FormLabel>
+								<FormControl>
+									<Input
+										type="number"
+										step="0.01"
+										placeholder={t("shared.fields.height.placeholder")}
+										disabled={isLoading}
+										value={height || ""}
+										onChange={(e) =>
+											setHeight(
+												e.target.value ? Number(e.target.value) : undefined,
+											)
+										}
+									/>
+								</FormControl>
+								<FormMessage fieldName="height" />
+							</FormItem>
 
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="unit"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.unit.label")}</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-											disabled={isLoading}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue
-														placeholder={t("shared.fields.unit.placeholder")}
-													/>
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												<SelectItem value="MILLIMETER">
-													{t("shared.units.length.MILLIMETER")}
-												</SelectItem>
-												<SelectItem value="CENTIMETER">
-													{t("shared.units.length.CENTIMETER")}
-												</SelectItem>
-												<SelectItem value="METER">
-													{t("shared.units.length.METER")}
-												</SelectItem>
-												<SelectItem value="INCH">
-													{t("shared.units.length.INCH")}
-												</SelectItem>
-												<SelectItem value="FOOT">
-													{t("shared.units.length.FOOT")}
-												</SelectItem>
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>{t("shared.fields.unit.label")}</FormLabel>
+								<Select
+									onValueChange={(value) =>
+										setUnit(value as GrowingUnitCreateFormValues["unit"])
+									}
+									value={unit}
+									disabled={isLoading}
+								>
+									<FormControl>
+										<SelectTrigger>
+											<SelectValue
+												placeholder={t("shared.fields.unit.placeholder")}
+											/>
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value="MILLIMETER">
+											{t("shared.units.length.MILLIMETER")}
+										</SelectItem>
+										<SelectItem value="CENTIMETER">
+											{t("shared.units.length.CENTIMETER")}
+										</SelectItem>
+										<SelectItem value="METER">
+											{t("shared.units.length.METER")}
+										</SelectItem>
+										<SelectItem value="INCH">
+											{t("shared.units.length.INCH")}
+										</SelectItem>
+										<SelectItem value="FOOT">
+											{t("shared.units.length.FOOT")}
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage fieldName="unit" />
+							</FormItem>
 						</div>
 
 						{error && (
@@ -313,7 +305,7 @@ export function GrowingUnitCreateForm({
 							<Button
 								type="button"
 								variant="outline"
-								onClick={() => onOpenChange(false)}
+								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
 								{t("common.cancel")}

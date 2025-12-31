@@ -2,58 +2,50 @@
 
 import {
 	FormControl,
-	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from "@repo/shared/presentation/components/ui/form";
 import { Input } from "@repo/shared/presentation/components/ui/input";
 import { useTranslations } from "next-intl";
-import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
-interface AuthPasswordFieldProps<T extends FieldValues> {
-	control: Control<T>;
-	name: FieldPath<T>;
+interface AuthPasswordFieldProps {
+	value: string;
+	onChange: (value: string) => void;
 	disabled?: boolean;
 	placeholder?: "login" | "signup";
+	error?: { message?: string };
 	onPasswordChange?: (value: string) => void;
 }
 
-export function AuthPasswordField<T extends FieldValues>({
-	control,
-	name,
+export function AuthPasswordField({
+	value,
+	onChange,
 	disabled = false,
 	placeholder = "login",
+	error,
 	onPasswordChange,
-}: AuthPasswordFieldProps<T>) {
+}: AuthPasswordFieldProps) {
 	const t = useTranslations();
 
 	return (
-		<FormField
-			// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-			control={control as any}
-			// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-			name={name as any}
-			render={({ field }) => (
-				<FormItem>
-					<FormLabel>{t("pages.auth.fields.password.label")}</FormLabel>
-					<FormControl>
-						<Input
-							type="password"
-							placeholder={t(
-								`pages.auth.fields.password.placeholder.${placeholder}`,
-							)}
-							disabled={disabled}
-							{...field}
-							onChange={(e) => {
-								field.onChange(e);
-								onPasswordChange?.(e.target.value);
-							}}
-						/>
-					</FormControl>
-					<FormMessage />
-				</FormItem>
-			)}
-		/>
+		<FormItem>
+			<FormLabel>{t("pages.auth.fields.password.label")}</FormLabel>
+			<FormControl>
+				<Input
+					type="password"
+					placeholder={t(
+						`pages.auth.fields.password.placeholder.${placeholder}`,
+					)}
+					disabled={disabled}
+					value={value}
+					onChange={(e) => {
+						onChange(e.target.value);
+						onPasswordChange?.(e.target.value);
+					}}
+				/>
+			</FormControl>
+			{error && <FormMessage>{error.message}</FormMessage>}
+		</FormItem>
 	);
 }

@@ -2,54 +2,46 @@
 
 import {
 	FormControl,
-	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from "@repo/shared/presentation/components/ui/form";
 import { Input } from "@repo/shared/presentation/components/ui/input";
 import { useTranslations } from "next-intl";
-import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
-interface AuthConfirmPasswordFieldProps<T extends FieldValues> {
-	control: Control<T>;
-	name: FieldPath<T>;
+interface AuthConfirmPasswordFieldProps {
+	value: string;
+	onChange: (value: string) => void;
 	disabled?: boolean;
+	error?: { message?: string };
 	onConfirmPasswordChange?: (value: string) => void;
 }
 
-export function AuthConfirmPasswordField<T extends FieldValues>({
-	control,
-	name,
+export function AuthConfirmPasswordField({
+	value,
+	onChange,
 	disabled = false,
+	error,
 	onConfirmPasswordChange,
-}: AuthConfirmPasswordFieldProps<T>) {
+}: AuthConfirmPasswordFieldProps) {
 	const t = useTranslations();
 
 	return (
-		<FormField
-			// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-			control={control as any}
-			// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-			name={name as any}
-			render={({ field }) => (
-				<FormItem>
-					<FormLabel>{t("pages.auth.fields.confirmPassword.label")}</FormLabel>
-					<FormControl>
-						<Input
-							type="password"
-							placeholder={t("pages.auth.fields.confirmPassword.placeholder")}
-							disabled={disabled}
-							{...field}
-							onChange={(e) => {
-								field.onChange(e);
-								onConfirmPasswordChange?.(e.target.value);
-							}}
-						/>
-					</FormControl>
-					<FormMessage />
-				</FormItem>
-			)}
-		/>
+		<FormItem>
+			<FormLabel>{t("pages.auth.fields.confirmPassword.label")}</FormLabel>
+			<FormControl>
+				<Input
+					type="password"
+					placeholder={t("pages.auth.fields.confirmPassword.placeholder")}
+					disabled={disabled}
+					value={value}
+					onChange={(e) => {
+						onChange(e.target.value);
+						onConfirmPasswordChange?.(e.target.value);
+					}}
+				/>
+			</FormControl>
+			{error && <FormMessage>{error.message}</FormMessage>}
+		</FormItem>
 	);
 }

@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+	return twMerge(clsx(inputs));
 }
 
 /**
@@ -19,24 +19,24 @@ export function cn(...inputs: ClassValue[]) {
  * // Returns: { items: [1, 2, 3, 4, 5], totalPages: 2, startIndex: 0, endIndex: 5 }
  */
 export function paginate<T>(
-  items: T[],
-  currentPage: number,
-  perPage: number,
+	items: T[],
+	currentPage: number,
+	perPage: number,
 ): {
-  items: T[];
-  totalPages: number;
-  startIndex: number;
-  endIndex: number;
+	items: T[];
+	totalPages: number;
+	startIndex: number;
+	endIndex: number;
 } {
-  const totalPages = Math.ceil(items.length / perPage);
-  const startIndex = (currentPage - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const paginatedItems = items.slice(startIndex, endIndex);
+	const totalPages = Math.ceil(items.length / perPage);
+	const startIndex = (currentPage - 1) * perPage;
+	const endIndex = startIndex + perPage;
+	const paginatedItems = items.slice(startIndex, endIndex);
 
-  return {
-    items: paginatedItems,
-    totalPages,
-    startIndex,
-    endIndex,
-  };
+	return {
+		items: paginatedItems,
+		totalPages,
+		startIndex,
+		endIndex,
+	};
 }

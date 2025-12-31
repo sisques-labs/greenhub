@@ -1,6 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { GrowingUnitResponse, PlantResponse } from "@repo/sdk";
 import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
@@ -14,7 +13,6 @@ import {
 import {
 	Form,
 	FormControl,
-	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
@@ -28,8 +26,7 @@ import {
 	SelectValue,
 } from "@repo/shared/presentation/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
 import { z } from "zod";
 
 const createPlantTransplantSchema = (translations: (key: string) => string) =>
@@ -57,7 +54,6 @@ interface PlantTransplantModalProps {
 }
 
 export function PlantTransplantModal({
-	plant,
 	sourceGrowingUnit,
 	targetGrowingUnits,
 	open,
@@ -74,23 +70,11 @@ export function PlantTransplantModal({
 		[t],
 	);
 
-	// Form - initialized with empty values
-	const form = useForm<PlantTransplantFormValues>({
-		resolver: zodResolver(transplantSchema),
-		defaultValues: {
-			targetGrowingUnitId: "",
-		},
-	});
-
-	const handleSubmit = async (values: PlantTransplantFormValues) => {
-		await onSubmit(values.targetGrowingUnitId);
-		if (!error) {
-			form.reset({
-				targetGrowingUnitId: "",
-			});
-			onOpenChange(false);
-		}
-	};
+	// Form state
+	const [targetGrowingUnitId, setTargetGrowingUnitId] = useState("");
+	const [formErrors, setFormErrors] = useState<
+		Record<string, { message?: string }>
+	>({});
 
 	// Filter out the source growing unit from target options
 	const availableTargetGrowingUnits = useMemo(() => {
@@ -98,8 +82,43 @@ export function PlantTransplantModal({
 		return targetGrowingUnits.filter((gu) => gu.id !== sourceGrowingUnit.id);
 	}, [targetGrowingUnits, sourceGrowingUnit]);
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		// Validate form
+		const result = transplantSchema.safeParse({
+			targetGrowingUnitId,
+		});
+
+		if (!result.success) {
+			const errors: Record<string, { message?: string }> = {};
+			result.error.issues.forEach((err) => {
+				if (err.path[0]) {
+					errors[err.path[0] as string] = { message: err.message };
+				}
+			});
+			setFormErrors(errors);
+			return;
+		}
+
+		setFormErrors({});
+		await onSubmit(targetGrowingUnitId);
+		if (!error) {
+			setTargetGrowingUnitId("");
+			onOpenChange(false);
+		}
+	};
+
+	const handleOpenChange = (newOpen: boolean) => {
+		if (!newOpen) {
+			setTargetGrowingUnitId("");
+			setFormErrors({});
+		}
+		onOpenChange(newOpen);
+	};
+
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>
@@ -110,11 +129,8 @@ export function PlantTransplantModal({
 					</DialogDescription>
 				</DialogHeader>
 
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(handleSubmit)}
-						className="space-y-4"
-					>
+				<Form errors={formErrors}>
+					<form onSubmit={handleSubmit} className="space-y-4">
 						{/* Source Growing Unit (read-only) */}
 						<FormItem>
 							<FormLabel>
@@ -140,48 +156,41 @@ export function PlantTransplantModal({
 						</FormItem>
 
 						{/* Target Growing Unit (select) */}
-						<FormField
-							// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-							control={form.control as any}
-							name="targetGrowingUnitId"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										{t(
-											"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label",
-										)}
-									</FormLabel>
-									<Select
-										onValueChange={field.onChange}
-										value={field.value}
-										disabled={isLoading}
-									>
-										<FormControl>
-											<SelectTrigger>
-												<SelectValue
-													placeholder={t(
-														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder",
-													)}
-												/>
-											</SelectTrigger>
-										</FormControl>
-										<SelectContent>
-											{availableTargetGrowingUnits.map((growingUnit) => (
-												<SelectItem key={growingUnit.id} value={growingUnit.id}>
-													{growingUnit.name} ({growingUnit.remainingCapacity}/
-													{growingUnit.capacity}{" "}
-													{t(
-														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable",
-													)}
-													)
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<FormItem>
+							<FormLabel>
+								{t(
+									"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label",
+								)}
+							</FormLabel>
+							<Select
+								onValueChange={setTargetGrowingUnitId}
+								value={targetGrowingUnitId}
+								disabled={isLoading}
+							>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue
+											placeholder={t(
+												"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder",
+											)}
+										/>
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{availableTargetGrowingUnits.map((growingUnit) => (
+										<SelectItem key={growingUnit.id} value={growingUnit.id}>
+											{growingUnit.name} ({growingUnit.remainingCapacity}/
+											{growingUnit.capacity}{" "}
+											{t(
+												"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable",
+											)}
+											)
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<FormMessage fieldName="targetGrowingUnitId" />
+						</FormItem>
 
 						{error && (
 							<div className="text-sm text-destructive">{error.message}</div>
@@ -191,7 +200,7 @@ export function PlantTransplantModal({
 							<Button
 								type="button"
 								variant="outline"
-								onClick={() => onOpenChange(false)}
+								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
 								{t("common.cancel")}

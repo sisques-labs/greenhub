@@ -1,10 +1,8 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@repo/shared/presentation/components/ui/form";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
 import { AuthConfirmPasswordField } from "@/generic/auth/presentation/components/molecules/auth-confirm-password-field/auth-confirm-password-field";
 import { AuthEmailField } from "@/generic/auth/presentation/components/molecules/auth-email-field/auth-email-field";
 import { AuthErrorMessage } from "@/generic/auth/presentation/components/molecules/auth-error-message/auth-error-message";
@@ -43,37 +41,62 @@ export function AuthRegisterForm({
 		[t],
 	);
 
-	// Register form - initialized with store values
-	const form = useForm<AuthRegisterByEmailFormValues>({
-		resolver: zodResolver(registerSchema),
-		defaultValues: {
-			email: email,
-			password: password,
-			confirmPassword: confirmPassword,
-		},
-	});
+	// Form state
+	const [formEmail, setFormEmail] = useState(email);
+	const [formPassword, setFormPassword] = useState(password);
+	const [formConfirmPassword, setFormConfirmPassword] = useState(confirmPassword);
+	const [formErrors, setFormErrors] = useState<
+		Record<string, { message?: string }>
+	>({});
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		// Validate form
+		const result = registerSchema.safeParse({
+			email: formEmail,
+			password: formPassword,
+			confirmPassword: formConfirmPassword,
+		});
+
+		if (!result.success) {
+			const errors: Record<string, { message?: string }> = {};
+			result.error.issues.forEach((err) => {
+				if (err.path[0]) {
+					errors[err.path[0] as string] = { message: err.message };
+				}
+			});
+			setFormErrors(errors);
+			return;
+		}
+
+		setFormErrors({});
+		await onSubmit(result.data);
+	};
 
 	return (
-		// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-		<Form {...(form as any)}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+		<Form errors={formErrors}>
+			<form onSubmit={handleSubmit} className="space-y-4">
 				<AuthEmailField
-					control={form.control}
-					name="email"
+					value={formEmail}
+					onChange={setFormEmail}
 					disabled={isLoading}
+					error={formErrors.email}
 					onEmailChange={setEmail}
 				/>
 				<AuthPasswordField
-					control={form.control}
-					name="password"
+					value={formPassword}
+					onChange={setFormPassword}
 					disabled={isLoading}
 					placeholder="signup"
+					error={formErrors.password}
 					onPasswordChange={setPassword}
 				/>
 				<AuthConfirmPasswordField
-					control={form.control}
-					name="confirmPassword"
+					value={formConfirmPassword}
+					onChange={setFormConfirmPassword}
 					disabled={isLoading}
+					error={formErrors.confirmPassword}
 					onConfirmPasswordChange={setConfirmPassword}
 				/>
 				<AuthErrorMessage error={error} />

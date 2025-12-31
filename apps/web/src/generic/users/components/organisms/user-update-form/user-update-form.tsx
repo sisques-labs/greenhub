@@ -1,12 +1,10 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { UserResponse } from "@repo/sdk";
 import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Form,
 	FormControl,
-	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
@@ -14,8 +12,7 @@ import {
 import { Input } from "@repo/shared/presentation/components/ui/input";
 import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useMemo, useState } from "react";
 import {
 	createUserUpdateSchema,
 	UserUpdateFormValues,
@@ -42,134 +39,171 @@ export function UserUpdateForm({
 		[t],
 	);
 
-	// Form - initialized with user values
-	const form = useForm<UserUpdateFormValues>({
-		resolver: zodResolver(updateSchema),
-		defaultValues: {
-			id: user.id,
+	// Form state
+	const [id, setId] = useState(user.id);
+	const [name, setName] = useState(user.name || "");
+	const [lastName, setLastName] = useState(user.lastName || "");
+	const [userName, setUserName] = useState(user.userName || "");
+	const [bio, setBio] = useState(user.bio || "");
+	const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl || "");
+	const [formErrors, setFormErrors] = useState<
+		Record<string, { message?: string }>
+	>({});
+
+	// Initial values for dirty check
+	const [initialValues, setInitialValues] = useState({
+		name: user.name || "",
+		lastName: user.lastName || "",
+		userName: user.userName || "",
+		bio: user.bio || "",
+		avatarUrl: user.avatarUrl || "",
+	});
+
+	// Update form when user changes
+	useEffect(() => {
+		setId(user.id);
+		setName(user.name || "");
+		setLastName(user.lastName || "");
+		setUserName(user.userName || "");
+		setBio(user.bio || "");
+		setAvatarUrl(user.avatarUrl || "");
+		setInitialValues({
 			name: user.name || "",
 			lastName: user.lastName || "",
 			userName: user.userName || "",
 			bio: user.bio || "",
 			avatarUrl: user.avatarUrl || "",
-		},
-	});
+		});
+		setFormErrors({});
+	}, [user]);
 
 	// Check if form has been modified
-	const isDirty = form.formState.isDirty;
+	const isDirty =
+		name !== initialValues.name ||
+		lastName !== initialValues.lastName ||
+		userName !== initialValues.userName ||
+		bio !== initialValues.bio ||
+		avatarUrl !== initialValues.avatarUrl;
 	const isSubmitting = isLoading;
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		// Validate form
+		const result = updateSchema.safeParse({
+			id,
+			name: name || undefined,
+			lastName: lastName || undefined,
+			userName: userName || undefined,
+			bio: bio || undefined,
+			avatarUrl: avatarUrl || undefined,
+		});
+
+		if (!result.success) {
+			const errors: Record<string, { message?: string }> = {};
+			result.error.issues.forEach((err) => {
+				if (err.path[0]) {
+					errors[err.path[0] as string] = { message: err.message };
+				}
+			});
+			setFormErrors(errors);
+			return;
+		}
+
+		setFormErrors({});
+		await onSubmit(result.data);
+		if (!error) {
+			// Update initial values after successful submit
+			setInitialValues({
+				name,
+				lastName,
+				userName,
+				bio,
+				avatarUrl,
+			});
+		}
+	};
+
 	return (
-		// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-		<Form {...(form as any)}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-				<FormField
-					// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-					control={form.control as any}
-					name="name"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>{t("pages.user.profile.fields.name.label")}</FormLabel>
-							<FormControl>
-								<Input
-									placeholder={t("pages.user.profile.fields.name.placeholder")}
-									disabled={isLoading}
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+		<Form errors={formErrors}>
+			<form onSubmit={handleSubmit} className="space-y-4">
+				<FormItem>
+					<FormLabel>{t("pages.user.profile.fields.name.label")}</FormLabel>
+					<FormControl>
+						<Input
+							placeholder={t("pages.user.profile.fields.name.placeholder")}
+							disabled={isLoading}
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+					</FormControl>
+					<FormMessage fieldName="name" />
+				</FormItem>
 
-				<FormField
-					// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-					control={form.control as any}
-					name="lastName"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>
-								{t("pages.user.profile.fields.lastName.label")}
-							</FormLabel>
-							<FormControl>
-								<Input
-									placeholder={t(
-										"pages.user.profile.fields.lastName.placeholder",
-									)}
-									disabled={isLoading}
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<FormItem>
+					<FormLabel>
+						{t("pages.user.profile.fields.lastName.label")}
+					</FormLabel>
+					<FormControl>
+						<Input
+							placeholder={t(
+								"pages.user.profile.fields.lastName.placeholder",
+							)}
+							disabled={isLoading}
+							value={lastName}
+							onChange={(e) => setLastName(e.target.value)}
+						/>
+					</FormControl>
+					<FormMessage fieldName="lastName" />
+				</FormItem>
 
-				<FormField
-					// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-					control={form.control as any}
-					name="userName"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>
-								{t("pages.user.profile.fields.userName.label")}
-							</FormLabel>
-							<FormControl>
-								<Input
-									placeholder={t(
-										"pages.user.profile.fields.userName.placeholder",
-									)}
-									disabled={isLoading}
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<FormItem>
+					<FormLabel>
+						{t("pages.user.profile.fields.userName.label")}
+					</FormLabel>
+					<FormControl>
+						<Input
+							placeholder={t(
+								"pages.user.profile.fields.userName.placeholder",
+							)}
+							disabled={isLoading}
+							value={userName}
+							onChange={(e) => setUserName(e.target.value)}
+						/>
+					</FormControl>
+					<FormMessage fieldName="userName" />
+				</FormItem>
 
-				<FormField
-					// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-					control={form.control as any}
-					name="bio"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>{t("pages.user.profile.fields.bio.label")}</FormLabel>
-							<FormControl>
-								<Textarea
-									placeholder={t("pages.user.profile.fields.bio.placeholder")}
-									disabled={isLoading}
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<FormItem>
+					<FormLabel>{t("pages.user.profile.fields.bio.label")}</FormLabel>
+					<FormControl>
+						<Textarea
+							placeholder={t("pages.user.profile.fields.bio.placeholder")}
+							disabled={isLoading}
+							value={bio}
+							onChange={(e) => setBio(e.target.value)}
+						/>
+					</FormControl>
+					<FormMessage fieldName="bio" />
+				</FormItem>
 
-				<FormField
-					// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-					control={form.control as any}
-					name="avatarUrl"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>
-								{t("pages.user.profile.fields.avatarUrl.label")}
-							</FormLabel>
-							<FormControl>
-								<Input
-									type="url"
-									placeholder={t(
-										"pages.user.profile.fields.avatarUrl.placeholder",
-									)}
-									disabled={isLoading}
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<FormItem>
+					<FormLabel>
+						{t("pages.user.profile.fields.avatarUrl.label")}
+					</FormLabel>
+					<FormControl>
+						<Input
+							type="url"
+							placeholder={t(
+								"pages.user.profile.fields.avatarUrl.placeholder",
+							)}
+							disabled={isLoading}
+							value={avatarUrl}
+							onChange={(e) => setAvatarUrl(e.target.value)}
+						/>
+					</FormControl>
+					<FormMessage fieldName="avatarUrl" />
+				</FormItem>
 
 				{error && (
 					<div className="text-sm text-destructive">{error.message}</div>

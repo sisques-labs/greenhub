@@ -1,6 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { PLANT_STATUS } from "@repo/sdk";
 import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
@@ -14,7 +13,6 @@ import {
 import {
 	Form,
 	FormControl,
-	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
@@ -29,8 +27,7 @@ import {
 } from "@repo/shared/presentation/components/ui/select";
 import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
 import {
 	createPlantCreateSchema,
 	PlantCreateFormValues,
@@ -61,36 +58,70 @@ export function PlantCreateForm({
 		[t],
 	);
 
-	// Form - initialized with empty values
-	const form = useForm<PlantCreateFormValues>({
-		resolver: zodResolver(createSchema),
-		defaultValues: {
-			name: "",
-			species: "",
-			plantedDate: new Date(),
-			notes: "",
-			status: PLANT_STATUS.PLANTED,
-			growingUnitId: growingUnitId,
-		},
-	});
+	// Form state
+	const [name, setName] = useState("");
+	const [species, setSpecies] = useState("");
+	const [plantedDate, setPlantedDate] = useState<Date>(new Date());
+	const [notes, setNotes] = useState("");
+	const [status, setStatus] = useState<PlantCreateFormValues["status"]>(
+		PLANT_STATUS.PLANTED,
+	);
+	const [formErrors, setFormErrors] = useState<
+		Record<string, { message?: string }>
+	>({});
 
-	const handleSubmit = async (values: PlantCreateFormValues) => {
-		await onSubmit(values);
-		if (!error) {
-			form.reset({
-				name: "",
-				species: "",
-				plantedDate: new Date(),
-				notes: "",
-				status: PLANT_STATUS.PLANTED,
-				growingUnitId: growingUnitId,
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		// Validate form
+		const result = createSchema.safeParse({
+			name,
+			species,
+			plantedDate,
+			notes: notes || undefined,
+			status,
+			growingUnitId,
+		});
+
+		if (!result.success) {
+			const errors: Record<string, { message?: string }> = {};
+			result.error.issues.forEach((err) => {
+				if (err.path[0]) {
+					errors[err.path[0] as string] = { message: err.message };
+				}
 			});
+			setFormErrors(errors);
+			return;
+		}
+
+		setFormErrors({});
+		await onSubmit(result.data);
+		if (!error) {
+			// Reset form
+			setName("");
+			setSpecies("");
+			setPlantedDate(new Date());
+			setNotes("");
+			setStatus(PLANT_STATUS.PLANTED);
 			onOpenChange(false);
 		}
 	};
 
+	const handleOpenChange = (newOpen: boolean) => {
+		if (!newOpen) {
+			// Reset form
+			setName("");
+			setSpecies("");
+			setPlantedDate(new Date());
+			setNotes("");
+			setStatus(PLANT_STATUS.PLANTED);
+			setFormErrors({});
+		}
+		onOpenChange(newOpen);
+	};
+
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("plants.actions.create.title")}</DialogTitle>
@@ -98,150 +129,113 @@ export function PlantCreateForm({
 						{t("plants.actions.create.description")}
 					</DialogDescription>
 				</DialogHeader>
-				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
-				<Form {...(form as any)}>
-					<form
-						onSubmit={form.handleSubmit(handleSubmit)}
-						className="space-y-4"
-					>
+				<Form errors={formErrors}>
+					<form onSubmit={handleSubmit} className="space-y-4">
 						<div className="grid grid-cols-2 gap-4">
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="name"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											{t("pages.plants.detail.fields.name.label")}
-										</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t(
-													"pages.plants.detail.fields.name.placeholder",
-												)}
-												disabled={isLoading}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>
+									{t("pages.plants.detail.fields.name.label")}
+								</FormLabel>
+								<FormControl>
+									<Input
+										placeholder={t(
+											"pages.plants.detail.fields.name.placeholder",
+										)}
+										disabled={isLoading}
+										value={name}
+										onChange={(e) => setName(e.target.value)}
+									/>
+								</FormControl>
+								<FormMessage fieldName="name" />
+							</FormItem>
 
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="species"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.species.label")}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t("shared.fields.species.placeholder")}
-												disabled={isLoading}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>{t("shared.fields.species.label")}</FormLabel>
+								<FormControl>
+									<Input
+										placeholder={t("shared.fields.species.placeholder")}
+										disabled={isLoading}
+										value={species}
+										onChange={(e) => setSpecies(e.target.value)}
+									/>
+								</FormControl>
+								<FormMessage fieldName="species" />
+							</FormItem>
 						</div>
 
 						<div className="grid grid-cols-2 gap-4">
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="plantedDate"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("plant.fields.plantedDate.label")}</FormLabel>
-										<FormControl>
-											<Input
-												type="date"
-												disabled={isLoading}
-												{...field}
-												value={
-													field.value
-														? new Date(field.value).toISOString().split("T")[0]
-														: ""
-												}
-												onChange={(e) =>
-													field.onChange(
-														e.target.value
-															? new Date(e.target.value)
-															: undefined,
-													)
-												}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+							<FormItem>
+								<FormLabel>{t("plant.fields.plantedDate.label")}</FormLabel>
+								<FormControl>
+									<Input
+										type="date"
+										disabled={isLoading}
+										value={
+											plantedDate
+												? new Date(plantedDate).toISOString().split("T")[0]
+												: ""
+										}
+										onChange={(e) =>
+											setPlantedDate(
+												e.target.value ? new Date(e.target.value) : new Date(),
+											)
+										}
+									/>
+								</FormControl>
+								<FormMessage fieldName="plantedDate" />
+							</FormItem>
 
-							<FormField
-								// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-								control={form.control as any}
-								name="status"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("shared.fields.status.label")}</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-											disabled={isLoading}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue
-														placeholder={t("shared.fields.status.placeholder")}
-													/>
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												<SelectItem value={PLANT_STATUS.PLANTED}>
-													{t("shared.status.plant.PLANTED")}
-												</SelectItem>
-												<SelectItem value={PLANT_STATUS.GROWING}>
-													{t("shared.status.plant.GROWING")}
-												</SelectItem>
-												<SelectItem value={PLANT_STATUS.HARVESTED}>
-													{t("shared.status.plant.HARVESTED")}
-												</SelectItem>
-												<SelectItem value={PLANT_STATUS.DEAD}>
-													{t("shared.status.plant.DEAD")}
-												</SelectItem>
-												<SelectItem value={PLANT_STATUS.ARCHIVED}>
-													{t("shared.status.plant.ARCHIVED")}
-												</SelectItem>
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-
-						<FormField
-							// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
-							control={form.control as any}
-							name="notes"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("shared.fields.notes.label")}</FormLabel>
+							<FormItem>
+								<FormLabel>{t("shared.fields.status.label")}</FormLabel>
+								<Select
+									onValueChange={(value) =>
+										setStatus(value as PlantCreateFormValues["status"])
+									}
+									value={status}
+									disabled={isLoading}
+								>
 									<FormControl>
-										<Textarea
-											placeholder={t("shared.fields.notes.placeholder")}
-											disabled={isLoading}
-											rows={4}
-											{...field}
-										/>
+										<SelectTrigger>
+											<SelectValue
+												placeholder={t("shared.fields.status.placeholder")}
+											/>
+										</SelectTrigger>
 									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+									<SelectContent>
+										<SelectItem value={PLANT_STATUS.PLANTED}>
+											{t("shared.status.plant.PLANTED")}
+										</SelectItem>
+										<SelectItem value={PLANT_STATUS.GROWING}>
+											{t("shared.status.plant.GROWING")}
+										</SelectItem>
+										<SelectItem value={PLANT_STATUS.HARVESTED}>
+											{t("shared.status.plant.HARVESTED")}
+										</SelectItem>
+										<SelectItem value={PLANT_STATUS.DEAD}>
+											{t("shared.status.plant.DEAD")}
+										</SelectItem>
+										<SelectItem value={PLANT_STATUS.ARCHIVED}>
+											{t("shared.status.plant.ARCHIVED")}
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage fieldName="status" />
+							</FormItem>
+						</div>
+
+						<FormItem>
+							<FormLabel>{t("shared.fields.notes.label")}</FormLabel>
+							<FormControl>
+								<Textarea
+									placeholder={t("shared.fields.notes.placeholder")}
+									disabled={isLoading}
+									rows={4}
+									value={notes}
+									onChange={(e) => setNotes(e.target.value)}
+								/>
+							</FormControl>
+							<FormMessage fieldName="notes" />
+						</FormItem>
 
 						{error && (
 							<div className="text-sm text-destructive">{error.message}</div>
@@ -251,7 +245,7 @@ export function PlantCreateForm({
 							<Button
 								type="button"
 								variant="outline"
-								onClick={() => onOpenChange(false)}
+								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
 								{t("common.cancel")}
