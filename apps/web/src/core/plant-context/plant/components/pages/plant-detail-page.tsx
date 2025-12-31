@@ -1,9 +1,9 @@
 'use client';
 
-import {
-	TimelineSequence,
-	type TimelineSequenceGroup,
-} from '@repo/shared/presentation/components/molecules/timeline-sequence';
+import { PlantTransplantModal } from '@/core/plant-context/plant/components/organisms/plant-transplant-modal/plant-transplant-modal';
+import { usePlantDetailPage } from '@/core/plant-context/plant/hooks/use-plant-detail-page/use-plant-detail-page';
+import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
+import { TimelineSequence } from '@repo/shared/presentation/components/molecules/timeline-sequence';
 import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
@@ -22,6 +22,7 @@ import {
 	TableRow,
 } from '@repo/shared/presentation/components/ui/table';
 import {
+	ArrowRightLeftIcon,
 	CalendarIcon,
 	CheckIcon,
 	CloudIcon,
@@ -34,60 +35,28 @@ import {
 	ThermometerIcon,
 	TrashIcon,
 } from 'lucide-react';
-import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import { usePlantFindById } from '@/core/plant-context/plant/hooks/use-plant-find-by-id/use-plant-find-by-id';
-import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
+import { useParams } from 'next/navigation';
 
 export function PlantDetailPage() {
 	const t = useTranslations();
 	const params = useParams();
 	const id = params?.id as string;
 
-	const { plant, isLoading, error } = usePlantFindById(id || '');
-
-	// Prepare upcoming care data for TimelineSequence
-	// Must be called before any early returns to maintain hooks order
-	// TODO: This should be fetched from the backend and not hardcoded
-	const upcomingCareGroups: TimelineSequenceGroup[] = useMemo(() => {
-		return [
-			{
-				id: 'tomorrow',
-				label: t('plant.detail.upcomingCare.tomorrow'),
-				isActive: true,
-				items: [
-					{
-						id: 'tomorrow-watering',
-						title: t('plant.detail.upcomingCare.lightWatering'),
-						subtitle: '10:00 AM',
-					},
-				],
-			},
-			{
-				id: 'in5days',
-				label: t('plant.detail.upcomingCare.in5Days'),
-				items: [
-					{
-						id: 'in5days-cleaning',
-						title: t('plant.detail.upcomingCare.cleanLeaves'),
-						subtitle: t('plant.detail.upcomingCare.duringDay'),
-					},
-				],
-			},
-			{
-				id: 'in2weeks',
-				label: t('plant.detail.upcomingCare.in2Weeks'),
-				items: [
-					{
-						id: 'in2weeks-fertilization',
-						title: t('plant.detail.upcomingCare.fertilization'),
-						subtitle: t('plant.detail.upcomingCare.spring'),
-					},
-				],
-			},
-		];
-	}, [t]);
+	const {
+		plant,
+		sourceGrowingUnit,
+		targetGrowingUnits,
+		plantAgeText,
+		upcomingCareGroups,
+		isLoading,
+		isLoadingTransplant,
+		error,
+		transplantError,
+		transplantDialogOpen,
+		setTransplantDialogOpen,
+		handleTransplantSubmit,
+	} = usePlantDetailPage(id);
 
 	if (isLoading) {
 		return (
@@ -110,7 +79,7 @@ export function PlantDetailPage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('plant.error.loading', {
+						{t('pages.plants.detail.error.loading', {
 							message: (error as Error)?.message || 'Unknown error',
 						})}
 					</p>
@@ -119,28 +88,7 @@ export function PlantDetailPage() {
 		);
 	}
 
-	// Calculate plant age
-	const calculateAge = () => {
-		if (!plant.plantedDate) return null;
-		const plantedDate = new Date(plant.plantedDate);
-		const now = new Date();
-		const diffTime = Math.abs(now.getTime() - plantedDate.getTime());
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-		const years = Math.floor(diffDays / 365);
-		const months = Math.floor((diffDays % 365) / 30);
 
-		if (years > 0 && months > 0) {
-			return t('plant.detail.age.yearsMonths', { years, months });
-		} else if (years > 0) {
-			return t('plant.detail.age.years', { years });
-		} else if (months > 0) {
-			return t('plant.detail.age.months', { months });
-		} else {
-			return t('plant.detail.age.days', { days: diffDays });
-		}
-	};
-
-	const plantAge = calculateAge();
 
 	return (
 		<div className="mx-auto space-y-6">
@@ -161,17 +109,17 @@ export function PlantDetailPage() {
 							<div className="space-y-2">
 								<div className="flex items-start justify-between gap-4">
 									<div className="space-y-1">
-										<h1 className="text-3xl font-bold">
-											{plant.name || t('plant.common.unnamed')}
-										</h1>
-										<p className="text-muted-foreground">
-											{plant.species || t('plant.common.notSet')} • Araceae
-										</p>
+									<h1 className="text-3xl font-bold">
+										{plant.name || t('pages.plants.detail.unnamed')}
+									</h1>
+									<p className="text-muted-foreground">
+										{plant.species || t('common.notSet')} • Araceae
+									</p>
 									</div>
 									<div className="flex items-center gap-2 flex-wrap">
 										{getPlantStatusBadge(plant.status, t)}
 										<Badge variant="outline">
-											{t('plant.detail.location.indoor')}
+											{t('pages.plants.detail.location.indoor')}
 										</Badge>
 									</div>
 								</div>
@@ -182,35 +130,35 @@ export function PlantDetailPage() {
 								<div className="space-y-1">
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<DropletsIcon className="h-4 w-4" />
-										<span>{t('plant.detail.metrics.watering.label')}</span>
+										<span>{t('pages.plants.detail.metrics.watering.label')}</span>
 									</div>
 									<p className="font-medium">
-										{t('plant.detail.metrics.watering.every7Days')}
+										{t('pages.plants.detail.metrics.watering.every7Days')}
 									</p>
 								</div>
 								<div className="space-y-1">
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<SunIcon className="h-4 w-4" />
-										<span>{t('plant.detail.metrics.light.label')}</span>
+										<span>{t('pages.plants.detail.metrics.light.label')}</span>
 									</div>
 									<p className="font-medium">
-										{t('plant.detail.metrics.light.indirect')}
+										{t('pages.plants.detail.metrics.light.indirect')}
 									</p>
 								</div>
 								<div className="space-y-1">
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<ThermometerIcon className="h-4 w-4" />
-										<span>{t('plant.detail.metrics.temperature.label')}</span>
+										<span>{t('pages.plants.detail.metrics.temperature.label')}</span>
 									</div>
 									<p className="font-medium">18-24°C</p>
 								</div>
 								<div className="space-y-1">
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<CloudIcon className="h-4 w-4" />
-										<span>{t('plant.detail.metrics.humidity.label')}</span>
+										<span>{t('pages.plants.detail.metrics.humidity.label')}</span>
 									</div>
 									<p className="font-medium">
-										{t('plant.detail.metrics.humidity.high')}
+										{t('pages.plants.detail.metrics.humidity.high')}
 									</p>
 								</div>
 							</div>
@@ -219,15 +167,22 @@ export function PlantDetailPage() {
 							<div className="flex items-center gap-2 flex-wrap">
 								<Button variant="default">
 									<PencilIcon className="mr-2 h-4 w-4" />
-									{t('plant.detail.actions.editDetails')}
+									{t('pages.plants.detail.actions.editDetails')}
 								</Button>
 								<Button variant="outline">
 									<DropletsIcon className="mr-2 h-4 w-4" />
-									{t('plant.detail.actions.registerWatering')}
+									{t('pages.plants.detail.actions.registerWatering')}
 								</Button>
 								<Button variant="outline">
 									<FlowerIcon className="mr-2 h-4 w-4" />
-									{t('plant.detail.actions.fertilize')}
+									{t('pages.plants.detail.actions.fertilize')}
+								</Button>
+								<Button 
+									variant="outline"
+									onClick={() => setTransplantDialogOpen(true)}
+								>
+									<ArrowRightLeftIcon className="mr-2 h-4 w-4" />
+									{t('pages.plants.detail.actions.transplant')}
 								</Button>
 								<Button variant="ghost" size="icon">
 									<TrashIcon className="h-4 w-4 text-destructive" />
@@ -243,24 +198,24 @@ export function PlantDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('plant.detail.currentStatus.lastWatering.label')}
+							{t('pages.plants.detail.currentStatus.lastWatering.label')}
 						</CardTitle>
 						<DropletsIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="flex items-center gap-2 mb-2">
 							<Badge variant="default" className="bg-green-500">
-								{t('plant.detail.currentStatus.lastWatering.onTime')}
+								{t('pages.plants.detail.currentStatus.lastWatering.onTime')}
 							</Badge>
 						</div>
 						<div className="text-2xl font-bold">
-							{t('plant.detail.currentStatus.lastWatering.daysAgo', {
+							{t('shared.time.daysAgo', {
 								days: 2,
 							})}
 						</div>
 						<p className="text-xs text-muted-foreground">
-							{t('plant.detail.currentStatus.lastWatering.next')}:{' '}
-							{t('plant.detail.currentStatus.lastWatering.tomorrow')}
+							{t('pages.plants.detail.currentStatus.lastWatering.next')}:{' '}
+							{t('common.tomorrow')}
 						</p>
 					</CardContent>
 				</Card>
@@ -268,7 +223,7 @@ export function PlantDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('plant.detail.currentStatus.lastFertilization.label')}
+							{t('pages.plants.detail.currentStatus.lastFertilization.label')}
 						</CardTitle>
 						<FlowerIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
@@ -278,17 +233,17 @@ export function PlantDetailPage() {
 								variant="outline"
 								className="border-orange-500 text-orange-500"
 							>
-								{t('plant.detail.currentStatus.lastFertilization.pending')}
+								{t('common.pending')}
 							</Badge>
 						</div>
 						<div className="text-2xl font-bold">
-							{t('plant.detail.currentStatus.lastFertilization.monthAgo', {
+							{t('shared.time.monthsAgo', {
 								months: 1,
 							})}
 						</div>
 						<p className="text-xs text-muted-foreground">
-							{t('plant.detail.currentStatus.lastFertilization.suggested')}:{' '}
-							{t('plant.detail.currentStatus.lastFertilization.today')}
+							{t('pages.plants.detail.currentStatus.lastFertilization.suggested')}:{' '}
+							{t('common.today')}
 						</p>
 					</CardContent>
 				</Card>
@@ -296,7 +251,7 @@ export function PlantDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('plant.detail.currentStatus.plantingDate.label')}
+							{t('pages.plants.detail.currentStatus.plantingDate.label')}
 						</CardTitle>
 						<CalendarIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
@@ -308,11 +263,11 @@ export function PlantDetailPage() {
 										month: 'short',
 										year: 'numeric',
 									})
-								: t('plant.common.notSet')}
+								: t('common.notSet')}
 						</div>
-						{plantAge && (
+						{plantAgeText && (
 							<p className="text-xs text-muted-foreground">
-								{t('plant.detail.currentStatus.plantingDate.age')}: {plantAge}
+								{t('pages.plants.detail.currentStatus.plantingDate.age')}: {plantAgeText}
 							</p>
 						)}
 					</CardContent>
@@ -327,15 +282,15 @@ export function PlantDetailPage() {
 					<Card>
 						<CardHeader>
 							<div className="flex items-center justify-between">
-								<CardTitle>{t('plant.detail.personalNotes.title')}</CardTitle>
+								<CardTitle>{t('pages.plants.detail.sections.personalNotes.title')}</CardTitle>
 								<Button variant="ghost" size="sm">
-									{t('plant.detail.personalNotes.edit')}
+									{t('pages.plants.detail.sections.personalNotes.edit')}
 								</Button>
 							</div>
 						</CardHeader>
 						<CardContent>
 							<p className="text-muted-foreground whitespace-pre-wrap">
-								{plant.notes || t('plant.detail.personalNotes.empty')}
+								{plant.notes || t('pages.plants.detail.sections.personalNotes.empty')}
 							</p>
 						</CardContent>
 					</Card>
@@ -344,9 +299,9 @@ export function PlantDetailPage() {
 					<Card>
 						<CardHeader>
 							<div className="flex items-center justify-between">
-								<CardTitle>{t('plant.detail.recentHistory.title')}</CardTitle>
+								<CardTitle>{t('pages.plants.detail.sections.recentHistory.title')}</CardTitle>
 								<Button variant="link" className="h-auto p-0">
-									{t('plant.detail.recentHistory.viewAll')}
+									{t('common.viewAll')}
 								</Button>
 							</div>
 						</CardHeader>
@@ -355,39 +310,39 @@ export function PlantDetailPage() {
 								<TableHeader>
 									<TableRow>
 										<TableHead>
-											{t('plant.detail.recentHistory.table.date')}
+											{t('pages.plants.detail.sections.recentHistory.table.date')}
 										</TableHead>
 										<TableHead>
-											{t('plant.detail.recentHistory.table.action')}
+											{t('pages.plants.detail.sections.recentHistory.table.action')}
 										</TableHead>
 										<TableHead>
-											{t('plant.detail.recentHistory.table.details')}
+											{t('pages.plants.detail.sections.recentHistory.table.details')}
 										</TableHead>
 										<TableHead>
-											{t('plant.detail.recentHistory.table.status')}
+											{t('pages.plants.detail.sections.recentHistory.table.status')}
 										</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
 									<TableRow>
 										<TableCell>
-											{t('plant.detail.recentHistory.today')} - 09:30 AM
+											{t('common.today')} - 09:30 AM
 										</TableCell>
 										<TableCell>
 											<div className="flex items-center gap-2">
 												<div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
 													<DropletsIcon className="h-4 w-4 text-blue-500" />
 												</div>
-												<span>{t('plant.detail.recentHistory.watering')}</span>
+												<span>{t('pages.plants.detail.sections.recentHistory.watering')}</span>
 											</div>
 										</TableCell>
 										<TableCell>
-											{t('plant.detail.recentHistory.wateringDetails')}
+											{t('pages.plants.detail.sections.recentHistory.wateringDetails')}
 										</TableCell>
 										<TableCell>
 											<Badge variant="default" className="bg-green-500">
 												<CheckIcon className="h-3 w-3 mr-1" />
-												{t('plant.detail.recentHistory.completed')}
+												{t('common.completed')}
 											</Badge>
 										</TableCell>
 									</TableRow>
@@ -398,16 +353,16 @@ export function PlantDetailPage() {
 												<div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
 													<ScissorsIcon className="h-4 w-4 text-green-500" />
 												</div>
-												<span>{t('plant.detail.recentHistory.pruning')}</span>
+												<span>{t('pages.plants.detail.sections.recentHistory.pruning')}</span>
 											</div>
 										</TableCell>
 										<TableCell>
-											{t('plant.detail.recentHistory.pruningDetails')}
+											{t('pages.plants.detail.sections.recentHistory.pruningDetails')}
 										</TableCell>
 										<TableCell>
 											<Badge variant="default" className="bg-green-500">
 												<CheckIcon className="h-3 w-3 mr-1" />
-												{t('plant.detail.recentHistory.completed')}
+												{t('common.completed')}
 											</Badge>
 										</TableCell>
 									</TableRow>
@@ -419,17 +374,17 @@ export function PlantDetailPage() {
 													<PackageIcon className="h-4 w-4 text-orange-500" />
 												</div>
 												<span>
-													{t('plant.detail.recentHistory.fertilization')}
+													{t('pages.plants.detail.sections.recentHistory.fertilization')}
 												</span>
 											</div>
 										</TableCell>
 										<TableCell>
-											{t('plant.detail.recentHistory.fertilizationDetails')}
+											{t('pages.plants.detail.sections.recentHistory.fertilizationDetails')}
 										</TableCell>
 										<TableCell>
 											<Badge variant="default" className="bg-green-500">
 												<CheckIcon className="h-3 w-3 mr-1" />
-												{t('plant.detail.recentHistory.completed')}
+												{t('common.completed')}
 											</Badge>
 										</TableCell>
 									</TableRow>
@@ -442,7 +397,7 @@ export function PlantDetailPage() {
 					<Card>
 						<CardHeader>
 							<div className="flex items-center justify-between">
-								<CardTitle>{t('plant.detail.progressGallery.title')}</CardTitle>
+								<CardTitle>{t('pages.plants.detail.sections.progressGallery.title')}</CardTitle>
 								<Button variant="ghost" size="icon">
 									<FlowerIcon className="h-4 w-4" />
 								</Button>
@@ -457,7 +412,7 @@ export function PlantDetailPage() {
 									>
 										{i === 4 ? (
 											<span className="text-xs text-muted-foreground">
-												+12 {t('plant.detail.progressGallery.more')}
+												+12 {t('pages.plants.detail.sections.progressGallery.more')}
 											</span>
 										) : (
 											<FlowerIcon className="h-8 w-8 text-muted-foreground" />
@@ -474,7 +429,7 @@ export function PlantDetailPage() {
 					{/* Próximos Cuidados Section */}
 					<Card>
 						<CardHeader>
-							<CardTitle>{t('plant.detail.upcomingCare.title')}</CardTitle>
+							<CardTitle>{t('pages.plants.detail.sections.upcomingCare.title')}</CardTitle>
 						</CardHeader>
 						<CardContent className="px-6 pb-6">
 							<TimelineSequence
@@ -490,24 +445,36 @@ export function PlantDetailPage() {
 							<div className="flex items-center gap-2">
 								<FlowerIcon className="h-5 w-5 text-green-600" />
 								<CardTitle className="text-green-900">
-									{t('plant.detail.wiki.title')}
+									{t('pages.plants.detail.sections.wiki.title')}
 								</CardTitle>
 							</div>
 						</CardHeader>
 						<CardContent>
 							<p className="text-sm text-green-800 mb-2">
-								<strong>{t('plant.detail.wiki.didYouKnow')}</strong>
+								<strong>{t('pages.plants.detail.sections.wiki.didYouKnow')}</strong>
 							</p>
 							<p className="text-green-700 mb-4">
-								{t('plant.detail.wiki.description')}
+								{t('pages.plants.detail.sections.wiki.description')}
 							</p>
 							<Button variant="link" className="p-0 text-green-600">
-								{t('plant.detail.wiki.readMore')} →
+								{t('pages.plants.detail.sections.wiki.readMore')} →
 							</Button>
 						</CardContent>
 					</Card>
 				</div>
 			</div>
+
+			{/* Transplant Modal */}
+			<PlantTransplantModal
+				plant={plant}
+				sourceGrowingUnit={sourceGrowingUnit || null}
+				targetGrowingUnits={targetGrowingUnits}
+				open={transplantDialogOpen}
+				onOpenChange={setTransplantDialogOpen}
+				onSubmit={handleTransplantSubmit}
+				isLoading={isLoadingTransplant}
+				error={transplantError}
+			/>
 		</div>
 	);
 }

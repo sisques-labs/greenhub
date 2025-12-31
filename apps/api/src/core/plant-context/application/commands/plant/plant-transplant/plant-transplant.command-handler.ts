@@ -1,5 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { PlantTransplantCommand } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
@@ -7,7 +5,13 @@ import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import {
+  IPlantWriteRepository,
+  PLANT_WRITE_REPOSITORY_TOKEN,
+} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link PlantTransplantCommand} to transplant a plant from one growing unit to another.
@@ -32,6 +36,7 @@ export class PlantTransplantCommandHandler
    * Creates a new instance of {@link PlantTransplantCommandHandler}.
    *
    * @param growingUnitWriteRepository - The write repository for persisting growing unit aggregates.
+   * @param plantWriteRepository - The write repository for persisting plant entities.
    * @param eventBus - The event bus for publishing domain events.
    * @param assertGrowingUnitExistsService - Service that ensures the growing units exist.
    * @param transplantPlantService - Service that handles the transplant logic.
@@ -39,6 +44,8 @@ export class PlantTransplantCommandHandler
   constructor(
     @Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
     private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
+    @Inject(PLANT_WRITE_REPOSITORY_TOKEN)
+    private readonly plantWriteRepository: IPlantWriteRepository,
     private readonly eventBus: EventBus,
     private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
     private readonly plantTransplantService: PlantTransplantService,
@@ -68,25 +75,28 @@ export class PlantTransplantCommandHandler
       );
 
     // 03: Perform the transplant using the domain service
-    await this.plantTransplantService.execute({
+    const transplantedPlant = await this.plantTransplantService.execute({
       sourceGrowingUnit: sourceGrowingUnitAggregate,
       targetGrowingUnit: targetGrowingUnitAggregate,
       plantId: command.plantId.value,
     });
 
-    // 04: Save the source growing unit aggregate
+    // 04: Save the transplanted plant first to update its growingUnitId
+    await this.plantWriteRepository.save(transplantedPlant);
+
+    // 05: Save the source growing unit aggregate
     await this.growingUnitWriteRepository.save(sourceGrowingUnitAggregate);
 
-    // 05: Save the target growing unit aggregate
+    // 06: Save the target growing unit aggregate
     await this.growingUnitWriteRepository.save(targetGrowingUnitAggregate);
 
-    // 06: Publish all events from source growing unit
+    // 07: Publish all events from source growing unit
     await this.eventBus.publishAll(
       sourceGrowingUnitAggregate.getUncommittedEvents(),
     );
     await sourceGrowingUnitAggregate.commit();
 
-    // 07: Publish all events from target growing unit
+    // 08: Publish all events from target growing unit
     await this.eventBus.publishAll(
       targetGrowingUnitAggregate.getUncommittedEvents(),
     );

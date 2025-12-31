@@ -21,23 +21,23 @@ function getStatusConfig(
 ): StatusConfig {
 	const statusTranslations: Record<string, StatusConfig> = {
 		PLANTED: {
-			label: t('plant.status.PLANTED'),
+			label: t('shared.status.plant.PLANTED'),
 			variant: 'outline',
 		},
 		GROWING: {
-			label: t('plant.status.GROWING'),
+			label: t('shared.status.plant.GROWING'),
 			variant: 'default',
 		},
 		HARVESTED: {
-			label: t('plant.status.HARVESTED'),
+			label: t('shared.status.plant.HARVESTED'),
 			variant: 'secondary',
 		},
 		DEAD: {
-			label: t('plant.status.DEAD'),
+			label: t('shared.status.plant.DEAD'),
 			variant: 'destructive',
 		},
 		ARCHIVED: {
-			label: t('plant.status.ARCHIVED'),
+			label: t('shared.status.plant.ARCHIVED'),
 			variant: 'outline',
 		},
 	};

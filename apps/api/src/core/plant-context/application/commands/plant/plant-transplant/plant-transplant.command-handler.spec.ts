@@ -9,16 +9,28 @@ import {
   GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
   IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import {
+  IPlantWriteRepository,
+  PLANT_WRITE_REPOSITORY_TOKEN,
+} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
+import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { PlantStatusEnum } from '@/shared/domain/enums/plant-status/plant-status.enum';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
+import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
+import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
+import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
+import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 
 describe('PlantTransplantCommandHandler', () => {
   let handler: PlantTransplantCommandHandler;
   let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
+  let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
   let mockEventBus: jest.Mocked<EventBus>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
   let mockPlantTransplantService: jest.Mocked<PlantTransplantService>;
@@ -29,6 +41,13 @@ describe('PlantTransplantCommandHandler', () => {
       save: jest.fn(),
       delete: jest.fn(),
     } as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
+
+    mockPlantWriteRepository = {
+      findById: jest.fn(),
+      save: jest.fn(),
+      delete: jest.fn(),
+      findByGrowingUnitId: jest.fn(),
+    } as unknown as jest.Mocked<IPlantWriteRepository>;
 
     mockEventBus = {
       publishAll: jest.fn(),
@@ -45,6 +64,7 @@ describe('PlantTransplantCommandHandler', () => {
 
     handler = new PlantTransplantCommandHandler(
       mockGrowingUnitWriteRepository,
+      mockPlantWriteRepository,
       mockEventBus,
       mockAssertGrowingUnitExistsService,
       mockPlantTransplantService,
@@ -91,10 +111,21 @@ describe('PlantTransplantCommandHandler', () => {
         false,
       );
 
+      const transplantedPlant = new PlantEntity({
+        id: new PlantUuidValueObject(plantId),
+        growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+        name: new PlantNameValueObject('Test Plant'),
+        species: new PlantSpeciesValueObject('Test Species'),
+        plantedDate: new PlantPlantedDateValueObject(new Date()),
+        notes: new PlantNotesValueObject(''),
+        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+      });
+
       mockAssertGrowingUnitExistsService.execute
         .mockResolvedValueOnce(sourceGrowingUnit)
         .mockResolvedValueOnce(targetGrowingUnit);
-      mockPlantTransplantService.execute.mockResolvedValue(undefined);
+      mockPlantTransplantService.execute.mockResolvedValue(transplantedPlant);
+      mockPlantWriteRepository.save.mockResolvedValue(transplantedPlant);
       mockGrowingUnitWriteRepository.save
         .mockResolvedValueOnce(sourceGrowingUnit)
         .mockResolvedValueOnce(targetGrowingUnit);
@@ -113,6 +144,9 @@ describe('PlantTransplantCommandHandler', () => {
         targetGrowingUnit,
         plantId,
       });
+      expect(mockPlantWriteRepository.save).toHaveBeenCalledWith(
+        transplantedPlant,
+      );
       expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
         sourceGrowingUnit,
       );
@@ -157,10 +191,21 @@ describe('PlantTransplantCommandHandler', () => {
         false,
       );
 
+      const transplantedPlant = new PlantEntity({
+        id: new PlantUuidValueObject(plantId),
+        growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+        name: new PlantNameValueObject('Test Plant'),
+        species: new PlantSpeciesValueObject('Test Species'),
+        plantedDate: new PlantPlantedDateValueObject(new Date()),
+        notes: new PlantNotesValueObject(''),
+        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+      });
+
       mockAssertGrowingUnitExistsService.execute
         .mockResolvedValueOnce(sourceGrowingUnit)
         .mockResolvedValueOnce(targetGrowingUnit);
-      mockPlantTransplantService.execute.mockResolvedValue(undefined);
+      mockPlantTransplantService.execute.mockResolvedValue(transplantedPlant);
+      mockPlantWriteRepository.save.mockResolvedValue(transplantedPlant);
       mockGrowingUnitWriteRepository.save
         .mockResolvedValueOnce(sourceGrowingUnit)
         .mockResolvedValueOnce(targetGrowingUnit);
@@ -211,10 +256,21 @@ describe('PlantTransplantCommandHandler', () => {
         false,
       );
 
+      const transplantedPlant = new PlantEntity({
+        id: new PlantUuidValueObject(plantId),
+        growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+        name: new PlantNameValueObject('Test Plant'),
+        species: new PlantSpeciesValueObject('Test Species'),
+        plantedDate: new PlantPlantedDateValueObject(new Date()),
+        notes: new PlantNotesValueObject(''),
+        status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
+      });
+
       mockAssertGrowingUnitExistsService.execute
         .mockResolvedValueOnce(sourceGrowingUnit)
         .mockResolvedValueOnce(targetGrowingUnit);
-      mockPlantTransplantService.execute.mockResolvedValue(undefined);
+      mockPlantTransplantService.execute.mockResolvedValue(transplantedPlant);
+      mockPlantWriteRepository.save.mockResolvedValue(transplantedPlant);
       mockGrowingUnitWriteRepository.save
         .mockResolvedValueOnce(sourceGrowingUnit)
         .mockResolvedValueOnce(targetGrowingUnit);
@@ -222,11 +278,13 @@ describe('PlantTransplantCommandHandler', () => {
 
       await handler.execute(command);
 
-      const saveOrder =
+      const plantSaveOrder = mockPlantWriteRepository.save.mock.invocationCallOrder;
+      const growingUnitSaveOrder =
         mockGrowingUnitWriteRepository.save.mock.invocationCallOrder;
       const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder;
-      expect(saveOrder[0]).toBeLessThan(publishOrder[0]);
-      expect(saveOrder[1]).toBeLessThan(publishOrder[1]);
+      expect(plantSaveOrder[0]).toBeLessThan(growingUnitSaveOrder[0]);
+      expect(growingUnitSaveOrder[0]).toBeLessThan(publishOrder[0]);
+      expect(growingUnitSaveOrder[1]).toBeLessThan(publishOrder[1]);
     });
   });
 });
