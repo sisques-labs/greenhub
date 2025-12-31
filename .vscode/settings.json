@@ -5,6 +5,9 @@
 	// 🔧 Automatically format pasted code
 	"editor.formatOnPaste": true,
 
+	// 🔧 Biome extension configuration
+	"biome.enabled": true,
+
 	// 📦 Force auto-imports to use aliases (e.g. "@/..." instead of relative paths like "../../../")
 	"typescript.preferences.importModuleSpecifier": "non-relative",
 	"javascript.preferences.importModuleSpecifier": "non-relative",
