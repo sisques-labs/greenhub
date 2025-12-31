@@ -34,7 +34,7 @@
 				"useNamespaceKeyword": "error"
 			}
 		},
-		"includes": ["**", "**/.eslintrc.js"]
+		"includes": ["**"]
 	},
 	"javascript": {
 		"formatter": { "quoteStyle": "single" },

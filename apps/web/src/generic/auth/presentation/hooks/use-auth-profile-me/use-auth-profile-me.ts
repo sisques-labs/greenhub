@@ -30,7 +30,6 @@ export function useAuthProfileMe(options?: { autoFetch?: boolean }) {
 		if (autoFetch) {
 			fetchRef.current();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autoFetch]);
 
 	return {

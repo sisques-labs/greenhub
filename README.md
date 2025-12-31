@@ -16,7 +16,6 @@ project-starter/
 ├── packages/
 │   ├── sdk/          # Shared TypeScript SDK for clients
 │   ├── shared/       # Shared UI components and utilities
-│   ├── eslint-config/    # Shared ESLint configuration
 │   └── typescript-config/ # Shared TypeScript configuration
 ```
 
@@ -308,9 +307,7 @@ See the SDK README at `packages/sdk/README.md` for complete usage examples.
 
 The project includes shared configurations for:
 
-- **ESLint**: Configuration in `packages/eslint-config`
 - **TypeScript**: Configurations in `packages/typescript-config`
-- **Prettier**: Global configuration
 
 ## 🚢 Deployment
 
