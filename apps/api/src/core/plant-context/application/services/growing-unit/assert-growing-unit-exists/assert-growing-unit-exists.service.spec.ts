@@ -54,8 +54,7 @@ describe('AssertGrowingUnitExistsService', () => {
           dimensions: null,
           plants: [],
         },
-        false,
-      );
+      });
 
       mockGrowingUnitWriteRepository.findById.mockResolvedValue(
         mockGrowingUnit,

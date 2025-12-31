@@ -1,4 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
 import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
 import { GrowingUnitDeleteCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command-handler';
 import { IGrowingUnitDeleteCommandDto } from '@/core/plant-context/application/dtos/commands/growing-unit/growing-unit-delete/growing-unit-delete-command.dto';
@@ -14,11 +13,12 @@ import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 describe('GrowingUnitDeleteCommandHandler', () => {
   let handler: GrowingUnitDeleteCommandHandler;
   let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-  let mockEventBus: jest.Mocked<EventBus>;
+  let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
   let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
 
   beforeEach(() => {
@@ -28,10 +28,9 @@ describe('GrowingUnitDeleteCommandHandler', () => {
       delete: jest.fn(),
     } as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-    mockEventBus = {
-      publishAll: jest.fn(),
-      publish: jest.fn(),
-    } as unknown as jest.Mocked<EventBus>;
+    mockPublishIntegrationEventsService = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<PublishIntegrationEventsService>;
 
     mockAssertGrowingUnitExistsService = {
       execute: jest.fn(),
@@ -39,8 +38,8 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 
     handler = new GrowingUnitDeleteCommandHandler(
       mockGrowingUnitWriteRepository,
-      mockEventBus,
       mockAssertGrowingUnitExistsService,
+      mockPublishIntegrationEventsService,
     );
   });
 
@@ -65,14 +64,13 @@ describe('GrowingUnitDeleteCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
-      );
+      });
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
         mockGrowingUnit,
       );
       mockGrowingUnitWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       await handler.execute(command);
 
@@ -82,7 +80,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
       expect(mockGrowingUnitWriteRepository.delete).toHaveBeenCalledWith(
         growingUnitId,
       );
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(
         mockGrowingUnit.getUncommittedEvents(),
       );
     });
@@ -103,21 +101,20 @@ describe('GrowingUnitDeleteCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
-      );
+      });
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
         mockGrowingUnit,
       );
       mockGrowingUnitWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       await handler.execute(command);
 
       const uncommittedEvents = mockGrowingUnit.getUncommittedEvents();
       expect(uncommittedEvents).toHaveLength(1);
       expect(uncommittedEvents[0]).toBeInstanceOf(GrowingUnitDeletedEvent);
-      expect(mockEventBus.publishAll).toHaveBeenCalledWith(uncommittedEvents);
+      expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledWith(uncommittedEvents);
     });
 
     it('should delete growing unit before publishing events', async () => {
@@ -136,20 +133,19 @@ describe('GrowingUnitDeleteCommandHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
-      );
+      });
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
         mockGrowingUnit,
       );
       mockGrowingUnitWriteRepository.delete.mockResolvedValue(undefined);
-      mockEventBus.publishAll.mockResolvedValue(undefined);
+      mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
       await handler.execute(command);
 
       const deleteOrder =
         mockGrowingUnitWriteRepository.delete.mock.invocationCallOrder[0];
-      const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+      const publishOrder = mockPublishIntegrationEventsService.execute.mock.invocationCallOrder[0];
       expect(deleteOrder).toBeLessThan(publishOrder);
     });
 
@@ -166,7 +162,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 
       await expect(handler.execute(command)).rejects.toThrow(error);
       expect(mockGrowingUnitWriteRepository.delete).not.toHaveBeenCalled();
-      expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+      expect(mockPublishIntegrationEventsService.execute).not.toHaveBeenCalled();
     });
   });
 });

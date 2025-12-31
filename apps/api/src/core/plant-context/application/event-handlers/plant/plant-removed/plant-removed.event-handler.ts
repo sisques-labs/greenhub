@@ -43,7 +43,7 @@ export class PlantDeletedEventHandler
 
     // 01: Get the growing unit aggregate to have the complete state
     const growingUnitAggregate =
-      await this.assertGrowingUnitExistsService.execute(event.data.id);
+      await this.assertGrowingUnitExistsService.execute(event.data.growingUnitId);
 
     // 02: Create the updated growing unit view model from the aggregate
     const growingUnitViewModel: GrowingUnitViewModel =

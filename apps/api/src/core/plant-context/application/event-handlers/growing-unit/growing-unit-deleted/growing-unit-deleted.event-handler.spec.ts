@@ -42,8 +42,10 @@ describe('GrowingUnitDeletedEventHandler', () => {
       const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
       const event = new GrowingUnitDeletedEvent(
         {
-          aggregateId: growingUnitId,
-          aggregateType: 'GrowingUnitAggregate',
+          aggregateRootId: growingUnitId,
+          aggregateRootType: 'GrowingUnitAggregate',
+          entityId: growingUnitId,
+          entityType: 'GrowingUnitAggregate',
           eventType: 'GrowingUnitDeletedEvent',
         },
         {

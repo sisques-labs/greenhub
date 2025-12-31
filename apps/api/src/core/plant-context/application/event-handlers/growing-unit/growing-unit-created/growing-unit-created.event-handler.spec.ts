@@ -71,8 +71,10 @@ describe('GrowingUnitCreatedEventHandler', () => {
       const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
       const event = new GrowingUnitCreatedEvent(
         {
-          aggregateId: growingUnitId,
-          aggregateType: 'GrowingUnitAggregate',
+          aggregateRootId: growingUnitId,
+          aggregateRootType: 'GrowingUnitAggregate',
+          entityId: growingUnitId,
+          entityType: 'GrowingUnitAggregate',
           eventType: 'GrowingUnitCreatedEvent',
         },
         {
@@ -85,17 +87,14 @@ describe('GrowingUnitCreatedEventHandler', () => {
         },
       );
 
-      const mockGrowingUnit = new GrowingUnitAggregate(
-        {
-          id: new GrowingUnitUuidValueObject(growingUnitId),
-          name: new GrowingUnitNameValueObject('Garden Bed 1'),
-          type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
-          capacity: new GrowingUnitCapacityValueObject(10),
-          dimensions: null,
-          plants: [],
-        },
-        false,
-      );
+      const mockGrowingUnit = new GrowingUnitAggregate({
+        id: new GrowingUnitUuidValueObject(growingUnitId),
+        name: new GrowingUnitNameValueObject('Garden Bed 1'),
+        type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
+        capacity: new GrowingUnitCapacityValueObject(10),
+        dimensions: null,
+        plants: [],
+      });
 
       const now = new Date();
       const mockViewModel = new GrowingUnitViewModel({

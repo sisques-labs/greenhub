@@ -163,7 +163,7 @@ describe('SagaLogCreateCommandHandler', () => {
       if (publishedEvents.length > 0) {
         expect(publishedEvents[0]).toBeInstanceOf(SagaLogCreatedEvent);
         const event = publishedEvents[0] as SagaLogCreatedEvent;
-        expect(event.aggregateId).toBe(mockSagaLog.id.value);
+        expect(event.aggregateRootId).toBe(mockSagaLog.id.value);
         expect(event.data).toEqual(mockSagaLog.toPrimitives());
       }
     });

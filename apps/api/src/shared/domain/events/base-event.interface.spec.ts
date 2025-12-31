@@ -13,10 +13,11 @@ describe('BaseEvent', () => {
     overrides?: Partial<IEventMetadata>,
   ): IEventMetadata => {
     return {
-      aggregateId: '123e4567-e89b-12d3-a456-426614174000',
-      aggregateType: 'TestAggregate',
+      aggregateRootId: '123e4567-e89b-12d3-a456-426614174000',
+      aggregateRootType: 'TestAggregate',
+      entityId: '123e4567-e89b-12d3-a456-426614174000',
+      entityType: 'TestEntity',
       eventType: 'TestEvent',
-      isReplay: false,
       ...overrides,
     };
   };
@@ -39,8 +40,10 @@ describe('BaseEvent', () => {
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
       );
       expect(event.eventType).toBe(metadata.eventType);
-      expect(event.aggregateId).toBe(metadata.aggregateId);
-      expect(event.aggregateType).toBe(metadata.aggregateType);
+      expect(event.aggregateRootId).toBe(metadata.aggregateRootId);
+      expect(event.aggregateRootType).toBe(metadata.aggregateRootType);
+      expect(event.entityId).toBe(metadata.entityId);
+      expect(event.entityType).toBe(metadata.entityType);
       expect(event.ocurredAt).toBeInstanceOf(Date);
       expect(event.ocurredAt.getTime()).toBeGreaterThanOrEqual(
         beforeCreation.getTime(),
@@ -48,26 +51,6 @@ describe('BaseEvent', () => {
       expect(event.ocurredAt.getTime()).toBeLessThanOrEqual(
         afterCreation.getTime(),
       );
-      expect(event.isReplay).toBe(false);
-    });
-
-    it('should set isReplay to true when provided in metadata', () => {
-      const metadata = createMetadata({ isReplay: true });
-      const data = createTestData();
-
-      const event = new TestEvent(metadata, data);
-
-      expect(event.isReplay).toBe(true);
-    });
-
-    it('should set isReplay to undefined when not provided in metadata', () => {
-      const metadata = createMetadata();
-      delete metadata.isReplay;
-      const data = createTestData();
-
-      const event = new TestEvent(metadata, data);
-
-      expect(event.isReplay).toBeUndefined();
     });
 
     it('should generate a unique eventId for each event', () => {

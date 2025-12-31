@@ -44,8 +44,7 @@ describe('GrowingUnitFindByIdQueryHandler', () => {
           dimensions: null,
           plants: [],
         },
-        false,
-      );
+      });
 
       mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
         mockGrowingUnit,

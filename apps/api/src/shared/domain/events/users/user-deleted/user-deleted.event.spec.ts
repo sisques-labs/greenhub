@@ -5,10 +5,11 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
 
 describe('UserDeletedEvent', () => {
   const createMetadata = (): IEventMetadata => ({
-    aggregateId: '123e4567-e89b-12d3-a456-426614174000',
-    aggregateType: 'UserAggregate',
+    aggregateRootId: '123e4567-e89b-12d3-a456-426614174000',
+    aggregateRootType: 'UserAggregate',
+    entityId: '123e4567-e89b-12d3-a456-426614174000',
+    entityType: 'UserAggregate',
     eventType: 'UserDeletedEvent',
-    isReplay: false,
   });
 
   const createUserData = (): IUserEventData => ({
@@ -39,8 +40,10 @@ describe('UserDeletedEvent', () => {
 
     const event = new UserDeletedEvent(metadata, data);
 
-    expect(event.aggregateId).toBe(metadata.aggregateId);
-    expect(event.aggregateType).toBe(metadata.aggregateType);
+    expect(event.aggregateRootId).toBe(metadata.aggregateRootId);
+    expect(event.aggregateRootType).toBe(metadata.aggregateRootType);
+    expect(event.entityId).toBe(metadata.entityId);
+    expect(event.entityType).toBe(metadata.entityType);
     expect(event.eventType).toBe(metadata.eventType);
   });
 
