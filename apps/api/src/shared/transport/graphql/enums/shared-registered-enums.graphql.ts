@@ -1,4 +1,5 @@
 import { registerEnumType } from '@nestjs/graphql';
+
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
 /**

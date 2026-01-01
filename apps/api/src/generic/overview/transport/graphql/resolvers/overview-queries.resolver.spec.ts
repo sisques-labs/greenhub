@@ -1,4 +1,5 @@
 import { QueryBus } from '@nestjs/cqrs';
+
 import { OverviewFindViewModelQuery } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query';
 import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';

@@ -1,6 +1,7 @@
 import { AuthRegisterByEmailCommandHandler } from '@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command-handler';
 import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';
 import { AssertAuthEmailNotExistsService } from '@/generic/auth/application/services/assert-auth-email-not-exists/assert-auth-email-not-exists.service';
+
 import { AuthRegisterByEmailCommand } from './auth-register-by-email.command';
 
 describe('AuthRegisterByEmailCommandHandler', () => {

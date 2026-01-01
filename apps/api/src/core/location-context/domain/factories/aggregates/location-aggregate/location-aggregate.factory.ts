@@ -1,12 +1,13 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { LocationAggregate } from "@/core/location-context/domain/aggregates/location.aggregate";
-import type { ILocationDto } from "@/core/location-context/domain/dtos/entities/location/location.dto";
-import type { LocationPrimitives } from "@/core/location-context/domain/primitives/location.primitives";
-import { LocationDescriptionValueObject } from "@/core/location-context/domain/value-objects/location/location-description/location-description.vo";
-import { LocationNameValueObject } from "@/core/location-context/domain/value-objects/location/location-name/location-name.vo";
-import { LocationTypeValueObject } from "@/core/location-context/domain/value-objects/location/location-type/location-type.vo";
-import type { IWriteFactory } from "@/shared/domain/interfaces/write-factory.interface";
-import { LocationUuidValueObject } from "@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo";
+import { Injectable, Logger } from '@nestjs/common';
+
+import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
+import type { ILocationDto } from '@/core/location-context/domain/dtos/entities/location/location.dto';
+import type { LocationPrimitives } from '@/core/location-context/domain/primitives/location.primitives';
+import { LocationDescriptionValueObject } from '@/core/location-context/domain/value-objects/location/location-description/location-description.vo';
+import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
+import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
+import type { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 /**
  * Factory responsible for creating {@link LocationAggregate} entities.

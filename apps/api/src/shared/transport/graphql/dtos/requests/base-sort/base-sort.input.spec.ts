@@ -1,4 +1,5 @@
 import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+
 import { BaseSortInput } from './base-sort.input';
 
 describe('BaseSortInput', () => {

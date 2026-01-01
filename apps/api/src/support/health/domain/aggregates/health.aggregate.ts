@@ -1,4 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
+
 import { IHealthCreateDto } from '@/support/health/domain/dtos/entities/health-create/health-create.dto';
 import { HealthPrimitives } from '@/support/health/domain/primitives/health.primitives';
 import { HealthStatusValueObject } from '@/support/health/domain/value-objects/health-status/health-status.vo';

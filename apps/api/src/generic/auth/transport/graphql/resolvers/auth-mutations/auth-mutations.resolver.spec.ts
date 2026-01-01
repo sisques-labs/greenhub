@@ -1,4 +1,5 @@
 import { CommandBus } from '@nestjs/cqrs';
+
 import { AuthLoginByEmailCommand } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command';
 import { AuthRegisterByEmailCommand } from '@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command';
 import { AuthLoginByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-login-by-email.request.dto';

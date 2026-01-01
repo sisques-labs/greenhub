@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { UserDeleteCommandHandler } from '@/generic/users/application/commands/delete-user/delete-user.command-handler';
 import { IUserDeleteCommandDto } from '@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto';

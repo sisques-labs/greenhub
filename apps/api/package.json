@@ -4,13 +4,15 @@
 	"description": "",
 	"author": "",
 	"private": true,
+	"type": "module",
 	"license": "UNLICENSED",
 	"scripts": {
 		"build": "nest build",
-		"format": "biome format --write .",
-		"format:check": "biome format .",
-		"lint": "biome check --write .",
-		"lint:check": "biome check .",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"lint:check": "eslint .",
 		"start": "nest start",
 		"dev": "nest start --watch",
 		"debug": "nest start --debug --watch",
@@ -62,7 +64,6 @@
 		"winston-daily-rotate-file": "^5.0.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.3.10",
 		"@nestjs/cli": "^10.0.0",
 		"@nestjs/schematics": "^10.0.0",
 		"@nestjs/testing": "^10.0.0",

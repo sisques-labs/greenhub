@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+
 import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
 import { AuthDeleteCommandHandler } from '@/generic/auth/application/commands/auth-delete/auth-delete.command-handler';
 import { IAuthDeleteCommandDto } from '@/generic/auth/application/dtos/commands/auth-delete/auth-delete-command.dto';

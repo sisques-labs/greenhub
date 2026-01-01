@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
 import { ISagaLogCreateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-create/saga-log-create.dto';
 import { SagaLogPrimitives } from '@/generic/saga-context/saga-log/domain/primitives/saga-log.primitives';

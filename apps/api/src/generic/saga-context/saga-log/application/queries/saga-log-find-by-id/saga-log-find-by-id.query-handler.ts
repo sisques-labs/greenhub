@@ -1,7 +1,9 @@
 import { Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
 import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
+
 import { FindSagaLogByIdQuery } from './saga-log-find-by-id.query';
 
 @QueryHandler(FindSagaLogByIdQuery)

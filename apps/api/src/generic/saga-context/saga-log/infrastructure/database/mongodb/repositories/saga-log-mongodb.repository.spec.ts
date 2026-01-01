@@ -1,4 +1,5 @@
 import { Collection } from 'mongodb';
+
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 import { SagaLogMongoDbDto } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/dtos/saga-log-mongodb.dto';

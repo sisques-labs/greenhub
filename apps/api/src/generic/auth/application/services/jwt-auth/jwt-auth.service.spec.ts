@@ -1,6 +1,7 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+
 import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
 import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';
 

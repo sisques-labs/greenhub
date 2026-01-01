@@ -1,4 +1,5 @@
 import { AggregateRoot } from "@nestjs/cqrs";
+
 import type { ILocationDto } from "@/core/location-context/domain/dtos/entities/location/location.dto";
 import { LocationDescriptionChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-description-changed/location-description-changed.event";
 import { LocationNameChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-name-changed/location-name-changed.event";

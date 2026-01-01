@@ -1,6 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
-import type { ILocationViewModelDto } from "@/core/location-context/domain/dtos/view-models/location/location-view-model.dto";
+
 import { LocationAggregate } from "@/core/location-context/domain/aggregates/location.aggregate";
+import type { ILocationViewModelDto } from "@/core/location-context/domain/dtos/view-models/location/location-view-model.dto";
 import { LocationPrimitives } from "@/core/location-context/domain/primitives/location.primitives";
 import { LocationViewModel } from "@/core/location-context/domain/view-models/location/location.view-model";
 import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";

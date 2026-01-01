@@ -1,11 +1,13 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import {
 	AUTH_READ_REPOSITORY_TOKEN,
 	AuthReadRepository,
 } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+
 import { FindAuthsByCriteriaQuery } from './find-auths-by-criteria.query';
 
 @QueryHandler(FindAuthsByCriteriaQuery)

@@ -1,4 +1,5 @@
 import { QueryBus } from '@nestjs/cqrs';
+
 import { FindUsersByCriteriaQuery } from '@/generic/users/application/queries/find-users-by-criteria/find-users-by-criteria.query';
 import { UserViewModelFindByIdQuery } from '@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
@@ -10,6 +11,7 @@ import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
+
 import { UserQueryResolver } from './user-queries.resolver';
 
 describe('UserQueryResolver', () => {

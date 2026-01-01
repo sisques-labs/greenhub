@@ -1,4 +1,5 @@
 import { CommandBus } from '@nestjs/cqrs';
+
 import { AuthCreateCommand } from '@/generic/auth/application/commands/auth-create/auth-create.command';
 import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
 import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';

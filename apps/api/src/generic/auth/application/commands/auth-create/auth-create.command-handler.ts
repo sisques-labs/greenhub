@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
 import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
 import { AuthAggregateFactory } from '@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory';
 import {
@@ -8,6 +9,7 @@ import {
 } from '@/generic/auth/domain/repositories/auth-write.repository';
 import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+
 import { AuthCreateCommand } from './auth-create.command';
 
 @CommandHandler(AuthCreateCommand)

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { SharedModule } from '@/shared/shared.module';
 import { HealthCheckQueryHandler } from '@/support/health/application/queries/health-check/health-check.query-handler';
 import { HealthCheckService } from '@/support/health/application/services/health-check/health-check.service';

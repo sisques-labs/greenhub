@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+
 import { CalculateMedianCommand } from '@/support/math/application/commands/calculate-median/calculate-median.command';
 import { CalculateMedianService } from '@/support/math/application/services/calculate-median/calculate-median.service';
 

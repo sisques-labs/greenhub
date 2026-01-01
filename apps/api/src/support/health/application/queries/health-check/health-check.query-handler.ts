@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { HealthCheckQuery } from '@/support/health/application/queries/health-check/health-check.query';
 import { HealthCheckService } from '@/support/health/application/services/health-check/health-check.service';
 import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';

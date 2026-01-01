@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+
 import { AuthNotFoundByEmailException } from '@/generic/auth/application/exceptions/auth-not-found-by-email/auth-not-found-by-email.exception';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import {

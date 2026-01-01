@@ -1,8 +1,10 @@
 import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
+
 import { BaseFilterInput } from '../base-filter/base-filter.input';
 import { BasePaginationInput } from '../base-pagination/base-pagination.input';
 import { BaseSortInput } from '../base-sort/base-sort.input';
+
 import { BaseFindByCriteriaInput } from './base-find-by-criteria.input';
 
 describe('BaseFindByCriteriaInput', () => {

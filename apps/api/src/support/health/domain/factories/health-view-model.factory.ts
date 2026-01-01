@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+
 import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
 import { HealthAggregate } from '@/support/health/domain/aggregates/health.aggregate';
 import { IHealthCreateViewModelDto } from '@/support/health/domain/dtos/view-models/health-create/health-create.dto';

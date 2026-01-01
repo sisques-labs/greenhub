@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+
 import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
 
 /**

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+
 import { HealthModule } from '@/support/health/health.module';
+
 import { LoggingModule } from './logging/logging.module';
 import { MathModule } from './math/math.module';
 

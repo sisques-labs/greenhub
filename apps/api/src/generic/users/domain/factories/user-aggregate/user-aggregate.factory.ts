@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create/user-create.dto';
 import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
