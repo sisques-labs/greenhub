@@ -156,41 +156,41 @@ export function PlantTransplantModal({
 						</FormItem>
 
 						{/* Target Growing Unit (select) */}
-						<FormItem>
-							<FormLabel>
-								{t(
-									"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label",
-								)}
-							</FormLabel>
-							<Select
+								<FormItem>
+									<FormLabel>
+										{t(
+											"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label",
+										)}
+									</FormLabel>
+									<Select
 								onValueChange={setTargetGrowingUnitId}
 								value={targetGrowingUnitId}
-								disabled={isLoading}
-							>
-								<FormControl>
-									<SelectTrigger>
-										<SelectValue
-											placeholder={t(
-												"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder",
-											)}
-										/>
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{availableTargetGrowingUnits.map((growingUnit) => (
-										<SelectItem key={growingUnit.id} value={growingUnit.id}>
-											{growingUnit.name} ({growingUnit.remainingCapacity}/
-											{growingUnit.capacity}{" "}
-											{t(
-												"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable",
-											)}
-											)
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
+										disabled={isLoading}
+									>
+										<FormControl>
+											<SelectTrigger>
+												<SelectValue
+													placeholder={t(
+														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder",
+													)}
+												/>
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											{availableTargetGrowingUnits.map((growingUnit) => (
+												<SelectItem key={growingUnit.id} value={growingUnit.id}>
+													{growingUnit.name} ({growingUnit.remainingCapacity}/
+													{growingUnit.capacity}{" "}
+													{t(
+														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable",
+													)}
+													)
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
 							<FormMessage fieldName="targetGrowingUnitId" />
-						</FormItem>
+								</FormItem>
 
 						{error && (
 							<div className="text-sm text-destructive">{error.message}</div>
