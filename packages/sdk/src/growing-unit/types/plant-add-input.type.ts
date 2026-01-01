@@ -8,3 +8,4 @@ export type PlantAddInput = {
 	notes?: string | null;
 	status?: PlantStatus;
 };
+

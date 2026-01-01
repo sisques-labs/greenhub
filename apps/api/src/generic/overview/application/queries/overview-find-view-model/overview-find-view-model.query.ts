@@ -6,3 +6,4 @@
  * Since there is only one overview entity, this query has no parameters.
  */
 export class OverviewFindViewModelQuery {}
+

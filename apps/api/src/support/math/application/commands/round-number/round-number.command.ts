@@ -16,3 +16,4 @@ export class RoundNumberCommand {
 		this.decimals = props.decimals ?? 2;
 	}
 }
+

@@ -10,3 +10,4 @@ export class PlantFindByIdRequestDto {
 	@IsNotEmpty()
 	id: string;
 }
+

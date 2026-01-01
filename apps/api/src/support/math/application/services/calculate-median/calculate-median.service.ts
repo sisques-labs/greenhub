@@ -49,3 +49,4 @@ export class CalculateMedianService {
 		return Number(median.toFixed(decimals));
 	}
 }
+
