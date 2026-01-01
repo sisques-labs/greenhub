@@ -1,6 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { LocationCreateCommandHandler } from '@/core/location-context/application/commands/location/location-create/location-create.command-handler';
+import { LocationDeleteCommandHandler } from '@/core/location-context/application/commands/location/location-delete/location-delete.command-handler';
+import { LocationUpdateCommandHandler } from '@/core/location-context/application/commands/location/location-update/location-update.command-handler';
+import { LocationCreatedEventHandler } from '@/core/location-context/application/event-handlers/location/location-created/location-created.event-handler';
+import { LocationDeletedEventHandler } from '@/core/location-context/application/event-handlers/location/location-deleted/location-deleted.event-handler';
+import { LocationUpdatedEventHandler } from '@/core/location-context/application/event-handlers/location/location-updated/location-updated.event-handler';
+import { LocationFindByCriteriaQueryHandler } from '@/core/location-context/application/queries/location/location-find-by-criteria/location-find-by-criteria.query-handler';
+import { LocationFindByIdQueryHandler } from '@/core/location-context/application/queries/location/location-find-by-id/location-find-by-id.query-handler';
+import { LocationViewModelFindByIdQueryHandler } from '@/core/location-context/application/queries/location/location-view-model-find-by-id/location-view-model-find-by-id.query-handler';
+import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
+import { AssertLocationViewModelExistsService } from '@/core/location-context/application/services/location/assert-location-view-model-exists/assert-location-view-model-exists.service';
 import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
 import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
@@ -59,6 +70,10 @@ const RESOLVERS = [
 const DOMAIN_SERVICES = [];
 
 const APPLICATION_SERVICES = [
+	// Location services
+	AssertLocationExistsService,
+	AssertLocationViewModelExistsService,
+
 	// Growing Unit services
 	AssertGrowingUnitExistsService,
 	//AssertGrowingUnitViewModelExistsService,
@@ -68,6 +83,11 @@ const APPLICATION_SERVICES = [
 ];
 
 const QUERY_HANDLERS = [
+	// Location query handlers
+	LocationFindByCriteriaQueryHandler,
+	LocationFindByIdQueryHandler,
+	LocationViewModelFindByIdQueryHandler,
+
 	// Growing Unit query handlers
 	GrowingUnitFindByCriteriaQueryHandler,
 	GrowingUnitFindByIdQueryHandler,
@@ -78,6 +98,11 @@ const QUERY_HANDLERS = [
 ];
 
 const COMMAND_HANDLERS = [
+	// Location command handlers
+	LocationCreateCommandHandler,
+	LocationUpdateCommandHandler,
+	LocationDeleteCommandHandler,
+
 	// Growing Unit command handlers
 	GrowingUnitCreateCommandHandler,
 	GrowingUnitUpdateCommandHandler,
@@ -91,6 +116,11 @@ const COMMAND_HANDLERS = [
 ];
 
 const EVENT_HANDLERS = [
+	// Location event handlers
+	LocationCreatedEventHandler,
+	LocationUpdatedEventHandler,
+	LocationDeletedEventHandler,
+
 	// Growing Unit event handlers
 	GrowingUnitCreatedEventHandler,
 	GrowingUnitDeletedEventHandler,

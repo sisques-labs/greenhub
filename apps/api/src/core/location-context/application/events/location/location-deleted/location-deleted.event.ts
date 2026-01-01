@@ -1,0 +1,22 @@
+import { ILocationEventData } from '@/core/location-context/domain/events/location/interfaces/location-event-data.interface';
+import { BaseEvent } from '@/shared/domain/events/base-event.interface';
+import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
+
+/**
+ * Location deleted event
+ *
+ * @class LocationDeletedEvent
+ * @extends {BaseEvent<ILocationEventData>}
+ */
+export class LocationDeletedEvent extends BaseEvent<ILocationEventData> {
+	/**
+	 * Constructor
+	 *
+	 * @param metadata - The metadata of the event
+	 * @param data - The data of the event
+	 */
+	constructor(metadata: IEventMetadata, data: ILocationEventData) {
+		super(metadata, data);
+	}
+}
+
