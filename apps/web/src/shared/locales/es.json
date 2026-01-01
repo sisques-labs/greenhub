@@ -1,672 +1,672 @@
 {
-  "common": {
-    "loading": "Cargando...",
-    "error": "Error",
-    "unknown": "Desconocido",
-    "cancel": "Cancelar",
-    "delete": "Eliminar",
-    "edit": "Editar",
-    "view": "Ver",
-    "create": "Crear",
-    "update": "Actualizar",
-    "submit": "Enviar",
-    "save": "Guardar",
-    "close": "Cerrar",
-    "back": "Volver",
-    "next": "Siguiente",
-    "previous": "Anterior",
-    "search": "Buscar",
-    "filter": "Filtrar",
-    "all": "Todos",
-    "none": "Ninguno",
-    "empty": "Vacío",
-    "notSet": "No establecido",
-    "notFound": "No encontrado",
-    "today": "Hoy",
-    "yesterday": "Ayer",
-    "tomorrow": "Mañana",
-    "completed": "Completado",
-    "pending": "Pendiente",
-    "viewAll": "Ver todo",
-    "seeAll": "Ver todas"
-  },
-  "nav": {
-    "home": "Inicio",
-    "settings": "Configuración",
-    "plants": "Plantas",
-    "growingUnits": "Unidades de Cultivo",
-    "locations": "Ubicaciones",
-    "search": "Buscar",
-    "searchPlaceholder": "Buscar..."
-  },
-  "dashboard": {
-    "page": {
-      "title": "Panel de Control",
-      "description": "Bienvenido de nuevo, aquí tienes el resumen de hoy.",
-      "addPlantButton": "Añadir Planta"
-    },
-    "error": {
-      "loading": "Error al cargar el dashboard: {message}"
-    },
-    "stats": {
-      "totalPlants": {
-        "title": "Total Plantas"
-      },
-      "activeUnits": {
-        "title": "Unidades Activas"
-      },
-      "readyForHarvest": {
-        "title": "Listas para Cosecha"
-      },
-      "criticalAlerts": {
-        "title": "Alertas Críticas"
-      },
-      "changeSuffix": "vs mes anterior"
-    },
-    "sections": {
-      "plants": {
-        "title": "Resumen de Plantas",
-        "totalPlants": "Total Plantas",
-        "activePlants": "Plantas Activas",
-        "activePercentage": "{percentage}% activas",
-        "statusBreakdown": "Desglose por Estado",
-        "additionalMetrics": "Métricas Adicionales",
-        "planted": "Plantadas",
-        "growing": "Creciendo",
-        "harvested": "Cosechadas",
-        "dead": "Muertas",
-        "archived": "Archivadas",
-        "withoutPlantedDate": "Sin Fecha de Plantación",
-        "withNotes": "Con Notas",
-        "recent7Days": "Recientes (7 días)"
-      },
-      "capacity": {
-        "title": "Resumen de Capacidad",
-        "averageOccupancy": "Ocupación Promedio",
-        "totalCapacity": "Capacidad Total",
-        "used": "Usada",
-        "available": "Disponible",
-        "atLimit": "En Límite (≥80%)",
-        "full": "Llena (100%)"
-      },
-      "growingUnits": {
-        "title": "Resumen de Unidades de Cultivo",
-        "totalGrowingUnits": "Total Unidades de Cultivo",
-        "active": "Activas",
-        "empty": "Vacías",
-        "byType": "Por Tipo",
-        "percentageOfTotal": "{percentage}% del total",
-        "avgPlantsPerUnit": "Prom. Plantas/Unidad",
-        "min": "Mín",
-        "max": "Máx",
-        "pots": "Macetas",
-        "gardenBeds": "Bancales",
-        "hangingBaskets": "Cestas Colgantes",
-        "windowBoxes": "Jardines de Ventana"
-      },
-      "growingUnitsStatus": {
-        "title": "Estado de Unidades de Cultivo",
-        "empty": "No hay unidades de cultivo disponibles"
-      },
-      "recentAlerts": {
-        "title": "Alertas Recientes",
-        "empty": "No hay alertas recientes"
-      },
-      "todayTasks": {
-        "title": "Tareas de Hoy",
-        "assignedTo": "Asignado a",
-        "empty": "No hay tareas programadas para hoy"
-      }
-    },
-    "common": {
-      "retry": "Reintentar",
-      "active": "activas",
-      "total": "total",
-      "growing": "creciendo",
-      "atLimit": "en límite"
-    }
-  },
-  "shared": {
-    "fields": {
-      "name": {
-        "label": "Nombre",
-        "placeholder": "Ingresa el nombre"
-      },
-      "status": {
-        "label": "Estado",
-        "placeholder": "Selecciona el estado"
-      },
-      "createdAt": {
-        "label": "Fecha de creación"
-      },
-      "updatedAt": {
-        "label": "Fecha de actualización"
-      },
-      "type": {
-        "label": "Tipo",
-        "placeholder": "Selecciona el tipo"
-      },
-      "capacity": {
-        "label": "Capacidad",
-        "placeholder": "Número de elementos"
-      },
-      "remainingCapacity": {
-        "label": "Capacidad Restante"
-      },
-      "volume": {
-        "label": "Volumen"
-      },
-      "dimensions": {
-        "label": "Dimensiones"
-      },
-      "length": {
-        "label": "Longitud",
-        "placeholder": "Longitud"
-      },
-      "width": {
-        "label": "Ancho",
-        "placeholder": "Ancho"
-      },
-      "height": {
-        "label": "Altura",
-        "placeholder": "Altura"
-      },
-      "unit": {
-        "label": "Unidad",
-        "placeholder": "Selecciona la unidad"
-      },
-      "plants": {
-        "label": "Plantas activas"
-      },
-      "species": {
-        "label": "Especie",
-        "placeholder": "Especie"
-      },
-      "plantedDate": {
-        "label": "Fecha de plantación"
-      },
-      "notes": {
-        "label": "Notas",
-        "placeholder": "Notas adicionales"
-      },
-      "description": {
-        "label": "Descripción",
-        "placeholder": "Ingresa la descripción"
-      },
-      "growingUnitId": {
-        "label": "Unidad de Cultivo"
-      }
-    },
-    "types": {
-      "growingUnit": {
-        "POT": "Maceta",
-        "GARDEN_BED": "Cama de jardín",
-        "HANGING_BASKET": "Cesta colgante",
-        "WINDOW_BOX": "Jardín de ventana"
-      },
-      "location": {
-        "ROOM": "Habitación",
-        "BALCONY": "Balcón",
-        "GARDEN": "Jardín",
-        "GREENHOUSE": "Invernadero",
-        "OUTDOOR_SPACE": "Espacio Exterior",
-        "INDOOR_SPACE": "Espacio Interior"
-      }
-    },
-    "units": {
-      "length": {
-        "MILLIMETER": "Milímetro",
-        "CENTIMETER": "Centímetro",
-        "METER": "Metro",
-        "INCH": "Pulgada",
-        "FOOT": "Pie"
-      }
-    },
-    "status": {
-      "plant": {
-        "PLANTED": "Plantada",
-        "GROWING": "Creciendo",
-        "HARVESTED": "Cosechada",
-        "DEAD": "Muerta",
-        "ARCHIVED": "Archivada"
-      },
-      "growingUnit": {
-        "active": "ACTIVA",
-        "inactive": "INACTIVA"
-      },
-      "location": {
-        "indoor": "Interior",
-        "outdoor": "Exterior"
-      }
-    },
-    "validation": {
-      "required": "Este campo es requerido",
-      "invalid": "Valor inválido",
-      "id": {
-        "required": "El ID es requerido"
-      },
-      "name": {
-        "required": "El nombre es requerido"
-      },
-      "species": {
-        "required": "La especie es requerida"
-      },
-      "status": {
-        "invalid": "Estado inválido"
-      },
-      "growingUnitId": {
-        "required": "El ID de la unidad de cultivo es requerido"
-      },
-      "plantId": {
-        "required": "El ID de la planta es requerido"
-      },
-      "sourceGrowingUnitId": {
-        "required": "El ID de la unidad de cultivo origen es requerido"
-      },
-      "targetGrowingUnitId": {
-        "required": "El ID de la unidad de cultivo destino es requerido"
-      },
-      "type": {
-        "invalid": "Tipo inválido"
-      },
-      "capacity": {
-        "required": "La capacidad es requerida"
-      },
-      "unit": {
-        "invalid": "Unidad inválida"
-      }
-    },
-    "pagination": {
-      "info": "Página {page} de {totalPages} ({total} en total)",
-      "showing": "Mostrando {from} a {to} de {total}"
-    },
-    "time": {
-      "daysAgo": "Hace {days} días",
-      "weeksAgo": "Hace {weeks} semanas",
-      "monthsAgo": "Hace {months} mes{months, plural, =1 {} other {es}}",
-      "yearsAgo": "Hace {years} años"
-    }
-  },
-  "pages": {
-    "dashboard": {
-      "title": "Panel de Control",
-      "description": "Bienvenido de nuevo, aquí tienes el resumen de hoy.",
-      "addPlantButton": "Añadir Planta",
-      "error": {
-        "loading": "Error al cargar el dashboard: {message}"
-      },
-      "stats": {
-        "totalPlants": {
-          "title": "Total Plantas"
-        },
-        "activeUnits": {
-          "title": "Unidades Activas"
-        },
-        "readyForHarvest": {
-          "title": "Listas para Cosecha"
-        },
-        "criticalAlerts": {
-          "title": "Alertas Críticas"
-        },
-        "changeSuffix": "vs mes anterior"
-      },
-      "sections": {
-        "growingUnitsStatus": {
-          "title": "Estado de Unidades de Cultivo",
-          "empty": "No hay unidades de cultivo disponibles"
-        },
-        "recentAlerts": {
-          "title": "Alertas Recientes",
-          "empty": "No hay alertas recientes"
-        },
-        "todayTasks": {
-          "title": "Tareas de Hoy",
-          "assignedTo": "Asignado a",
-          "empty": "No hay tareas programadas para hoy"
-        }
-      }
-    },
-    "auth": {
-      "title": {
-        "login": "Bienvenido de nuevo",
-        "signup": "Crear una cuenta"
-      },
-      "description": {
-        "login": "Ingresa tu email y contraseña para iniciar sesión",
-        "signup": "Ingresa tu información para crear una nueva cuenta"
-      },
-      "fields": {
-        "email": {
-          "label": "Email",
-          "placeholder": "nombre@ejemplo.com"
-        },
-        "password": {
-          "label": "Contraseña",
-          "placeholder": {
-            "login": "Ingresa tu contraseña",
-            "signup": "Al menos 8 caracteres"
-          }
-        },
-        "confirmPassword": {
-          "label": "Confirmar contraseña",
-          "placeholder": "Confirma tu contraseña"
-        }
-      },
-      "actions": {
-        "login": "Iniciar sesión",
-        "signup": "Crear cuenta",
-        "switchToSignup": "Registrarse",
-        "switchToLogin": "Iniciar sesión",
-        "loading": {
-          "login": "Iniciando sesión...",
-          "signup": "Creando cuenta..."
-        }
-      },
-      "messages": {
-        "switchToSignup": "¿No tienes una cuenta?",
-        "switchToLogin": "¿Ya tienes una cuenta?",
-        "error": "Ocurrió un error. Por favor intenta de nuevo."
-      },
-      "validation": {
-        "email": {
-          "required": "El email es requerido",
-          "invalid": "Formato de email inválido"
-        },
-        "password": {
-          "required": "La contraseña es requerida",
-          "minLength": "La contraseña debe tener al menos 8 caracteres"
-        },
-        "confirmPassword": {
-          "required": "Por favor confirma tu contraseña",
-          "mismatch": "Las contraseñas no coinciden"
-        }
-      }
-    },
-    "user": {
-      "profile": {
-        "title": "Perfil de Usuario",
-        "anonymous": "Usuario anónimo",
-        "error": {
-          "loading": "Error al cargar usuario: {message}"
-        },
-        "sections": {
-          "personalInfo": {
-            "title": "Información Personal",
-            "description": "Datos personales y de identificación"
-          },
-          "authInfo": {
-            "title": "Información de Autenticación",
-            "description": "Configuración de seguridad y autenticación"
-          },
-          "accountInfo": {
-            "title": "Información de Cuenta",
-            "description": "Detalles de la cuenta y actividad"
-          },
-          "contactInfo": {
-            "title": "Información de Contacto",
-            "description": "Datos de contacto y comunicación"
-          },
-          "editProfile": {
-            "title": "Editar Perfil",
-            "description": "Actualiza tu información personal"
-          }
-        },
-        "fields": {
-          "email": "Correo electrónico",
-          "verified": "Verificado",
-          "unverified": "No verificado",
-          "provider": "Proveedor de autenticación",
-          "twoFactor": "Autenticación de dos factores",
-          "enabled": "Habilitado",
-          "disabled": "Deshabilitado",
-          "createdAt": "Fecha de creación",
-          "lastLoginAt": "Último inicio de sesión",
-          "phoneNumber": "Número de teléfono",
-          "name": {
-            "label": "Nombre",
-            "placeholder": "Ingresa tu nombre"
-          },
-          "lastName": {
-            "label": "Apellido",
-            "placeholder": "Ingresa tu apellido"
-          },
-          "userName": {
-            "label": "Nombre de usuario",
-            "placeholder": "Ingresa tu nombre de usuario"
-          },
-          "bio": {
-            "label": "Biografía",
-            "placeholder": "Escribe una breve biografía sobre ti"
-          },
-          "avatarUrl": {
-            "label": "URL del avatar",
-            "placeholder": "https://ejemplo.com/avatar.jpg"
-          },
-          "role": {
-            "label": "Rol"
-          },
-          "status": {
-            "label": "Estado"
-          }
-        },
-        "actions": {
-          "update": {
-            "label": "Actualizar perfil",
-            "loading": "Actualizando..."
-          }
-        }
-      }
-    },
-    "plants": {
-      "list": {
-        "title": "Lista de Plantas",
-        "description": "Gestiona tu colección botánica y monitorea su salud",
-        "empty": "No hay plantas registradas",
-        "emptyFiltered": "No hay plantas que coincidan con los filtros actuales",
-        "search": {
-          "placeholder": "Buscar por nombre, especie o ubicación..."
-        },
-        "filters": {
-          "all": "Todas",
-          "indoor": "Interior",
-          "outdoor": "Exterior",
-          "needsWater": "Necesita Agua",
-          "healthy": "Saludables"
-        },
-        "table": {
-          "columns": {
-            "plant": "PLANTA / ESPECIE",
-            "location": "UBICACIÓN",
-            "status": "ESTADO",
-            "lastWatering": "ÚLTIMO RIEGO",
-            "actions": "ACCIONES"
-          },
-          "lastWatering": {
-            "today": "Hoy",
-            "yesterday": "Ayer",
-            "daysAgo": "Hace {days} días",
-            "weeksAgo": "Hace {weeks} semanas"
-          }
-        },
-        "actions": {
-          "create": {
-            "button": "Añadir Planta",
-            "title": "Crear Planta",
-            "description": "Agrega una nueva planta a tu colección",
-            "submit": "Crear",
-            "loading": "Creando..."
-          },
-          "view": "Ver",
-          "edit": "Editar",
-          "delete": "Eliminar"
-        },
-        "error": {
-          "loading": "Error al cargar plantas: {message}"
-        },
-        "growingUnit": {
-          "plantCount": "{count} de {total} plantas"
-        }
-      },
-      "detail": {
-        "title": "Detalle de Planta",
-        "notFound": "Planta no encontrada",
-        "unnamed": "Planta sin nombre",
-        "error": {
-          "loading": "Error al cargar planta: {message}"
-        },
-        "fields": {
-          "name": {
-            "label": "Nombre",
-            "placeholder": "Nombre de la planta"
-          },
-          "species": {
-            "label": "Especie",
-            "placeholder": "Especie de la planta"
-          },
-          "plantedDate": {
-            "label": "Fecha de plantación"
-          },
-          "notes": {
-            "label": "Notas",
-            "placeholder": "Notas adicionales sobre la planta"
-          },
-          "growingUnitId": {
-            "label": "Unidad de Cultivo"
-          }
-        },
-        "location": {
-          "indoor": "INTERIOR",
-          "outdoor": "EXTERIOR"
-        },
-        "actions": {
-          "editDetails": "Editar Detalles",
-          "registerWatering": "Registrar Riego",
-          "fertilize": "Fertilizar",
-          "transplant": "Trasplantar"
-        },
-        "metrics": {
-          "title": "Requisitos de Cuidado",
-          "watering": {
-            "label": "RIEGO",
-            "every7Days": "Cada 7 días"
-          },
-          "light": {
-            "label": "LUZ",
-            "indirect": "Indirecta"
-          },
-          "temperature": {
-            "label": "TEMP"
-          },
-          "humidity": {
-            "label": "HUMEDAD",
-            "high": "Alta"
-          }
-        },
-        "currentStatus": {
-          "lastWatering": {
-            "label": "Último Riego",
-            "onTime": "A tiempo",
-            "next": "Próximo"
-          },
-          "lastFertilization": {
-            "label": "Última Fertilización",
-            "suggested": "Sugerido"
-          },
-          "plantingDate": {
-            "label": "Fecha de Plantación",
-            "age": "Edad"
-          }
-        },
-        "age": {
-          "yearsMonths": "{years} año {months} meses",
-          "years": "{years} año",
-          "months": "{months} meses",
-          "days": "{days} días"
-        },
-        "sections": {
-          "personalNotes": {
-            "title": "Notas Personales",
-            "edit": "Editar Notas",
-            "empty": "Aún no hay notas personales. ¡Agrega algunas notas sobre tu rutina de cuidado de plantas!"
-          },
-          "upcomingCare": {
-            "title": "Próximos Cuidados",
-            "tomorrow": "MAÑANA",
-            "lightWatering": "Riego Ligero",
-            "in5Days": "EN 5 DÍAS",
-            "cleanLeaves": "Limpiar Hojas",
-            "duringDay": "Durante el día",
-            "in2Weeks": "EN 2 SEMANAS",
-            "fertilization": "Fertilización",
-            "spring": "Primavera"
-          },
-          "recentHistory": {
-            "title": "Historial Reciente",
-            "watering": "Riego",
-            "wateringDetails": "250ml de agua filtrada",
-            "pruning": "Poda",
-            "pruningDetails": "Hojas amarillas inferiores",
-            "fertilization": "Fertilización",
-            "fertilizationDetails": "Fertilizante líquido NPK 20-20-20",
-            "table": {
-              "date": "FECHA",
-              "action": "ACCIÓN",
-              "details": "DETALLES",
-              "status": "ESTADO"
-            }
-          },
-          "progressGallery": {
-            "title": "Galería de Progreso",
-            "more": "más"
-          },
-          "wiki": {
-            "title": "Wiki Planta",
-            "didYouKnow": "Sabías que...",
-            "description": "La Monstera Deliciosa también es conocida como 'Costilla de Adán' debido a la forma única de sus hojas que desarrollan agujeros naturales (fenestraciones) a medida que maduran.",
-            "readMore": "LEER MÁS"
-          }
-        },
-        "modals": {
-          "transplant": {
-            "title": "Trasplantar Planta",
-            "description": "Mueve esta planta a una unidad de cultivo diferente",
-            "fields": {
-              "sourceGrowingUnit": {
-                "label": "Desde",
-                "unknown": "Unidad de cultivo desconocida",
-                "helper": "Unidad de cultivo actual (no se puede cambiar)"
-              },
-              "targetGrowingUnitId": {
-                "label": "Hacia",
-                "placeholder": "Selecciona una unidad de cultivo destino",
-                "required": "Debes seleccionar una unidad de cultivo destino",
-                "capacityAvailable": "espacios disponibles"
-              }
-            },
-            "actions": {
-              "submit": {
-                "label": "Trasplantar",
-                "loading": "Trasplantando..."
-              }
-            }
-          }
-        }
-      }
-    },
-    "locations": {
-      "list": {
-        "title": "Ubicaciones",
-        "description": "Gestiona tus ubicaciones y organiza tus espacios de cultivo.",
-        "empty": "No hay ubicaciones disponibles",
-        "noDescription": "Sin descripción disponible",
-        "search": {
-          "placeholder": "Buscar por nombre o tipo..."
-        },
-        "filters": {
-          "all": "Todas",
-          "indoor": "Interior",
-          "outdoor": "Exterior"
-        },
+	"common": {
+		"loading": "Cargando...",
+		"error": "Error",
+		"unknown": "Desconocido",
+		"cancel": "Cancelar",
+		"delete": "Eliminar",
+		"edit": "Editar",
+		"view": "Ver",
+		"create": "Crear",
+		"update": "Actualizar",
+		"submit": "Enviar",
+		"save": "Guardar",
+		"close": "Cerrar",
+		"back": "Volver",
+		"next": "Siguiente",
+		"previous": "Anterior",
+		"search": "Buscar",
+		"filter": "Filtrar",
+		"all": "Todos",
+		"none": "Ninguno",
+		"empty": "Vacío",
+		"notSet": "No establecido",
+		"notFound": "No encontrado",
+		"today": "Hoy",
+		"yesterday": "Ayer",
+		"tomorrow": "Mañana",
+		"completed": "Completado",
+		"pending": "Pendiente",
+		"viewAll": "Ver todo",
+		"seeAll": "Ver todas"
+	},
+	"nav": {
+		"home": "Inicio",
+		"settings": "Configuración",
+		"plants": "Plantas",
+		"growingUnits": "Unidades de Cultivo",
+		"locations": "Ubicaciones",
+		"search": "Buscar",
+		"searchPlaceholder": "Buscar..."
+	},
+	"dashboard": {
+		"page": {
+			"title": "Panel de Control",
+			"description": "Bienvenido de nuevo, aquí tienes el resumen de hoy.",
+			"addPlantButton": "Añadir Planta"
+		},
+		"error": {
+			"loading": "Error al cargar el dashboard: {message}"
+		},
+		"stats": {
+			"totalPlants": {
+				"title": "Total Plantas"
+			},
+			"activeUnits": {
+				"title": "Unidades Activas"
+			},
+			"readyForHarvest": {
+				"title": "Listas para Cosecha"
+			},
+			"criticalAlerts": {
+				"title": "Alertas Críticas"
+			},
+			"changeSuffix": "vs mes anterior"
+		},
+		"sections": {
+			"plants": {
+				"title": "Resumen de Plantas",
+				"totalPlants": "Total Plantas",
+				"activePlants": "Plantas Activas",
+				"activePercentage": "{percentage}% activas",
+				"statusBreakdown": "Desglose por Estado",
+				"additionalMetrics": "Métricas Adicionales",
+				"planted": "Plantadas",
+				"growing": "Creciendo",
+				"harvested": "Cosechadas",
+				"dead": "Muertas",
+				"archived": "Archivadas",
+				"withoutPlantedDate": "Sin Fecha de Plantación",
+				"withNotes": "Con Notas",
+				"recent7Days": "Recientes (7 días)"
+			},
+			"capacity": {
+				"title": "Resumen de Capacidad",
+				"averageOccupancy": "Ocupación Promedio",
+				"totalCapacity": "Capacidad Total",
+				"used": "Usada",
+				"available": "Disponible",
+				"atLimit": "En Límite (≥80%)",
+				"full": "Llena (100%)"
+			},
+			"growingUnits": {
+				"title": "Resumen de Unidades de Cultivo",
+				"totalGrowingUnits": "Total Unidades de Cultivo",
+				"active": "Activas",
+				"empty": "Vacías",
+				"byType": "Por Tipo",
+				"percentageOfTotal": "{percentage}% del total",
+				"avgPlantsPerUnit": "Prom. Plantas/Unidad",
+				"min": "Mín",
+				"max": "Máx",
+				"pots": "Macetas",
+				"gardenBeds": "Bancales",
+				"hangingBaskets": "Cestas Colgantes",
+				"windowBoxes": "Jardines de Ventana"
+			},
+			"growingUnitsStatus": {
+				"title": "Estado de Unidades de Cultivo",
+				"empty": "No hay unidades de cultivo disponibles"
+			},
+			"recentAlerts": {
+				"title": "Alertas Recientes",
+				"empty": "No hay alertas recientes"
+			},
+			"todayTasks": {
+				"title": "Tareas de Hoy",
+				"assignedTo": "Asignado a",
+				"empty": "No hay tareas programadas para hoy"
+			}
+		},
+		"common": {
+			"retry": "Reintentar",
+			"active": "activas",
+			"total": "total",
+			"growing": "creciendo",
+			"atLimit": "en límite"
+		}
+	},
+	"shared": {
+		"fields": {
+			"name": {
+				"label": "Nombre",
+				"placeholder": "Ingresa el nombre"
+			},
+			"status": {
+				"label": "Estado",
+				"placeholder": "Selecciona el estado"
+			},
+			"createdAt": {
+				"label": "Fecha de creación"
+			},
+			"updatedAt": {
+				"label": "Fecha de actualización"
+			},
+			"type": {
+				"label": "Tipo",
+				"placeholder": "Selecciona el tipo"
+			},
+			"capacity": {
+				"label": "Capacidad",
+				"placeholder": "Número de elementos"
+			},
+			"remainingCapacity": {
+				"label": "Capacidad Restante"
+			},
+			"volume": {
+				"label": "Volumen"
+			},
+			"dimensions": {
+				"label": "Dimensiones"
+			},
+			"length": {
+				"label": "Longitud",
+				"placeholder": "Longitud"
+			},
+			"width": {
+				"label": "Ancho",
+				"placeholder": "Ancho"
+			},
+			"height": {
+				"label": "Altura",
+				"placeholder": "Altura"
+			},
+			"unit": {
+				"label": "Unidad",
+				"placeholder": "Selecciona la unidad"
+			},
+			"plants": {
+				"label": "Plantas activas"
+			},
+			"species": {
+				"label": "Especie",
+				"placeholder": "Especie"
+			},
+			"plantedDate": {
+				"label": "Fecha de plantación"
+			},
+			"notes": {
+				"label": "Notas",
+				"placeholder": "Notas adicionales"
+			},
+			"description": {
+				"label": "Descripción",
+				"placeholder": "Ingresa la descripción"
+			},
+			"growingUnitId": {
+				"label": "Unidad de Cultivo"
+			}
+		},
+		"types": {
+			"growingUnit": {
+				"POT": "Maceta",
+				"GARDEN_BED": "Cama de jardín",
+				"HANGING_BASKET": "Cesta colgante",
+				"WINDOW_BOX": "Jardín de ventana"
+			},
+			"location": {
+				"ROOM": "Habitación",
+				"BALCONY": "Balcón",
+				"GARDEN": "Jardín",
+				"GREENHOUSE": "Invernadero",
+				"OUTDOOR_SPACE": "Espacio Exterior",
+				"INDOOR_SPACE": "Espacio Interior"
+			}
+		},
+		"units": {
+			"length": {
+				"MILLIMETER": "Milímetro",
+				"CENTIMETER": "Centímetro",
+				"METER": "Metro",
+				"INCH": "Pulgada",
+				"FOOT": "Pie"
+			}
+		},
+		"status": {
+			"plant": {
+				"PLANTED": "Plantada",
+				"GROWING": "Creciendo",
+				"HARVESTED": "Cosechada",
+				"DEAD": "Muerta",
+				"ARCHIVED": "Archivada"
+			},
+			"growingUnit": {
+				"active": "ACTIVA",
+				"inactive": "INACTIVA"
+			},
+			"location": {
+				"indoor": "Interior",
+				"outdoor": "Exterior"
+			}
+		},
+		"validation": {
+			"required": "Este campo es requerido",
+			"invalid": "Valor inválido",
+			"id": {
+				"required": "El ID es requerido"
+			},
+			"name": {
+				"required": "El nombre es requerido"
+			},
+			"species": {
+				"required": "La especie es requerida"
+			},
+			"status": {
+				"invalid": "Estado inválido"
+			},
+			"growingUnitId": {
+				"required": "El ID de la unidad de cultivo es requerido"
+			},
+			"plantId": {
+				"required": "El ID de la planta es requerido"
+			},
+			"sourceGrowingUnitId": {
+				"required": "El ID de la unidad de cultivo origen es requerido"
+			},
+			"targetGrowingUnitId": {
+				"required": "El ID de la unidad de cultivo destino es requerido"
+			},
+			"type": {
+				"invalid": "Tipo inválido"
+			},
+			"capacity": {
+				"required": "La capacidad es requerida"
+			},
+			"unit": {
+				"invalid": "Unidad inválida"
+			}
+		},
+		"pagination": {
+			"info": "Página {page} de {totalPages} ({total} en total)",
+			"showing": "Mostrando {from} a {to} de {total}"
+		},
+		"time": {
+			"daysAgo": "Hace {days} días",
+			"weeksAgo": "Hace {weeks} semanas",
+			"monthsAgo": "Hace {months} mes{months, plural, =1 {} other {es}}",
+			"yearsAgo": "Hace {years} años"
+		}
+	},
+	"pages": {
+		"dashboard": {
+			"title": "Panel de Control",
+			"description": "Bienvenido de nuevo, aquí tienes el resumen de hoy.",
+			"addPlantButton": "Añadir Planta",
+			"error": {
+				"loading": "Error al cargar el dashboard: {message}"
+			},
+			"stats": {
+				"totalPlants": {
+					"title": "Total Plantas"
+				},
+				"activeUnits": {
+					"title": "Unidades Activas"
+				},
+				"readyForHarvest": {
+					"title": "Listas para Cosecha"
+				},
+				"criticalAlerts": {
+					"title": "Alertas Críticas"
+				},
+				"changeSuffix": "vs mes anterior"
+			},
+			"sections": {
+				"growingUnitsStatus": {
+					"title": "Estado de Unidades de Cultivo",
+					"empty": "No hay unidades de cultivo disponibles"
+				},
+				"recentAlerts": {
+					"title": "Alertas Recientes",
+					"empty": "No hay alertas recientes"
+				},
+				"todayTasks": {
+					"title": "Tareas de Hoy",
+					"assignedTo": "Asignado a",
+					"empty": "No hay tareas programadas para hoy"
+				}
+			}
+		},
+		"auth": {
+			"title": {
+				"login": "Bienvenido de nuevo",
+				"signup": "Crear una cuenta"
+			},
+			"description": {
+				"login": "Ingresa tu email y contraseña para iniciar sesión",
+				"signup": "Ingresa tu información para crear una nueva cuenta"
+			},
+			"fields": {
+				"email": {
+					"label": "Email",
+					"placeholder": "nombre@ejemplo.com"
+				},
+				"password": {
+					"label": "Contraseña",
+					"placeholder": {
+						"login": "Ingresa tu contraseña",
+						"signup": "Al menos 8 caracteres"
+					}
+				},
+				"confirmPassword": {
+					"label": "Confirmar contraseña",
+					"placeholder": "Confirma tu contraseña"
+				}
+			},
+			"actions": {
+				"login": "Iniciar sesión",
+				"signup": "Crear cuenta",
+				"switchToSignup": "Registrarse",
+				"switchToLogin": "Iniciar sesión",
+				"loading": {
+					"login": "Iniciando sesión...",
+					"signup": "Creando cuenta..."
+				}
+			},
+			"messages": {
+				"switchToSignup": "¿No tienes una cuenta?",
+				"switchToLogin": "¿Ya tienes una cuenta?",
+				"error": "Ocurrió un error. Por favor intenta de nuevo."
+			},
+			"validation": {
+				"email": {
+					"required": "El email es requerido",
+					"invalid": "Formato de email inválido"
+				},
+				"password": {
+					"required": "La contraseña es requerida",
+					"minLength": "La contraseña debe tener al menos 8 caracteres"
+				},
+				"confirmPassword": {
+					"required": "Por favor confirma tu contraseña",
+					"mismatch": "Las contraseñas no coinciden"
+				}
+			}
+		},
+		"user": {
+			"profile": {
+				"title": "Perfil de Usuario",
+				"anonymous": "Usuario anónimo",
+				"error": {
+					"loading": "Error al cargar usuario: {message}"
+				},
+				"sections": {
+					"personalInfo": {
+						"title": "Información Personal",
+						"description": "Datos personales y de identificación"
+					},
+					"authInfo": {
+						"title": "Información de Autenticación",
+						"description": "Configuración de seguridad y autenticación"
+					},
+					"accountInfo": {
+						"title": "Información de Cuenta",
+						"description": "Detalles de la cuenta y actividad"
+					},
+					"contactInfo": {
+						"title": "Información de Contacto",
+						"description": "Datos de contacto y comunicación"
+					},
+					"editProfile": {
+						"title": "Editar Perfil",
+						"description": "Actualiza tu información personal"
+					}
+				},
+				"fields": {
+					"email": "Correo electrónico",
+					"verified": "Verificado",
+					"unverified": "No verificado",
+					"provider": "Proveedor de autenticación",
+					"twoFactor": "Autenticación de dos factores",
+					"enabled": "Habilitado",
+					"disabled": "Deshabilitado",
+					"createdAt": "Fecha de creación",
+					"lastLoginAt": "Último inicio de sesión",
+					"phoneNumber": "Número de teléfono",
+					"name": {
+						"label": "Nombre",
+						"placeholder": "Ingresa tu nombre"
+					},
+					"lastName": {
+						"label": "Apellido",
+						"placeholder": "Ingresa tu apellido"
+					},
+					"userName": {
+						"label": "Nombre de usuario",
+						"placeholder": "Ingresa tu nombre de usuario"
+					},
+					"bio": {
+						"label": "Biografía",
+						"placeholder": "Escribe una breve biografía sobre ti"
+					},
+					"avatarUrl": {
+						"label": "URL del avatar",
+						"placeholder": "https://ejemplo.com/avatar.jpg"
+					},
+					"role": {
+						"label": "Rol"
+					},
+					"status": {
+						"label": "Estado"
+					}
+				},
+				"actions": {
+					"update": {
+						"label": "Actualizar perfil",
+						"loading": "Actualizando..."
+					}
+				}
+			}
+		},
+		"plants": {
+			"list": {
+				"title": "Lista de Plantas",
+				"description": "Gestiona tu colección botánica y monitorea su salud",
+				"empty": "No hay plantas registradas",
+				"emptyFiltered": "No hay plantas que coincidan con los filtros actuales",
+				"search": {
+					"placeholder": "Buscar por nombre, especie o ubicación..."
+				},
+				"filters": {
+					"all": "Todas",
+					"indoor": "Interior",
+					"outdoor": "Exterior",
+					"needsWater": "Necesita Agua",
+					"healthy": "Saludables"
+				},
+				"table": {
+					"columns": {
+						"plant": "PLANTA / ESPECIE",
+						"location": "UBICACIÓN",
+						"status": "ESTADO",
+						"lastWatering": "ÚLTIMO RIEGO",
+						"actions": "ACCIONES"
+					},
+					"lastWatering": {
+						"today": "Hoy",
+						"yesterday": "Ayer",
+						"daysAgo": "Hace {days} días",
+						"weeksAgo": "Hace {weeks} semanas"
+					}
+				},
+				"actions": {
+					"create": {
+						"button": "Añadir Planta",
+						"title": "Crear Planta",
+						"description": "Agrega una nueva planta a tu colección",
+						"submit": "Crear",
+						"loading": "Creando..."
+					},
+					"view": "Ver",
+					"edit": "Editar",
+					"delete": "Eliminar"
+				},
+				"error": {
+					"loading": "Error al cargar plantas: {message}"
+				},
+				"growingUnit": {
+					"plantCount": "{count} de {total} plantas"
+				}
+			},
+			"detail": {
+				"title": "Detalle de Planta",
+				"notFound": "Planta no encontrada",
+				"unnamed": "Planta sin nombre",
+				"error": {
+					"loading": "Error al cargar planta: {message}"
+				},
+				"fields": {
+					"name": {
+						"label": "Nombre",
+						"placeholder": "Nombre de la planta"
+					},
+					"species": {
+						"label": "Especie",
+						"placeholder": "Especie de la planta"
+					},
+					"plantedDate": {
+						"label": "Fecha de plantación"
+					},
+					"notes": {
+						"label": "Notas",
+						"placeholder": "Notas adicionales sobre la planta"
+					},
+					"growingUnitId": {
+						"label": "Unidad de Cultivo"
+					}
+				},
+				"location": {
+					"indoor": "INTERIOR",
+					"outdoor": "EXTERIOR"
+				},
+				"actions": {
+					"editDetails": "Editar Detalles",
+					"registerWatering": "Registrar Riego",
+					"fertilize": "Fertilizar",
+					"transplant": "Trasplantar"
+				},
+				"metrics": {
+					"title": "Requisitos de Cuidado",
+					"watering": {
+						"label": "RIEGO",
+						"every7Days": "Cada 7 días"
+					},
+					"light": {
+						"label": "LUZ",
+						"indirect": "Indirecta"
+					},
+					"temperature": {
+						"label": "TEMP"
+					},
+					"humidity": {
+						"label": "HUMEDAD",
+						"high": "Alta"
+					}
+				},
+				"currentStatus": {
+					"lastWatering": {
+						"label": "Último Riego",
+						"onTime": "A tiempo",
+						"next": "Próximo"
+					},
+					"lastFertilization": {
+						"label": "Última Fertilización",
+						"suggested": "Sugerido"
+					},
+					"plantingDate": {
+						"label": "Fecha de Plantación",
+						"age": "Edad"
+					}
+				},
+				"age": {
+					"yearsMonths": "{years} año {months} meses",
+					"years": "{years} año",
+					"months": "{months} meses",
+					"days": "{days} días"
+				},
+				"sections": {
+					"personalNotes": {
+						"title": "Notas Personales",
+						"edit": "Editar Notas",
+						"empty": "Aún no hay notas personales. ¡Agrega algunas notas sobre tu rutina de cuidado de plantas!"
+					},
+					"upcomingCare": {
+						"title": "Próximos Cuidados",
+						"tomorrow": "MAÑANA",
+						"lightWatering": "Riego Ligero",
+						"in5Days": "EN 5 DÍAS",
+						"cleanLeaves": "Limpiar Hojas",
+						"duringDay": "Durante el día",
+						"in2Weeks": "EN 2 SEMANAS",
+						"fertilization": "Fertilización",
+						"spring": "Primavera"
+					},
+					"recentHistory": {
+						"title": "Historial Reciente",
+						"watering": "Riego",
+						"wateringDetails": "250ml de agua filtrada",
+						"pruning": "Poda",
+						"pruningDetails": "Hojas amarillas inferiores",
+						"fertilization": "Fertilización",
+						"fertilizationDetails": "Fertilizante líquido NPK 20-20-20",
+						"table": {
+							"date": "FECHA",
+							"action": "ACCIÓN",
+							"details": "DETALLES",
+							"status": "ESTADO"
+						}
+					},
+					"progressGallery": {
+						"title": "Galería de Progreso",
+						"more": "más"
+					},
+					"wiki": {
+						"title": "Wiki Planta",
+						"didYouKnow": "Sabías que...",
+						"description": "La Monstera Deliciosa también es conocida como 'Costilla de Adán' debido a la forma única de sus hojas que desarrollan agujeros naturales (fenestraciones) a medida que maduran.",
+						"readMore": "LEER MÁS"
+					}
+				},
+				"modals": {
+					"transplant": {
+						"title": "Trasplantar Planta",
+						"description": "Mueve esta planta a una unidad de cultivo diferente",
+						"fields": {
+							"sourceGrowingUnit": {
+								"label": "Desde",
+								"unknown": "Unidad de cultivo desconocida",
+								"helper": "Unidad de cultivo actual (no se puede cambiar)"
+							},
+							"targetGrowingUnitId": {
+								"label": "Hacia",
+								"placeholder": "Selecciona una unidad de cultivo destino",
+								"required": "Debes seleccionar una unidad de cultivo destino",
+								"capacityAvailable": "espacios disponibles"
+							}
+						},
+						"actions": {
+							"submit": {
+								"label": "Trasplantar",
+								"loading": "Trasplantando..."
+							}
+						}
+					}
+				}
+			}
+		},
+		"locations": {
+			"list": {
+				"title": "Ubicaciones",
+				"description": "Gestiona tus ubicaciones y organiza tus espacios de cultivo.",
+				"empty": "No hay ubicaciones disponibles",
+				"noDescription": "Sin descripción disponible",
+				"search": {
+					"placeholder": "Buscar por nombre o tipo..."
+				},
+				"filters": {
+					"all": "Todas",
+					"indoor": "Interior",
+					"outdoor": "Exterior"
+				},
         "actions": {
           "create": {
             "button": "Crear Ubicación",
@@ -674,94 +674,10 @@
             "description": "Agrega una nueva ubicación para tus espacios de cultivo",
             "submit": "Crear",
             "loading": "Creando..."
-          }
-        },
-        "error": {
-          "loading": "Error al cargar ubicaciones: {message}"
-        }
-      }
-    },
-    "growingUnits": {
-      "list": {
-        "title": "Unidades de Cultivo",
-        "description": "Visualiza y gestiona tus espacios de cultivo de manera eficiente.",
-        "empty": "No hay unidades de cultivo disponibles",
-        "search": {
-          "placeholder": "Buscar por nombre, tipo o planta..."
-        },
-        "filters": {
-          "all": "Todo",
-          "indoor": "Interior",
-          "outdoor": "Exterior",
-          "pots": "Macetas",
-          "beds": "Bancales"
-        },
-        "actions": {
-          "create": {
-            "button": "Nueva Unidad",
-            "title": "Crear Unidad de Cultivo",
-            "description": "Agrega una nueva unidad de cultivo para tus plantas",
-            "submit": "Crear",
-            "loading": "Creando..."
-          }
-        },
-        "noPlants": "Sin plantas activas",
-        "common": {
-          "noDimensions": "Sin dimensiones"
-        }
-      },
-      "detail": {
-        "title": "Detalle de Unidad de Cultivo",
-        "notFound": "Unidad de cultivo no encontrada",
-        "error": {
-          "loading": "Error al cargar unidad de cultivo: {message}"
-        },
-        "breadcrumbs": {
-          "home": "Inicio",
-          "growingUnits": "Mis Unidades"
-        },
-        "location": {
-          "label": "Ubicación"
-        },
-        "summary": {
-          "substrate": {
-            "label": "Sustrato",
-            "value": "Tierra Universal"
           },
-          "exposure": {
-            "label": "Exposición",
-            "directSun": "Sol Directo",
-            "partialSun": "Sol Parcial",
-            "shade": "Sombra"
-          },
-          "lastWatering": {
-            "label": "Último Riego",
-            "today": "Hoy",
-            "yesterday": "Ayer",
-            "never": "Nunca"
-          },
-          "occupancy": {
-            "label": "Ocupación"
-          }
-        },
-        "sections": {
-          "plants": {
-            "title": "Plantas en cultivo",
-            "variety": "Variedad",
-            "planted": "PLANTADO",
-            "days": "días",
-            "manage": "Gestionar"
-          },
-          "history": {
-            "title": "Historial Reciente"
-          }
-        },
-        "actions": {
-          "editUnit": "Editar Unidad",
-          "addPlant": "Agregar Planta",
           "update": {
-            "title": "Actualizar Unidad de Cultivo",
-            "description": "Actualizar información de la unidad de cultivo",
+            "title": "Actualizar Ubicación",
+            "description": "Actualizar información de la ubicación",
             "submit": "Actualizar",
             "loading": "Actualizando..."
           },
@@ -769,592 +685,690 @@
             "label": "Eliminar",
             "loading": "Eliminando...",
             "confirm": {
-              "title": "Eliminar Unidad de Cultivo",
-              "description": "¿Estás seguro de que quieres eliminar la unidad de cultivo {name}? Esta acción no se puede deshacer."
+              "title": "Eliminar Ubicación",
+              "description": "¿Estás seguro de que quieres eliminar la ubicación {name}? Esta acción no se puede deshacer."
             }
           }
         },
-        "fields": {
-          "name": {
-            "label": "Nombre",
-            "placeholder": "Nombre de la unidad de cultivo"
-          },
-          "type": {
-            "label": "Tipo",
-            "placeholder": "Selecciona el tipo"
-          },
-          "capacity": {
-            "label": "Capacidad",
-            "placeholder": "Número de plantas"
-          },
-          "remainingCapacity": {
-            "label": "Capacidad Restante"
-          },
-          "volume": {
-            "label": "Volumen"
-          },
-          "dimensions": {
-            "label": "Dimensiones"
-          },
-          "length": {
-            "label": "Longitud",
-            "placeholder": "Longitud"
-          },
-          "width": {
-            "label": "Ancho",
-            "placeholder": "Ancho"
-          },
-          "height": {
-            "label": "Altura",
-            "placeholder": "Altura"
-          },
-          "unit": {
-            "label": "Unidad",
-            "placeholder": "Selecciona la unidad"
-          },
-          "plants": {
-            "label": "Plantas activas"
-          }
-        },
-        "types": {
-          "POT": "Maceta",
-          "GARDEN_BED": "Cama de jardín",
-          "HANGING_BASKET": "Cesta colgante",
-          "WINDOW_BOX": "Jardín de ventana"
-        },
-        "units": {
-          "MILLIMETER": "Milímetro",
-          "CENTIMETER": "Centímetro",
-          "METER": "Metro",
-          "INCH": "Pulgada",
-          "FOOT": "Pie"
-        },
-        "validation": {
-          "type": {
-            "invalid": "Tipo inválido"
-          },
-          "capacity": {
-            "required": "La capacidad es requerida"
-          }
-        }
-      }
-    }
-  },
-  "legacy": {
-    "plant": {
-      "common": {
-        "notSet": "No establecido",
-        "unnamed": "Planta sin nombre"
-      },
-      "notFound": "Planta no encontrada",
-      "error": {
-        "loading": "Error al cargar planta: {message}"
-      },
-      "fields": {
-        "name": {
-          "label": "Nombre",
-          "placeholder": "Nombre de la planta"
-        },
-        "species": {
-          "label": "Especie",
-          "placeholder": "Especie de la planta"
-        },
-        "plantedDate": {
-          "label": "Fecha de plantación"
-        },
-        "notes": {
-          "label": "Notas",
-          "placeholder": "Notas adicionales sobre la planta"
-        },
-        "status": {
-          "label": "Estado",
-          "placeholder": "Selecciona el estado"
-        },
-        "growingUnitId": {
-          "label": "ID de Unidad de Cultivo"
-        },
-        "sourceGrowingUnitId": {
-          "label": "Unidad de Cultivo Origen",
-          "placeholder": "ID de unidad de cultivo origen"
-        },
-        "targetGrowingUnitId": {
-          "label": "Unidad de Cultivo Destino",
-          "placeholder": "ID de unidad de cultivo destino"
-        }
-      },
-      "status": {
-        "PLANTED": "Plantada",
-        "GROWING": "Creciendo",
-        "HARVESTED": "Cosechada",
-        "DEAD": "Muerta",
-        "ARCHIVED": "Archivada"
-      },
-      "sections": {
-        "info": {
-          "title": "Información de la Planta",
-          "description": "Información detallada sobre la planta"
-        },
-        "update": {
-          "title": "Actualizar Planta",
-          "description": "Actualizar información de la planta"
-        },
-        "transplant": {
-          "title": "Trasplantar Planta",
-          "description": "Mover planta a una unidad de cultivo diferente"
-        }
-      },
-      "actions": {
-        "update": {
-          "label": "Actualizar Planta",
-          "loading": "Actualizando..."
-        },
-        "transplant": {
-          "label": "Trasplantar",
-          "loading": "Trasplantando..."
-        }
-      },
-      "transplant": {
-        "title": "Trasplantar Planta",
-        "description": "Mueve esta planta a una unidad de cultivo diferente",
-        "fields": {
-          "sourceGrowingUnit": {
-            "label": "Desde",
-            "unknown": "Unidad de cultivo desconocida",
-            "helper": "Unidad de cultivo actual (no se puede cambiar)"
-          },
-          "targetGrowingUnitId": {
-            "label": "Hacia",
-            "placeholder": "Selecciona una unidad de cultivo destino",
-            "required": "Debes seleccionar una unidad de cultivo destino",
-            "capacityAvailable": "espacios disponibles"
-          }
-        },
-        "actions": {
-          "submit": {
-            "label": "Trasplantar",
-            "loading": "Trasplantando..."
-          }
-        }
-      },
-      "validation": {
-        "id": {
-          "required": "El ID es requerido"
-        },
-        "plantId": {
-          "required": "El ID de la planta es requerido"
-        },
-        "sourceGrowingUnitId": {
-          "required": "El ID de la unidad de cultivo origen es requerido"
-        },
-        "targetGrowingUnitId": {
-          "required": "El ID de la unidad de cultivo destino es requerido"
-        }
-      },
-      "detail": {
-        "image": {
-          "placeholder": "Imagen de la planta"
-        },
-        "location": {
-          "indoor": "INTERIOR",
-          "outdoor": "EXTERIOR"
-        },
-        "actions": {
-          "registerWatering": "Registrar Riego",
-          "fertilize": "Fertilizar"
-        },
-        "metrics": {
-          "title": "Requisitos de Cuidado",
-          "watering": {
-            "label": "RIEGO",
-            "every7Days": "Cada 7 días"
-          },
-          "light": {
-            "label": "LUZ",
-            "indirect": "Indirecta"
-          },
-          "temperature": {
-            "label": "TEMP"
-          },
-          "humidity": {
-            "label": "HUMEDAD",
-            "high": "Alta"
-          }
-        },
-        "currentStatus": {
-          "lastWatering": {
-            "label": "Último Riego",
-            "onTime": "A tiempo",
-            "daysAgo": "Hace {days} días",
-            "next": "Próximo",
-            "tomorrow": "Mañana"
-          },
-          "lastFertilization": {
-            "label": "Última Fertilización",
-            "pending": "Pendiente",
-            "monthAgo": "Hace {months} mes{months, plural, =1 {} other {es}}",
-            "suggested": "Sugerido",
-            "today": "Hoy"
-          },
-          "plantingDate": {
-            "label": "Fecha de Plantación",
-            "age": "Edad"
-          }
-        },
-        "age": {
-          "yearsMonths": "{years} año {months} meses",
-          "years": "{years} año",
-          "months": "{months} meses",
-          "days": "{days} días"
-        },
-        "personalNotes": {
-          "title": "Notas Personales",
-          "edit": "Editar Notas",
-          "empty": "Aún no hay notas personales. ¡Agrega algunas notas sobre tu rutina de cuidado de plantas!"
-        },
-        "upcomingCare": {
-          "title": "Próximos Cuidados",
-          "tomorrow": "MAÑANA",
-          "lightWatering": "Riego Ligero",
-          "in5Days": "EN 5 DÍAS",
-          "cleanLeaves": "Limpiar Hojas",
-          "duringDay": "Durante el día",
-          "in2Weeks": "EN 2 SEMANAS",
-          "fertilization": "Fertilización",
-          "spring": "Primavera"
-        },
-        "recentHistory": {
-          "title": "Historial Reciente",
-          "viewAll": "Ver todo",
-          "today": "Hoy",
-          "watering": "Riego",
-          "wateringDetails": "250ml de agua filtrada",
-          "pruning": "Poda",
-          "pruningDetails": "Hojas amarillas inferiores",
-          "fertilization": "Fertilización",
-          "fertilizationDetails": "Fertilizante líquido NPK 20-20-20",
-          "completed": "Completado",
-          "table": {
-            "date": "FECHA",
-            "action": "ACCIÓN",
-            "details": "DETALLES",
-            "status": "ESTADO"
-          }
-        },
-        "progressGallery": {
-          "title": "Galería de Progreso",
-          "more": "más"
-        },
-        "wiki": {
-          "title": "Wiki Planta",
-          "didYouKnow": "Sabías que...",
-          "description": "La Monstera Deliciosa también es conocida como 'Costilla de Adán' debido a la forma única de sus hojas que desarrollan agujeros naturales (fenestraciones) a medida que maduran.",
-          "readMore": "LEER MÁS"
-        }
-      }
-    },
-    "plants": {
-      "title": "Lista de Plantas",
-      "description": "Gestiona tu colección botánica y monitorea su salud",
-      "empty": "No hay plantas registradas",
-      "empty.filtered": "No hay plantas que coincidan con los filtros actuales",
-      "growingUnit": {
-        "plantCount": "{count} de {total} plantas"
-      },
-      "search": {
-        "placeholder": "Buscar por nombre, especie o ubicación..."
-      },
-      "filters": {
-        "all": "Todas",
-        "indoor": "Interior",
-        "outdoor": "Exterior",
-        "needsWater": "Necesita Agua",
-        "healthy": "Saludables"
-      },
-      "table": {
-        "columns": {
-          "plant": "PLANTA / ESPECIE",
-          "location": "UBICACIÓN",
-          "status": "ESTADO",
-          "lastWatering": "ÚLTIMO RIEGO",
-          "actions": "ACCIONES"
-        },
-        "lastWatering": {
-          "today": "Hoy",
-          "yesterday": "Ayer",
-          "daysAgo": "Hace {days} días",
-          "weeksAgo": "Hace {weeks} semanas"
-        },
-        "pagination": {
-          "showing": "Mostrando {from} a {to} de {total} plantas"
-        }
-      },
-      "actions": {
-        "create": {
-          "button": "Añadir Planta",
-          "title": "Crear Planta",
-          "description": "Agrega una nueva planta a tu colección",
-          "submit": "Crear",
-          "loading": "Creando..."
-        },
-        "view": "Ver",
-        "edit": "Editar",
-        "delete": "Eliminar"
-      },
-      "pagination": {
-        "info": "Página {page} de {totalPages} ({total} en total)"
-      }
-    },
-    "growingUnit": {
-      "page": {
-        "title": "Unidades de Cultivo",
-        "description": "Visualiza y gestiona tus espacios de cultivo de manera eficiente."
-      },
-      "common": {
-        "noDimensions": "Sin dimensiones",
-        "more": "más"
-      },
-      "error": {
-        "loading": "Error al cargar unidades de cultivo: {message}"
-      },
-      "search": {
-        "placeholder": "Buscar por nombre, tipo o planta..."
-      },
-      "filters": {
-        "all": "Todo",
-        "indoor": "Interior",
-        "outdoor": "Exterior",
-        "pots": "Macetas",
-        "beds": "Bancales"
-      },
-      "fields": {
-        "name": {
-          "label": "Nombre",
-          "placeholder": "Nombre de la unidad de cultivo"
-        },
-        "type": {
-          "label": "Tipo",
-          "placeholder": "Selecciona el tipo"
-        },
-        "capacity": {
-          "label": "Capacidad",
-          "placeholder": "Número de plantas"
-        },
-        "remainingCapacity": {
-          "label": "Capacidad Restante"
-        },
-        "volume": {
-          "label": "Volumen"
-        },
-        "dimensions": {
-          "label": "Dimensiones"
-        },
-        "length": {
-          "label": "Longitud",
-          "placeholder": "Longitud"
-        },
-        "width": {
-          "label": "Ancho",
-          "placeholder": "Ancho"
-        },
-        "height": {
-          "label": "Altura",
-          "placeholder": "Altura"
-        },
-        "unit": {
-          "label": "Unidad",
-          "placeholder": "Selecciona la unidad"
-        },
-        "plants": {
-          "label": "Plantas activas"
-        },
-        "createdAt": {
-          "label": "Fecha de creación"
-        }
-      },
-      "noPlants": "Sin plantas activas",
-      "detail": {
-        "notFound": "Unidad de cultivo no encontrada",
-        "error": {
-          "loading": "Error al cargar unidad de cultivo: {message}"
-        },
-        "breadcrumbs": {
-          "home": "Inicio",
-          "growingUnits": "Mis Unidades"
-        },
-        "status": {
-          "active": "ACTIVA",
-          "inactive": "INACTIVA"
-        },
-        "location": {
-          "label": "Ubicación",
-          "indoor": "Interior",
-          "outdoor": "Exterior"
-        },
-        "summary": {
-          "substrate": {
-            "label": "Sustrato",
-            "value": "Tierra Universal"
-          },
-          "exposure": {
-            "label": "Exposición",
-            "directSun": "Sol Directo",
-            "partialSun": "Sol Parcial",
-            "shade": "Sombra"
-          },
-          "lastWatering": {
-            "label": "Último Riego",
-            "today": "Hoy",
-            "yesterday": "Ayer",
-            "never": "Nunca"
-          },
-          "occupancy": {
-            "label": "Ocupación"
-          }
-        },
-        "plants": {
-          "title": "Plantas en cultivo",
-          "viewAll": "Ver todas",
-          "variety": "Variedad",
-          "planted": "PLANTADO",
-          "days": "días",
-          "manage": "Gestionar"
-        },
-        "history": {
-          "title": "Historial Reciente",
-          "viewAll": "Ver todo el historial",
-          "today": "HOY",
-          "yesterday": "AYER"
-        },
-        "actions": {
-          "editUnit": "Editar Unidad",
-          "addPlant": "Agregar Planta"
-        }
-      },
-      "type": {
-        "POT": "Maceta",
-        "GARDEN_BED": "Cama de jardín",
-        "HANGING_BASKET": "Cesta colgante",
-        "WINDOW_BOX": "Jardín de ventana"
-      },
-      "unit": {
-        "MILLIMETER": "Milímetro",
-        "CENTIMETER": "Centímetro",
-        "METER": "Metro",
-        "INCH": "Pulgada",
-        "FOOT": "Pie"
-      },
-      "actions": {
-        "create": {
-          "title": "Crear Unidad de Cultivo",
-          "description": "Agrega una nueva unidad de cultivo para tus plantas",
-          "button": "Nueva Unidad",
-          "submit": "Crear",
-          "loading": "Creando..."
-        },
-        "update": {
-          "title": "Actualizar Unidad de Cultivo",
-          "description": "Actualizar información de la unidad de cultivo",
-          "submit": "Actualizar",
-          "loading": "Actualizando..."
-        },
-        "edit": "Editar",
-        "delete": {
-          "label": "Eliminar",
-          "loading": "Eliminando...",
-          "confirm": {
-            "title": "Eliminar Unidad de Cultivo",
-            "description": "¿Estás seguro de que quieres eliminar la unidad de cultivo {name}? Esta acción no se puede deshacer."
-          }
-        }
-      },
-      "pagination": {
-        "info": "Página {page} de {totalPages} ({total} en total)"
-      },
-      "validation": {
-        "id": {
-          "required": "El ID es requerido"
-        },
-        "name": {
-          "required": "El nombre es requerido"
-        },
-        "type": {
-          "invalid": "Tipo inválido"
-        },
-        "capacity": {
-          "required": "La capacidad es requerida"
-        }
-      }
-    },
-    "user": {
-      "loading": "Cargando usuario...",
-      "notFound": "Usuario no encontrado",
-      "validation": {
-        "species": {
-          "required": "La especie es requerida"
-        },
-        "status": {
-          "invalid": "Estado inválido"
-        },
-        "growingUnitId": {
-          "required": "El ID de la unidad de cultivo es requerido"
-        }
-      }
-    },
-    "authPage": {
-      "title": {
-        "login": "Bienvenido de nuevo",
-        "signup": "Crear una cuenta"
-      },
-      "description": {
-        "login": "Ingresa tu email y contraseña para iniciar sesión",
-        "signup": "Ingresa tu información para crear una nueva cuenta"
-      },
-      "fields": {
-        "email": {
-          "label": "Email",
-          "placeholder": "nombre@ejemplo.com"
-        },
-        "password": {
-          "label": "Contraseña",
-          "placeholder": {
-            "login": "Ingresa tu contraseña",
-            "signup": "Al menos 8 caracteres"
-          }
-        },
-        "confirmPassword": {
-          "label": "Confirmar contraseña",
-          "placeholder": "Confirma tu contraseña"
-        }
-      },
-      "actions": {
-        "login": "Iniciar sesión",
-        "signup": "Crear cuenta",
-        "switchToSignup": "Registrarse",
-        "switchToLogin": "Iniciar sesión",
-        "loading": {
-          "login": "Iniciando sesión...",
-          "signup": "Creando cuenta..."
-        }
-      },
-      "messages": {
-        "switchToSignup": "¿No tienes una cuenta?",
-        "switchToLogin": "¿Ya tienes una cuenta?",
-        "error": "Ocurrió un error. Por favor intenta de nuevo."
-      },
-      "validation": {
-        "email": {
-          "required": "El email es requerido",
-          "invalid": "Formato de email inválido"
-        },
-        "password": {
-          "required": "La contraseña es requerida",
-          "minLength": "La contraseña debe tener al menos 8 caracteres"
-        },
-        "confirmPassword": {
-          "required": "Por favor confirma tu contraseña",
-          "mismatch": "Las contraseñas no coinciden"
-        }
-      }
-    }
-  }
+				"error": {
+					"loading": "Error al cargar ubicaciones: {message}"
+				}
+			}
+		},
+		"growingUnits": {
+			"list": {
+				"title": "Unidades de Cultivo",
+				"description": "Visualiza y gestiona tus espacios de cultivo de manera eficiente.",
+				"empty": "No hay unidades de cultivo disponibles",
+				"search": {
+					"placeholder": "Buscar por nombre, tipo o planta..."
+				},
+				"filters": {
+					"all": "Todo",
+					"indoor": "Interior",
+					"outdoor": "Exterior",
+					"pots": "Macetas",
+					"beds": "Bancales"
+				},
+				"actions": {
+					"create": {
+						"button": "Nueva Unidad",
+						"title": "Crear Unidad de Cultivo",
+						"description": "Agrega una nueva unidad de cultivo para tus plantas",
+						"submit": "Crear",
+						"loading": "Creando..."
+					}
+				},
+				"noPlants": "Sin plantas activas",
+				"common": {
+					"noDimensions": "Sin dimensiones"
+				}
+			},
+			"detail": {
+				"title": "Detalle de Unidad de Cultivo",
+				"notFound": "Unidad de cultivo no encontrada",
+				"error": {
+					"loading": "Error al cargar unidad de cultivo: {message}"
+				},
+				"breadcrumbs": {
+					"home": "Inicio",
+					"growingUnits": "Mis Unidades"
+				},
+				"location": {
+					"label": "Ubicación"
+				},
+				"summary": {
+					"substrate": {
+						"label": "Sustrato",
+						"value": "Tierra Universal"
+					},
+					"exposure": {
+						"label": "Exposición",
+						"directSun": "Sol Directo",
+						"partialSun": "Sol Parcial",
+						"shade": "Sombra"
+					},
+					"lastWatering": {
+						"label": "Último Riego",
+						"today": "Hoy",
+						"yesterday": "Ayer",
+						"never": "Nunca"
+					},
+					"occupancy": {
+						"label": "Ocupación"
+					}
+				},
+				"sections": {
+					"plants": {
+						"title": "Plantas en cultivo",
+						"variety": "Variedad",
+						"planted": "PLANTADO",
+						"days": "días",
+						"manage": "Gestionar"
+					},
+					"history": {
+						"title": "Historial Reciente"
+					}
+				},
+				"actions": {
+					"editUnit": "Editar Unidad",
+					"addPlant": "Agregar Planta",
+					"update": {
+						"title": "Actualizar Unidad de Cultivo",
+						"description": "Actualizar información de la unidad de cultivo",
+						"submit": "Actualizar",
+						"loading": "Actualizando..."
+					},
+					"delete": {
+						"label": "Eliminar",
+						"loading": "Eliminando...",
+						"confirm": {
+							"title": "Eliminar Unidad de Cultivo",
+							"description": "¿Estás seguro de que quieres eliminar la unidad de cultivo {name}? Esta acción no se puede deshacer."
+						}
+					}
+				},
+				"fields": {
+					"name": {
+						"label": "Nombre",
+						"placeholder": "Nombre de la unidad de cultivo"
+					},
+					"type": {
+						"label": "Tipo",
+						"placeholder": "Selecciona el tipo"
+					},
+					"capacity": {
+						"label": "Capacidad",
+						"placeholder": "Número de plantas"
+					},
+					"remainingCapacity": {
+						"label": "Capacidad Restante"
+					},
+					"volume": {
+						"label": "Volumen"
+					},
+					"dimensions": {
+						"label": "Dimensiones"
+					},
+					"length": {
+						"label": "Longitud",
+						"placeholder": "Longitud"
+					},
+					"width": {
+						"label": "Ancho",
+						"placeholder": "Ancho"
+					},
+					"height": {
+						"label": "Altura",
+						"placeholder": "Altura"
+					},
+					"unit": {
+						"label": "Unidad",
+						"placeholder": "Selecciona la unidad"
+					},
+					"plants": {
+						"label": "Plantas activas"
+					}
+				},
+				"types": {
+					"POT": "Maceta",
+					"GARDEN_BED": "Cama de jardín",
+					"HANGING_BASKET": "Cesta colgante",
+					"WINDOW_BOX": "Jardín de ventana"
+				},
+				"units": {
+					"MILLIMETER": "Milímetro",
+					"CENTIMETER": "Centímetro",
+					"METER": "Metro",
+					"INCH": "Pulgada",
+					"FOOT": "Pie"
+				},
+				"validation": {
+					"type": {
+						"invalid": "Tipo inválido"
+					},
+					"capacity": {
+						"required": "La capacidad es requerida"
+					}
+				}
+			}
+		}
+	},
+	"legacy": {
+		"plant": {
+			"common": {
+				"notSet": "No establecido",
+				"unnamed": "Planta sin nombre"
+			},
+			"notFound": "Planta no encontrada",
+			"error": {
+				"loading": "Error al cargar planta: {message}"
+			},
+			"fields": {
+				"name": {
+					"label": "Nombre",
+					"placeholder": "Nombre de la planta"
+				},
+				"species": {
+					"label": "Especie",
+					"placeholder": "Especie de la planta"
+				},
+				"plantedDate": {
+					"label": "Fecha de plantación"
+				},
+				"notes": {
+					"label": "Notas",
+					"placeholder": "Notas adicionales sobre la planta"
+				},
+				"status": {
+					"label": "Estado",
+					"placeholder": "Selecciona el estado"
+				},
+				"growingUnitId": {
+					"label": "ID de Unidad de Cultivo"
+				},
+				"sourceGrowingUnitId": {
+					"label": "Unidad de Cultivo Origen",
+					"placeholder": "ID de unidad de cultivo origen"
+				},
+				"targetGrowingUnitId": {
+					"label": "Unidad de Cultivo Destino",
+					"placeholder": "ID de unidad de cultivo destino"
+				}
+			},
+			"status": {
+				"PLANTED": "Plantada",
+				"GROWING": "Creciendo",
+				"HARVESTED": "Cosechada",
+				"DEAD": "Muerta",
+				"ARCHIVED": "Archivada"
+			},
+			"sections": {
+				"info": {
+					"title": "Información de la Planta",
+					"description": "Información detallada sobre la planta"
+				},
+				"update": {
+					"title": "Actualizar Planta",
+					"description": "Actualizar información de la planta"
+				},
+				"transplant": {
+					"title": "Trasplantar Planta",
+					"description": "Mover planta a una unidad de cultivo diferente"
+				}
+			},
+			"actions": {
+				"update": {
+					"label": "Actualizar Planta",
+					"loading": "Actualizando..."
+				},
+				"transplant": {
+					"label": "Trasplantar",
+					"loading": "Trasplantando..."
+				}
+			},
+			"transplant": {
+				"title": "Trasplantar Planta",
+				"description": "Mueve esta planta a una unidad de cultivo diferente",
+				"fields": {
+					"sourceGrowingUnit": {
+						"label": "Desde",
+						"unknown": "Unidad de cultivo desconocida",
+						"helper": "Unidad de cultivo actual (no se puede cambiar)"
+					},
+					"targetGrowingUnitId": {
+						"label": "Hacia",
+						"placeholder": "Selecciona una unidad de cultivo destino",
+						"required": "Debes seleccionar una unidad de cultivo destino",
+						"capacityAvailable": "espacios disponibles"
+					}
+				},
+				"actions": {
+					"submit": {
+						"label": "Trasplantar",
+						"loading": "Trasplantando..."
+					}
+				}
+			},
+			"validation": {
+				"id": {
+					"required": "El ID es requerido"
+				},
+				"plantId": {
+					"required": "El ID de la planta es requerido"
+				},
+				"sourceGrowingUnitId": {
+					"required": "El ID de la unidad de cultivo origen es requerido"
+				},
+				"targetGrowingUnitId": {
+					"required": "El ID de la unidad de cultivo destino es requerido"
+				}
+			},
+			"detail": {
+				"image": {
+					"placeholder": "Imagen de la planta"
+				},
+				"location": {
+					"indoor": "INTERIOR",
+					"outdoor": "EXTERIOR"
+				},
+				"actions": {
+					"registerWatering": "Registrar Riego",
+					"fertilize": "Fertilizar"
+				},
+				"metrics": {
+					"title": "Requisitos de Cuidado",
+					"watering": {
+						"label": "RIEGO",
+						"every7Days": "Cada 7 días"
+					},
+					"light": {
+						"label": "LUZ",
+						"indirect": "Indirecta"
+					},
+					"temperature": {
+						"label": "TEMP"
+					},
+					"humidity": {
+						"label": "HUMEDAD",
+						"high": "Alta"
+					}
+				},
+				"currentStatus": {
+					"lastWatering": {
+						"label": "Último Riego",
+						"onTime": "A tiempo",
+						"daysAgo": "Hace {days} días",
+						"next": "Próximo",
+						"tomorrow": "Mañana"
+					},
+					"lastFertilization": {
+						"label": "Última Fertilización",
+						"pending": "Pendiente",
+						"monthAgo": "Hace {months} mes{months, plural, =1 {} other {es}}",
+						"suggested": "Sugerido",
+						"today": "Hoy"
+					},
+					"plantingDate": {
+						"label": "Fecha de Plantación",
+						"age": "Edad"
+					}
+				},
+				"age": {
+					"yearsMonths": "{years} año {months} meses",
+					"years": "{years} año",
+					"months": "{months} meses",
+					"days": "{days} días"
+				},
+				"personalNotes": {
+					"title": "Notas Personales",
+					"edit": "Editar Notas",
+					"empty": "Aún no hay notas personales. ¡Agrega algunas notas sobre tu rutina de cuidado de plantas!"
+				},
+				"upcomingCare": {
+					"title": "Próximos Cuidados",
+					"tomorrow": "MAÑANA",
+					"lightWatering": "Riego Ligero",
+					"in5Days": "EN 5 DÍAS",
+					"cleanLeaves": "Limpiar Hojas",
+					"duringDay": "Durante el día",
+					"in2Weeks": "EN 2 SEMANAS",
+					"fertilization": "Fertilización",
+					"spring": "Primavera"
+				},
+				"recentHistory": {
+					"title": "Historial Reciente",
+					"viewAll": "Ver todo",
+					"today": "Hoy",
+					"watering": "Riego",
+					"wateringDetails": "250ml de agua filtrada",
+					"pruning": "Poda",
+					"pruningDetails": "Hojas amarillas inferiores",
+					"fertilization": "Fertilización",
+					"fertilizationDetails": "Fertilizante líquido NPK 20-20-20",
+					"completed": "Completado",
+					"table": {
+						"date": "FECHA",
+						"action": "ACCIÓN",
+						"details": "DETALLES",
+						"status": "ESTADO"
+					}
+				},
+				"progressGallery": {
+					"title": "Galería de Progreso",
+					"more": "más"
+				},
+				"wiki": {
+					"title": "Wiki Planta",
+					"didYouKnow": "Sabías que...",
+					"description": "La Monstera Deliciosa también es conocida como 'Costilla de Adán' debido a la forma única de sus hojas que desarrollan agujeros naturales (fenestraciones) a medida que maduran.",
+					"readMore": "LEER MÁS"
+				}
+			}
+		},
+		"plants": {
+			"title": "Lista de Plantas",
+			"description": "Gestiona tu colección botánica y monitorea su salud",
+			"empty": "No hay plantas registradas",
+			"empty.filtered": "No hay plantas que coincidan con los filtros actuales",
+			"growingUnit": {
+				"plantCount": "{count} de {total} plantas"
+			},
+			"search": {
+				"placeholder": "Buscar por nombre, especie o ubicación..."
+			},
+			"filters": {
+				"all": "Todas",
+				"indoor": "Interior",
+				"outdoor": "Exterior",
+				"needsWater": "Necesita Agua",
+				"healthy": "Saludables"
+			},
+			"table": {
+				"columns": {
+					"plant": "PLANTA / ESPECIE",
+					"location": "UBICACIÓN",
+					"status": "ESTADO",
+					"lastWatering": "ÚLTIMO RIEGO",
+					"actions": "ACCIONES"
+				},
+				"lastWatering": {
+					"today": "Hoy",
+					"yesterday": "Ayer",
+					"daysAgo": "Hace {days} días",
+					"weeksAgo": "Hace {weeks} semanas"
+				},
+				"pagination": {
+					"showing": "Mostrando {from} a {to} de {total} plantas"
+				}
+			},
+			"actions": {
+				"create": {
+					"button": "Añadir Planta",
+					"title": "Crear Planta",
+					"description": "Agrega una nueva planta a tu colección",
+					"submit": "Crear",
+					"loading": "Creando..."
+				},
+				"view": "Ver",
+				"edit": "Editar",
+				"delete": "Eliminar"
+			},
+			"pagination": {
+				"info": "Página {page} de {totalPages} ({total} en total)"
+			}
+		},
+		"growingUnit": {
+			"page": {
+				"title": "Unidades de Cultivo",
+				"description": "Visualiza y gestiona tus espacios de cultivo de manera eficiente."
+			},
+			"common": {
+				"noDimensions": "Sin dimensiones",
+				"more": "más"
+			},
+			"error": {
+				"loading": "Error al cargar unidades de cultivo: {message}"
+			},
+			"search": {
+				"placeholder": "Buscar por nombre, tipo o planta..."
+			},
+			"filters": {
+				"all": "Todo",
+				"indoor": "Interior",
+				"outdoor": "Exterior",
+				"pots": "Macetas",
+				"beds": "Bancales"
+			},
+			"fields": {
+				"name": {
+					"label": "Nombre",
+					"placeholder": "Nombre de la unidad de cultivo"
+				},
+				"type": {
+					"label": "Tipo",
+					"placeholder": "Selecciona el tipo"
+				},
+				"capacity": {
+					"label": "Capacidad",
+					"placeholder": "Número de plantas"
+				},
+				"remainingCapacity": {
+					"label": "Capacidad Restante"
+				},
+				"volume": {
+					"label": "Volumen"
+				},
+				"dimensions": {
+					"label": "Dimensiones"
+				},
+				"length": {
+					"label": "Longitud",
+					"placeholder": "Longitud"
+				},
+				"width": {
+					"label": "Ancho",
+					"placeholder": "Ancho"
+				},
+				"height": {
+					"label": "Altura",
+					"placeholder": "Altura"
+				},
+				"unit": {
+					"label": "Unidad",
+					"placeholder": "Selecciona la unidad"
+				},
+				"plants": {
+					"label": "Plantas activas"
+				},
+				"createdAt": {
+					"label": "Fecha de creación"
+				}
+			},
+			"noPlants": "Sin plantas activas",
+			"detail": {
+				"notFound": "Unidad de cultivo no encontrada",
+				"error": {
+					"loading": "Error al cargar unidad de cultivo: {message}"
+				},
+				"breadcrumbs": {
+					"home": "Inicio",
+					"growingUnits": "Mis Unidades"
+				},
+				"status": {
+					"active": "ACTIVA",
+					"inactive": "INACTIVA"
+				},
+				"location": {
+					"label": "Ubicación",
+					"indoor": "Interior",
+					"outdoor": "Exterior"
+				},
+				"summary": {
+					"substrate": {
+						"label": "Sustrato",
+						"value": "Tierra Universal"
+					},
+					"exposure": {
+						"label": "Exposición",
+						"directSun": "Sol Directo",
+						"partialSun": "Sol Parcial",
+						"shade": "Sombra"
+					},
+					"lastWatering": {
+						"label": "Último Riego",
+						"today": "Hoy",
+						"yesterday": "Ayer",
+						"never": "Nunca"
+					},
+					"occupancy": {
+						"label": "Ocupación"
+					}
+				},
+				"plants": {
+					"title": "Plantas en cultivo",
+					"viewAll": "Ver todas",
+					"variety": "Variedad",
+					"planted": "PLANTADO",
+					"days": "días",
+					"manage": "Gestionar"
+				},
+				"history": {
+					"title": "Historial Reciente",
+					"viewAll": "Ver todo el historial",
+					"today": "HOY",
+					"yesterday": "AYER"
+				},
+				"actions": {
+					"editUnit": "Editar Unidad",
+					"addPlant": "Agregar Planta"
+				}
+			},
+			"type": {
+				"POT": "Maceta",
+				"GARDEN_BED": "Cama de jardín",
+				"HANGING_BASKET": "Cesta colgante",
+				"WINDOW_BOX": "Jardín de ventana"
+			},
+			"unit": {
+				"MILLIMETER": "Milímetro",
+				"CENTIMETER": "Centímetro",
+				"METER": "Metro",
+				"INCH": "Pulgada",
+				"FOOT": "Pie"
+			},
+			"actions": {
+				"create": {
+					"title": "Crear Unidad de Cultivo",
+					"description": "Agrega una nueva unidad de cultivo para tus plantas",
+					"button": "Nueva Unidad",
+					"submit": "Crear",
+					"loading": "Creando..."
+				},
+				"update": {
+					"title": "Actualizar Unidad de Cultivo",
+					"description": "Actualizar información de la unidad de cultivo",
+					"submit": "Actualizar",
+					"loading": "Actualizando..."
+				},
+				"edit": "Editar",
+				"delete": {
+					"label": "Eliminar",
+					"loading": "Eliminando...",
+					"confirm": {
+						"title": "Eliminar Unidad de Cultivo",
+						"description": "¿Estás seguro de que quieres eliminar la unidad de cultivo {name}? Esta acción no se puede deshacer."
+					}
+				}
+			},
+			"pagination": {
+				"info": "Página {page} de {totalPages} ({total} en total)"
+			},
+			"validation": {
+				"id": {
+					"required": "El ID es requerido"
+				},
+				"name": {
+					"required": "El nombre es requerido"
+				},
+				"type": {
+					"invalid": "Tipo inválido"
+				},
+				"capacity": {
+					"required": "La capacidad es requerida"
+				}
+			}
+		},
+		"user": {
+			"loading": "Cargando usuario...",
+			"notFound": "Usuario no encontrado",
+			"validation": {
+				"species": {
+					"required": "La especie es requerida"
+				},
+				"status": {
+					"invalid": "Estado inválido"
+				},
+				"growingUnitId": {
+					"required": "El ID de la unidad de cultivo es requerido"
+				}
+			}
+		},
+		"authPage": {
+			"title": {
+				"login": "Bienvenido de nuevo",
+				"signup": "Crear una cuenta"
+			},
+			"description": {
+				"login": "Ingresa tu email y contraseña para iniciar sesión",
+				"signup": "Ingresa tu información para crear una nueva cuenta"
+			},
+			"fields": {
+				"email": {
+					"label": "Email",
+					"placeholder": "nombre@ejemplo.com"
+				},
+				"password": {
+					"label": "Contraseña",
+					"placeholder": {
+						"login": "Ingresa tu contraseña",
+						"signup": "Al menos 8 caracteres"
+					}
+				},
+				"confirmPassword": {
+					"label": "Confirmar contraseña",
+					"placeholder": "Confirma tu contraseña"
+				}
+			},
+			"actions": {
+				"login": "Iniciar sesión",
+				"signup": "Crear cuenta",
+				"switchToSignup": "Registrarse",
+				"switchToLogin": "Iniciar sesión",
+				"loading": {
+					"login": "Iniciando sesión...",
+					"signup": "Creando cuenta..."
+				}
+			},
+			"messages": {
+				"switchToSignup": "¿No tienes una cuenta?",
+				"switchToLogin": "¿Ya tienes una cuenta?",
+				"error": "Ocurrió un error. Por favor intenta de nuevo."
+			},
+			"validation": {
+				"email": {
+					"required": "El email es requerido",
+					"invalid": "Formato de email inválido"
+				},
+				"password": {
+					"required": "La contraseña es requerida",
+					"minLength": "La contraseña debe tener al menos 8 caracteres"
+				},
+				"confirmPassword": {
+					"required": "Por favor confirma tu contraseña",
+					"mismatch": "Las contraseñas no coinciden"
+				}
+			}
+		}
+	}
 }

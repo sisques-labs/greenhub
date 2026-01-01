@@ -2,6 +2,8 @@
 
 import { LocationCard } from '@/core/location-context/location/components/organisms/location-card/location-card';
 import { LocationCreateForm } from '@/core/location-context/location/components/organisms/location-create-form/location-create-form';
+import { LocationDeleteDialog } from '@/core/location-context/location/components/organisms/location-delete-dialog/location-delete-dialog';
+import { LocationUpdateForm } from '@/core/location-context/location/components/organisms/location-update-form/location-update-form';
 import { LocationsPageSkeleton } from '@/core/location-context/location/components/organisms/locations-page-skeleton/locations-page-skeleton';
 import { useLocationsPage } from '@/core/location-context/location/hooks/use-locations-page/use-locations-page';
 import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
@@ -16,6 +18,11 @@ export function LocationsPage() {
 	const {
 		createDialogOpen,
 		setCreateDialogOpen,
+		updateDialogOpen,
+		setUpdateDialogOpen,
+		deleteDialogOpen,
+		setDeleteDialogOpen,
+		selectedLocation,
 		searchQuery,
 		setSearchQuery,
 		selectedFilter,
@@ -25,10 +32,18 @@ export function LocationsPage() {
 		isLoading,
 		locationsError,
 		handleCreateSubmit,
+		handleUpdateSubmit,
+		handleDeleteSubmit,
 		handleAddClick,
+		handleEditClick,
+		handleDeleteClick,
 		handlePageChange,
 		isCreating,
+		isUpdating,
+		isDeleting,
 		createError,
+		updateError,
+		deleteError,
 	} = useLocationsPage();
 
 	if (isLoading) {
@@ -78,7 +93,12 @@ export function LocationsPage() {
 				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{locations.items.map((location) => (
-							<LocationCard key={location.id} location={location} />
+							<LocationCard
+								key={location.id}
+								location={location}
+								onEdit={handleEditClick}
+								onDelete={handleDeleteClick}
+							/>
 						))}
 					</div>
 
@@ -116,7 +136,25 @@ export function LocationsPage() {
 				isLoading={isCreating}
 				error={createError}
 			/>
+
+			{/* Update Dialog */}
+			<LocationUpdateForm
+				location={selectedLocation}
+				open={updateDialogOpen}
+				onOpenChange={setUpdateDialogOpen}
+				onSubmit={handleUpdateSubmit}
+				isLoading={isUpdating}
+				error={updateError}
+			/>
+
+			{/* Delete Dialog */}
+			<LocationDeleteDialog
+				location={selectedLocation}
+				open={deleteDialogOpen}
+				onOpenChange={setDeleteDialogOpen}
+				onConfirm={handleDeleteSubmit}
+				isLoading={isDeleting}
+			/>
 		</div>
 	);
 }
-
