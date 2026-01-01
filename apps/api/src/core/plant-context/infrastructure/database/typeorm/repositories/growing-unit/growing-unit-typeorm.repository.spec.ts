@@ -1,6 +1,3 @@
-import { Repository } from 'typeorm';
-
-import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
@@ -12,6 +9,7 @@ import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/da
 import { GrowingUnitTypeormRepository } from '@/core/plant-context/infrastructure/database/typeorm/repositories/growing-unit/growing-unit-typeorm.repository';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
+import { Repository } from 'typeorm';
 
 describe('GrowingUnitTypeormRepository', () => {
 	let repository: GrowingUnitTypeormRepository;

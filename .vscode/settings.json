@@ -9,9 +9,9 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "javascript.preferences.importModuleSpecifier": "non-relative",
 
-  // 🔧 Disable TypeScript's built-in organize imports to avoid conflicts with ESLint
+  // 🔧 Enable TypeScript's built-in organize imports (will work with ESLint)
   "typescript.preferences.organizeImports": {
-    "enabled": false
+    "enabled": true
   },
 
   // 🔧 ESLint configuration
@@ -41,10 +41,11 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      // Use ESLint to fix all issues including import order
+      // Use ESLint to fix all issues including import order and unused imports
       "source.fixAll.eslint": "explicit",
-      // Disable TypeScript organize imports to avoid conflicts
-      "source.organizeImports": "never"
+      // Remove unused imports and organize imports
+      "source.organizeImports": "explicit",
+      "source.removeUnusedImports": "explicit"
     }
   },
 
@@ -52,10 +53,11 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      // Use ESLint to fix all issues including import order
+      // Use ESLint to fix all issues including import order and unused imports
       "source.fixAll.eslint": "explicit",
-      // Disable TypeScript organize imports to avoid conflicts
-      "source.organizeImports": "never"
+      // Remove unused imports and organize imports
+      "source.organizeImports": "explicit",
+      "source.removeUnusedImports": "explicit"
     }
   },
 

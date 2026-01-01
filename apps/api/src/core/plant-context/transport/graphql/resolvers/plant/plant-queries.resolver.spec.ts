@@ -1,7 +1,4 @@
-import { QueryBus } from '@nestjs/cqrs';
-
 import { PlantFindByIdQuery } from '@/core/plant-context/application/queries/plant/plant-find-by-id/plant-find-by-id.query';
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
@@ -13,6 +10,7 @@ import { PlantGraphQLMapper } from '@/core/plant-context/transport/graphql/mappe
 import { PlantQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-queries.resolver';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
+import { QueryBus } from '@nestjs/cqrs';
 
 describe('PlantQueriesResolver', () => {
 	let resolver: PlantQueriesResolver;
@@ -108,4 +106,3 @@ describe('PlantQueriesResolver', () => {
 		});
 	});
 });
-

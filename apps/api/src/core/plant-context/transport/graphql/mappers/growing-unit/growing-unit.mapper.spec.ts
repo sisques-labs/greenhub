@@ -1,9 +1,5 @@
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import {
-	GrowingUnitResponseDto,
-	PaginatedGrowingUnitResultDto,
-} from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
 import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
@@ -185,4 +181,3 @@ describe('GrowingUnitGraphQLMapper', () => {
 		});
 	});
 });
-

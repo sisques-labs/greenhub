@@ -61,7 +61,7 @@ const DOMAIN_SERVICES = [];
 const APPLICATION_SERVICES = [
 	// Growing Unit services
 	AssertGrowingUnitExistsService,
-	AssertGrowingUnitViewModelExistsService,
+	//AssertGrowingUnitViewModelExistsService,
 
 	// Plant services
 	AssertPlantExistsService,

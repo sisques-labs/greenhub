@@ -121,55 +121,6 @@ type RefreshTokenResponseDto {
   accessToken: String!
 }
 
-type AuthResponseDto {
-  """The id of the auth"""
-  id: String!
-
-  """The user id of the auth"""
-  userId: String!
-
-  """The email of the auth"""
-  email: String
-
-  """The email verified of the auth"""
-  emailVerified: Boolean
-
-  """The last login at of the auth"""
-  lastLoginAt: DateTime
-
-  """The provider of the auth"""
-  provider: String
-
-  """The provider id of the auth"""
-  providerId: String
-
-  """The two factor enabled of the auth"""
-  twoFactorEnabled: Boolean
-
-  """The created at of the auth"""
-  createdAt: DateTime
-
-  """The updated at of the auth"""
-  updatedAt: DateTime
-}
-
-type PaginatedAuthResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The auths in the current page"""
-  items: [AuthResponseDto!]!
-}
-
 type AuthUserProfileResponseDto {
   """The user id"""
   userId: String!
@@ -224,6 +175,55 @@ type AuthUserProfileResponseDto {
 
   """The updated at timestamp"""
   updatedAt: DateTime
+}
+
+type AuthResponseDto {
+  """The id of the auth"""
+  id: String!
+
+  """The user id of the auth"""
+  userId: String!
+
+  """The email of the auth"""
+  email: String
+
+  """The email verified of the auth"""
+  emailVerified: Boolean
+
+  """The last login at of the auth"""
+  lastLoginAt: DateTime
+
+  """The provider of the auth"""
+  provider: String
+
+  """The provider id of the auth"""
+  providerId: String
+
+  """The two factor enabled of the auth"""
+  twoFactorEnabled: Boolean
+
+  """The created at of the auth"""
+  createdAt: DateTime
+
+  """The updated at of the auth"""
+  updatedAt: DateTime
+}
+
+type PaginatedAuthResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The auths in the current page"""
+  items: [AuthResponseDto!]!
 }
 
 type OverviewResponseDto {

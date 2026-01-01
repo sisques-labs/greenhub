@@ -1,6 +1,5 @@
 import { IPlantDto } from '@/core/plant-context/domain/dtos/entities/plant/plant.dto';
 import { IPlantViewModelDto } from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
-import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
@@ -209,4 +208,3 @@ describe('PlantViewModelFactory', () => {
 		});
 	});
 });
-
