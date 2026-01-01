@@ -17,6 +17,7 @@ export function useGrowingUnitUpdate() {
 		try {
 			const input: UpdateGrowingUnitInput = {
 				id: values.id,
+				locationId: values.locationId,
 				name: values.name,
 				type: values.type,
 				capacity: values.capacity,

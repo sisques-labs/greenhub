@@ -146,6 +146,10 @@
 				"label": "Type",
 				"placeholder": "Select type"
 			},
+			"locationId": {
+				"label": "Location",
+				"placeholder": "Select a location"
+			},
 			"capacity": {
 				"label": "Capacity",
 				"placeholder": "Number of items"
@@ -260,6 +264,9 @@
 			},
 			"type": {
 				"invalid": "Invalid type"
+			},
+			"locationId": {
+				"required": "Location is required"
 			},
 			"capacity": {
 				"required": "Capacity is required"

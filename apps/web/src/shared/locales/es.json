@@ -146,6 +146,10 @@
 				"label": "Tipo",
 				"placeholder": "Selecciona el tipo"
 			},
+			"locationId": {
+				"label": "Ubicación",
+				"placeholder": "Selecciona una ubicación"
+			},
 			"capacity": {
 				"label": "Capacidad",
 				"placeholder": "Número de elementos"
@@ -268,6 +272,9 @@
 			},
 			"type": {
 				"invalid": "Tipo inválido"
+			},
+			"locationId": {
+				"required": "La ubicación es requerida"
 			},
 			"capacity": {
 				"required": "La capacidad es requerida"

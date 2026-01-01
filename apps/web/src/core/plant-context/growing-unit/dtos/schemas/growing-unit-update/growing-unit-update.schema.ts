@@ -13,6 +13,10 @@ export function createGrowingUnitUpdateSchema(
 ) {
 	return z.object({
 		id: z.string().min(1, translations("shared.validation.id.required")),
+		locationId: z
+			.string()
+			.min(1, translations("shared.validation.locationId.required"))
+			.optional(),
 		name: z.string().optional(),
 		type: z
 			.enum(["POT", "GARDEN_BED", "HANGING_BASKET", "WINDOW_BOX"])

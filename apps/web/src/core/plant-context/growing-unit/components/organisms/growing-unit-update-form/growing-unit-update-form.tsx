@@ -31,6 +31,7 @@ import {
 	createGrowingUnitUpdateSchema,
 	GrowingUnitUpdateFormValues,
 } from "@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema";
+import { useLocationsList } from "@/core/location-context/location/hooks/use-locations-list/use-locations-list";
 
 interface GrowingUnitUpdateFormProps {
 	growingUnit: GrowingUnitResponse | null;
@@ -50,6 +51,7 @@ export function GrowingUnitUpdateForm({
 	error,
 }: GrowingUnitUpdateFormProps) {
 	const t = useTranslations();
+	const { locations, isLoading: isLoadingLocations } = useLocationsList();
 
 	// Create schema with translations
 	const updateSchema = useMemo(
@@ -59,6 +61,7 @@ export function GrowingUnitUpdateForm({
 
 	// Form state
 	const [id, setId] = useState("");
+	const [locationId, setLocationId] = useState<string>("");
 	const [name, setName] = useState("");
 	const [type, setType] = useState<GrowingUnitUpdateFormValues["type"]>("POT");
 	const [capacity, setCapacity] = useState<number | undefined>(undefined);
@@ -74,6 +77,7 @@ export function GrowingUnitUpdateForm({
 	useEffect(() => {
 		if (growingUnit) {
 			setId(growingUnit.id);
+			setLocationId(growingUnit.locationId);
 			setName(growingUnit.name);
 			setType(
 				growingUnit.type as
@@ -105,6 +109,7 @@ export function GrowingUnitUpdateForm({
 		// Validate form
 		const result = updateSchema.safeParse({
 			id,
+			locationId: locationId || undefined,
 			name: name || undefined,
 			type,
 			capacity,
@@ -154,6 +159,31 @@ export function GrowingUnitUpdateForm({
 				</DialogHeader>
 				<Form errors={formErrors}>
 					<form onSubmit={handleSubmit} className="space-y-4">
+						<FormItem>
+							<FormLabel>{t("shared.fields.locationId.label")}</FormLabel>
+							<Select
+								onValueChange={(value) => setLocationId(value)}
+								value={locationId}
+								disabled={isLoading || isLoadingLocations}
+							>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue
+											placeholder={t("shared.fields.locationId.placeholder")}
+										/>
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{locations.map((location) => (
+										<SelectItem key={location.id} value={location.id}>
+											{location.name} ({location.type})
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<FormMessage fieldName="locationId" />
+						</FormItem>
+
 						<FormItem>
 							<FormLabel>{t("shared.fields.name.label")}</FormLabel>
 							<FormControl>

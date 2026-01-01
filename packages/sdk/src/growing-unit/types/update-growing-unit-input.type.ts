@@ -3,6 +3,7 @@ import { LengthUnit } from "./length-unit.type.js";
 
 export type UpdateGrowingUnitInput = {
 	id: string;
+	locationId?: string;
 	name?: string;
 	type?: GrowingUnitType;
 	capacity?: number;

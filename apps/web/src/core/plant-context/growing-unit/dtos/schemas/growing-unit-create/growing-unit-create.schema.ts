@@ -13,6 +13,9 @@ export function createGrowingUnitCreateSchema(
 	translations: (key: string) => string,
 ) {
 	return z.object({
+		locationId: z
+			.string()
+			.min(1, translations("shared.validation.locationId.required")),
 		name: z.string().min(1, translations("shared.validation.name.required")),
 		type: z
 			.string()
