@@ -52,6 +52,7 @@ export class GrowingUnitTypeormMapper {
 
 		return this.growingUnitAggregateFactory.fromPrimitives({
 			id: growingUnitEntity.id,
+			locationId: growingUnitEntity.locationId,
 			name: growingUnitEntity.name,
 			type: growingUnitEntity.type,
 			capacity: growingUnitEntity.capacity,
@@ -76,6 +77,7 @@ export class GrowingUnitTypeormMapper {
 		const entity = new GrowingUnitTypeormEntity();
 
 		entity.id = primitives.id;
+		entity.locationId = primitives.locationId;
 		entity.name = primitives.name;
 		entity.type = primitives.type as GrowingUnitTypeEnum;
 		entity.capacity = primitives.capacity;

@@ -27,6 +27,7 @@ import { PlantStatusValueObject } from '@/core/plant-context/domain/value-object
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('GrowingUnitAggregate', () => {
@@ -40,6 +41,7 @@ describe('GrowingUnitAggregate', () => {
 
 		growingUnitDto = {
 			id: growingUnitId,
+			locationId: new LocationUuidValueObject(),
 			name: new GrowingUnitNameValueObject('Garden Bed 1'),
 			type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 			capacity: new GrowingUnitCapacityValueObject(10),

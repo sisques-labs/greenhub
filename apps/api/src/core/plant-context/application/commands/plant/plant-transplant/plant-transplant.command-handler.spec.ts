@@ -21,6 +21,7 @@ import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objec
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantTransplantCommandHandler', () => {
@@ -81,6 +82,7 @@ describe('PlantTransplantCommandHandler', () => {
 		it('should transplant plant successfully', async () => {
 			const sourceGrowingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const targetGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const plantId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantTransplantCommandDto = {
 				sourceGrowingUnitId,
@@ -91,6 +93,7 @@ describe('PlantTransplantCommandHandler', () => {
 			const command = new PlantTransplantCommand(commandDto);
 			const sourceGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -100,6 +103,7 @@ describe('PlantTransplantCommandHandler', () => {
 
 			const targetGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 2'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -155,6 +159,7 @@ describe('PlantTransplantCommandHandler', () => {
 		it('should publish events from both growing units', async () => {
 			const sourceGrowingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const targetGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const plantId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantTransplantCommandDto = {
 				sourceGrowingUnitId,
@@ -165,6 +170,7 @@ describe('PlantTransplantCommandHandler', () => {
 			const command = new PlantTransplantCommand(commandDto);
 			const sourceGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -174,6 +180,7 @@ describe('PlantTransplantCommandHandler', () => {
 
 			const targetGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 2'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -214,6 +221,7 @@ describe('PlantTransplantCommandHandler', () => {
 		it('should save growing units before publishing events', async () => {
 			const sourceGrowingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const targetGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const plantId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantTransplantCommandDto = {
 				sourceGrowingUnitId,
@@ -224,6 +232,7 @@ describe('PlantTransplantCommandHandler', () => {
 			const command = new PlantTransplantCommand(commandDto);
 			const sourceGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -233,6 +242,7 @@ describe('PlantTransplantCommandHandler', () => {
 
 			const targetGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 2'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),

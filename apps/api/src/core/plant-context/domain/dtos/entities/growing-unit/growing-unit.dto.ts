@@ -4,6 +4,7 @@ import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 /**
  * Represents the structure required to create a new growing unit entity.
@@ -15,6 +16,7 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
  */
 export interface IGrowingUnitDto {
 	id: GrowingUnitUuidValueObject;
+	locationId: LocationUuidValueObject;
 	name: GrowingUnitNameValueObject;
 	type: GrowingUnitTypeValueObject;
 	capacity: GrowingUnitCapacityValueObject;

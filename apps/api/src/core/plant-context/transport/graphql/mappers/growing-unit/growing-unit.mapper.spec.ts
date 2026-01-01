@@ -31,6 +31,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -52,6 +53,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 
 			expect(result).toEqual({
 				id: growingUnitId,
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -89,6 +91,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -105,6 +108,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 
 			expect(result).toEqual({
 				id: growingUnitId,
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -125,8 +129,10 @@ describe('GrowingUnitGraphQLMapper', () => {
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -147,6 +153,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 				items: [
 					{
 						id: growingUnitId,
+						locationId,
 						name: 'Garden Bed 1',
 						type: 'GARDEN_BED',
 						capacity: 10,

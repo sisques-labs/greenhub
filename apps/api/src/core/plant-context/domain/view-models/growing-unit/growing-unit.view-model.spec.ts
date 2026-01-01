@@ -11,6 +11,7 @@ describe('GrowingUnitViewModel', () => {
 	beforeEach(() => {
 		viewModelDto = {
 			id: '123e4567-e89b-12d3-a456-426614174000',
+			locationId: '323e4567-e89b-12d3-a456-426614174000',
 			name: 'Garden Bed 1',
 			type: GrowingUnitTypeEnum.GARDEN_BED,
 			capacity: 10,

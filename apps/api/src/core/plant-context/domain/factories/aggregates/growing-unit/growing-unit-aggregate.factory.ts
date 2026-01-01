@@ -10,6 +10,7 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 /**
  * Factory responsible for creating {@link GrowingUnitAggregate} entities.
@@ -58,6 +59,7 @@ export class GrowingUnitAggregateFactory
 	 *
 	 * @param data - The primitive values representing a growing unit aggregate.
 	 * @param data.id - UUID string representing the growing unit identifier.
+	 * @param data.locationId - UUID string representing the location identifier.
 	 * @param data.name - Name of the growing unit.
 	 * @param data.type - Type of the growing unit.
 	 * @param data.capacity - Capacity value for the growing unit.
@@ -71,6 +73,7 @@ export class GrowingUnitAggregateFactory
 		);
 		return new GrowingUnitAggregate({
 			id: new GrowingUnitUuidValueObject(data.id),
+			locationId: new LocationUuidValueObject(data.locationId),
 			name: new GrowingUnitNameValueObject(data.name),
 			type: new GrowingUnitTypeValueObject(data.type),
 			capacity: new GrowingUnitCapacityValueObject(data.capacity),

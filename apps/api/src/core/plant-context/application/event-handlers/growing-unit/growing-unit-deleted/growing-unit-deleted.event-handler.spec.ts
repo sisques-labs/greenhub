@@ -41,6 +41,7 @@ describe('GrowingUnitDeletedEventHandler', () => {
 	describe('handle', () => {
 		it('should delete growing unit view model when event is handled', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const event = new GrowingUnitDeletedEvent(
 				{
 					aggregateRootId: growingUnitId,
@@ -51,6 +52,7 @@ describe('GrowingUnitDeletedEventHandler', () => {
 				},
 				{
 					id: growingUnitId,
+					locationId,
 					name: 'Garden Bed 1',
 					type: 'GARDEN_BED',
 					capacity: 10,

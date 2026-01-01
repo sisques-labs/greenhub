@@ -25,6 +25,9 @@ export class GrowingUnitResponseDto {
 	@Field(() => String, { description: 'The id of the growing unit' })
 	id: string;
 
+	@Field(() => String, { description: 'The id of the location this growing unit belongs to' })
+	locationId: string;
+
 	@Field(() => String, { description: 'The name of the growing unit' })
 	name: string;
 

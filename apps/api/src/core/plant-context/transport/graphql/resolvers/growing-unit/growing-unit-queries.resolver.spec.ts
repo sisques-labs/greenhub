@@ -49,9 +49,11 @@ describe('GrowingUnitQueriesResolver', () => {
 
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const viewModels: GrowingUnitViewModel[] = [
 				new GrowingUnitViewModel({
 					id: '123e4567-e89b-12d3-a456-426614174000',
+					locationId,
 					name: 'Garden Bed 1',
 					type: 'GARDEN_BED',
 					capacity: 10,
@@ -70,6 +72,7 @@ describe('GrowingUnitQueriesResolver', () => {
 				items: [
 					{
 						id: '123e4567-e89b-12d3-a456-426614174000',
+						locationId,
 						name: 'Garden Bed 1',
 						type: 'GARDEN_BED',
 						capacity: 10,
@@ -144,10 +147,12 @@ describe('GrowingUnitQueriesResolver', () => {
 				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 			const viewModel = new GrowingUnitViewModel({
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -162,6 +167,7 @@ describe('GrowingUnitQueriesResolver', () => {
 
 			const responseDto: GrowingUnitResponseDto = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,

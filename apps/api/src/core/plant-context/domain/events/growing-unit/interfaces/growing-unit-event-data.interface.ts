@@ -19,6 +19,9 @@ export interface IGrowingUnitEventData {
 	/** Unique identifier for the growing unit. */
 	id: string;
 
+	/** Unique identifier for the location. */
+	locationId: string;
+
 	/** Name of the growing unit. */
 	name: string;
 

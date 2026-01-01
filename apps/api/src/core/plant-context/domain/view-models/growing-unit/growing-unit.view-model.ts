@@ -24,6 +24,7 @@ import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-
  * ```
  */
 export class GrowingUnitViewModel extends BaseViewModel {
+	private _locationId: string;
 	private _name: string;
 	private _type: string;
 	private _capacity: number;
@@ -47,6 +48,7 @@ export class GrowingUnitViewModel extends BaseViewModel {
 	 */
 	constructor(props: IGrowingUnitViewModelDto) {
 		super(props);
+		this._locationId = props.locationId;
 		this._name = props.name;
 		this._type = props.type;
 		this._capacity = props.capacity;
@@ -68,6 +70,15 @@ export class GrowingUnitViewModel extends BaseViewModel {
 			? new DimensionsValueObject(this._dimensions).getVolume()
 			: 0;
 		this._numberOfPlants = this._plants.length;
+	}
+
+	/**
+	 * Gets the location identifier this growing unit belongs to.
+	 *
+	 * @returns The location identifier
+	 */
+	public get locationId(): string {
+		return this._locationId;
 	}
 
 	/**
@@ -158,6 +169,7 @@ export class GrowingUnitViewModel extends BaseViewModel {
 	 * ```
 	 */
 	public update(updateData: IGrowingUnitViewModelDto): void {
+		this._locationId = updateData.locationId;
 		this._name = updateData.name;
 		this._type = updateData.type;
 		this._capacity = updateData.capacity;

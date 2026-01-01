@@ -75,6 +75,7 @@ export class GrowingUnitGraphQLMapper {
 
 		return {
 			id: growingUnit.id,
+			locationId: growingUnit.locationId,
 			name: growingUnit.name,
 			type: growingUnit.type,
 			capacity: growingUnit.capacity,

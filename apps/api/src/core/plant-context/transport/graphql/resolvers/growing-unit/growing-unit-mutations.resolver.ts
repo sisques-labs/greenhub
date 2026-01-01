@@ -55,6 +55,7 @@ export class GrowingUnitMutationsResolver {
 		// 01: Send the command to the command bus
 		const createdGrowingUnitId = await this.commandBus.execute(
 			new GrowingUnitCreateCommand({
+				locationId: input.locationId,
 				name: input.name,
 				type: input.type,
 				capacity: input.capacity,

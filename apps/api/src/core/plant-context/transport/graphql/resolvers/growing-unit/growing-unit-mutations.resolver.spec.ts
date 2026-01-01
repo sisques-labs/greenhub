@@ -46,7 +46,9 @@ describe('GrowingUnitMutationsResolver', () => {
 	describe('growingUnitCreate', () => {
 		it('should create growing unit successfully', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitCreateRequestDto = {
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -89,7 +91,9 @@ describe('GrowingUnitMutationsResolver', () => {
 
 		it('should create growing unit without dimensions', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitCreateRequestDto = {
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

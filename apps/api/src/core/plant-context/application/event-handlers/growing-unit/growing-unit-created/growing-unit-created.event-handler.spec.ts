@@ -15,6 +15,7 @@ import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('GrowingUnitCreatedEventHandler', () => {
 	let handler: GrowingUnitCreatedEventHandler;
@@ -70,6 +71,7 @@ describe('GrowingUnitCreatedEventHandler', () => {
 	describe('handle', () => {
 		it('should create and save growing unit view model when event is handled', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const event = new GrowingUnitCreatedEvent(
 				{
 					aggregateRootId: growingUnitId,
@@ -80,6 +82,7 @@ describe('GrowingUnitCreatedEventHandler', () => {
 				},
 				{
 					id: growingUnitId,
+					locationId,
 					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
@@ -90,6 +93,7 @@ describe('GrowingUnitCreatedEventHandler', () => {
 
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -100,6 +104,7 @@ describe('GrowingUnitCreatedEventHandler', () => {
 			const now = new Date();
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

@@ -1,7 +1,7 @@
 import { Collection } from 'mongodb';
 
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto copy';
+import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto';
 import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 import { GrowingUnitMongoRepository } from '@/core/plant-context/infrastructure/database/mongodb/repositories/growing-unit-mongodb.repository';
@@ -72,11 +72,13 @@ describe('GrowingUnitMongoRepository', () => {
 	describe('findById', () => {
 		it('should return growing unit view model when growing unit exists', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
 			const mongoDoc: GrowingUnitMongoDbDto = {
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -91,6 +93,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -135,6 +138,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 	describe('findByCriteria', () => {
 		it('should return paginated result with growing units when criteria matches', async () => {
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 			const criteria = new Criteria([], [], { page: 1, perPage: 10 });
@@ -142,6 +146,7 @@ describe('GrowingUnitMongoRepository', () => {
 			const mongoDocs: GrowingUnitMongoDbDto[] = [
 				{
 					id: '123e4567-e89b-12d3-a456-426614174000',
+					locationId,
 					name: 'Garden Bed 1',
 					type: 'GARDEN_BED',
 					capacity: 10,
@@ -155,6 +160,7 @@ describe('GrowingUnitMongoRepository', () => {
 				},
 				{
 					id: '223e4567-e89b-12d3-a456-426614174001',
+					locationId,
 					name: 'Garden Bed 2',
 					type: 'GARDEN_BED',
 					capacity: 15,
@@ -170,6 +176,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const viewModel1 = new GrowingUnitViewModel({
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -184,6 +191,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const viewModel2 = new GrowingUnitViewModel({
 				id: '223e4567-e89b-12d3-a456-426614174001',
+				locationId,
 				name: 'Garden Bed 2',
 				type: 'GARDEN_BED',
 				capacity: 15,
@@ -224,11 +232,13 @@ describe('GrowingUnitMongoRepository', () => {
 	describe('save', () => {
 		it('should save growing unit view model using upsert', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -243,6 +253,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const mongoData: GrowingUnitMongoDbDto = {
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -303,12 +314,14 @@ describe('GrowingUnitMongoRepository', () => {
 	describe('findByContainerId', () => {
 		it('should return array of growing unit view models when growing units exist', async () => {
 			const containerId = '223e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
 			const mongoDocs: GrowingUnitMongoDbDto[] = [
 				{
 					id: '123e4567-e89b-12d3-a456-426614174000',
+					locationId,
 					name: 'Garden Bed 1',
 					type: 'GARDEN_BED',
 					capacity: 10,
@@ -324,6 +337,7 @@ describe('GrowingUnitMongoRepository', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,

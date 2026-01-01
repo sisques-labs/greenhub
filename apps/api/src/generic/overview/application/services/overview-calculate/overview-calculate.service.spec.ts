@@ -5,12 +5,12 @@ import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-u
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import { OverviewCalculateAggregatedMetricsService } from '@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service';
 import { OverviewCalculateCapacityMetricsService } from '@/generic/overview/application/services/overview-calculate-capacity-metrics/overview-calculate-capacity-metrics.service';
 import { OverviewCalculateDimensionsMetricsService } from '@/generic/overview/application/services/overview-calculate-dimensions-metrics/overview-calculate-dimensions-metrics.service';
 import { OverviewCalculateGrowingUnitMetricsService } from '@/generic/overview/application/services/overview-calculate-growing-unit-metrics/overview-calculate-growing-unit-metrics.service';
 import { OverviewCalculatePlantMetricsService } from '@/generic/overview/application/services/overview-calculate-plant-metrics/overview-calculate-plant-metrics.service';
+import { OverviewCalculateService } from '@/generic/overview/application/services/overview-calculate/overview-calculate.service';
 import { OverviewViewModelFactory } from '@/generic/overview/domain/factories/view-models/plant-view-model/overview-view-model.factory';
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
@@ -132,8 +132,10 @@ describe('OverviewCalculateService', () => {
 			});
 
 			// Create mock growing units
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const growingUnit1 = new GrowingUnitViewModel({
 				id: 'gu-1',
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -153,6 +155,7 @@ describe('OverviewCalculateService', () => {
 
 			const growingUnit2 = new GrowingUnitViewModel({
 				id: 'gu-2',
+				locationId,
 				name: 'Pot 1',
 				type: GrowingUnitTypeEnum.POT,
 				capacity: 5,
@@ -167,6 +170,7 @@ describe('OverviewCalculateService', () => {
 
 			const growingUnit3 = new GrowingUnitViewModel({
 				id: 'gu-3',
+				locationId,
 				name: 'Empty Pot',
 				type: GrowingUnitTypeEnum.POT,
 				capacity: 3,
@@ -314,11 +318,13 @@ describe('OverviewCalculateService', () => {
 
 		it('should fetch multiple pages in batches', async () => {
 			const now = new Date();
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const growingUnitsPage1: GrowingUnitViewModel[] = Array.from(
 				{ length: 500 },
 				(_, i) =>
 					new GrowingUnitViewModel({
 						id: `gu-${i + 1}`,
+						locationId,
 						name: `Growing Unit ${i + 1}`,
 						type: GrowingUnitTypeEnum.POT,
 						capacity: 10,
@@ -337,6 +343,7 @@ describe('OverviewCalculateService', () => {
 				(_, i) =>
 					new GrowingUnitViewModel({
 						id: `gu-${i + 501}`,
+						locationId,
 						name: `Growing Unit ${i + 501}`,
 						type: GrowingUnitTypeEnum.POT,
 						capacity: 10,

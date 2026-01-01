@@ -21,6 +21,7 @@ import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objec
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantUpdateCommandHandler', () => {
@@ -90,8 +91,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -145,8 +148,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -188,8 +193,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -245,8 +252,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -292,8 +301,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -338,8 +349,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -389,8 +402,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -439,8 +454,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -485,8 +502,10 @@ describe('PlantUpdateCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),

@@ -16,4 +16,3 @@ export class LocationTypeormEntity extends BaseTypeormEntity {
 	@Column({ type: 'varchar', nullable: true })
 	description: string | null;
 }
-

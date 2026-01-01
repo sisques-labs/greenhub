@@ -97,6 +97,9 @@ type GrowingUnitResponseDto {
   """The id of the growing unit"""
   id: String!
 
+  """The id of the location this growing unit belongs to"""
+  locationId: String!
+
   """The name of the growing unit"""
   name: String!
 
@@ -822,6 +825,9 @@ type Mutation {
 }
 
 input GrowingUnitCreateRequestDto {
+  """The id of the location this growing unit belongs to"""
+  locationId: String!
+
   """The name of the growing unit"""
   name: String!
 

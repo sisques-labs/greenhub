@@ -3,7 +3,7 @@ import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-s
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto copy';
+import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto';
 import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
 import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
@@ -55,8 +55,10 @@ describe('GrowingUnitMongoDBMapper', () => {
 				updatedAt,
 			};
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const mongoDoc: GrowingUnitMongoDbDto = {
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -88,6 +90,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -116,6 +119,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 			);
 			expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -136,11 +140,13 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 		it('should convert MongoDB document with null dimensions and no plants', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
 			const mongoDoc: GrowingUnitMongoDbDto = {
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -155,6 +161,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -175,6 +182,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 			expect(mockPlantMongoDBMapper.toViewModel).not.toHaveBeenCalled();
 			expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -193,8 +201,10 @@ describe('GrowingUnitMongoDBMapper', () => {
 			const createdAt = '2024-01-01T00:00:00.000Z';
 			const updatedAt = '2024-01-02T00:00:00.000Z';
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const mongoDoc: any = {
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -209,6 +219,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -228,6 +239,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 			expect(result).toBe(viewModel);
 			expect(mockGrowingUnitViewModelFactory.create).toHaveBeenCalledWith({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -245,6 +257,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 	describe('toMongoData', () => {
 		it('should convert view model to MongoDB document with all properties', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
@@ -263,6 +276,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -298,6 +312,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 			expect(result).toEqual({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -321,11 +336,13 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 		it('should convert view model with null dimensions and no plants', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -342,6 +359,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 
 			expect(result).toEqual({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

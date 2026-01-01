@@ -8,6 +8,7 @@ import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/da
 import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper';
 import { GrowingUnitTypeormRepository } from '@/core/plant-context/infrastructure/database/typeorm/repositories/growing-unit/growing-unit-typeorm.repository';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 import { Repository } from 'typeorm';
 
@@ -77,6 +78,9 @@ describe('GrowingUnitTypeormRepository', () => {
 
 			const growingUnitAggregate = growingUnitAggregateFactory.create({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(
+					'123e4567-e89b-12d3-a456-426614174000',
+				),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -129,10 +133,12 @@ describe('GrowingUnitTypeormRepository', () => {
 	describe('save', () => {
 		it('should save growing unit aggregate and return it', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
 			const growingUnitAggregate = growingUnitAggregateFactory.create({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),

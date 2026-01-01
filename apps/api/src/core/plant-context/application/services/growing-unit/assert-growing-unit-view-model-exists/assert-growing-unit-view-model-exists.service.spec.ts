@@ -43,9 +43,11 @@ describe('AssertGrowingUnitViewModelExistsService', () => {
 	describe('execute', () => {
 		it('should return growing unit view model when found', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

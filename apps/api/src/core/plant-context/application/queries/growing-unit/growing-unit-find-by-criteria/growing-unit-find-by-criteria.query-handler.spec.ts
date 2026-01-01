@@ -46,10 +46,12 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 		it('should return paginated result when criteria matches', async () => {
 			const criteria = new Criteria();
 			const query = new GrowingUnitFindByCriteriaQuery(criteria);
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 			const mockViewModels = [
 				new GrowingUnitViewModel({
 					id: '123e4567-e89b-12d3-a456-426614174000',
+					locationId,
 					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
@@ -63,6 +65,7 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 				}),
 				new GrowingUnitViewModel({
 					id: '223e4567-e89b-12d3-a456-426614174000',
+					locationId,
 					name: 'Garden Bed 2',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,

@@ -16,6 +16,7 @@ import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('GrowingUnitTypeormMapper', () => {
@@ -90,8 +91,10 @@ describe('GrowingUnitTypeormMapper', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -150,8 +153,10 @@ describe('GrowingUnitTypeormMapper', () => {
 			typeormEntity.updatedAt = now;
 			typeormEntity.deletedAt = null;
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -195,8 +200,10 @@ describe('GrowingUnitTypeormMapper', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -222,6 +229,7 @@ describe('GrowingUnitTypeormMapper', () => {
 				.spyOn(growingUnitAggregate, 'toPrimitives')
 				.mockReturnValue({
 					id: growingUnitId,
+					locationId,
 					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
@@ -261,9 +269,11 @@ describe('GrowingUnitTypeormMapper', () => {
 
 		it('should convert domain aggregate with null dimensions', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 
 			const growingUnitAggregate = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -275,6 +285,7 @@ describe('GrowingUnitTypeormMapper', () => {
 				.spyOn(growingUnitAggregate, 'toPrimitives')
 				.mockReturnValue({
 					id: growingUnitId,
+					locationId,
 					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,

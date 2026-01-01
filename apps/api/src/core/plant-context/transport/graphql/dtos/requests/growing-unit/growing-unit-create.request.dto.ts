@@ -14,6 +14,11 @@ import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.en
 
 @InputType('GrowingUnitCreateRequestDto')
 export class GrowingUnitCreateRequestDto {
+	@Field(() => String, { description: 'The id of the location this growing unit belongs to' })
+	@IsString()
+	@IsNotEmpty()
+	locationId: string;
+
 	@Field(() => String, { description: 'The name of the growing unit' })
 	@IsString()
 	@IsNotEmpty()

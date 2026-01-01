@@ -7,6 +7,9 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 
 @Entity('growing-units')
 export class GrowingUnitTypeormEntity extends BaseTypeormEntity {
+	@Column({ type: 'uuid' })
+	locationId: string;
+
 	@Column({ type: 'varchar' })
 	name: string;
 

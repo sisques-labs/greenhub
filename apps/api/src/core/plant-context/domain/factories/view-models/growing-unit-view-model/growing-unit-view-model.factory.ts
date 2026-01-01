@@ -85,6 +85,7 @@ export class GrowingUnitViewModelFactory
 
 		return new GrowingUnitViewModel({
 			id: growingUnitPrimitives.id,
+			locationId: growingUnitPrimitives.locationId,
 			name: growingUnitPrimitives.name,
 			type: growingUnitPrimitives.type,
 			capacity: growingUnitPrimitives.capacity,
@@ -126,6 +127,7 @@ export class GrowingUnitViewModelFactory
 
 		return new GrowingUnitViewModel({
 			id: growingUnitAggregate.id.value,
+			locationId: growingUnitAggregate.locationId.value,
 			name: growingUnitAggregate.name.value,
 			type: growingUnitAggregate.type.value,
 			capacity: growingUnitAggregate.capacity.value,

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto copy';
+import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 
 /**
@@ -34,6 +34,7 @@ export class GrowingUnitMongoDBMapper {
 
 		return this.growingUnitViewModelFactory.create({
 			id: doc.id,
+			locationId: doc.locationId,
 			name: doc.name,
 			type: doc.type,
 			capacity: doc.capacity,
@@ -66,6 +67,7 @@ export class GrowingUnitMongoDBMapper {
 
 		return {
 			id: growingUnitViewModel.id,
+			locationId: growingUnitViewModel.locationId,
 			name: growingUnitViewModel.name,
 			type: growingUnitViewModel.type,
 			capacity: growingUnitViewModel.capacity,

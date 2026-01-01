@@ -12,6 +12,7 @@ import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dt
  * @see IGrowingUnitDto for entity data structure
  */
 export interface IGrowingUnitViewModelDto extends IBaseViewModelDto {
+	locationId: string;
 	name: string;
 	type: string;
 	capacity: number;

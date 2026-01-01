@@ -2,6 +2,7 @@ import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.pr
 
 export type GrowingUnitPrimitives = {
 	id: string;
+	locationId: string;
 	name: string;
 	type: string;
 	capacity: number;

@@ -14,6 +14,7 @@ import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-o
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantTransplantService', () => {
@@ -27,10 +28,12 @@ describe('PlantTransplantService', () => {
 
 	beforeEach(() => {
 		service = new PlantTransplantService();
+		const locationId = '423e4567-e89b-12d3-a456-426614174000';
 
 		// Create source growing unit with capacity for 5 plants
 		sourceGrowingUnit = new GrowingUnitAggregate({
 			id: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
+			locationId: new LocationUuidValueObject(locationId),
 			name: new GrowingUnitNameValueObject('Source Unit'),
 			type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
 			capacity: new GrowingUnitCapacityValueObject(5),
@@ -41,6 +44,7 @@ describe('PlantTransplantService', () => {
 		// Create target growing unit with capacity for 3 plants
 		targetGrowingUnit = new GrowingUnitAggregate({
 			id: new GrowingUnitUuidValueObject(targetGrowingUnitId),
+			locationId: new LocationUuidValueObject(locationId),
 			name: new GrowingUnitNameValueObject('Target Unit'),
 			type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.POT),
 			capacity: new GrowingUnitCapacityValueObject(3),

@@ -15,6 +15,7 @@ import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('PlantDeletedEventHandler', () => {
 	let handler: PlantDeletedEventHandler;
@@ -68,9 +69,11 @@ describe('PlantDeletedEventHandler', () => {
 	describe('handle', () => {
 		it('should delete growing unit view model when plant is deleted', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -81,6 +84,7 @@ describe('PlantDeletedEventHandler', () => {
 			const now = new Date();
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

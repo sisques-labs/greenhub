@@ -13,6 +13,7 @@ import { PublishIntegrationEventsService } from '@/shared/application/services/p
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('GrowingUnitCreateCommandHandler', () => {
 	let handler: GrowingUnitCreateCommandHandler;
@@ -50,6 +51,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 	describe('execute', () => {
 		it('should create growing unit successfully', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -62,6 +64,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(
+					'123e4567-e89b-12d3-a456-426614174000',
+				),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -83,6 +88,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			expect(result).toBe(mockGrowingUnit.id.value);
 			expect(mockGrowingUnitAggregateFactory.create).toHaveBeenCalledWith({
 				id: command.id,
+				locationId: command.locationId,
 				name: command.name,
 				type: command.type,
 				capacity: command.capacity,
@@ -104,6 +110,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 		it('should create growing unit without dimensions', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -112,6 +119,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(
+					'123e4567-e89b-12d3-a456-426614174000',
+				),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -128,6 +138,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			expect(result).toBe(mockGrowingUnit.id.value);
 			expect(mockGrowingUnitAggregateFactory.create).toHaveBeenCalledWith({
 				id: command.id,
+				locationId: command.locationId,
 				name: command.name,
 				type: command.type,
 				capacity: command.capacity,
@@ -138,6 +149,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 		it('should publish GrowingUnitCreatedEvent when growing unit is created', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -146,6 +158,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(
+					'123e4567-e89b-12d3-a456-426614174000',
+				),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -167,6 +182,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 		it('should save growing unit before publishing events', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -175,6 +191,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			const command = new GrowingUnitCreateCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(
+					'123e4567-e89b-12d3-a456-426614174000',
+				),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -197,6 +216,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 		it('should return the created growing unit id', async () => {
 			const commandDto: IGrowingUnitCreateCommandDto = {
+				locationId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -206,6 +226,9 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(
+					'123e4567-e89b-12d3-a456-426614174000',
+				),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),

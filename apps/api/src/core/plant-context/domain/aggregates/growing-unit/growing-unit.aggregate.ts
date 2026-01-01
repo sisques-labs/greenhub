@@ -1,10 +1,9 @@
-import { AggregateRoot } from '@nestjs/cqrs';
-
 import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitCapacityChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-capacity-changed/growing-unit-capacity-changed.event';
 import { GrowingUnitDimensionsChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-dimensions-changed/growing-unit-dimensions-changed.event';
+import { GrowingUnitLocationIdChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-location-id-changed/growing-unit-location-id-changed.event';
 import { GrowingUnitNameChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-name-changed/growing-unit-name-changed.event';
 import { GrowingUnitTypeChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-type-changed/growing-unit-type-changed.event';
 import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
@@ -26,6 +25,8 @@ import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objec
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
+import { AggregateRoot } from '@nestjs/cqrs';
 
 /**
  * The aggregate root representing a growing unit, which manages a collection of plants
@@ -40,6 +41,10 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	 * The unique identifier of this growing unit.
 	 */
 	private readonly _id: GrowingUnitUuidValueObject;
+	/**
+	 * The location identifier this growing unit belongs to.
+	 */
+	private _locationId: LocationUuidValueObject;
 	/**
 	 * The name of this growing unit.
 	 */
@@ -73,6 +78,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
 		super();
 
 		this._id = props.id;
+		this._locationId = props.locationId;
 		this._name = props.name;
 		this._type = props.type;
 		this._capacity = props.capacity;
@@ -373,6 +379,36 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	}
 
 	/**
+	 * Changes the location identifier of this growing unit.
+	 * @param locationId - The new location identifier value object.
+	 * @param generateEvent - Whether to emit the corresponding domain event.
+	 */
+	public changeLocationId(
+		locationId: LocationUuidValueObject,
+		generateEvent: boolean = true,
+	) {
+		const oldValue = this._locationId.value;
+		this._locationId = locationId;
+		if (generateEvent) {
+			this.apply(
+				new GrowingUnitLocationIdChangedEvent(
+					{
+						aggregateRootId: this._id.value,
+						aggregateRootType: GrowingUnitAggregate.name,
+						entityId: this._id.value,
+						entityType: GrowingUnitAggregate.name,
+						eventType: GrowingUnitLocationIdChangedEvent.name,
+					},
+					{
+						id: this._id.value,
+						oldValue,
+						newValue: this._locationId.value,
+					},
+				),
+			);
+		}
+	}
+	/**
 	 * Changes the name of this growing unit.
 	 * @param name - The new name value object.
 	 * @param generateEvent - Whether to emit the corresponding domain event.
@@ -553,6 +589,13 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	}
 
 	/**
+	 * The location identifier this growing unit belongs to.
+	 */
+	public get locationId(): LocationUuidValueObject {
+		return this._locationId;
+	}
+
+	/**
 	 * The name of this growing unit.
 	 */
 	public get name(): GrowingUnitNameValueObject {
@@ -594,6 +637,7 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	public toPrimitives(): GrowingUnitPrimitives {
 		return {
 			id: this._id.value,
+			locationId: this._locationId.value,
 			name: this._name.value,
 			type: this._type.value,
 			capacity: this._capacity.value,
