@@ -3,6 +3,7 @@ import { GrowingUnitDimensions } from "./growing-unit-dimensions.type.js";
 
 export type GrowingUnitResponse = {
 	id: string;
+	locationId: string;
 	name: string;
 	type: string;
 	capacity: number;
