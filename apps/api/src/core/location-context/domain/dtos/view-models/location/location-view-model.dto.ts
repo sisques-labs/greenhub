@@ -1,4 +1,4 @@
-import { IBaseViewModelDto } from "@/shared/domain/interfaces/base-view-model-dto.interface";
+import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dto.interface';
 
 /**
  * Represents the view model for the data returned for a location entity.
@@ -14,9 +14,4 @@ export interface ILocationViewModelDto extends IBaseViewModelDto {
 	name: string;
 	type: string;
 	description: string | null;
-
-	// Calculated properties
-	totalGrowingUnits: number;
-	totalPlants: number;
 }
-

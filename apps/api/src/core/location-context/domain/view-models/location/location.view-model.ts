@@ -1,5 +1,5 @@
-import type { ILocationViewModelDto } from "@/core/location-context/domain/dtos/view-models/location/location-view-model.dto";
-import { BaseViewModel } from "@/shared/domain/view-models/base-view-model/base-view-model";
+import type { ILocationViewModelDto } from '@/core/location-context/domain/dtos/view-models/location/location-view-model.dto';
+import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
 
 /**
  * Represents a location view model for the presentation layer.
@@ -29,10 +29,6 @@ export class LocationViewModel extends BaseViewModel {
 	private _type: string;
 	private _description: string | null;
 
-	// Calculated properties
-	private _totalGrowingUnits: number;
-	private _totalPlants: number;
-
 	/**
 	 * Creates a new LocationViewModel instance.
 	 *
@@ -43,8 +39,6 @@ export class LocationViewModel extends BaseViewModel {
 		this._name = props.name;
 		this._type = props.type;
 		this._description = props.description;
-		this._totalGrowingUnits = props.totalGrowingUnits;
-		this._totalPlants = props.totalPlants;
 	}
 
 	/**
@@ -75,24 +69,6 @@ export class LocationViewModel extends BaseViewModel {
 	}
 
 	/**
-	 * Gets the total number of growing units in this location.
-	 *
-	 * @returns The total number of growing units
-	 */
-	public get totalGrowingUnits(): number {
-		return this._totalGrowingUnits;
-	}
-
-	/**
-	 * Gets the total number of plants in this location.
-	 *
-	 * @returns The total number of plants across all growing units in this location
-	 */
-	public get totalPlants(): number {
-		return this._totalPlants;
-	}
-
-	/**
 	 * Updates the location view model with new data.
 	 *
 	 * @param updateData - The partial update view model data for the location
@@ -107,8 +83,6 @@ export class LocationViewModel extends BaseViewModel {
 		this._name = updateData.name;
 		this._type = updateData.type;
 		this._description = updateData.description;
-		this._totalGrowingUnits = updateData.totalGrowingUnits;
-		this._totalPlants = updateData.totalPlants;
 
 		this._updatedAt = new Date();
 	}

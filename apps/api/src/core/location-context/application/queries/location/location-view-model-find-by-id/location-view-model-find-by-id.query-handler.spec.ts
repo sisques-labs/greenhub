@@ -38,8 +38,6 @@ describe('LocationViewModelFindByIdQueryHandler', () => {
 				name: 'Living Room',
 				type: LocationTypeEnum.ROOM,
 				description: 'North-facing room with good sunlight',
-				totalGrowingUnits: 5,
-				totalPlants: 12,
 				createdAt: now,
 				updatedAt: now,
 			});

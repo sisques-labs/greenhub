@@ -1,10 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from '@nestjs/common';
 
-import { LocationAggregate } from "@/core/location-context/domain/aggregates/location.aggregate";
-import type { ILocationViewModelDto } from "@/core/location-context/domain/dtos/view-models/location/location-view-model.dto";
-import { LocationPrimitives } from "@/core/location-context/domain/primitives/location.primitives";
-import { LocationViewModel } from "@/core/location-context/domain/view-models/location/location.view-model";
-import { IReadFactory } from "@/shared/domain/interfaces/read-factory.interface";
+import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
+import type { ILocationViewModelDto } from '@/core/location-context/domain/dtos/view-models/location/location-view-model.dto';
+import { LocationPrimitives } from '@/core/location-context/domain/primitives/location.primitives';
+import { LocationViewModel } from '@/core/location-context/domain/view-models/location/location.view-model';
+import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
 
 /**
  * Factory class for constructing {@link LocationViewModel} instances from
@@ -57,20 +57,19 @@ export class LocationViewModelFactory
 	 * Creates a {@link LocationViewModel} from {@link LocationPrimitives}.
 	 *
 	 * @param locationPrimitives - The basic primitive data describing the location.
-	 * @param totalGrowingUnits - The total number of growing units in this location.
-	 * @param totalPlants - The total number of plants in this location.
 	 * @returns The constructed {@link LocationViewModel} instance.
+	 * @remarks
+	 * Calculated fields (totalGrowingUnits, totalPlants) are initialized to 0.
+	 * They should be updated later by querying MongoDB or other data sources.
 	 *
 	 * @example
 	 * ```typescript
 	 * const primitives: LocationPrimitives = {...};
-	 * const viewModel = factory.fromPrimitives(primitives, 5, 12);
+	 * const viewModel = factory.fromPrimitives(primitives);
 	 * ```
 	 */
 	public fromPrimitives(
 		locationPrimitives: LocationPrimitives,
-		totalGrowingUnits: number = 0,
-		totalPlants: number = 0,
 	): LocationViewModel {
 		this.logger.log(
 			`Creating location view model from primitives: ${locationPrimitives}`,
@@ -83,8 +82,6 @@ export class LocationViewModelFactory
 			name: locationPrimitives.name,
 			type: locationPrimitives.type,
 			description: locationPrimitives.description,
-			totalGrowingUnits,
-			totalPlants,
 			createdAt: now,
 			updatedAt: now,
 		});
@@ -94,19 +91,18 @@ export class LocationViewModelFactory
 	 * Converts a {@link LocationAggregate} into a {@link LocationViewModel}.
 	 *
 	 * @param locationAggregate - The aggregate root containing the location's domain properties and behaviors.
-	 * @param totalGrowingUnits - The total number of growing units in this location.
-	 * @param totalPlants - The total number of plants in this location.
 	 * @returns The populated {@link LocationViewModel} instance.
+	 * @remarks
+	 * Calculated fields (totalGrowingUnits, totalPlants) are initialized to 0.
+	 * They should be updated later by querying MongoDB or other data sources.
 	 *
 	 * @example
 	 * ```typescript
-	 * const viewModel = factory.fromAggregate(locationAggregate, 5, 12);
+	 * const viewModel = factory.fromAggregate(locationAggregate);
 	 * ```
 	 */
 	public fromAggregate(
 		locationAggregate: LocationAggregate,
-		totalGrowingUnits: number = 0,
-		totalPlants: number = 0,
 	): LocationViewModel {
 		this.logger.log(
 			`Creating location view model from aggregate: ${locationAggregate}`,
@@ -119,11 +115,8 @@ export class LocationViewModelFactory
 			name: locationAggregate.name.value,
 			type: locationAggregate.type.value,
 			description: locationAggregate.description?.value ?? null,
-			totalGrowingUnits,
-			totalPlants,
 			createdAt: now,
 			updatedAt: now,
 		});
 	}
 }
-

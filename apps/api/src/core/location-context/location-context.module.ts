@@ -14,6 +14,13 @@ import { AssertLocationExistsService } from '@/core/location-context/application
 import { AssertLocationViewModelExistsService } from '@/core/location-context/application/services/location/assert-location-view-model-exists/assert-location-view-model-exists.service';
 import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
 import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
+import { LOCATION_READ_REPOSITORY_TOKEN } from '@/core/location-context/domain/repositories/location-read/location-read.repository';
+import { LOCATION_WRITE_REPOSITORY_TOKEN } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
+import { LocationMongoDBMapper } from '@/core/location-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
+import { LocationMongoRepository } from '@/core/location-context/infrastructure/database/mongodb/repositories/location-mongodb.repository';
+import { LocationTypeormEntity } from '@/core/location-context/infrastructure/database/typeorm/entities/location-typeorm.entity';
+import { LocationTypeormMapper } from '@/core/location-context/infrastructure/database/typeorm/mappers/location/location-typeorm.mapper';
+import { LocationTypeormRepository } from '@/core/location-context/infrastructure/database/typeorm/repositories/location/location-typeorm.repository';
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
 import { GrowingUnitDeleteCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command-handler';
 import { GrowingUnitUpdateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command-handler';
@@ -139,6 +146,10 @@ const FACTORIES = [
 ];
 
 const MAPPERS = [
+	// Location mappers
+	LocationTypeormMapper,
+	LocationMongoDBMapper,
+
 	// Growing unit mappers
 	GrowingUnitTypeormMapper,
 	GrowingUnitMongoDBMapper,
@@ -151,6 +162,17 @@ const MAPPERS = [
 ];
 
 const REPOSITORIES = [
+	// Location repositories
+	{
+		provide: LOCATION_WRITE_REPOSITORY_TOKEN,
+		useClass: LocationTypeormRepository,
+	},
+	{
+		provide: LOCATION_READ_REPOSITORY_TOKEN,
+		useClass: LocationMongoRepository,
+	},
+
+	// Growing Unit repositories
 	{
 		provide: GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 		useClass: GrowingUnitTypeormRepository,
@@ -165,7 +187,11 @@ const REPOSITORIES = [
 	},
 ];
 
-const ENTITIES = [GrowingUnitTypeormEntity, PlantTypeormEntity];
+const ENTITIES = [
+	LocationTypeormEntity,
+	GrowingUnitTypeormEntity,
+	PlantTypeormEntity,
+];
 
 @Module({
 	imports: [SharedModule, TypeOrmModule.forFeature(ENTITIES)],

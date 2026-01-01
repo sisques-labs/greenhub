@@ -99,8 +99,6 @@ describe('LocationCreatedEventHandler', () => {
 				name: 'Living Room',
 				type: LocationTypeEnum.ROOM,
 				description: 'North-facing room with good sunlight',
-				totalGrowingUnits: 0,
-				totalPlants: 0,
 				createdAt: now,
 				updatedAt: now,
 			});
@@ -116,8 +114,6 @@ describe('LocationCreatedEventHandler', () => {
 			);
 			expect(mockLocationViewModelFactory.fromAggregate).toHaveBeenCalledWith(
 				mockLocation,
-				0,
-				0,
 			);
 			expect(mockLocationReadRepository.save).toHaveBeenCalledWith(
 				mockViewModel,
