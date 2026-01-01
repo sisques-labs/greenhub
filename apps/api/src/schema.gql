@@ -8,6 +8,48 @@ type MutationResponseDto {
   id: String
 }
 
+type LocationResponseDto {
+  """The id of the location"""
+  id: String!
+
+  """The name of the location"""
+  name: String!
+
+  """The type of the location"""
+  type: String!
+
+  """The description of the location"""
+  description: String
+
+  """The created at timestamp of the location"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the location"""
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type PaginatedLocationResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The locations in the current page"""
+  items: [LocationResponseDto!]!
+}
+
 type PlantResponseDto {
   """The id of the plant"""
   id: String!
@@ -36,11 +78,6 @@ type PlantResponseDto {
   """The updated at timestamp of the plant"""
   updatedAt: DateTime!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type GrowingUnitDimensionsResponseDto {
   """The length of the growing unit"""
@@ -562,6 +599,8 @@ type Query {
   growingUnitsFindByCriteria(input: GrowingUnitFindByCriteriaRequestDto): PaginatedGrowingUnitResultDto!
   growingUnitFindById(input: GrowingUnitFindByIdRequestDto!): GrowingUnitResponseDto
   plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
+  locationsFindByCriteria(input: LocationFindByCriteriaRequestDto): PaginatedLocationResultDto!
+  locationFindById(input: LocationFindByIdRequestDto!): LocationResponseDto
   healthCheck: HealthResponseDto!
   authProfileMe: AuthUserProfileResponseDto!
   findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
@@ -642,6 +681,22 @@ input GrowingUnitFindByIdRequestDto {
 
 input PlantFindByIdRequestDto {
   """The id of the plant to find"""
+  id: String!
+}
+
+input LocationFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input LocationFindByIdRequestDto {
+  """The id of the location to find"""
   id: String!
 }
 
@@ -743,6 +798,9 @@ type Mutation {
   plantUpdate(input: PlantUpdateRequestDto!): MutationResponseDto!
   plantRemove(input: PlantRemoveRequestDto!): MutationResponseDto!
   plantTransplant(input: PlantTransplantRequestDto!): MutationResponseDto!
+  createLocation(input: LocationCreateRequestDto!): MutationResponseDto!
+  updateLocation(input: LocationUpdateRequestDto!): MutationResponseDto!
+  deleteLocation(input: LocationDeleteRequestDto!): MutationResponseDto!
   loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
   registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
   refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
@@ -900,6 +958,46 @@ input PlantTransplantRequestDto {
 
   """The id of the plant to be transplanted"""
   plantId: String!
+}
+
+input LocationCreateRequestDto {
+  """The name of the location"""
+  name: String!
+
+  """The type of the location"""
+  type: LocationTypeEnum!
+
+  """The description of the location"""
+  description: String
+}
+
+"""The type of the location"""
+enum LocationTypeEnum {
+  ROOM
+  BALCONY
+  GARDEN
+  GREENHOUSE
+  OUTDOOR_SPACE
+  INDOOR_SPACE
+}
+
+input LocationUpdateRequestDto {
+  """The id of the location"""
+  id: String!
+
+  """The name of the location"""
+  name: String
+
+  """The type of the location"""
+  type: LocationTypeEnum
+
+  """The description of the location"""
+  description: String
+}
+
+input LocationDeleteRequestDto {
+  """The id of the location"""
+  id: String!
 }
 
 input AuthLoginByEmailRequestDto {
