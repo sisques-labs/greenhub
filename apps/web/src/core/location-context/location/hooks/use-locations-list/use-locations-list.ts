@@ -1,5 +1,5 @@
-import { useLocations } from "@repo/sdk";
-import { useEffect, useMemo, useRef } from "react";
+import { useLocations } from '@repo/sdk';
+import { useEffect, useMemo, useRef } from 'react';
 
 /**
  * Hook that fetches all locations without pagination
@@ -35,4 +35,3 @@ export function useLocationsList() {
 		},
 	};
 }
-
