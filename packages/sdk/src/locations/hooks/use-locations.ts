@@ -1,11 +1,15 @@
 "use client";
 import { useAsyncState } from "../../react/hooks/use-async-state.js";
 import { useSDKContext } from "../../react/index.js";
+import type { MutationResponse } from "../../shared/types/index.js";
 import type {
+	CreateLocationInput,
+	DeleteLocationInput,
 	LocationFindByCriteriaInput,
 	LocationFindByIdInput,
 	LocationResponse,
 	PaginatedLocationResult,
+	UpdateLocationInput,
 } from "../index.js";
 
 /**
@@ -22,6 +26,18 @@ export function useLocations() {
 		(input: LocationFindByIdInput) => sdk.locations.findById(input),
 	);
 
+	const create = useAsyncState<MutationResponse, [CreateLocationInput]>(
+		(input: CreateLocationInput) => sdk.locations.create(input),
+	);
+
+	const update = useAsyncState<MutationResponse, [UpdateLocationInput]>(
+		(input: UpdateLocationInput) => sdk.locations.update(input),
+	);
+
+	const remove = useAsyncState<MutationResponse, [DeleteLocationInput]>(
+		(input: DeleteLocationInput) => sdk.locations.delete(input),
+	);
+
 	return {
 		findByCriteria: {
 			...findByCriteria,
@@ -30,6 +46,18 @@ export function useLocations() {
 		findById: {
 			...findById,
 			fetch: findById.execute,
+		},
+		create: {
+			...create,
+			mutate: create.execute,
+		},
+		update: {
+			...update,
+			mutate: update.execute,
+		},
+		delete: {
+			...remove,
+			mutate: remove.execute,
 		},
 	};
 }

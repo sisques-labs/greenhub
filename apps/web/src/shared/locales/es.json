@@ -35,6 +35,7 @@
     "settings": "Configuración",
     "plants": "Plantas",
     "growingUnits": "Unidades de Cultivo",
+    "locations": "Ubicaciones",
     "search": "Buscar",
     "searchPlaceholder": "Buscar..."
   },
@@ -188,6 +189,10 @@
         "label": "Notas",
         "placeholder": "Notas adicionales"
       },
+      "description": {
+        "label": "Descripción",
+        "placeholder": "Ingresa la descripción"
+      },
       "growingUnitId": {
         "label": "Unidad de Cultivo"
       }
@@ -198,6 +203,14 @@
         "GARDEN_BED": "Cama de jardín",
         "HANGING_BASKET": "Cesta colgante",
         "WINDOW_BOX": "Jardín de ventana"
+      },
+      "location": {
+        "ROOM": "Habitación",
+        "BALCONY": "Balcón",
+        "GARDEN": "Jardín",
+        "GREENHOUSE": "Invernadero",
+        "OUTDOOR_SPACE": "Espacio Exterior",
+        "INDOOR_SPACE": "Espacio Interior"
       }
     },
     "units": {
@@ -637,6 +650,34 @@
               }
             }
           }
+        }
+      }
+    },
+    "locations": {
+      "list": {
+        "title": "Ubicaciones",
+        "description": "Gestiona tus ubicaciones y organiza tus espacios de cultivo.",
+        "empty": "No hay ubicaciones disponibles",
+        "noDescription": "Sin descripción disponible",
+        "search": {
+          "placeholder": "Buscar por nombre o tipo..."
+        },
+        "filters": {
+          "all": "Todas",
+          "indoor": "Interior",
+          "outdoor": "Exterior"
+        },
+        "actions": {
+          "create": {
+            "button": "Crear Ubicación",
+            "title": "Crear Ubicación",
+            "description": "Agrega una nueva ubicación para tus espacios de cultivo",
+            "submit": "Crear",
+            "loading": "Creando..."
+          }
+        },
+        "error": {
+          "loading": "Error al cargar ubicaciones: {message}"
         }
       }
     },

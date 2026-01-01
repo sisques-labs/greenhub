@@ -240,6 +240,18 @@ export class SDK {
 			 * Find a location by ID
 			 */
 			findById: this.locationClient.findById.bind(this.locationClient),
+			/**
+			 * Create a new location
+			 */
+			create: this.locationClient.create.bind(this.locationClient),
+			/**
+			 * Update an existing location
+			 */
+			update: this.locationClient.update.bind(this.locationClient),
+			/**
+			 * Delete a location
+			 */
+			delete: this.locationClient.delete.bind(this.locationClient),
 		};
 	}
 

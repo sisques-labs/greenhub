@@ -35,6 +35,7 @@
     "settings": "Settings",
     "plants": "Plants",
     "growingUnits": "Growing Units",
+    "locations": "Locations",
     "search": "Search",
     "searchPlaceholder": "Search..."
   },
@@ -188,6 +189,10 @@
         "label": "Notes",
         "placeholder": "Additional notes"
       },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter description"
+      },
       "growingUnitId": {
         "label": "Growing Unit ID"
       },
@@ -208,6 +213,14 @@
         "GARDEN_BED": "Garden bed",
         "HANGING_BASKET": "Hanging basket",
         "WINDOW_BOX": "Window box"
+      },
+      "location": {
+        "ROOM": "Room",
+        "BALCONY": "Balcony",
+        "GARDEN": "Garden",
+        "GREENHOUSE": "Greenhouse",
+        "OUTDOOR_SPACE": "Outdoor Space",
+        "INDOOR_SPACE": "Indoor Space"
       }
     },
     "units": {
@@ -629,6 +642,34 @@
               }
             }
           }
+        }
+      }
+    },
+    "locations": {
+      "list": {
+        "title": "Locations",
+        "description": "Manage your locations and organize your growing spaces.",
+        "empty": "No locations available",
+        "noDescription": "No description available",
+        "search": {
+          "placeholder": "Search by name or type..."
+        },
+        "filters": {
+          "all": "All",
+          "indoor": "Indoor",
+          "outdoor": "Outdoor"
+        },
+        "actions": {
+          "create": {
+            "button": "Create Location",
+            "title": "Create Location",
+            "description": "Add a new location for your growing spaces",
+            "submit": "Create",
+            "loading": "Creating..."
+          }
+        },
+        "error": {
+          "loading": "Error loading locations: {message}"
         }
       }
     },
