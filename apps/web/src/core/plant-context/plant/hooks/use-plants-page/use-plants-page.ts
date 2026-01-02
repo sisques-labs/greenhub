@@ -2,6 +2,8 @@ import { PLANT_STATUS, type PlantResponse } from "@repo/sdk";
 import { paginate } from "@repo/shared/presentation/lib/utils";
 import { useEffect, useMemo, useState } from "react";
 import { useGrowingUnitsFindByCriteria } from "@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria";
+import { usePlantAdd } from "@/core/plant-context/plant/hooks/use-plant-add/use-plant-add";
+import type { PlantCreateFormValues } from "@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema";
 
 const PLANTS_PER_PAGE = 10;
 
@@ -14,6 +16,7 @@ export function usePlantsPage() {
 	const [selectedFilter, setSelectedFilter] = useState("all");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
+	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
 	// Fetch growing units with their plants
 	// Note: We don't send currentPage to backend because pagination is done client-side
@@ -30,8 +33,14 @@ export function usePlantsPage() {
 		[],
 	);
 
-	const { growingUnits, isLoading, error } =
+	const { growingUnits, isLoading, error, refetch } =
 		useGrowingUnitsFindByCriteria(paginationInput);
+
+	const {
+		handleCreate,
+		isLoading: isCreating,
+		error: createError,
+	} = usePlantAdd();
 
 	// Flatten all plants from all growing units and apply filters
 	const allFilteredPlants = useMemo(() => {
@@ -90,6 +99,17 @@ export function usePlantsPage() {
 		setCurrentPage(1);
 	}, []);
 
+	const handleCreateSubmit = async (values: PlantCreateFormValues) => {
+		await handleCreate(values, () => {
+			refetch();
+			setCreateDialogOpen(false);
+		});
+	};
+
+	const handleAddClick = () => {
+		setCreateDialogOpen(true);
+	};
+
 	const handleEdit = (plant: PlantResponse) => {
 		// TODO: Open edit dialog
 		console.log("Edit plant:", plant);
@@ -122,6 +142,8 @@ export function usePlantsPage() {
 		currentPage,
 		perPage,
 		setPerPage,
+		createDialogOpen,
+		setCreateDialogOpen,
 
 		// Data
 		growingUnits,
@@ -132,9 +154,17 @@ export function usePlantsPage() {
 		error,
 
 		// Handlers
+		handleCreateSubmit,
+		handleAddClick,
 		handleEdit,
 		handleDelete,
 		handlePageChange,
+
+		// Loading states
+		isCreating,
+
+		// Errors
+		createError,
 
 		// Computed
 		hasAnyPlants,

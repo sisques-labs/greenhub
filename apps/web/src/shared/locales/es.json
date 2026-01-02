@@ -538,7 +538,8 @@
 						"placeholder": "Notas adicionales sobre la planta"
 					},
 					"growingUnitId": {
-						"label": "Unidad de Cultivo"
+						"label": "Unidad de Cultivo",
+						"placeholder": "Selecciona una unidad de cultivo"
 					}
 				},
 				"location": {
@@ -858,6 +859,21 @@
 						"required": "La capacidad es requerida"
 					}
 				}
+			}
+		}
+	},
+	"plants": {
+		"actions": {
+			"create": {
+				"title": "Crear Planta",
+				"description": "Agrega una nueva planta a tu colección"
+			}
+		}
+	},
+	"plant": {
+		"fields": {
+			"plantedDate": {
+				"label": "Fecha de Plantación"
 			}
 		}
 	},

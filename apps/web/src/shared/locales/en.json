@@ -530,7 +530,8 @@
 						"placeholder": "Additional notes about the plant"
 					},
 					"growingUnitId": {
-						"label": "Growing Unit"
+						"label": "Growing Unit",
+						"placeholder": "Select a growing unit"
 					}
 				},
 				"location": {
@@ -850,6 +851,21 @@
 						"required": "Capacity is required"
 					}
 				}
+			}
+		}
+	},
+	"plants": {
+		"actions": {
+			"create": {
+				"title": "Create Plant",
+				"description": "Add a new plant to your collection"
+			}
+		}
+	},
+	"plant": {
+		"fields": {
+			"plantedDate": {
+				"label": "Planted Date"
 			}
 		}
 	},

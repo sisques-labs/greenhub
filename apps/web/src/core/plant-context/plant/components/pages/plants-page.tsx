@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PlantTableRow } from "@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row";
+import { PlantCreateForm } from "@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form";
 import { PlantsPageSkeleton } from "@/core/plant-context/plant/components/organisms/plants-page-skeleton/plants-page-skeleton";
 import { usePlantsPage } from "@/core/plant-context/plant/hooks/use-plants-page/use-plants-page";
 import {
@@ -37,16 +38,22 @@ export function PlantsPage() {
 		currentPage,
 		perPage,
 		setPerPage,
+		createDialogOpen,
+		setCreateDialogOpen,
 		allFilteredPlants,
 		paginatedPlants,
 		totalPages,
 		isLoading,
 		error,
+		handleCreateSubmit,
+		handleAddClick,
 		handleEdit,
 		handleDelete,
 		handlePageChange,
 		hasAnyPlants,
 		growingUnits,
+		isCreating,
+		createError,
 	} = usePlantsPage();
 
 	const filterOptions: FilterOption[] = [
@@ -99,7 +106,7 @@ export function PlantsPage() {
 				title={t("pages.plants.list.title")}
 				description={t("pages.plants.list.description")}
 				actions={[
-					<Button key="create">
+					<Button key="create" onClick={handleAddClick}>
 						<PlusIcon className="mr-2 h-4 w-4" />
 						{t("pages.plants.list.actions.create.button")}
 					</Button>,
@@ -170,6 +177,21 @@ export function PlantsPage() {
 					</div>
 				)}
 			</TableLayout>
+
+			{/* Create Plant Form */}
+			<PlantCreateForm
+				open={createDialogOpen}
+				onOpenChange={setCreateDialogOpen}
+				onSubmit={handleCreateSubmit}
+				isLoading={isCreating}
+				error={createError}
+				growingUnits={
+					growingUnits?.items.map((unit) => ({
+						id: unit.id,
+						name: unit.name,
+					})) || []
+				}
+			/>
 		</div>
 	);
 }

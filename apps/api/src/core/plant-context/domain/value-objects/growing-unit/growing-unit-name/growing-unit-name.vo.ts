@@ -12,3 +12,4 @@ import { StringValueObject } from '@/shared/domain/value-objects/string/string.v
  */
 export class GrowingUnitNameValueObject extends StringValueObject {}
 
+
