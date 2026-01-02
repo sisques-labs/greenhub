@@ -70,6 +70,8 @@ Create `.env.local` in `apps/web/`:
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:4100/graphql
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
 ```
 
 ### 3. Start Development Server
@@ -202,13 +204,13 @@ The application uses **Zustand** for client-side state management.
 import { create } from 'zustand';
 
 interface StoreState {
-  count: number;
-  increment: () => void;
+	count: number;
+	increment: () => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
+	count: 0,
+	increment: () => set((state) => ({ count: state.count + 1 })),
 }));
 ```
 

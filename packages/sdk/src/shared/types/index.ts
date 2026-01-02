@@ -8,6 +8,11 @@ export type GraphQLClientConfig = {
 	headers?: Record<string, string>;
 	storage?: Storage;
 	storagePrefix?: string;
+	/**
+	 * Optional function to get the access token dynamically (e.g., from Clerk)
+	 * If provided, this will be called before each request to get the current token
+	 */
+	getToken?: () => Promise<string | null> | string | null;
 };
 
 // Common types

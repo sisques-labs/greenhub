@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
@@ -17,7 +17,7 @@ import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/s
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 export class UserMutationsResolver {
 	constructor(
 		private readonly commandBus: CommandBus,

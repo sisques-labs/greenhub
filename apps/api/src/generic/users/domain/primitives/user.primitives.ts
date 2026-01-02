@@ -4,6 +4,7 @@ export type UserPrimitives = BasePrimitives & {
 	id: string;
 	avatarUrl: string | null;
 	bio: string | null;
+	clerkUserId: string | null;
 	lastName: string | null;
 	name: string | null;
 	role: string;

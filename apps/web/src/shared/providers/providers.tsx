@@ -1,7 +1,8 @@
-import { SDKAutoProvider } from "@repo/sdk/react";
+import { ClerkProvider } from "@clerk/nextjs";
 import { QueryProvider } from "@repo/shared/presentation/providers/query-client-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "next-themes";
+import { SDKProviderWithClerk } from "./sdk-provider-with-clerk";
 
 interface ProvidersProps extends React.PropsWithChildren {
 	apiUrl: string;
@@ -10,13 +11,15 @@ interface ProvidersProps extends React.PropsWithChildren {
 
 const Providers = async ({ children, apiUrl, messages }: ProvidersProps) => {
 	return (
-		<NextIntlClientProvider messages={messages}>
-			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-				<SDKAutoProvider apiUrl={apiUrl}>
-					<QueryProvider>{children}</QueryProvider>
-				</SDKAutoProvider>
-			</ThemeProvider>
-		</NextIntlClientProvider>
+		<ClerkProvider>
+			<NextIntlClientProvider messages={messages}>
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+					<SDKProviderWithClerk apiUrl={apiUrl}>
+						<QueryProvider>{children}</QueryProvider>
+					</SDKProviderWithClerk>
+				</ThemeProvider>
+			</NextIntlClientProvider>
+		</ClerkProvider>
 	);
 };
 

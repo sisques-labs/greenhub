@@ -11,11 +11,11 @@ import {
 	PaginatedLocationResultDto,
 } from '@/core/location-context/transport/graphql/dtos/responses/location/location.response.dto';
 import { LocationGraphQLMapper } from '@/core/location-context/transport/graphql/mappers/location/location.mapper';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { Criteria } from '@/shared/domain/entities/criteria';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 /**
  * GraphQL resolver for location queries.
@@ -24,7 +24,7 @@ import { Criteria } from '@/shared/domain/entities/criteria';
  * Handles all read operations for locations. Requires authentication and appropriate roles.
  */
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class LocationQueriesResolver {
 	private readonly logger = new Logger(LocationQueriesResolver.name);
@@ -45,9 +45,7 @@ export class LocationQueriesResolver {
 		@Args('input', { nullable: true })
 		input?: LocationFindByCriteriaRequestDto,
 	): Promise<PaginatedLocationResultDto> {
-		this.logger.log(
-			`Finding locations by criteria: ${JSON.stringify(input)}`,
-		);
+		this.logger.log(`Finding locations by criteria: ${JSON.stringify(input)}`);
 
 		// 01: Convert DTO to domain Criteria
 		const criteria = new Criteria(
@@ -86,4 +84,3 @@ export class LocationQueriesResolver {
 		return result ? this.locationGraphQLMapper.toResponseDto(result) : null;
 	}
 }
-

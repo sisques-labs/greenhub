@@ -2,7 +2,7 @@ import { Logger, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
@@ -16,7 +16,7 @@ import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/s
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN)
 export class SagaLogMutationsResolver {
 	private readonly logger = new Logger(SagaLogMutationsResolver.name);

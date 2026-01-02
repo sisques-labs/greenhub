@@ -7,7 +7,7 @@ import {
 	PlantResponseDto,
 } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
 import { PlantGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/plant/plant.mapper';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { Criteria } from '@/shared/domain/entities/criteria';
@@ -23,7 +23,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
  * Handles all read operations for plants. Requires authentication and appropriate roles.
  */
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class PlantQueriesResolver {
 	private readonly logger = new Logger(PlantQueriesResolver.name);

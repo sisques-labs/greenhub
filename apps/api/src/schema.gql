@@ -205,19 +205,6 @@ type PaginatedGrowingUnitResultDto {
   items: [GrowingUnitResponseDto!]!
 }
 
-type LoginResponseDto {
-  """The access token"""
-  accessToken: String!
-
-  """The refresh token"""
-  refreshToken: String!
-}
-
-type RefreshTokenResponseDto {
-  """The new access token"""
-  accessToken: String!
-}
-
 type AuthUserProfileResponseDto {
   """The user id"""
   userId: String!
@@ -272,55 +259,6 @@ type AuthUserProfileResponseDto {
 
   """The updated at timestamp"""
   updatedAt: DateTime
-}
-
-type AuthResponseDto {
-  """The id of the auth"""
-  id: String!
-
-  """The user id of the auth"""
-  userId: String!
-
-  """The email of the auth"""
-  email: String
-
-  """The email verified of the auth"""
-  emailVerified: Boolean
-
-  """The last login at of the auth"""
-  lastLoginAt: DateTime
-
-  """The provider of the auth"""
-  provider: String
-
-  """The provider id of the auth"""
-  providerId: String
-
-  """The two factor enabled of the auth"""
-  twoFactorEnabled: Boolean
-
-  """The created at of the auth"""
-  createdAt: DateTime
-
-  """The updated at of the auth"""
-  updatedAt: DateTime
-}
-
-type PaginatedAuthResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The auths in the current page"""
-  items: [AuthResponseDto!]!
 }
 
 type OverviewResponseDto {
@@ -664,7 +602,6 @@ type Query {
   locationFindById(input: LocationFindByIdRequestDto!): LocationResponseDto
   healthCheck: HealthResponseDto!
   authProfileMe: AuthUserProfileResponseDto!
-  findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
   sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
   sagaInstanceFindByCriteria(input: SagaInstanceFindByCriteriaRequestDto): PaginatedSagaInstanceResultDto!
   sagaStepFindById(input: SagaStepFindByIdRequestDto!): SagaStepResponseDto
@@ -772,17 +709,6 @@ input LocationFindByIdRequestDto {
   id: String!
 }
 
-input AuthFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
-}
-
 input SagaInstanceFindByIdRequestDto {
   """The id of the saga instance"""
   id: String!
@@ -873,10 +799,6 @@ type Mutation {
   createLocation(input: LocationCreateRequestDto!): MutationResponseDto!
   updateLocation(input: LocationUpdateRequestDto!): MutationResponseDto!
   deleteLocation(input: LocationDeleteRequestDto!): MutationResponseDto!
-  loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
-  registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
-  refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
-  logout(input: UpdateUserRequestDto!): MutationResponseDto!
   sagaInstanceCreate(input: SagaInstanceCreateRequestDto!): MutationResponseDto!
   sagaInstanceUpdate(input: SagaInstanceUpdateRequestDto!): MutationResponseDto!
   sagaInstanceChangeStatus(input: SagaInstanceChangeStatusRequestDto!): MutationResponseDto!
@@ -1078,66 +1000,6 @@ input LocationDeleteRequestDto {
   id: String!
 }
 
-input AuthLoginByEmailRequestDto {
-  """The email of the auth"""
-  email: String!
-
-  """The password of the auth"""
-  password: String!
-}
-
-input AuthRegisterByEmailRequestDto {
-  """The email of the auth"""
-  email: String!
-
-  """The password of the auth"""
-  password: String!
-}
-
-input AuthRefreshTokenRequestDto {
-  """The refresh token to use for generating a new access token"""
-  refreshToken: String!
-}
-
-input UpdateUserRequestDto {
-  """The unique identifier of the user"""
-  id: String!
-
-  """The name of the user"""
-  name: String
-
-  """The bio of the user"""
-  bio: String
-
-  """The avatar url of the user"""
-  avatarUrl: String
-
-  """The last name of the user"""
-  lastName: String
-
-  """The user name of the user"""
-  userName: String
-
-  """The role of the user"""
-  role: UserRoleEnum
-
-  """The status of the user"""
-  status: UserStatusEnum
-}
-
-"""The role of the user"""
-enum UserRoleEnum {
-  ADMIN
-  USER
-}
-
-"""The status of the user"""
-enum UserStatusEnum {
-  ACTIVE
-  INACTIVE
-  BLOCKED
-}
-
 input SagaInstanceCreateRequestDto {
   """The name of the saga instance"""
   name: String!
@@ -1286,6 +1148,45 @@ input CreateUserRequestDto {
 
   """The status of the user"""
   status: UserStatusEnum!
+}
+
+"""The role of the user"""
+enum UserRoleEnum {
+  ADMIN
+  USER
+}
+
+"""The status of the user"""
+enum UserStatusEnum {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+input UpdateUserRequestDto {
+  """The unique identifier of the user"""
+  id: String!
+
+  """The name of the user"""
+  name: String
+
+  """The bio of the user"""
+  bio: String
+
+  """The avatar url of the user"""
+  avatarUrl: String
+
+  """The last name of the user"""
+  lastName: String
+
+  """The user name of the user"""
+  userName: String
+
+  """The role of the user"""
+  role: UserRoleEnum
+
+  """The status of the user"""
+  status: UserStatusEnum
 }
 
 input DeleteUserRequestDto {

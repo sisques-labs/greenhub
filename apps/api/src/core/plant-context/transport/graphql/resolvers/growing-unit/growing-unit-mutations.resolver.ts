@@ -14,7 +14,7 @@ import { GrowingUnitUpdateRequestDto } from '@/core/plant-context/transport/grap
 import { PlantAddRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-add.request.dto';
 import { PlantRemoveRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-remove.request.dto';
 import { PlantUpdateRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-update.request.dto';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
@@ -28,7 +28,7 @@ import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mapper
  * Handles all write operations for growing units. Requires authentication and appropriate roles.
  */
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class GrowingUnitMutationsResolver {
 	private readonly logger = new Logger(GrowingUnitMutationsResolver.name);

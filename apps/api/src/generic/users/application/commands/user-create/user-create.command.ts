@@ -1,6 +1,7 @@
 import { IUserCreateCommandDto } from '@/generic/users/application/dtos/commands/user-create/user-create-command.dto';
 import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
 import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
+import { UserClerkUserIdValueObject } from '@/generic/users/domain/value-objects/user-clerk-user-id/user-clerk-user-id.vo';
 import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
 import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
@@ -14,6 +15,7 @@ export class UserCreateCommand {
 	readonly id: UserUuidValueObject;
 	readonly avatarUrl: UserAvatarUrlValueObject | null;
 	readonly bio: UserBioValueObject | null;
+	readonly clerkUserId: UserClerkUserIdValueObject | null;
 	readonly lastName: UserLastNameValueObject | null;
 	readonly name: UserNameValueObject | null;
 	readonly role?: UserRoleValueObject;
@@ -21,13 +23,19 @@ export class UserCreateCommand {
 	readonly userName: UserUserNameValueObject | null;
 
 	constructor(props: IUserCreateCommandDto) {
-		this.id = new UserUuidValueObject();
+		this.id = props.id
+			? new UserUuidValueObject(props.id)
+			: new UserUuidValueObject();
 
 		this.avatarUrl = props.avatarUrl
 			? new UserAvatarUrlValueObject(props.avatarUrl)
 			: null;
 
 		this.bio = props.bio ? new UserBioValueObject(props.bio) : null;
+
+		this.clerkUserId = props.clerkUserId
+			? new UserClerkUserIdValueObject(props.clerkUserId)
+			: null;
 
 		this.lastName = props.lastName
 			? new UserLastNameValueObject(props.lastName)

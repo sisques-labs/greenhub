@@ -5,6 +5,7 @@ import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create
 import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
 import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
 import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
+import { UserClerkUserIdValueObject } from '@/generic/users/domain/value-objects/user-clerk-user-id/user-clerk-user-id.vo';
 import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
 import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
@@ -65,6 +66,9 @@ export class UserAggregateFactory
 			id: new UserUuidValueObject(data.id),
 			name: data.name ? new UserNameValueObject(data.name) : null,
 			bio: data.bio ? new UserBioValueObject(data.bio) : null,
+			clerkUserId: data.clerkUserId
+				? new UserClerkUserIdValueObject(data.clerkUserId)
+				: null,
 			avatarUrl: data.avatarUrl
 				? new UserAvatarUrlValueObject(data.avatarUrl)
 				: null,

@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
@@ -19,7 +19,7 @@ import { Criteria } from '@/shared/domain/entities/criteria';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 export class UserQueryResolver {
 	constructor(
 		private readonly queryBus: QueryBus,

@@ -3,6 +3,7 @@ import { IUserUpdateDto } from '@/generic/users/domain/dtos/entities/user-update
 import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
 import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
 import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
+import { UserClerkUserIdValueObject } from '@/generic/users/domain/value-objects/user-clerk-user-id/user-clerk-user-id.vo';
 import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
 import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
@@ -19,6 +20,7 @@ export class UserAggregate extends BaseAggregate {
 	private readonly _id: UserUuidValueObject;
 	private _avatarUrl: UserAvatarUrlValueObject | null;
 	private _bio: UserBioValueObject | null;
+	private _clerkUserId: UserClerkUserIdValueObject | null;
 	private _lastName: UserLastNameValueObject | null;
 	private _name: UserNameValueObject | null;
 	private _role: UserRoleValueObject;
@@ -32,6 +34,7 @@ export class UserAggregate extends BaseAggregate {
 		this._id = props.id;
 		this._avatarUrl = props.avatarUrl;
 		this._bio = props.bio;
+		this._clerkUserId = props.clerkUserId;
 		this._lastName = props.lastName;
 		this._name = props.name;
 		this._role = props.role;
@@ -69,6 +72,8 @@ export class UserAggregate extends BaseAggregate {
 		this._avatarUrl =
 			props.avatarUrl !== undefined ? props.avatarUrl : this._avatarUrl;
 		this._bio = props.bio !== undefined ? props.bio : this._bio;
+		this._clerkUserId =
+			props.clerkUserId !== undefined ? props.clerkUserId : this._clerkUserId;
 		this._lastName =
 			props.lastName !== undefined ? props.lastName : this._lastName;
 		this._name = props.name !== undefined ? props.name : this._name;
@@ -124,6 +129,15 @@ export class UserAggregate extends BaseAggregate {
 	 */
 	public get id(): UserUuidValueObject {
 		return this._id;
+	}
+
+	/**
+	 * Get the Clerk user ID of the user.
+	 *
+	 * @returns The Clerk user ID of the user.
+	 */
+	public get clerkUserId(): UserClerkUserIdValueObject | null {
+		return this._clerkUserId;
 	}
 
 	/**
@@ -198,6 +212,7 @@ export class UserAggregate extends BaseAggregate {
 			id: this._id.value,
 			avatarUrl: this._avatarUrl ? this._avatarUrl.value : null,
 			bio: this._bio ? this._bio.value : null,
+			clerkUserId: this._clerkUserId ? this._clerkUserId.value : null,
 			lastName: this._lastName ? this._lastName.value : null,
 			name: this._name ? this._name.value : null,
 			role: this._role.value,

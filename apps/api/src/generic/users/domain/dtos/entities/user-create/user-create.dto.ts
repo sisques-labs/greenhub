@@ -1,5 +1,6 @@
 import { UserAvatarUrlValueObject } from '@/generic/users/domain/value-objects/user-avatar-url/user-avatar-url.vo';
 import { UserBioValueObject } from '@/generic/users/domain/value-objects/user-bio/user-bio.vo';
+import { UserClerkUserIdValueObject } from '@/generic/users/domain/value-objects/user-clerk-user-id/user-clerk-user-id.vo';
 import { UserLastNameValueObject } from '@/generic/users/domain/value-objects/user-last-name/user-last-name.vo';
 import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-name/user-name.vo';
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
@@ -27,6 +28,7 @@ export interface IUserCreateDto extends IBaseAggregateDto {
 	id: UserUuidValueObject;
 	avatarUrl?: UserAvatarUrlValueObject | null;
 	bio?: UserBioValueObject | null;
+	clerkUserId?: UserClerkUserIdValueObject | null;
 	lastName?: UserLastNameValueObject | null;
 	name?: UserNameValueObject | null;
 	role?: UserRoleValueObject;

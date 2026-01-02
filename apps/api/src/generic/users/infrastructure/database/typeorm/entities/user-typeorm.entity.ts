@@ -6,7 +6,11 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 
 @Entity('users')
 @Index(['userName'])
+@Index(['clerkUserId'])
 export class UserTypeormEntity extends BaseTypeormEntity {
+	@Column({ type: 'varchar', nullable: true, unique: true })
+	clerkUserId: string | null;
+
 	@Column({ type: 'varchar', nullable: true, unique: true })
 	userName: string | null;
 

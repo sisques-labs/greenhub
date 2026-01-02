@@ -2,6 +2,7 @@ import { IBaseEventData } from '@/shared/domain/interfaces/base-event-data.inter
 
 export interface IUserEventData extends IBaseEventData {
 	id: string;
+	clerkUserId: string | null;
 	avatarUrl: string | null;
 	bio: string | null;
 	lastName: string | null;

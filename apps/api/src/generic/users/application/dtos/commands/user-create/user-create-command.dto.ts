@@ -2,6 +2,7 @@
  * Data Transfer Object for creating a new user via command layer.
  *
  * @interface IUserCreateCommandDto
+ * @property {string} [id] - The user ID. If not provided, a new UUID will be generated.
  * @property {string | null} avatarUrl - The URL of the user's avatar. Can be null if not provided.
  * @property {string | null} bio - The biography of the user. Can be null if not provided.
  * @property {string | null} lastName - The user's last name. Can be null if not provided.
@@ -11,6 +12,8 @@
  * @property {string} userName - The user's username. Must be provided.
  */
 export interface IUserCreateCommandDto {
+	id?: string;
+	clerkUserId?: string | null;
 	avatarUrl: string | null;
 	bio: string | null;
 	lastName: string | null;

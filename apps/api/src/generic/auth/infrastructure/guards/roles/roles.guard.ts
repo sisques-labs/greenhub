@@ -34,14 +34,14 @@ export class RolesGuard implements CanActivate {
 		const ctx = GqlExecutionContext.create(context);
 		const request = ctx.getContext().req;
 
-		// Get user from request (attached by JwtStrategy)
+		// Get user from request (attached by ClerkAuthGuard)
 		const user = request.user;
 
 		if (!user) {
 			throw new ForbiddenException('User not authenticated');
 		}
 
-		// Get user role from JWT payload (added by JwtStrategy)
+		// Get user role from Clerk user (added by ClerkAuthGuard)
 		const userRole = (user as any).role;
 
 		if (!userRole) {

@@ -1,80 +1,67 @@
-import { NextRequest, NextResponse } from "next/server";
-import createMiddleware from "next-intl/middleware";
-import { routing } from "@/shared/i18n/routing";
+import { routing } from '@/shared/i18n/routing';
+import { clerkMiddleware } from '@clerk/nextjs/server';
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest, NextResponse } from 'next/server';
 
 const intlMiddleware = createMiddleware(routing);
 
-const STORAGE_PREFIX = "@repo/sdk:";
-const ACCESS_TOKEN_KEY = `${STORAGE_PREFIX}accessToken`;
-
 /**
  * Public routes that don't require authentication
+ * Use (.*) pattern for catch-all routes
  */
-const PUBLIC_ROUTES = ["/auth"];
-
-/**
- * Encodes cookie name to match SDK encoding
- */
-function encodeCookieName(name: string): string {
-	return encodeURIComponent(name).replace(/[()]/g, (c) => {
-		return c === "(" ? "%28" : "%29";
-	});
-}
+const PUBLIC_ROUTES = ['/auth(.*)'];
 
 /**
  * Checks if a path is a public route
+ * Supports regex patterns like /auth(.*)
  */
 function isPublicRoute(path: string): boolean {
-	return PUBLIC_ROUTES.some(
-		(route) => path === route || path.startsWith(`${route}/`),
-	);
+	return PUBLIC_ROUTES.some((route) => {
+		// If route contains regex pattern like (.*)
+		if (route.includes('(.*)')) {
+			const pattern = route.replace('(.*)', '');
+			return path === pattern || path.startsWith(`${pattern}/`);
+		}
+		// Exact match or starts with route
+		return path === route || path.startsWith(`${route}/`);
+	});
 }
 
-/**
- * Gets access token from cookies
- */
-function getAccessTokenFromCookies(request: NextRequest): string | null {
-	const encodedKey = encodeCookieName(ACCESS_TOKEN_KEY);
-	const token = request.cookies.get(encodedKey)?.value;
-
-	// Return token only if it exists and is not empty
-	return token && token.trim().length > 0 ? token : null;
-}
-
-export default function middleware(request: NextRequest) {
+export default clerkMiddleware(async (auth, request: NextRequest) => {
 	// Get the pathname without locale
 	const pathname = request.nextUrl.pathname;
 
 	// Extract locale from pathname (format: /locale/path)
 	const localeMatch = pathname.match(/^\/([^/]+)/);
 	const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
-	const pathWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+	const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
 
 	// Redirect root path to /home
-	if (pathWithoutLocale === "/") {
+	if (pathWithoutLocale === '/') {
 		const url = request.nextUrl.clone();
 		url.pathname = `/${locale}/home`;
 		return NextResponse.redirect(url);
 	}
 
 	// Check if accessing auth page or other public routes
-	const isAuthPage = pathWithoutLocale === "/auth";
+	const isAuthPage =
+		pathWithoutLocale === '/auth' || pathWithoutLocale.startsWith('/auth/');
 	const isPublic = isPublicRoute(pathWithoutLocale);
 
-	// Get access token from cookies
-	const accessToken = getAccessTokenFromCookies(request);
+	// Get Clerk session
+	const { userId } = await auth();
 
-	// Case 1: User is authenticated (has valid token) and tries to access auth page
+	// Case 1: User is authenticated (has Clerk session) and tries to access auth page
 	// Redirect to dashboard
-	if (accessToken && isAuthPage) {
+	if (userId && isAuthPage) {
 		const url = request.nextUrl.clone();
-		url.pathname = `/${locale}/dashboard`;
+		url.pathname = `/${locale}/home`;
 		return NextResponse.redirect(url);
 	}
 
-	// Case 2: User is NOT authenticated (no token) and tries to access protected route
+	// Case 2: User is NOT authenticated (no Clerk session) and tries to access protected route
 	// Redirect to auth page
-	if (!accessToken && !isPublic) {
+	if (!userId && !isPublic) {
 		const url = request.nextUrl.clone();
 		url.pathname = `/${locale}/auth`;
 		return NextResponse.redirect(url);
@@ -82,11 +69,13 @@ export default function middleware(request: NextRequest) {
 
 	// Continue with intl middleware for all other cases
 	return intlMiddleware(request);
-}
+});
 
 export const config = {
-	// Match all pathnames except for
-	// - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
-	// - … the ones containing a dot (e.g. `favicon.ico`)
-	matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+	matcher: [
+		// Skip Next.js internals and all static files, unless found in search params
+		'/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+		// Always run for API routes
+		'/(api|trpc)(.*)',
+	],
 };

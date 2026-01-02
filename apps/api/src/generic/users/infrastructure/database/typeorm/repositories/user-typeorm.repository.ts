@@ -40,6 +40,27 @@ export class UserTypeormRepository
 	}
 
 	/**
+	 * Finds a user by their Clerk user ID
+	 *
+	 * @param clerkUserId - The Clerk user ID of the user to find
+	 * @returns The user if found, null otherwise
+	 */
+	async findByClerkUserId(
+		clerkUserId: string,
+	): Promise<UserAggregate | null> {
+		this.logger.log(`Finding user by Clerk user ID: ${clerkUserId}`);
+		const userEntity = await this.repository.findOne({
+			where: { clerkUserId },
+		});
+
+		if (!userEntity) {
+			return null;
+		}
+
+		return this.userTypeormMapper.toDomainEntity(userEntity);
+	}
+
+	/**
 	 * Finds a user by their user name
 	 *
 	 * @param userName - The user name of the user to find

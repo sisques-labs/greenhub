@@ -7,7 +7,7 @@ import {
 	PaginatedGrowingUnitResultDto,
 } from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
 import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { Criteria } from '@/shared/domain/entities/criteria';
@@ -23,7 +23,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
  * Handles all read operations for growing units. Requires authentication and appropriate roles.
  */
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class GrowingUnitQueriesResolver {
 	private readonly logger = new Logger(GrowingUnitQueriesResolver.name);

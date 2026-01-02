@@ -1,14 +1,13 @@
-import { Logger, UseGuards } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { Query, Resolver } from '@nestjs/graphql';
-
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { OverviewFindViewModelQuery } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query';
 import { OverviewResponseDto } from '@/generic/overview/transport/graphql/dtos/responses/overview.response.dto';
 import { OverviewGraphQLMapper } from '@/generic/overview/transport/graphql/mappers/overview.mapper';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { Logger, UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Query, Resolver } from '@nestjs/graphql';
 
 /**
  * GraphQL resolver for overview queries.
@@ -18,7 +17,7 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
  * Since there is only one overview entity, queries do not require parameters.
  */
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class OverviewQueriesResolver {
 	private readonly logger = new Logger(OverviewQueriesResolver.name);

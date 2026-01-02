@@ -8,7 +8,7 @@ import { LocationUpdateCommand } from '@/core/location-context/application/comma
 import { LocationCreateRequestDto } from '@/core/location-context/transport/graphql/dtos/requests/location/location-create.request.dto';
 import { LocationDeleteRequestDto } from '@/core/location-context/transport/graphql/dtos/requests/location/location-delete.request.dto';
 import { LocationUpdateRequestDto } from '@/core/location-context/transport/graphql/dtos/requests/location/location-update.request.dto';
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
@@ -22,7 +22,7 @@ import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mapper
  * Handles all write operations for locations. Requires authentication and appropriate roles.
  */
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN, UserRoleEnum.USER)
 export class LocationMutationsResolver {
 	private readonly logger = new Logger(LocationMutationsResolver.name);
@@ -42,9 +42,7 @@ export class LocationMutationsResolver {
 	async createLocation(
 		@Args('input') input: LocationCreateRequestDto,
 	): Promise<MutationResponseDto> {
-		this.logger.log(
-			`Creating location with input: ${JSON.stringify(input)}`,
-		);
+		this.logger.log(`Creating location with input: ${JSON.stringify(input)}`);
 
 		// 01: Send the command to the command bus
 		const createdLocationId = await this.commandBus.execute(
@@ -73,9 +71,7 @@ export class LocationMutationsResolver {
 	async updateLocation(
 		@Args('input') input: LocationUpdateRequestDto,
 	): Promise<MutationResponseDto> {
-		this.logger.log(
-			`Updating location with input: ${JSON.stringify(input)}`,
-		);
+		this.logger.log(`Updating location with input: ${JSON.stringify(input)}`);
 
 		// 01: Send the command to the command bus
 		await this.commandBus.execute(
@@ -105,14 +101,10 @@ export class LocationMutationsResolver {
 	async deleteLocation(
 		@Args('input') input: LocationDeleteRequestDto,
 	): Promise<MutationResponseDto> {
-		this.logger.log(
-			`Deleting location with input: ${JSON.stringify(input)}`,
-		);
+		this.logger.log(`Deleting location with input: ${JSON.stringify(input)}`);
 
 		// 01: Send the command to the command bus
-		await this.commandBus.execute(
-			new LocationDeleteCommand({ id: input.id }),
-		);
+		await this.commandBus.execute(new LocationDeleteCommand({ id: input.id }));
 
 		// 02: Return success response
 		return this.mutationResponseGraphQLMapper.toResponseDto({
@@ -122,4 +114,3 @@ export class LocationMutationsResolver {
 		});
 	}
 }
-

@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 
 import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { ClerkModule } from '@/shared/infrastructure/clerk/clerk.module';
 import { TypeOrmModule } from '@/shared/infrastructure/database/typeorm/typeorm.module';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
 
@@ -28,7 +29,7 @@ const REPOSITORIES = [];
 
 @Global()
 @Module({
-	imports: [MongoModule, TypeOrmModule],
+	imports: [MongoModule, TypeOrmModule, ClerkModule],
 	controllers: [],
 	providers: [
 		...RESOLVERS,
@@ -43,6 +44,7 @@ const REPOSITORIES = [];
 	exports: [
 		MongoModule,
 		TypeOrmModule,
+		ClerkModule,
 		...RESOLVERS,
 		...SERVICES,
 		...QUERY_HANDLERS,

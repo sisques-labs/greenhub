@@ -8,6 +8,7 @@ import { UserCreatedEventHandler } from '@/generic/users/application/event-handl
 import { UserDeletedEventHandler } from '@/generic/users/application/event-handlers/user-deleted/user-deleted.event-handler';
 import { UserUpdatedEventHandler } from '@/generic/users/application/event-handlers/user-updated/user-updated.event-handler';
 import { FindUsersByCriteriaQueryHandler } from '@/generic/users/application/queries/find-users-by-criteria/find-users-by-criteria.query-handler';
+import { UserEnsureExistsQueryHandler } from '@/generic/users/application/queries/user-ensure-exists/user-ensure-exists.query-handler';
 import { UserFindByIdQueryHandler } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query-handler';
 import { UserViewModelFindByIdQueryHandler } from '@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query-handler';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
@@ -37,6 +38,7 @@ const SERVICES = [
 
 const QUERY_HANDLERS = [
 	FindUsersByCriteriaQueryHandler,
+	UserEnsureExistsQueryHandler,
 	UserFindByIdQueryHandler,
 	UserViewModelFindByIdQueryHandler,
 ];
@@ -83,5 +85,6 @@ const ENTITIES = [UserTypeormEntity];
 		...FACTORIES,
 		...MAPPERS,
 	],
+	exports: [...SERVICES],
 })
 export class UserModule {}

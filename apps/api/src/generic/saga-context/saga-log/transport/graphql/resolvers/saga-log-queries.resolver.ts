@@ -2,7 +2,7 @@ import { Logger, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
-import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { ClerkAuthGuard } from '@/generic/auth/infrastructure/auth/clerk-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { FindSagaLogsByCriteriaQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query';
@@ -22,7 +22,7 @@ import { Criteria } from '@/shared/domain/entities/criteria';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 @Resolver()
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(ClerkAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN)
 export class SagaLogQueryResolver {
 	private readonly logger = new Logger(SagaLogQueryResolver.name);

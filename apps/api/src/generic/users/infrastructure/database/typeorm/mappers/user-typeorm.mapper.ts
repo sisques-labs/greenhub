@@ -29,6 +29,7 @@ export class UserTypeOrmMapper {
 			name: userEntity.name ?? null,
 			lastName: userEntity.lastName ?? null,
 			bio: userEntity.bio ?? null,
+			clerkUserId: userEntity.clerkUserId ?? null,
 			avatarUrl: userEntity.avatarUrl ?? null,
 			role: userEntity.role,
 			status: userEntity.status,
@@ -57,6 +58,7 @@ export class UserTypeOrmMapper {
 		entity.name = primitives.name;
 		entity.lastName = primitives.lastName;
 		entity.bio = primitives.bio;
+		entity.clerkUserId = primitives.clerkUserId;
 		entity.avatarUrl = primitives.avatarUrl;
 		entity.role = primitives.role as UserRoleEnum;
 		entity.status = primitives.status as UserStatusEnum;
