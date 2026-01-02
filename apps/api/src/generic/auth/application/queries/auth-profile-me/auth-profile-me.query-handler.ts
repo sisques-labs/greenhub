@@ -2,6 +2,7 @@ import { Logger } from '@nestjs/common';
 import { IQueryHandler, QueryBus, QueryHandler } from '@nestjs/cqrs';
 
 import { AuthProfileMeQuery } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query';
+import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
 import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
@@ -77,7 +78,7 @@ export class AuthProfileMeQueryHandler
 				? new Date(clerkUser.lastSignInAt)
 				: null,
 			password: null, // Clerk manages passwords, we don't store them
-			provider: 'CLERK',
+			provider: AuthProviderEnum.CLERK,
 			providerId: clerkUser.id,
 			twoFactorEnabled: clerkUser.twoFactorEnabled || false,
 			createdAt: new Date(clerkUser.createdAt),
