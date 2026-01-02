@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import { PageHeader } from "@repo/shared/presentation/components/organisms/page-header";
-import { TableLayout } from "@repo/shared/presentation/components/organisms/table-layout";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { PlantCreateForm } from '@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
+import { PlantsPageSkeleton } from '@/core/plant-context/plant/components/organisms/plants-page-skeleton/plants-page-skeleton';
+import { usePlantsPage } from '@/core/plant-context/plant/hooks/use-plants-page/use-plants-page';
+import {
+	type FilterOption,
+	SearchAndFilters,
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
+import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
+import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
+import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@repo/shared/presentation/components/ui/table";
+} from '@repo/shared/presentation/components/ui/table';
 import {
 	Building2Icon,
 	CheckCircleIcon,
 	DropletsIcon,
 	HomeIcon,
 	PlusIcon,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
-import { PlantTableRow } from "@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row";
-import { PlantCreateForm } from "@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form";
-import { PlantsPageSkeleton } from "@/core/plant-context/plant/components/organisms/plants-page-skeleton/plants-page-skeleton";
-import { usePlantsPage } from "@/core/plant-context/plant/hooks/use-plants-page/use-plants-page";
-import {
-	type FilterOption,
-	SearchAndFilters,
-} from "@/shared/components/ui/search-and-filters/search-and-filters";
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function PlantsPage() {
 	const t = useTranslations();
@@ -57,25 +57,25 @@ export function PlantsPage() {
 	} = usePlantsPage();
 
 	const filterOptions: FilterOption[] = [
-		{ value: "all", label: t("pages.plants.list.filters.all") },
+		{ value: 'all', label: t('pages.plants.list.filters.all') },
 		{
-			value: "indoor",
-			label: t("pages.plants.list.filters.indoor"),
+			value: 'indoor',
+			label: t('pages.plants.list.filters.indoor'),
 			icon: HomeIcon,
 		},
 		{
-			value: "outdoor",
-			label: t("pages.plants.list.filters.outdoor"),
+			value: 'outdoor',
+			label: t('pages.plants.list.filters.outdoor'),
 			icon: Building2Icon,
 		},
 		{
-			value: "needsWater",
-			label: t("pages.plants.list.filters.needsWater"),
+			value: 'needsWater',
+			label: t('pages.plants.list.filters.needsWater'),
 			icon: DropletsIcon,
 		},
 		{
-			value: "healthy",
-			label: t("pages.plants.list.filters.healthy"),
+			value: 'healthy',
+			label: t('pages.plants.list.filters.healthy'),
 			icon: CheckCircleIcon,
 		},
 	];
@@ -90,7 +90,7 @@ export function PlantsPage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t("pages.plants.list.error.loading", {
+						{t('pages.plants.list.error.loading', {
 							message: (error as Error).message,
 						})}
 					</p>
@@ -103,19 +103,19 @@ export function PlantsPage() {
 		<div className="mx-auto space-y-6">
 			{/* Header */}
 			<PageHeader
-				title={t("pages.plants.list.title")}
-				description={t("pages.plants.list.description")}
+				title={t('pages.plants.list.title')}
+				description={t('pages.plants.list.description')}
 				actions={[
 					<Button key="create" onClick={handleAddClick}>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t("pages.plants.list.actions.create.button")}
+						{t('pages.plants.list.actions.create.button')}
 					</Button>,
 				]}
 			/>
 
 			{/* Search and Filters */}
 			<SearchAndFilters
-				searchPlaceholder={t("pages.plants.list.search.placeholder")}
+				searchPlaceholder={t('pages.plants.list.search.placeholder')}
 				searchValue={searchQuery}
 				onSearchChange={setSearchQuery}
 				filterOptions={filterOptions}
@@ -131,26 +131,26 @@ export function PlantsPage() {
 				perPage={perPage}
 				onPerPageChange={setPerPage}
 			>
-				{allFilteredPlants.length > 0 ? (
+				{paginatedPlants.length > 0 ? (
 					<div className="rounded-md border">
 						<Table>
 							<TableHeader>
 								<TableRow>
 									<TableHead className="w-[80px]">IMG</TableHead>
 									<TableHead>
-										{t("pages.plants.list.table.columns.plant")}
+										{t('pages.plants.list.table.columns.plant')}
 									</TableHead>
 									<TableHead>
-										{t("pages.plants.list.table.columns.location")}
+										{t('pages.plants.list.table.columns.location')}
 									</TableHead>
 									<TableHead>
-										{t("pages.plants.list.table.columns.status")}
+										{t('pages.plants.list.table.columns.status')}
 									</TableHead>
 									<TableHead>
-										{t("pages.plants.list.table.columns.lastWatering")}
+										{t('pages.plants.list.table.columns.lastWatering')}
 									</TableHead>
 									<TableHead className="w-[80px]">
-										{t("pages.plants.list.table.columns.actions")}
+										{t('pages.plants.list.table.columns.actions')}
 									</TableHead>
 								</TableRow>
 							</TableHeader>
@@ -171,8 +171,8 @@ export function PlantsPage() {
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-muted-foreground">
 							{hasAnyPlants
-								? t("pages.plants.list.empty.filtered")
-								: t("pages.plants.list.empty")}
+								? t('pages.plants.list.empty.filtered')
+								: t('pages.plants.list.empty')}
 						</p>
 					</div>
 				)}

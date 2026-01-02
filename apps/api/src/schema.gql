@@ -70,6 +70,20 @@ type GrowingUnitLocationResponseDto {
   updatedAt: DateTime!
 }
 
+type PlantGrowingUnitReferenceDto {
+  """The id of the growing unit"""
+  id: String!
+
+  """The name of the growing unit"""
+  name: String!
+
+  """The type of the growing unit"""
+  type: String!
+
+  """The capacity of the growing unit"""
+  capacity: Float!
+}
+
 type PlantResponseDto {
   """The id of the plant"""
   id: String!
@@ -91,6 +105,12 @@ type PlantResponseDto {
 
   """The status of the plant"""
   status: String!
+
+  """The location where the plant is located"""
+  location: GrowingUnitLocationResponseDto
+
+  """The growing unit containing the plant (basic information only)"""
+  growingUnit: PlantGrowingUnitReferenceDto
 
   """The created at timestamp of the plant"""
   createdAt: DateTime!

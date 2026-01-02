@@ -1,4 +1,8 @@
-import { IPlantViewModelDto } from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
+import {
+	IPlantGrowingUnitReference,
+	IPlantViewModelDto,
+} from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
 
 /**
@@ -26,6 +30,8 @@ import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-
  */
 export class PlantViewModel extends BaseViewModel {
 	private _growingUnitId?: string;
+	private _location?: LocationViewModel;
+	private _growingUnit?: IPlantGrowingUnitReference;
 	private _name: string;
 	private _species: string;
 	private _plantedDate: Date | null;
@@ -40,6 +46,8 @@ export class PlantViewModel extends BaseViewModel {
 	constructor(props: IPlantViewModelDto) {
 		super(props);
 		this._growingUnitId = props.growingUnitId;
+		this._location = props.location;
+		this._growingUnit = props.growingUnit;
 		this._name = props.name;
 		this._species = props.species;
 		this._plantedDate = props.plantedDate;
@@ -52,8 +60,26 @@ export class PlantViewModel extends BaseViewModel {
 	 *
 	 * @returns The growing unit identifier
 	 */
-	public get growingUnitId(): string {
+	public get growingUnitId(): string | undefined {
 		return this._growingUnitId;
+	}
+
+	/**
+	 * Gets the location view model of the plant.
+	 *
+	 * @returns The location view model, or undefined if not set
+	 */
+	public get location(): LocationViewModel | undefined {
+		return this._location;
+	}
+
+	/**
+	 * Gets the growing unit reference of the plant.
+	 *
+	 * @returns The growing unit reference with basic information, or undefined if not set
+	 */
+	public get growingUnit(): IPlantGrowingUnitReference | undefined {
+		return this._growingUnit;
 	}
 
 	/**
@@ -114,6 +140,8 @@ export class PlantViewModel extends BaseViewModel {
 	 */
 	public update(updateData: IPlantViewModelDto): void {
 		this._growingUnitId = updateData.growingUnitId;
+		this._location = updateData.location;
+		this._growingUnit = updateData.growingUnit;
 		this._name = updateData.name;
 		this._species = updateData.species;
 		this._plantedDate = updateData.plantedDate;

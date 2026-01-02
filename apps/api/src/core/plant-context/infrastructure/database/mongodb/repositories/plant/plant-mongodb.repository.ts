@@ -46,17 +46,7 @@ export class PlantMongoRepository
 		const plantMongoDbDto = await collection.findOne({ id });
 
 		return plantMongoDbDto
-			? this.plantMongoDBMapper.toViewModel({
-					id: plantMongoDbDto.id,
-					growingUnitId: plantMongoDbDto.growingUnitId,
-					name: plantMongoDbDto.name,
-					species: plantMongoDbDto.species,
-					plantedDate: plantMongoDbDto.plantedDate,
-					notes: plantMongoDbDto.notes,
-					status: plantMongoDbDto.status,
-					createdAt: plantMongoDbDto.createdAt,
-					updatedAt: plantMongoDbDto.updatedAt,
-				})
+			? this.plantMongoDBMapper.toViewModel(plantMongoDbDto)
 			: null;
 	}
 
@@ -93,17 +83,7 @@ export class PlantMongoRepository
 
 		// 04: Convert MongoDB documents to domain entities
 		const plants = items.map((doc) =>
-			this.plantMongoDBMapper.toViewModel({
-				id: doc.id,
-				growingUnitId: doc.growingUnitId,
-				name: doc.name,
-				species: doc.species,
-				plantedDate: doc.plantedDate,
-				notes: doc.notes,
-				status: doc.status,
-				createdAt: doc.createdAt,
-				updatedAt: doc.updatedAt,
-			}),
+			this.plantMongoDBMapper.toViewModel(doc),
 		);
 
 		return new PaginatedResult<PlantViewModel>(plants, total, page, limit);

@@ -1,12 +1,16 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { IPlantViewModelDto } from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
+import {
+	IPlantGrowingUnitReference,
+	IPlantViewModelDto,
+} from '@/core/plant-context/domain/dtos/view-models/plant/plant-view-model.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantViewModelIdRequiredException } from '@/core/plant-context/domain/exceptions/plant-view-model/plant-view-model-id-required/plant-view-model-id-required.exception';
 import { PlantViewModelNameRequiredException } from '@/core/plant-context/domain/exceptions/plant-view-model/plant-view-model-name-required/plant-view-model-name-required.exception';
 import { PlantViewModelSpeciesRequiredException } from '@/core/plant-context/domain/exceptions/plant-view-model/plant-view-model-species-required/plant-view-model-species-required.exception';
 import { PlantViewModelStatusRequiredException } from '@/core/plant-context/domain/exceptions/plant-view-model/plant-view-model-status-required/plant-view-model-status-required.exception';
 import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant/plant.primitives';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 
 /**
@@ -41,6 +45,8 @@ export class PlantViewModelBuilder {
 
 	private _id: string | null = null;
 	private _growingUnitId: string | null = null;
+	private _location: LocationViewModel | null = null;
+	private _growingUnit: IPlantGrowingUnitReference | null = null;
 	private _name: string | null = null;
 	private _species: string | null = null;
 	private _plantedDate: Date | null = null;
@@ -68,6 +74,28 @@ export class PlantViewModelBuilder {
 	 */
 	public withGrowingUnitId(growingUnitId: string): this {
 		this._growingUnitId = growingUnitId;
+		return this;
+	}
+
+	/**
+	 * Sets the location view model.
+	 *
+	 * @param location - The location view model
+	 * @returns The builder instance for method chaining
+	 */
+	public withLocation(location: LocationViewModel): this {
+		this._location = location;
+		return this;
+	}
+
+	/**
+	 * Sets the growing unit reference with basic information.
+	 *
+	 * @param growingUnit - The growing unit reference
+	 * @returns The builder instance for method chaining
+	 */
+	public withGrowingUnit(growingUnit: IPlantGrowingUnitReference): this {
+		this._growingUnit = growingUnit;
 		return this;
 	}
 
@@ -159,6 +187,8 @@ export class PlantViewModelBuilder {
 
 		this._id = dto.id;
 		this._growingUnitId = dto.growingUnitId ?? null;
+		this._location = dto.location ?? null;
+		this._growingUnit = dto.growingUnit ?? null;
 		this._name = dto.name;
 		this._species = dto.species;
 		this._plantedDate = dto.plantedDate;
@@ -228,6 +258,8 @@ export class PlantViewModelBuilder {
 	public reset(): this {
 		this._id = null;
 		this._growingUnitId = null;
+		this._location = null;
+		this._growingUnit = null;
 		this._name = null;
 		this._species = null;
 		this._plantedDate = null;
@@ -267,10 +299,12 @@ export class PlantViewModelBuilder {
 			throw new PlantViewModelStatusRequiredException();
 		}
 
-		// Optional fields: notes, plantedDate, and growingUnitId can be null/undefined
+		// Optional fields: notes, plantedDate, growingUnitId, location, and growingUnit can be null/undefined
 		const dto: IPlantViewModelDto = {
 			id: this._id,
 			growingUnitId: this._growingUnitId ?? undefined,
+			location: this._location ?? undefined,
+			growingUnit: this._growingUnit ?? undefined,
 			name: this._name,
 			species: this._species,
 			plantedDate: this._plantedDate ?? null,

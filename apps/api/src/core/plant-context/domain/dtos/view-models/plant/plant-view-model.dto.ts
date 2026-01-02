@@ -1,4 +1,16 @@
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dto.interface';
+
+/**
+ * Represents a simplified growing unit reference for plant view models.
+ * Contains only basic information without the plants array to avoid circular references.
+ */
+export interface IPlantGrowingUnitReference {
+	id: string;
+	name: string;
+	type: string;
+	capacity: number;
+}
 
 /**
  * Represents the view model for the data returned after creating a plant entity.
@@ -18,4 +30,6 @@ export interface IPlantViewModelDto extends IBaseViewModelDto {
 	status: string;
 
 	growingUnitId?: string;
+	location?: LocationViewModel;
+	growingUnit?: IPlantGrowingUnitReference;
 }

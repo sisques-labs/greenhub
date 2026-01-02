@@ -8,6 +8,20 @@ export const PLANT_FIND_BY_ID_QUERY = `
       plantedDate
       notes
       status
+      location {
+        id
+        name
+        type
+        description
+        createdAt
+        updatedAt
+      }
+      growingUnit {
+        id
+        name
+        type
+        capacity
+      }
       createdAt
       updatedAt
     }
@@ -29,6 +43,20 @@ export const PLANTS_FIND_BY_CRITERIA_QUERY = `
         plantedDate
         notes
         status
+        location {
+          id
+          name
+          type
+          description
+          createdAt
+          updatedAt
+        }
+        growingUnit {
+          id
+          name
+          type
+          capacity
+        }
         createdAt
         updatedAt
       }

@@ -75,14 +75,24 @@ export class GrowingUnitPlantAddedEventHandler
 			}),
 		);
 
-		// 04: Create the updated plant view model
+		// 04: Create the growing unit reference with basic information
+		const growingUnitReference = {
+			id: growingUnitAggregate.id.value,
+			name: growingUnitAggregate.name.value,
+			type: growingUnitAggregate.type.value,
+			capacity: growingUnitAggregate.capacity.value,
+		};
+
+		// 05: Create the updated plant view model
 		const plantViewModel: PlantViewModel = this.plantViewModelBuilder
 			.reset()
 			.fromEntity(plantEntity)
 			.withGrowingUnitId(growingUnitAggregate.id.value)
+			.withLocation(locationViewModel)
+			.withGrowingUnit(growingUnitReference)
 			.build();
 
-		// 05: Create the updated growing unit view model from the aggregate
+		// 06: Create the updated growing unit view model from the aggregate
 		const growingUnitViewModel: GrowingUnitViewModel =
 			this.growingUnitViewModelBuilder
 				.reset()
@@ -90,7 +100,7 @@ export class GrowingUnitPlantAddedEventHandler
 				.withLocation(locationViewModel)
 				.build();
 
-		// 06: Save both view models
+		// 07: Save both view models
 		await Promise.all([
 			this.plantReadRepository.save(plantViewModel),
 			this.growingUnitReadRepository.save(growingUnitViewModel),
