@@ -35,6 +35,7 @@ const consoleFormat = winston.format.combine(
 	),
 );
 
+ 
 const fileRotateTransport = new (winston.transports as any).DailyRotateFile({
 	filename: 'logs/%DATE%.log',
 	datePattern: 'YYYY-MM-DD',

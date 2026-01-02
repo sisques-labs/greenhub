@@ -1,4 +1,5 @@
 import { Repository } from 'typeorm';
+
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthTypeormEntity } from '@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity';

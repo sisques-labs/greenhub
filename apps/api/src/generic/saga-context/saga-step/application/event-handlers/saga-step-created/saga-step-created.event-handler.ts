@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
 import { SagaStepViewModelFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-view-model/saga-step-view-model.factory';
 import {
 	SAGA_STEP_READ_REPOSITORY_TOKEN,

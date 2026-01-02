@@ -1,5 +1,6 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';

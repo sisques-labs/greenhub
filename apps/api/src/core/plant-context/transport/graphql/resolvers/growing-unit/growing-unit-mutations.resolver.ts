@@ -1,6 +1,7 @@
 import { Logger, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
 import { GrowingUnitCreateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command';
 import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
 import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
@@ -54,6 +55,7 @@ export class GrowingUnitMutationsResolver {
 		// 01: Send the command to the command bus
 		const createdGrowingUnitId = await this.commandBus.execute(
 			new GrowingUnitCreateCommand({
+				locationId: input.locationId,
 				name: input.name,
 				type: input.type,
 				capacity: input.capacity,
@@ -188,6 +190,7 @@ export class GrowingUnitMutationsResolver {
 		await this.commandBus.execute(
 			new PlantUpdateCommand({
 				id: input.id,
+				growingUnitId: input.growingUnitId,
 				name: input.name,
 				species: input.species,
 				plantedDate: input.plantedDate,

@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
+
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 import { BaseEvent } from '@/shared/domain/events/base-event.interface';
 

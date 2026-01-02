@@ -1,7 +1,16 @@
-"use client";
+'use client';
 
-import type { GrowingUnitResponse } from "@repo/sdk";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { useLocationsList } from '@/core/location-context/location/hooks/use-locations-list/use-locations-list';
+import {
+	createGrowingUnitUpdateSchema,
+	GrowingUnitUpdateFormValues,
+} from '@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema';
+import type {
+	GrowingUnitResponse,
+	GrowingUnitType,
+	LengthUnit,
+} from '@repo/sdk';
+import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -9,28 +18,24 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@repo/shared/presentation/components/ui/dialog";
+} from '@repo/shared/presentation/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
+} from '@repo/shared/presentation/components/ui/form';
+import { Input } from '@repo/shared/presentation/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@repo/shared/presentation/components/ui/select";
-import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
-import {
-	createGrowingUnitUpdateSchema,
-	GrowingUnitUpdateFormValues,
-} from "@/core/plant-context/growing-unit/dtos/schemas/growing-unit-update/growing-unit-update.schema";
+} from '@repo/shared/presentation/components/ui/select';
+import { useTranslations } from 'next-intl';
+import { useEffect, useMemo, useState } from 'react';
 
 interface GrowingUnitUpdateFormProps {
 	growingUnit: GrowingUnitResponse | null;
@@ -50,6 +55,7 @@ export function GrowingUnitUpdateForm({
 	error,
 }: GrowingUnitUpdateFormProps) {
 	const t = useTranslations();
+	const { locations, isLoading: isLoadingLocations } = useLocationsList();
 
 	// Create schema with translations
 	const updateSchema = useMemo(
@@ -58,14 +64,16 @@ export function GrowingUnitUpdateForm({
 	);
 
 	// Form state
-	const [id, setId] = useState("");
-	const [name, setName] = useState("");
-	const [type, setType] = useState<GrowingUnitUpdateFormValues["type"]>("POT");
+	const [id, setId] = useState('');
+	const [locationId, setLocationId] = useState<string>('');
+	const [name, setName] = useState('');
+	const [type, setType] = useState<GrowingUnitUpdateFormValues['type']>('POT');
 	const [capacity, setCapacity] = useState<number | undefined>(undefined);
 	const [length, setLength] = useState<number | undefined>(undefined);
 	const [width, setWidth] = useState<number | undefined>(undefined);
 	const [height, setHeight] = useState<number | undefined>(undefined);
-	const [unit, setUnit] = useState<GrowingUnitUpdateFormValues["unit"]>(undefined);
+	const [unit, setUnit] =
+		useState<GrowingUnitUpdateFormValues['unit']>(undefined);
 	const [formErrors, setFormErrors] = useState<
 		Record<string, { message?: string }>
 	>({});
@@ -74,27 +82,14 @@ export function GrowingUnitUpdateForm({
 	useEffect(() => {
 		if (growingUnit) {
 			setId(growingUnit.id);
+			setLocationId(growingUnit.location.id);
 			setName(growingUnit.name);
-			setType(
-				growingUnit.type as
-					| "POT"
-					| "GARDEN_BED"
-					| "HANGING_BASKET"
-					| "WINDOW_BOX",
-			);
+			setType(growingUnit.type as GrowingUnitType);
 			setCapacity(growingUnit.capacity);
 			setLength(growingUnit.dimensions?.length);
 			setWidth(growingUnit.dimensions?.width);
 			setHeight(growingUnit.dimensions?.height);
-			setUnit(
-				growingUnit.dimensions?.unit as
-					| "MILLIMETER"
-					| "CENTIMETER"
-					| "METER"
-					| "INCH"
-					| "FOOT"
-					| undefined,
-			);
+			setUnit(growingUnit.dimensions?.unit as LengthUnit);
 			setFormErrors({});
 		}
 	}, [growingUnit]);
@@ -105,6 +100,7 @@ export function GrowingUnitUpdateForm({
 		// Validate form
 		const result = updateSchema.safeParse({
 			id,
+			locationId: locationId || undefined,
 			name: name || undefined,
 			type,
 			capacity,
@@ -146,20 +142,45 @@ export function GrowingUnitUpdateForm({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t("pages.growingUnits.detail.actions.update.title")}
+						{t('pages.growingUnits.detail.actions.update.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t("pages.growingUnits.detail.actions.update.description")}
+						{t('pages.growingUnits.detail.actions.update.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
 					<form onSubmit={handleSubmit} className="space-y-4">
 						<FormItem>
-							<FormLabel>{t("shared.fields.name.label")}</FormLabel>
+							<FormLabel>{t('shared.fields.locationId.label')}</FormLabel>
+							<Select
+								onValueChange={(value) => setLocationId(value)}
+								value={locationId}
+								disabled={isLoading || isLoadingLocations}
+							>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue
+											placeholder={t('shared.fields.locationId.placeholder')}
+										/>
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{locations.map((location) => (
+										<SelectItem key={location.id} value={location.id}>
+											{location.name} ({location.type})
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<FormMessage fieldName="locationId" />
+						</FormItem>
+
+						<FormItem>
+							<FormLabel>{t('shared.fields.name.label')}</FormLabel>
 							<FormControl>
 								<Input
 									placeholder={t(
-										"pages.growingUnits.detail.fields.name.placeholder",
+										'pages.growingUnits.detail.fields.name.placeholder',
 									)}
 									disabled={isLoading}
 									value={name}
@@ -171,10 +192,10 @@ export function GrowingUnitUpdateForm({
 
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
-								<FormLabel>{t("shared.fields.type.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.type.label')}</FormLabel>
 								<Select
 									onValueChange={(value) =>
-										setType(value as GrowingUnitUpdateFormValues["type"])
+										setType(value as GrowingUnitUpdateFormValues['type'])
 									}
 									value={type}
 									disabled={isLoading}
@@ -182,22 +203,22 @@ export function GrowingUnitUpdateForm({
 									<FormControl>
 										<SelectTrigger>
 											<SelectValue
-												placeholder={t("shared.fields.type.placeholder")}
+												placeholder={t('shared.fields.type.placeholder')}
 											/>
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
 										<SelectItem value="POT">
-											{t("shared.types.growingUnit.POT")}
+											{t('shared.types.growingUnit.POT')}
 										</SelectItem>
 										<SelectItem value="GARDEN_BED">
-											{t("shared.types.growingUnit.GARDEN_BED")}
+											{t('shared.types.growingUnit.GARDEN_BED')}
 										</SelectItem>
 										<SelectItem value="HANGING_BASKET">
-											{t("shared.types.growingUnit.HANGING_BASKET")}
+											{t('shared.types.growingUnit.HANGING_BASKET')}
 										</SelectItem>
 										<SelectItem value="WINDOW_BOX">
-											{t("shared.types.growingUnit.WINDOW_BOX")}
+											{t('shared.types.growingUnit.WINDOW_BOX')}
 										</SelectItem>
 									</SelectContent>
 								</Select>
@@ -205,14 +226,14 @@ export function GrowingUnitUpdateForm({
 							</FormItem>
 
 							<FormItem>
-								<FormLabel>{t("shared.fields.capacity.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.capacity.label')}</FormLabel>
 								<FormControl>
 									<Input
 										type="number"
 										min="1"
-										placeholder={t("shared.fields.capacity.placeholder")}
+										placeholder={t('shared.fields.capacity.placeholder')}
 										disabled={isLoading}
-										value={capacity || ""}
+										value={capacity || ''}
 										onChange={(e) =>
 											setCapacity(
 												e.target.value ? Number(e.target.value) : undefined,
@@ -226,14 +247,14 @@ export function GrowingUnitUpdateForm({
 
 						<div className="grid grid-cols-4 gap-4">
 							<FormItem>
-								<FormLabel>{t("shared.fields.length.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.length.label')}</FormLabel>
 								<FormControl>
 									<Input
 										type="number"
 										step="0.01"
-										placeholder={t("shared.fields.length.placeholder")}
+										placeholder={t('shared.fields.length.placeholder')}
 										disabled={isLoading}
-										value={length || ""}
+										value={length || ''}
 										onChange={(e) =>
 											setLength(
 												e.target.value ? Number(e.target.value) : undefined,
@@ -245,14 +266,14 @@ export function GrowingUnitUpdateForm({
 							</FormItem>
 
 							<FormItem>
-								<FormLabel>{t("shared.fields.width.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.width.label')}</FormLabel>
 								<FormControl>
 									<Input
 										type="number"
 										step="0.01"
-										placeholder={t("shared.fields.width.placeholder")}
+										placeholder={t('shared.fields.width.placeholder')}
 										disabled={isLoading}
-										value={width || ""}
+										value={width || ''}
 										onChange={(e) =>
 											setWidth(
 												e.target.value ? Number(e.target.value) : undefined,
@@ -264,14 +285,14 @@ export function GrowingUnitUpdateForm({
 							</FormItem>
 
 							<FormItem>
-								<FormLabel>{t("shared.fields.height.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.height.label')}</FormLabel>
 								<FormControl>
 									<Input
 										type="number"
 										step="0.01"
-										placeholder={t("shared.fields.height.placeholder")}
+										placeholder={t('shared.fields.height.placeholder')}
 										disabled={isLoading}
-										value={height || ""}
+										value={height || ''}
 										onChange={(e) =>
 											setHeight(
 												e.target.value ? Number(e.target.value) : undefined,
@@ -283,36 +304,36 @@ export function GrowingUnitUpdateForm({
 							</FormItem>
 
 							<FormItem>
-								<FormLabel>{t("shared.fields.unit.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.unit.label')}</FormLabel>
 								<Select
 									onValueChange={(value) =>
-										setUnit(value as GrowingUnitUpdateFormValues["unit"])
+										setUnit(value as GrowingUnitUpdateFormValues['unit'])
 									}
-									value={unit || ""}
+									value={unit || ''}
 									disabled={isLoading}
 								>
 									<FormControl>
 										<SelectTrigger>
 											<SelectValue
-												placeholder={t("shared.fields.unit.placeholder")}
+												placeholder={t('shared.fields.unit.placeholder')}
 											/>
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
 										<SelectItem value="MILLIMETER">
-											{t("shared.units.length.MILLIMETER")}
+											{t('shared.units.length.MILLIMETER')}
 										</SelectItem>
 										<SelectItem value="CENTIMETER">
-											{t("shared.units.length.CENTIMETER")}
+											{t('shared.units.length.CENTIMETER')}
 										</SelectItem>
 										<SelectItem value="METER">
-											{t("shared.units.length.METER")}
+											{t('shared.units.length.METER')}
 										</SelectItem>
 										<SelectItem value="INCH">
-											{t("shared.units.length.INCH")}
+											{t('shared.units.length.INCH')}
 										</SelectItem>
 										<SelectItem value="FOOT">
-											{t("shared.units.length.FOOT")}
+											{t('shared.units.length.FOOT')}
 										</SelectItem>
 									</SelectContent>
 								</Select>
@@ -331,12 +352,12 @@ export function GrowingUnitUpdateForm({
 								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t("common.cancel")}
+								{t('common.cancel')}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t("pages.growingUnits.detail.actions.update.loading")
-									: t("pages.growingUnits.detail.actions.update.submit")}
+									? t('pages.growingUnits.detail.actions.update.loading')
+									: t('pages.growingUnits.detail.actions.update.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

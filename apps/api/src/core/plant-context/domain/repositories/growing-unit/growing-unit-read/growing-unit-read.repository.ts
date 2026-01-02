@@ -9,5 +9,7 @@ export const GROWING_UNIT_READ_REPOSITORY_TOKEN = Symbol(
  * Read repository interface for GrowingUnit view model.
  * Extends IBaseReadRepository with additional query methods.
  */
-export type IGrowingUnitReadRepository =
-	IBaseReadRepository<GrowingUnitViewModel>;
+export interface IGrowingUnitReadRepository
+	extends IBaseReadRepository<GrowingUnitViewModel> {
+	findByLocationId(locationId: string): Promise<GrowingUnitViewModel[]>;
+}

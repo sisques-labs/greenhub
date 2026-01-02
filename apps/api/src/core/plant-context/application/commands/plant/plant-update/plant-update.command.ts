@@ -4,6 +4,7 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -15,6 +16,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  */
 export class PlantUpdateCommand {
 	readonly id: PlantUuidValueObject;
+	readonly growingUnitId: GrowingUnitUuidValueObject;
 	readonly name?: PlantNameValueObject;
 	readonly species?: PlantSpeciesValueObject;
 	readonly plantedDate?: PlantPlantedDateValueObject | null;
@@ -23,6 +25,7 @@ export class PlantUpdateCommand {
 
 	constructor(props: IPlantUpdateCommandDto) {
 		this.id = new PlantUuidValueObject(props.id);
+		this.growingUnitId = new GrowingUnitUuidValueObject(props.growingUnitId);
 		this.name = props.name ? new PlantNameValueObject(props.name) : undefined;
 		this.species = props.species
 			? new PlantSpeciesValueObject(props.species)

@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
 import { SagaLogViewModelFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory';
 import {
 	SAGA_LOG_READ_REPOSITORY_TOKEN,

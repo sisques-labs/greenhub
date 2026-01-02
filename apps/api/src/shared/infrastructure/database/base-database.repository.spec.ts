@@ -1,4 +1,5 @@
 import { Criteria } from '@/shared/domain/entities/criteria';
+
 import { BaseDatabaseRepository } from './base-database.repository';
 
 describe('BaseDatabaseRepository', () => {

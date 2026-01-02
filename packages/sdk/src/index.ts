@@ -2,6 +2,7 @@ import { AuthClient } from "./auth/client/auth-client.js";
 import type { AuthLogoutInput } from "./auth/index.js";
 import { GrowingUnitClient } from "./growing-unit/client/growing-unit-client.js";
 import { HealthClient } from "./health/client/health-client.js";
+import { LocationClient } from "./locations/client/location-client.js";
 import { OverviewClient } from "./overview/client/overview-client.js";
 import { PlantClient } from "./plants/client/plant-client.js";
 import { SagaInstanceClient } from "./saga-instance/client/saga-instance-client.js";
@@ -14,6 +15,7 @@ import { UserClient } from "./users/client/user-client.js";
 export * from "./auth/index.js";
 export * from "./growing-unit/index.js";
 export * from "./health/index.js";
+export * from "./locations/index.js";
 export * from "./overview/index.js";
 export * from "./plants/index.js";
 export * from "./saga-instance/index.js";
@@ -44,6 +46,7 @@ export class SDK {
 	private userClient: UserClient;
 	private plantClient: PlantClient;
 	private growingUnitClient: GrowingUnitClient;
+	private locationClient: LocationClient;
 	private healthClient: HealthClient;
 	private overviewClient: OverviewClient;
 	private sagaInstanceClient: SagaInstanceClient;
@@ -56,6 +59,7 @@ export class SDK {
 		this.userClient = new UserClient(this.client);
 		this.plantClient = new PlantClient(this.client);
 		this.growingUnitClient = new GrowingUnitClient(this.client);
+		this.locationClient = new LocationClient(this.client);
 		this.healthClient = new HealthClient(this.client);
 		this.overviewClient = new OverviewClient(this.client);
 		this.sagaInstanceClient = new SagaInstanceClient(this.client);
@@ -171,6 +175,12 @@ export class SDK {
 			 */
 			findById: this.plantClient.findById.bind(this.plantClient),
 			/**
+			 * Find plants by criteria
+			 */
+			findByCriteria: this.plantClient.findByCriteria.bind(
+				this.plantClient,
+			),
+			/**
 			 * Update an existing plant
 			 */
 			update: this.plantClient.update.bind(this.plantClient),
@@ -218,6 +228,36 @@ export class SDK {
 			plantRemove: this.growingUnitClient.plantRemove.bind(
 				this.growingUnitClient,
 			),
+		};
+	}
+
+	/**
+	 * Locations module
+	 */
+	get locations() {
+		return {
+			/**
+			 * Find locations by criteria with pagination, filters, and sorting
+			 */
+			findByCriteria: this.locationClient.findByCriteria.bind(
+				this.locationClient,
+			),
+			/**
+			 * Find a location by ID
+			 */
+			findById: this.locationClient.findById.bind(this.locationClient),
+			/**
+			 * Create a new location
+			 */
+			create: this.locationClient.create.bind(this.locationClient),
+			/**
+			 * Update an existing location
+			 */
+			update: this.locationClient.update.bind(this.locationClient),
+			/**
+			 * Delete a location
+			 */
+			delete: this.locationClient.delete.bind(this.locationClient),
 		};
 	}
 

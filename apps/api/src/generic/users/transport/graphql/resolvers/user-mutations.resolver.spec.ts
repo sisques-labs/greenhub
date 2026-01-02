@@ -1,4 +1,5 @@
 import { CommandBus } from '@nestjs/cqrs';
+
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { UserCreateCommand } from '@/generic/users/application/commands/user-create/user-create.command';
 import { UserUpdateCommand } from '@/generic/users/application/commands/user-update/user-update.command';
@@ -9,6 +10,7 @@ import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
+
 import { UserMutationsResolver } from './user-mutations.resolver';
 
 describe('UserMutationsResolver', () => {

@@ -14,7 +14,7 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 } from "@repo/shared/presentation/components/ui/sidebar";
-import { Home, LayoutGrid, LogOut, Settings, Sprout } from "lucide-react";
+import { Home, LayoutGrid, LogOut, MapPin, Settings, Sprout } from "lucide-react";
 import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui";
 
@@ -36,6 +36,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 	home: Home,
 	plants: Sprout,
 	growingUnits: LayoutGrid,
+	locations: MapPin,
 	settings: Settings,
 };
 

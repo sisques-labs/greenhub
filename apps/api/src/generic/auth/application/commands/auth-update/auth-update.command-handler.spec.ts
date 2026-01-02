@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+
 import { AuthUpdateCommandHandler } from '@/generic/auth/application/commands/auth-update/auth-update.command-handler';
 import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
@@ -11,6 +12,7 @@ import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-obj
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+
 import { AuthUpdateCommand } from './auth-update.command';
 
 describe('AuthUpdateCommandHandler', () => {

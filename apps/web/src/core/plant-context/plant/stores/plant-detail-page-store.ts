@@ -4,6 +4,8 @@ interface PlantDetailPageStore {
 	// Dialog states
 	transplantDialogOpen: boolean;
 	setTransplantDialogOpen: (open: boolean) => void;
+	editDetailsDialogOpen: boolean;
+	setEditDetailsDialogOpen: (open: boolean) => void;
 }
 
 /**
@@ -13,4 +15,6 @@ interface PlantDetailPageStore {
 export const usePlantDetailPageStore = create<PlantDetailPageStore>((set) => ({
 	transplantDialogOpen: false,
 	setTransplantDialogOpen: (open) => set({ transplantDialogOpen: open }),
+	editDetailsDialogOpen: false,
+	setEditDetailsDialogOpen: (open) => set({ editDetailsDialogOpen: open }),
 }));

@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { IAuthCreateViewModelDto } from '@/generic/auth/domain/dtos/view-models/auth-create/auth-create-view-model.dto';
 import { AuthPrimitives } from '@/generic/auth/domain/primitives/auth.primitives';

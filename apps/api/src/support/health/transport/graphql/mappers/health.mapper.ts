@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
 import {

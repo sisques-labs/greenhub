@@ -1,5 +1,5 @@
 import { SidebarData } from "@repo/shared/domain/interfaces/sidebar-data.interface";
-import { Home, LayoutGrid, Settings, Sprout } from "lucide-react";
+import { Home, LayoutGrid, MapPin, Settings, Sprout } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -23,6 +23,7 @@ export const useAppRoutes = () => {
 		userProfile: buildLocalizedUrl("/user/profile"),
 		plants: buildLocalizedUrl("/plants"),
 		growingUnits: buildLocalizedUrl("/growing-units"),
+		locations: buildLocalizedUrl("/locations"),
 	} as const;
 
 	/**
@@ -58,6 +59,18 @@ export const useAppRoutes = () => {
 							url: routes.growingUnits,
 							isActive: pathname === routes.growingUnits,
 							icon: LayoutGrid,
+						},
+					],
+				},
+				{
+					title: t("locations"),
+					url: "#",
+					items: [
+						{
+							title: t("locations"),
+							url: routes.locations,
+							isActive: pathname === routes.locations,
+							icon: MapPin,
 						},
 					],
 				},

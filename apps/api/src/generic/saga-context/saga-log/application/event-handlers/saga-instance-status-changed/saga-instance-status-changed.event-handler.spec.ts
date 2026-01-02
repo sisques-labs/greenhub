@@ -1,7 +1,9 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
+
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
+
 import { SagaInstanceStatusChangedEventHandler } from './saga-instance-status-changed.event-handler';
 
 describe('SagaInstanceStatusChangedEventHandler', () => {

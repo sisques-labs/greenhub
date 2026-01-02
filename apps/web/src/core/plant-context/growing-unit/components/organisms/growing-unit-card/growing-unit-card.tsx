@@ -1,42 +1,32 @@
-"use client";
+'use client';
 
-import type { GrowingUnitResponse } from "@repo/sdk";
-import { Badge } from "@repo/shared/presentation/components/ui/badge";
+import type { GrowingUnitResponse } from '@repo/sdk';
+import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import { useCallback } from "react";
+} from '@repo/shared/presentation/components/ui/card';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 
 interface GrowingUnitCardProps {
 	growingUnit: GrowingUnitResponse;
-	onEdit?: (growingUnit: GrowingUnitResponse) => void;
-	onDelete?: (id: string) => void;
-	isDeleting?: boolean;
-	showActions?: boolean;
 }
 
-export function GrowingUnitCard({
-	growingUnit,
-	onEdit,
-	onDelete,
-	isDeleting = false,
-	showActions = false,
-}: GrowingUnitCardProps) {
+export function GrowingUnitCard({ growingUnit }: GrowingUnitCardProps) {
 	const t = useTranslations();
 	const locale = useLocale();
 	const router = useRouter();
 
 	// Determine location based on type
 	const location =
-		growingUnit.type === "POT" || growingUnit.type === "WINDOW_BOX"
-			? "INTERIOR"
-			: "EXTERIOR";
+		growingUnit.type === 'POT' || growingUnit.type === 'WINDOW_BOX'
+			? 'INTERIOR'
+			: 'EXTERIOR';
 
 	const handleCardClick = useCallback(() => {
 		router.push(`/${locale}/growing-units/${growingUnit.id}`);
@@ -63,7 +53,7 @@ export function GrowingUnitCard({
 					{/* Badge overlay in top-right corner */}
 					<div className="absolute top-2 right-2">
 						<Badge
-							variant={location === "EXTERIOR" ? "default" : "secondary"}
+							variant={location === 'EXTERIOR' ? 'default' : 'secondary'}
 							className="text-xs"
 						>
 							{location}
@@ -86,7 +76,7 @@ export function GrowingUnitCard({
 				{growingUnit.plants.length > 0 ? (
 					<div>
 						<div className="text-sm font-medium mb-2">
-							{t("shared.fields.plants.label")}:
+							{t('shared.fields.plants.label')}:
 						</div>
 						<div className="space-y-1">
 							{visiblePlants.map((plant) => (
@@ -98,20 +88,20 @@ export function GrowingUnitCard({
 									<span>
 										{plant.name ||
 											plant.species ||
-											t("pages.plants.detail.unnamed")}
+											t('pages.plants.detail.unnamed')}
 									</span>
 								</div>
 							))}
 							{remainingPlantsCount > 0 && (
 								<div className="text-sm text-muted-foreground font-medium">
-									+{remainingPlantsCount} {t("common.more")}
+									+{remainingPlantsCount} {t('common.more')}
 								</div>
 							)}
 						</div>
 					</div>
 				) : (
 					<div className="text-sm text-muted-foreground">
-						{t("pages.growingUnits.list.noPlants")}
+						{t('pages.growingUnits.list.noPlants')}
 					</div>
 				)}
 			</CardContent>

@@ -1,13 +1,14 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { LocationViewModelFindByIdQuery } from '@/core/location-context/application/queries/location/location-view-model-find-by-id/location-view-model-find-by-id.query';
 import { GrowingUnitCreatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-created/growing-unit-created.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
+import { GrowingUnitViewModelBuilder } from '@/core/plant-context/domain/builders/growing-unit/growing-unit-view-model.builder';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler, QueryBus } from '@nestjs/cqrs';
 
 /**
  * Event handler for GrowingUnitCreatedEvent.
@@ -26,7 +27,8 @@ export class GrowingUnitCreatedEventHandler
 		@Inject(GROWING_UNIT_READ_REPOSITORY_TOKEN)
 		private readonly growingUnitReadRepository: IGrowingUnitReadRepository,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
-		private readonly growingUnitViewModelFactory: GrowingUnitViewModelFactory,
+		private readonly growingUnitViewModelBuilder: GrowingUnitViewModelBuilder,
+		private readonly queryBus: QueryBus,
 	) {}
 
 	/**
@@ -45,9 +47,19 @@ export class GrowingUnitCreatedEventHandler
 		const growingUnitAggregate =
 			await this.assertGrowingUnitExistsService.execute(event.entityId);
 
+		const locationViewModel = await this.queryBus.execute(
+			new LocationViewModelFindByIdQuery({
+				id: growingUnitAggregate.locationId.value,
+			}),
+		);
+
 		// 02: Create the growing unit view model from the aggregate
 		const growingUnitViewModel: GrowingUnitViewModel =
-			this.growingUnitViewModelFactory.fromAggregate(growingUnitAggregate);
+			this.growingUnitViewModelBuilder
+				.reset()
+				.fromAggregate(growingUnitAggregate)
+				.withLocation(locationViewModel)
+				.build();
 
 		// 03: Save the growing unit view model
 		await this.growingUnitReadRepository.save(growingUnitViewModel);

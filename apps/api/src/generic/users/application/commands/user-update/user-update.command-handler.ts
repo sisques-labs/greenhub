@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
 import { UserUpdateCommand } from '@/generic/users/application/commands/user-update/user-update.command';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
 import { IUserUpdateDto } from '@/generic/users/domain/dtos/entities/user-update/user-update.dto';

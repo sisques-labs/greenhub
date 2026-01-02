@@ -1,73 +1,66 @@
-import { PLANT_STATUS, type PlantResponse } from "@repo/sdk";
-import { paginate } from "@repo/shared/presentation/lib/utils";
-import { useEffect, useMemo, useState } from "react";
-import { useGrowingUnitsFindByCriteria } from "@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria";
+import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
+import { usePlantAdd } from '@/core/plant-context/plant/hooks/use-plant-add/use-plant-add';
+import { usePlantsFindByCriteria } from '@/core/plant-context/plant/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
+import {
+	PLANT_STATUS,
+	type FilterOperator,
+	type PlantResponse,
+} from '@repo/sdk';
+import { useEffect, useMemo, useState } from 'react';
 
 const PLANTS_PER_PAGE = 10;
+const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 export type PlantWithGrowingUnit = PlantResponse & {
 	growingUnitName?: string;
 };
 
 export function usePlantsPage() {
-	const [searchQuery, setSearchQuery] = useState("");
-	const [selectedFilter, setSelectedFilter] = useState("all");
+	const [searchQuery, setSearchQuery] = useState('');
+	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+	const [selectedFilter, setSelectedFilter] = useState('all');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
+	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-	// Fetch growing units with their plants
-	// Note: We don't send currentPage to backend because pagination is done client-side
-	// on the filtered plants. We fetch a large number of growing units to ensure
-	// we have all the data needed for client-side filtering and pagination.
-	// TODO: Implement pagination on the for the  plants backend.
-	const paginationInput = useMemo(
-		() => ({
-			pagination: {
-				page: 1,
-				perPage: 1000, // Fetch a large number to get all growing units
-			},
-		}),
-		[],
-	);
+	// Debounce search query
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearchQuery(searchQuery);
+		}, SEARCH_DEBOUNCE_DELAY);
 
-	const { growingUnits, isLoading, error } =
-		useGrowingUnitsFindByCriteria(paginationInput);
+		return () => clearTimeout(timer);
+	}, [searchQuery]);
 
-	// Flatten all plants from all growing units and apply filters
-	const allFilteredPlants = useMemo(() => {
-		if (!growingUnits) return [];
+	// Build filters for backend
+	const filters = useMemo(() => {
+		const backendFilters: Array<{
+			field: string;
+			operator: FilterOperator;
+			value: string;
+		}> = [];
 
-		// Flatten all plants with their growing unit info
-		const allPlants: PlantWithGrowingUnit[] = [];
-		growingUnits.items.forEach((unit) => {
-			const plants = unit.plants || [];
-			plants.forEach((plant) => {
-				allPlants.push({
-					...plant,
-					growingUnitName: unit.name,
-				});
+		// Search filter - search in name, species, growing unit name, and location name
+		if (debouncedSearchQuery) {
+			// For now, we'll search in name and species fields
+			// TODO: Add support for searching in nested fields (growingUnit.name, location.name) when backend supports it
+			backendFilters.push({
+				field: 'name',
+				operator: 'LIKE',
+				value: debouncedSearchQuery,
 			});
-		});
-
-		// Apply search filter
-		let filtered = allPlants;
-		if (searchQuery) {
-			const query = searchQuery.toLowerCase();
-			filtered = filtered.filter(
-				(plant) =>
-					plant.name?.toLowerCase().includes(query) ||
-					plant.species?.toLowerCase().includes(query) ||
-					plant.growingUnitName?.toLowerCase().includes(query),
-			);
 		}
 
-		// Apply status filter
-		if (selectedFilter !== "all") {
+		// Status filter
+		if (selectedFilter !== 'all') {
 			switch (selectedFilter) {
-				case "healthy":
-					filtered = filtered.filter(
-						(plant) => plant.status === PLANT_STATUS.GROWING,
-					);
+				case 'healthy':
+					backendFilters.push({
+						field: 'status',
+						operator: 'EQUALS',
+						value: PLANT_STATUS.GROWING,
+					});
 					break;
 				// TODO: Add more filter cases when needed
 				default:
@@ -75,43 +68,95 @@ export function usePlantsPage() {
 			}
 		}
 
-		return filtered;
-	}, [growingUnits, searchQuery, selectedFilter]);
+		return backendFilters;
+	}, [debouncedSearchQuery, selectedFilter]);
 
-	// Calculate pagination
-	const { items: paginatedPlants, totalPages } = paginate(
-		allFilteredPlants,
-		currentPage,
-		perPage,
+	// Fetch plants using findByCriteria with filters and pagination
+	const criteriaInput = useMemo(
+		() => ({
+			filters: filters.length > 0 ? filters : undefined,
+			pagination: {
+				page: currentPage,
+				perPage,
+			},
+			sorts: [
+				{
+					field: 'createdAt',
+					direction: 'DESC' as const,
+				},
+			],
+		}),
+		[filters, currentPage, perPage],
 	);
+
+	const { plants, isLoading, error, refetch } =
+		usePlantsFindByCriteria(criteriaInput);
+
+	// Fetch growing units for create form
+	const { growingUnits } = useGrowingUnitsFindByCriteria({
+		pagination: {
+			page: 1,
+			perPage: 1000, // Fetch a large number to get all growing units for the create form
+		},
+	});
+
+	const {
+		handleCreate,
+		isLoading: isCreating,
+		error: createError,
+	} = usePlantAdd();
+
+	// Add growing unit names to plants for backward compatibility
+	// Now we can also use plant.growingUnit?.name directly
+	const allFilteredPlants = useMemo(() => {
+		if (!plants) return [];
+
+		return plants.items.map((plant) => ({
+			...plant,
+			growingUnitName:
+				plant.growingUnit?.name || plant.growingUnitId || undefined,
+		}));
+	}, [plants]);
+
+	// Use backend pagination
+	const paginatedPlants = allFilteredPlants;
+	const totalPages = plants?.totalPages || 0;
 
 	// Reset to page 1 when filters change
 	useEffect(() => {
 		setCurrentPage(1);
-	}, []);
+	}, [debouncedSearchQuery, selectedFilter]);
+
+	const handleCreateSubmit = async (values: PlantCreateFormValues) => {
+		await handleCreate(values, () => {
+			refetch();
+			setCreateDialogOpen(false);
+		});
+	};
+
+	const handleAddClick = () => {
+		setCreateDialogOpen(true);
+	};
 
 	const handleEdit = (plant: PlantResponse) => {
 		// TODO: Open edit dialog
-		console.log("Edit plant:", plant);
+		console.log('Edit plant:', plant);
 	};
 
 	const handleDelete = (id: string) => {
 		// TODO: Open delete confirmation
-		console.log("Delete plant:", id);
+		console.log('Delete plant:', id);
 	};
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
 		// Scroll to top when page changes
-		window.scrollTo({ top: 0, behavior: "smooth" });
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	};
 
 	const hasAnyPlants = useMemo(() => {
-		return (
-			growingUnits &&
-			growingUnits.items.some((unit) => (unit.plants?.length || 0) > 0)
-		);
-	}, [growingUnits]);
+		return plants && plants.total > 0;
+	}, [plants]);
 
 	return {
 		// State
@@ -122,6 +167,8 @@ export function usePlantsPage() {
 		currentPage,
 		perPage,
 		setPerPage,
+		createDialogOpen,
+		setCreateDialogOpen,
 
 		// Data
 		growingUnits,
@@ -132,9 +179,17 @@ export function usePlantsPage() {
 		error,
 
 		// Handlers
+		handleCreateSubmit,
+		handleAddClick,
 		handleEdit,
 		handleDelete,
 		handlePageChange,
+
+		// Loading states
+		isCreating,
+
+		// Errors
+		createError,
 
 		// Computed
 		hasAnyPlants,

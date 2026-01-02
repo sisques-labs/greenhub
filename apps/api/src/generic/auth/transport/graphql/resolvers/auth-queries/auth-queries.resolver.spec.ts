@@ -1,4 +1,5 @@
 import { QueryBus } from '@nestjs/cqrs';
+
 import { FindAuthsByCriteriaQuery } from '@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';

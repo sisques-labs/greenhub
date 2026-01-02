@@ -39,7 +39,8 @@ interface PlantCreateFormProps {
 	onSubmit: (values: PlantCreateFormValues) => Promise<void>;
 	isLoading: boolean;
 	error: Error | null;
-	growingUnitId: string;
+	growingUnitId?: string;
+	growingUnits?: Array<{ id: string; name: string }>;
 }
 
 export function PlantCreateForm({
@@ -48,7 +49,8 @@ export function PlantCreateForm({
 	onSubmit,
 	isLoading,
 	error,
-	growingUnitId,
+	growingUnitId: initialGrowingUnitId,
+	growingUnits = [],
 }: PlantCreateFormProps) {
 	const t = useTranslations();
 
@@ -59,6 +61,9 @@ export function PlantCreateForm({
 	);
 
 	// Form state
+	const [selectedGrowingUnitId, setSelectedGrowingUnitId] = useState<string>(
+		initialGrowingUnitId || "",
+	);
 	const [name, setName] = useState("");
 	const [species, setSpecies] = useState("");
 	const [plantedDate, setPlantedDate] = useState<Date>(new Date());
@@ -73,6 +78,9 @@ export function PlantCreateForm({
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
+		// Use selected growing unit ID or the provided one
+		const finalGrowingUnitId = selectedGrowingUnitId || initialGrowingUnitId || "";
+
 		// Validate form
 		const result = createSchema.safeParse({
 			name,
@@ -80,7 +88,7 @@ export function PlantCreateForm({
 			plantedDate,
 			notes: notes || undefined,
 			status,
-			growingUnitId,
+			growingUnitId: finalGrowingUnitId,
 		});
 
 		if (!result.success) {
@@ -98,6 +106,7 @@ export function PlantCreateForm({
 		await onSubmit(result.data);
 		if (!error) {
 			// Reset form
+			setSelectedGrowingUnitId(initialGrowingUnitId || "");
 			setName("");
 			setSpecies("");
 			setPlantedDate(new Date());
@@ -110,6 +119,7 @@ export function PlantCreateForm({
 	const handleOpenChange = (newOpen: boolean) => {
 		if (!newOpen) {
 			// Reset form
+			setSelectedGrowingUnitId(initialGrowingUnitId || "");
 			setName("");
 			setSpecies("");
 			setPlantedDate(new Date());
@@ -131,6 +141,35 @@ export function PlantCreateForm({
 				</DialogHeader>
 				<Form errors={formErrors}>
 					<form onSubmit={handleSubmit} className="space-y-4">
+						{!initialGrowingUnitId && growingUnits.length > 0 && (
+							<FormItem>
+								<FormLabel>{t("shared.fields.growingUnitId.label")}</FormLabel>
+								<Select
+									onValueChange={(value) => setSelectedGrowingUnitId(value)}
+									value={selectedGrowingUnitId}
+									disabled={isLoading}
+								>
+									<FormControl>
+										<SelectTrigger>
+											<SelectValue
+												placeholder={t(
+													"pages.plants.detail.fields.growingUnitId.placeholder",
+												)}
+											/>
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										{growingUnits.map((unit) => (
+											<SelectItem key={unit.id} value={unit.id}>
+												{unit.name}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+								<FormMessage fieldName="growingUnitId" />
+							</FormItem>
+						)}
+
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
 								<FormLabel>

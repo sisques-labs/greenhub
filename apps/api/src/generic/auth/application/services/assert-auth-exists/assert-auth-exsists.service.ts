@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+
 import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import {

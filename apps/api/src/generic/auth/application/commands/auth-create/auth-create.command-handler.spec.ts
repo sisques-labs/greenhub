@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+
 import { AuthCreateCommandHandler } from '@/generic/auth/application/commands/auth-create/auth-create.command-handler';
 import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
@@ -12,6 +13,7 @@ import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-obj
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+
 import { AuthCreateCommand } from './auth-create.command';
 
 describe('AuthCreateCommandHandler', () => {

@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
 import { AuthLoginByEmailCommand } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command';
 import { AuthRefreshTokenCommand } from '@/generic/auth/application/commands/auth-refresh-token/auth-refresh-token.command';
 import { AuthRegisterByEmailCommand } from '@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command';

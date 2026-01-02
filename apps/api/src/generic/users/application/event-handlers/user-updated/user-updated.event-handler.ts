@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
 import { AssertUserViewModelExsistsService } from '@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service';
 import {
 	USER_READ_REPOSITORY_TOKEN,

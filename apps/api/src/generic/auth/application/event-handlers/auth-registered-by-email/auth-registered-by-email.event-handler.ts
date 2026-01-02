@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
 import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
 import {
 	AUTH_READ_REPOSITORY_TOKEN,

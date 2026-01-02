@@ -1,3 +1,5 @@
+import { Db } from 'mongodb';
+
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 import { HealthReadDatabaseCheckService } from '@/support/health/application/services/health-read-database-check/health-read-database-check.service';
 import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
@@ -31,7 +33,9 @@ describe('HealthReadDatabaseCheckService', () => {
 		const mockDb = {
 			admin: jest.fn().mockReturnValue(mockAdmin),
 		};
-		mockMongoMasterService.getDatabase.mockReturnValue(mockDb as any);
+		mockMongoMasterService.getDatabase.mockReturnValue(
+			mockDb as unknown as jest.Mocked<Db>,
+		);
 
 		const result = await service.execute();
 
@@ -48,7 +52,9 @@ describe('HealthReadDatabaseCheckService', () => {
 		const mockDb = {
 			admin: jest.fn().mockReturnValue(mockAdmin),
 		};
-		mockMongoMasterService.getDatabase.mockReturnValue(mockDb as any);
+		mockMongoMasterService.getDatabase.mockReturnValue(
+			mockDb as unknown as jest.Mocked<Db>,
+		);
 
 		const result = await service.execute();
 

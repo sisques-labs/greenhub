@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import {
 	AuthResponseDto,

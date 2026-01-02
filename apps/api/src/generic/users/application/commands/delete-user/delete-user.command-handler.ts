@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
 import {

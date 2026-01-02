@@ -1,4 +1,5 @@
 import { registerEnumType } from '@nestjs/graphql';
+
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 
 /**

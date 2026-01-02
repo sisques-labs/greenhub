@@ -4,6 +4,7 @@ import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+
 import { FindAuthsByCriteriaQuery } from './find-auths-by-criteria.query';
 
 describe('FindAuthsByCriteriaQueryHandler', () => {

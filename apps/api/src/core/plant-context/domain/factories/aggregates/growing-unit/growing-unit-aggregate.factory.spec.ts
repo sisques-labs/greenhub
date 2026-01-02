@@ -4,14 +4,15 @@ import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-u
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
-import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit.primitives';
-import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
+import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit/growing-unit.primitives';
+import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant/plant.primitives';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('GrowingUnitAggregateFactory', () => {
 	let factory: GrowingUnitAggregateFactory;
@@ -26,6 +27,7 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create a GrowingUnitAggregate from DTO', () => {
 			const dto: IGrowingUnitDto = {
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -50,6 +52,7 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create a GrowingUnitAggregate from DTO without dimensions', () => {
 			const dto: IGrowingUnitDto = {
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -66,6 +69,7 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create aggregate without events by default', () => {
 			const dto: IGrowingUnitDto = {
 				id: new GrowingUnitUuidValueObject(),
+				locationId: new LocationUuidValueObject(),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -85,6 +89,7 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create a GrowingUnitAggregate from primitives', () => {
 			const primitives: GrowingUnitPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId: '323e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -109,6 +114,7 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create a GrowingUnitAggregate from primitives without dimensions', () => {
 			const primitives: GrowingUnitPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId: '323e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -125,7 +131,6 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create a GrowingUnitAggregate from primitives with plants', () => {
 			const plantPrimitives: PlantPrimitives = {
 				id: '223e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: new Date('2024-01-15'),
@@ -135,6 +140,7 @@ describe('GrowingUnitAggregateFactory', () => {
 
 			const primitives: GrowingUnitPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId: '323e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -152,6 +158,7 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should not generate event when creating from primitives', () => {
 			const primitives: GrowingUnitPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				locationId: '323e4567-e89b-12d3-a456-426614174000',
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

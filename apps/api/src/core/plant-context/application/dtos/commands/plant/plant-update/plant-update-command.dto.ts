@@ -3,6 +3,7 @@
  *
  * @interface IPlantUpdateCommandDto
  * @property {string} id - The id of the plant to update
+ * @property {string} growingUnitId - The id of the growing unit containing the plant
  * @property {string} [name] - The name of the plant. Optional.
  * @property {string} [species] - The species of the plant. Optional.
  * @property {Date | null} [plantedDate] - The date when the plant was planted. Can be null to clear the date.
@@ -11,6 +12,7 @@
  */
 export interface IPlantUpdateCommandDto {
 	id: string;
+	growingUnitId: string;
 	name?: string;
 	species?: string;
 	plantedDate?: Date | null;

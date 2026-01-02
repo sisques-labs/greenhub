@@ -6,6 +6,7 @@ import { UserViewModel } from '@/generic/users/domain/view-models/user.view-mode
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
+
 import { UserUpdatedEventHandler } from './user-updated.event-handler';
 
 describe('UserUpdatedEventHandler', () => {

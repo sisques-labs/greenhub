@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
+
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
@@ -6,6 +7,9 @@ import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/enti
 
 @Entity('growing-units')
 export class GrowingUnitTypeormEntity extends BaseTypeormEntity {
+	@Column({ type: 'uuid' })
+	locationId: string;
+
 	@Column({ type: 'varchar' })
 	name: string;
 

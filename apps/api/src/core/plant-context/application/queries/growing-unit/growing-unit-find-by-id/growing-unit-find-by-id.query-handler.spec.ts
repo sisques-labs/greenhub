@@ -8,6 +8,7 @@ import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/valu
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('GrowingUnitFindByIdQueryHandler', () => {
 	let handler: GrowingUnitFindByIdQueryHandler;
@@ -30,6 +31,7 @@ describe('GrowingUnitFindByIdQueryHandler', () => {
 	describe('execute', () => {
 		it('should return growing unit aggregate when found', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const queryDto: IGrowingUnitFindByIdQueryDto = {
 				id: growingUnitId,
 			};
@@ -37,6 +39,7 @@ describe('GrowingUnitFindByIdQueryHandler', () => {
 			const query = new GrowingUnitFindByIdQuery(queryDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),

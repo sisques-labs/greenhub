@@ -1,4 +1,5 @@
 import { Collection } from 'mongodb';
+
 import { OverviewViewModel } from '@/generic/overview/domain/view-models/plant/overview.view-model';
 import { OverviewMongoDbDto } from '@/generic/overview/infrastructure/database/mongodb/dtos/overview-mongodb.dto';
 import { OverviewMongoDBMapper } from '@/generic/overview/infrastructure/database/mongodb/mappers/overview-mongodb.mapper';

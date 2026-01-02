@@ -1,3 +1,4 @@
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dto.interface';
 
@@ -12,6 +13,7 @@ import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dt
  * @see IGrowingUnitDto for entity data structure
  */
 export interface IGrowingUnitViewModelDto extends IBaseViewModelDto {
+	location: LocationViewModel;
 	name: string;
 	type: string;
 	capacity: number;

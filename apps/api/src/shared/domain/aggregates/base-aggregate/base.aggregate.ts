@@ -1,4 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
+
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 export class BaseAggregate extends AggregateRoot {

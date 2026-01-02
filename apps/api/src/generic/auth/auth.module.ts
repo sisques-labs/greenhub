@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AuthCreateCommandHandler } from '@/generic/auth/application/commands/auth-create/auth-create.command-handler';
 import { AuthDeleteCommandHandler } from '@/generic/auth/application/commands/auth-delete/auth-delete.command-handler';
 import { AuthLoginByEmailCommandHandler } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command-handler';
