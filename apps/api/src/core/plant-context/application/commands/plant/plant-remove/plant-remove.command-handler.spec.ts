@@ -9,8 +9,8 @@ import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-u
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import { IPlantWriteRepository } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
@@ -25,9 +25,9 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
 describe('PlantRemoveCommandHandler', () => {
 	let handler: PlantRemoveCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-	let mockPlantWriteRepository: jest.Mocked<IPlantWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
+	let mockAssertPlantExistsInGrowingUnitService: jest.Mocked<AssertPlantExistsInGrowingUnitService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let plantEntityFactory: PlantEntityFactory;
 
@@ -39,12 +39,6 @@ describe('PlantRemoveCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-		mockPlantWriteRepository = {
-			findById: jest.fn(),
-			save: jest.fn(),
-			delete: jest.fn(),
-		} as unknown as jest.Mocked<IPlantWriteRepository>;
-
 		mockEventBus = {
 			publishAll: jest.fn(),
 			publish: jest.fn(),
@@ -54,15 +48,19 @@ describe('PlantRemoveCommandHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
+		mockAssertPlantExistsInGrowingUnitService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertPlantExistsInGrowingUnitService>;
+
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<PublishIntegrationEventsService>;
 
 		handler = new PlantRemoveCommandHandler(
 			mockGrowingUnitWriteRepository,
-			mockPlantWriteRepository,
 			mockEventBus,
 			mockAssertGrowingUnitExistsService,
+			mockAssertPlantExistsInGrowingUnitService,
 			mockPublishIntegrationEventsService,
 		);
 	});
@@ -94,7 +92,6 @@ describe('PlantRemoveCommandHandler', () => {
 
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -107,7 +104,9 @@ describe('PlantRemoveCommandHandler', () => {
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
-			mockPlantWriteRepository.delete.mockResolvedValue(undefined);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
@@ -116,7 +115,12 @@ describe('PlantRemoveCommandHandler', () => {
 			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
 				growingUnitId,
 			);
-			expect(mockPlantWriteRepository.delete).toHaveBeenCalledWith(plantId);
+			expect(
+				mockAssertPlantExistsInGrowingUnitService.execute,
+			).toHaveBeenCalledWith({
+				growingUnitAggregate: mockGrowingUnit,
+				plantId,
+			});
 			expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
 				mockGrowingUnit,
 			);
@@ -149,9 +153,12 @@ describe('PlantRemoveCommandHandler', () => {
 				mockGrowingUnit,
 			);
 
-			await handler.execute(command);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockRejectedValue(
+				new Error('Plant not found'),
+			);
 
-			expect(mockPlantWriteRepository.delete).not.toHaveBeenCalled();
+			await expect(handler.execute(command)).rejects.toThrow();
+
 			expect(mockGrowingUnitWriteRepository.save).not.toHaveBeenCalled();
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
@@ -178,7 +185,6 @@ describe('PlantRemoveCommandHandler', () => {
 
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -191,7 +197,9 @@ describe('PlantRemoveCommandHandler', () => {
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
-			mockPlantWriteRepository.delete.mockResolvedValue(undefined);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
 
 			// Make save return the same object to preserve events
 			mockGrowingUnitWriteRepository.save.mockImplementation(

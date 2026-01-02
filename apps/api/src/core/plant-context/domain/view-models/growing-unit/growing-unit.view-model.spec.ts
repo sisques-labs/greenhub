@@ -1,6 +1,7 @@
 import { IGrowingUnitViewModelDto } from '@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
@@ -9,9 +10,17 @@ describe('GrowingUnitViewModel', () => {
 	let viewModelDto: IGrowingUnitViewModelDto;
 
 	beforeEach(() => {
+		const location = new LocationViewModel({
+			id: '323e4567-e89b-12d3-a456-426614174000',
+			name: 'Test Location',
+			type: 'INDOOR',
+			description: null,
+			createdAt: new Date('2024-01-15'),
+			updatedAt: new Date('2024-01-15'),
+		});
 		viewModelDto = {
 			id: '123e4567-e89b-12d3-a456-426614174000',
-			locationId: '323e4567-e89b-12d3-a456-426614174000',
+			location,
 			name: 'Garden Bed 1',
 			type: GrowingUnitTypeEnum.GARDEN_BED,
 			capacity: 10,

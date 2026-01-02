@@ -4,6 +4,7 @@ import { GrowingUnitViewModelFindByIdQuery } from '@/core/plant-context/applicat
 import { GrowingUnitViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler';
 import { AssertGrowingUnitViewModelExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 
 describe('GrowingUnitViewModelFindByIdQueryHandler', () => {
@@ -34,9 +35,17 @@ describe('GrowingUnitViewModelFindByIdQueryHandler', () => {
 
 			const query = new GrowingUnitViewModelFindByIdQuery(queryDto);
 			const now = new Date();
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,

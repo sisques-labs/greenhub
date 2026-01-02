@@ -1,3 +1,4 @@
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
@@ -26,8 +27,14 @@ describe('PlantTransplantService', () => {
 	const sourceGrowingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 	const targetGrowingUnitId = '323e4567-e89b-12d3-a456-426614174000';
 
+	let mockAssertPlantExistsInGrowingUnitService: jest.Mocked<AssertPlantExistsInGrowingUnitService>;
+
 	beforeEach(() => {
-		service = new PlantTransplantService();
+		mockAssertPlantExistsInGrowingUnitService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<AssertPlantExistsInGrowingUnitService>;
+
+		service = new PlantTransplantService(mockAssertPlantExistsInGrowingUnitService);
 		const locationId = '423e4567-e89b-12d3-a456-426614174000';
 
 		// Create source growing unit with capacity for 5 plants
@@ -55,7 +62,6 @@ describe('PlantTransplantService', () => {
 		// Create a plant
 		plant = new PlantEntity({
 			id: new PlantUuidValueObject(plantId),
-			growingUnitId: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
 			name: new PlantNameValueObject('Aloe Vera'),
 			species: new PlantSpeciesValueObject('Aloe barbadensis'),
 			plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -79,7 +85,6 @@ describe('PlantTransplantService', () => {
 
 			expect(result).toBeInstanceOf(PlantEntity);
 			expect(result.id.value).toBe(plantId);
-			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
 
 			// Verify plant was removed from source
 			const plantInSource = sourceGrowingUnit.getPlantById(plantId);
@@ -100,8 +105,13 @@ describe('PlantTransplantService', () => {
 
 			const result = await service.execute(input);
 
-			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
-			expect(result.growingUnitId.value).not.toBe(sourceGrowingUnitId);
+			expect(result.id.value).toBe(plantId);
+			expect(targetGrowingUnit.plants.some((p) => p.id.value === plantId)).toBe(
+				true,
+			);
+			expect(sourceGrowingUnit.plants.some((p) => p.id.value === plantId)).toBe(
+				false,
+			);
 		});
 
 		it('should throw GrowingUnitPlantNotFoundException when plant is not found in source', async () => {
@@ -127,7 +137,6 @@ describe('PlantTransplantService', () => {
 					id: new PlantUuidValueObject(
 						`${i}23e4567-e89b-12d3-a456-426614174000`,
 					),
-					growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
 					name: new PlantNameValueObject(`Test Plant ${i}`),
 					species: new PlantSpeciesValueObject('Test Species'),
 					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -158,7 +167,6 @@ describe('PlantTransplantService', () => {
 					id: new PlantUuidValueObject(
 						`${i}23e4567-e89b-12d3-a456-426614174000`,
 					),
-					growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
 					name: new PlantNameValueObject(`Test Plant ${i}`),
 					species: new PlantSpeciesValueObject('Test Species'),
 					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -178,7 +186,6 @@ describe('PlantTransplantService', () => {
 
 			expect(result).toBeInstanceOf(PlantEntity);
 			expect(result.id.value).toBe(plantId);
-			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
 
 			// Verify plant is in target
 			const plantInTarget = targetGrowingUnit.getPlantById(plantId);
@@ -211,7 +218,6 @@ describe('PlantTransplantService', () => {
 			for (let i = 0; i < additionalPlantIds.length; i++) {
 				const testPlant = new PlantEntity({
 					id: new PlantUuidValueObject(additionalPlantIds[i]),
-					growingUnitId: new GrowingUnitUuidValueObject(sourceGrowingUnitId),
 					name: new PlantNameValueObject(`Test Plant ${i + 1}`),
 					species: new PlantSpeciesValueObject('Test Species'),
 					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -230,7 +236,9 @@ describe('PlantTransplantService', () => {
 			const result = await service.execute(input);
 
 			expect(result.id.value).toBe(plantId);
-			expect(result.growingUnitId.value).toBe(targetGrowingUnitId);
+			expect(targetGrowingUnit.plants.some((p) => p.id.value === plantId)).toBe(
+				true,
+			);
 
 			// Verify other plants remain in source
 			const remainingPlants = sourceGrowingUnit.plants;
@@ -249,7 +257,6 @@ describe('PlantTransplantService', () => {
 			// Add a plant to target
 			const existingPlant = new PlantEntity({
 				id: new PlantUuidValueObject('423e4567-e89b-12d3-a456-426614174000'),
-				growingUnitId: new GrowingUnitUuidValueObject(targetGrowingUnitId),
 				name: new PlantNameValueObject('Existing Plant'),
 				species: new PlantSpeciesValueObject('Existing Species'),
 				plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),

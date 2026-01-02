@@ -4,7 +4,7 @@ import { PlantUpdateCommand } from '@/core/plant-context/application/commands/pl
 import { PlantUpdateCommandHandler } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command-handler';
 import { IPlantUpdateCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-update/plant-update-command.dto';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { AssertPlantExistsService } from '@/core/plant-context/application/services/plant/assert-plant-exists/assert-plant-exists.service';
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
@@ -28,7 +28,7 @@ describe('PlantUpdateCommandHandler', () => {
 	let handler: PlantUpdateCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockEventBus: jest.Mocked<EventBus>;
-	let mockAssertPlantExistsService: jest.Mocked<AssertPlantExistsService>;
+	let mockAssertPlantExistsInGrowingUnitService: jest.Mocked<AssertPlantExistsInGrowingUnitService>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
 	let plantEntityFactory: PlantEntityFactory;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
@@ -46,9 +46,9 @@ describe('PlantUpdateCommandHandler', () => {
 			publish: jest.fn(),
 		} as unknown as jest.Mocked<EventBus>;
 
-		mockAssertPlantExistsService = {
+		mockAssertPlantExistsInGrowingUnitService = {
 			execute: jest.fn(),
-		} as unknown as jest.Mocked<AssertPlantExistsService>;
+		} as unknown as jest.Mocked<AssertPlantExistsInGrowingUnitService>;
 
 		mockAssertGrowingUnitExistsService = {
 			execute: jest.fn(),
@@ -61,8 +61,8 @@ describe('PlantUpdateCommandHandler', () => {
 		handler = new PlantUpdateCommandHandler(
 			mockGrowingUnitWriteRepository,
 			mockEventBus,
-			mockAssertPlantExistsService,
 			mockAssertGrowingUnitExistsService,
+			mockAssertPlantExistsInGrowingUnitService,
 			mockPublishIntegrationEventsService,
 		);
 	});
@@ -83,7 +83,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -104,7 +103,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -113,9 +114,12 @@ describe('PlantUpdateCommandHandler', () => {
 
 			await handler.execute(command);
 
-			expect(mockAssertPlantExistsService.execute).toHaveBeenCalledWith(
+			expect(
+				mockAssertPlantExistsInGrowingUnitService.execute,
+			).toHaveBeenCalledWith({
+				growingUnitAggregate: mockGrowingUnit,
 				plantId,
-			);
+			});
 			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
 				growingUnitId,
 			);
@@ -140,7 +144,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -161,7 +164,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -185,7 +190,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -206,7 +210,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -244,7 +250,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -265,7 +270,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -293,7 +300,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -314,7 +320,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -341,7 +349,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -362,7 +369,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -394,7 +403,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -415,7 +423,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -446,7 +456,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -467,7 +476,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
@@ -494,7 +505,6 @@ describe('PlantUpdateCommandHandler', () => {
 			const command = new PlantUpdateCommand(commandDto);
 			const mockPlant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -515,7 +525,9 @@ describe('PlantUpdateCommandHandler', () => {
 
 			mockGrowingUnit.addPlant(mockPlant, false);
 
-			mockAssertPlantExistsService.execute.mockResolvedValue(mockPlant);
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				mockPlant,
+			);
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);

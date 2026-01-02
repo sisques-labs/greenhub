@@ -95,7 +95,6 @@ describe('PlantAddCommandHandler', () => {
 			const plantEntityFactory = new PlantEntityFactory();
 			const mockPlant = plantEntityFactory.create({
 				id: command.id,
-				growingUnitId: command.growingUnitId,
 				name: command.name,
 				species: command.species,
 				plantedDate: command.plantedDate,
@@ -118,7 +117,6 @@ describe('PlantAddCommandHandler', () => {
 			);
 			expect(mockPlantEntityFactory.create).toHaveBeenCalledWith({
 				id: command.id,
-				growingUnitId: command.growingUnitId,
 				name: command.name,
 				species: command.species,
 				plantedDate: command.plantedDate,
@@ -206,7 +204,6 @@ describe('PlantAddCommandHandler', () => {
 			const plantEntityFactory = new PlantEntityFactory();
 			const mockPlant = plantEntityFactory.create({
 				id: command.id,
-				growingUnitId: command.growingUnitId,
 				name: command.name,
 				species: command.species,
 				plantedDate: command.plantedDate,

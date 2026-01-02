@@ -8,6 +8,7 @@ import {
 	IGrowingUnitReadRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 
 describe('AssertGrowingUnitViewModelExistsService', () => {
 	let service: AssertGrowingUnitViewModelExistsService;
@@ -45,9 +46,17 @@ describe('AssertGrowingUnitViewModelExistsService', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -95,4 +104,3 @@ describe('AssertGrowingUnitViewModelExistsService', () => {
 		});
 	});
 });
-

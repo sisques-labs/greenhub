@@ -106,12 +106,12 @@ export function PlantTableRow({
 						<span className="text-sm">{plant.location.name}</span>
 					</div>
 				) : (
-					<div className="flex items-center gap-2">
-						{getLocationIcon()}
+				<div className="flex items-center gap-2">
+					{getLocationIcon()}
 						<span className="text-sm text-muted-foreground">
 							{t("common.unknown")}
-						</span>
-					</div>
+					</span>
+				</div>
 				)}
 			</TableCell>
 			<TableCell>{getPlantStatusBadge(plant.status, t)}</TableCell>

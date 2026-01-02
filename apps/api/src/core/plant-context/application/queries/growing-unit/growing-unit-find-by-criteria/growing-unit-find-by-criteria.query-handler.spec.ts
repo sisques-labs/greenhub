@@ -7,6 +7,7 @@ import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
@@ -48,10 +49,18 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 			const query = new GrowingUnitFindByCriteriaQuery(criteria);
 			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
 			const mockViewModels = [
 				new GrowingUnitViewModel({
 					id: '123e4567-e89b-12d3-a456-426614174000',
-					locationId,
+					location,
 					name: 'Garden Bed 1',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,
@@ -65,7 +74,7 @@ describe('GrowingUnitFindByCriteriaQueryHandler', () => {
 				}),
 				new GrowingUnitViewModel({
 					id: '223e4567-e89b-12d3-a456-426614174000',
-					locationId,
+					location,
 					name: 'Garden Bed 2',
 					type: GrowingUnitTypeEnum.GARDEN_BED,
 					capacity: 10,

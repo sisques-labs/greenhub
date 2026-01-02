@@ -51,7 +51,6 @@ describe('PlantTypeormMapper', () => {
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(plantedDate),
@@ -66,7 +65,6 @@ describe('PlantTypeormMapper', () => {
 			expect(result).toBe(plantEntity);
 			expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledWith({
 				id: plantId,
-				growingUnitId: growingUnitId,
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: plantedDate,
@@ -95,7 +93,6 @@ describe('PlantTypeormMapper', () => {
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -110,7 +107,6 @@ describe('PlantTypeormMapper', () => {
 			expect(result).toBe(plantEntity);
 			expect(mockPlantEntityFactory.fromPrimitives).toHaveBeenCalledWith({
 				id: plantId,
-				growingUnitId: growingUnitId,
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: null,
@@ -128,7 +124,6 @@ describe('PlantTypeormMapper', () => {
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(plantedDate),
@@ -140,7 +135,6 @@ describe('PlantTypeormMapper', () => {
 				.spyOn(plantEntity, 'toPrimitives')
 				.mockReturnValue({
 					id: plantId,
-					growingUnitId: growingUnitId,
 					name: 'Basil',
 					species: 'Ocimum basilicum',
 					plantedDate: plantedDate,
@@ -148,7 +142,7 @@ describe('PlantTypeormMapper', () => {
 					status: PlantStatusEnum.PLANTED,
 				});
 
-			const result = mapper.toTypeormEntity(plantEntity);
+			const result = mapper.toTypeormEntity(plantEntity, growingUnitId);
 
 			expect(result).toBeInstanceOf(PlantTypeormEntity);
 			expect(result.id).toBe(plantId);
@@ -169,7 +163,6 @@ describe('PlantTypeormMapper', () => {
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -181,7 +174,6 @@ describe('PlantTypeormMapper', () => {
 				.spyOn(plantEntity, 'toPrimitives')
 				.mockReturnValue({
 					id: plantId,
-					growingUnitId: growingUnitId,
 					name: 'Basil',
 					species: 'Ocimum basilicum',
 					plantedDate: null,
@@ -189,7 +181,7 @@ describe('PlantTypeormMapper', () => {
 					status: PlantStatusEnum.GROWING,
 				});
 
-			const result = mapper.toTypeormEntity(plantEntity);
+			const result = mapper.toTypeormEntity(plantEntity, growingUnitId);
 
 			expect(result).toBeInstanceOf(PlantTypeormEntity);
 			expect(result.id).toBe(plantId);
@@ -212,7 +204,6 @@ describe('PlantTypeormMapper', () => {
 
 			const primitives = {
 				id: plantId,
-				growingUnitId: growingUnitId,
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: plantedDate,
@@ -220,7 +211,7 @@ describe('PlantTypeormMapper', () => {
 				status: PlantStatusEnum.PLANTED,
 			};
 
-			const result = mapper.toTypeormEntityFromPrimitives(primitives);
+			const result = mapper.toTypeormEntityFromPrimitives(primitives, growingUnitId);
 
 			expect(result).toBeInstanceOf(PlantTypeormEntity);
 			expect(result.id).toBe(plantId);
@@ -238,7 +229,6 @@ describe('PlantTypeormMapper', () => {
 
 			const primitives = {
 				id: plantId,
-				growingUnitId: growingUnitId,
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: null,
@@ -246,7 +236,7 @@ describe('PlantTypeormMapper', () => {
 				status: PlantStatusEnum.GROWING,
 			};
 
-			const result = mapper.toTypeormEntityFromPrimitives(primitives);
+			const result = mapper.toTypeormEntityFromPrimitives(primitives, growingUnitId);
 
 			expect(result).toBeInstanceOf(PlantTypeormEntity);
 			expect(result.id).toBe(plantId);

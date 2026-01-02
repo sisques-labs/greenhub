@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { IPlantReadRepository } from '@/core/plant-context/domain/repositories/plant/plant-read/plant-read.repository';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
@@ -43,7 +44,9 @@ export class PlantMongoRepository
 		const collection = this.mongoMasterService.getCollection(
 			this.collectionName,
 		);
-		const plantMongoDbDto = await collection.findOne({ id });
+		const plantMongoDbDto = (await collection.findOne({
+			id,
+		})) as unknown as PlantMongoDbDto | null;
 
 		return plantMongoDbDto
 			? this.plantMongoDBMapper.toViewModel(plantMongoDbDto)
@@ -82,9 +85,7 @@ export class PlantMongoRepository
 		);
 
 		// 04: Convert MongoDB documents to domain entities
-		const plants = items.map((doc) =>
-			this.plantMongoDBMapper.toViewModel(doc),
-		);
+		const plants = items.map((doc) => this.plantMongoDBMapper.toViewModel(doc));
 
 		return new PaginatedResult<PlantViewModel>(plants, total, page, limit);
 	}

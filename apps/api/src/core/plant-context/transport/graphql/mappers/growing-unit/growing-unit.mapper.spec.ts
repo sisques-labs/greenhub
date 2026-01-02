@@ -1,25 +1,50 @@
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { LocationGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/location/location.mapper';
+import { PlantGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/plant/plant.mapper';
 import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 describe('GrowingUnitGraphQLMapper', () => {
 	let mapper: GrowingUnitGraphQLMapper;
+	let mockLocationGraphQLMapper: jest.Mocked<LocationGraphQLMapper>;
+	let mockPlantGraphQLMapper: jest.Mocked<PlantGraphQLMapper>;
 
 	beforeEach(() => {
-		mapper = new GrowingUnitGraphQLMapper();
+		mockLocationGraphQLMapper = {
+			toResponseDtoFromViewModel: jest.fn(),
+		} as unknown as jest.Mocked<LocationGraphQLMapper>;
+
+		mockPlantGraphQLMapper = {
+			toResponseDtoFromViewModel: jest.fn(),
+		} as unknown as jest.Mocked<PlantGraphQLMapper>;
+
+		mapper = new GrowingUnitGraphQLMapper(
+			mockLocationGraphQLMapper,
+			mockPlantGraphQLMapper,
+		);
 	});
 
 	describe('toResponseDto', () => {
 		it('should convert growing unit view model to response DTO with all properties', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			});
+
 			const plantViewModel = new PlantViewModel({
 				id: plantId,
-				growingUnitId: growingUnitId,
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: null,
@@ -31,7 +56,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId: '123e4567-e89b-12d3-a456-426614174000',
+				location,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -49,11 +74,38 @@ describe('GrowingUnitGraphQLMapper', () => {
 				updatedAt,
 			});
 
+			const mockLocationDto = {
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			};
+
+			const mockPlantDto = {
+				id: plantId,
+				name: 'Basil',
+				species: 'Ocimum basilicum',
+				plantedDate: null,
+				notes: null,
+				status: 'PLANTED',
+				createdAt,
+				updatedAt,
+			};
+
+			mockLocationGraphQLMapper.toResponseDtoFromViewModel.mockReturnValue(
+				mockLocationDto as any,
+			);
+			mockPlantGraphQLMapper.toResponseDtoFromViewModel.mockReturnValue(
+				mockPlantDto as any,
+			);
+
 			const result = mapper.toResponseDto(viewModel);
 
 			expect(result).toEqual({
 				id: growingUnitId,
-				locationId: '123e4567-e89b-12d3-a456-426614174000',
+				location: mockLocationDto,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -63,19 +115,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 					height: 0.5,
 					unit: 'METER',
 				},
-				plants: [
-					{
-						id: plantId,
-						growingUnitId: growingUnitId,
-						name: 'Basil',
-						species: 'Ocimum basilicum',
-						plantedDate: null,
-						notes: null,
-						status: 'PLANTED',
-						createdAt,
-						updatedAt,
-					},
-				],
+				plants: [mockPlantDto],
 				numberOfPlants: 1,
 				remainingCapacity: 9,
 				volume: 1.0,
@@ -86,12 +126,22 @@ describe('GrowingUnitGraphQLMapper', () => {
 
 		it('should convert growing unit view model with null dimensions and no plants', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			});
+
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId: '123e4567-e89b-12d3-a456-426614174000',
+				location,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -104,11 +154,24 @@ describe('GrowingUnitGraphQLMapper', () => {
 				updatedAt,
 			});
 
+			const mockLocationDto = {
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			};
+
+			mockLocationGraphQLMapper.toResponseDtoFromViewModel.mockReturnValue(
+				mockLocationDto as any,
+			);
+
 			const result = mapper.toResponseDto(viewModel);
 
 			expect(result).toEqual({
 				id: growingUnitId,
-				locationId: '123e4567-e89b-12d3-a456-426614174000',
+				location: mockLocationDto,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -126,13 +189,22 @@ describe('GrowingUnitGraphQLMapper', () => {
 	describe('toPaginatedResponseDto', () => {
 		it('should convert paginated result to paginated response DTO', () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
 
-			const locationId = '323e4567-e89b-12d3-a456-426614174000';
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			});
+
 			const viewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -145,6 +217,19 @@ describe('GrowingUnitGraphQLMapper', () => {
 				updatedAt,
 			});
 
+			const mockLocationDto = {
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			};
+
+			mockLocationGraphQLMapper.toResponseDtoFromViewModel.mockReturnValue(
+				mockLocationDto as any,
+			);
+
 			const paginatedResult = new PaginatedResult([viewModel], 1, 1, 10);
 
 			const result = mapper.toPaginatedResponseDto(paginatedResult);
@@ -153,7 +238,7 @@ describe('GrowingUnitGraphQLMapper', () => {
 				items: [
 					{
 						id: growingUnitId,
-						locationId,
+						location: mockLocationDto,
 						name: 'Garden Bed 1',
 						type: 'GARDEN_BED',
 						capacity: 10,

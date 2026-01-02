@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
 
-import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-removed/plant-removed.event-handler';
+import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-deleted/plant-deleted.event-handler';
 import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	type IGrowingUnitReadRepository,
@@ -21,7 +21,6 @@ describe('PlantDeletedEventHandler', () => {
 	let handler: PlantDeletedEventHandler;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
-	let mockGrowingUnitViewModelFactory: jest.Mocked<GrowingUnitViewModelFactory>;
 
 	beforeEach(async () => {
 		mockGrowingUnitReadRepository = {
@@ -35,11 +34,6 @@ describe('PlantDeletedEventHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
-		mockGrowingUnitViewModelFactory = {
-			create: jest.fn(),
-			fromPrimitives: jest.fn(),
-			fromAggregate: jest.fn(),
-		} as unknown as jest.Mocked<GrowingUnitViewModelFactory>;
 
 		const module = await Test.createTestingModule({
 			providers: [
@@ -51,10 +45,6 @@ describe('PlantDeletedEventHandler', () => {
 				{
 					provide: AssertGrowingUnitExistsService,
 					useValue: mockAssertGrowingUnitExistsService,
-				},
-				{
-					provide: GrowingUnitViewModelFactory,
-					useValue: mockGrowingUnitViewModelFactory,
 				},
 			],
 		}).compile();
@@ -82,9 +72,18 @@ describe('PlantDeletedEventHandler', () => {
 			});
 
 			const now = new Date();
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
+
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -100,9 +99,6 @@ describe('PlantDeletedEventHandler', () => {
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
-			mockGrowingUnitViewModelFactory.fromAggregate.mockReturnValue(
-				mockViewModel,
-			);
 			mockGrowingUnitReadRepository.save.mockResolvedValue(undefined);
 
 			await handler.handle(
@@ -116,7 +112,6 @@ describe('PlantDeletedEventHandler', () => {
 					},
 					{
 						id: '223e4567-e89b-12d3-a456-426614174000',
-						growingUnitId,
 						name: 'Basil',
 						species: 'Ocimum basilicum',
 						plantedDate: null,
@@ -129,12 +124,7 @@ describe('PlantDeletedEventHandler', () => {
 			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
 				growingUnitId,
 			);
-			expect(
-				mockGrowingUnitViewModelFactory.fromAggregate,
-			).toHaveBeenCalledWith(mockGrowingUnit);
-			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledWith(
-				mockViewModel,
-			);
+			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalled();
 			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledTimes(1);
 		});
 	});

@@ -5,7 +5,9 @@ import { useGrowingUnitFindById } from "@/core/plant-context/growing-unit/hooks/
 import { useGrowingUnitsFindByCriteria } from "@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria";
 import { usePlantFindById } from "@/core/plant-context/plant/hooks/use-plant-find-by-id/use-plant-find-by-id";
 import { usePlantTransplant } from "@/core/plant-context/plant/hooks/use-plant-transplant/use-plant-transplant";
+import { usePlantUpdate } from "@/core/plant-context/plant/hooks/use-plant-update/use-plant-update";
 import { usePlantDetailPageStore } from "@/core/plant-context/plant/stores/plant-detail-page-store";
+import type { PlantUpdateFormValues } from "@/core/plant-context/plant/dtos/schemas/plant-update/plant-update.schema";
 
 /**
  * Hook that provides plant detail page functionality
@@ -13,8 +15,12 @@ import { usePlantDetailPageStore } from "@/core/plant-context/plant/stores/plant
  */
 export function usePlantDetailPage(id: string) {
 	const t = useTranslations();
-	const { transplantDialogOpen, setTransplantDialogOpen } =
-		usePlantDetailPageStore();
+	const {
+		transplantDialogOpen,
+		setTransplantDialogOpen,
+		editDetailsDialogOpen,
+		setEditDetailsDialogOpen,
+	} = usePlantDetailPageStore();
 
 	const { plant, isLoading, error, refetch } = usePlantFindById(id || "");
 	const {
@@ -30,6 +36,11 @@ export function usePlantDetailPage(id: string) {
 		isLoading: isTransplanting,
 		error: transplantError,
 	} = usePlantTransplant();
+	const {
+		handleUpdate,
+		isLoading: isUpdating,
+		error: updateError,
+	} = usePlantUpdate();
 
 	const handleTransplantSubmit = useCallback(
 		async (targetGrowingUnitId: string) => {
@@ -47,6 +58,29 @@ export function usePlantDetailPage(id: string) {
 			);
 		},
 		[plant, handleTransplant, refetch, setTransplantDialogOpen],
+	);
+
+	const handleUpdateSubmit = useCallback(
+		async (values: PlantUpdateFormValues) => {
+			if (!plant) return;
+			await handleUpdate(
+				{
+					id: plant.id,
+					name: values.name,
+					species: values.species,
+					plantedDate: values.plantedDate,
+					notes: values.notes,
+					status: values.status,
+					// Note: growingUnitId is not included as it's not part of UpdatePlantInput
+					// The backend should obtain it from the existing plant
+				},
+				() => {
+					refetch();
+					setEditDetailsDialogOpen(false);
+				},
+			);
+		},
+		[plant, handleUpdate, refetch, setEditDetailsDialogOpen],
 	);
 
 	const calculateAge = useCallback(() => {
@@ -146,19 +180,24 @@ export function usePlantDetailPage(id: string) {
 		isLoadingSourceGrowingUnit,
 		isLoadingGrowingUnits,
 		isTransplanting,
+		isUpdating,
 		isLoadingTransplant:
 			isTransplanting || isLoadingSourceGrowingUnit || isLoadingGrowingUnits,
 
 		// Errors
 		error,
 		transplantError,
+		updateError,
 
 		// Dialog state
 		transplantDialogOpen,
 		setTransplantDialogOpen,
+		editDetailsDialogOpen,
+		setEditDetailsDialogOpen,
 
 		// Handlers
 		refetch,
 		handleTransplantSubmit,
+		handleUpdateSubmit,
 	};
 }

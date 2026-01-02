@@ -83,7 +83,6 @@ describe('GrowingUnitTypeormMapper', () => {
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -192,7 +191,6 @@ describe('GrowingUnitTypeormMapper', () => {
 
 			const plantEntity = plantEntityFactory.create({
 				id: new PlantUuidValueObject(plantId),
-				growingUnitId: new GrowingUnitUuidValueObject(growingUnitId),
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -262,7 +260,7 @@ describe('GrowingUnitTypeormMapper', () => {
 			expect(toPrimitivesSpy).toHaveBeenCalledTimes(1);
 			expect(
 				mockPlantTypeormMapper.toTypeormEntityFromPrimitives,
-			).toHaveBeenCalledWith(plantEntity.toPrimitives());
+			).toHaveBeenCalledWith(plantEntity.toPrimitives(), growingUnitId);
 
 			toPrimitivesSpy.mockRestore();
 		});

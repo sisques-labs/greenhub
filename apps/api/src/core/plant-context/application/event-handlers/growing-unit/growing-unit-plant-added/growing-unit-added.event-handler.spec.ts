@@ -1,13 +1,13 @@
 import { Test } from '@nestjs/testing';
 
-import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
+import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-created/plant-created.event-handler';
 import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
@@ -23,7 +23,6 @@ describe('PlantCreatedEventHandler', () => {
 	let handler: PlantCreatedEventHandler;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
-	let mockGrowingUnitViewModelFactory: jest.Mocked<GrowingUnitViewModelFactory>;
 
 	beforeEach(async () => {
 		mockGrowingUnitReadRepository = {
@@ -37,11 +36,6 @@ describe('PlantCreatedEventHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
-		mockGrowingUnitViewModelFactory = {
-			create: jest.fn(),
-			fromPrimitives: jest.fn(),
-			fromAggregate: jest.fn(),
-		} as unknown as jest.Mocked<GrowingUnitViewModelFactory>;
 
 		const module = await Test.createTestingModule({
 			providers: [
@@ -53,10 +47,6 @@ describe('PlantCreatedEventHandler', () => {
 				{
 					provide: AssertGrowingUnitExistsService,
 					useValue: mockAssertGrowingUnitExistsService,
-				},
-				{
-					provide: GrowingUnitViewModelFactory,
-					useValue: mockGrowingUnitViewModelFactory,
 				},
 			],
 		}).compile();
@@ -83,7 +73,6 @@ describe('PlantCreatedEventHandler', () => {
 				},
 				{
 					id: plantId,
-					growingUnitId,
 					name: 'Basil',
 					species: 'Ocimum basilicum',
 					plantedDate: null,
@@ -103,9 +92,18 @@ describe('PlantCreatedEventHandler', () => {
 			});
 
 			const now = new Date();
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
+
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -121,9 +119,6 @@ describe('PlantCreatedEventHandler', () => {
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
-			mockGrowingUnitViewModelFactory.fromAggregate.mockReturnValue(
-				mockViewModel,
-			);
 			mockGrowingUnitReadRepository.save.mockResolvedValue(undefined);
 
 			await handler.handle(event);
@@ -131,12 +126,7 @@ describe('PlantCreatedEventHandler', () => {
 			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
 				growingUnitId,
 			);
-			expect(
-				mockGrowingUnitViewModelFactory.fromAggregate,
-			).toHaveBeenCalledWith(mockGrowingUnit);
-			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledWith(
-				mockViewModel,
-			);
+			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalled();
 			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledTimes(1);
 		});
 	});

@@ -5,7 +5,9 @@ import { GrowingUnitCreatedEvent } from '@/core/plant-context/application/events
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
+import { LocationViewModelFindByIdQuery } from '@/core/location-context/application/queries/location/location-view-model-find-by-id/location-view-model-find-by-id.query';
+import { GrowingUnitViewModelBuilder } from '@/core/plant-context/domain/builders/growing-unit/growing-unit-view-model.builder';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
@@ -14,6 +16,7 @@ import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/valu
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { QueryBus } from '@nestjs/cqrs';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
@@ -21,7 +24,8 @@ describe('GrowingUnitCreatedEventHandler', () => {
 	let handler: GrowingUnitCreatedEventHandler;
 	let mockGrowingUnitReadRepository: jest.Mocked<IGrowingUnitReadRepository>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
-	let mockGrowingUnitViewModelFactory: jest.Mocked<GrowingUnitViewModelFactory>;
+	let mockGrowingUnitViewModelBuilder: jest.Mocked<GrowingUnitViewModelBuilder>;
+	let mockQueryBus: jest.Mocked<QueryBus>;
 
 	beforeEach(async () => {
 		mockGrowingUnitReadRepository = {
@@ -35,11 +39,16 @@ describe('GrowingUnitCreatedEventHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
-		mockGrowingUnitViewModelFactory = {
-			create: jest.fn(),
-			fromPrimitives: jest.fn(),
-			fromAggregate: jest.fn(),
-		} as unknown as jest.Mocked<GrowingUnitViewModelFactory>;
+		mockGrowingUnitViewModelBuilder = {
+			reset: jest.fn().mockReturnThis(),
+			fromAggregate: jest.fn().mockReturnThis(),
+			withLocation: jest.fn().mockReturnThis(),
+			build: jest.fn(),
+		} as unknown as jest.Mocked<GrowingUnitViewModelBuilder>;
+
+		mockQueryBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<QueryBus>;
 
 		const module = await Test.createTestingModule({
 			providers: [
@@ -53,8 +62,12 @@ describe('GrowingUnitCreatedEventHandler', () => {
 					useValue: mockAssertGrowingUnitExistsService,
 				},
 				{
-					provide: GrowingUnitViewModelFactory,
-					useValue: mockGrowingUnitViewModelFactory,
+					provide: GrowingUnitViewModelBuilder,
+					useValue: mockGrowingUnitViewModelBuilder,
+				},
+				{
+					provide: QueryBus,
+					useValue: mockQueryBus,
 				},
 			],
 		}).compile();
@@ -102,9 +115,18 @@ describe('GrowingUnitCreatedEventHandler', () => {
 			});
 
 			const now = new Date();
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
+
 			const mockViewModel = new GrowingUnitViewModel({
 				id: growingUnitId,
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -120,9 +142,8 @@ describe('GrowingUnitCreatedEventHandler', () => {
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
 			);
-			mockGrowingUnitViewModelFactory.fromAggregate.mockReturnValue(
-				mockViewModel,
-			);
+			mockQueryBus.execute.mockResolvedValue(location);
+			mockGrowingUnitViewModelBuilder.build.mockReturnValue(mockViewModel);
 			mockGrowingUnitReadRepository.save.mockResolvedValue(undefined);
 
 			await handler.handle(event);
@@ -130,9 +151,17 @@ describe('GrowingUnitCreatedEventHandler', () => {
 			expect(mockAssertGrowingUnitExistsService.execute).toHaveBeenCalledWith(
 				growingUnitId,
 			);
-			expect(
-				mockGrowingUnitViewModelFactory.fromAggregate,
-			).toHaveBeenCalledWith(mockGrowingUnit);
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.any(LocationViewModelFindByIdQuery),
+			);
+			expect(mockGrowingUnitViewModelBuilder.reset).toHaveBeenCalled();
+			expect(mockGrowingUnitViewModelBuilder.fromAggregate).toHaveBeenCalledWith(
+				mockGrowingUnit,
+			);
+			expect(mockGrowingUnitViewModelBuilder.withLocation).toHaveBeenCalledWith(
+				location,
+			);
+			expect(mockGrowingUnitViewModelBuilder.build).toHaveBeenCalled();
 			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledWith(
 				mockViewModel,
 			);

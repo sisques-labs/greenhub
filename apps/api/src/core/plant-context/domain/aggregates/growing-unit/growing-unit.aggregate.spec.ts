@@ -99,7 +99,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -117,7 +116,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -136,7 +134,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -156,7 +153,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant1 = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -165,7 +161,6 @@ describe('GrowingUnitAggregate', () => {
 			});
 			const plant2 = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Tomato'),
 				species: new PlantSpeciesValueObject('Solanum lycopersicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -185,7 +180,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -205,7 +199,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -224,7 +217,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -247,7 +239,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -285,7 +276,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -308,7 +298,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -333,7 +322,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -356,7 +344,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -381,7 +368,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -405,7 +391,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: null,
@@ -430,7 +415,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -453,7 +437,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -473,48 +456,6 @@ describe('GrowingUnitAggregate', () => {
 		});
 	});
 
-	describe('changePlantGrowingUnit', () => {
-		it('should change plant growing unit', () => {
-			const aggregate = new GrowingUnitAggregate(growingUnitDto);
-			const newGrowingUnitId = new GrowingUnitUuidValueObject();
-			const plant = plantEntityFactory.create({
-				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
-				name: new PlantNameValueObject('Basil'),
-				species: new PlantSpeciesValueObject('Ocimum basilicum'),
-				plantedDate: new PlantPlantedDateValueObject(new Date()),
-				notes: null,
-				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-			});
-
-			aggregate.addPlant(plant, false);
-			aggregate.changePlantGrowingUnit(plant.id.value, newGrowingUnitId, false);
-
-			const updatedPlant = aggregate.getPlantById(plant.id.value);
-			expect(updatedPlant?.growingUnitId.value).toBe(newGrowingUnitId.value);
-		});
-
-		it('should generate PlantGrowingUnitChangedEvent by default', () => {
-			const aggregate = new GrowingUnitAggregate(growingUnitDto);
-			const newGrowingUnitId = new GrowingUnitUuidValueObject();
-			const plant = plantEntityFactory.create({
-				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
-				name: new PlantNameValueObject('Basil'),
-				species: new PlantSpeciesValueObject('Ocimum basilicum'),
-				plantedDate: new PlantPlantedDateValueObject(new Date()),
-				notes: null,
-				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
-			});
-
-			aggregate.addPlant(plant, false);
-			aggregate.changePlantGrowingUnit(plant.id.value, newGrowingUnitId);
-
-			const events = aggregate.getUncommittedEvents();
-			expect(events).toHaveLength(1);
-			expect(events[0]).toBeInstanceOf(PlantGrowingUnitChangedEvent);
-		});
-	});
 
 	describe('changeName', () => {
 		it('should change growing unit name', () => {
@@ -644,7 +585,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -681,7 +621,6 @@ describe('GrowingUnitAggregate', () => {
 			for (let i = 0; i < 10; i++) {
 				const plant = plantEntityFactory.create({
 					id: new PlantUuidValueObject(),
-					growingUnitId: growingUnitId,
 					name: new PlantNameValueObject(`Plant ${i}`),
 					species: new PlantSpeciesValueObject('Test species'),
 					plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -703,7 +642,6 @@ describe('GrowingUnitAggregate', () => {
 
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -722,7 +660,6 @@ describe('GrowingUnitAggregate', () => {
 			for (let i = 0; i < 10; i++) {
 				const plant = plantEntityFactory.create({
 					id: new PlantUuidValueObject(),
-					growingUnitId: growingUnitId,
 					name: new PlantNameValueObject(`Plant ${i}`),
 					species: new PlantSpeciesValueObject('Test species'),
 					plantedDate: new PlantPlantedDateValueObject(new Date()),
@@ -753,7 +690,6 @@ describe('GrowingUnitAggregate', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 			const plant = plantEntityFactory.create({
 				id: new PlantUuidValueObject(),
-				growingUnitId: growingUnitId,
 				name: new PlantNameValueObject('Basil'),
 				species: new PlantSpeciesValueObject('Ocimum basilicum'),
 				plantedDate: new PlantPlantedDateValueObject(new Date()),

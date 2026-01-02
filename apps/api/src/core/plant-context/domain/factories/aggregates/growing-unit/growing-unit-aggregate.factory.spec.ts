@@ -131,7 +131,6 @@ describe('GrowingUnitAggregateFactory', () => {
 		it('should create a GrowingUnitAggregate from primitives with plants', () => {
 			const plantPrimitives: PlantPrimitives = {
 				id: '223e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '123e4567-e89b-12d3-a456-426614174000',
 				name: 'Basil',
 				species: 'Ocimum basilicum',
 				plantedDate: new Date('2024-01-15'),

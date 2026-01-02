@@ -649,6 +649,16 @@
 								"loading": "Transplanting..."
 							}
 						}
+					},
+					"editDetails": {
+						"title": "Edit Plant Details",
+						"description": "Update the information for this plant",
+						"actions": {
+							"submit": {
+								"label": "Save Changes",
+								"loading": "Saving..."
+							}
+						}
 					}
 				}
 			}

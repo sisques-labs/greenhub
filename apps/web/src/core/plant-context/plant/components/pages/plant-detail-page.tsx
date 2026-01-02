@@ -35,6 +35,7 @@ import {
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { PlantDetailPageSkeleton } from "@/core/plant-context/plant/components/organisms/plant-detail-page-skeleton/plant-detail-page-skeleton";
+import { PlantEditDetailsModal } from "@/core/plant-context/plant/components/organisms/plant-edit-details-modal/plant-edit-details-modal";
 import { PlantTransplantModal } from "@/core/plant-context/plant/components/organisms/plant-transplant-modal/plant-transplant-modal";
 import { usePlantDetailPage } from "@/core/plant-context/plant/hooks/use-plant-detail-page/use-plant-detail-page";
 import { getPlantStatusBadge } from "@/core/plant-context/plant/utils/plant-status.utils";
@@ -52,11 +53,16 @@ export function PlantDetailPage() {
 		upcomingCareGroups,
 		isLoading,
 		isLoadingTransplant,
+		isUpdating,
 		error,
 		transplantError,
+		updateError,
 		transplantDialogOpen,
 		setTransplantDialogOpen,
+		editDetailsDialogOpen,
+		setEditDetailsDialogOpen,
 		handleTransplantSubmit,
+		handleUpdateSubmit,
 	} = usePlantDetailPage(id);
 
 	// Show skeleton while loading or if data is not yet available
@@ -159,7 +165,10 @@ export function PlantDetailPage() {
 
 							{/* Action Buttons */}
 							<div className="flex items-center gap-2 flex-wrap">
-								<Button variant="default">
+								<Button
+									variant="default"
+									onClick={() => setEditDetailsDialogOpen(true)}
+								>
 									<PencilIcon className="mr-2 h-4 w-4" />
 									{t("pages.plants.detail.actions.editDetails")}
 								</Button>
@@ -505,6 +514,16 @@ export function PlantDetailPage() {
 				onSubmit={handleTransplantSubmit}
 				isLoading={isLoadingTransplant}
 				error={transplantError}
+			/>
+
+			{/* Edit Details Modal */}
+			<PlantEditDetailsModal
+				plant={plant}
+				open={editDetailsDialogOpen}
+				onOpenChange={setEditDetailsDialogOpen}
+				onSubmit={handleUpdateSubmit}
+				isLoading={isUpdating}
+				error={updateError}
 			/>
 		</div>
 	);

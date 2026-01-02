@@ -7,21 +7,17 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantEntity', () => {
 	let plantId: PlantUuidValueObject;
-	let growingUnitId: GrowingUnitUuidValueObject;
 	let plantDto: IPlantDto;
 
 	beforeEach(() => {
 		plantId = new PlantUuidValueObject();
-		growingUnitId = new GrowingUnitUuidValueObject();
 
 		plantDto = {
 			id: plantId,
-			growingUnitId: growingUnitId,
 			name: new PlantNameValueObject('Basil'),
 			species: new PlantSpeciesValueObject('Ocimum basilicum'),
 			plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -35,7 +31,6 @@ describe('PlantEntity', () => {
 			const plant = new PlantEntity(plantDto);
 
 			expect(plant.id).toBe(plantId);
-			expect(plant.growingUnitId).toBe(growingUnitId);
 			expect(plant.name.value).toBe('Basil');
 			expect(plant.species.value).toBe('Ocimum basilicum');
 			expect(plant.plantedDate?.value).toEqual(new Date('2024-01-15'));
@@ -89,17 +84,6 @@ describe('PlantEntity', () => {
 				plant.changeStatus(new PlantStatusValueObject(status));
 				expect(plant.status.value).toBe(status);
 			});
-		});
-	});
-
-	describe('changeGrowingUnit', () => {
-		it('should change growing unit id', () => {
-			const plant = new PlantEntity(plantDto);
-			const newGrowingUnitId = new GrowingUnitUuidValueObject();
-
-			plant.changeGrowingUnit(newGrowingUnitId);
-
-			expect(plant.growingUnitId.value).toBe(newGrowingUnitId.value);
 		});
 	});
 
@@ -193,7 +177,6 @@ describe('PlantEntity', () => {
 			const primitives = plant.toPrimitives();
 
 			expect(primitives.id).toBe(plantId.value);
-			expect(primitives.growingUnitId).toBe(growingUnitId.value);
 			expect(primitives.name).toBe('Basil');
 			expect(primitives.species).toBe('Ocimum basilicum');
 			expect(primitives.plantedDate).toEqual(new Date('2024-01-15'));
@@ -227,12 +210,6 @@ describe('PlantEntity', () => {
 			const plant = new PlantEntity(plantDto);
 
 			expect(plant.id).toBe(plantId);
-		});
-
-		it('should return correct growingUnitId', () => {
-			const plant = new PlantEntity(plantDto);
-
-			expect(plant.growingUnitId).toBe(growingUnitId);
 		});
 
 		it('should return correct name', () => {

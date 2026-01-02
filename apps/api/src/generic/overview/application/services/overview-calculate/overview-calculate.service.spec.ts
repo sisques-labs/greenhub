@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { OverviewCalculateAggregatedMetricsService } from '@/generic/overview/application/services/overview-calculate-aggregated-metrics/overview-calculate-aggregated-metrics.service';
@@ -133,9 +134,17 @@ describe('OverviewCalculateService', () => {
 
 			// Create mock growing units
 			const locationId = '423e4567-e89b-12d3-a456-426614174000';
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
 			const growingUnit1 = new GrowingUnitViewModel({
 				id: 'gu-1',
-				locationId,
+				location,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -155,7 +164,7 @@ describe('OverviewCalculateService', () => {
 
 			const growingUnit2 = new GrowingUnitViewModel({
 				id: 'gu-2',
-				locationId,
+				location,
 				name: 'Pot 1',
 				type: GrowingUnitTypeEnum.POT,
 				capacity: 5,
@@ -170,7 +179,7 @@ describe('OverviewCalculateService', () => {
 
 			const growingUnit3 = new GrowingUnitViewModel({
 				id: 'gu-3',
-				locationId,
+				location,
 				name: 'Empty Pot',
 				type: GrowingUnitTypeEnum.POT,
 				capacity: 3,
@@ -319,12 +328,20 @@ describe('OverviewCalculateService', () => {
 		it('should fetch multiple pages in batches', async () => {
 			const now = new Date();
 			const locationId = '423e4567-e89b-12d3-a456-426614174000';
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt: now,
+				updatedAt: now,
+			});
 			const growingUnitsPage1: GrowingUnitViewModel[] = Array.from(
 				{ length: 500 },
 				(_, i) =>
 					new GrowingUnitViewModel({
 						id: `gu-${i + 1}`,
-						locationId,
+						location,
 						name: `Growing Unit ${i + 1}`,
 						type: GrowingUnitTypeEnum.POT,
 						capacity: 10,
@@ -343,7 +360,7 @@ describe('OverviewCalculateService', () => {
 				(_, i) =>
 					new GrowingUnitViewModel({
 						id: `gu-${i + 501}`,
-						locationId,
+						location,
 						name: `Growing Unit ${i + 501}`,
 						type: GrowingUnitTypeEnum.POT,
 						capacity: 10,
