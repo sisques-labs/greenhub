@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { PlantDetailPageSkeleton } from "@/core/plant-context/plant/components/organisms/plant-detail-page-skeleton/plant-detail-page-skeleton";
 import { PlantTransplantModal } from "@/core/plant-context/plant/components/organisms/plant-transplant-modal/plant-transplant-modal";
 import { usePlantDetailPage } from "@/core/plant-context/plant/hooks/use-plant-detail-page/use-plant-detail-page";
 import { getPlantStatusBadge } from "@/core/plant-context/plant/utils/plant-status.utils";
@@ -60,19 +61,7 @@ export function PlantDetailPage() {
 
 	// Show skeleton while loading or if data is not yet available
 	if (isLoading || plant === null || plant === undefined) {
-		return (
-			<div className="mx-auto space-y-6">
-				<Skeleton className="h-6 w-64" />
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<Skeleton className="h-96 w-full" />
-					<div className="space-y-4">
-						<Skeleton className="h-8 w-full" />
-						<Skeleton className="h-4 w-full" />
-						<Skeleton className="h-20 w-full" />
-					</div>
-				</div>
-			</div>
-		);
+		return <PlantDetailPageSkeleton />;
 	}
 
 	if (error || !plant) {
