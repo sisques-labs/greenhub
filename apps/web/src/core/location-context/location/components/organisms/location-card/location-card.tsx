@@ -69,7 +69,7 @@ export function LocationCard({
 							}
 							className="text-xs"
 						>
-							{location.type}
+							{t(`shared.types.location.${location.type}`)}
 						</Badge>
 					</div>
 					{/* Menu overlay in top-right corner */}
@@ -103,7 +103,7 @@ export function LocationCard({
 					<div>
 						<CardTitle className="text-lg font-bold">{location.name}</CardTitle>
 						<CardDescription className="text-xs uppercase mt-1">
-							{location.type}
+							{t(`shared.types.location.${location.type}`)}
 						</CardDescription>
 					</div>
 				</div>
