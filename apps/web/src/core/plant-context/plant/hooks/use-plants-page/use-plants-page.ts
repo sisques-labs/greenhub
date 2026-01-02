@@ -10,6 +10,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 
 const PLANTS_PER_PAGE = 10;
+const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 export type PlantWithGrowingUnit = PlantResponse & {
 	growingUnitName?: string;
@@ -17,10 +18,20 @@ export type PlantWithGrowingUnit = PlantResponse & {
 
 export function usePlantsPage() {
 	const [searchQuery, setSearchQuery] = useState('');
+	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 	const [selectedFilter, setSelectedFilter] = useState('all');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
+	// Debounce search query
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearchQuery(searchQuery);
+		}, SEARCH_DEBOUNCE_DELAY);
+
+		return () => clearTimeout(timer);
+	}, [searchQuery]);
 
 	// Build filters for backend
 	const filters = useMemo(() => {
@@ -31,13 +42,13 @@ export function usePlantsPage() {
 		}> = [];
 
 		// Search filter - search in name, species, growing unit name, and location name
-		if (searchQuery) {
+		if (debouncedSearchQuery) {
 			// For now, we'll search in name and species fields
 			// TODO: Add support for searching in nested fields (growingUnit.name, location.name) when backend supports it
 			backendFilters.push({
 				field: 'name',
 				operator: 'LIKE',
-				value: searchQuery,
+				value: debouncedSearchQuery,
 			});
 		}
 
@@ -58,7 +69,7 @@ export function usePlantsPage() {
 		}
 
 		return backendFilters;
-	}, [searchQuery, selectedFilter]);
+	}, [debouncedSearchQuery, selectedFilter]);
 
 	// Fetch plants using findByCriteria with filters and pagination
 	const criteriaInput = useMemo(
@@ -114,7 +125,7 @@ export function usePlantsPage() {
 	// Reset to page 1 when filters change
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [searchQuery, selectedFilter]);
+	}, [debouncedSearchQuery, selectedFilter]);
 
 	const handleCreateSubmit = async (values: PlantCreateFormValues) => {
 		await handleCreate(values, () => {
