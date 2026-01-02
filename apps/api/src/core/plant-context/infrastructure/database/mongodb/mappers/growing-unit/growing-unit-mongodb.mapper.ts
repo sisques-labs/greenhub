@@ -42,7 +42,10 @@ export class GrowingUnitMongoDBMapper {
 			capacity: doc.capacity,
 			dimensions: doc.dimensions,
 			plants: doc.plants.map((plant) =>
-				this.plantMongoDBMapper.toViewModel(plant),
+				this.plantMongoDBMapper.toViewModel({
+					...plant,
+					growingUnitId: doc.id,
+				}),
 			),
 			remainingCapacity: doc.remainingCapacity,
 			numberOfPlants: doc.plants.length,
@@ -67,6 +70,12 @@ export class GrowingUnitMongoDBMapper {
 			`Converting growing unit view model with id ${growingUnitViewModel.id} to MongoDB document`,
 		);
 
+		const plants = growingUnitViewModel.plants.map((plant) => {
+			const { growingUnitId, ...plantMongoData } =
+				this.plantMongoDBMapper.toMongoData(plant);
+			return plantMongoData;
+		});
+
 		return {
 			id: growingUnitViewModel.id,
 			location: this.locationMongoDBMapper.toMongoData(
@@ -76,9 +85,7 @@ export class GrowingUnitMongoDBMapper {
 			type: growingUnitViewModel.type,
 			capacity: growingUnitViewModel.capacity,
 			dimensions: growingUnitViewModel.dimensions,
-			plants: growingUnitViewModel.plants.map((plant) =>
-				this.plantMongoDBMapper.toMongoData(plant),
-			),
+			plants: plants,
 			remainingCapacity: growingUnitViewModel.remainingCapacity,
 			numberOfPlants: growingUnitViewModel.numberOfPlants,
 			volume: growingUnitViewModel.volume,

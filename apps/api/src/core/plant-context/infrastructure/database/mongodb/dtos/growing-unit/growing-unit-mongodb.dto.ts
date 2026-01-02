@@ -20,7 +20,7 @@ export type GrowingUnitMongoDbDto = BaseMongoDto & {
 		height: number;
 		unit: string;
 	} | null;
-	plants: PlantMongoDbDto[];
+	plants: Omit<PlantMongoDbDto, 'growingUnitId'>[];
 	remainingCapacity: number;
 	numberOfPlants: number;
 	volume: number;
