@@ -1,6 +1,8 @@
 import { QueryBus } from '@nestjs/cqrs';
+
 import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
 import { GrowingUnitViewModelFindByIdQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { GrowingUnitFindByCriteriaRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-criteria.request.dto';
 import { GrowingUnitFindByIdRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-id.request.dto';
@@ -48,9 +50,19 @@ describe('GrowingUnitQueriesResolver', () => {
 
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			});
 			const viewModels: GrowingUnitViewModel[] = [
 				new GrowingUnitViewModel({
 					id: '123e4567-e89b-12d3-a456-426614174000',
+					location,
 					name: 'Garden Bed 1',
 					type: 'GARDEN_BED',
 					capacity: 10,
@@ -64,11 +76,21 @@ describe('GrowingUnitQueriesResolver', () => {
 				}),
 			];
 
+			const mockLocationDto = {
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			};
+
 			const paginatedResult = new PaginatedResult(viewModels, 1, 1, 10);
 			const paginatedResponseDto: PaginatedGrowingUnitResultDto = {
 				items: [
 					{
 						id: '123e4567-e89b-12d3-a456-426614174000',
+						location: mockLocationDto,
 						name: 'Garden Bed 1',
 						type: 'GARDEN_BED',
 						capacity: 10,
@@ -143,10 +165,20 @@ describe('GrowingUnitQueriesResolver', () => {
 				id: '123e4567-e89b-12d3-a456-426614174000',
 			};
 
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const createdAt = new Date('2024-01-01');
 			const updatedAt = new Date('2024-01-02');
+			const location = new LocationViewModel({
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			});
 			const viewModel = new GrowingUnitViewModel({
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				location,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -159,8 +191,18 @@ describe('GrowingUnitQueriesResolver', () => {
 				updatedAt,
 			});
 
+			const mockLocationDto = {
+				id: locationId,
+				name: 'Test Location',
+				type: 'INDOOR',
+				description: null,
+				createdAt,
+				updatedAt,
+			};
+
 			const responseDto: GrowingUnitResponseDto = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
+				location: mockLocationDto,
 				name: 'Garden Bed 1',
 				type: 'GARDEN_BED',
 				capacity: 10,
@@ -207,4 +249,3 @@ describe('GrowingUnitQueriesResolver', () => {
 		});
 	});
 });
-

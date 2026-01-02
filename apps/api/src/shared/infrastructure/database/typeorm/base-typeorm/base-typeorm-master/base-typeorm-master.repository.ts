@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
+
 import { BaseDatabaseRepository } from '@/shared/infrastructure/database/base-database.repository';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 

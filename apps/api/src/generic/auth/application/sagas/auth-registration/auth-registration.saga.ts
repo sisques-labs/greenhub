@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+
 import { AuthCreateCommand } from '@/generic/auth/application/commands/auth-create/auth-create.command';
 import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
 import { IAuthCreateCommandDto } from '@/generic/auth/application/dtos/commands/auth-create/auth-create-command.dto';

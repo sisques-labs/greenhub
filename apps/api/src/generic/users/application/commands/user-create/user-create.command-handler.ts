@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
 import { AssertUserUsernameIsUniqueService } from '@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service';
 import { UserAggregateFactory } from '@/generic/users/domain/factories/user-aggregate/user-aggregate.factory';
 import {
@@ -7,6 +8,7 @@ import {
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
+
 import { UserCreateCommand } from './user-create.command';
 
 @CommandHandler(UserCreateCommand)

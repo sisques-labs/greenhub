@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 
 @InputType('SagaLogCreateRequestDto')

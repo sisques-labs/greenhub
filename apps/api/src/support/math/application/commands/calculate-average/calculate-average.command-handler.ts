@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+
 import { CalculateAverageCommand } from '@/support/math/application/commands/calculate-average/calculate-average.command';
 import { CalculateAverageService } from '@/support/math/application/services/calculate-average/calculate-average.service';
 
@@ -37,4 +38,6 @@ export class CalculateAverageCommandHandler
 		);
 	}
 }
+
+
 

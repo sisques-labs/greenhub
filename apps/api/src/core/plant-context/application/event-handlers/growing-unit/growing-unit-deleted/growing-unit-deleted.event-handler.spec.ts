@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+
 import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
 import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import {
@@ -40,6 +41,7 @@ describe('GrowingUnitDeletedEventHandler', () => {
 	describe('handle', () => {
 		it('should delete growing unit view model when event is handled', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const event = new GrowingUnitDeletedEvent(
 				{
 					aggregateRootId: growingUnitId,
@@ -50,6 +52,7 @@ describe('GrowingUnitDeletedEventHandler', () => {
 				},
 				{
 					id: growingUnitId,
+					locationId,
 					name: 'Garden Bed 1',
 					type: 'GARDEN_BED',
 					capacity: 10,

@@ -3,3 +3,4 @@ import { PlantResponse } from "./plant-response.type.js";
 
 export type PaginatedPlantResult = PaginatedResult<PlantResponse>;
 
+

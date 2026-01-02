@@ -9,5 +9,7 @@ export const GROWING_UNIT_WRITE_REPOSITORY_TOKEN = Symbol(
  * Write repository interface for GrowingUnit aggregate.
  * Extends IBaseWriteRepository with additional query methods.
  */
-export type IGrowingUnitWriteRepository =
-	IBaseWriteRepository<GrowingUnitAggregate>;
+export interface IGrowingUnitWriteRepository
+	extends IBaseWriteRepository<GrowingUnitAggregate> {
+	findByLocationId(locationId: string): Promise<GrowingUnitAggregate[]>;
+}

@@ -8,11 +8,17 @@ import {
 	IsString,
 	Min,
 } from 'class-validator';
+
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
 @InputType('GrowingUnitCreateRequestDto')
 export class GrowingUnitCreateRequestDto {
+	@Field(() => String, { description: 'The id of the location this growing unit belongs to' })
+	@IsString()
+	@IsNotEmpty()
+	locationId: string;
+
 	@Field(() => String, { description: 'The name of the growing unit' })
 	@IsString()
 	@IsNotEmpty()

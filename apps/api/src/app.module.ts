@@ -1,14 +1,14 @@
-import { AppResolver } from '@/app.resolver';
-import { CoreModule } from '@/core/core.module';
-import { GenericModule } from '@/generic/generic.module';
-import { SharedModule } from '@/shared/shared.module';
-import '@/shared/transport/graphql/registered-enums/registered-enums.graphql';
+import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
+import { AppResolver } from '@/app.resolver';
 import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
+import { CoreModule } from '@/core/core.module';
+import { GenericModule } from '@/generic/generic.module';
+import { SharedModule } from '@/shared/shared.module';
+import '@/shared/transport/graphql/registered-enums/registered-enums.graphql';
 import { SupportModule } from '@/support/generic.module';
 
 const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];

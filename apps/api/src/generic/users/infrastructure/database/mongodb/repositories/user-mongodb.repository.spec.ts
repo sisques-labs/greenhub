@@ -1,4 +1,5 @@
 import { Collection } from 'mongodb';
+
 import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import { UserMongoDbDto } from '@/generic/users/infrastructure/database/mongodb/dtos/user-mongodb.dto';

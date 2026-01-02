@@ -5,6 +5,7 @@ import {
 	ICommandHandler,
 	QueryBus,
 } from '@nestjs/cqrs';
+
 import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
 import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
 import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
@@ -20,6 +21,7 @@ import {
 } from '@/generic/auth/domain/repositories/auth-write.repository';
 import { AuthLastLoginAtValueObject } from '@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo';
 import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
+
 import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
 @CommandHandler(AuthLoginByEmailCommand)

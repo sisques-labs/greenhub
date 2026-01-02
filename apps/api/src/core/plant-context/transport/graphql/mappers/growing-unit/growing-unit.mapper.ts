@@ -1,12 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import {
 	GrowingUnitDimensionsResponseDto,
 	GrowingUnitResponseDto,
 	PaginatedGrowingUnitResultDto,
 } from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
-import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
+import { LocationGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/location/location.mapper';
+import { PlantGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/plant/plant.mapper';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Mapper for converting between GrowingUnitViewModel domain entities and GraphQL DTOs.
@@ -19,27 +20,10 @@ import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entit
 export class GrowingUnitGraphQLMapper {
 	private readonly logger = new Logger(GrowingUnitGraphQLMapper.name);
 
-	/**
-	 * Converts a plant view model to a GraphQL response DTO.
-	 *
-	 * @param plant - The plant view model to convert
-	 * @returns The GraphQL response DTO
-	 */
-	private toPlantResponseDto(
-		plant: GrowingUnitViewModel['plants'][0],
-	): PlantResponseDto {
-		return {
-			id: plant.id,
-			growingUnitId: plant.growingUnitId,
-			name: plant.name,
-			species: plant.species,
-			plantedDate: plant.plantedDate,
-			notes: plant.notes,
-			status: plant.status,
-			createdAt: plant.createdAt,
-			updatedAt: plant.updatedAt,
-		};
-	}
+	constructor(
+		private readonly locationGraphQLMapper: LocationGraphQLMapper,
+		private readonly plantGraphQLMapper: PlantGraphQLMapper,
+	) {}
 
 	/**
 	 * Converts dimensions to a GraphQL response DTO.
@@ -74,13 +58,18 @@ export class GrowingUnitGraphQLMapper {
 
 		return {
 			id: growingUnit.id,
+			location: this.locationGraphQLMapper.toResponseDtoFromViewModel(
+				growingUnit.location,
+			),
 			name: growingUnit.name,
 			type: growingUnit.type,
 			capacity: growingUnit.capacity,
 			dimensions: growingUnit.dimensions
 				? this.toDimensionsResponseDto(growingUnit.dimensions)
 				: null,
-			plants: growingUnit.plants.map((plant) => this.toPlantResponseDto(plant)),
+			plants: growingUnit.plants.map((plant) =>
+				this.plantGraphQLMapper.toResponseDtoFromViewModel(plant),
+			),
 			numberOfPlants: growingUnit.numberOfPlants,
 			remainingCapacity: growingUnit.remainingCapacity,
 			volume: growingUnit.volume,

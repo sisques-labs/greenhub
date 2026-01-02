@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+
 import { UserUsernameIsNotUniqueException } from '@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception';
 import {
 	USER_WRITE_REPOSITORY_TOKEN,

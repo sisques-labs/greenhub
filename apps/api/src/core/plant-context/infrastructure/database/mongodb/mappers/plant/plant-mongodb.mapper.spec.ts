@@ -1,20 +1,44 @@
-import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
+import { PlantViewModelBuilder } from '@/core/plant-context/domain/builders/plant/plant-view-model.builder';
+import { LocationViewModelBuilder } from '@/core/plant-context/domain/builders/location/location-view-model.builder';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 
 describe('PlantMongoDBMapper', () => {
 	let mapper: PlantMongoDBMapper;
-	let mockPlantViewModelFactory: jest.Mocked<PlantViewModelFactory>;
+	let mockPlantViewModelBuilder: jest.Mocked<PlantViewModelBuilder>;
+	let mockLocationViewModelBuilder: jest.Mocked<LocationViewModelBuilder>;
 
 	beforeEach(() => {
-		mockPlantViewModelFactory = {
-			create: jest.fn(),
-			fromEntity: jest.fn(),
-			fromPrimitives: jest.fn(),
-		} as unknown as jest.Mocked<PlantViewModelFactory>;
+		mockPlantViewModelBuilder = {
+			reset: jest.fn().mockReturnThis(),
+			withId: jest.fn().mockReturnThis(),
+			withGrowingUnitId: jest.fn().mockReturnThis(),
+			withName: jest.fn().mockReturnThis(),
+			withSpecies: jest.fn().mockReturnThis(),
+			withPlantedDate: jest.fn().mockReturnThis(),
+			withNotes: jest.fn().mockReturnThis(),
+			withStatus: jest.fn().mockReturnThis(),
+			withCreatedAt: jest.fn().mockReturnThis(),
+			withUpdatedAt: jest.fn().mockReturnThis(),
+			build: jest.fn(),
+		} as unknown as jest.Mocked<PlantViewModelBuilder>;
 
-		mapper = new PlantMongoDBMapper(mockPlantViewModelFactory);
+		mockLocationViewModelBuilder = {
+			reset: jest.fn().mockReturnThis(),
+			withId: jest.fn().mockReturnThis(),
+			withName: jest.fn().mockReturnThis(),
+			withType: jest.fn().mockReturnThis(),
+			withDescription: jest.fn().mockReturnThis(),
+			withCreatedAt: jest.fn().mockReturnThis(),
+			withUpdatedAt: jest.fn().mockReturnThis(),
+			build: jest.fn(),
+		} as unknown as jest.Mocked<LocationViewModelBuilder>;
+
+		mapper = new PlantMongoDBMapper(
+			mockPlantViewModelBuilder,
+			mockLocationViewModelBuilder,
+		);
 	});
 
 	afterEach(() => {
@@ -53,23 +77,36 @@ describe('PlantMongoDBMapper', () => {
 				updatedAt,
 			});
 
-			mockPlantViewModelFactory.create.mockReturnValue(viewModel);
+			mockPlantViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockPlantViewModelFactory.create).toHaveBeenCalledWith({
-				id: plantId,
-				growingUnitId: growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: plantedDate,
-				notes: 'Keep in indirect sunlight',
-				status: 'PLANTED',
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalledTimes(1);
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withGrowingUnitId).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.withSpecies).toHaveBeenCalledWith(
+				'Ocimum basilicum',
+			);
+			expect(mockPlantViewModelBuilder.withPlantedDate).toHaveBeenCalledWith(
+				plantedDate,
+			);
+			expect(mockPlantViewModelBuilder.withNotes).toHaveBeenCalledWith(
+				'Keep in indirect sunlight',
+			);
+			expect(mockPlantViewModelBuilder.withStatus).toHaveBeenCalledWith(
+				'PLANTED',
+			);
+			expect(mockPlantViewModelBuilder.withCreatedAt).toHaveBeenCalledWith(
 				createdAt,
+			);
+			expect(mockPlantViewModelBuilder.withUpdatedAt).toHaveBeenCalledWith(
 				updatedAt,
-			});
-			expect(mockPlantViewModelFactory.create).toHaveBeenCalledTimes(1);
+			);
+			expect(mockPlantViewModelBuilder.build).toHaveBeenCalledTimes(1);
 		});
 
 		it('should convert MongoDB document with null optional properties', () => {
@@ -102,22 +139,33 @@ describe('PlantMongoDBMapper', () => {
 				updatedAt,
 			});
 
-			mockPlantViewModelFactory.create.mockReturnValue(viewModel);
+			mockPlantViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockPlantViewModelFactory.create).toHaveBeenCalledWith({
-				id: plantId,
-				growingUnitId: growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: null,
-				notes: null,
-				status: 'GROWING',
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalledTimes(1);
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withGrowingUnitId).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.withSpecies).toHaveBeenCalledWith(
+				'Ocimum basilicum',
+			);
+			expect(mockPlantViewModelBuilder.withPlantedDate).toHaveBeenCalledWith(
+				null,
+			);
+			expect(mockPlantViewModelBuilder.withNotes).toHaveBeenCalledWith(null);
+			expect(mockPlantViewModelBuilder.withStatus).toHaveBeenCalledWith(
+				'GROWING',
+			);
+			expect(mockPlantViewModelBuilder.withCreatedAt).toHaveBeenCalledWith(
 				createdAt,
+			);
+			expect(mockPlantViewModelBuilder.withUpdatedAt).toHaveBeenCalledWith(
 				updatedAt,
-			});
+			);
 		});
 
 		it('should handle date conversion when createdAt/updatedAt are strings', () => {
@@ -150,22 +198,33 @@ describe('PlantMongoDBMapper', () => {
 				updatedAt: new Date(updatedAt),
 			});
 
-			mockPlantViewModelFactory.create.mockReturnValue(viewModel);
+			mockPlantViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockPlantViewModelFactory.create).toHaveBeenCalledWith({
-				id: plantId,
-				growingUnitId: growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: null,
-				notes: null,
-				status: 'PLANTED',
-				createdAt: expect.any(Date),
-				updatedAt: expect.any(Date),
-			});
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalledTimes(1);
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withGrowingUnitId).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.withSpecies).toHaveBeenCalledWith(
+				'Ocimum basilicum',
+			);
+			expect(mockPlantViewModelBuilder.withPlantedDate).toHaveBeenCalledWith(
+				null,
+			);
+			expect(mockPlantViewModelBuilder.withNotes).toHaveBeenCalledWith(null);
+			expect(mockPlantViewModelBuilder.withStatus).toHaveBeenCalledWith(
+				'PLANTED',
+			);
+			expect(mockPlantViewModelBuilder.withCreatedAt).toHaveBeenCalledWith(
+				expect.any(Date),
+			);
+			expect(mockPlantViewModelBuilder.withUpdatedAt).toHaveBeenCalledWith(
+				expect.any(Date),
+			);
 		});
 	});
 

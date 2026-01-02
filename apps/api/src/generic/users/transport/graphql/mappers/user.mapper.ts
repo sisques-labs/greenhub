@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import {
 	PaginatedUserResultDto,

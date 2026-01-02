@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
+
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 
 @InputType('SagaInstanceChangeStatusRequestDto')

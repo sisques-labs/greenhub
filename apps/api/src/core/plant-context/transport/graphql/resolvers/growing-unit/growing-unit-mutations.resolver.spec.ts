@@ -1,4 +1,5 @@
 import { CommandBus } from '@nestjs/cqrs';
+
 import { GrowingUnitCreateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command';
 import { GrowingUnitDeleteCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command';
 import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
@@ -45,7 +46,9 @@ describe('GrowingUnitMutationsResolver', () => {
 	describe('growingUnitCreate', () => {
 		it('should create growing unit successfully', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitCreateRequestDto = {
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -88,7 +91,9 @@ describe('GrowingUnitMutationsResolver', () => {
 
 		it('should create growing unit without dimensions', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const input: GrowingUnitCreateRequestDto = {
+				locationId,
 				name: 'Garden Bed 1',
 				type: GrowingUnitTypeEnum.GARDEN_BED,
 				capacity: 10,
@@ -271,8 +276,10 @@ describe('GrowingUnitMutationsResolver', () => {
 	describe('plantUpdate', () => {
 		it('should update plant successfully', async () => {
 			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: PlantUpdateRequestDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				name: 'Basil Updated',
 				species: 'Ocimum basilicum',
 				status: PlantStatusEnum.GROWING,

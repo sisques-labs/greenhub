@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
+
 import { IPlantDto } from '@/core/plant-context/domain/dtos/entities/plant/plant.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
-import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
+import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant/plant.primitives';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -64,7 +64,6 @@ export class PlantEntityFactory
 		);
 		return new PlantEntity({
 			id: new PlantUuidValueObject(data.id),
-			growingUnitId: new GrowingUnitUuidValueObject(data.growingUnitId),
 			name: new PlantNameValueObject(data.name),
 			species: new PlantSpeciesValueObject(data.species),
 			plantedDate: data.plantedDate

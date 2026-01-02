@@ -1,11 +1,12 @@
 import { QueryBus } from '@nestjs/cqrs';
+
 import { AuthProfileMeQuery } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query';
 import { AuthProfileMeQueryHandler } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query-handler';
 import { AssertAuthViewModelExistsByUserIdService } from '@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
-import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
+import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';

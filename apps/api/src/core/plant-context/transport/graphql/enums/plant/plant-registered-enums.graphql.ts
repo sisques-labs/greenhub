@@ -1,4 +1,5 @@
 import { registerEnumType } from '@nestjs/graphql';
+
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 
 /**

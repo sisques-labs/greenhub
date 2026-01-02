@@ -1,4 +1,5 @@
 import { EventBus } from '@nestjs/cqrs';
+
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
 import { PlantAddCommandHandler } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command-handler';
 import { IPlantAddCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-add/plant-add-command.dto';
@@ -18,6 +19,7 @@ import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objec
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantAddCommandHandler', () => {
@@ -79,8 +81,10 @@ describe('PlantAddCommandHandler', () => {
 			};
 
 			const command = new PlantAddCommand(commandDto);
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -91,7 +95,6 @@ describe('PlantAddCommandHandler', () => {
 			const plantEntityFactory = new PlantEntityFactory();
 			const mockPlant = plantEntityFactory.create({
 				id: command.id,
-				growingUnitId: command.growingUnitId,
 				name: command.name,
 				species: command.species,
 				plantedDate: command.plantedDate,
@@ -114,7 +117,6 @@ describe('PlantAddCommandHandler', () => {
 			);
 			expect(mockPlantEntityFactory.create).toHaveBeenCalledWith({
 				id: command.id,
-				growingUnitId: command.growingUnitId,
 				name: command.name,
 				species: command.species,
 				plantedDate: command.plantedDate,
@@ -131,6 +133,7 @@ describe('PlantAddCommandHandler', () => {
 
 		it('should throw exception when growing unit is at full capacity', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantAddCommandDto = {
 				growingUnitId,
 				name: 'Basil',
@@ -143,6 +146,7 @@ describe('PlantAddCommandHandler', () => {
 			const command = new PlantAddCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(1),
@@ -186,8 +190,10 @@ describe('PlantAddCommandHandler', () => {
 			};
 
 			const command = new PlantAddCommand(commandDto);
+			const locationId = '423e4567-e89b-12d3-a456-426614174000';
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -198,7 +204,6 @@ describe('PlantAddCommandHandler', () => {
 			const plantEntityFactory = new PlantEntityFactory();
 			const mockPlant = plantEntityFactory.create({
 				id: command.id,
-				growingUnitId: command.growingUnitId,
 				name: command.name,
 				species: command.species,
 				plantedDate: command.plantedDate,

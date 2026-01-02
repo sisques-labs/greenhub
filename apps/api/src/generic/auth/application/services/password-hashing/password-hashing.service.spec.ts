@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+
 import { InvalidHashFormatException } from '@/generic/auth/application/exceptions/auth-invalid-hash-format/auth-invalid-hash-format.exception';
 import { InvalidSaltRoundsException } from '@/generic/auth/application/exceptions/auth-invalid-salt-rounds/auth-invalid-salt-rounds.exception';
 import { PasswordHashingFailedException } from '@/generic/auth/application/exceptions/password-hashing-failed/password-hashing-failed.exception';

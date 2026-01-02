@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { UserDeleteCommandHandler } from '@/generic/users/application/commands/delete-user/delete-user.command-handler';
 import { UserCreateCommandHandler } from '@/generic/users/application/commands/user-create/user-create.command-handler';
 import { UserUpdateCommandHandler } from '@/generic/users/application/commands/user-update/user-update.command-handler';

@@ -1,4 +1,5 @@
 import { Repository } from 'typeorm';
+
 import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
 import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';

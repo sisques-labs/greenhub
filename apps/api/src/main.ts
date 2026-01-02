@@ -2,6 +2,7 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+
 import { AppModule } from '@/app.module';
 
 async function bootstrap() {

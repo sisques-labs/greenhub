@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { FindSagaInstancesByCriteriaQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
 import { FindSagaInstanceViewModelByIdQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-view-model-find-by-id/saga-instance-view-model-find-by-id.query';
 import { SagaInstanceFindByCriteriaRequestDto } from '@/generic/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-criteria.request.dto';

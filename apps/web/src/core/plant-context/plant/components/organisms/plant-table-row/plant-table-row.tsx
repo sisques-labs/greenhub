@@ -16,7 +16,7 @@ import {
 	TableCell,
 	TableRow,
 } from "@repo/shared/presentation/components/ui/table";
-import { HomeIcon, MoreVerticalIcon } from "lucide-react";
+import { MapPinIcon, MoreVerticalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { getPlantStatusBadge } from "@/core/plant-context/plant/utils/plant-status.utils";
@@ -60,8 +60,7 @@ export function PlantTableRow({
 	};
 
 	const getLocationIcon = () => {
-		// TODO: This should come from plant data when available
-		return <HomeIcon className="h-4 w-4" />;
+		return <MapPinIcon className="h-4 w-4 text-muted-foreground" />;
 	};
 
 	const initials = (plant.name || plant.species || "P")
@@ -101,12 +100,19 @@ export function PlantTableRow({
 				</div>
 			</TableCell>
 			<TableCell>
+				{plant.location ? (
+					<div className="flex items-center gap-2">
+						{getLocationIcon()}
+						<span className="text-sm">{plant.location.name}</span>
+					</div>
+				) : (
 				<div className="flex items-center gap-2">
 					{getLocationIcon()}
-					<span className="text-sm">
-						{growingUnitName || plant.growingUnitId || t("common.unknown")}
+						<span className="text-sm text-muted-foreground">
+							{t("common.unknown")}
 					</span>
 				</div>
+				)}
 			</TableCell>
 			<TableCell>{getPlantStatusBadge(plant.status, t)}</TableCell>
 			<TableCell>

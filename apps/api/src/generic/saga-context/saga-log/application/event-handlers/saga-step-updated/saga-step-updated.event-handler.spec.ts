@@ -1,10 +1,12 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
+
 import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { FindSagaStepViewModelByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query';
 import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
 import { SagaStepUpdatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-updated/saga-step-updated.event';
+
 import { SagaStepUpdatedEventHandler } from './saga-step-updated.event-handler';
 
 describe('SagaStepUpdatedEventHandler', () => {

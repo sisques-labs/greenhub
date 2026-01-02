@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { UserViewModelFindByIdQuery } from '@/generic/users/application/queries/user-view-model-find-by-id/user-view-model-find-by-id.query';
 import { AssertUserViewModelExsistsService } from '@/generic/users/application/services/assert-user-view-model-exsits/assert-user-view-model-exsits.service';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';

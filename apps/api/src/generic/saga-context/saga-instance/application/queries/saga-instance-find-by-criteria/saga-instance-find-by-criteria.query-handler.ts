@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { FindSagaInstancesByCriteriaQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
 import {
 	SAGA_INSTANCE_READ_REPOSITORY_TOKEN,

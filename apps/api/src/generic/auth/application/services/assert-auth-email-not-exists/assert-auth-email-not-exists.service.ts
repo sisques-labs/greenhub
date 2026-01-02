@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+
 import { AuthEmailAlreadyExistsException } from '@/generic/auth/application/exceptions/auth-email-already-exists/auth-email-already-exists.exception';
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,

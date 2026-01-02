@@ -1,4 +1,5 @@
 import { Logger } from '@nestjs/common';
+
 import { Criteria } from '@/shared/domain/entities/criteria';
 
 export class BaseDatabaseRepository {

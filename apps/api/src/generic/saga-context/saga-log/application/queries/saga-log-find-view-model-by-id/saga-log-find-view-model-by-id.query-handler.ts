@@ -1,7 +1,9 @@
 import { Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
+
 import { FindSagaLogViewModelByIdQuery } from './saga-log-find-view-model-by-id.query';
 
 @QueryHandler(FindSagaLogViewModelByIdQuery)

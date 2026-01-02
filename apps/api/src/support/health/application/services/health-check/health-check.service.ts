@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 import { HealthCheckQuery } from '@/support/health/application/queries/health-check/health-check.query';
 import { HealthReadDatabaseCheckService } from '@/support/health/application/services/health-read-database-check/health-read-database-check.service';

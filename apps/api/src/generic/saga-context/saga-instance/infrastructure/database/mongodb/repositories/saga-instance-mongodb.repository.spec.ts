@@ -1,4 +1,5 @@
 import { Collection } from 'mongodb';
+
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { SagaInstanceMongoDbDto } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/dtos/saga-instance-mongodb.dto';

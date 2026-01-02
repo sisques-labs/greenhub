@@ -17,17 +17,18 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"format": "biome format --write .",
-		"format:check": "biome format .",
-		"lint": "biome check --write .",
-		"lint:check": "biome check .",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"lint:check": "eslint .",
 		"check-types": "tsc --noEmit",
 		"dev": "tsc --watch",
 		"release": "semantic-release",
 		"git:clean": "git branch --merged | grep -vE '^*|main|dev' | xargs -n 1 git branch -d"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.3.10",
+		"eslint-plugin-react": "^7.37.3",
 		"@repo/typescript-config": "workspace:*",
 		"@semantic-release/commit-analyzer": "^13.0.1",
 		"@semantic-release/git": "^10.0.1",

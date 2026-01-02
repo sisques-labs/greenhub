@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { AuthViewModelFindByUserIdQuery } from '@/generic/auth/application/queries/auth-view-model-find-by-user-id/auth-view-model-find-by-user-id.query';
 import { AssertAuthViewModelExistsByUserIdService } from '@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';

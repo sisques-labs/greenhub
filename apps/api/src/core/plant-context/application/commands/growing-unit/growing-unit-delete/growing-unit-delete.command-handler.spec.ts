@@ -11,6 +11,7 @@ import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-ob
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('GrowingUnitDeleteCommandHandler', () => {
 	let handler: GrowingUnitDeleteCommandHandler;
@@ -47,6 +48,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 	describe('execute', () => {
 		it('should delete growing unit successfully', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IGrowingUnitDeleteCommandDto = {
 				id: growingUnitId,
 			};
@@ -54,6 +56,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 			const command = new GrowingUnitDeleteCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -83,6 +86,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 
 		it('should publish GrowingUnitDeletedEvent when growing unit is deleted', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IGrowingUnitDeleteCommandDto = {
 				id: growingUnitId,
 			};
@@ -90,6 +94,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 			const command = new GrowingUnitDeleteCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
@@ -113,6 +118,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 
 		it('should delete growing unit before publishing events', async () => {
 			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IGrowingUnitDeleteCommandDto = {
 				id: growingUnitId,
 			};
@@ -120,6 +126,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 			const command = new GrowingUnitDeleteCommand(commandDto);
 			const mockGrowingUnit = new GrowingUnitAggregate({
 				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Garden Bed 1'),
 				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),

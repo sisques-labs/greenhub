@@ -6,6 +6,7 @@ import {
 	IsString,
 	IsUUID,
 } from 'class-validator';
+
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 
 @InputType('PlantUpdateRequestDto')
@@ -14,6 +15,11 @@ export class PlantUpdateRequestDto {
 	@IsUUID()
 	@IsNotEmpty()
 	id: string;
+
+	@Field(() => String, { description: 'The id of the growing unit containing the plant' })
+	@IsUUID()
+	@IsNotEmpty()
+	growingUnitId: string;
 
 	@Field(() => String, {
 		description: 'The name of the plant',

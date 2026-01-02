@@ -1,4 +1,5 @@
 import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
+
 import { BaseFilterInput } from './base-filter.input';
 
 describe('BaseFilterInput', () => {

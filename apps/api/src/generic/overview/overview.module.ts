@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { OverviewUpdatedEventHandler } from '@/generic/overview/application/event-handlers/overview-updated/overview-updated.event-handler';
 import { OverviewFindViewModelQueryHandler } from '@/generic/overview/application/queries/overview-find-view-model/overview-find-view-model.query-handler';
 import { AssertOverviewViewModelExistsService } from '@/generic/overview/application/services/assert-overview-view-model-exists/assert-overview-view-model-exists.service';

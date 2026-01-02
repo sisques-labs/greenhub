@@ -1,4 +1,5 @@
 import { Collection } from 'mongodb';
+
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthMongoDbDto } from '@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto';

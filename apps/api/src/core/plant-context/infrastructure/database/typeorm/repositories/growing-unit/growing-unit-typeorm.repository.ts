@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
 import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
@@ -70,5 +71,25 @@ export class GrowingUnitTypeormRepository
 		this.logger.log(`Soft deleting growing unit by id: ${id}`);
 
 		await this.repository.softDelete(id);
+	}
+
+	/**
+	 * Finds all growing units by location ID.
+	 *
+	 * @param locationId - The location ID to search for
+	 * @returns Promise that resolves to an array of GrowingUnitAggregate instances
+	 */
+	async findByLocationId(locationId: string): Promise<GrowingUnitAggregate[]> {
+		this.logger.log(`Finding growing units by location id: ${locationId}`);
+		const growingUnitEntities = await this.repository.find({
+			where: { locationId },
+			relations: {
+				plants: true,
+			},
+		});
+
+		return growingUnitEntities.map((entity) =>
+			this.growingUnitTypeormMapper.toDomainEntity(entity),
+		);
 	}
 }

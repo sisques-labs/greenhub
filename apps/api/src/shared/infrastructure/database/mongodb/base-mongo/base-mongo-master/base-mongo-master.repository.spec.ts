@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';

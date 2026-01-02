@@ -1,18 +1,16 @@
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
-import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
 import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import {
-	IPlantWriteRepository,
-	PLANT_WRITE_REPOSITORY_TOKEN,
-} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -45,10 +43,9 @@ export class PlantRemoveCommandHandler
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		@Inject(PLANT_WRITE_REPOSITORY_TOKEN)
-		private readonly plantWriteRepository: IPlantWriteRepository,
 		private readonly eventBus: EventBus,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 	) {}
 
@@ -70,21 +67,13 @@ export class PlantRemoveCommandHandler
 			);
 
 		// 02: Find the plant entity in the growing unit
-		const plantEntity = growingUnitAggregate.getPlantById(
-			command.plantId.value,
-		);
+		const plantEntity: PlantEntity =
+			await this.assertPlantExistsInGrowingUnitService.execute({
+				growingUnitAggregate,
+				plantId: command.plantId.value,
+			});
 
-		if (!plantEntity) {
-			this.logger.warn(
-				`Plant ${command.plantId.value} not found in growing unit ${command.growingUnitId.value}`,
-			);
-			return;
-		}
-
-		// 03: Delete the plant from the database
-		await this.plantWriteRepository.delete(command.plantId.value);
-
-		// 04: Remove the plant from the growing unit aggregate
+		// 03: Remove the plant from the growing unit aggregate
 		growingUnitAggregate.removePlant(plantEntity);
 
 		// 05: Save the growing unit aggregate
@@ -96,15 +85,17 @@ export class PlantRemoveCommandHandler
 
 		// 07: Publish the PlantDeletedEvent integration event
 		await this.publishIntegrationEventsService.execute(
-			new PlantDeletedEvent(
+			new GrowingUnitPlantRemovedEvent(
 				{
 					aggregateRootId: growingUnitAggregate.id.value,
 					aggregateRootType: GrowingUnitAggregate.name,
 					entityId: plantEntity.id.value,
 					entityType: PlantEntity.name,
-					eventType: PlantDeletedEvent.name,
+					eventType: GrowingUnitPlantRemovedEvent.name,
 				},
-				plantEntity.toPrimitives(),
+				{
+					plant: plantEntity.toPrimitives(),
+				},
 			),
 		);
 	}

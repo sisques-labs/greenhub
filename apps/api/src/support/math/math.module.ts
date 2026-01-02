@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
+
 import { CalculateAverageCommandHandler } from '@/support/math/application/commands/calculate-average/calculate-average.command-handler';
 import { CalculateMedianCommandHandler } from '@/support/math/application/commands/calculate-median/calculate-median.command-handler';
 import { CalculatePercentageCommandHandler } from '@/support/math/application/commands/calculate-percentage/calculate-percentage.command-handler';

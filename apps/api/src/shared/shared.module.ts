@@ -1,8 +1,10 @@
 import { Global, Module } from '@nestjs/common';
+
 import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { TypeOrmModule } from '@/shared/infrastructure/database/typeorm/typeorm.module';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
+
 import { MongoModule } from './infrastructure/database/mongodb/mongodb.module';
 
 // Import enums for GraphQL

@@ -2,6 +2,7 @@
  * Data Transfer Object for creating a new growing unit via command layer.
  *
  * @interface IGrowingUnitCreateCommandDto
+ * @property {string} locationId - The id of the location this growing unit belongs to
  * @property {string} name - The name of the growing unit
  * @property {string} type - The type of the growing unit
  * @property {number} capacity - The capacity of the growing unit
@@ -11,6 +12,7 @@
  * @property {string} [unit] - The unit of measurement for dimensions. Optional.
  */
 export interface IGrowingUnitCreateCommandDto {
+	locationId: string;
 	name: string;
 	type: string;
 	capacity: number;

@@ -1,6 +1,3 @@
-import { Logger, UseGuards } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { Args, Query, Resolver } from '@nestjs/graphql';
 import { GrowingUnitFindByCriteriaQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria.query';
 import { GrowingUnitViewModelFindByIdQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query';
 import { GrowingUnitFindByCriteriaRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/growing-unit/growing-unit-find-by-criteria.request.dto';
@@ -15,6 +12,9 @@ import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.deco
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+import { Logger, UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 
 /**
  * GraphQL resolver for growing unit queries.

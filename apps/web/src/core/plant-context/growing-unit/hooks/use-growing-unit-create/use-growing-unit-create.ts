@@ -20,6 +20,7 @@ export function useGrowingUnitCreate() {
 	) => {
 		try {
 			const input: CreateGrowingUnitInput = {
+				locationId: values.locationId,
 				name: values.name,
 				type: values.type as GrowingUnitType,
 				capacity: values.capacity,

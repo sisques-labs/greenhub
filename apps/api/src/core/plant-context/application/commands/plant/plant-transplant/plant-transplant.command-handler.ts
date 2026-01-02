@@ -1,19 +1,17 @@
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+
 import { PlantTransplantCommand } from '@/core/plant-context/application/commands/plant/plant-transplant/plant-transplant.command';
 import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
 import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
-import {
-	IPlantWriteRepository,
-	PLANT_WRITE_REPOSITORY_TOKEN,
-} from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
@@ -43,15 +41,15 @@ export class PlantTransplantCommandHandler
 	 * @param plantWriteRepository - The write repository for persisting plant entities.
 	 * @param eventBus - The event bus for publishing domain events.
 	 * @param assertGrowingUnitExistsService - Service that ensures the growing units exist.
+	 * @param assertPlantExistsInGrowingUnitService - Service that ensures the plant exists in the growing unit.
 	 * @param transplantPlantService - Service that handles the transplant logic.
 	 */
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		@Inject(PLANT_WRITE_REPOSITORY_TOKEN)
-		private readonly plantWriteRepository: IPlantWriteRepository,
 		private readonly eventBus: EventBus,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
 		private readonly plantTransplantService: PlantTransplantService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 	) {}
@@ -86,9 +84,6 @@ export class PlantTransplantCommandHandler
 			plantId: command.plantId.value,
 		});
 
-		// 04: Save the transplanted plant first to update its growingUnitId
-		await this.plantWriteRepository.save(transplantedPlant);
-
 		// 05: Save the source growing unit aggregate
 		await this.growingUnitWriteRepository.save(sourceGrowingUnitAggregate);
 
@@ -111,7 +106,7 @@ export class PlantTransplantCommandHandler
 		await this.publishIntegrationEventsService.execute([
 			new PlantUpdatedEvent(
 				{
-					aggregateRootId: transplantedPlant.growingUnitId.value,
+					aggregateRootId: targetGrowingUnitAggregate.id.value,
 					aggregateRootType: GrowingUnitAggregate.name,
 					entityId: transplantedPlant.id.value,
 					entityType: PlantEntity.name,

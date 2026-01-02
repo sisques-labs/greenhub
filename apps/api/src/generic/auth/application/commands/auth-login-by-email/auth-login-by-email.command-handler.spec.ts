@@ -1,5 +1,6 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { EventBus, QueryBus } from '@nestjs/cqrs';
+
 import { AuthLoginByEmailCommandHandler } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command-handler';
 import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
 import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
@@ -24,6 +25,7 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+
 import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
 describe('AuthLoginByEmailCommandHandler', () => {

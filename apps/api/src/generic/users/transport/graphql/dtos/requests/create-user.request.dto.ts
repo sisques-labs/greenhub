@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEnum, IsOptional, IsString, IsUrl } from 'class-validator';
+
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 

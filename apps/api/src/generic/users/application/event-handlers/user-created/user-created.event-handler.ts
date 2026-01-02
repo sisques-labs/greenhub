@@ -1,5 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
 import { UserViewModelFactory } from '@/generic/users/domain/factories/user-view-model/user-view-model.factory';
 import {
 	USER_READ_REPOSITORY_TOKEN,

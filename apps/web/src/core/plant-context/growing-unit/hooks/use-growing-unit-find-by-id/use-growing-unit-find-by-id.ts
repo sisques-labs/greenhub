@@ -1,6 +1,5 @@
-import type { GrowingUnitFindByIdInput } from "@repo/sdk";
-import { useGrowingUnits } from "@repo/sdk";
-import { useEffect, useRef } from "react";
+import { useGrowingUnits } from '@repo/sdk';
+import { useEffect, useRef } from 'react';
 
 /**
  * Hook that provides growing unit find by id functionality

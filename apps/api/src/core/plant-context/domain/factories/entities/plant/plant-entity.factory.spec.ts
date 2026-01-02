@@ -2,13 +2,12 @@ import { IPlantDto } from '@/core/plant-context/domain/dtos/entities/plant/plant
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
-import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant.primitives';
+import { PlantPrimitives } from '@/core/plant-context/domain/primitives/plant/plant.primitives';
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-notes/plant-notes.vo';
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantEntityFactory', () => {
@@ -22,9 +21,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from DTO with all fields', () => {
 			const dto: IPlantDto = {
 				id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-				growingUnitId: new GrowingUnitUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
-				),
 				name: new PlantNameValueObject('Aloe Vera'),
 				species: new PlantSpeciesValueObject('Aloe barbadensis'),
 				plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -36,7 +32,6 @@ describe('PlantEntityFactory', () => {
 
 			expect(entity).toBeInstanceOf(PlantEntity);
 			expect(entity.id.value).toBe(dto.id.value);
-			expect(entity.growingUnitId.value).toBe(dto.growingUnitId.value);
 			expect(entity.name.value).toBe(dto.name.value);
 			expect(entity.species.value).toBe(dto.species.value);
 			expect(entity.plantedDate?.value).toEqual(dto.plantedDate?.value);
@@ -47,9 +42,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from DTO with null plantedDate', () => {
 			const dto: IPlantDto = {
 				id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-				growingUnitId: new GrowingUnitUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
-				),
 				name: new PlantNameValueObject('Aloe Vera'),
 				species: new PlantSpeciesValueObject('Aloe barbadensis'),
 				plantedDate: null,
@@ -67,9 +59,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from DTO with null notes', () => {
 			const dto: IPlantDto = {
 				id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-				growingUnitId: new GrowingUnitUuidValueObject(
-					'223e4567-e89b-12d3-a456-426614174000',
-				),
 				name: new PlantNameValueObject('Aloe Vera'),
 				species: new PlantSpeciesValueObject('Aloe barbadensis'),
 				plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -96,9 +85,6 @@ describe('PlantEntityFactory', () => {
 			statuses.forEach((status) => {
 				const dto: IPlantDto = {
 					id: new PlantUuidValueObject('123e4567-e89b-12d3-a456-426614174000'),
-					growingUnitId: new GrowingUnitUuidValueObject(
-						'223e4567-e89b-12d3-a456-426614174000',
-					),
 					name: new PlantNameValueObject('Test Plant'),
 					species: new PlantSpeciesValueObject('Test Species'),
 					plantedDate: new PlantPlantedDateValueObject(new Date('2024-01-15')),
@@ -117,7 +103,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from primitives with all fields', () => {
 			const primitives: PlantPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 				name: 'Aloe Vera',
 				species: 'Aloe barbadensis',
 				plantedDate: new Date('2024-01-15'),
@@ -129,7 +114,6 @@ describe('PlantEntityFactory', () => {
 
 			expect(entity).toBeInstanceOf(PlantEntity);
 			expect(entity.id.value).toBe(primitives.id);
-			expect(entity.growingUnitId.value).toBe(primitives.growingUnitId);
 			expect(entity.name.value).toBe(primitives.name);
 			expect(entity.species.value).toBe(primitives.species);
 			expect(entity.plantedDate?.value).toEqual(primitives.plantedDate);
@@ -140,7 +124,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from primitives with null plantedDate', () => {
 			const primitives: PlantPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 				name: 'Aloe Vera',
 				species: 'Aloe barbadensis',
 				plantedDate: null,
@@ -158,7 +141,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from primitives with null notes', () => {
 			const primitives: PlantPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 				name: 'Aloe Vera',
 				species: 'Aloe barbadensis',
 				plantedDate: new Date('2024-01-15'),
@@ -176,7 +158,6 @@ describe('PlantEntityFactory', () => {
 		it('should create a PlantEntity from primitives with empty notes string', () => {
 			const primitives: PlantPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 				name: 'Aloe Vera',
 				species: 'Aloe barbadensis',
 				plantedDate: new Date('2024-01-15'),
@@ -194,7 +175,6 @@ describe('PlantEntityFactory', () => {
 		it('should create value objects correctly from primitives', () => {
 			const primitives: PlantPrimitives = {
 				id: '123e4567-e89b-12d3-a456-426614174000',
-				growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 				name: 'Aloe Vera',
 				species: 'Aloe barbadensis',
 				plantedDate: new Date('2024-01-15'),
@@ -205,7 +185,6 @@ describe('PlantEntityFactory', () => {
 			const entity = factory.fromPrimitives(primitives);
 
 			expect(entity.id).toBeInstanceOf(PlantUuidValueObject);
-			expect(entity.growingUnitId).toBeInstanceOf(GrowingUnitUuidValueObject);
 			expect(entity.name).toBeInstanceOf(PlantNameValueObject);
 			expect(entity.species).toBeInstanceOf(PlantSpeciesValueObject);
 			expect(entity.plantedDate).toBeInstanceOf(PlantPlantedDateValueObject);
@@ -225,7 +204,6 @@ describe('PlantEntityFactory', () => {
 			statuses.forEach((status) => {
 				const primitives: PlantPrimitives = {
 					id: '123e4567-e89b-12d3-a456-426614174000',
-					growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 					name: 'Test Plant',
 					species: 'Test Species',
 					plantedDate: new Date('2024-01-15'),
@@ -249,7 +227,6 @@ describe('PlantEntityFactory', () => {
 			dates.forEach((date) => {
 				const primitives: PlantPrimitives = {
 					id: '123e4567-e89b-12d3-a456-426614174000',
-					growingUnitId: '223e4567-e89b-12d3-a456-426614174000',
 					name: 'Test Plant',
 					species: 'Test Species',
 					plantedDate: date,

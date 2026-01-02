@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Db, MongoClient } from 'mongodb';
+
 import { MongoMasterService } from './mongo-master.service';
 
 jest.mock('mongodb');

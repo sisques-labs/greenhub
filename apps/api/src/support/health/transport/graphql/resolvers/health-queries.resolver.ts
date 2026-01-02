@@ -1,5 +1,6 @@
 import { QueryBus } from '@nestjs/cqrs';
 import { Query, Resolver } from '@nestjs/graphql';
+
 import { HealthCheckQuery } from '@/support/health/application/queries/health-check/health-check.query';
 import { HealthResponseDto } from '@/support/health/transport/graphql/dtos/responses/health.response.dto';
 import { HealthGraphQLMapper } from '@/support/health/transport/graphql/mappers/health.mapper';

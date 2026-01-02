@@ -17,9 +17,6 @@ export interface IPlantEventData {
 	/** Unique identifier for the plant. */
 	id: string;
 
-	/** Unique identifier for the growing unit containing this plant. */
-	growingUnitId: string;
-
 	/** Name of the plant. */
 	name: string;
 
