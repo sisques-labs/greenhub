@@ -7,7 +7,6 @@ import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objec
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
 import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 describe('PlantTypeormMapper', () => {
@@ -211,7 +210,10 @@ describe('PlantTypeormMapper', () => {
 				status: PlantStatusEnum.PLANTED,
 			};
 
-			const result = mapper.toTypeormEntityFromPrimitives(primitives, growingUnitId);
+			const result = mapper.toTypeormEntityFromPrimitives(
+				primitives,
+				growingUnitId,
+			);
 
 			expect(result).toBeInstanceOf(PlantTypeormEntity);
 			expect(result.id).toBe(plantId);
@@ -236,7 +238,10 @@ describe('PlantTypeormMapper', () => {
 				status: PlantStatusEnum.GROWING,
 			};
 
-			const result = mapper.toTypeormEntityFromPrimitives(primitives, growingUnitId);
+			const result = mapper.toTypeormEntityFromPrimitives(
+				primitives,
+				growingUnitId,
+			);
 
 			expect(result).toBeInstanceOf(PlantTypeormEntity);
 			expect(result.id).toBe(plantId);

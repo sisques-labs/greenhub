@@ -1,4 +1,3 @@
-import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
 import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
 import { LocationDescriptionValueObject } from '@/core/location-context/domain/value-objects/location/location-description/location-description.vo';
@@ -167,6 +166,3 @@ describe('LocationTypeormMapper', () => {
 		});
 	});
 });
-
-
-

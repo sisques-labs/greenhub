@@ -1,6 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-
 import { LocationUpdatedEvent } from '@/core/location-context/application/events/location/location-updated/location-updated.event';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
@@ -9,6 +6,8 @@ import {
 	LOCATION_READ_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-read/location-read.repository';
 import { LocationViewModel } from '@/core/location-context/domain/view-models/location/location.view-model';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 /**
  * Event handler for LocationUpdatedEvent.
@@ -47,17 +46,11 @@ export class LocationUpdatedEventHandler
 			event.entityId,
 		);
 
-		// 02: Get existing view model to preserve calculated fields
-		const existingViewModel = await this.locationReadRepository.findById(
-			event.entityId,
-		);
-
-		// 03: Create the location view model from the aggregate
-		// Preserve calculated fields from existing view model if it exists
+		// 02: Create the location view model from the aggregate
 		const locationViewModel: LocationViewModel =
 			this.locationViewModelFactory.fromAggregate(locationAggregate);
 
-		// 04: Save the updated location view model
+		// 03: Save the updated location view model
 		await this.locationReadRepository.save(locationViewModel);
 	}
 }

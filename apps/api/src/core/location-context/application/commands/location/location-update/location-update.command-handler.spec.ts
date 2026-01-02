@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { LocationUpdateCommand } from '@/core/location-context/application/commands/location/location-update/location-update.command';
 import { LocationUpdateCommandHandler } from '@/core/location-context/application/commands/location/location-update/location-update.command-handler';
 import { ILocationUpdateCommandDto } from '@/core/location-context/application/dtos/commands/location/location-update/location-update-command.dto';
@@ -8,11 +6,11 @@ import { AssertLocationExistsService } from '@/core/location-context/application
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
 import { ILocationWriteRepository } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
-import { LocationDescriptionValueObject } from '@/core/location-context/domain/value-objects/location/location-description/location-description.vo';
 import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
+import { EventBus } from '@nestjs/cqrs';
 
 describe('LocationUpdateCommandHandler', () => {
 	let handler: LocationUpdateCommandHandler;
@@ -214,4 +212,3 @@ describe('LocationUpdateCommandHandler', () => {
 		});
 	});
 });
-
