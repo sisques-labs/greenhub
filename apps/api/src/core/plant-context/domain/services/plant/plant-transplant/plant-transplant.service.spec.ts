@@ -125,7 +125,10 @@ describe('PlantTransplantService', () => {
 		it('should throw GrowingUnitPlantNotFoundException when plant is not found in source', async () => {
 			const nonExistentPlantId = '999e4567-e89b-12d3-a456-426614174000';
 			mockAssertPlantExistsInGrowingUnitService.execute.mockRejectedValue(
-				new GrowingUnitPlantNotFoundException(nonExistentPlantId),
+				new GrowingUnitPlantNotFoundException(
+					sourceGrowingUnitId,
+					nonExistentPlantId,
+				),
 			);
 
 			const input = {

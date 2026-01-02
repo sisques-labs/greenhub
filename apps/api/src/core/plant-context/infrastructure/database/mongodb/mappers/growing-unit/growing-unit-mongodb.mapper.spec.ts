@@ -180,16 +180,21 @@ describe('GrowingUnitMongoDBMapper', () => {
 				updatedAt,
 			});
 
-			mockLocationMongoDBMapper.toViewModel.mockReturnValue(location);
+			mockLocationViewModelBuilder.build.mockReturnValue(location);
 			mockPlantMongoDBMapper.toViewModel.mockReturnValue(plantViewModel);
 			mockGrowingUnitViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockLocationMongoDBMapper.toViewModel).toHaveBeenCalledWith(
-				locationMongoDto,
+			expect(mockLocationViewModelBuilder.reset).toHaveBeenCalled();
+			expect(mockLocationViewModelBuilder.withId).toHaveBeenCalledWith(
+				locationId,
 			);
+			expect(mockLocationViewModelBuilder.withName).toHaveBeenCalledWith(
+				'Test Location',
+			);
+			expect(mockLocationViewModelBuilder.build).toHaveBeenCalled();
 			expect(mockPlantMongoDBMapper.toViewModel).toHaveBeenCalledWith(
 				plantMongoDoc,
 			);
@@ -250,13 +255,14 @@ describe('GrowingUnitMongoDBMapper', () => {
 				updatedAt,
 			});
 
-			mockLocationMongoDBMapper.toViewModel.mockReturnValue(location);
+			mockLocationViewModelBuilder.build.mockReturnValue(location);
 			mockGrowingUnitViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
 			expect(mockPlantMongoDBMapper.toViewModel).not.toHaveBeenCalled();
+			expect(mockLocationViewModelBuilder.build).toHaveBeenCalled();
 			expect(mockGrowingUnitViewModelBuilder.build).toHaveBeenCalled();
 		});
 
@@ -314,12 +320,13 @@ describe('GrowingUnitMongoDBMapper', () => {
 				updatedAt: new Date(updatedAt),
 			});
 
-			mockLocationMongoDBMapper.toViewModel.mockReturnValue(location);
+			mockLocationViewModelBuilder.build.mockReturnValue(location);
 			mockGrowingUnitViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
+			expect(mockLocationViewModelBuilder.build).toHaveBeenCalled();
 			expect(mockGrowingUnitViewModelBuilder.build).toHaveBeenCalled();
 		});
 	});

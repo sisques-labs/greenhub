@@ -276,8 +276,10 @@ describe('GrowingUnitMutationsResolver', () => {
 	describe('plantUpdate', () => {
 		it('should update plant successfully', async () => {
 			const plantId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = '223e4567-e89b-12d3-a456-426614174000';
 			const input: PlantUpdateRequestDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				name: 'Basil Updated',
 				species: 'Ocimum basilicum',
 				status: PlantStatusEnum.GROWING,
