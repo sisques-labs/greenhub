@@ -1,6 +1,10 @@
 "use client";
 
-import type { GrowingUnitResponse, PlantResponse } from "@repo/sdk";
+import type {
+	GrowingUnitResponse,
+	PlantGrowingUnitReference,
+	PlantResponse,
+} from "@repo/sdk";
 import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Dialog,
@@ -44,7 +48,7 @@ export type PlantTransplantFormValues = z.infer<
 
 interface PlantTransplantModalProps {
 	plant: PlantResponse;
-	sourceGrowingUnit: GrowingUnitResponse | null;
+	sourceGrowingUnit: PlantGrowingUnitReference | null;
 	targetGrowingUnits: GrowingUnitResponse[];
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
