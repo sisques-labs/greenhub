@@ -1,3 +1,4 @@
+import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import type { PlantCreateFormValues } from '@/core/plant-context/plant/dtos/schemas/plant-create/plant-create.schema';
 import { usePlantAdd } from '@/core/plant-context/plant/hooks/use-plant-add/use-plant-add';
 import { usePlantsFindByCriteria } from '@/core/plant-context/plant/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
@@ -36,7 +37,7 @@ export function usePlantsPage() {
 			backendFilters.push({
 				field: 'name',
 				operator: 'LIKE',
-				value: `%${searchQuery}%`,
+				value: searchQuery,
 			});
 		}
 
@@ -79,6 +80,14 @@ export function usePlantsPage() {
 
 	const { plants, isLoading, error, refetch } =
 		usePlantsFindByCriteria(criteriaInput);
+
+	// Fetch growing units for create form
+	const { growingUnits } = useGrowingUnitsFindByCriteria({
+		pagination: {
+			page: 1,
+			perPage: 1000, // Fetch a large number to get all growing units for the create form
+		},
+	});
 
 	const {
 		handleCreate,
@@ -151,6 +160,7 @@ export function usePlantsPage() {
 		setCreateDialogOpen,
 
 		// Data
+		growingUnits,
 		allFilteredPlants,
 		paginatedPlants,
 		totalPages,

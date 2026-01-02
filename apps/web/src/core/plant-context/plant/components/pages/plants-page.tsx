@@ -2,7 +2,7 @@
 
 import { PlantCreateForm } from '@/core/plant-context/plant/components/organisms/plant-create-form/plant-create-form';
 import { PlantTableRow } from '@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row';
-import { PlantsPageSkeleton } from '@/core/plant-context/plant/components/organisms/plants-page-skeleton/plants-page-skeleton';
+import { PlantsTableSkeleton } from '@/core/plant-context/plant/components/organisms/plants-table-skeleton/plants-table-skeleton';
 import { usePlantsPage } from '@/core/plant-context/plant/hooks/use-plants-page/use-plants-page';
 import {
 	type FilterOption,
@@ -80,25 +80,6 @@ export function PlantsPage() {
 		},
 	];
 
-	// Show skeleton while loading or if data is not yet available
-	if (isLoading) {
-		return <PlantsPageSkeleton />;
-	}
-
-	if (error) {
-		return (
-			<div className="mx-auto py-8">
-				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-destructive">
-						{t('pages.plants.list.error.loading', {
-							message: (error as Error).message,
-						})}
-					</p>
-				</div>
-			</div>
-		);
-	}
-
 	return (
 		<div className="mx-auto space-y-6">
 			{/* Header */}
@@ -131,7 +112,17 @@ export function PlantsPage() {
 				perPage={perPage}
 				onPerPageChange={setPerPage}
 			>
-				{paginatedPlants.length > 0 ? (
+				{isLoading ? (
+					<PlantsTableSkeleton />
+				) : error ? (
+					<div className="flex items-center justify-center min-h-[400px]">
+						<p className="text-destructive">
+							{t('pages.plants.list.error.loading', {
+								message: (error as Error).message,
+							})}
+						</p>
+					</div>
+				) : paginatedPlants.length > 0 ? (
 					<div className="rounded-md border">
 						<Table>
 							<TableHeader>
@@ -186,7 +177,7 @@ export function PlantsPage() {
 				isLoading={isCreating}
 				error={createError}
 				growingUnits={
-					growingUnits?.items.map((unit) => ({
+					growingUnits?.items.map((unit: { id: string; name: string }) => ({
 						id: unit.id,
 						name: unit.name,
 					})) || []
