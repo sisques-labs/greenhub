@@ -6,12 +6,13 @@ import { useLocationUpdate } from '@/core/location-context/location/hooks/use-lo
 import { useLocationsFindByCriteria } from '@/core/location-context/location/hooks/use-locations-find-by-criteria/use-locations-find-by-criteria';
 import { useLocationsPageStore } from '@/core/location-context/location/stores/locations-page-store';
 import type { FilterOption } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import type { LocationResponse } from '@repo/sdk';
+import type { FilterOperator, LocationResponse } from '@repo/sdk';
 import { Building2Icon, HomeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const LOCATIONS_PER_PAGE = 12;
+const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 /**
  * Hook that provides all the logic for the locations page
@@ -36,14 +37,52 @@ export function useLocationsPage() {
 		setCurrentPage,
 	} = useLocationsPageStore();
 
-	const paginationInput = useMemo(
+	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+
+	// Debounce search query
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearchQuery(searchQuery);
+		}, SEARCH_DEBOUNCE_DELAY);
+
+		return () => clearTimeout(timer);
+	}, [searchQuery]);
+
+	// Build filters for backend
+	const filters = useMemo(() => {
+		const backendFilters: Array<{
+			field: string;
+			operator: FilterOperator;
+			value: string;
+		}> = [];
+
+		// Search filter - search in name field
+		if (debouncedSearchQuery) {
+			backendFilters.push({
+				field: 'name',
+				operator: 'LIKE',
+				value: debouncedSearchQuery,
+			});
+		}
+
+		return backendFilters;
+	}, [debouncedSearchQuery]);
+
+	const criteriaInput = useMemo(
 		() => ({
+			filters: filters.length > 0 ? filters : undefined,
 			pagination: {
 				page: currentPage,
 				perPage: LOCATIONS_PER_PAGE,
 			},
+			sorts: [
+				{
+					field: 'createdAt',
+					direction: 'DESC' as const,
+				},
+			],
 		}),
-		[currentPage],
+		[filters, currentPage],
 	);
 
 	const {
@@ -51,7 +90,7 @@ export function useLocationsPage() {
 		isLoading: isLoadingLocations,
 		error: locationsError,
 		refetch,
-	} = useLocationsFindByCriteria(paginationInput);
+	} = useLocationsFindByCriteria(criteriaInput);
 
 	const {
 		handleCreate,
@@ -131,6 +170,11 @@ export function useLocationsPage() {
 			setDeleteDialogOpen(true);
 		}
 	};
+
+	// Reset to page 1 when filters change
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [debouncedSearchQuery]);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);

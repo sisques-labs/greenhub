@@ -1,10 +1,11 @@
 'use client';
 
+import { LocationAddCard } from '@/core/location-context/location/components/organisms/location-add-card/location-add-card';
 import { LocationCard } from '@/core/location-context/location/components/organisms/location-card/location-card';
 import { LocationCreateForm } from '@/core/location-context/location/components/organisms/location-create-form/location-create-form';
 import { LocationDeleteDialog } from '@/core/location-context/location/components/organisms/location-delete-dialog/location-delete-dialog';
 import { LocationUpdateForm } from '@/core/location-context/location/components/organisms/location-update-form/location-update-form';
-import { LocationsPageSkeleton } from '@/core/location-context/location/components/organisms/locations-page-skeleton/locations-page-skeleton';
+import { LocationsCardsSkeleton } from '@/core/location-context/location/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
 import { useLocationsPage } from '@/core/location-context/location/hooks/use-locations-page/use-locations-page';
 import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
 import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
@@ -12,6 +13,8 @@ import { PageHeader } from '@repo/shared/presentation/components/organisms/page-
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+
+const LOCATIONS_PER_PAGE = 12;
 
 export function LocationsPage() {
 	const t = useTranslations();
@@ -46,24 +49,6 @@ export function LocationsPage() {
 		deleteError,
 	} = useLocationsPage();
 
-	if (isLoading) {
-		return <LocationsPageSkeleton />;
-	}
-
-	if (locationsError) {
-		return (
-			<div className="mx-auto py-8">
-				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-destructive">
-						{t('pages.locations.list.error.loading', {
-							message: locationsError.message,
-						})}
-					</p>
-				</div>
-			</div>
-		);
-	}
-
 	return (
 		<div className="mx-auto space-y-6">
 			{/* Header */}
@@ -89,7 +74,17 @@ export function LocationsPage() {
 			/>
 
 			{/* Locations Grid */}
-			{locations && locations.items.length > 0 ? (
+			{isLoading ? (
+				<LocationsCardsSkeleton cards={LOCATIONS_PER_PAGE} />
+			) : locationsError ? (
+				<div className="flex items-center justify-center min-h-[400px]">
+					<p className="text-destructive">
+						{t('pages.locations.list.error.loading', {
+							message: locationsError.message,
+						})}
+					</p>
+				</div>
+			) : locations && locations.items.length > 0 ? (
 				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{locations.items.map((location) => (
@@ -100,6 +95,7 @@ export function LocationsPage() {
 								onDelete={handleDeleteClick}
 							/>
 						))}
+						<LocationAddCard onClick={handleAddClick} />
 					</div>
 
 					{/* Pagination */}
@@ -121,10 +117,8 @@ export function LocationsPage() {
 					)}
 				</>
 			) : (
-				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-muted-foreground">
-						{t('pages.locations.list.empty')}
-					</p>
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					<LocationAddCard onClick={handleAddClick} />
 				</div>
 			)}
 
