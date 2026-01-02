@@ -3,7 +3,7 @@
 import { GrowingUnitAddCard } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-add-card/growing-unit-add-card';
 import { GrowingUnitCard } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-card/growing-unit-card';
 import { GrowingUnitCreateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-create-form/growing-unit-create-form';
-import { GrowingUnitsPageSkeleton } from '@/core/plant-context/growing-unit/components/organisms/growing-units-page-skeleton/growing-units-page-skeleton';
+import { GrowingUnitsCardsSkeleton } from '@/core/plant-context/growing-unit/components/organisms/growing-units-cards-skeleton/growing-units-cards-skeleton';
 import { useGrowingUnitsPage } from '@/core/plant-context/growing-unit/hooks/use-growing-units-page/use-growing-units-page';
 import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
 import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
@@ -11,6 +11,8 @@ import { PageHeader } from '@repo/shared/presentation/components/organisms/page-
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+
+const GROWING_UNITS_PER_PAGE = 12;
 
 export function GrowingUnitsPage() {
 	const t = useTranslations();
@@ -31,24 +33,6 @@ export function GrowingUnitsPage() {
 		isCreating,
 		createError,
 	} = useGrowingUnitsPage();
-
-	if (isLoading) {
-		return <GrowingUnitsPageSkeleton />;
-	}
-
-	if (growingUnitsError) {
-		return (
-			<div className="mx-auto py-8">
-				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-destructive">
-						{t('pages.growingUnits.list.error.loading', {
-							message: growingUnitsError.message,
-						})}
-					</p>
-				</div>
-			</div>
-		);
-	}
 
 	return (
 		<div className="mx-auto space-y-6">
@@ -75,7 +59,17 @@ export function GrowingUnitsPage() {
 			/>
 
 			{/* Growing Units Grid */}
-			{growingUnits && growingUnits.items.length > 0 ? (
+			{isLoading ? (
+				<GrowingUnitsCardsSkeleton cards={GROWING_UNITS_PER_PAGE} />
+			) : growingUnitsError ? (
+				<div className="flex items-center justify-center min-h-[400px]">
+					<p className="text-destructive">
+						{t('pages.growingUnits.list.error.loading', {
+							message: growingUnitsError.message,
+						})}
+					</p>
+				</div>
+			) : growingUnits && growingUnits.items.length > 0 ? (
 				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{growingUnits.items.map((growingUnit) => (

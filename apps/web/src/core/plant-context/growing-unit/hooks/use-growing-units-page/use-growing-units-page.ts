@@ -5,11 +5,13 @@ import { useGrowingUnitUpdate } from '@/core/plant-context/growing-unit/hooks/us
 import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import { useGrowingUnitsPageStore } from '@/core/plant-context/growing-unit/stores/growing-units-page-store';
 import type { FilterOption } from '@/shared/components/ui/search-and-filters/search-and-filters';
+import type { FilterOperator } from '@repo/sdk';
 import { Building2Icon, FlowerIcon, HomeIcon, PackageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const GROWING_UNITS_PER_PAGE = 12;
+const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 /**
  * Hook that provides all the logic for the growing units page
@@ -32,14 +34,67 @@ export function useGrowingUnitsPage() {
 		setCurrentPage,
 	} = useGrowingUnitsPageStore();
 
-	const paginationInput = useMemo(
+	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+
+	// Debounce search query
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearchQuery(searchQuery);
+		}, SEARCH_DEBOUNCE_DELAY);
+
+		return () => clearTimeout(timer);
+	}, [searchQuery]);
+
+	// Build filters for backend
+	const filters = useMemo(() => {
+		const backendFilters: Array<{
+			field: string;
+			operator: FilterOperator;
+			value: string;
+		}> = [];
+
+		// Search filter - search in name field
+		if (debouncedSearchQuery) {
+			backendFilters.push({
+				field: 'name',
+				operator: 'LIKE',
+				value: debouncedSearchQuery,
+			});
+		}
+
+		// Type filter
+		if (selectedFilter !== 'all') {
+			switch (selectedFilter) {
+				case 'indoor':
+				case 'outdoor':
+				case 'pots':
+				case 'beds':
+					// TODO: Map filter values to actual growing unit types when backend supports it
+					// For now, we'll skip type filtering until the backend supports it
+					break;
+				default:
+					break;
+			}
+		}
+
+		return backendFilters;
+	}, [debouncedSearchQuery, selectedFilter]);
+
+	const criteriaInput = useMemo(
 		() => ({
+			filters: filters.length > 0 ? filters : undefined,
 			pagination: {
 				page: currentPage,
 				perPage: GROWING_UNITS_PER_PAGE,
 			},
+			sorts: [
+				{
+					field: 'createdAt',
+					direction: 'DESC' as const,
+				},
+			],
 		}),
-		[currentPage],
+		[filters, currentPage],
 	);
 
 	const {
@@ -47,7 +102,7 @@ export function useGrowingUnitsPage() {
 		isLoading: isLoadingGrowingUnits,
 		error: growingUnitsError,
 		refetch,
-	} = useGrowingUnitsFindByCriteria(paginationInput);
+	} = useGrowingUnitsFindByCriteria(criteriaInput);
 
 	const {
 		handleCreate,
@@ -106,6 +161,11 @@ export function useGrowingUnitsPage() {
 	const handleAddClick = () => {
 		setCreateDialogOpen(true);
 	};
+
+	// Reset to page 1 when filters change
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [debouncedSearchQuery, selectedFilter]);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);

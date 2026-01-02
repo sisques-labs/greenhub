@@ -14,7 +14,7 @@ import {
 /**
  * Skeleton component for a single growing unit card
  */
-function GrowingUnitCardSkeleton() {
+export function GrowingUnitCardSkeleton() {
 	return (
 		<Card className="!pt-0 overflow-hidden">
 			<CardHeader className="!p-0 !m-0">
