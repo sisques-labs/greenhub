@@ -89,7 +89,7 @@ describe('PlantQueriesResolver', () => {
 
 			const result = await resolver.plantFindById(input);
 
-			expect(result).toBeNull();
+			expect(result).toBeUndefined();
 			expect(mockQueryBus.execute).toHaveBeenCalledWith(
 				expect.any(PlantViewModelFindByIdQuery),
 			);

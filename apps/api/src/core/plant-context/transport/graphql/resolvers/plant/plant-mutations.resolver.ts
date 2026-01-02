@@ -82,6 +82,7 @@ export class PlantMutationsResolver {
 		await this.commandBus.execute(
 			new PlantUpdateCommand({
 				id: input.id,
+				growingUnitId: input.growingUnitId,
 				name: input.name,
 				species: input.species,
 				plantedDate: input.plantedDate,

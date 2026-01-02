@@ -77,6 +77,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				name: 'Sweet Basil',
 			};
 
@@ -138,6 +139,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				status: PlantStatusEnum.GROWING,
 			};
 
@@ -184,6 +186,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				name: 'Sweet Basil',
 			};
 
@@ -244,6 +247,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				species: 'Ocimum tenuiflorum',
 			};
 
@@ -294,6 +298,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const newPlantedDate = new Date('2024-02-01');
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				plantedDate: newPlantedDate,
 			};
 
@@ -343,6 +348,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				notes: 'Updated notes',
 			};
 
@@ -393,6 +399,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const newPlantedDate = new Date('2024-02-01');
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				name: 'Sweet Basil',
 				species: 'Ocimum tenuiflorum',
 				plantedDate: newPlantedDate,
@@ -450,6 +457,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				plantedDate: null,
 			};
 
@@ -499,6 +507,7 @@ describe('PlantUpdateCommandHandler', () => {
 			const plantId = '223e4567-e89b-12d3-a456-426614174000';
 			const commandDto: IPlantUpdateCommandDto = {
 				id: plantId,
+				growingUnitId: growingUnitId,
 				notes: null,
 			};
 

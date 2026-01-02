@@ -75,6 +75,10 @@ describe('PlantTransplantService', () => {
 
 	describe('execute', () => {
 		it('should successfully transplant a plant from source to target growing unit', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			const input = {
 				sourceGrowingUnit,
 				targetGrowingUnit,
@@ -97,6 +101,10 @@ describe('PlantTransplantService', () => {
 		});
 
 		it('should update plant growingUnitId after transplant', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			const input = {
 				sourceGrowingUnit,
 				targetGrowingUnit,
@@ -116,6 +124,10 @@ describe('PlantTransplantService', () => {
 
 		it('should throw GrowingUnitPlantNotFoundException when plant is not found in source', async () => {
 			const nonExistentPlantId = '999e4567-e89b-12d3-a456-426614174000';
+			mockAssertPlantExistsInGrowingUnitService.execute.mockRejectedValue(
+				new GrowingUnitPlantNotFoundException(nonExistentPlantId),
+			);
+
 			const input = {
 				sourceGrowingUnit,
 				targetGrowingUnit,
@@ -131,6 +143,10 @@ describe('PlantTransplantService', () => {
 		});
 
 		it('should throw GrowingUnitFullCapacityException when target has no capacity', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			// Fill target growing unit to capacity
 			for (let i = 0; i < 3; i++) {
 				const testPlant = new PlantEntity({
@@ -161,6 +177,10 @@ describe('PlantTransplantService', () => {
 		});
 
 		it('should successfully transplant when target has available capacity', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			// Add 2 plants to target (capacity is 3, so 1 slot remains)
 			for (let i = 0; i < 2; i++) {
 				const testPlant = new PlantEntity({
@@ -209,6 +229,10 @@ describe('PlantTransplantService', () => {
 		});
 
 		it('should handle transplant when source has multiple plants', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			// Add additional plants to source (using different UUIDs to avoid conflicts)
 			const additionalPlantIds = [
 				'523e4567-e89b-12d3-a456-426614174000',

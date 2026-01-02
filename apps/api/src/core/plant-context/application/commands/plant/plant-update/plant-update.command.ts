@@ -25,6 +25,7 @@ export class PlantUpdateCommand {
 
 	constructor(props: IPlantUpdateCommandDto) {
 		this.id = new PlantUuidValueObject(props.id);
+		this.growingUnitId = new GrowingUnitUuidValueObject(props.growingUnitId);
 		this.name = props.name ? new PlantNameValueObject(props.name) : undefined;
 		this.species = props.species
 			? new PlantSpeciesValueObject(props.species)

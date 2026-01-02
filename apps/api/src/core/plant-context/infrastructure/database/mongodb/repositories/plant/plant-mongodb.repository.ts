@@ -85,7 +85,9 @@ export class PlantMongoRepository
 		);
 
 		// 04: Convert MongoDB documents to domain entities
-		const plants = items.map((doc) => this.plantMongoDBMapper.toViewModel(doc));
+		const plants = items.map((doc) =>
+			this.plantMongoDBMapper.toViewModel(doc as unknown as PlantMongoDbDto),
+		);
 
 		return new PaginatedResult<PlantViewModel>(plants, total, page, limit);
 	}

@@ -1000,6 +1000,9 @@ input PlantUpdateRequestDto {
   """The id of the plant to update"""
   id: String!
 
+  """The id of the growing unit containing the plant"""
+  growingUnitId: String!
+
   """The name of the plant"""
   name: String
 

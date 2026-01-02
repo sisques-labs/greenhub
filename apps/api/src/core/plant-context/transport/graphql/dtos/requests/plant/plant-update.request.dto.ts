@@ -16,6 +16,11 @@ export class PlantUpdateRequestDto {
 	@IsNotEmpty()
 	id: string;
 
+	@Field(() => String, { description: 'The id of the growing unit containing the plant' })
+	@IsUUID()
+	@IsNotEmpty()
+	growingUnitId: string;
+
 	@Field(() => String, {
 		description: 'The name of the plant',
 		nullable: true,

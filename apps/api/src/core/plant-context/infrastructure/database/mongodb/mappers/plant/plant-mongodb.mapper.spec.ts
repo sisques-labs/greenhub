@@ -82,17 +82,30 @@ describe('PlantMongoDBMapper', () => {
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockPlantViewModelBuilder.build).toHaveBeenCalledWith({
-				id: plantId,
-				growingUnitId: growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: plantedDate,
-				notes: 'Keep in indirect sunlight',
-				status: 'PLANTED',
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalledTimes(1);
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withGrowingUnitId).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.withSpecies).toHaveBeenCalledWith(
+				'Ocimum basilicum',
+			);
+			expect(mockPlantViewModelBuilder.withPlantedDate).toHaveBeenCalledWith(
+				plantedDate,
+			);
+			expect(mockPlantViewModelBuilder.withNotes).toHaveBeenCalledWith(
+				'Keep in indirect sunlight',
+			);
+			expect(mockPlantViewModelBuilder.withStatus).toHaveBeenCalledWith(
+				'PLANTED',
+			);
+			expect(mockPlantViewModelBuilder.withCreatedAt).toHaveBeenCalledWith(
 				createdAt,
+			);
+			expect(mockPlantViewModelBuilder.withUpdatedAt).toHaveBeenCalledWith(
 				updatedAt,
-			});
+			);
 			expect(mockPlantViewModelBuilder.build).toHaveBeenCalledTimes(1);
 		});
 
@@ -131,17 +144,28 @@ describe('PlantMongoDBMapper', () => {
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockPlantViewModelBuilder.build).toHaveBeenCalledWith({
-				id: plantId,
-				growingUnitId: growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: null,
-				notes: null,
-				status: 'GROWING',
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalledTimes(1);
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withGrowingUnitId).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.withSpecies).toHaveBeenCalledWith(
+				'Ocimum basilicum',
+			);
+			expect(mockPlantViewModelBuilder.withPlantedDate).toHaveBeenCalledWith(
+				null,
+			);
+			expect(mockPlantViewModelBuilder.withNotes).toHaveBeenCalledWith(null);
+			expect(mockPlantViewModelBuilder.withStatus).toHaveBeenCalledWith(
+				'GROWING',
+			);
+			expect(mockPlantViewModelBuilder.withCreatedAt).toHaveBeenCalledWith(
 				createdAt,
+			);
+			expect(mockPlantViewModelBuilder.withUpdatedAt).toHaveBeenCalledWith(
 				updatedAt,
-			});
+			);
 		});
 
 		it('should handle date conversion when createdAt/updatedAt are strings', () => {
@@ -179,17 +203,28 @@ describe('PlantMongoDBMapper', () => {
 			const result = mapper.toViewModel(mongoDoc);
 
 			expect(result).toBe(viewModel);
-			expect(mockPlantViewModelBuilder.build).toHaveBeenCalledWith({
-				id: plantId,
-				growingUnitId: growingUnitId,
-				name: 'Basil',
-				species: 'Ocimum basilicum',
-				plantedDate: null,
-				notes: null,
-				status: 'PLANTED',
-				createdAt: expect.any(Date),
-				updatedAt: expect.any(Date),
-			});
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalledTimes(1);
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withGrowingUnitId).toHaveBeenCalledWith(
+				growingUnitId,
+			);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.withSpecies).toHaveBeenCalledWith(
+				'Ocimum basilicum',
+			);
+			expect(mockPlantViewModelBuilder.withPlantedDate).toHaveBeenCalledWith(
+				null,
+			);
+			expect(mockPlantViewModelBuilder.withNotes).toHaveBeenCalledWith(null);
+			expect(mockPlantViewModelBuilder.withStatus).toHaveBeenCalledWith(
+				'PLANTED',
+			);
+			expect(mockPlantViewModelBuilder.withCreatedAt).toHaveBeenCalledWith(
+				expect.any(Date),
+			);
+			expect(mockPlantViewModelBuilder.withUpdatedAt).toHaveBeenCalledWith(
+				expect.any(Date),
+			);
 		});
 	});
 

@@ -2,7 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { IGrowingUnitReadRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto';
 import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
+import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
@@ -45,25 +47,12 @@ export class GrowingUnitMongoRepository
 		const collection = this.mongoMasterService.getCollection(
 			this.collectionName,
 		);
-		const growingUnitMongoDbDto = await collection.findOne({ id });
+		const growingUnitMongoDbDto = (await collection.findOne({
+			id,
+		})) as unknown as GrowingUnitMongoDbDto | null;
 
 		return growingUnitMongoDbDto
-			? this.growingUnitMongoDBMapper.toViewModel({
-					id: growingUnitMongoDbDto.id,
-					location: growingUnitMongoDbDto.location,
-					name: growingUnitMongoDbDto.name,
-					type: growingUnitMongoDbDto.type,
-					capacity: growingUnitMongoDbDto.capacity,
-					dimensions: growingUnitMongoDbDto.dimensions,
-					plants: growingUnitMongoDbDto.plants.map((plant) =>
-						this.plantMongoDBMapper.toViewModel(plant),
-					),
-					remainingCapacity: growingUnitMongoDbDto.remainingCapacity,
-					numberOfPlants: growingUnitMongoDbDto.numberOfPlants,
-					volume: growingUnitMongoDbDto.volume,
-					createdAt: growingUnitMongoDbDto.createdAt,
-					updatedAt: growingUnitMongoDbDto.updatedAt,
-				})
+			? this.growingUnitMongoDBMapper.toViewModel(growingUnitMongoDbDto)
 			: null;
 	}
 
@@ -102,22 +91,9 @@ export class GrowingUnitMongoRepository
 
 		// 04: Convert MongoDB documents to domain entities
 		const growingUnits = items.map((doc) =>
-			this.growingUnitMongoDBMapper.toViewModel({
-				id: doc.id,
-				location: doc.location,
-				name: doc.name,
-				type: doc.type,
-				capacity: doc.capacity,
-				dimensions: doc.dimensions,
-				plants: doc.plants.map((plant) =>
-					this.plantMongoDBMapper.toViewModel(plant),
-				),
-				remainingCapacity: doc.remainingCapacity,
-				numberOfPlants: doc.numberOfPlants,
-				volume: doc.volume,
-				createdAt: doc.createdAt,
-				updatedAt: doc.updatedAt,
-			}),
+			this.growingUnitMongoDBMapper.toViewModel(
+				doc as unknown as GrowingUnitMongoDbDto,
+			),
 		);
 
 		return new PaginatedResult<GrowingUnitViewModel>(
@@ -187,22 +163,9 @@ export class GrowingUnitMongoRepository
 
 		// 02: Convert MongoDB documents to view models
 		return growingUnits.map((doc) =>
-			this.growingUnitMongoDBMapper.toViewModel({
-				id: doc.id,
-				location: doc.location,
-				name: doc.name,
-				type: doc.type,
-				capacity: doc.capacity,
-				dimensions: doc.dimensions,
-				plants: doc.plants.map((plant) =>
-					this.plantMongoDBMapper.toViewModel(plant),
-				),
-				remainingCapacity: doc.remainingCapacity,
-				numberOfPlants: doc.numberOfPlants,
-				volume: doc.volume,
-				createdAt: doc.createdAt,
-				updatedAt: doc.updatedAt,
-			}),
+			this.growingUnitMongoDBMapper.toViewModel(
+				doc as unknown as GrowingUnitMongoDbDto,
+			),
 		);
 	}
 
@@ -220,26 +183,15 @@ export class GrowingUnitMongoRepository
 		);
 
 		// 01: Find all growing units with the given locationId
-		const growingUnits = await collection.find({ locationId }).toArray();
+		const growingUnits = await collection
+			.find({ 'location.id': locationId })
+			.toArray();
 
 		// 02: Convert MongoDB documents to view models
 		return growingUnits.map((doc) =>
-			this.growingUnitMongoDBMapper.toViewModel({
-				id: doc.id,
-				location: doc.location,
-				name: doc.name,
-				type: doc.type,
-				capacity: doc.capacity,
-				dimensions: doc.dimensions,
-				plants: doc.plants.map((plant) =>
-					this.plantMongoDBMapper.toViewModel(plant),
-				),
-				remainingCapacity: doc.remainingCapacity,
-				numberOfPlants: doc.numberOfPlants,
-				volume: doc.volume,
-				createdAt: doc.createdAt,
-				updatedAt: doc.updatedAt,
-			}),
+			this.growingUnitMongoDBMapper.toViewModel(
+				doc as unknown as GrowingUnitMongoDbDto,
+			),
 		);
 	}
 }

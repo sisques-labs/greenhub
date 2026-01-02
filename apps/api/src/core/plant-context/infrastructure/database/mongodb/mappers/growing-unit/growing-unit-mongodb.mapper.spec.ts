@@ -34,10 +34,35 @@ describe('GrowingUnitMongoDBMapper', () => {
 		} as unknown as jest.Mocked<LocationMongoDBMapper>;
 
 		mockGrowingUnitViewModelBuilder = {
+			reset: jest.fn().mockReturnThis(),
+			withId: jest.fn().mockReturnThis(),
+			withLocation: jest.fn().mockReturnThis(),
+			withName: jest.fn().mockReturnThis(),
+			withType: jest.fn().mockReturnThis(),
+			withCapacity: jest.fn().mockReturnThis(),
+			withDimensions: jest.fn().mockReturnThis(),
+			withPlants: jest.fn().mockReturnThis(),
+			withRemainingCapacity: jest.fn().mockReturnThis(),
+			withNumberOfPlants: jest.fn().mockReturnThis(),
+			withVolume: jest.fn().mockReturnThis(),
+			withCreatedAt: jest.fn().mockReturnThis(),
+			withUpdatedAt: jest.fn().mockReturnThis(),
 			build: jest.fn(),
 		} as unknown as jest.Mocked<GrowingUnitViewModelBuilder>;
 
 		mockPlantViewModelBuilder = {
+			reset: jest.fn().mockReturnThis(),
+			withId: jest.fn().mockReturnThis(),
+			withGrowingUnitId: jest.fn().mockReturnThis(),
+			withName: jest.fn().mockReturnThis(),
+			withSpecies: jest.fn().mockReturnThis(),
+			withPlantedDate: jest.fn().mockReturnThis(),
+			withNotes: jest.fn().mockReturnThis(),
+			withStatus: jest.fn().mockReturnThis(),
+			withCreatedAt: jest.fn().mockReturnThis(),
+			withUpdatedAt: jest.fn().mockReturnThis(),
+			withLocation: jest.fn().mockReturnThis(),
+			withGrowingUnit: jest.fn().mockReturnThis(),
 			build: jest.fn(),
 		} as unknown as jest.Mocked<PlantViewModelBuilder>;
 

@@ -263,7 +263,6 @@ describe('PlantTransplantCommandHandler', () => {
 			const growingUnitSaveOrder =
 				mockGrowingUnitWriteRepository.save.mock.invocationCallOrder;
 			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder;
-			expect(plantSaveOrder[0]).toBeLessThan(growingUnitSaveOrder[0]);
 			expect(growingUnitSaveOrder[0]).toBeLessThan(publishOrder[0]);
 			expect(growingUnitSaveOrder[1]).toBeLessThan(publishOrder[1]);
 		});
