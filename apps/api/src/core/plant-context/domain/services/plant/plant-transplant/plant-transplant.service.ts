@@ -1,10 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
-
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { ITransplantPlantDto } from '@/core/plant-context/domain/dtos/services/transplant.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
-import { GrowingUnitPlantNotFoundException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-not-found/growing-unit-plant-not-found.exception';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Service responsible for transplanting plants between growing units.
@@ -19,6 +17,10 @@ import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identi
 @Injectable()
 export class PlantTransplantService {
 	private readonly logger = new Logger(PlantTransplantService.name);
+
+	constructor(
+		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
+	) {}
 
 	/**
 	 * Transplants a plant from one growing unit to another.
@@ -36,17 +38,10 @@ export class PlantTransplantService {
 		);
 
 		// 01: Find the plant in the source growing unit
-		const plant = sourceGrowingUnit.getPlantById(plantId);
-
-		if (!plant) {
-			this.logger.error(
-				`Plant ${plantId} not found in source growing unit ${sourceGrowingUnit.id.value}`,
-			);
-			throw new GrowingUnitPlantNotFoundException(
-				sourceGrowingUnit.id.value,
-				plantId,
-			);
-		}
+		const plant = await this.assertPlantExistsInGrowingUnitService.execute({
+			growingUnitAggregate: sourceGrowingUnit,
+			plantId,
+		});
 
 		// 02: Verify target growing unit has capacity
 		if (!targetGrowingUnit.hasCapacity()) {
@@ -59,12 +54,7 @@ export class PlantTransplantService {
 		// 03: Remove plant from source growing unit
 		sourceGrowingUnit.removePlant(plant);
 
-		// 04: Update plant's growing unit ID
-		plant.changeGrowingUnit(
-			new GrowingUnitUuidValueObject(targetGrowingUnit.id.value),
-		);
-
-		// 05: Add plant to target growing unit
+		// 04: Add plant to target growing unit
 		targetGrowingUnit.addPlant(plant);
 
 		this.logger.log(

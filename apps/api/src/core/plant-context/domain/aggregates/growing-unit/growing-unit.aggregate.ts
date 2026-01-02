@@ -8,7 +8,6 @@ import { GrowingUnitNameChangedEvent } from '@/core/plant-context/domain/events/
 import { GrowingUnitTypeChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-type-changed/growing-unit-type-changed.event';
 import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
 import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
-import { PlantGrowingUnitChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-growing-unit-changed/plant-growing-unit-changed.event';
 import { PlantNameChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-name-changed/plant-name-changed.event';
 import { PlantNotesChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-notes-changed/plant-notes-changed.event';
 import { PlantPlantedDateChangedEvent } from '@/core/plant-context/domain/events/plant/field-changed/plant-planted-date-changed/plant-planted-date-changed.event';
@@ -104,7 +103,6 @@ export class GrowingUnitAggregate extends AggregateRoot {
 						eventType: GrowingUnitPlantAddedEvent.name,
 					},
 					{
-						growingUnitId: this._id.value,
 						plant: plantToAdd.toPrimitives(),
 					},
 				),
@@ -136,7 +134,6 @@ export class GrowingUnitAggregate extends AggregateRoot {
 						eventType: GrowingUnitPlantRemovedEvent.name,
 					},
 					{
-						growingUnitId: this._id.value,
 						plant: plantPrimitives,
 					},
 				),
@@ -340,45 +337,6 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	}
 
 	/**
-	 * Changes the growing unit association of a plant (moves plant to another unit).
-	 * @param plantId - The ID of the plant to update.
-	 * @param newGrowingUnitId - The new growing unit ID value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
-	 */
-	public changePlantGrowingUnit(
-		plantId: string,
-		newGrowingUnitId: GrowingUnitUuidValueObject,
-		generateEvent: boolean = true,
-	) {
-		const plant = this.getPlantById(plantId);
-		if (!plant) {
-			return;
-		}
-
-		const oldValue = plant.growingUnitId.value;
-		plant.changeGrowingUnit(newGrowingUnitId);
-
-		if (generateEvent) {
-			this.apply(
-				new PlantGrowingUnitChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: GrowingUnitAggregate.name,
-						entityId: plantId,
-						entityType: PlantEntity.name,
-						eventType: PlantGrowingUnitChangedEvent.name,
-					},
-					{
-						id: plantId,
-						oldValue,
-						newValue: plant.growingUnitId.value,
-					},
-				),
-			);
-		}
-	}
-
-	/**
 	 * Changes the location identifier of this growing unit.
 	 * @param locationId - The new location identifier value object.
 	 * @param generateEvent - Whether to emit the corresponding domain event.
@@ -554,6 +512,15 @@ export class GrowingUnitAggregate extends AggregateRoot {
 				),
 			);
 		}
+	}
+
+	/**
+	 * Checks if the growing unit has a plant with the given plant ID.
+	 * @param plantId - The string representation of the plant identifier value object.
+	 * @returns True if the growing unit has a plant with the given plant ID, false otherwise.
+	 */
+	public hasPlant(plantId: string): boolean {
+		return this.getPlantById(plantId) !== null;
 	}
 
 	/**

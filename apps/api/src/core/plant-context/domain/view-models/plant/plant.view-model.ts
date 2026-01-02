@@ -25,7 +25,7 @@ import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-
  * ```
  */
 export class PlantViewModel extends BaseViewModel {
-	private _growingUnitId: string;
+	private _growingUnitId?: string;
 	private _name: string;
 	private _species: string;
 	private _plantedDate: Date | null;

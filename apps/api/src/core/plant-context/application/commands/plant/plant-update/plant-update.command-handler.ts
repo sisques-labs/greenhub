@@ -4,7 +4,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
 import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
-import { AssertPlantExistsService } from '@/core/plant-context/application/services/plant/assert-plant-exists/assert-plant-exists.service';
+import { AssertPlantExistsInGrowingUnitService } from '@/core/plant-context/application/services/growing-unit/assert-plant-exists-in-growing-unit/assert-plant-exists-in-growing-unit.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import {
@@ -37,13 +37,15 @@ export class PlantUpdateCommandHandler
 	 * @param growingUnitWriteRepository - The write repository for persisting growing unit aggregates.
 	 * @param eventBus - The event bus for publishing domain events.
 	 * @param assertGrowingUnitExistsService - Service that ensures the target entity exists.
+	 * @param assertPlantExistsInGrowingUnitService - Service that ensures the plant exists in the growing unit.
+	 * @param publishIntegrationEventsService - Service for publishing integration events.
 	 */
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
 		private readonly eventBus: EventBus,
-		private readonly assertPlantExistsService: AssertPlantExistsService,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
+		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 	) {}
 
@@ -59,16 +61,18 @@ export class PlantUpdateCommandHandler
 			`Executing update plant command by id: ${command.id.value}`,
 		);
 
-		// 01: Assert that the plant exists by its id.
-		const existingPlant = await this.assertPlantExistsService.execute(
-			command.id.value,
-		);
-
 		// 02: Find the growing unit aggregate (aggregate root)
 		const growingUnitAggregate: GrowingUnitAggregate =
 			await this.assertGrowingUnitExistsService.execute(
-				existingPlant.growingUnitId.value,
+				command.growingUnitId.value,
 			);
+
+		// 03: Assert that the plant exists in the growing unit
+		const existingPlantEntity: PlantEntity =
+			await this.assertPlantExistsInGrowingUnitService.execute({
+				growingUnitAggregate,
+				plantId: command.id.value,
+			});
 
 		// 03: Update the growing unit aggregate (aggregate root)
 		if (command.name !== undefined) {
@@ -110,11 +114,11 @@ export class PlantUpdateCommandHandler
 				{
 					aggregateRootId: growingUnitAggregate.id.value,
 					aggregateRootType: GrowingUnitAggregate.name,
-					entityId: existingPlant.id.value,
+					entityId: existingPlantEntity.id.value,
 					entityType: PlantEntity.name,
 					eventType: PlantUpdatedEvent.name,
 				},
-				existingPlant.toPrimitives(),
+				existingPlantEntity.toPrimitives(),
 			),
 		);
 	}

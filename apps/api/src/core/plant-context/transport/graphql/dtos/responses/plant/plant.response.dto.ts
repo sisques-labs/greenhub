@@ -8,9 +8,10 @@ export class PlantResponseDto {
 	id: string;
 
 	@Field(() => String, {
+		nullable: true,
 		description: 'The id of the growing unit containing the plant',
 	})
-	growingUnitId: string;
+	growingUnitId?: string | null;
 
 	@Field(() => String, { description: 'The name of the plant' })
 	name: string;

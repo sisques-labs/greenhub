@@ -75,7 +75,7 @@ type PlantResponseDto {
   id: String!
 
   """The id of the growing unit containing the plant"""
-  growingUnitId: String!
+  growingUnitId: String
 
   """The name of the plant"""
   name: String!

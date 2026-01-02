@@ -87,7 +87,10 @@ export class GrowingUnitTypeormMapper {
 		entity.unit =
 			(primitives.dimensions?.unit as LengthUnitEnum | null) ?? null;
 		entity.plants = primitives.plants.map((plant) =>
-			this.plantTypeormMapper.toTypeormEntityFromPrimitives(plant),
+			this.plantTypeormMapper.toTypeormEntityFromPrimitives(
+				plant,
+				primitives.id,
+			),
 		);
 
 		return entity;

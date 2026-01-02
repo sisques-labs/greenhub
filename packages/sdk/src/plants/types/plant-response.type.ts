@@ -2,7 +2,7 @@ import { PlantStatus } from "./plant-status.type.js";
 
 export type PlantResponse = {
 	id: string;
-	growingUnitId: string;
+	growingUnitId?: string | null;
 	name: string;
 	species: string;
 	plantedDate?: Date | null;

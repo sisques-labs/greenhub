@@ -1,13 +1,12 @@
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-
 import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
-import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
+import { PlantViewModelBuilder } from '@/core/plant-context/domain/builders/plant/plant-view-model.builder';
 import {
 	IPlantReadRepository,
 	PLANT_READ_REPOSITORY_TOKEN,
 } from '@/core/plant-context/domain/repositories/plant/plant-read/plant-read.repository';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 /**
  * Event handler for PlantCreatedEvent.
@@ -25,7 +24,7 @@ export class PlantCreatedEventHandler
 	constructor(
 		@Inject(PLANT_READ_REPOSITORY_TOKEN)
 		private readonly plantReadRepository: IPlantReadRepository,
-		private readonly plantViewModelFactory: PlantViewModelFactory,
+		private readonly plantViewModelBuilder: PlantViewModelBuilder,
 	) {}
 
 	/**
@@ -41,10 +40,11 @@ export class PlantCreatedEventHandler
 		);
 
 		// 01: Create the plant view model
-		const plantViewModel: PlantViewModel =
-			this.plantViewModelFactory.fromPrimitives(event.data);
+		const plantViewModel: PlantViewModel = this.plantViewModelBuilder
+			.reset()
+			.fromPrimitives(event.data)
+			.build();
 
-		// 02: Save the plant view model
 		await this.plantReadRepository.save(plantViewModel);
 	}
 }

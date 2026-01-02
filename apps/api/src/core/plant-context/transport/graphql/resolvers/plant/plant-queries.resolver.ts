@@ -1,5 +1,5 @@
 import { FindPlantsByCriteriaQuery } from '@/core/plant-context/application/queries/plant/find-plants-by-criteria/find-plants-by-criteria.query';
-import { PlantFindByIdQuery } from '@/core/plant-context/application/queries/plant/plant-find-by-id/plant-find-by-id.query';
+import { PlantViewModelFindByIdQuery } from '@/core/plant-context/application/queries/plant/plant-view-model-find-by-id/plant-view-model-find-by-id.query';
 import { PlantFindByCriteriaRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-find-by-criteria.request.dto';
 import { PlantFindByIdRequestDto } from '@/core/plant-context/transport/graphql/dtos/requests/plant/plant-find-by-id.request.dto';
 import {
@@ -76,12 +76,10 @@ export class PlantQueriesResolver {
 
 		// 01: Execute query
 		const result = await this.queryBus.execute(
-			new PlantFindByIdQuery({ id: input.id }),
+			new PlantViewModelFindByIdQuery({ id: input.id }),
 		);
 
 		// 02: Convert to response DTO
-		return result
-			? this.plantGraphQLMapper.toResponseDtoFromEntity(result)
-			: null;
+		return this.plantGraphQLMapper.toResponseDtoFromViewModel(result);
 	}
 }

@@ -9,7 +9,6 @@ import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-o
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -65,7 +64,6 @@ export class PlantEntityFactory
 		);
 		return new PlantEntity({
 			id: new PlantUuidValueObject(data.id),
-			growingUnitId: new GrowingUnitUuidValueObject(data.growingUnitId),
 			name: new PlantNameValueObject(data.name),
 			species: new PlantSpeciesValueObject(data.species),
 			plantedDate: data.plantedDate

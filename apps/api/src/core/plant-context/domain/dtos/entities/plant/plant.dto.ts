@@ -3,7 +3,6 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -16,7 +15,6 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
  */
 export interface IPlantDto {
 	id: PlantUuidValueObject;
-	growingUnitId: GrowingUnitUuidValueObject;
 	name: PlantNameValueObject;
 	species: PlantSpeciesValueObject;
 	plantedDate: PlantPlantedDateValueObject | null;

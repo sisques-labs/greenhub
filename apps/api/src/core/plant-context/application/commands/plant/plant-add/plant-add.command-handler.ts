@@ -1,11 +1,8 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
-import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
+import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
 import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import {
@@ -13,6 +10,8 @@ import {
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link PlantAddCommand} to add a new plant to a growing unit.
@@ -75,10 +74,8 @@ export class PlantAddCommandHandler
 			throw new GrowingUnitFullCapacityException(command.growingUnitId.value);
 		}
 
-		// 03: Create the plant entity
-		const plantEntity = this.plantEntityFactory.create({
+		const plantEntity: PlantEntity = this.plantEntityFactory.create({
 			id: command.id,
-			growingUnitId: command.growingUnitId,
 			name: command.name,
 			species: command.species,
 			plantedDate: command.plantedDate,
@@ -98,15 +95,17 @@ export class PlantAddCommandHandler
 
 		// 07: Publish the PlantCreatedEvent integration event
 		await this.publishIntegrationEventsService.execute(
-			new PlantCreatedEvent(
+			new GrowingUnitPlantAddedEvent(
 				{
 					aggregateRootId: growingUnitAggregate.id.value,
 					aggregateRootType: GrowingUnitAggregate.name,
 					entityId: plantEntity.id.value,
 					entityType: PlantEntity.name,
-					eventType: PlantCreatedEvent.name,
+					eventType: GrowingUnitPlantAddedEvent.name,
 				},
-				plantEntity.toPrimitives(),
+				{
+					plant: plantEntity.toPrimitives(),
+				},
 			),
 		);
 

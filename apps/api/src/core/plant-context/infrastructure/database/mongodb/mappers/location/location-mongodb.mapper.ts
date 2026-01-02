@@ -1,4 +1,4 @@
-import { LocationViewModelFactory } from '@/core/plant-context/domain/factories/view-models/location-view-model/growing-unit-view-model.factory';
+import { LocationViewModelBuilder } from '@/core/plant-context/domain/builders/location/location-view-model.builder';
 import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { LocationMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/location/location-mongodb.dto';
 import { Injectable, Logger } from '@nestjs/common';
@@ -15,7 +15,7 @@ export class LocationMongoDBMapper {
 	private readonly logger = new Logger(LocationMongoDBMapper.name);
 
 	constructor(
-		private readonly locationViewModelFactory: LocationViewModelFactory,
+		private readonly locationViewModelBuilder: LocationViewModelBuilder,
 	) {}
 
 	/**
@@ -29,16 +29,22 @@ export class LocationMongoDBMapper {
 			`Converting MongoDB document to location view model with id ${doc.id}`,
 		);
 
-		return this.locationViewModelFactory.create({
-			id: doc.id,
-			name: doc.name,
-			type: doc.type,
-			description: doc.description,
-			createdAt:
-				doc.createdAt instanceof Date ? doc.createdAt : new Date(doc.createdAt),
-			updatedAt:
-				doc.updatedAt instanceof Date ? doc.updatedAt : new Date(doc.updatedAt),
-		});
+		// 01: Convert dates if needed
+		const createdAt =
+			doc.createdAt instanceof Date ? doc.createdAt : new Date(doc.createdAt);
+		const updatedAt =
+			doc.updatedAt instanceof Date ? doc.updatedAt : new Date(doc.updatedAt);
+
+		// 02: Build the location view model using the builder
+		return this.locationViewModelBuilder
+			.reset()
+			.withId(doc.id)
+			.withName(doc.name)
+			.withType(doc.type)
+			.withDescription(doc.description)
+			.withCreatedAt(createdAt)
+			.withUpdatedAt(updatedAt)
+			.build();
 	}
 
 	/**

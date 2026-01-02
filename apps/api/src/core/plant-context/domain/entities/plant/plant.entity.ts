@@ -6,7 +6,6 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
-import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-uuid/plant-uuid.vo';
 
 /**
@@ -26,11 +25,6 @@ export class PlantEntity {
 	 * Plant unique identifier (value object).
 	 */
 	private readonly _id: PlantUuidValueObject;
-
-	/**
-	 * Foreign key: UUID of the growing unit where the plant is located.
-	 */
-	private _growingUnitId: GrowingUnitUuidValueObject;
 
 	/**
 	 * Name of the plant.
@@ -63,7 +57,6 @@ export class PlantEntity {
 	 */
 	constructor(props: IPlantDto) {
 		this._id = props.id;
-		this._growingUnitId = props.growingUnitId;
 		this._name = props.name;
 		this._species = props.species;
 		this._plantedDate = props.plantedDate;
@@ -77,14 +70,6 @@ export class PlantEntity {
 	 */
 	public changeStatus(status: PlantStatusValueObject): void {
 		this._status = status;
-	}
-
-	/**
-	 * Change the growing unit to which this plant belongs.
-	 * @param newGrowingUnitId - The new growing unit's value object.
-	 */
-	public changeGrowingUnit(newGrowingUnitId: GrowingUnitUuidValueObject): void {
-		this._growingUnitId = newGrowingUnitId;
 	}
 
 	/**
@@ -143,13 +128,6 @@ export class PlantEntity {
 	}
 
 	/**
-	 * Gets the identifier of the plant's growing unit.
-	 */
-	public get growingUnitId(): GrowingUnitUuidValueObject {
-		return this._growingUnitId;
-	}
-
-	/**
 	 * Gets the plant's name value object.
 	 */
 	public get name(): PlantNameValueObject {
@@ -192,7 +170,6 @@ export class PlantEntity {
 	public toPrimitives(): PlantPrimitives {
 		return {
 			id: this._id.value,
-			growingUnitId: this._growingUnitId.value,
 			name: this._name.value,
 			species: this._species.value,
 			plantedDate: this._plantedDate?.value ?? null,
