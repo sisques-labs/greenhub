@@ -1,16 +1,16 @@
 import { GrowingUnitViewModelBuilder } from '@/core/plant-context/domain/builders/growing-unit/growing-unit-view-model.builder';
 import { LocationViewModelBuilder } from '@/core/plant-context/domain/builders/location/location-view-model.builder';
 import { PlantViewModelBuilder } from '@/core/plant-context/domain/builders/plant/plant-view-model.builder';
-import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import { LocationMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/location/location-mongodb.dto';
 import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto';
+import { LocationMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/location/location-mongodb.dto';
 import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
-import { LocationMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
 import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
+import { LocationMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 
@@ -181,7 +181,7 @@ describe('GrowingUnitMongoDBMapper', () => {
 			});
 
 			mockLocationViewModelBuilder.build.mockReturnValue(location);
-			mockPlantMongoDBMapper.toViewModel.mockReturnValue(plantViewModel);
+			mockPlantViewModelBuilder.build.mockReturnValue(plantViewModel);
 			mockGrowingUnitViewModelBuilder.build.mockReturnValue(viewModel);
 
 			const result = mapper.toViewModel(mongoDoc);
@@ -195,9 +195,10 @@ describe('GrowingUnitMongoDBMapper', () => {
 				'Test Location',
 			);
 			expect(mockLocationViewModelBuilder.build).toHaveBeenCalled();
-			expect(mockPlantMongoDBMapper.toViewModel).toHaveBeenCalledWith(
-				plantMongoDoc,
-			);
+			expect(mockPlantViewModelBuilder.reset).toHaveBeenCalled();
+			expect(mockPlantViewModelBuilder.withId).toHaveBeenCalledWith(plantId);
+			expect(mockPlantViewModelBuilder.withName).toHaveBeenCalledWith('Basil');
+			expect(mockPlantViewModelBuilder.build).toHaveBeenCalled();
 			expect(mockGrowingUnitViewModelBuilder.build).toHaveBeenCalled();
 		});
 

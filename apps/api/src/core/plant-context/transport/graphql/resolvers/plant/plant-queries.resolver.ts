@@ -79,6 +79,8 @@ export class PlantQueriesResolver {
 			new PlantViewModelFindByIdQuery({ id: input.id }),
 		);
 		// 03: Convert to response DTO
-		return this.plantGraphQLMapper.toResponseDtoFromViewModel(result);
+		return result
+			? this.plantGraphQLMapper.toResponseDtoFromViewModel(result)
+			: null;
 	}
 }

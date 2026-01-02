@@ -3,8 +3,8 @@ import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/gro
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
 import { PlantStatusEnum } from '@/core/plant-context/domain/enums/plant/plant-status/plant-status.enum';
-import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
 import { GrowingUnitPlantNotFoundException } from '@/core/plant-context/domain/exceptions/growing-unit-plant-not-found/growing-unit-plant-not-found.exception';
+import { GrowingUnitFullCapacityException } from '@/core/plant-context/domain/exceptions/growing-unit/growing-unit-full-capacity/growing-unit-full-capacity.exception';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
@@ -34,7 +34,9 @@ describe('PlantTransplantService', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertPlantExistsInGrowingUnitService>;
 
-		service = new PlantTransplantService(mockAssertPlantExistsInGrowingUnitService);
+		service = new PlantTransplantService(
+			mockAssertPlantExistsInGrowingUnitService,
+		);
 		const locationId = '423e4567-e89b-12d3-a456-426614174000';
 
 		// Create source growing unit with capacity for 5 plants
@@ -216,6 +218,10 @@ describe('PlantTransplantService', () => {
 		});
 
 		it('should preserve plant properties after transplant', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			const input = {
 				sourceGrowingUnit,
 				targetGrowingUnit,
@@ -281,6 +287,10 @@ describe('PlantTransplantService', () => {
 		});
 
 		it('should handle transplant when target already has plants', async () => {
+			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
+				plant,
+			);
+
 			// Add a plant to target
 			const existingPlant = new PlantEntity({
 				id: new PlantUuidValueObject('423e4567-e89b-12d3-a456-426614174000'),
