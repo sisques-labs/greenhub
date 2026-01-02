@@ -72,4 +72,24 @@ export class GrowingUnitTypeormRepository
 
 		await this.repository.softDelete(id);
 	}
+
+	/**
+	 * Finds all growing units by location ID.
+	 *
+	 * @param locationId - The location ID to search for
+	 * @returns Promise that resolves to an array of GrowingUnitAggregate instances
+	 */
+	async findByLocationId(locationId: string): Promise<GrowingUnitAggregate[]> {
+		this.logger.log(`Finding growing units by location id: ${locationId}`);
+		const growingUnitEntities = await this.repository.find({
+			where: { locationId },
+			relations: {
+				plants: true,
+			},
+		});
+
+		return growingUnitEntities.map((entity) =>
+			this.growingUnitTypeormMapper.toDomainEntity(entity),
+		);
+	}
 }

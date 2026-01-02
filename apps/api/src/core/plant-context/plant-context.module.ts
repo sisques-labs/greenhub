@@ -17,7 +17,9 @@ import { PlantDeletedEventHandler } from '@/core/plant-context/application/event
 import { PlantUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-updated/plant-updated.event-handler';
 import { GrowingUnitFindByCriteriaQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler';
 import { GrowingUnitFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-id/growing-unit-find-by-id.query-handler';
+import { GrowingUnitFindByLocationIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-location-id/growing-unit-find-by-location-id.query-handler';
 import { GrowingUnitViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler';
+import { GrowingUnitViewModelFindByLocationIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-location-id/growing-unit-view-model-find-by-location-id.query-handler';
 import { PlantFindByIdQueryHandler } from '@/core/plant-context/application/queries/plant/plant-find-by-id/plant-find-by-id.query-handler';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { AssertGrowingUnitViewModelExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service';
@@ -77,7 +79,9 @@ const QUERY_HANDLERS = [
 	// Growing Unit query handlers
 	GrowingUnitFindByCriteriaQueryHandler,
 	GrowingUnitFindByIdQueryHandler,
+	GrowingUnitFindByLocationIdQueryHandler,
 	GrowingUnitViewModelFindByIdQueryHandler,
+	GrowingUnitViewModelFindByLocationIdQueryHandler,
 
 	// Plant query handlers
 	PlantFindByIdQueryHandler,

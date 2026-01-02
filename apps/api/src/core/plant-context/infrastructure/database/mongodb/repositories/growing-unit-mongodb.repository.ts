@@ -205,4 +205,41 @@ export class GrowingUnitMongoRepository
 			}),
 		);
 	}
+
+	/**
+	 * Finds all growing units by location ID.
+	 *
+	 * @param locationId - The location ID to search for growing units by
+	 * @returns Promise that resolves to an array of GrowingUnitViewModel instances
+	 */
+	async findByLocationId(locationId: string): Promise<GrowingUnitViewModel[]> {
+		this.logger.log(`Finding growing units by location id: ${locationId}`);
+
+		const collection = this.mongoMasterService.getCollection(
+			this.collectionName,
+		);
+
+		// 01: Find all growing units with the given locationId
+		const growingUnits = await collection.find({ locationId }).toArray();
+
+		// 02: Convert MongoDB documents to view models
+		return growingUnits.map((doc) =>
+			this.growingUnitMongoDBMapper.toViewModel({
+				id: doc.id,
+				locationId: doc.locationId,
+				name: doc.name,
+				type: doc.type,
+				capacity: doc.capacity,
+				dimensions: doc.dimensions,
+				plants: doc.plants.map((plant) =>
+					this.plantMongoDBMapper.toViewModel(plant),
+				),
+				remainingCapacity: doc.remainingCapacity,
+				numberOfPlants: doc.numberOfPlants,
+				volume: doc.volume,
+				createdAt: doc.createdAt,
+				updatedAt: doc.updatedAt,
+			}),
+		);
+	}
 }
