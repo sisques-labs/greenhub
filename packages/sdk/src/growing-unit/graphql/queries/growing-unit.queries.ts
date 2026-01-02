@@ -2,7 +2,14 @@ export const GROWING_UNIT_FIND_BY_ID_QUERY = `
   query GrowingUnitFindById($input: GrowingUnitFindByIdRequestDto!) {
     growingUnitFindById(input: $input) {
       id
-      locationId
+      location {
+        id
+        name
+        type
+        description
+        createdAt
+        updatedAt
+      }
       name
       type
       capacity
@@ -41,7 +48,14 @@ export const GROWING_UNITS_FIND_BY_CRITERIA_QUERY = `
       totalPages
       items {
         id
-        locationId
+        location {
+          id
+          name
+          type
+          description
+          createdAt
+          updatedAt
+        }
         name
         type
         capacity
@@ -71,4 +85,3 @@ export const GROWING_UNITS_FIND_BY_CRITERIA_QUERY = `
     }
   }
 `;
-

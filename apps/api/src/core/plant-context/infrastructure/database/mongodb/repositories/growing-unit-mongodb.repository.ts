@@ -50,7 +50,7 @@ export class GrowingUnitMongoRepository
 		return growingUnitMongoDbDto
 			? this.growingUnitMongoDBMapper.toViewModel({
 					id: growingUnitMongoDbDto.id,
-					locationId: growingUnitMongoDbDto.locationId,
+					location: growingUnitMongoDbDto.location,
 					name: growingUnitMongoDbDto.name,
 					type: growingUnitMongoDbDto.type,
 					capacity: growingUnitMongoDbDto.capacity,
@@ -104,7 +104,7 @@ export class GrowingUnitMongoRepository
 		const growingUnits = items.map((doc) =>
 			this.growingUnitMongoDBMapper.toViewModel({
 				id: doc.id,
-				locationId: doc.locationId,
+				location: doc.location,
 				name: doc.name,
 				type: doc.type,
 				capacity: doc.capacity,
@@ -189,7 +189,7 @@ export class GrowingUnitMongoRepository
 		return growingUnits.map((doc) =>
 			this.growingUnitMongoDBMapper.toViewModel({
 				id: doc.id,
-				locationId: doc.locationId,
+				location: doc.location,
 				name: doc.name,
 				type: doc.type,
 				capacity: doc.capacity,
@@ -226,7 +226,7 @@ export class GrowingUnitMongoRepository
 		return growingUnits.map((doc) =>
 			this.growingUnitMongoDBMapper.toViewModel({
 				id: doc.id,
-				locationId: doc.locationId,
+				location: doc.location,
 				name: doc.name,
 				type: doc.type,
 				capacity: doc.capacity,

@@ -1,6 +1,3 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { GrowingUnitCreateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-create/growing-unit-create.command-handler';
 import { GrowingUnitDeleteCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-delete/growing-unit-delete.command-handler';
 import { GrowingUnitUpdateCommandHandler } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command-handler';
@@ -11,7 +8,6 @@ import { PlantUpdateCommandHandler } from '@/core/plant-context/application/comm
 import { GrowingUnitCreatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-created/growing-unit-created.event-handler';
 import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
 import { GrowingUnitUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-updated/growing-unit-updated.event-handler';
-// Import enums for GraphQL
 import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
 import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-removed/plant-removed.event-handler';
 import { PlantUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-updated/plant-updated.event-handler';
@@ -27,12 +23,14 @@ import { AssertPlantExistsService } from '@/core/plant-context/application/servi
 import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
+import { LocationViewModelFactory } from '@/core/plant-context/domain/factories/view-models/location-view-model/growing-unit-view-model.factory';
 import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
 import { GROWING_UNIT_READ_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GROWING_UNIT_WRITE_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
 import { PLANT_WRITE_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
 import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
+import { LocationMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 import { GrowingUnitMongoRepository } from '@/core/plant-context/infrastructure/database/mongodb/repositories/growing-unit-mongodb.repository';
 import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
@@ -41,15 +39,18 @@ import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/da
 import { PlantTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/plant/plant-typeorm.mapper';
 import { GrowingUnitTypeormRepository } from '@/core/plant-context/infrastructure/database/typeorm/repositories/growing-unit/growing-unit-typeorm.repository';
 import { PlantTypeormRepository } from '@/core/plant-context/infrastructure/database/typeorm/repositories/plant/plant-typeorm.repository';
+import '@/core/plant-context/transport/graphql/enums/growing-unit/growing-unit-registered-enums.graphql';
+import '@/core/plant-context/transport/graphql/enums/plant/plant-registered-enums.graphql';
 import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
+import { LocationGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/location/location.mapper';
 import { PlantGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/plant/plant.mapper';
 import { GrowingUnitMutationsResolver } from '@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-mutations.resolver';
 import { GrowingUnitQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-queries.resolver';
 import { PlantMutationsResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-mutations.resolver';
 import { PlantQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/plant/plant-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
-import '@/core/plant-context/transport/graphql/enums/growing-unit/growing-unit-registered-enums.graphql';
-import '@/core/plant-context/transport/graphql/enums/plant/plant-registered-enums.graphql';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 const RESOLVERS = [
 	// Growing Unit resolvers
@@ -120,6 +121,9 @@ const FACTORIES = [
 	// Plant factories
 	PlantEntityFactory,
 	PlantViewModelFactory,
+
+	// Location factories
+	LocationViewModelFactory,
 ];
 
 const MAPPERS = [
@@ -132,6 +136,10 @@ const MAPPERS = [
 	PlantTypeormMapper,
 	PlantMongoDBMapper,
 	PlantGraphQLMapper,
+
+	// Location mappers
+	LocationMongoDBMapper,
+	LocationGraphQLMapper,
 ];
 
 const REPOSITORIES = [

@@ -8,7 +8,7 @@ import { GrowingUnitFindByIdRequestDto } from '@/core/plant-context/transport/gr
 import {
 	GrowingUnitResponseDto,
 	PaginatedGrowingUnitResultDto,
-} from '@/core/plant-context/transport/graphql/dtos/responses/growing-unit/growing-unit.response.dto';
+} from '@/core/plant-context/transport/graphql/dtos/responses/locationn/growing-unit.response.dto';
 import { GrowingUnitGraphQLMapper } from '@/core/plant-context/transport/graphql/mappers/growing-unit/growing-unit.mapper';
 import { GrowingUnitQueriesResolver } from '@/core/plant-context/transport/graphql/resolvers/growing-unit/growing-unit-queries.resolver';
 import { Criteria } from '@/shared/domain/entities/criteria';
@@ -214,4 +214,3 @@ describe('GrowingUnitQueriesResolver', () => {
 		});
 	});
 });
-

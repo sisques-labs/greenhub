@@ -1,4 +1,5 @@
 import { IGrowingUnitViewModelDto } from '@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
@@ -24,7 +25,7 @@ import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-
  * ```
  */
 export class GrowingUnitViewModel extends BaseViewModel {
-	private _locationId: string;
+	private _location: LocationViewModel;
 	private _name: string;
 	private _type: string;
 	private _capacity: number;
@@ -48,7 +49,7 @@ export class GrowingUnitViewModel extends BaseViewModel {
 	 */
 	constructor(props: IGrowingUnitViewModelDto) {
 		super(props);
-		this._locationId = props.locationId;
+		this._location = props.location;
 		this._name = props.name;
 		this._type = props.type;
 		this._capacity = props.capacity;
@@ -73,12 +74,12 @@ export class GrowingUnitViewModel extends BaseViewModel {
 	}
 
 	/**
-	 * Gets the location identifier this growing unit belongs to.
+	 * Gets the location this growing unit belongs to.
 	 *
-	 * @returns The location identifier
+	 * @returns The location
 	 */
-	public get locationId(): string {
-		return this._locationId;
+	public get location(): LocationViewModel {
+		return this._location;
 	}
 
 	/**
@@ -169,7 +170,7 @@ export class GrowingUnitViewModel extends BaseViewModel {
 	 * ```
 	 */
 	public update(updateData: IGrowingUnitViewModelDto): void {
-		this._locationId = updateData.locationId;
+		this._location = updateData.location;
 		this._name = updateData.name;
 		this._type = updateData.type;
 		this._capacity = updateData.capacity;

@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
+import { GrowingUnitLocationResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/location/location.response.dto';
 import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
 import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
 
@@ -25,8 +26,10 @@ export class GrowingUnitResponseDto {
 	@Field(() => String, { description: 'The id of the growing unit' })
 	id: string;
 
-	@Field(() => String, { description: 'The id of the location this growing unit belongs to' })
-	locationId: string;
+	@Field(() => GrowingUnitLocationResponseDto, {
+		description: 'The location this growing unit belongs to',
+	})
+	location: GrowingUnitLocationResponseDto;
 
 	@Field(() => String, { description: 'The name of the growing unit' })
 	name: string;

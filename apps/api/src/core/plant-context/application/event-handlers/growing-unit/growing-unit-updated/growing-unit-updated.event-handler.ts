@@ -1,6 +1,7 @@
 import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { EventsHandler, IEventHandler, QueryBus } from '@nestjs/cqrs';
 
+import { LocationViewModelFindByIdQuery } from '@/core/location-context/application/queries/location/location-view-model-find-by-id/location-view-model-find-by-id.query';
 import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
@@ -28,6 +29,7 @@ export class GrowingUnitUpdatedEventHandler
 		private readonly growingUnitReadRepository: IGrowingUnitReadRepository,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly growingUnitViewModelFactory: GrowingUnitViewModelFactory,
+		private readonly queryBus: QueryBus,
 	) {}
 
 	/**
@@ -46,9 +48,18 @@ export class GrowingUnitUpdatedEventHandler
 		const growingUnitAggregate =
 			await this.assertGrowingUnitExistsService.execute(event.entityId);
 
+		const locationViewModel = await this.queryBus.execute(
+			new LocationViewModelFindByIdQuery({
+				id: growingUnitAggregate.locationId.value,
+			}),
+		);
+
 		// 02: Update the growing unit view model from the aggregate
 		const growingUnitViewModel: GrowingUnitViewModel =
-			this.growingUnitViewModelFactory.fromAggregate(growingUnitAggregate);
+			this.growingUnitViewModelFactory.fromAggregate(
+				growingUnitAggregate,
+				locationViewModel,
+			);
 
 		// 03: Save the updated growing unit view model
 		await this.growingUnitReadRepository.save(growingUnitViewModel);

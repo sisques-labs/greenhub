@@ -50,6 +50,26 @@ type PaginatedLocationResultDto {
   items: [LocationResponseDto!]!
 }
 
+type GrowingUnitLocationResponseDto {
+  """The id of the location"""
+  id: String!
+
+  """The name of the location"""
+  name: String!
+
+  """The type of the location"""
+  type: String!
+
+  """The description of the location"""
+  description: String
+
+  """The created at timestamp of the location"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the location"""
+  updatedAt: DateTime!
+}
+
 type PlantResponseDto {
   """The id of the plant"""
   id: String!
@@ -97,8 +117,8 @@ type GrowingUnitResponseDto {
   """The id of the growing unit"""
   id: String!
 
-  """The id of the location this growing unit belongs to"""
-  locationId: String!
+  """The location this growing unit belongs to"""
+  location: GrowingUnitLocationResponseDto!
 
   """The name of the growing unit"""
   name: String!

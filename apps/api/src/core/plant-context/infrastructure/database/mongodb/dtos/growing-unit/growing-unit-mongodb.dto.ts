@@ -1,3 +1,4 @@
+import { LocationMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/location/location-mongodb.dto';
 import { PlantMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/plant/plant-mongodb.dto';
 import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base-mongo.dto';
 
@@ -9,7 +10,7 @@ import { BaseMongoDto } from '@/shared/infrastructure/database/mongodb/dtos/base
  * It matches the structure of GrowingUnitViewModel for consistency.
  */
 export type GrowingUnitMongoDbDto = BaseMongoDto & {
-	locationId: string;
+	location: LocationMongoDbDto;
 	name: string;
 	type: string;
 	capacity: number;

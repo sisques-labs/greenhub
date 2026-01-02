@@ -2,9 +2,11 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { IGrowingUnitViewModelDto } from '@/core/plant-context/domain/dtos/view-models/growing-unit/growing-unit-view-model.dto';
+import { LocationViewModelFactory } from '@/core/plant-context/domain/factories/view-models/location-view-model/growing-unit-view-model.factory';
 import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
-import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit.primitives';
+import { GrowingUnitPrimitives } from '@/core/plant-context/domain/primitives/growing-unit/growing-unit.primitives';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
+import { LocationViewModel } from '@/core/plant-context/domain/view-models/location/location.view-model';
 import { IReadFactory } from '@/shared/domain/interfaces/read-factory.interface';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
 
@@ -41,7 +43,10 @@ export class GrowingUnitViewModelFactory
 	 *
 	 * @param plantViewModelFactory - A factory used to create view models for plants.
 	 */
-	constructor(private readonly plantViewModelFactory: PlantViewModelFactory) {}
+	constructor(
+		private readonly plantViewModelFactory: PlantViewModelFactory,
+		private readonly locationViewModelFactory: LocationViewModelFactory,
+	) {}
 
 	/**
 	 * Converts an {@link IGrowingUnitViewModelDto} into a {@link GrowingUnitViewModel}.
@@ -85,7 +90,12 @@ export class GrowingUnitViewModelFactory
 
 		return new GrowingUnitViewModel({
 			id: growingUnitPrimitives.id,
-			locationId: growingUnitPrimitives.locationId,
+			location: this.locationViewModelFactory.fromPrimitives({
+				id: growingUnitPrimitives.locationId,
+				name: growingUnitPrimitives.name,
+				type: growingUnitPrimitives.type,
+				description: null,
+			}),
 			name: growingUnitPrimitives.name,
 			type: growingUnitPrimitives.type,
 			capacity: growingUnitPrimitives.capacity,
@@ -109,15 +119,22 @@ export class GrowingUnitViewModelFactory
 	 * Converts a {@link GrowingUnitAggregate} into a {@link GrowingUnitViewModel}.
 	 *
 	 * @param growingUnitAggregate - The aggregate root containing the growing unit's domain properties and behaviors.
+	 * @param locationViewModel - Optional location view model. If not provided, a minimal location view model will be created using the locationId from the aggregate.
 	 * @returns The populated {@link GrowingUnitViewModel} instance.
 	 *
 	 * @example
 	 * ```typescript
+	 * // Without location view model (creates minimal one)
 	 * const viewModel = factory.fromAggregate(growingUnitAggregate);
+	 *
+	 * // With location view model (preferred when available)
+	 * const locationViewModel = await locationReadRepository.findById(locationId);
+	 * const viewModel = factory.fromAggregate(growingUnitAggregate, locationViewModel);
 	 * ```
 	 */
 	public fromAggregate(
 		growingUnitAggregate: GrowingUnitAggregate,
+		locationViewModel?: LocationViewModel,
 	): GrowingUnitViewModel {
 		this.logger.log(
 			`Creating growing unit view model from aggregate: ${growingUnitAggregate}`,
@@ -125,9 +142,19 @@ export class GrowingUnitViewModelFactory
 
 		const now = new Date();
 
+		// 01: Get or create location view model
+		const location =
+			locationViewModel ??
+			this.locationViewModelFactory.fromPrimitives({
+				id: growingUnitAggregate.locationId.value,
+				name: '', // Will be populated from read model if needed
+				type: '', // Will be populated from read model if needed
+				description: null,
+			});
+
 		return new GrowingUnitViewModel({
 			id: growingUnitAggregate.id.value,
-			locationId: growingUnitAggregate.locationId.value,
+			location,
 			name: growingUnitAggregate.name.value,
 			type: growingUnitAggregate.type.value,
 			capacity: growingUnitAggregate.capacity.value,

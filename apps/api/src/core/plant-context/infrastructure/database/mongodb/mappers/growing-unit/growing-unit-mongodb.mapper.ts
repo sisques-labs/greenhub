@@ -3,6 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
 import { GrowingUnitMongoDbDto } from '@/core/plant-context/infrastructure/database/mongodb/dtos/growing-unit/growing-unit-mongodb.dto';
+import { LocationMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
 
 /**
@@ -19,6 +20,7 @@ export class GrowingUnitMongoDBMapper {
 	constructor(
 		private readonly growingUnitViewModelFactory: GrowingUnitViewModelFactory,
 		private readonly plantMongoDBMapper: PlantMongoDBMapper,
+		private readonly locationMongoDBMapper: LocationMongoDBMapper,
 	) {}
 
 	/**
@@ -34,7 +36,7 @@ export class GrowingUnitMongoDBMapper {
 
 		return this.growingUnitViewModelFactory.create({
 			id: doc.id,
-			locationId: doc.locationId,
+			location: this.locationMongoDBMapper.toViewModel(doc.location),
 			name: doc.name,
 			type: doc.type,
 			capacity: doc.capacity,
@@ -67,7 +69,9 @@ export class GrowingUnitMongoDBMapper {
 
 		return {
 			id: growingUnitViewModel.id,
-			locationId: growingUnitViewModel.locationId,
+			location: this.locationMongoDBMapper.toMongoData(
+				growingUnitViewModel.location,
+			),
 			name: growingUnitViewModel.name,
 			type: growingUnitViewModel.type,
 			capacity: growingUnitViewModel.capacity,
