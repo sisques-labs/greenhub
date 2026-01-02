@@ -113,7 +113,7 @@ export function PlantsPage() {
 				onPerPageChange={setPerPage}
 			>
 				{isLoading ? (
-					<PlantsTableSkeleton />
+					<PlantsTableSkeleton rows={perPage} />
 				) : error ? (
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-destructive">

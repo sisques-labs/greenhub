@@ -10,10 +10,19 @@ import {
 	TableRow,
 } from "@repo/shared/presentation/components/ui/table";
 
+interface PlantsTableSkeletonProps {
+	/**
+	 * Number of skeleton rows to display
+	 * @default 10
+	 */
+	rows?: number;
+}
+
 /**
  * Skeleton component for the plants table only
+ * Adapts to the number of rows specified to match the expected page size
  */
-export function PlantsTableSkeleton() {
+export function PlantsTableSkeleton({ rows = 10 }: PlantsTableSkeletonProps) {
 	return (
 		<div className="rounded-md border">
 			<Table>
@@ -40,7 +49,7 @@ export function PlantsTableSkeleton() {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+					{Array.from({ length: rows }).map((_, i) => (
 						<TableRow key={i}>
 							<TableCell>
 								<Skeleton className="h-10 w-10 rounded-full" />
