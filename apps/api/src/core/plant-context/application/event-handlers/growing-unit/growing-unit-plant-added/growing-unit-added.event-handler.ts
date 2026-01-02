@@ -1,8 +1,8 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
-import { PlantCreatedEvent } from '@/core/plant-context/application/events/plant/plant-created/plant-created.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { GrowingUnitPlantAddedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-added/growing-unit-plant-added.event';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
@@ -14,14 +14,15 @@ import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/gr
  * Event handler for GrowingUnitPlantAddedEvent.
  *
  * @remarks
- * This handler updates the growing unit view model when a plant is added,
- * ensuring the read model is synchronized with the write model.
+ * This handler updates the growing unit view model when a plant is added to a growing unit,
+ * ensuring the read model is synchronized with the write model. This event is triggered
+ * when a plant is added to a growing unit (including during transplant operations).
  */
-@EventsHandler(PlantCreatedEvent)
-export class PlantCreatedEventHandler
-	implements IEventHandler<PlantCreatedEvent>
+@EventsHandler(GrowingUnitPlantAddedEvent)
+export class GrowingUnitPlantAddedEventHandler
+	implements IEventHandler<GrowingUnitPlantAddedEvent>
 {
-	private readonly logger = new Logger(PlantCreatedEventHandler.name);
+	private readonly logger = new Logger(GrowingUnitPlantAddedEventHandler.name);
 
 	constructor(
 		@Inject(GROWING_UNIT_READ_REPOSITORY_TOKEN)
@@ -35,11 +36,13 @@ export class PlantCreatedEventHandler
 	 *
 	 * @param event - The GrowingUnitPlantAddedEvent event to handle
 	 */
-	async handle(event: PlantCreatedEvent) {
-		this.logger.log(`Handling plant created event: ${event.entityId}`);
+	async handle(event: GrowingUnitPlantAddedEvent) {
+		this.logger.log(
+			`Handling growing unit plant added event: ${event.entityId}`,
+		);
 
 		this.logger.debug(
-			`Plant created event data: ${JSON.stringify(event.data)}`,
+			`Growing unit plant added event data: ${JSON.stringify(event.data)}`,
 		);
 
 		// 01: Get the growing unit aggregate to have the complete state

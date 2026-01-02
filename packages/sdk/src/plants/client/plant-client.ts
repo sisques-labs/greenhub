@@ -4,9 +4,14 @@ import {
 	PLANT_TRANSPLANT_MUTATION,
 	PLANT_UPDATE_MUTATION,
 } from "../graphql/mutations/plants.mutations.js";
-import { PLANT_FIND_BY_ID_QUERY } from "../graphql/queries/plants.queries.js";
+import {
+	PLANT_FIND_BY_ID_QUERY,
+	PLANTS_FIND_BY_CRITERIA_QUERY,
+} from "../graphql/queries/plants.queries.js";
 import type {
+	PlantFindByCriteriaInput,
 	PlantFindByIdInput,
+	PaginatedPlantResult,
 	PlantResponse,
 	PlantTransplantInput,
 	UpdatePlantInput,
@@ -24,6 +29,19 @@ export class PlantClient {
 		});
 
 		return result.plantFindById;
+	}
+
+	async findByCriteria(
+		input?: PlantFindByCriteriaInput,
+	): Promise<PaginatedPlantResult> {
+		const result = await this.client.request<{
+			plantsFindByCriteria: PaginatedPlantResult;
+		}>({
+			query: PLANTS_FIND_BY_CRITERIA_QUERY,
+			variables: { input },
+		});
+
+		return result.plantsFindByCriteria;
 	}
 
 	async update(input: UpdatePlantInput): Promise<MutationResponse> {

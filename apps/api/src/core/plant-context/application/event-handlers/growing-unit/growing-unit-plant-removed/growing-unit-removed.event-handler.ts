@@ -1,27 +1,28 @@
 import { Inject, Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-
-import { PlantDeletedEvent } from '@/core/plant-context/application/events/plant/plant-deleted/plant-deleted.event';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
+import { GrowingUnitPlantRemovedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/growing-unit-plant-removed/growing-unit-plant-removed.event';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
 import {
 	GROWING_UNIT_READ_REPOSITORY_TOKEN,
 	IGrowingUnitReadRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GrowingUnitViewModel } from '@/core/plant-context/domain/view-models/growing-unit/growing-unit.view-model';
-
 /**
- * Event handler for PlantDeletedEvent.
+ * Event handler for GrowingUnitPlantRemovedEvent.
  *
  * @remarks
- * This handler deletes the growing unit view model when a plant is deleted,
- * ensuring the read model is synchronized with the write model.
+ * This handler updates the growing unit view model when a plant is removed from a growing unit,
+ * ensuring the read model is synchronized with the write model. This event is triggered
+ * when a plant is removed from a growing unit (including during transplant operations).
  */
-@EventsHandler(PlantDeletedEvent)
-export class PlantDeletedEventHandler
-	implements IEventHandler<PlantDeletedEvent>
+@EventsHandler(GrowingUnitPlantRemovedEvent)
+export class GrowingUnitPlantRemovedEventHandler
+	implements IEventHandler<GrowingUnitPlantRemovedEvent>
 {
-	private readonly logger = new Logger(PlantDeletedEventHandler.name);
+	private readonly logger = new Logger(
+		GrowingUnitPlantRemovedEventHandler.name,
+	);
 
 	constructor(
 		@Inject(GROWING_UNIT_READ_REPOSITORY_TOKEN)
@@ -31,15 +32,17 @@ export class PlantDeletedEventHandler
 	) {}
 
 	/**
-	 * Handles the PlantDeletedEvent event by deleting the growing unit view model.
+	 * Handles the GrowingUnitPlantRemovedEvent event by updating the growing unit view model.
 	 *
-	 * @param event - The PlantDeletedEvent event to handle
+	 * @param event - The GrowingUnitPlantRemovedEvent event to handle
 	 */
-	async handle(event: PlantDeletedEvent) {
-		this.logger.log(`Handling plant deleted event: ${event.entityId}`);
+	async handle(event: GrowingUnitPlantRemovedEvent) {
+		this.logger.log(
+			`Handling growing unit plant removed event: ${event.entityId}`,
+		);
 
 		this.logger.debug(
-			`Plant deleted event data: ${JSON.stringify(event.data)}`,
+			`Growing unit plant removed event data: ${JSON.stringify(event.data)}`,
 		);
 
 		// 01: Get the growing unit aggregate to have the complete state

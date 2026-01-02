@@ -1,5 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
+import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
+
 @ObjectType('PlantResponseDto')
 export class PlantResponseDto {
 	@Field(() => String, { description: 'The id of the plant' })
@@ -40,4 +42,12 @@ export class PlantResponseDto {
 		description: 'The updated at timestamp of the plant',
 	})
 	updatedAt: Date;
+}
+
+@ObjectType('PaginatedPlantResultDto')
+export class PaginatedPlantResultDto extends BasePaginatedResultDto {
+	@Field(() => [PlantResponseDto], {
+		description: 'The plants in the current page',
+	})
+	items: PlantResponseDto[];
 }

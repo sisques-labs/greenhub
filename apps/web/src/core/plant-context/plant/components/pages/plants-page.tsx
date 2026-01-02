@@ -81,7 +81,7 @@ export function PlantsPage() {
 	];
 
 	// Show skeleton while loading or if data is not yet available
-	if (isLoading || growingUnits === null || growingUnits === undefined) {
+	if (isLoading) {
 		return <PlantsPageSkeleton />;
 	}
 

@@ -3,6 +3,8 @@ import { useAsyncState } from "../../react/hooks/use-async-state.js";
 import { useSDKContext } from "../../react/index.js";
 import type { MutationResponse } from "../../shared/types/index.js";
 import type {
+	PaginatedPlantResult,
+	PlantFindByCriteriaInput,
 	PlantFindByIdInput,
 	PlantResponse,
 	PlantTransplantInput,
@@ -18,6 +20,11 @@ export function usePlants() {
 		(input: PlantFindByIdInput) => sdk.plants.findById(input),
 	);
 
+	const findByCriteria = useAsyncState<
+		PaginatedPlantResult,
+		[PlantFindByCriteriaInput?]
+	>((input?: PlantFindByCriteriaInput) => sdk.plants.findByCriteria(input));
+
 	const update = useAsyncState<MutationResponse, [UpdatePlantInput]>(
 		(input: UpdatePlantInput) => sdk.plants.update(input),
 	);
@@ -30,6 +37,10 @@ export function usePlants() {
 		findById: {
 			...findById,
 			fetch: findById.execute,
+		},
+		findByCriteria: {
+			...findByCriteria,
+			fetch: findByCriteria.execute,
 		},
 		update: {
 			...update,

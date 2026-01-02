@@ -2,7 +2,11 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { PlantViewModel } from '@/core/plant-context/domain/view-models/plant/plant.view-model';
-import { PlantResponseDto } from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
+import {
+	PaginatedPlantResultDto,
+	PlantResponseDto,
+} from '@/core/plant-context/transport/graphql/dtos/responses/plant/plant.response.dto';
+import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 /**
  * Mapper for converting between Plant domain entities and GraphQL DTOs.
@@ -58,6 +62,29 @@ export class PlantGraphQLMapper {
 			status: plant.status,
 			createdAt: plant.createdAt,
 			updatedAt: plant.updatedAt,
+		};
+	}
+
+	/**
+	 * Converts a paginated result of plant view models to a paginated GraphQL response DTO.
+	 *
+	 * @param paginatedResult - The paginated result to convert
+	 * @returns The paginated GraphQL response DTO
+	 */
+	toPaginatedResponseDto(
+		paginatedResult: PaginatedResult<PlantViewModel>,
+	): PaginatedPlantResultDto {
+		this.logger.log(
+			`Mapping paginated plant result to response dto: ${JSON.stringify(paginatedResult)}`,
+		);
+		return {
+			items: paginatedResult.items.map((plant) =>
+				this.toResponseDtoFromViewModel(plant),
+			),
+			total: paginatedResult.total,
+			page: paginatedResult.page,
+			perPage: paginatedResult.perPage,
+			totalPages: paginatedResult.totalPages,
 		};
 	}
 }

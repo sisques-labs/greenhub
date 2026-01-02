@@ -7,19 +7,24 @@ import { PlantTransplantCommandHandler } from '@/core/plant-context/application/
 import { PlantUpdateCommandHandler } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command-handler';
 import { GrowingUnitCreatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-created/growing-unit-created.event-handler';
 import { GrowingUnitDeletedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-deleted/growing-unit-deleted.event-handler';
+import { GrowingUnitPlantAddedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-plant-added/growing-unit-added.event-handler';
+import { GrowingUnitPlantRemovedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-plant-removed/growing-unit-removed.event-handler';
 import { GrowingUnitUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/growing-unit/growing-unit-updated/growing-unit-updated.event-handler';
-import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-added/plant-added.event-handler';
-import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-removed/plant-removed.event-handler';
+import { PlantCreatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-created/plant-created.event-handler';
+import { PlantDeletedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-deleted/plant-deleted.event-handler';
 import { PlantUpdatedEventHandler } from '@/core/plant-context/application/event-handlers/plant/plant-updated/plant-updated.event-handler';
 import { GrowingUnitFindByCriteriaQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-criteria/growing-unit-find-by-criteria-by-criteria.query-handler';
 import { GrowingUnitFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-id/growing-unit-find-by-id.query-handler';
 import { GrowingUnitFindByLocationIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-location-id/growing-unit-find-by-location-id.query-handler';
 import { GrowingUnitViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-id/growing-unit-view-model-find-by-id.query-handler';
 import { GrowingUnitViewModelFindByLocationIdQueryHandler } from '@/core/plant-context/application/queries/growing-unit/growing-unit-view-model-find-by-location-id/growing-unit-view-model-find-by-location-id.query-handler';
+import { FindPlantsByCriteriaQueryHandler } from '@/core/plant-context/application/queries/plant/find-plants-by-criteria/find-plants-by-criteria.query-handler';
 import { PlantFindByIdQueryHandler } from '@/core/plant-context/application/queries/plant/plant-find-by-id/plant-find-by-id.query-handler';
+import { PlantViewModelFindByIdQueryHandler } from '@/core/plant-context/application/queries/plant/plant-view-model-find-by-id/plant-view-model-find-by-id.query-handler';
 import { AssertGrowingUnitExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-exists/assert-growing-unit-exists.service';
 import { AssertGrowingUnitViewModelExistsService } from '@/core/plant-context/application/services/growing-unit/assert-growing-unit-view-model-exists/assert-growing-unit-view-model-exists.service';
 import { AssertPlantExistsService } from '@/core/plant-context/application/services/plant/assert-plant-exists/assert-plant-exists.service';
+import { AssertPlantViewModelExistsService } from '@/core/plant-context/application/services/plant/assert-plant-view-model-exists/assert-plant-view-model-exists.service';
 import { GrowingUnitAggregateFactory } from '@/core/plant-context/domain/factories/aggregates/growing-unit/growing-unit-aggregate.factory';
 import { PlantEntityFactory } from '@/core/plant-context/domain/factories/entities/plant/plant-entity.factory';
 import { GrowingUnitViewModelFactory } from '@/core/plant-context/domain/factories/view-models/growing-unit-view-model/growing-unit-view-model.factory';
@@ -27,12 +32,14 @@ import { LocationViewModelFactory } from '@/core/plant-context/domain/factories/
 import { PlantViewModelFactory } from '@/core/plant-context/domain/factories/view-models/plant-view-model/plant-view-model.factory';
 import { GROWING_UNIT_READ_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-read/growing-unit-read.repository';
 import { GROWING_UNIT_WRITE_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PLANT_READ_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/plant/plant-read/plant-read.repository';
 import { PLANT_WRITE_REPOSITORY_TOKEN } from '@/core/plant-context/domain/repositories/plant/plant-write/plant-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
 import { GrowingUnitMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/growing-unit/growing-unit-mongodb.mapper';
 import { LocationMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
 import { PlantMongoDBMapper } from '@/core/plant-context/infrastructure/database/mongodb/mappers/plant/plant-mongodb.mapper';
-import { GrowingUnitMongoRepository } from '@/core/plant-context/infrastructure/database/mongodb/repositories/growing-unit-mongodb.repository';
+import { GrowingUnitMongoRepository } from '@/core/plant-context/infrastructure/database/mongodb/repositories/growing-unit/growing-unit-mongodb.repository';
+import { PlantMongoRepository } from '@/core/plant-context/infrastructure/database/mongodb/repositories/plant/plant-mongodb.repository';
 import { GrowingUnitTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/growing-unit-typeorm.entity';
 import { PlantTypeormEntity } from '@/core/plant-context/infrastructure/database/typeorm/entities/plant-typeorm.entity';
 import { GrowingUnitTypeormMapper } from '@/core/plant-context/infrastructure/database/typeorm/mappers/growing-unit/growing-unit-typeorm.mapper';
@@ -74,6 +81,7 @@ const APPLICATION_SERVICES = [
 
 	// Plant services
 	AssertPlantExistsService,
+	AssertPlantViewModelExistsService,
 ];
 
 const QUERY_HANDLERS = [
@@ -86,6 +94,8 @@ const QUERY_HANDLERS = [
 
 	// Plant query handlers
 	PlantFindByIdQueryHandler,
+	PlantViewModelFindByIdQueryHandler,
+	FindPlantsByCriteriaQueryHandler,
 ];
 
 const COMMAND_HANDLERS = [
@@ -111,6 +121,8 @@ const EVENT_HANDLERS = [
 	PlantCreatedEventHandler,
 	PlantDeletedEventHandler,
 	PlantUpdatedEventHandler,
+	GrowingUnitPlantAddedEventHandler,
+	GrowingUnitPlantRemovedEventHandler,
 ];
 
 const FACTORIES = [
@@ -154,6 +166,10 @@ const REPOSITORIES = [
 	{
 		provide: PLANT_WRITE_REPOSITORY_TOKEN,
 		useClass: PlantTypeormRepository,
+	},
+	{
+		provide: PLANT_READ_REPOSITORY_TOKEN,
+		useClass: PlantMongoRepository,
 	},
 ];
 

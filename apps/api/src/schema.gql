@@ -99,6 +99,23 @@ type PlantResponseDto {
   updatedAt: DateTime!
 }
 
+type PaginatedPlantResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The plants in the current page"""
+  items: [PlantResponseDto!]!
+}
+
 type GrowingUnitDimensionsResponseDto {
   """The length of the growing unit"""
   length: Float!
@@ -621,6 +638,7 @@ type Query {
   health: String!
   growingUnitsFindByCriteria(input: GrowingUnitFindByCriteriaRequestDto): PaginatedGrowingUnitResultDto!
   growingUnitFindById(input: GrowingUnitFindByIdRequestDto!): GrowingUnitResponseDto
+  plantsFindByCriteria(input: PlantFindByCriteriaRequestDto): PaginatedPlantResultDto!
   plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
   locationsFindByCriteria(input: LocationFindByCriteriaRequestDto): PaginatedLocationResultDto!
   locationFindById(input: LocationFindByIdRequestDto!): LocationResponseDto
@@ -700,6 +718,17 @@ input BasePaginationInput {
 input GrowingUnitFindByIdRequestDto {
   """The id of the growing unit to find"""
   id: String!
+}
+
+input PlantFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
 }
 
 input PlantFindByIdRequestDto {

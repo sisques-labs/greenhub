@@ -175,6 +175,12 @@ export class SDK {
 			 */
 			findById: this.plantClient.findById.bind(this.plantClient),
 			/**
+			 * Find plants by criteria
+			 */
+			findByCriteria: this.plantClient.findByCriteria.bind(
+				this.plantClient,
+			),
+			/**
 			 * Update an existing plant
 			 */
 			update: this.plantClient.update.bind(this.plantClient),
