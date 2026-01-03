@@ -1,5 +1,9 @@
-"use client";
+'use client';
 
+import { useTenantCurrent } from '@/generic/tenants/hooks/use-tenant-current/use-tenant-current';
+import { useTenantSelectorStore } from '@/generic/tenants/stores/tenant-selector-store';
+import { useOrganization, useOrganizationList, useUser } from '@clerk/nextjs';
+import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -7,10 +11,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@repo/shared/presentation/components/ui/dialog";
-import { Button } from "@repo/shared/presentation/components/ui/button";
-import { Input } from "@repo/shared/presentation/components/ui/input";
-import { Label } from "@repo/shared/presentation/components/ui/label";
+} from '@repo/shared/presentation/components/ui/dialog';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,12 +19,12 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@repo/shared/presentation/components/ui/dropdown-menu";
-import { useOrganization, useOrganizationList, useUser } from "@clerk/nextjs";
-import { ChevronDown, Plus } from "lucide-react";
-import { useState } from "react";
-import { useTenantCurrent } from "@/generic/tenants/hooks/use-tenant-current/use-tenant-current";
-import { useRouter } from "next/navigation";
+} from '@repo/shared/presentation/components/ui/dropdown-menu';
+import { Input } from '@repo/shared/presentation/components/ui/input';
+import { Label } from '@repo/shared/presentation/components/ui/label';
+import { ChevronDown, Plus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface TenantSelectorProps {
 	children?: React.ReactNode;
@@ -33,31 +34,33 @@ interface TenantSelectorProps {
  * Component that allows users to create or switch between tenants (Clerk organizations)
  */
 export function TenantSelector({ children }: TenantSelectorProps) {
-	const { organization, setActive } = useOrganization();
+	const { organization } = useOrganization();
 	const { user } = useUser();
 	const { refetch: refetchTenant } = useTenantCurrent();
 	const router = useRouter();
+	const { refreshKey, triggerRefresh } = useTenantSelectorStore();
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 	const [isCreating, setIsCreating] = useState(false);
-	const [orgName, setOrgName] = useState("");
+	const [orgName, setOrgName] = useState('');
 
 	// Get user's organizations
-	const { organizationList, isLoaded, setUserMemberships } = useOrganizationList({
-		userMemberships: {
-			infinite: true,
-		},
-	});
+	const { userMemberships, isLoaded, setActive, createOrganization } =
+		useOrganizationList({
+			userMemberships: {
+				infinite: true,
+			},
+		});
 
 	/**
 	 * Handles creating a new organization in Clerk
 	 */
 	const handleCreateOrganization = async () => {
-		if (!user || !orgName.trim()) return;
+		if (!user || !orgName.trim() || !createOrganization || !setActive) return;
 
 		setIsCreating(true);
 		try {
 			// Create organization in Clerk
-			const newOrg = await setUserMemberships.create({
+			const newOrg = await createOrganization({
 				name: orgName.trim(),
 			});
 
@@ -66,16 +69,20 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 				await setActive({ organization: newOrg.id });
 			}
 
+			// Trigger refresh in store to update organization list
+			triggerRefresh();
+
 			// Refetch tenant data (backend will create tenant lazily)
 			await refetchTenant();
 
 			// Refresh the page to update the tenant context
 			router.refresh();
 
+			// Close dialog and clear form
 			setCreateDialogOpen(false);
-			setOrgName("");
+			setOrgName('');
 		} catch (error) {
-			console.error("Failed to create organization:", error);
+			console.error('Failed to create organization:', error);
 		} finally {
 			setIsCreating(false);
 		}
@@ -85,6 +92,8 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 	 * Handles switching to a different organization
 	 */
 	const handleSwitchOrganization = async (orgId: string) => {
+		if (!setActive) return;
+
 		try {
 			await setActive({ organization: orgId });
 			// Refetch tenant data
@@ -92,7 +101,7 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 			// Refresh the page to update the tenant context
 			router.refresh();
 		} catch (error) {
-			console.error("Failed to switch organization:", error);
+			console.error('Failed to switch organization:', error);
 		}
 	};
 
@@ -110,16 +119,14 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 						</Button>
 					)}
 				</DropdownMenuTrigger>
-				<DropdownMenuContent align="start" className="w-56">
+				<DropdownMenuContent align="start" className="w-56" key={refreshKey}>
 					<DropdownMenuLabel>Tenants</DropdownMenuLabel>
 					<DropdownMenuSeparator />
-					{organizationList?.map(({ organization: org }) => (
+					{userMemberships?.data?.map(({ organization: org }) => (
 						<DropdownMenuItem
 							key={org.id}
 							onClick={() => handleSwitchOrganization(org.id)}
-							className={
-								organization?.id === org.id ? "bg-accent" : ""
-							}
+							className={organization?.id === org.id ? 'bg-accent' : ''}
 						>
 							{org.name}
 							{organization?.id === org.id && (
@@ -140,8 +147,8 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 					<DialogHeader>
 						<DialogTitle>Create New Tenant</DialogTitle>
 						<DialogDescription>
-							Create a new organization in Clerk. This will automatically
-							create a tenant in the system.
+							Create a new organization in Clerk. This will automatically create
+							a tenant in the system.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="py-4 space-y-4">
@@ -154,7 +161,7 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 								onChange={(e) => setOrgName(e.target.value)}
 								disabled={isCreating}
 								onKeyDown={(e) => {
-									if (e.key === "Enter" && orgName.trim() && !isCreating) {
+									if (e.key === 'Enter' && orgName.trim() && !isCreating) {
 										handleCreateOrganization();
 									}
 								}}
@@ -166,7 +173,7 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 							variant="outline"
 							onClick={() => {
 								setCreateDialogOpen(false);
-								setOrgName("");
+								setOrgName('');
 							}}
 							disabled={isCreating}
 						>
@@ -176,7 +183,7 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 							onClick={handleCreateOrganization}
 							disabled={isCreating || !orgName.trim()}
 						>
-							{isCreating ? "Creating..." : "Create Tenant"}
+							{isCreating ? 'Creating...' : 'Create Tenant'}
 						</Button>
 					</DialogFooter>
 				</DialogContent>
@@ -184,4 +191,3 @@ export function TenantSelector({ children }: TenantSelectorProps) {
 		</>
 	);
 }
-
