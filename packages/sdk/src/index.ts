@@ -10,6 +10,7 @@ import { SagaLogClient } from "./saga-log/client/saga-log-client.js";
 import { SagaStepClient } from "./saga-step/client/saga-step-client.js";
 import { GraphQLClient } from "./shared/client/graphql-client.js";
 import type { GraphQLClientConfig } from "./shared/types/index.js";
+import { TenantClient } from "./tenants/client/tenant-client.js";
 import { UserClient } from "./users/client/user-client.js";
 
 export * from "./auth/index.js";
@@ -38,12 +39,14 @@ export type {
 } from "./shared/types/index.js";
 // Re-export enums from shared
 export { LENGTH_UNIT } from "./shared/types/length-unit.enum.js";
+export * from "./tenants/index.js";
 export * from "./users/index.js";
 
 export class SDK {
 	private client: GraphQLClient;
 	private authClient: AuthClient;
 	private userClient: UserClient;
+	private tenantClient: TenantClient;
 	private plantClient: PlantClient;
 	private growingUnitClient: GrowingUnitClient;
 	private locationClient: LocationClient;
@@ -57,6 +60,7 @@ export class SDK {
 		this.client = new GraphQLClient(config);
 		this.authClient = new AuthClient(this.client);
 		this.userClient = new UserClient(this.client);
+		this.tenantClient = new TenantClient(this.client);
 		this.plantClient = new PlantClient(this.client);
 		this.growingUnitClient = new GrowingUnitClient(this.client);
 		this.locationClient = new LocationClient(this.client);
@@ -162,6 +166,22 @@ export class SDK {
 			 * Delete a user
 			 */
 			delete: this.userClient.delete.bind(this.userClient),
+		};
+	}
+
+	/**
+	 * Tenants module
+	 */
+	get tenants() {
+		return {
+			/**
+			 * Find tenants by criteria with pagination, filters, and sorting
+			 */
+			findByCriteria: this.tenantClient.findByCriteria.bind(this.tenantClient),
+			/**
+			 * Find a tenant by ID
+			 */
+			findById: this.tenantClient.findById.bind(this.tenantClient),
 		};
 	}
 

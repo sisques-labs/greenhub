@@ -30,7 +30,10 @@ export class AuthQueryResolver {
 			}),
 		);
 
-		// 02: Convert to response DTO
-		return this.authUserProfileGraphQLMapper.toResponseDto(result);
+		// 02: Convert to response DTO, including tenantId from user object
+		return this.authUserProfileGraphQLMapper.toResponseDto(
+			result,
+			user.tenantId || null,
+		);
 	}
 }

@@ -71,12 +71,17 @@ export function AppSidebar({
 									<span className="font-bold text-base leading-none">
 										{data.header.appName}
 									</span>
-									<span className="text-xs text-sidebar-foreground/60 font-normal">
-										Dashboard
-									</span>
+									{data.header.subtitle && (
+										<span className="text-xs text-sidebar-foreground/60 font-normal">
+											{data.header.subtitle}
+										</span>
+									)}
 								</div>
 							</a>
 						</SidebarMenuButton>
+						{data.header.action && (
+							<SidebarMenuAction>{data.header.action}</SidebarMenuAction>
+						)}
 					</SidebarMenuItem>
 				</SidebarMenu>
 				<div className="px-2 pb-2">

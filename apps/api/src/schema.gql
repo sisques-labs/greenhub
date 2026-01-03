@@ -254,6 +254,9 @@ type AuthUserProfileResponseDto {
   """The status of the user"""
   status: String
 
+  """The tenant ID of the user"""
+  tenantId: String
+
   """The created at timestamp"""
   createdAt: DateTime
 
@@ -531,6 +534,43 @@ type PaginatedSagaStepResultDto {
   items: [SagaStepResponseDto!]!
 }
 
+type TenantResponseDto {
+  """The id of the tenant"""
+  id: String!
+
+  """The Clerk ID of the tenant"""
+  clerkId: String!
+
+  """The name of the tenant"""
+  name: String
+
+  """The status of the tenant"""
+  status: String
+
+  """The created at of the tenant"""
+  createdAt: DateTime
+
+  """The updated at of the tenant"""
+  updatedAt: DateTime
+}
+
+type PaginatedTenantResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The tenants in the current page"""
+  items: [TenantResponseDto!]!
+}
+
 type UserResponseDto {
   """The id of the user"""
   id: String!
@@ -611,6 +651,8 @@ type Query {
   sagaLogFindBySagaInstanceId(input: SagaLogFindBySagaInstanceIdRequestDto!): [SagaLogResponseDto!]!
   sagaLogFindBySagaStepId(input: SagaLogFindBySagaStepIdRequestDto!): [SagaLogResponseDto!]!
   sagaLogFindByCriteria(input: SagaLogFindByCriteriaRequestDto): PaginatedSagaLogResultDto!
+  tenantsFindByCriteria(input: TenantFindByCriteriaRequestDto): PaginatedTenantResultDto!
+  tenantFindById(input: TenantFindByIdRequestDto!): TenantResponseDto
   usersFindByCriteria(input: UserFindByCriteriaRequestDto): PaginatedUserResultDto!
   userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
   overviewFind: OverviewResponseDto
@@ -772,6 +814,22 @@ input SagaLogFindByCriteriaRequestDto {
   pagination: BasePaginationInput = {page: 1, perPage: 10}
 }
 
+input TenantFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
+input TenantFindByIdRequestDto {
+  """The id of the tenant"""
+  id: String!
+}
+
 input UserFindByCriteriaRequestDto {
   """The filters to find by"""
   filters: [BaseFilterInput!] = []
@@ -810,6 +868,9 @@ type Mutation {
   sagaLogCreate(input: SagaLogCreateRequestDto!): MutationResponseDto!
   sagaLogUpdate(input: SagaLogUpdateRequestDto!): MutationResponseDto!
   sagaLogDelete(input: SagaLogDeleteRequestDto!): MutationResponseDto!
+  createTenant(input: CreateTenantRequestDto!): MutationResponseDto!
+  updateTenant(input: UpdateTenantRequestDto!): MutationResponseDto!
+  deleteTenant(input: DeleteTenantRequestDto!): MutationResponseDto!
   createUser(input: CreateUserRequestDto!): MutationResponseDto!
   updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
   deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
@@ -1124,6 +1185,40 @@ input SagaLogUpdateRequestDto {
 
 input SagaLogDeleteRequestDto {
   """The id of the saga log"""
+  id: String!
+}
+
+input CreateTenantRequestDto {
+  """The Clerk ID of the tenant"""
+  clerkId: String!
+
+  """The name of the tenant"""
+  name: String!
+
+  """The status of the tenant"""
+  status: TenantStatusEnum!
+}
+
+"""The status of the tenant"""
+enum TenantStatusEnum {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+input UpdateTenantRequestDto {
+  """The unique identifier of the tenant"""
+  id: String!
+
+  """The name of the tenant"""
+  name: String
+
+  """The status of the tenant"""
+  status: TenantStatusEnum
+}
+
+input DeleteTenantRequestDto {
+  """The unique identifier of the tenant"""
   id: String!
 }
 

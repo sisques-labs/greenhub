@@ -15,6 +15,7 @@ export type AuthUserProfileResponse = {
 	avatarUrl?: string | null;
 	role?: string | null;
 	status?: string | null;
+	tenantId?: string | null;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
 };

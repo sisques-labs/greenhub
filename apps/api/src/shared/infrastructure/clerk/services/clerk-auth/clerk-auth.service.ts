@@ -52,6 +52,7 @@ export class ClerkAuthService {
 			return {
 				userId: payload.sub,
 				sessionId: payload.sid || null,
+				orgId: (payload.org_id as string) || null,
 			};
 		} catch (error) {
 			this.logger.error(`Authentication verification failed: ${error.message}`);

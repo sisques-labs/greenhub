@@ -86,6 +86,12 @@ export class AuthUserProfileResponseDto {
 	})
 	status?: string;
 
+	@Field(() => String, {
+		nullable: true,
+		description: 'The tenant ID of the user',
+	})
+	tenantId?: string | null;
+
 	@Field(() => Date, {
 		nullable: true,
 		description: 'The created at timestamp',

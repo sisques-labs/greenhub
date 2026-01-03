@@ -53,9 +53,17 @@ export interface SidebarHeaderData {
 	 */
 	appName: string;
 	/**
+	 * The subtitle to display below the app name (optional)
+	 */
+	subtitle?: string;
+	/**
 	 * The URL to navigate to when clicking the header
 	 */
 	url?: string;
+	/**
+	 * Optional action component to render in the header (e.g., tenant selector)
+	 */
+	action?: React.ReactNode;
 }
 
 /**

@@ -9,6 +9,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ClerkAuthService } from '@/shared/infrastructure/clerk/services/clerk-auth/clerk-auth.service';
 import { UserEnsureExistsQuery } from '@/generic/users/application/queries/user-ensure-exists/user-ensure-exists.query';
+import { TenantEnsureExistsQuery } from '@/generic/tenants/application/queries/tenant-ensure-exists/tenant-ensure-exists.query';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 /**
@@ -61,14 +62,30 @@ export class ClerkAuthGuard implements CanActivate {
 				}),
 			);
 
+			// Ensure tenant exists (lazy creation) if organization ID is present
+			let internalTenant = null;
+			if (authResult.orgId) {
+				internalTenant = await this.queryBus.execute(
+					new TenantEnsureExistsQuery({
+						clerkId: authResult.orgId,
+						name: null, // Will use default name
+						status: null, // Will use default status
+					}),
+				);
+			}
+
 			// Attach user to request object
 			// userId is the internal user ID (UUID)
 			// clerkUserId is the Clerk user ID
+			// tenantId is the internal tenant ID (UUID) if organization exists
+			// clerkOrgId is the Clerk organization ID
 			// This will be used by @CurrentUser() decorator and RolesGuard
 			request.user = {
 				id: internalUser.id.value,
 				userId: internalUser.id.value, // Internal user ID (UUID)
 				clerkUserId: clerkUser.id, // Clerk user ID
+				tenantId: internalTenant?.id.value || null, // Internal tenant ID (UUID)
+				clerkOrgId: authResult.orgId || null, // Clerk organization ID
 				email: clerkUser.emailAddresses[0]?.emailAddress || null,
 				username: internalUser.userName?.value || null,
 				firstName: internalUser.name?.value || null,
@@ -77,6 +94,7 @@ export class ClerkAuthGuard implements CanActivate {
 				// Store the full user objects for reference
 				clerkUser: clerkUser,
 				internalUser: internalUser,
+				internalTenant: internalTenant,
 				sessionId: authResult.sessionId || null,
 			};
 

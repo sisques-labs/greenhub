@@ -338,6 +338,7 @@ function MyComponent() {
 - `useAuth()` - Authentication operations (loginByEmail, registerByEmail, logout, refreshToken, profileMe)
 - `useUsers()` - User operations (findById, findByCriteria, create, update, delete)
 - `useUsersList(input?)` - Auto-fetch users list with pagination and filters
+- `useTenants()` - Tenant operations (findById, findByCriteria)
 - `usePlants()` - Plant operations (findById, findByCriteria, create, update, delete, changeStatus)
 - `usePlantsList(input?)` - Auto-fetch plants list with pagination and filters
 - `useContainers()` - Container operations (findById, findByCriteria, create, update, delete)
