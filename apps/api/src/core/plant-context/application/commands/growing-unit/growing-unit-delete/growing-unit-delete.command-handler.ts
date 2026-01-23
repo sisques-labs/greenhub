@@ -9,6 +9,7 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -29,6 +30,7 @@ export class GrowingUnitDeleteCommandHandler
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 	) {}
 
 	/**
@@ -52,7 +54,13 @@ export class GrowingUnitDeleteCommandHandler
 		// 03: Delete the growing unit entity
 		await this.growingUnitWriteRepository.delete(existingGrowingUnit.id.value);
 
-		// 04: Publish all events
+		// 04: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			existingGrowingUnit.getUncommittedEvents(),
+		);
+		await existingGrowingUnit.commit();
+
+		// 05: Publish the integration event for the GrowingUnitDeletedEvent
 		await this.publishIntegrationEventsService.execute(
 			new GrowingUnitDeletedEvent(
 				{

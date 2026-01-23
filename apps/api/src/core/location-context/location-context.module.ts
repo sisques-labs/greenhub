@@ -9,8 +9,8 @@ import { LocationFindByIdQueryHandler } from '@/core/location-context/applicatio
 import { LocationViewModelFindByIdQueryHandler } from '@/core/location-context/application/queries/location/location-view-model-find-by-id/location-view-model-find-by-id.query-handler';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { AssertLocationViewModelExistsService } from '@/core/location-context/application/services/location/assert-location-view-model-exists/assert-location-view-model-exists.service';
-import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
-import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
+import { LocationAggregateBuilder } from '@/core/location-context/domain/builders/aggregates/location-aggregate/location-aggregate.builder';
+import { LocationViewModelBuilder } from '@/core/location-context/domain/builders/view-models/location-view-model/location-view-model.builder';
 import { LOCATION_READ_REPOSITORY_TOKEN } from '@/core/location-context/domain/repositories/location-read/location-read.repository';
 import { LOCATION_WRITE_REPOSITORY_TOKEN } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
 import { LocationMongoDBMapper } from '@/core/location-context/infrastructure/database/mongodb/mappers/location/location-mongodb.mapper';
@@ -63,10 +63,10 @@ const EVENT_HANDLERS = [
 	LocationDeletedEventHandler,
 ];
 
-const FACTORIES = [
-	// Location factories
-	LocationAggregateFactory,
-	LocationViewModelFactory,
+const BUILDERS = [
+	// Location builders
+	LocationAggregateBuilder,
+	LocationViewModelBuilder,
 ];
 
 const MAPPERS = [
@@ -101,7 +101,7 @@ const ENTITIES = [LocationTypeormEntity];
 		...COMMAND_HANDLERS,
 		...EVENT_HANDLERS,
 		...REPOSITORIES,
-		...FACTORIES,
+		...BUILDERS,
 		...MAPPERS,
 	],
 })

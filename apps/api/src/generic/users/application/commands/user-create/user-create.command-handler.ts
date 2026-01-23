@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { AssertUserUsernameIsUniqueService } from '@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service';
 import { UserAggregateFactory } from '@/generic/users/domain/factories/user-aggregate/user-aggregate.factory';
@@ -7,6 +7,7 @@ import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 import { UserCreateCommand } from './user-create.command';
@@ -18,7 +19,7 @@ export class UserCreateCommandHandler
 	constructor(
 		@Inject(USER_WRITE_REPOSITORY_TOKEN)
 		private readonly userWriteRepository: UserWriteRepository,
-		private readonly eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly userAggregateFactory: UserAggregateFactory,
 		private readonly assertUserUsernameIsUniqueService: AssertUserUsernameIsUniqueService,
 	) {}
@@ -47,8 +48,10 @@ export class UserCreateCommandHandler
 		// 02: Save the user entity
 		await this.userWriteRepository.save(user);
 
-		// 03: Publish all events
-		await this.eventBus.publishAll(user.getUncommittedEvents());
+		// 03: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			user.getUncommittedEvents(),
+		);
 
 		// 04: Return the user id
 		return user.id.value;

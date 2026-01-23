@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { GrowingUnitUpdateCommand } from '@/core/plant-context/application/commands/growing-unit/growing-unit-update/growing-unit-update.command';
 import { GrowingUnitUpdatedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-updated/growing-unit-updated.event';
@@ -9,6 +9,7 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -33,15 +34,16 @@ export class GrowingUnitUpdateCommandHandler
 	 * Creates a new instance of {@link GrowingUnitUpdateCommandHandler}.
 	 *
 	 * @param growingUnitWriteRepository - The write repository for persisting growing unit aggregates.
-	 * @param eventBus - The event bus for publishing domain events.
+	 * @param publishIntegrationEventsService - Service for publishing integration events.
 	 * @param assertGrowingUnitExistsService - Service that ensures the target entity exists.
+	 * @param publishDomainEventsService - Service for publishing domain events.
 	 */
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
-		private eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 	) {}
 
 	/**
@@ -81,7 +83,9 @@ export class GrowingUnitUpdateCommandHandler
 		await this.growingUnitWriteRepository.save(existingGrowingUnit);
 
 		// 04: Publish all domain events
-		await this.eventBus.publishAll(existingGrowingUnit.getUncommittedEvents());
+		await this.publishDomainEventsService.execute(
+			existingGrowingUnit.getUncommittedEvents(),
+		);
 		await existingGrowingUnit.commit();
 
 		// 05: Publish the integration event for the GrowingUnitUpdatedEvent

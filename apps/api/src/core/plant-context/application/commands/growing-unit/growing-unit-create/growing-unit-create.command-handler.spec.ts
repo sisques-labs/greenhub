@@ -9,6 +9,7 @@ import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/reposit
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { DimensionsValueObject } from '@/shared/domain/value-objects/dimensions/dimensions.vo';
@@ -18,6 +19,7 @@ import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifie
 describe('GrowingUnitCreateCommandHandler', () => {
 	let handler: GrowingUnitCreateCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockGrowingUnitAggregateFactory: jest.Mocked<GrowingUnitAggregateFactory>;
 
@@ -27,6 +29,10 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			save: jest.fn(),
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
+
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
@@ -41,6 +47,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 			mockGrowingUnitWriteRepository,
 			mockGrowingUnitAggregateFactory,
 			mockPublishIntegrationEventsService,
+			mockPublishDomainEventsService,
 		);
 	});
 
@@ -81,6 +88,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 			mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
@@ -131,6 +139,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 			mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
@@ -170,6 +179,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 			mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
@@ -203,6 +213,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 			mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
@@ -238,6 +249,7 @@ describe('GrowingUnitCreateCommandHandler', () => {
 
 			mockGrowingUnitAggregateFactory.create.mockReturnValue(mockGrowingUnit);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);

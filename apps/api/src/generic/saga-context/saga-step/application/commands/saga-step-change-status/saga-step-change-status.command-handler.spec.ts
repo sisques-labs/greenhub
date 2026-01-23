@@ -1,4 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 
 import { SagaStepChangeStatusCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-change-status/saga-step-change-status.command';
@@ -17,6 +16,7 @@ import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/dom
 import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
 import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
 import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { SagaStepStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-status-changed/saga-step-status-changed.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
@@ -25,7 +25,7 @@ import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifie
 describe('SagaStepChangeStatusCommandHandler', () => {
 	let handler: SagaStepChangeStatusCommandHandler;
 	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
 
 	beforeEach(async () => {
@@ -36,10 +36,9 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<SagaStepWriteRepository>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertSagaStepExistsService = {
 			execute: jest.fn(),
@@ -53,8 +52,8 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 					useValue: mockSagaStepWriteRepository,
 				},
 				{
-					provide: EventBus,
-					useValue: mockEventBus,
+					provide: PublishDomainEventsService,
+					useValue: mockPublishDomainEventsService,
 				},
 				{
 					provide: AssertSagaStepExistsService,
@@ -112,7 +111,7 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -136,7 +135,7 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -157,7 +156,7 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -181,7 +180,7 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -202,7 +201,7 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -222,7 +221,7 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
 			expect(mockSagaStepWriteRepository.save).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should publish SagaStepStatusChangedEvent after changing status', async () => {
@@ -238,12 +237,12 @@ describe('SagaStepChangeStatusCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
-			const publishedEvents = mockEventBus.publishAll.mock.calls[0][0];
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
+			const publishedEvents = mockPublishDomainEventsService.execute.mock.calls[0][0];
 			if (publishedEvents.length > 0) {
 				expect(
 					publishedEvents.some((e) => e instanceof SagaStepStatusChangedEvent),

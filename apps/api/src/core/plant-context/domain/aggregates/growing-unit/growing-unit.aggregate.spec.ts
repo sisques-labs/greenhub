@@ -105,7 +105,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 
 			expect(aggregate.plants).toHaveLength(1);
 			expect(aggregate.plants[0].id.value).toBe(plant.id.value);
@@ -140,7 +140,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 
 			const events = aggregate.getUncommittedEvents();
 			expect(events).toHaveLength(0);
@@ -167,9 +167,9 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant1, false);
-			aggregate.addPlant(plant2, false);
-			aggregate.removePlant(plant1, false);
+			aggregate.addPlant(plant1);
+			aggregate.addPlant(plant2);
+			aggregate.removePlant(plant1);
 
 			expect(aggregate.plants).toHaveLength(1);
 			expect(aggregate.plants[0].id.value).toBe(plant2.id.value);
@@ -186,7 +186,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.removePlant(plant);
 
 			const events = aggregate.getUncommittedEvents();
@@ -205,7 +205,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.removePlant(plant, false);
+			aggregate.removePlant(plant);
 
 			expect(aggregate.plants).toHaveLength(0);
 		});
@@ -223,7 +223,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantStatus(
 				plant.id.value,
 				new PlantStatusValueObject(PlantStatusEnum.GROWING),
@@ -245,7 +245,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantStatus(
 				plant.id.value,
 				new PlantStatusValueObject(PlantStatusEnum.GROWING),
@@ -282,7 +282,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantName(
 				plant.id.value,
 				new PlantNameValueObject('Sweet Basil'),
@@ -304,7 +304,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantName(
 				plant.id.value,
 				new PlantNameValueObject('Sweet Basil'),
@@ -328,7 +328,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantSpecies(
 				plant.id.value,
 				new PlantSpeciesValueObject('Ocimum tenuiflorum'),
@@ -350,7 +350,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantSpecies(
 				plant.id.value,
 				new PlantSpeciesValueObject('Ocimum tenuiflorum'),
@@ -374,7 +374,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			const newDate = new Date('2024-01-15');
 			aggregate.changePlantPlantedDate(
 				plant.id.value,
@@ -397,7 +397,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantPlantedDate(
 				plant.id.value,
 				new PlantPlantedDateValueObject(new Date()),
@@ -421,7 +421,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantNotes(
 				plant.id.value,
 				new PlantNotesValueObject('Keep in indirect sunlight'),
@@ -443,7 +443,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			aggregate.changePlantNotes(
 				plant.id.value,
 				new PlantNotesValueObject('Keep in indirect sunlight'),
@@ -571,7 +571,7 @@ describe('GrowingUnitAggregate', () => {
 		it('should not generate event when generateEvent is false', () => {
 			const aggregate = new GrowingUnitAggregate(growingUnitDto);
 
-			aggregate.delete(false);
+			aggregate.delete();
 
 			const events = aggregate.getUncommittedEvents();
 			expect(events).toHaveLength(0);
@@ -590,7 +590,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 
 			const foundPlant = aggregate.getPlantById(plant.id.value);
 			expect(foundPlant).not.toBeNull();
@@ -625,7 +625,7 @@ describe('GrowingUnitAggregate', () => {
 					notes: null,
 					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 				});
-				aggregate.addPlant(plant, false);
+				aggregate.addPlant(plant);
 			}
 
 			expect(aggregate.hasCapacity()).toBe(false);
@@ -647,7 +647,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			expect(aggregate.getRemainingCapacity()).toBe(9);
 		});
 
@@ -664,7 +664,7 @@ describe('GrowingUnitAggregate', () => {
 					notes: null,
 					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 				});
-				aggregate.addPlant(plant, false);
+				aggregate.addPlant(plant);
 			}
 
 			expect(aggregate.getRemainingCapacity()).toBe(0);
@@ -695,7 +695,7 @@ describe('GrowingUnitAggregate', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			aggregate.addPlant(plant, false);
+			aggregate.addPlant(plant);
 			const primitives = aggregate.toPrimitives();
 
 			expect(primitives.plants).toHaveLength(1);

@@ -1,14 +1,14 @@
-import { AggregateRoot } from "@nestjs/cqrs";
+import { AggregateRoot } from '@nestjs/cqrs';
 
-import type { ILocationDto } from "@/core/location-context/domain/dtos/entities/location/location.dto";
-import { LocationDescriptionChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-description-changed/location-description-changed.event";
-import { LocationNameChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-name-changed/location-name-changed.event";
-import { LocationTypeChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-type-changed/location-type-changed.event";
-import type { LocationPrimitives } from "@/core/location-context/domain/primitives/location.primitives";
-import type { LocationDescriptionValueObject } from "@/core/location-context/domain/value-objects/location/location-description/location-description.vo";
-import type { LocationNameValueObject } from "@/core/location-context/domain/value-objects/location/location-name/location-name.vo";
-import type { LocationTypeValueObject } from "@/core/location-context/domain/value-objects/location/location-type/location-type.vo";
-import type { LocationUuidValueObject } from "@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo";
+import type { ILocationDto } from '@/core/location-context/domain/dtos/entities/location/location.dto';
+import { LocationDescriptionChangedEvent } from '@/core/location-context/domain/events/location/field-changed/location-description-changed/location-description-changed.event';
+import { LocationNameChangedEvent } from '@/core/location-context/domain/events/location/field-changed/location-name-changed/location-name-changed.event';
+import { LocationTypeChangedEvent } from '@/core/location-context/domain/events/location/field-changed/location-type-changed/location-type-changed.event';
+import type { LocationPrimitives } from '@/core/location-context/domain/primitives/location.primitives';
+import type { LocationDescriptionValueObject } from '@/core/location-context/domain/value-objects/location/location-description/location-description.vo';
+import type { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
+import type { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
+import type { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 /**
  * The aggregate root representing a location, which manages physical or logical spaces
@@ -137,6 +137,11 @@ export class LocationAggregate extends AggregateRoot {
 			),
 		);
 	}
+
+	/**
+	 * Deletes this location.
+	 */
+	public delete(): void {}
 
 	/**
 	 * The unique identifier of this location.

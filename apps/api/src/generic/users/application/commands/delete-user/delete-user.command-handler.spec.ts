@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { UserDeleteCommandHandler } from '@/generic/users/application/commands/delete-user/delete-user.command-handler';
 import { IUserDeleteCommandDto } from '@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto';
@@ -10,6 +8,7 @@ import { UserWriteRepository } from '@/generic/users/domain/repositories/user-wr
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
 import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
 import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { UserDeletedEvent } from '@/shared/domain/events/users/user-deleted/user-deleted.event';
@@ -19,7 +18,7 @@ import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/u
 describe('UserDeleteCommandHandler', () => {
 	let handler: UserDeleteCommandHandler;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertUserExsistsService: jest.Mocked<AssertUserExsistsService>;
 
 	beforeEach(() => {
@@ -30,10 +29,9 @@ describe('UserDeleteCommandHandler', () => {
 			delete: jest.fn(),
 		};
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertUserExsistsService = {
 			execute: jest.fn(),
@@ -41,7 +39,7 @@ describe('UserDeleteCommandHandler', () => {
 
 		handler = new UserDeleteCommandHandler(
 			mockUserWriteRepository,
-			mockEventBus,
+			mockPublishDomainEventsService,
 			mockAssertUserExsistsService,
 		);
 	});
@@ -73,7 +71,7 @@ describe('UserDeleteCommandHandler', () => {
 			const deleteSpy = jest.spyOn(existingUser, 'delete');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -82,10 +80,10 @@ describe('UserDeleteCommandHandler', () => {
 			expect(deleteSpy).toHaveBeenCalled();
 			expect(mockUserWriteRepository.delete).toHaveBeenCalledWith(userId);
 			expect(mockUserWriteRepository.delete).toHaveBeenCalledTimes(1);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				existingUser.getUncommittedEvents(),
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 
 			deleteSpy.mockRestore();
 		});
@@ -104,7 +102,7 @@ describe('UserDeleteCommandHandler', () => {
 			await expect(handler.execute(command)).rejects.toThrow(error);
 			expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(userId);
 			expect(mockUserWriteRepository.delete).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should publish UserDeletedEvent when user is deleted', async () => {
@@ -149,13 +147,13 @@ describe('UserDeleteCommandHandler', () => {
 				existingUserForHandler,
 			);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			// Verify that publishAll was called (the handler should call it with events)
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			// Verify that execute was called (the handler should call it with events)
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 			// Note: We can't verify the events here because commit() clears them
 			// But we verified above that delete() generates the event correctly
 		});
@@ -181,7 +179,7 @@ describe('UserDeleteCommandHandler', () => {
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			const deleteSpy = jest.spyOn(existingUser, 'delete');
 			await handler.execute(command);
@@ -215,11 +213,11 @@ describe('UserDeleteCommandHandler', () => {
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			const publishOrder = mockPublishDomainEventsService.execute.mock.invocationCallOrder[0];
 			const commitOrder = commitSpy.mock.invocationCallOrder[0];
 			expect(publishOrder).toBeLessThan(commitOrder);
 		});
@@ -245,13 +243,13 @@ describe('UserDeleteCommandHandler', () => {
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const deleteOrder =
 				mockUserWriteRepository.delete.mock.invocationCallOrder[0];
-			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			const publishOrder = mockPublishDomainEventsService.execute.mock.invocationCallOrder[0];
 			expect(deleteOrder).toBeLessThan(publishOrder);
 		});
 
@@ -276,7 +274,7 @@ describe('UserDeleteCommandHandler', () => {
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 

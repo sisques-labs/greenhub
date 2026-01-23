@@ -1,4 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 
 import { SagaStepDeleteCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command';
@@ -17,6 +16,7 @@ import { SagaStepPayloadValueObject } from '@/generic/saga-context/saga-step/dom
 import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-result/saga-step-result.vo';
 import { SagaStepRetryCountValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-retry-count/saga-step-retry-count.vo';
 import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/domain/value-objects/saga-step-status/saga-step-status.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
@@ -25,7 +25,7 @@ import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifie
 describe('SagaStepDeleteCommandHandler', () => {
 	let handler: SagaStepDeleteCommandHandler;
 	let mockSagaStepWriteRepository: jest.Mocked<SagaStepWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertSagaStepExistsService: jest.Mocked<AssertSagaStepExistsService>;
 
 	beforeEach(async () => {
@@ -36,10 +36,9 @@ describe('SagaStepDeleteCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<SagaStepWriteRepository>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertSagaStepExistsService = {
 			execute: jest.fn(),
@@ -53,8 +52,8 @@ describe('SagaStepDeleteCommandHandler', () => {
 					useValue: mockSagaStepWriteRepository,
 				},
 				{
-					provide: EventBus,
-					useValue: mockEventBus,
+					provide: PublishDomainEventsService,
+					useValue: mockPublishDomainEventsService,
 				},
 				{
 					provide: AssertSagaStepExistsService,
@@ -112,7 +111,7 @@ describe('SagaStepDeleteCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -123,7 +122,7 @@ describe('SagaStepDeleteCommandHandler', () => {
 			expect(mockSagaStepWriteRepository.delete).toHaveBeenCalledWith(
 				existingSagaStep.id.value,
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				existingSagaStep.getUncommittedEvents(),
 			);
 			expect(commitSpy).toHaveBeenCalled();
@@ -144,7 +143,7 @@ describe('SagaStepDeleteCommandHandler', () => {
 				command.id.value,
 			);
 			expect(mockSagaStepWriteRepository.delete).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should publish SagaStepDeletedEvent after deleting', async () => {
@@ -159,12 +158,12 @@ describe('SagaStepDeleteCommandHandler', () => {
 				existingSagaStep,
 			);
 			mockSagaStepWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
-			const publishedEvents = mockEventBus.publishAll.mock.calls[0][0];
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
+			const publishedEvents = mockPublishDomainEventsService.execute.mock.calls[0][0];
 			expect(publishedEvents).toBeDefined();
 			expect(Array.isArray(publishedEvents)).toBe(true);
 			if (publishedEvents.length > 0) {

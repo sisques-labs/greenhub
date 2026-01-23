@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
+import { LocationViewModelBuilder } from '@/core/location-context/domain/builders/view-models/location-view-model/location-view-model.builder';
 import { LocationViewModel } from '@/core/location-context/domain/view-models/location/location.view-model';
 import { LocationMongoDbDto } from '@/core/location-context/infrastructure/database/mongodb/dtos/location/location-mongodb.dto';
 
@@ -16,7 +16,7 @@ export class LocationMongoDBMapper {
 	private readonly logger = new Logger(LocationMongoDBMapper.name);
 
 	constructor(
-		private readonly locationViewModelFactory: LocationViewModelFactory,
+		private readonly locationViewModelBuilder: LocationViewModelBuilder,
 	) {}
 
 	/**
@@ -30,16 +30,18 @@ export class LocationMongoDBMapper {
 			`Converting MongoDB document to location view model with id ${doc.id}`,
 		);
 
-		return this.locationViewModelFactory.create({
-			id: doc.id,
-			name: doc.name,
-			type: doc.type,
-			description: doc.description,
-			createdAt:
+		return this.locationViewModelBuilder
+			.withId(doc.id)
+			.withName(doc.name)
+			.withType(doc.type)
+			.withDescription(doc.description)
+			.withCreatedAt(
 				doc.createdAt instanceof Date ? doc.createdAt : new Date(doc.createdAt),
-			updatedAt:
+			)
+			.withUpdatedAt(
 				doc.updatedAt instanceof Date ? doc.updatedAt : new Date(doc.updatedAt),
-		});
+			)
+			.build();
 	}
 
 	/**

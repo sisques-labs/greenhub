@@ -4,11 +4,12 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { LocationCreateCommand } from '@/core/location-context/application/commands/location/location-create/location-create.command';
 import { LocationCreatedEvent } from '@/core/location-context/application/events/location/location-created/location-created.event';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
-import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
+import { LocationAggregateBuilder } from '@/core/location-context/domain/builders/aggregates/location-aggregate/location-aggregate.builder';
 import {
 	ILocationWriteRepository,
 	LOCATION_WRITE_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -27,7 +28,8 @@ export class LocationCreateCommandHandler
 	constructor(
 		@Inject(LOCATION_WRITE_REPOSITORY_TOKEN)
 		private readonly locationWriteRepository: ILocationWriteRepository,
-		private readonly locationAggregateFactory: LocationAggregateFactory,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
+		private readonly locationAggregateBuilder: LocationAggregateBuilder,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 	) {}
 
@@ -41,14 +43,22 @@ export class LocationCreateCommandHandler
 		this.logger.log(`Executing location create command: ${command}`);
 
 		// 01: Create the location entity
-		const location = this.locationAggregateFactory.create({
-			...command,
-		});
+		const location = this.locationAggregateBuilder
+			.withId(command.id)
+			.withName(command.name)
+			.withType(command.type)
+			.withDescription(command.description)
+			.build();
 
 		// 02: Save the location entity
 		await this.locationWriteRepository.save(location);
 
-		// 03: Publish the LocationCreatedEvent
+		// 03: Publish domain events
+		await this.publishDomainEventsService.execute(
+			location.getUncommittedEvents(),
+		);
+
+		// 04: Publish integration event (LocationCreatedEvent)
 		await this.publishIntegrationEventsService.execute(
 			new LocationCreatedEvent(
 				{
@@ -68,7 +78,7 @@ export class LocationCreateCommandHandler
 			),
 		);
 
-		// 04: Return the location id
+		// 05: Return the location id
 		return location.id.value;
 	}
 }

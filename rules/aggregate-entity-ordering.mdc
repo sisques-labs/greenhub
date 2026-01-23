@@ -1,0 +1,243 @@
+---
+alwaysApply: true
+---
+
+# Aggregate & Entity Ordering Rule (DDD)
+
+When defining an **Aggregate** or **Entity**, the file should be ordered to tell a clear domain story from top to bottom.
+
+## Recommended Order
+
+### 1. State (Properties)
+
+Private fields representing the internal state. No public mutation.
+
+```typescript
+export class ExampleAggregate extends BaseAggregate {
+  private readonly _id: ExampleUuidValueObject;
+  private _name: ExampleNameValueObject;
+  private _status: ExampleStatusValueObject;
+  private _items: ItemEntity[];
+}
+```
+
+### 2. Construction
+
+Constructor (usually `private` or `protected`) and static factory methods (`create`, `fromPrimitives`, etc.). Enforce initial invariants here.
+
+```typescript
+constructor(props: IExampleCreateDto, generateEvent: boolean = true) {
+  super(props.createdAt, props.updatedAt);
+  
+  // 01: Set the properties
+  this._id = props.id;
+  this._name = props.name;
+  this._status = props.status;
+  
+  // 02: Apply the creation event
+  if (generateEvent) {
+    this.apply(new ExampleCreatedEvent(/* ... */));
+  }
+}
+```
+
+### 3. Domain Behavior
+
+Public methods that express business intentions. Methods must represent *verbs of the domain*, not technical actions.
+
+Examples: `confirm()`, `addItem()`, `activate()`, `rename()`, `changeStatus()`, `addPlant()`, `removePlant()`.
+
+```typescript
+public addItem(item: ItemEntity, generateEvent: boolean = true) {
+  this.ensureCanAddItem();
+  this._items.push(item);
+  
+  if (generateEvent) {
+    this.apply(new ItemAddedEvent(/* ... */));
+  }
+}
+
+public activate(generateEvent: boolean = true) {
+  this.ensureCanActivate();
+  this._status = new ExampleStatusValueObject(ExampleStatusEnum.ACTIVE);
+  
+  if (generateEvent) {
+    this.apply(new ExampleActivatedEvent(/* ... */));
+  }
+}
+```
+
+### 4. Internal Rules & Helpers
+
+Private methods that enforce invariants or encapsulate calculations.
+
+Examples: `ensureIsActive()`, `recalculateTotal()`, `validateCapacity()`, `ensureCanAddItem()`.
+
+```typescript
+private ensureCanAddItem(): void {
+  if (!this.hasCapacity()) {
+    throw new CapacityExceededException();
+  }
+}
+
+private recalculateTotal(): void {
+  this._total = this._items.reduce((sum, item) => sum + item.price.value, 0);
+}
+```
+
+### 5. Read Access (Getters)
+
+Public methods to expose state safely. Never return mutable internal collections directly. Prefer intention-revealing names over generic getters.
+
+```typescript
+public get id(): ExampleUuidValueObject {
+  return this._id;
+}
+
+public get name(): ExampleNameValueObject {
+  return this._name;
+}
+
+public getItems(): ReadonlyArray<ItemEntity> {
+  return [...this._items]; // Return a copy, not the original array
+}
+```
+
+### 6. Serialization
+
+Methods like `toPrimitives()` / `toSnapshot()`. Used for persistence or transport. Considered infrastructure-related, not core domain logic.
+
+```typescript
+public toPrimitives(): ExamplePrimitives {
+  return {
+    id: this._id.value,
+    name: this._name.value,
+    status: this._status.value,
+    items: this._items.map((item) => item.toPrimitives()),
+    createdAt: this.createdAt.value,
+    updatedAt: this.updatedAt.value,
+  };
+}
+```
+
+## Principles
+
+- **Behavior first, data second** - Domain behavior methods should appear before getters
+- **No public setters** - State changes should only happen through domain methods
+- **Methods express intent, not mechanics** - Use domain language (`activate()`, not `setStatus('active')`)
+- **Serialization stays at the bottom** - `toPrimitives()` is infrastructure concern
+- **Reading the file top-down should explain the domain** - The file should read like a domain narrative
+
+## Complete Example
+
+```typescript
+export class OrderAggregate extends BaseAggregate {
+  // 1. State
+  private readonly _id: OrderUuidValueObject;
+  private _status: OrderStatusValueObject;
+  private _items: OrderItemEntity[];
+  private _total: MoneyValueObject;
+
+  // 2. Construction
+  constructor(props: IOrderCreateDto, generateEvent: boolean = true) {
+    super(props.createdAt, props.updatedAt);
+    this._id = props.id;
+    this._status = new OrderStatusValueObject(OrderStatusEnum.PENDING);
+    this._items = [];
+    this._total = new MoneyValueObject(0);
+    
+    if (generateEvent) {
+      this.apply(new OrderCreatedEvent(/* ... */));
+    }
+  }
+
+  // 3. Domain Behavior
+  public addItem(item: OrderItemEntity, generateEvent: boolean = true) {
+    this.ensureCanAddItem();
+    this._items.push(item);
+    this.recalculateTotal();
+    
+    if (generateEvent) {
+      this.apply(new OrderItemAddedEvent(/* ... */));
+    }
+  }
+
+  public confirm(generateEvent: boolean = true) {
+    this.ensureCanConfirm();
+    this._status = new OrderStatusValueObject(OrderStatusEnum.CONFIRMED);
+    
+    if (generateEvent) {
+      this.apply(new OrderConfirmedEvent(/* ... */));
+    }
+  }
+
+  // 4. Internal Rules & Helpers
+  private ensureCanAddItem(): void {
+    if (this._status.value === OrderStatusEnum.CONFIRMED) {
+      throw new OrderAlreadyConfirmedException();
+    }
+  }
+
+  private ensureCanConfirm(): void {
+    if (this._items.length === 0) {
+      throw new EmptyOrderException();
+    }
+  }
+
+  private recalculateTotal(): void {
+    this._total = this._items.reduce(
+      (sum, item) => sum.add(item.subtotal),
+      new MoneyValueObject(0),
+    );
+  }
+
+  // 5. Read Access
+  public get id(): OrderUuidValueObject {
+    return this._id;
+  }
+
+  public get status(): OrderStatusValueObject {
+    return this._status;
+  }
+
+  public getItems(): ReadonlyArray<OrderItemEntity> {
+    return [...this._items];
+  }
+
+  public get total(): MoneyValueObject {
+    return this._total;
+  }
+
+  // 6. Serialization
+  public toPrimitives(): OrderPrimitives {
+    return {
+      id: this._id.value,
+      status: this._status.value,
+      items: this._items.map((item) => item.toPrimitives()),
+      total: this._total.value,
+      createdAt: this.createdAt.value,
+      updatedAt: this.updatedAt.value,
+    };
+  }
+}
+```
+
+## Best Practices
+
+### ✅ Good Practices
+
+- Group related domain behavior methods together
+- Place validation/helper methods near the domain methods that use them
+- Keep getters simple and focused on exposing state
+- Use descriptive names for domain methods (`confirm()`, not `setStatusConfirmed()`)
+- Return immutable copies of collections from getters
+
+### ❌ Bad Practices
+
+- Mixing getters with domain behavior methods
+- Placing `toPrimitives()` before domain methods
+- Using public setters instead of domain methods
+- Returning mutable collections directly from getters
+- Placing construction logic after domain behavior
+
+> **Rule of thumb**: If the Aggregate reads like a domain narrative when reading top-down, the ordering is correct.

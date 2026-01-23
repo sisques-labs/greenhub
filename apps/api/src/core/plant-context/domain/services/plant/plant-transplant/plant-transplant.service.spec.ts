@@ -72,7 +72,7 @@ describe('PlantTransplantService', () => {
 		});
 
 		// Add plant to source growing unit
-		sourceGrowingUnit.addPlant(plant, false);
+		sourceGrowingUnit.addPlant(plant);
 	});
 
 	describe('execute', () => {
@@ -164,7 +164,7 @@ describe('PlantTransplantService', () => {
 					notes: null,
 					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 				});
-				targetGrowingUnit.addPlant(testPlant, false);
+				targetGrowingUnit.addPlant(testPlant);
 			}
 
 			const input = {
@@ -198,7 +198,7 @@ describe('PlantTransplantService', () => {
 					notes: null,
 					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 				});
-				targetGrowingUnit.addPlant(testPlant, false);
+				targetGrowingUnit.addPlant(testPlant);
 			}
 
 			const input = {
@@ -257,7 +257,7 @@ describe('PlantTransplantService', () => {
 					notes: null,
 					status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 				});
-				sourceGrowingUnit.addPlant(testPlant, false);
+				sourceGrowingUnit.addPlant(testPlant);
 			}
 
 			const input = {
@@ -300,7 +300,7 @@ describe('PlantTransplantService', () => {
 				notes: null,
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
-			targetGrowingUnit.addPlant(existingPlant, false);
+			targetGrowingUnit.addPlant(existingPlant);
 
 			const input = {
 				sourceGrowingUnit,

@@ -4,7 +4,7 @@ alwaysApply: true
 
 # Domain Layer Architecture Rule
 
-Always implement the domain layer following Domain-Driven Design (DDD) principles with aggregates, value objects, repositories, factories, and primitives.
+Always implement the domain layer following Domain-Driven Design (DDD) principles with aggregates, value objects, repositories, builders, and primitives.
 
 ## Domain Layer Structure
 
@@ -15,7 +15,7 @@ domain/
 ├── aggregates/         # Domain aggregates (main entities)
 ├── value-objects/      # Value objects (immutable domain concepts)
 ├── repositories/       # Repository interfaces (read and write)
-├── factories/          # Aggregate and view model factories
+├── builders/           # Aggregate and view model builders
 ├── enums/              # Domain enums
 └── primitives/         # Primitive types (DTOs for serialization)
 ```
@@ -324,61 +324,204 @@ export interface ExampleReadRepository
 - **Return ViewModels from read repository** - Return ViewModels from read repository
 - **Handle null cases** - Methods should return `null` when not found
 
-## Factories
+## Builders
 
 ### Structure
 
-Factories must:
+Builders must:
 
-- Create aggregates from primitives
-- Create view models from aggregates or primitives
-- Validate data before creation
-- Be in separate files: `{entity}-aggregate.factory.ts` and `{entity}-view-model.factory.ts`
+- Implement `IWriteBuilder<TEntity, TPrimitives>` for aggregates or `IReadBuilder<TViewModel, TPrimitives>` for view models
+- Use `@Injectable()` decorator for dependency injection
+- Provide fluent API with `with{Property}()` methods for each property
+- Implement `fromPrimitives()` for reconstruction from database
+- Implement `fromAggregate()` for view model builders
+- Implement `build()` to construct the final entity/view model
+- Implement `reset()` to reuse the builder instance
+- Validate required fields before building
+- Be in separate folders: `builders/aggregates/{entity}-aggregate/` and `builders/view-models/{entity}-view-model/`
 
-### Aggregate Factory
+### Aggregate Builder
 
 ```typescript
+import { Injectable, Logger } from '@nestjs/common';
 import { ExampleAggregate } from '@/example-context/example/domain/aggregates/example.aggregate';
 import { ExamplePrimitives } from '@/example-context/example/domain/primitives/example.primitives';
+import { IWriteBuilder } from '@/shared/domain/interfaces/write-builder.interface';
 
-export class ExampleAggregateFactory {
-  static fromPrimitives(primitives: ExamplePrimitives): ExampleAggregate {
-    return new ExampleAggregate(
-      {
-        id: new ExampleUuidValueObject(primitives.id),
-        name: new ExampleNameValueObject(primitives.name),
-        createdAt: new DateValueObject(primitives.createdAt),
-        updatedAt: new DateValueObject(primitives.updatedAt),
-      },
-      false, // Don't generate events when creating from primitives
-    );
+@Injectable()
+export class ExampleAggregateBuilder
+  implements IWriteBuilder<ExampleAggregate, ExamplePrimitives>
+{
+  private readonly logger = new Logger(ExampleAggregateBuilder.name);
+
+  private _id?: ExampleUuidValueObject;
+  private _name?: ExampleNameValueObject;
+  private _createdAt?: DateValueObject;
+  private _updatedAt?: DateValueObject;
+
+  public withId(id: ExampleUuidValueObject): this {
+    this._id = id;
+    return this;
+  }
+
+  public withName(name: ExampleNameValueObject): this {
+    this._name = name;
+    return this;
+  }
+
+  public withCreatedAt(createdAt: DateValueObject): this {
+    this._createdAt = createdAt;
+    return this;
+  }
+
+  public withUpdatedAt(updatedAt: DateValueObject): this {
+    this._updatedAt = updatedAt;
+    return this;
+  }
+
+  public fromPrimitives(primitives: ExamplePrimitives): this {
+    this._id = new ExampleUuidValueObject(primitives.id);
+    this._name = new ExampleNameValueObject(primitives.name);
+    this._createdAt = new DateValueObject(primitives.createdAt);
+    this._updatedAt = new DateValueObject(primitives.updatedAt);
+    return this;
+  }
+
+  public build(): ExampleAggregate {
+    this.validate();
+    return new ExampleAggregate({
+      id: this._id!,
+      name: this._name!,
+      createdAt: this._createdAt!,
+      updatedAt: this._updatedAt!,
+    });
+  }
+
+  public reset(): this {
+    this._id = undefined;
+    this._name = undefined;
+    this._createdAt = undefined;
+    this._updatedAt = undefined;
+    return this;
+  }
+
+  private validate(): void {
+    const missingFields: string[] = [];
+    if (!this._id) missingFields.push('id');
+    if (!this._name) missingFields.push('name');
+    if (!this._createdAt) missingFields.push('createdAt');
+    if (!this._updatedAt) missingFields.push('updatedAt');
+
+    if (missingFields.length > 0) {
+      throw new Error(
+        `Cannot build ExampleAggregate: missing required fields: ${missingFields.join(', ')}`
+      );
+    }
   }
 }
 ```
 
-### View Model Factory
+### View Model Builder
 
 ```typescript
+import { Injectable, Logger } from '@nestjs/common';
 import { ExampleAggregate } from '@/example-context/example/domain/aggregates/example.aggregate';
 import { ExampleViewModel } from '@/example-context/example/domain/view-models/example.view-model';
+import { ExamplePrimitives } from '@/example-context/example/domain/primitives/example.primitives';
+import { IReadBuilder } from '@/shared/domain/interfaces/read-builder.interface';
 
-export class ExampleViewModelFactory {
-  static fromAggregate(aggregate: ExampleAggregate): ExampleViewModel {
-    const primitives = aggregate.toPrimitives();
-    return new ExampleViewModel(primitives);
+@Injectable()
+export class ExampleViewModelBuilder
+  implements IReadBuilder<ExampleViewModel, ExamplePrimitives>
+{
+  private readonly logger = new Logger(ExampleViewModelBuilder.name);
+
+  private _id?: string;
+  private _name?: string;
+  private _createdAt?: Date;
+  private _updatedAt?: Date;
+
+  public withId(id: string): this {
+    this._id = id;
+    return this;
   }
 
-  static fromPrimitives(primitives: ExamplePrimitives): ExampleViewModel {
-    return new ExampleViewModel(primitives);
+  public withName(name: string): this {
+    this._name = name;
+    return this;
+  }
+
+  public withCreatedAt(createdAt: Date): this {
+    this._createdAt = createdAt;
+    return this;
+  }
+
+  public withUpdatedAt(updatedAt: Date): this {
+    this._updatedAt = updatedAt;
+    return this;
+  }
+
+  public fromPrimitives(primitives: ExamplePrimitives): this {
+    this._id = primitives.id;
+    this._name = primitives.name;
+    this._createdAt = primitives.createdAt;
+    this._updatedAt = primitives.updatedAt;
+    return this;
+  }
+
+  public fromAggregate(aggregate: ExampleAggregate): this {
+    this._id = aggregate.id.value;
+    this._name = aggregate.name.value;
+    this._createdAt = aggregate.createdAt.value;
+    this._updatedAt = aggregate.updatedAt.value;
+    return this;
+  }
+
+  public build(): ExampleViewModel {
+    this.validate();
+    return new ExampleViewModel({
+      id: this._id!,
+      name: this._name!,
+      createdAt: this._createdAt!,
+      updatedAt: this._updatedAt!,
+    });
+  }
+
+  public reset(): this {
+    this._id = undefined;
+    this._name = undefined;
+    this._createdAt = undefined;
+    this._updatedAt = undefined;
+    return this;
+  }
+
+  private validate(): void {
+    const missingFields: string[] = [];
+    if (!this._id) missingFields.push('id');
+    if (!this._name) missingFields.push('name');
+    if (!this._createdAt) missingFields.push('createdAt');
+    if (!this._updatedAt) missingFields.push('updatedAt');
+
+    if (missingFields.length > 0) {
+      throw new Error(
+        `Cannot build ExampleViewModel: missing required fields: ${missingFields.join(', ')}`
+      );
+    }
   }
 }
 ```
 
 ### Rules
 
-- **No event generation in factories** - Set `generateEvent: false` when creating from primitives
-- **Validate before creation** - Factories should validate data integrity
-- **Keep factories simple** - They should only create objects, not contain business logic
+- **Implement base builder interfaces** - Use `IWriteBuilder` for aggregates and `IReadBuilder` for view models
+- **Use fluent API pattern** - Methods return `this` for chaining
+- **Validate before building** - Throw descriptive errors listing all missing required fields
+- **Use private fields with `_` prefix** - Follow the same pattern as aggregates
+- **Use Injectable decorator** - Builders are dependency-injected services
+- **Log important operations** - Use Logger for debugging
+- **Keep builders focused** - One builder per aggregate/view model
+- **Support reconstruction** - `fromPrimitives()` for database rehydration
+- **Support conversion** - `fromAggregate()` for view model builders only
 
 ## Primitives
 
@@ -430,7 +573,7 @@ export enum ExampleStatusEnum {
 - Validate business rules in aggregates
 - Generate domain events for state changes
 - Keep aggregates focused on a single responsibility
-- Use factories to create complex objects
+- Use builders to create complex objects
 - Separate read and write repositories
 - Extend base repository interfaces (`IBaseWriteRepository`, `IBaseReadRepository`)
 - Use type aliases when no additional methods are needed
@@ -440,7 +583,7 @@ export enum ExampleStatusEnum {
 
 - Using primitives directly in aggregates (e.g., `string` instead of `NameValueObject`)
 - Exposing private properties directly
-- Mixing business logic in repositories or factories
+- Mixing business logic in repositories or builders
 - Creating aggregates without proper validation
 - Skipping domain events for state changes
 - Using database entities directly in domain layer

@@ -9,6 +9,7 @@ import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/reposit
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
@@ -18,6 +19,7 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 
 	beforeEach(() => {
 		mockGrowingUnitWriteRepository = {
@@ -34,10 +36,15 @@ describe('GrowingUnitDeleteCommandHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
+
 		handler = new GrowingUnitDeleteCommandHandler(
 			mockGrowingUnitWriteRepository,
 			mockAssertGrowingUnitExistsService,
 			mockPublishIntegrationEventsService,
+			mockPublishDomainEventsService,
 		);
 	});
 

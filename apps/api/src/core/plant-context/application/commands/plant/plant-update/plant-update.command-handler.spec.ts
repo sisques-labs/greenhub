@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
 import { PlantUpdateCommandHandler } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command-handler';
 import { IPlantUpdateCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-update/plant-update-command.dto';
@@ -19,6 +17,7 @@ import { PlantNotesValueObject } from '@/core/plant-context/domain/value-objects
 import { PlantPlantedDateValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-planted-date/plant-planted-date.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
@@ -27,7 +26,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
 describe('PlantUpdateCommandHandler', () => {
 	let handler: PlantUpdateCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertPlantExistsInGrowingUnitService: jest.Mocked<AssertPlantExistsInGrowingUnitService>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
 	let plantEntityFactory: PlantEntityFactory;
@@ -41,10 +40,9 @@ describe('PlantUpdateCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertPlantExistsInGrowingUnitService = {
 			execute: jest.fn(),
@@ -60,7 +58,7 @@ describe('PlantUpdateCommandHandler', () => {
 
 		handler = new PlantUpdateCommandHandler(
 			mockGrowingUnitWriteRepository,
-			mockEventBus,
+			mockPublishDomainEventsService,
 			mockAssertGrowingUnitExistsService,
 			mockAssertPlantExistsInGrowingUnitService,
 			mockPublishIntegrationEventsService,
@@ -102,7 +100,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -111,7 +109,7 @@ describe('PlantUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -129,7 +127,7 @@ describe('PlantUpdateCommandHandler', () => {
 			expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
 				mockGrowingUnit,
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				mockGrowingUnit.getUncommittedEvents(),
 			);
 		});
@@ -164,7 +162,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -173,7 +171,7 @@ describe('PlantUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -211,7 +209,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -227,14 +225,14 @@ describe('PlantUpdateCommandHandler', () => {
 
 			// Capture the events that are passed to publishAll
 			let capturedEvents: any[] = [];
-			mockEventBus.publishAll.mockImplementation(async (events) => {
+			mockPublishDomainEventsService.execute.mockImplementation(async (events) => {
 				capturedEvents = Array.isArray(events) ? [...events] : [];
 				return undefined;
 			});
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 			expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
 			const nameChangedEvent = capturedEvents.find(
 				(e) => e instanceof PlantNameChangedEvent,
@@ -272,7 +270,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -283,13 +281,13 @@ describe('PlantUpdateCommandHandler', () => {
 			mockGrowingUnitWriteRepository.save.mockImplementation(
 				async (aggregate) => aggregate,
 			);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const updatedPlant = mockGrowingUnit.getPlantById(plantId);
 			expect(updatedPlant?.species.value).toBe('Ocimum tenuiflorum');
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 
 		it('should update plant plantedDate successfully', async () => {
@@ -323,7 +321,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -334,13 +332,13 @@ describe('PlantUpdateCommandHandler', () => {
 			mockGrowingUnitWriteRepository.save.mockImplementation(
 				async (aggregate) => aggregate,
 			);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const updatedPlant = mockGrowingUnit.getPlantById(plantId);
 			expect(updatedPlant?.plantedDate?.value).toEqual(newPlantedDate);
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 
 		it('should update plant notes successfully', async () => {
@@ -373,7 +371,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -384,13 +382,13 @@ describe('PlantUpdateCommandHandler', () => {
 			mockGrowingUnitWriteRepository.save.mockImplementation(
 				async (aggregate) => aggregate,
 			);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const updatedPlant = mockGrowingUnit.getPlantById(plantId);
 			expect(updatedPlant?.notes?.value).toBe('Updated notes');
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 
 		it('should update multiple plant fields at once', async () => {
@@ -428,7 +426,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -439,7 +437,7 @@ describe('PlantUpdateCommandHandler', () => {
 			mockGrowingUnitWriteRepository.save.mockImplementation(
 				async (aggregate) => aggregate,
 			);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -449,7 +447,7 @@ describe('PlantUpdateCommandHandler', () => {
 			expect(updatedPlant?.plantedDate?.value).toEqual(newPlantedDate);
 			expect(updatedPlant?.notes?.value).toBe('Updated notes');
 			expect(updatedPlant?.status.value).toBe(PlantStatusEnum.GROWING);
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 
 		it('should handle null plantedDate update', async () => {
@@ -482,7 +480,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -493,13 +491,13 @@ describe('PlantUpdateCommandHandler', () => {
 			mockGrowingUnitWriteRepository.save.mockImplementation(
 				async (aggregate) => aggregate,
 			);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const updatedPlant = mockGrowingUnit.getPlantById(plantId);
 			expect(updatedPlant?.plantedDate).toBeNull();
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 
 		it('should handle null notes update', async () => {
@@ -532,7 +530,7 @@ describe('PlantUpdateCommandHandler', () => {
 				plants: [],
 			});
 
-			mockGrowingUnit.addPlant(mockPlant, false);
+			mockGrowingUnit.addPlant(mockPlant);
 
 			mockAssertPlantExistsInGrowingUnitService.execute.mockResolvedValue(
 				mockPlant,
@@ -543,13 +541,13 @@ describe('PlantUpdateCommandHandler', () => {
 			mockGrowingUnitWriteRepository.save.mockImplementation(
 				async (aggregate) => aggregate,
 			);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const updatedPlant = mockGrowingUnit.getPlantById(plantId);
 			expect(updatedPlant?.notes).toBeNull();
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 	});
 });

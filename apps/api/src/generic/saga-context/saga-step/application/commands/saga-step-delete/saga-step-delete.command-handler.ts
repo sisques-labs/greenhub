@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { SagaStepDeleteCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command';
 import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
@@ -7,6 +7,7 @@ import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 
 @CommandHandler(SagaStepDeleteCommand)
 export class SagaStepDeleteCommandHandler
@@ -17,7 +18,7 @@ export class SagaStepDeleteCommandHandler
 	constructor(
 		@Inject(SAGA_STEP_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaStepWriteRepository: SagaStepWriteRepository,
-		private readonly eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly assertSagaStepExistsService: AssertSagaStepExistsService,
 	) {}
 
@@ -43,8 +44,10 @@ export class SagaStepDeleteCommandHandler
 		// 03: Delete the saga step from the repository
 		await this.sagaStepWriteRepository.delete(existingSagaStep.id.value);
 
-		// 04: Publish the saga step deleted event
-		await this.eventBus.publishAll(existingSagaStep.getUncommittedEvents());
+		// 04: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			existingSagaStep.getUncommittedEvents(),
+		);
 		await existingSagaStep.commit();
 	}
 }

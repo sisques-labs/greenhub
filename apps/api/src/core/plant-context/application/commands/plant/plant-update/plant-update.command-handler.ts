@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { PlantUpdateCommand } from '@/core/plant-context/application/commands/plant/plant-update/plant-update.command';
 import { PlantUpdatedEvent } from '@/core/plant-context/application/events/plant/plant-updated/plant-updated.event';
@@ -11,10 +11,11 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
- * Handles the {@link GrowingUnitUpdateCommand} to update an existing growing unit (container) entity.
+ * Handles the {@link PlantUpdateCommand} to update an existing plant entity.
  *
  * @remarks
  * This command handler locates an existing growing unit aggregate, applies any provided updates,
@@ -35,7 +36,7 @@ export class PlantUpdateCommandHandler
 	 * Creates a new instance of {@link PlantUpdateCommandHandler}.
 	 *
 	 * @param growingUnitWriteRepository - The write repository for persisting growing unit aggregates.
-	 * @param eventBus - The event bus for publishing domain events.
+	 * @param publishDomainEventsService - Service for publishing domain events.
 	 * @param assertGrowingUnitExistsService - Service that ensures the target entity exists.
 	 * @param assertPlantExistsInGrowingUnitService - Service that ensures the plant exists in the growing unit.
 	 * @param publishIntegrationEventsService - Service for publishing integration events.
@@ -43,7 +44,7 @@ export class PlantUpdateCommandHandler
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		private readonly eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
@@ -104,8 +105,10 @@ export class PlantUpdateCommandHandler
 		// 03: Save the growing unit entity
 		await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
-		// 04: Publish all events
-		await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
+		// 04: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			growingUnitAggregate.getUncommittedEvents(),
+		);
 		await growingUnitAggregate.commit();
 
 		// 05: Publish the integration event PlantUpdatedEvent

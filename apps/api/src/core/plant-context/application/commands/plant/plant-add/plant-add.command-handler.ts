@@ -9,9 +9,10 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Handles the {@link PlantAddCommand} to add a new plant to a growing unit.
@@ -35,18 +36,18 @@ export class PlantAddCommandHandler
 	 * Creates a new instance of {@link PlantAddCommandHandler}.
 	 *
 	 * @param growingUnitWriteRepository - The write repository for persisting growing unit aggregates.
-	 * @param eventBus - The event bus for publishing domain events.
 	 * @param assertGrowingUnitExistsService - Service that ensures the growing unit exists.
 	 * @param plantEntityFactory - Factory for creating plant entities.
 	 * @param publishIntegrationEventsService - Service for publishing integration events.
+	 * @param publishDomainEventsService - Service for publishing domain events.
 	 */
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		private readonly eventBus: EventBus,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly plantEntityFactory: PlantEntityFactory,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 	) {}
 
 	/**
@@ -90,11 +91,14 @@ export class PlantAddCommandHandler
 		await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
 		// 06: Publish all domain events
-		await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
+		await this.publishDomainEventsService.execute(
+			growingUnitAggregate.getUncommittedEvents(),
+		);
 		await growingUnitAggregate.commit();
 
 		// 07: Publish the PlantCreatedEvent integration event
 		await this.publishIntegrationEventsService.execute(
+			// TODO: Use an integration event instead of a domain event
 			new GrowingUnitPlantAddedEvent(
 				{
 					aggregateRootId: growingUnitAggregate.id.value,

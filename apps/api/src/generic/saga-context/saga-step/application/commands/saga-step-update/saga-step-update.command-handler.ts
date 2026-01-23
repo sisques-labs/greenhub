@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { SagaStepUpdateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command';
 import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
@@ -9,6 +9,7 @@ import {
 	SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
 import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 
 @CommandHandler(SagaStepUpdateCommand)
 export class SagaStepUpdateCommandHandler
@@ -19,7 +20,7 @@ export class SagaStepUpdateCommandHandler
 
 	constructor(
 		private readonly assertSagaStepExistsService: AssertSagaStepExistsService,
-		private readonly eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		@Inject(SAGA_STEP_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaStepWriteRepository: SagaStepWriteRepository,
 	) {
@@ -54,8 +55,10 @@ export class SagaStepUpdateCommandHandler
 		// 04: Save the saga step
 		await this.sagaStepWriteRepository.save(existingSagaStep);
 
-		// 05: Publish the saga step updated event
-		await this.eventBus.publishAll(existingSagaStep.getUncommittedEvents());
+		// 05: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			existingSagaStep.getUncommittedEvents(),
+		);
 		await existingSagaStep.commit();
 	}
 }

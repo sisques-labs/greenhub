@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { IUserUpdateCommandDto } from '@/generic/users/application/dtos/commands/user-update/user-update-command.dto';
 import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
@@ -9,6 +7,7 @@ import { UserNameValueObject } from '@/generic/users/domain/value-objects/user-n
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
 import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
 import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
@@ -21,7 +20,7 @@ import { UserUpdateCommandHandler } from './user-update.command-handler';
 describe('UserUpdateCommandHandler', () => {
 	let handler: UserUpdateCommandHandler;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertUserExsistsService: jest.Mocked<AssertUserExsistsService>;
 
 	beforeEach(() => {
@@ -32,10 +31,9 @@ describe('UserUpdateCommandHandler', () => {
 			delete: jest.fn(),
 		};
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertUserExsistsService = {
 			execute: jest.fn(),
@@ -43,7 +41,7 @@ describe('UserUpdateCommandHandler', () => {
 
 		handler = new UserUpdateCommandHandler(
 			mockUserWriteRepository,
-			mockEventBus,
+			mockPublishDomainEventsService,
 			mockAssertUserExsistsService,
 		);
 	});
@@ -78,7 +76,7 @@ describe('UserUpdateCommandHandler', () => {
 			const updateSpy = jest.spyOn(existingUser, 'update');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -87,8 +85,8 @@ describe('UserUpdateCommandHandler', () => {
 			expect(updateSpy).toHaveBeenCalled();
 			expect(mockUserWriteRepository.save).toHaveBeenCalledWith(existingUser);
 			expect(mockUserWriteRepository.save).toHaveBeenCalledTimes(1);
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 
 			updateSpy.mockRestore();
 		});
@@ -108,7 +106,7 @@ describe('UserUpdateCommandHandler', () => {
 			await expect(handler.execute(command)).rejects.toThrow(error);
 			expect(mockAssertUserExsistsService.execute).toHaveBeenCalledWith(userId);
 			expect(mockUserWriteRepository.save).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should update only provided fields', async () => {
@@ -136,7 +134,7 @@ describe('UserUpdateCommandHandler', () => {
 			const updateSpy = jest.spyOn(existingUser, 'update');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -173,7 +171,7 @@ describe('UserUpdateCommandHandler', () => {
 			const updateSpy = jest.spyOn(existingUser, 'update');
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -228,13 +226,13 @@ describe('UserUpdateCommandHandler', () => {
 				existingUserForHandler,
 			);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			// Verify that publishAll was called (the handler should call it with events)
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 			// Note: We can't verify the events here because commit() clears them
 			// But we verified above that update() generates the event correctly
 		});
@@ -263,13 +261,13 @@ describe('UserUpdateCommandHandler', () => {
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const saveOrder =
 				mockUserWriteRepository.save.mock.invocationCallOrder[0];
-			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			const publishOrder = mockPublishDomainEventsService.execute.mock.invocationCallOrder[0];
 			expect(saveOrder).toBeLessThan(publishOrder);
 		});
 
@@ -299,12 +297,12 @@ describe('UserUpdateCommandHandler', () => {
 
 			mockAssertUserExsistsService.execute.mockResolvedValue(existingUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			expect(commitSpy).toHaveBeenCalled();
-			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			const publishOrder = mockPublishDomainEventsService.execute.mock.invocationCallOrder[0];
 			const commitOrder = commitSpy.mock.invocationCallOrder[0];
 			expect(publishOrder).toBeLessThan(commitOrder);
 

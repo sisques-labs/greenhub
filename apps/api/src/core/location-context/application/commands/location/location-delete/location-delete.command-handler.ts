@@ -6,9 +6,10 @@ import { LocationDeletedEvent } from '@/core/location-context/application/events
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import {
-	LOCATION_WRITE_REPOSITORY_TOKEN,
 	ILocationWriteRepository,
+	LOCATION_WRITE_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -27,6 +28,7 @@ export class LocationDeleteCommandHandler
 	constructor(
 		@Inject(LOCATION_WRITE_REPOSITORY_TOKEN)
 		private readonly locationWriteRepository: ILocationWriteRepository,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 	) {}
@@ -47,9 +49,17 @@ export class LocationDeleteCommandHandler
 			await this.assertLocationExistsService.execute(command.id.value);
 
 		// 02: Delete the location entity
+		await existingLocation.delete();
+
+		// 03: Delete the location entity from the repository
 		await this.locationWriteRepository.delete(existingLocation.id.value);
 
-		// 03: Publish the integration event LocationDeletedEvent
+		// 04: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			existingLocation.getUncommittedEvents(),
+		);
+
+		// 05: Publish the integration event LocationDeletedEvent
 		await this.publishIntegrationEventsService.execute(
 			new LocationDeletedEvent(
 				{
@@ -70,4 +80,3 @@ export class LocationDeleteCommandHandler
 		);
 	}
 }
-

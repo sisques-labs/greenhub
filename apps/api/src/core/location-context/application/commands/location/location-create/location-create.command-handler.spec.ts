@@ -3,20 +3,22 @@ import { LocationCreateCommandHandler } from '@/core/location-context/applicatio
 import { ILocationCreateCommandDto } from '@/core/location-context/application/dtos/commands/location/location-create/location-create-command.dto';
 import { LocationCreatedEvent } from '@/core/location-context/application/events/location/location-created/location-created.event';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
+import { LocationAggregateBuilder } from '@/core/location-context/domain/builders/aggregates/location-aggregate/location-aggregate.builder';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
-import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
 import { ILocationWriteRepository } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
 import { LocationDescriptionValueObject } from '@/core/location-context/domain/value-objects/location/location-description/location-description.vo';
 import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('LocationCreateCommandHandler', () => {
 	let handler: LocationCreateCommandHandler;
 	let mockLocationWriteRepository: jest.Mocked<ILocationWriteRepository>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
-	let mockLocationAggregateFactory: jest.Mocked<LocationAggregateFactory>;
+	let mockLocationAggregateBuilder: jest.Mocked<LocationAggregateBuilder>;
 
 	beforeEach(() => {
 		mockLocationWriteRepository = {
@@ -25,18 +27,29 @@ describe('LocationCreateCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<ILocationWriteRepository>;
 
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
+
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<PublishIntegrationEventsService>;
 
-		mockLocationAggregateFactory = {
-			create: jest.fn(),
-			fromPrimitives: jest.fn(),
-		} as unknown as jest.Mocked<LocationAggregateFactory>;
+		// Mock the fluent builder pattern
+		mockLocationAggregateBuilder = {
+			withId: jest.fn().mockReturnThis(),
+			withName: jest.fn().mockReturnThis(),
+			withType: jest.fn().mockReturnThis(),
+			withDescription: jest.fn().mockReturnThis(),
+			build: jest.fn(),
+			reset: jest.fn().mockReturnThis(),
+			fromPrimitives: jest.fn().mockReturnThis(),
+		} as unknown as jest.Mocked<LocationAggregateBuilder>;
 
 		handler = new LocationCreateCommandHandler(
 			mockLocationWriteRepository,
-			mockLocationAggregateFactory,
+			mockPublishDomainEventsService,
+			mockLocationAggregateBuilder,
 			mockPublishIntegrationEventsService,
 		);
 	});
@@ -63,19 +76,27 @@ describe('LocationCreateCommandHandler', () => {
 				),
 			});
 
-			mockLocationAggregateFactory.create.mockReturnValue(mockLocation);
+			mockLocationAggregateBuilder.build.mockReturnValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
 			expect(result).toBe(mockLocation.id.value);
-			expect(mockLocationAggregateFactory.create).toHaveBeenCalledWith({
-				id: command.id,
-				name: command.name,
-				type: command.type,
-				description: command.description,
-			});
+			expect(mockLocationAggregateBuilder.withId).toHaveBeenCalledWith(
+				command.id,
+			);
+			expect(mockLocationAggregateBuilder.withName).toHaveBeenCalledWith(
+				command.name,
+			);
+			expect(mockLocationAggregateBuilder.withType).toHaveBeenCalledWith(
+				command.type,
+			);
+			expect(mockLocationAggregateBuilder.withDescription).toHaveBeenCalledWith(
+				command.description,
+			);
+			expect(mockLocationAggregateBuilder.build).toHaveBeenCalled();
 			expect(mockLocationWriteRepository.save).toHaveBeenCalledWith(
 				mockLocation,
 			);
@@ -103,19 +124,27 @@ describe('LocationCreateCommandHandler', () => {
 				description: null,
 			});
 
-			mockLocationAggregateFactory.create.mockReturnValue(mockLocation);
+			mockLocationAggregateBuilder.build.mockReturnValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
 			expect(result).toBe(mockLocation.id.value);
-			expect(mockLocationAggregateFactory.create).toHaveBeenCalledWith({
-				id: command.id,
-				name: command.name,
-				type: command.type,
-				description: null,
-			});
+			expect(mockLocationAggregateBuilder.withId).toHaveBeenCalledWith(
+				command.id,
+			);
+			expect(mockLocationAggregateBuilder.withName).toHaveBeenCalledWith(
+				command.name,
+			);
+			expect(mockLocationAggregateBuilder.withType).toHaveBeenCalledWith(
+				command.type,
+			);
+			expect(mockLocationAggregateBuilder.withDescription).toHaveBeenCalledWith(
+				null,
+			);
+			expect(mockLocationAggregateBuilder.build).toHaveBeenCalled();
 		});
 
 		it('should publish LocationCreatedEvent when location is created', async () => {
@@ -132,8 +161,9 @@ describe('LocationCreateCommandHandler', () => {
 				description: null,
 			});
 
-			mockLocationAggregateFactory.create.mockReturnValue(mockLocation);
+			mockLocationAggregateBuilder.build.mockReturnValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
@@ -158,8 +188,9 @@ describe('LocationCreateCommandHandler', () => {
 				description: null,
 			});
 
-			mockLocationAggregateFactory.create.mockReturnValue(mockLocation);
+			mockLocationAggregateBuilder.build.mockReturnValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
@@ -186,8 +217,9 @@ describe('LocationCreateCommandHandler', () => {
 				description: null,
 			});
 
-			mockLocationAggregateFactory.create.mockReturnValue(mockLocation);
+			mockLocationAggregateBuilder.build.mockReturnValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
@@ -196,4 +228,3 @@ describe('LocationCreateCommandHandler', () => {
 		});
 	});
 });
-

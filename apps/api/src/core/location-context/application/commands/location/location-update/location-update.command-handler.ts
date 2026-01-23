@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { LocationUpdateCommand } from '@/core/location-context/application/commands/location/location-update/location-update.command';
 import { LocationUpdatedEvent } from '@/core/location-context/application/events/location/location-updated/location-updated.event';
@@ -9,6 +9,7 @@ import {
 	ILocationWriteRepository,
 	LOCATION_WRITE_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -31,16 +32,16 @@ export class LocationUpdateCommandHandler
 	 * Creates a new instance of {@link LocationUpdateCommandHandler}.
 	 *
 	 * @param locationWriteRepository - The write repository for persisting location aggregates.
-	 * @param eventBus - The event bus for publishing domain events.
+	 * @param publishDomainEventsService - Service for publishing domain events.
 	 * @param assertLocationExistsService - Service that ensures the target entity exists.
 	 * @param publishIntegrationEventsService - Service for publishing integration events.
 	 */
 	constructor(
 		@Inject(LOCATION_WRITE_REPOSITORY_TOKEN)
 		private readonly locationWriteRepository: ILocationWriteRepository,
-		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
-		private eventBus: EventBus,
+		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 	) {}
 
 	/**
@@ -77,10 +78,12 @@ export class LocationUpdateCommandHandler
 		await this.locationWriteRepository.save(existingLocation);
 
 		// 04: Publish all domain events
-		await this.eventBus.publishAll(existingLocation.getUncommittedEvents());
+		await this.publishDomainEventsService.execute(
+			existingLocation.getUncommittedEvents(),
+		);
 		await existingLocation.commit();
 
-		// 05: Publish the integration event for the LocationUpdatedEvent
+		// 05: Publish integration event (LocationUpdatedEvent)
 		await this.publishIntegrationEventsService.execute(
 			new LocationUpdatedEvent(
 				{

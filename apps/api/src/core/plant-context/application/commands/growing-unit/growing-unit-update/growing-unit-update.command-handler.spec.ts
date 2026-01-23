@@ -9,18 +9,18 @@ import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/reposit
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { LengthUnitEnum } from '@/shared/domain/enums/length-unit/length-unit.enum';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('GrowingUnitUpdateCommandHandler', () => {
 	let handler: GrowingUnitUpdateCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
-	let mockEventBus: jest.Mocked<EventBus>;
 
 	beforeEach(() => {
 		mockGrowingUnitWriteRepository = {
@@ -28,6 +28,10 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 			save: jest.fn(),
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
+
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
@@ -37,16 +41,11 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertGrowingUnitExistsService>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
-
 		handler = new GrowingUnitUpdateCommandHandler(
 			mockGrowingUnitWriteRepository,
 			mockPublishIntegrationEventsService,
 			mockAssertGrowingUnitExistsService,
-			mockEventBus,
+			mockPublishDomainEventsService,
 		);
 	});
 
@@ -79,7 +78,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -90,7 +89,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 			expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
 				mockGrowingUnit,
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				mockGrowingUnit.getUncommittedEvents(),
 			);
 		});
@@ -119,7 +118,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -150,7 +149,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -186,7 +185,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -225,7 +224,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -261,7 +260,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 				mockGrowingUnit,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -301,14 +300,14 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 
 			// Capture the events that are passed to publishAll
 			let capturedEvents: any[] = [];
-			mockEventBus.publishAll.mockImplementation(async (events) => {
+			mockPublishDomainEventsService.execute.mockImplementation(async (events) => {
 				capturedEvents = Array.isArray(events) ? [...events] : [];
 				return undefined;
 			});
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 			expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
 			const nameChangedEvent = capturedEvents.find(
 				(e) => e instanceof GrowingUnitNameChangedEvent,
@@ -330,7 +329,7 @@ describe('GrowingUnitUpdateCommandHandler', () => {
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
 			expect(mockGrowingUnitWriteRepository.save).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 	});
 });

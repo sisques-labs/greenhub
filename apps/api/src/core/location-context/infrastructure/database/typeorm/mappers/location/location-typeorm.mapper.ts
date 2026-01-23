@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
-import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
+import { LocationAggregateBuilder } from '@/core/location-context/domain/builders/aggregates/location-aggregate/location-aggregate.builder';
 import { LocationTypeormEntity } from '@/core/location-context/infrastructure/database/typeorm/entities/location-typeorm.entity';
 
 /**
@@ -18,7 +18,7 @@ export class LocationTypeormMapper {
 	private readonly logger = new Logger(LocationTypeormMapper.name);
 
 	constructor(
-		private readonly locationAggregateFactory: LocationAggregateFactory,
+		private readonly locationAggregateBuilder: LocationAggregateBuilder,
 	) {}
 
 	/**
@@ -32,12 +32,14 @@ export class LocationTypeormMapper {
 			`Converting TypeORM entity to domain entity with id ${locationEntity.id}`,
 		);
 
-		return this.locationAggregateFactory.fromPrimitives({
-			id: locationEntity.id,
-			name: locationEntity.name,
-			type: locationEntity.type,
-			description: locationEntity.description,
-		});
+		return this.locationAggregateBuilder
+			.fromPrimitives({
+				id: locationEntity.id,
+				name: locationEntity.name,
+				type: locationEntity.type,
+				description: locationEntity.description,
+			})
+			.build();
 	}
 
 	/**

@@ -1,12 +1,15 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { EventBus } from '@nestjs/cqrs';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 import { BaseEvent } from '@/shared/domain/events/base-event.interface';
+import {
+	IIntegrationEventPublisher,
+	INTEGRATION_EVENT_PUBLISHER_TOKEN,
+} from '@/shared/domain/interfaces/integration-event-publisher.interface';
 
 /**
- * Service for publishing integration events to the EventBus.
- * This service can publish one or multiple events at once.
+ * Service for publishing integration events across bounded contexts.
+ * Delegates to IIntegrationEventPublisher abstraction to allow different transport mechanisms.
  */
 @Injectable()
 export class PublishIntegrationEventsService
@@ -14,10 +17,13 @@ export class PublishIntegrationEventsService
 {
 	private readonly logger = new Logger(PublishIntegrationEventsService.name);
 
-	constructor(private readonly eventBus: EventBus) {}
+	constructor(
+		@Inject(INTEGRATION_EVENT_PUBLISHER_TOKEN)
+		private readonly integrationEventPublisher: IIntegrationEventPublisher,
+	) {}
 
 	/**
-	 * Publishes one or multiple integration events to the EventBus.
+	 * Publishes one or multiple integration events across bounded contexts.
 	 *
 	 * @param events - A single event or an array of events to publish
 	 * @returns Promise that resolves when all events are published
@@ -25,21 +31,15 @@ export class PublishIntegrationEventsService
 	async execute(
 		events: BaseEvent<unknown> | BaseEvent<unknown>[],
 	): Promise<void> {
-		// 01: Normalize events to array
+		// 01: Normalize events to array for logging
 		const eventsArray = Array.isArray(events) ? events : [events];
 
 		// 02: Log the events being published
 		this.logger.log(
-			`Publishing ${eventsArray.length} integration event(s) to EventBus`,
+			`Publishing ${eventsArray.length} integration event(s)`,
 		);
 
-		eventsArray.forEach((event) => {
-			this.logger.debug(
-				`Publishing integration event: ${event.eventType} for aggregate ${event.aggregateRootId}`,
-			);
-		});
-
-		// 03: Publish all events
-		await this.eventBus.publishAll(eventsArray);
+		// 03: Delegate to integration event publisher
+		await this.integrationEventPublisher.publish(events);
 	}
 }

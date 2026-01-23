@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
@@ -7,6 +7,7 @@ import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 
 @CommandHandler(UserDeleteCommand)
 export class UserDeleteCommandHandler
@@ -17,7 +18,7 @@ export class UserDeleteCommandHandler
 	constructor(
 		@Inject(USER_WRITE_REPOSITORY_TOKEN)
 		private readonly userWriteRepository: UserWriteRepository,
-		private readonly eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly assertUserExsistsService: AssertUserExsistsService,
 	) {}
 
@@ -35,8 +36,10 @@ export class UserDeleteCommandHandler
 		// 04: Delete the user from the repository
 		await this.userWriteRepository.delete(existingUser.id.value);
 
-		// 05: Publish the user deleted event
-		await this.eventBus.publishAll(existingUser.getUncommittedEvents());
+		// 05: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			existingUser.getUncommittedEvents(),
+		);
 		await existingUser.commit();
 	}
 }

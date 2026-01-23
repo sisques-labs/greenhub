@@ -8,16 +8,16 @@ import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-
 import { ILocationWriteRepository } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
 import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('LocationUpdateCommandHandler', () => {
 	let handler: LocationUpdateCommandHandler;
 	let mockLocationWriteRepository: jest.Mocked<ILocationWriteRepository>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
-	let mockEventBus: jest.Mocked<EventBus>;
 
 	beforeEach(() => {
 		mockLocationWriteRepository = {
@@ -25,6 +25,10 @@ describe('LocationUpdateCommandHandler', () => {
 			save: jest.fn(),
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<ILocationWriteRepository>;
+
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
@@ -34,16 +38,11 @@ describe('LocationUpdateCommandHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertLocationExistsService>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
-
 		handler = new LocationUpdateCommandHandler(
 			mockLocationWriteRepository,
-			mockPublishIntegrationEventsService,
+			mockPublishDomainEventsService,
 			mockAssertLocationExistsService,
-			mockEventBus,
+			mockPublishIntegrationEventsService,
 		);
 	});
 
@@ -69,7 +68,7 @@ describe('LocationUpdateCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -80,7 +79,7 @@ describe('LocationUpdateCommandHandler', () => {
 			expect(mockLocationWriteRepository.save).toHaveBeenCalledWith(
 				mockLocation,
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				mockLocation.getUncommittedEvents(),
 			);
 		});
@@ -102,7 +101,7 @@ describe('LocationUpdateCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -129,7 +128,7 @@ describe('LocationUpdateCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -158,7 +157,7 @@ describe('LocationUpdateCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -184,7 +183,7 @@ describe('LocationUpdateCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.save.mockResolvedValue(mockLocation);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);

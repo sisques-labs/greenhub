@@ -8,12 +8,14 @@ import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-
 import { ILocationWriteRepository } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
 import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('LocationDeleteCommandHandler', () => {
 	let handler: LocationDeleteCommandHandler;
 	let mockLocationWriteRepository: jest.Mocked<ILocationWriteRepository>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
 
@@ -23,6 +25,10 @@ describe('LocationDeleteCommandHandler', () => {
 			save: jest.fn(),
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<ILocationWriteRepository>;
+
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
@@ -34,6 +40,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 		handler = new LocationDeleteCommandHandler(
 			mockLocationWriteRepository,
+			mockPublishDomainEventsService,
 			mockAssertLocationExistsService,
 			mockPublishIntegrationEventsService,
 		);
@@ -60,6 +67,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
@@ -92,6 +100,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
@@ -118,6 +127,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);

@@ -1,5 +1,5 @@
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
-import { LocationAggregateFactory } from '@/core/location-context/domain/factories/aggregates/location-aggregate/location-aggregate.factory';
+import { LocationAggregateBuilder } from '@/core/location-context/domain/builders/aggregates/location-aggregate/location-aggregate.builder';
 import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
 import { LocationTypeormEntity } from '@/core/location-context/infrastructure/database/typeorm/entities/location-typeorm.entity';
@@ -17,7 +17,7 @@ describe('LocationTypeormRepository', () => {
 	let mockFindOne: jest.Mock;
 	let mockSave: jest.Mock;
 	let mockSoftDelete: jest.Mock;
-	let locationAggregateFactory: LocationAggregateFactory;
+	let locationAggregateBuilder: LocationAggregateBuilder;
 
 	beforeEach(() => {
 		mockFindOne = jest.fn();
@@ -39,7 +39,7 @@ describe('LocationTypeormRepository', () => {
 			toTypeormEntity: jest.fn(),
 		} as unknown as jest.Mocked<LocationTypeormMapper>;
 
-		locationAggregateFactory = new LocationAggregateFactory();
+		locationAggregateBuilder = new LocationAggregateBuilder();
 
 		repository = new LocationTypeormRepository(
 			mockTypeormMasterService,
@@ -65,12 +65,12 @@ describe('LocationTypeormRepository', () => {
 			typeormEntity.updatedAt = now;
 			typeormEntity.deletedAt = null;
 
-			const locationAggregate = locationAggregateFactory.create({
-				id: new LocationUuidValueObject(locationId),
-				name: new LocationNameValueObject('Living Room'),
-				type: new LocationTypeValueObject(LocationTypeEnum.ROOM),
-				description: null,
-			});
+			const locationAggregate = locationAggregateBuilder
+				.withId(new LocationUuidValueObject(locationId))
+				.withName(new LocationNameValueObject('Living Room'))
+				.withType(new LocationTypeValueObject(LocationTypeEnum.ROOM))
+				.withDescription(null)
+				.build();
 
 			mockFindOne.mockResolvedValue(typeormEntity);
 			mockLocationTypeormMapper.toDomainEntity.mockReturnValue(
@@ -109,12 +109,12 @@ describe('LocationTypeormRepository', () => {
 			const locationId = '123e4567-e89b-12d3-a456-426614174000';
 			const now = new Date();
 
-			const locationAggregate = locationAggregateFactory.create({
-				id: new LocationUuidValueObject(locationId),
-				name: new LocationNameValueObject('Living Room'),
-				type: new LocationTypeValueObject(LocationTypeEnum.ROOM),
-				description: null,
-			});
+			const locationAggregate = locationAggregateBuilder
+				.withId(new LocationUuidValueObject(locationId))
+				.withName(new LocationNameValueObject('Living Room'))
+				.withType(new LocationTypeValueObject(LocationTypeEnum.ROOM))
+				.withDescription(null)
+				.build();
 
 			const typeormEntity = new LocationTypeormEntity();
 			typeormEntity.id = locationId;

@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { PlantRemoveCommand } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command';
 import { PlantRemoveCommandHandler } from '@/core/plant-context/application/commands/plant/plant-remove/plant-remove.command-handler';
 import { IPlantRemoveCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-remove/plant-remove-command.dto';
@@ -17,6 +15,7 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
@@ -25,7 +24,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
 describe('PlantRemoveCommandHandler', () => {
 	let handler: PlantRemoveCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
 	let mockAssertPlantExistsInGrowingUnitService: jest.Mocked<AssertPlantExistsInGrowingUnitService>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
@@ -39,10 +38,9 @@ describe('PlantRemoveCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertGrowingUnitExistsService = {
 			execute: jest.fn(),
@@ -58,10 +56,10 @@ describe('PlantRemoveCommandHandler', () => {
 
 		handler = new PlantRemoveCommandHandler(
 			mockGrowingUnitWriteRepository,
-			mockEventBus,
 			mockAssertGrowingUnitExistsService,
 			mockAssertPlantExistsInGrowingUnitService,
 			mockPublishIntegrationEventsService,
+			mockPublishDomainEventsService,
 		);
 	});
 
@@ -99,7 +97,7 @@ describe('PlantRemoveCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			mockGrowingUnit.addPlant(plant, false);
+			mockGrowingUnit.addPlant(plant);
 
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
@@ -108,7 +106,7 @@ describe('PlantRemoveCommandHandler', () => {
 				plant,
 			);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -124,7 +122,7 @@ describe('PlantRemoveCommandHandler', () => {
 			expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
 				mockGrowingUnit,
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				mockGrowingUnit.getUncommittedEvents(),
 			);
 		});
@@ -160,7 +158,7 @@ describe('PlantRemoveCommandHandler', () => {
 			await expect(handler.execute(command)).rejects.toThrow();
 
 			expect(mockGrowingUnitWriteRepository.save).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should publish GrowingUnitPlantRemovedEvent when plant is removed', async () => {
@@ -192,7 +190,7 @@ describe('PlantRemoveCommandHandler', () => {
 				status: new PlantStatusValueObject(PlantStatusEnum.PLANTED),
 			});
 
-			mockGrowingUnit.addPlant(plant, false);
+			mockGrowingUnit.addPlant(plant);
 
 			mockAssertGrowingUnitExistsService.execute.mockResolvedValue(
 				mockGrowingUnit,
@@ -206,16 +204,16 @@ describe('PlantRemoveCommandHandler', () => {
 				async (aggregate) => aggregate,
 			);
 
-			// Capture the events that are passed to publishAll
+			// Capture the events that are passed to execute
 			let capturedEvents: any[] = [];
-			mockEventBus.publishAll.mockImplementation(async (events) => {
+			mockPublishDomainEventsService.execute.mockImplementation(async (events) => {
 				capturedEvents = Array.isArray(events) ? [...events] : [];
 				return undefined;
 			});
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 			expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
 			const removedEvent = capturedEvents.find(
 				(e) => e instanceof GrowingUnitPlantRemovedEvent,

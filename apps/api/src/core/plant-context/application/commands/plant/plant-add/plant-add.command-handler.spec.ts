@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { PlantAddCommand } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command';
 import { PlantAddCommandHandler } from '@/core/plant-context/application/commands/plant/plant-add/plant-add.command-handler';
 import { IPlantAddCommandDto } from '@/core/plant-context/application/dtos/commands/plant/plant-add/plant-add-command.dto';
@@ -17,6 +15,7 @@ import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-ob
 import { PlantNameValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-name/plant-name.vo';
 import { PlantSpeciesValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-species/plant-species.vo';
 import { PlantStatusValueObject } from '@/core/plant-context/domain/value-objects/plant/plant-status/plant-status.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
@@ -25,7 +24,7 @@ import { PlantUuidValueObject } from '@/shared/domain/value-objects/identifiers/
 describe('PlantAddCommandHandler', () => {
 	let handler: PlantAddCommandHandler;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockAssertGrowingUnitExistsService: jest.Mocked<AssertGrowingUnitExistsService>;
 	let mockPlantEntityFactory: jest.Mocked<PlantEntityFactory>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
@@ -37,10 +36,9 @@ describe('PlantAddCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockAssertGrowingUnitExistsService = {
 			execute: jest.fn(),
@@ -57,10 +55,10 @@ describe('PlantAddCommandHandler', () => {
 
 		handler = new PlantAddCommandHandler(
 			mockGrowingUnitWriteRepository,
-			mockEventBus,
 			mockAssertGrowingUnitExistsService,
 			mockPlantEntityFactory,
 			mockPublishIntegrationEventsService,
+			mockPublishDomainEventsService,
 		);
 	});
 
@@ -107,7 +105,7 @@ describe('PlantAddCommandHandler', () => {
 			);
 			mockPlantEntityFactory.create.mockReturnValue(mockPlant);
 			mockGrowingUnitWriteRepository.save.mockResolvedValue(mockGrowingUnit);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
@@ -126,7 +124,7 @@ describe('PlantAddCommandHandler', () => {
 			expect(mockGrowingUnitWriteRepository.save).toHaveBeenCalledWith(
 				mockGrowingUnit,
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				mockGrowingUnit.getUncommittedEvents(),
 			);
 		});
@@ -175,7 +173,7 @@ describe('PlantAddCommandHandler', () => {
 			);
 			expect(mockPlantEntityFactory.create).not.toHaveBeenCalled();
 			expect(mockGrowingUnitWriteRepository.save).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should publish GrowingUnitPlantAddedEvent when plant is added', async () => {
@@ -221,9 +219,9 @@ describe('PlantAddCommandHandler', () => {
 				async (aggregate) => aggregate,
 			);
 
-			// Capture the events that are passed to publishAll
+			// Capture the events that are passed to execute
 			let capturedEvents: any[] = [];
-			mockEventBus.publishAll.mockImplementation(async (events) => {
+			mockPublishDomainEventsService.execute.mockImplementation(async (events) => {
 				capturedEvents = Array.isArray(events) ? [...events] : [];
 				return undefined;
 			});
@@ -233,8 +231,8 @@ describe('PlantAddCommandHandler', () => {
 			// Verify that addPlant was called
 			expect(mockGrowingUnit.plants).toHaveLength(1);
 
-			// Check the events that were passed to publishAll
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			// Check the events that were passed to execute
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 			expect(capturedEvents).toHaveLength(1);
 			expect(capturedEvents[0]).toBeInstanceOf(GrowingUnitPlantAddedEvent);
 		});

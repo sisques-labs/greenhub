@@ -5,7 +5,7 @@ import { LocationUpdatedEvent } from '@/core/location-context/application/events
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
-import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
+import { LocationViewModelBuilder } from '@/core/location-context/domain/builders/view-models/location-view-model/location-view-model.builder';
 import {
 	LOCATION_READ_REPOSITORY_TOKEN,
 	ILocationReadRepository,
@@ -19,7 +19,7 @@ describe('LocationUpdatedEventHandler', () => {
 	let handler: LocationUpdatedEventHandler;
 	let mockLocationReadRepository: jest.Mocked<ILocationReadRepository>;
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
-	let mockLocationViewModelFactory: jest.Mocked<LocationViewModelFactory>;
+	let mockLocationViewModelBuilder: jest.Mocked<LocationViewModelBuilder>;
 
 	beforeEach(async () => {
 		mockLocationReadRepository = {
@@ -33,11 +33,17 @@ describe('LocationUpdatedEventHandler', () => {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertLocationExistsService>;
 
-		mockLocationViewModelFactory = {
-			create: jest.fn(),
-			fromPrimitives: jest.fn(),
-			fromAggregate: jest.fn(),
-		} as unknown as jest.Mocked<LocationViewModelFactory>;
+		mockLocationViewModelBuilder = {
+			withId: jest.fn().mockReturnThis(),
+			withName: jest.fn().mockReturnThis(),
+			withType: jest.fn().mockReturnThis(),
+			withDescription: jest.fn().mockReturnThis(),
+			withCreatedAt: jest.fn().mockReturnThis(),
+			withUpdatedAt: jest.fn().mockReturnThis(),
+			fromPrimitives: jest.fn().mockReturnThis(),
+			fromAggregate: jest.fn().mockReturnThis(),
+			build: jest.fn(),
+		} as unknown as jest.Mocked<LocationViewModelBuilder>;
 
 		const module = await Test.createTestingModule({
 			providers: [
@@ -51,8 +57,8 @@ describe('LocationUpdatedEventHandler', () => {
 					useValue: mockAssertLocationExistsService,
 				},
 				{
-					provide: LocationViewModelFactory,
-					useValue: mockLocationViewModelFactory,
+					provide: LocationViewModelBuilder,
+					useValue: mockLocationViewModelBuilder,
 				},
 			],
 		}).compile();
@@ -104,7 +110,7 @@ describe('LocationUpdatedEventHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockLocationViewModelFactory.fromAggregate.mockReturnValue(mockViewModel);
+			mockLocationViewModelBuilder.build.mockReturnValue(mockViewModel);
 			mockLocationReadRepository.save.mockResolvedValue(undefined);
 
 			await handler.handle(event);
@@ -112,7 +118,7 @@ describe('LocationUpdatedEventHandler', () => {
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(mockLocationViewModelFactory.fromAggregate).toHaveBeenCalledWith(
+			expect(mockLocationViewModelBuilder.fromAggregate).toHaveBeenCalledWith(
 				mockLocation,
 			);
 			expect(mockLocationReadRepository.save).toHaveBeenCalledWith(

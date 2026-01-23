@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 import { UserUpdateCommand } from '@/generic/users/application/commands/user-update/user-update.command';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
@@ -9,6 +9,7 @@ import {
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
 import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 
 @CommandHandler(UserUpdateCommand)
 export class UserUpdateCommandHandler
@@ -20,7 +21,7 @@ export class UserUpdateCommandHandler
 	constructor(
 		@Inject(USER_WRITE_REPOSITORY_TOKEN)
 		private readonly userWriteRepository: UserWriteRepository,
-		private readonly eventBus: EventBus,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 		private readonly assertUserExsistsService: AssertUserExsistsService,
 	) {
 		super();
@@ -49,8 +50,10 @@ export class UserUpdateCommandHandler
 		// 04: Save the user
 		await this.userWriteRepository.save(existingUser);
 
-		// 05: Publish the user updated event
-		await this.eventBus.publishAll(existingUser.getUncommittedEvents());
+		// 05: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			existingUser.getUncommittedEvents(),
+		);
 		await existingUser.commit();
 	}
 }

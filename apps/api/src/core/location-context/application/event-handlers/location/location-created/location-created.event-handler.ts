@@ -3,7 +3,7 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 import { LocationCreatedEvent } from '@/core/location-context/application/events/location/location-created/location-created.event';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
-import { LocationViewModelFactory } from '@/core/location-context/domain/factories/view-models/location-view-model/location-view-model.factory';
+import { LocationViewModelBuilder } from '@/core/location-context/domain/builders/view-models/location-view-model/location-view-model.builder';
 import {
 	ILocationReadRepository,
 	LOCATION_READ_REPOSITORY_TOKEN,
@@ -27,7 +27,7 @@ export class LocationCreatedEventHandler
 		@Inject(LOCATION_READ_REPOSITORY_TOKEN)
 		private readonly locationReadRepository: ILocationReadRepository,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
-		private readonly locationViewModelFactory: LocationViewModelFactory,
+		private readonly locationViewModelBuilder: LocationViewModelBuilder,
 	) {}
 
 	/**
@@ -49,7 +49,7 @@ export class LocationCreatedEventHandler
 
 		// 02: Create the location view model from the aggregate
 		const locationViewModel: LocationViewModel =
-			this.locationViewModelFactory.fromAggregate(locationAggregate);
+			this.locationViewModelBuilder.fromAggregate(locationAggregate).build();
 
 		// 03: Save the location view model
 		await this.locationReadRepository.save(locationViewModel);

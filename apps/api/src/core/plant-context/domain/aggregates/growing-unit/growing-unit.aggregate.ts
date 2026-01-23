@@ -1,4 +1,3 @@
-import { GrowingUnitDeletedEvent } from '@/core/plant-context/application/events/growing-unit/growing-unit-deleted/growing-unit-deleted.event';
 import { IGrowingUnitDto } from '@/core/plant-context/domain/dtos/entities/growing-unit/growing-unit.dto';
 import { PlantEntity } from '@/core/plant-context/domain/entities/plant/plant.entity';
 import { GrowingUnitCapacityChangedEvent } from '@/core/plant-context/domain/events/growing-unit/growing-unit/field-changed/growing-unit-capacity-changed/growing-unit-capacity-changed.event';
@@ -90,24 +89,22 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	 * @param plantToAdd - The plant entity to add.
 	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
-	public addPlant(plantToAdd: PlantEntity, generateEvent: boolean = true) {
+	public addPlant(plantToAdd: PlantEntity) {
 		this._plants.push(plantToAdd);
-		if (generateEvent) {
-			this.apply(
-				new GrowingUnitPlantAddedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: GrowingUnitAggregate.name,
-						entityId: plantToAdd.id.value,
-						entityType: PlantEntity.name,
-						eventType: GrowingUnitPlantAddedEvent.name,
-					},
-					{
-						plant: plantToAdd.toPrimitives(),
-					},
-				),
-			);
-		}
+		this.apply(
+			new GrowingUnitPlantAddedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: GrowingUnitAggregate.name,
+					entityId: plantToAdd.id.value,
+					entityType: PlantEntity.name,
+					eventType: GrowingUnitPlantAddedEvent.name,
+				},
+				{
+					plant: plantToAdd.toPrimitives(),
+				},
+			),
+		);
 	}
 
 	/**
@@ -115,30 +112,25 @@ export class GrowingUnitAggregate extends AggregateRoot {
 	 * @param plantToRemove - The plant entity to remove.
 	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
-	public removePlant(
-		plantToRemove: PlantEntity,
-		generateEvent: boolean = true,
-	) {
+	public removePlant(plantToRemove: PlantEntity) {
 		const plantPrimitives = plantToRemove.toPrimitives();
 		this._plants = this._plants.filter(
 			(plant) => plant.id.value !== plantToRemove.id.value,
 		);
-		if (generateEvent) {
-			this.apply(
-				new GrowingUnitPlantRemovedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: GrowingUnitAggregate.name,
-						entityId: plantToRemove.id.value,
-						entityType: PlantEntity.name,
-						eventType: GrowingUnitPlantRemovedEvent.name,
-					},
-					{
-						plant: plantPrimitives,
-					},
-				),
-			);
-		}
+		this.apply(
+			new GrowingUnitPlantRemovedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: GrowingUnitAggregate.name,
+					entityId: plantToRemove.id.value,
+					entityType: PlantEntity.name,
+					eventType: GrowingUnitPlantRemovedEvent.name,
+				},
+				{
+					plant: plantPrimitives,
+				},
+			),
+		);
 	}
 
 	/**
@@ -495,24 +487,8 @@ export class GrowingUnitAggregate extends AggregateRoot {
 
 	/**
 	 * Marks this growing unit as deleted (soft-delete).
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
-	public delete(generateEvent: boolean = true) {
-		if (generateEvent) {
-			this.apply(
-				new GrowingUnitDeletedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: GrowingUnitAggregate.name,
-						entityId: this._id.value,
-						entityType: GrowingUnitAggregate.name,
-						eventType: GrowingUnitDeletedEvent.name,
-					},
-					this.toPrimitives(),
-				),
-			);
-		}
-	}
+	public delete(): void {}
 
 	/**
 	 * Checks if the growing unit has a plant with the given plant ID.

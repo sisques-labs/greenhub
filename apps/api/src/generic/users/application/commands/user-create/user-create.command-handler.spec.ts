@@ -1,5 +1,3 @@
-import { EventBus } from '@nestjs/cqrs';
-
 import { IUserCreateCommandDto } from '@/generic/users/application/dtos/commands/user-create/user-create-command.dto';
 import { UserUsernameIsNotUniqueException } from '@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception';
 import { AssertUserUsernameIsUniqueService } from '@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service';
@@ -9,6 +7,7 @@ import { UserWriteRepository } from '@/generic/users/domain/repositories/user-wr
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
 import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
 import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/user-user-name/user-user-name.vo';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
@@ -21,7 +20,7 @@ import { UserCreateCommandHandler } from './user-create.command-handler';
 describe('UserCreateCommandHandler', () => {
 	let handler: UserCreateCommandHandler;
 	let mockUserWriteRepository: jest.Mocked<UserWriteRepository>;
-	let mockEventBus: jest.Mocked<EventBus>;
+	let mockPublishDomainEventsService: jest.Mocked<PublishDomainEventsService>;
 	let mockUserAggregateFactory: jest.Mocked<UserAggregateFactory>;
 	let mockAssertUserUsernameIsUniqueService: jest.Mocked<AssertUserUsernameIsUniqueService>;
 
@@ -33,10 +32,9 @@ describe('UserCreateCommandHandler', () => {
 			delete: jest.fn(),
 		};
 
-		mockEventBus = {
-			publishAll: jest.fn(),
-			publish: jest.fn(),
-		} as unknown as jest.Mocked<EventBus>;
+		mockPublishDomainEventsService = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<PublishDomainEventsService>;
 
 		mockUserAggregateFactory = {
 			create: jest.fn(),
@@ -49,7 +47,7 @@ describe('UserCreateCommandHandler', () => {
 
 		handler = new UserCreateCommandHandler(
 			mockUserWriteRepository,
-			mockEventBus,
+			mockPublishDomainEventsService,
 			mockUserAggregateFactory,
 			mockAssertUserUsernameIsUniqueService,
 		);
@@ -87,7 +85,7 @@ describe('UserCreateCommandHandler', () => {
 			);
 			mockUserAggregateFactory.create.mockReturnValue(mockUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
@@ -118,10 +116,10 @@ describe('UserCreateCommandHandler', () => {
 			);
 			expect(mockUserWriteRepository.save).toHaveBeenCalledWith(mockUser);
 			expect(mockUserWriteRepository.save).toHaveBeenCalledTimes(1);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(
 				mockUser.getUncommittedEvents(),
 			);
-			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledTimes(1);
 		});
 
 		it('should create user successfully when username is null', async () => {
@@ -148,7 +146,7 @@ describe('UserCreateCommandHandler', () => {
 
 			mockUserAggregateFactory.create.mockReturnValue(mockUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
@@ -158,7 +156,7 @@ describe('UserCreateCommandHandler', () => {
 			).not.toHaveBeenCalled();
 			expect(mockUserAggregateFactory.create).toHaveBeenCalled();
 			expect(mockUserWriteRepository.save).toHaveBeenCalledWith(mockUser);
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalled();
 		});
 
 		it('should throw exception when username is not unique', async () => {
@@ -181,7 +179,7 @@ describe('UserCreateCommandHandler', () => {
 			).toHaveBeenCalledWith('johndoe');
 			expect(mockUserAggregateFactory.create).not.toHaveBeenCalled();
 			expect(mockUserWriteRepository.save).not.toHaveBeenCalled();
-			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
+			expect(mockPublishDomainEventsService.execute).not.toHaveBeenCalled();
 		});
 
 		it('should publish UserCreatedEvent when user is created', async () => {
@@ -211,14 +209,14 @@ describe('UserCreateCommandHandler', () => {
 			);
 			mockUserAggregateFactory.create.mockReturnValue(mockUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const uncommittedEvents = mockUser.getUncommittedEvents();
 			expect(uncommittedEvents).toHaveLength(1);
 			expect(uncommittedEvents[0]).toBeInstanceOf(UserCreatedEvent);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(uncommittedEvents);
+			expect(mockPublishDomainEventsService.execute).toHaveBeenCalledWith(uncommittedEvents);
 		});
 
 		it('should save user before publishing events', async () => {
@@ -248,13 +246,13 @@ describe('UserCreateCommandHandler', () => {
 			);
 			mockUserAggregateFactory.create.mockReturnValue(mockUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const saveOrder =
 				mockUserWriteRepository.save.mock.invocationCallOrder[0];
-			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
+			const publishOrder = mockPublishDomainEventsService.execute.mock.invocationCallOrder[0];
 			expect(saveOrder).toBeLessThan(publishOrder);
 		});
 
@@ -286,7 +284,7 @@ describe('UserCreateCommandHandler', () => {
 			);
 			mockUserAggregateFactory.create.mockReturnValue(mockUser);
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+			mockPublishDomainEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 

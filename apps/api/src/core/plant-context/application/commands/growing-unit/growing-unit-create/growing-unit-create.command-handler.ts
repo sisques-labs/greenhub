@@ -9,6 +9,7 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { PublishDomainEventsService } from '@/shared/application/services/publish-domain-events/publish-domain-events.service';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -29,6 +30,7 @@ export class GrowingUnitCreateCommandHandler
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
 		private readonly growingUnitAggregateFactory: GrowingUnitAggregateFactory,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
+		private readonly publishDomainEventsService: PublishDomainEventsService,
 	) {}
 
 	/**
@@ -49,7 +51,13 @@ export class GrowingUnitCreateCommandHandler
 		// 02: Save the growing unit entity
 		await this.growingUnitWriteRepository.save(growingUnit);
 
-		// 03: Publish the GrowingUnitCreatedEvent
+		// 03: Publish all domain events
+		await this.publishDomainEventsService.execute(
+			growingUnit.getUncommittedEvents(),
+		);
+		await growingUnit.commit();
+
+		// 04: Publish the GrowingUnitCreatedEvent
 		await this.publishIntegrationEventsService.execute(
 			new GrowingUnitCreatedEvent(
 				{
