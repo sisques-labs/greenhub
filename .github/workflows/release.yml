@@ -7,46 +7,18 @@ on:
 
 permissions:
   contents: write
-  issues: write
   pull-requests: write
+  issues: write
 
 concurrency:
-  group: semantic-release
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  detect-changes:
+  release:
+    name: Release
     runs-on: ubuntu-latest
-    outputs:
-      shared: ${{ steps.filter.outputs.shared }}
-      sdk: ${{ steps.filter.outputs.sdk }}
-      web: ${{ steps.filter.outputs.web }}
-      api: ${{ steps.filter.outputs.api }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed packages
-        uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            shared:
-              - 'packages/shared/**'
-            sdk:
-              - 'packages/sdk/**'
-            web:
-              - 'apps/web/**'
-            api:
-              - 'apps/api/**'
-
-  release-shared:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.shared == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -68,26 +40,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint code
-        run: pnpm lint --filter=./packages/shared...
-
-      - name: Check types
-        run: pnpm check-types --filter=./packages/shared...
-
-      - name: Build the shared package
-        run: pnpm build --filter=./packages/shared...
-
-      - name: Release
-        working-directory: packages/shared
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm version
+          publish: pnpm release
+          commit: 'chore: version packages'
+          title: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release
 
-  release-sdk:
-    needs: [detect-changes]
-    if: always() && needs.detect-changes.outputs.sdk == 'true'
+  # Separate job to create tags after version bump
+  create-tags:
+    name: Create Version Tags
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    needs: release
+    if: needs.release.outputs.published == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -109,32 +78,39 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint code
-        run: pnpm lint --filter=./packages/sdk...
+      - name: Create Git Tags
+        run: |
+          # Get versions from package.json files
+          API_VERSION=$(node -p "require('./apps/api/package.json').version")
+          WEB_VERSION=$(node -p "require('./apps/web/package.json').version")
 
-      - name: Check types
-        run: pnpm check-types --filter=./packages/sdk...
+          # Create tags if versions changed
+          if git rev-parse "api/v${API_VERSION}" >/dev/null 2>&1; then
+            echo "Tag api/v${API_VERSION} already exists"
+          else
+            git tag "api/v${API_VERSION}"
+            echo "Created tag api/v${API_VERSION}"
+          fi
 
-      - name: Build the SDK
-        run: pnpm build --filter=./packages/sdk...
+          if git rev-parse "web/v${WEB_VERSION}" >/dev/null 2>&1; then
+            echo "Tag web/v${WEB_VERSION} already exists"
+          else
+            git tag "web/v${WEB_VERSION}"
+            echo "Created tag web/v${WEB_VERSION}"
+          fi
 
-      - name: Release
-        working-directory: packages/sdk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release
+          # Push all tags
+          git push --tags
 
-  release-web:
-    needs: [detect-changes]
-    if: always() && needs.detect-changes.outputs.web == 'true'
+  # Deploy API when API version changes
+  deploy-api:
+    name: Deploy API
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    needs: create-tags
+    if: needs.release.outputs.publishedPackages != ''
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -150,58 +126,40 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build SDK
-        run: pnpm build --filter=./packages/sdk...
-
-      - name: Build Shared
-        run: pnpm build --filter=./packages/shared...
-
-      - name: Lint code
-        run: pnpm lint --filter=./apps/web...
-
-      - name: Build the app
-        run: pnpm build --filter=./apps/web...
-
-      - name: Release
-        working-directory: apps/web
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release
-
-  release-api:
-    needs: [detect-changes]
-    if: always() && needs.detect-changes.outputs.api == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.0.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint code
-        run: pnpm lint --filter=./apps/api...
-
-      - name: Build the app
+      - name: Build API
         run: pnpm build --filter=./apps/api...
 
-      - name: Release
-        working-directory: apps/api
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release
+      # Add your API deployment steps here
+      - name: Deploy API
+        run: echo "Add your API deployment command here"
+
+  # Deploy Web when Web version changes
+  deploy-web:
+    name: Deploy Web
+    runs-on: ubuntu-latest
+    needs: create-tags
+    if: needs.release.outputs.publishedPackages != ''
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Web
+        run: pnpm build --filter=./apps/web...
+
+      # Add your Web deployment steps here
+      - name: Deploy Web
+        run: echo "Add your Web deployment command here"
