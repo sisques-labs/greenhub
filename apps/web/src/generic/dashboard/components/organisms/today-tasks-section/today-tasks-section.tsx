@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { Checkbox } from "@repo/shared/presentation/components/ui/checkbox";
+} from "@/presentation/components/ui/card";
+import { Checkbox } from "@/presentation/components/ui/checkbox";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 

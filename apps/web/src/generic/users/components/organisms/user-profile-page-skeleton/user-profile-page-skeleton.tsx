@@ -6,8 +6,8 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+} from "@/presentation/components/ui/card";
+import { Skeleton } from "@/presentation/components/ui/skeleton";
 
 /**
  * Skeleton component for the user profile page

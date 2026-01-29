@@ -1,16 +1,16 @@
 "use client";
 
 import type { UserResponse } from "@repo/sdk";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
-import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
+} from "@/presentation/components/ui/form";
+import { Input } from "@/presentation/components/ui/input";
+import { Textarea } from "@/presentation/components/ui/textarea";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import {

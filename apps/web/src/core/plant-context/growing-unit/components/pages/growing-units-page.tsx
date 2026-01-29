@@ -7,8 +7,8 @@ import { GrowingUnitsCardsSkeleton } from '@/core/plant-context/growing-unit/com
 import { useGrowingUnitsPage } from '@/core/plant-context/growing-unit/hooks/use-growing-units-page/use-growing-units-page';
 import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
 import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { PageHeader } from '@/presentation/components/organisms/page-header';
+import { Button } from '@/presentation/components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

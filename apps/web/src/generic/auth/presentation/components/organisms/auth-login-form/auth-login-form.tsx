@@ -1,6 +1,6 @@
 "use client";
 
-import { Form } from "@repo/shared/presentation/components/ui/form";
+import { Form } from "@/presentation/components/ui/form";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { AuthEmailField } from "@/generic/auth/presentation/components/molecules/auth-email-field/auth-email-field";

@@ -1,6 +1,6 @@
 "use client";
 
-import PageWithSidebarTemplate from "@repo/shared/presentation/components/templates/page-with-sidebar-template";
+import PageWithSidebarTemplate from "@/presentation/components/templates/page-with-sidebar-template";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";

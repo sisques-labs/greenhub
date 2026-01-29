@@ -1,4 +1,4 @@
-import { SidebarData } from "@repo/shared/domain/interfaces/sidebar-data.interface";
+import { SidebarData } from "@/domain/interfaces/sidebar-data.interface";
 import { Home, LayoutGrid, MapPin, Settings, Sprout } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";

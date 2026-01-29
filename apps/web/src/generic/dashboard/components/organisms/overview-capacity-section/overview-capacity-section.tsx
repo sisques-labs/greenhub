@@ -1,14 +1,14 @@
 'use client';
 
 import type { OverviewResponse } from '@repo/sdk';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import { Badge } from '@/presentation/components/ui/badge';
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Progress } from '@repo/shared/presentation/components/ui/progress';
+} from '@/presentation/components/ui/card';
+import { Progress } from '@/presentation/components/ui/progress';
 import { AlertTriangleIcon, CheckCircleIcon, PackageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

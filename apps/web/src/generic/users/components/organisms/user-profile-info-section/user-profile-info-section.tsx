@@ -7,8 +7,8 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { Separator } from "@repo/shared/presentation/components/ui/separator";
+} from "@/presentation/components/ui/card";
+import { Separator } from "@/presentation/components/ui/separator";
 import { useTranslations } from "next-intl";
 
 interface UserProfileInfoSectionProps {

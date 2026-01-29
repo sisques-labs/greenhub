@@ -1,14 +1,14 @@
 'use client';
 
 import type { GrowingUnitResponse } from '@repo/sdk';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import { Badge } from '@/presentation/components/ui/badge';
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/presentation/components/ui/card';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';

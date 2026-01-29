@@ -6,7 +6,7 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
+} from "@/presentation/components/ui/card";
 import {
 	AlertTriangleIcon,
 	FlowerIcon,

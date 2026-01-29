@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+import { Skeleton } from "@/presentation/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -8,7 +8,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@repo/shared/presentation/components/ui/table";
+} from "@/presentation/components/ui/table";
 
 interface PlantsTableSkeletonProps {
 	/**

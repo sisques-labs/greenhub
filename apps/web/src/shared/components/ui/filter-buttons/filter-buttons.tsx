@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@repo/shared/presentation/components/ui/button";
-import { cn } from "@repo/shared/presentation/lib/utils";
+import { Button } from "@/presentation/components/ui/button";
+import { cn } from "@/presentation/lib/utils";
 import type { LucideIcon } from "lucide-react";
 
 export interface FilterOption {

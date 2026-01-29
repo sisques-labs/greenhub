@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import { useTranslations } from "next-intl";
 import { AuthCard } from "@/generic/auth/presentation/components/organisms/auth-card/auth-card";
 import { AuthLoginForm } from "@/generic/auth/presentation/components/organisms/auth-login-form/auth-login-form";

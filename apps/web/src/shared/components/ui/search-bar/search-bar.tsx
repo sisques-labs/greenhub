@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@repo/shared/presentation/components/ui/input";
+import { Input } from "@/presentation/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import type { ChangeEvent } from "react";
 

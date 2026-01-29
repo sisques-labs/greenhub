@@ -5,17 +5,17 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from "@repo/shared/presentation/components/ui/avatar";
+} from "@/presentation/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@repo/shared/presentation/components/ui/dropdown-menu";
+} from "@/presentation/components/ui/dropdown-menu";
 import {
 	TableCell,
 	TableRow,
-} from "@repo/shared/presentation/components/ui/table";
+} from "@/presentation/components/ui/table";
 import { MapPinIcon, MoreVerticalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";

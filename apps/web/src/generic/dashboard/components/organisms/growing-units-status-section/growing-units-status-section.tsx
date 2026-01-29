@@ -1,13 +1,13 @@
 "use client";
 
 import type { GrowingUnitResponse } from "@repo/sdk";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
+} from "@/presentation/components/ui/card";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";

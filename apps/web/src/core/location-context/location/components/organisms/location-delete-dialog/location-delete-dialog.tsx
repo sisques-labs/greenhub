@@ -10,7 +10,7 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-} from '@repo/shared/presentation/components/ui/alert-dialog';
+} from '@/presentation/components/ui/alert-dialog';
 import { useTranslations } from 'next-intl';
 
 interface LocationDeleteDialogProps {

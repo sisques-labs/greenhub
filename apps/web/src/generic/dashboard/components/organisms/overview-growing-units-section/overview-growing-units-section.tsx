@@ -1,13 +1,13 @@
 "use client";
 
 import type { OverviewResponse } from "@repo/sdk";
-import { Badge } from "@repo/shared/presentation/components/ui/badge";
+import { Badge } from "@/presentation/components/ui/badge";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
+} from "@/presentation/components/ui/card";
 import {
 	BoxIcon,
 	CircleIcon,

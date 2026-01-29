@@ -5,15 +5,15 @@ import { PlantEditDetailsModal } from '@/core/plant-context/plant/components/org
 import { PlantTransplantModal } from '@/core/plant-context/plant/components/organisms/plant-transplant-modal/plant-transplant-modal';
 import { usePlantDetailPage } from '@/core/plant-context/plant/hooks/use-plant-detail-page/use-plant-detail-page';
 import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
-import { TimelineSequence } from '@repo/shared/presentation/components/molecules/timeline-sequence';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { TimelineSequence } from '@/presentation/components/molecules/timeline-sequence';
+import { Badge } from '@/presentation/components/ui/badge';
+import { Button } from '@/presentation/components/ui/button';
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/presentation/components/ui/card';
 import {
 	Table,
 	TableBody,
@@ -21,7 +21,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
+} from '@/presentation/components/ui/table';
 import {
 	ArrowRightLeftIcon,
 	CalendarIcon,

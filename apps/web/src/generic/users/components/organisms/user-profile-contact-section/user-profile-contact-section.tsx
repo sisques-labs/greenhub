@@ -7,7 +7,7 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
+} from "@/presentation/components/ui/card";
 import { Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 

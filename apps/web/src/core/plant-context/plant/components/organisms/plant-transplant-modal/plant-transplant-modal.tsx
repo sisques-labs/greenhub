@@ -5,7 +5,7 @@ import type {
 	PlantGrowingUnitReference,
 	PlantResponse,
 } from "@repo/sdk";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from "@/presentation/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -13,22 +13,22 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@repo/shared/presentation/components/ui/dialog";
+} from "@/presentation/components/ui/dialog";
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
+} from "@/presentation/components/ui/form";
+import { Input } from "@/presentation/components/ui/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@repo/shared/presentation/components/ui/select";
+} from "@/presentation/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { z } from "zod";

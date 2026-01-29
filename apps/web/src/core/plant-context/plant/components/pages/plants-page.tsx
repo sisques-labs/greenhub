@@ -8,16 +8,16 @@ import {
 	type FilterOption,
 	SearchAndFilters,
 } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { PageHeader } from '@/presentation/components/organisms/page-header';
+import { TableLayout } from '@/presentation/components/organisms/table-layout';
+import { Button } from '@/presentation/components/ui/button';
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
+} from '@/presentation/components/ui/table';
 import {
 	Building2Icon,
 	CheckCircleIcon,

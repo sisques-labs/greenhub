@@ -1,22 +1,22 @@
 "use client";
 
-import { PageHeader } from "@repo/shared/presentation/components/organisms/page-header";
-import { Badge } from "@repo/shared/presentation/components/ui/badge";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { PageHeader } from "@/presentation/components/organisms/page-header";
+import { Badge } from "@/presentation/components/ui/badge";
+import { Button } from "@/presentation/components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+} from "@/presentation/components/ui/card";
+import { Skeleton } from "@/presentation/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@repo/shared/presentation/components/ui/table";
+} from "@/presentation/components/ui/table";
 import {
 	DropletsIcon,
 	Grid3x3Icon,

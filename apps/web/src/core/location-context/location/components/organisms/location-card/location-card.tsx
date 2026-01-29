@@ -1,20 +1,20 @@
 'use client';
 
 import type { LocationResponse } from '@repo/sdk';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import { Badge } from '@/presentation/components/ui/badge';
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/presentation/components/ui/card';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@repo/shared/presentation/components/ui/dropdown-menu';
+} from '@/presentation/components/ui/dropdown-menu';
 import { MoreVerticalIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
