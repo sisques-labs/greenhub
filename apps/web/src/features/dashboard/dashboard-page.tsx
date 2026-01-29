@@ -4,11 +4,11 @@ import { PageHeader } from "@/ui/composites/page-header";
 import { Button } from "@/ui/primitives/button";
 import { RefreshCwIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { OverviewCapacitySection } from "@/generic/dashboard/components/organisms/overview-capacity-section/overview-capacity-section";
-import { OverviewGrowingUnitsSection } from "@/generic/dashboard/components/organisms/overview-growing-units-section/overview-growing-units-section";
-import { OverviewPlantsSection } from "@/generic/dashboard/components/organisms/overview-plants-section/overview-plants-section";
-import { OverviewStatsCards } from "@/generic/dashboard/components/organisms/overview-stats-cards/overview-stats-cards";
-import { useDashboardPage } from "@/generic/dashboard/hooks/use-dashboard-page/use-dashboard-page";
+import { OverviewCapacitySection } from "./overview-capacity-section";
+import { OverviewGrowingUnitsSection } from "./overview-growing-units-section";
+import { OverviewPlantsSection } from "./overview-plants-section";
+import { OverviewStatsCards } from "./overview-stats-cards";
+import { useDashboardPage } from "./use-dashboard-page";
 
 /**
  * Dashboard page component
