@@ -6,14 +6,14 @@ import { PlantTransplantModal } from '@/core/plant-context/plant/components/orga
 import { usePlantDetailPage } from '@/core/plant-context/plant/hooks/use-plant-detail-page/use-plant-detail-page';
 import { getPlantStatusBadge } from '@/core/plant-context/plant/utils/plant-status.utils';
 import { TimelineSequence } from '@/presentation/components/molecules/timeline-sequence';
-import { Badge } from '@/presentation/components/ui/badge';
-import { Button } from '@/presentation/components/ui/button';
+import { Badge } from '@/ui/primitives/badge';
+import { Button } from '@/ui/primitives/button';
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@/presentation/components/ui/card';
+} from '@/ui/primitives/card';
 import {
 	Table,
 	TableBody,
@@ -21,7 +21,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/presentation/components/ui/table';
+} from '@/ui/primitives/table';
 import {
 	ArrowRightLeftIcon,
 	CalendarIcon,

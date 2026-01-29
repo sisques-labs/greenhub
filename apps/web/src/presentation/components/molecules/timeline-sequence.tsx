@@ -1,7 +1,7 @@
 "use client";
 
-import { Card } from "@/presentation/components/ui/card";
-import { cn } from "@/presentation/lib/utils";
+import { Card } from "@/ui/primitives/card";
+import { cn } from "@/lib/utils/cn";
 import { CheckIcon } from "lucide-react";
 import * as React from "react";
 

@@ -1,6 +1,6 @@
 import { useAuth } from "@repo/sdk";
 import { useEffect, useRef } from "react";
-import { useSidebarUserStore } from "@/shared/stores/sidebar-user-store";
+import { useSidebarUserStore } from "@/lib/stores/sidebar-user-store";
 
 /**
  * Hook that provides authenticated user profile functionality

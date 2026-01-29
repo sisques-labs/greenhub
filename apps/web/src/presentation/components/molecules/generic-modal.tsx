@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/presentation/components/ui/button";
+import { Button } from "@/ui/primitives/button";
 import {
 	Dialog,
 	DialogContent,
@@ -9,8 +9,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "@/presentation/components/ui/dialog";
-import { cn } from "@/presentation/lib/utils";
+} from "@/ui/primitives/dialog";
+import { cn } from "@/lib/utils/cn";
 import * as React from "react";
 
 export type GenericModalAction = {

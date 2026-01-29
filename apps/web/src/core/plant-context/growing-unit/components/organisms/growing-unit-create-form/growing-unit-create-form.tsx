@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/presentation/components/ui/button";
+import { Button } from "@/ui/primitives/button";
 import {
 	Dialog,
 	DialogContent,
@@ -8,22 +8,22 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@/presentation/components/ui/dialog";
+} from "@/ui/primitives/dialog";
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/presentation/components/ui/form";
-import { Input } from "@/presentation/components/ui/input";
+} from "@/ui/primitives/form";
+import { Input } from "@/ui/primitives/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/presentation/components/ui/select";
+} from "@/ui/primitives/select";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import {

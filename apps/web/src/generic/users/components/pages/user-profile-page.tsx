@@ -7,7 +7,7 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/presentation/components/ui/card";
+} from "@/ui/primitives/card";
 import { useTranslations } from "next-intl";
 import { useAuthProfileMe } from "@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me";
 import { UserProfileAccountSection } from "@/generic/users/components/organisms/user-profile-account-section/user-profile-account-section";

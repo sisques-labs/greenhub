@@ -1,15 +1,15 @@
 "use client";
 
 import type { AuthUserProfileResponse } from "@repo/sdk";
-import { Badge } from "@/presentation/components/ui/badge";
+import { Badge } from "@/ui/primitives/badge";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/presentation/components/ui/card";
-import { Separator } from "@/presentation/components/ui/separator";
+} from "@/ui/primitives/card";
+import { Separator } from "@/ui/primitives/separator";
 import { CheckCircle2, Mail, Shield, XCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 

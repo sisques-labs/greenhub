@@ -5,10 +5,10 @@ import { GrowingUnitCard } from '@/core/plant-context/growing-unit/components/or
 import { GrowingUnitCreateForm } from '@/core/plant-context/growing-unit/components/organisms/growing-unit-create-form/growing-unit-create-form';
 import { GrowingUnitsCardsSkeleton } from '@/core/plant-context/growing-unit/components/organisms/growing-units-cards-skeleton/growing-units-cards-skeleton';
 import { useGrowingUnitsPage } from '@/core/plant-context/growing-unit/hooks/use-growing-units-page/use-growing-units-page';
-import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
-import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import { PageHeader } from '@/presentation/components/organisms/page-header';
-import { Button } from '@/presentation/components/ui/button';
+import { PaginatedResults } from '@/ui/composites/paginated-results';
+import { SearchAndFilters } from '@/ui/composites/search-and-filters';
+import { PageHeader } from '@/ui/composites/page-header';
+import { Button } from '@/ui/primitives/button';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

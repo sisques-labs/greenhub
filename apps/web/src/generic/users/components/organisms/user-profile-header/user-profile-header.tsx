@@ -5,12 +5,12 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from "@/presentation/components/ui/avatar";
-import { Badge } from "@/presentation/components/ui/badge";
+} from "@/ui/primitives/avatar";
+import { Badge } from "@/ui/primitives/badge";
 import {
 	Card,
 	CardContent,
-} from "@/presentation/components/ui/card";
+} from "@/ui/primitives/card";
 import { useTranslations } from "next-intl";
 
 interface UserProfileHeaderProps {

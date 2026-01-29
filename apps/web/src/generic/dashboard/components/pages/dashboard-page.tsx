@@ -1,7 +1,7 @@
 "use client";
 
-import { PageHeader } from "@/presentation/components/organisms/page-header";
-import { Button } from "@/presentation/components/ui/button";
+import { PageHeader } from "@/ui/composites/page-header";
+import { Button } from "@/ui/primitives/button";
 import { RefreshCwIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { OverviewCapacitySection } from "@/generic/dashboard/components/organisms/overview-capacity-section/overview-capacity-section";

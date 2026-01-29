@@ -1,4 +1,4 @@
-import { Badge } from "@/presentation/components/ui/badge";
+import { Badge } from "@/ui/primitives/badge";
 
 /**
  * Status configuration type for plant status badges.

@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/presentation/components/ui/button";
+import { Button } from "@/ui/primitives/button";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@/presentation/components/ui/card";
-import { Checkbox } from "@/presentation/components/ui/checkbox";
+} from "@/ui/primitives/card";
+import { Checkbox } from "@/ui/primitives/checkbox";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 

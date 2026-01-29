@@ -1,6 +1,6 @@
 'use client';
 
-import { PageSkeleton } from '@/shared/components/ui/page-skeleton/page-skeleton';
+import { PageSkeleton } from '@/ui/composites/page-skeleton';
 
 export function LocationsPageSkeleton() {
 	return <PageSkeleton />;

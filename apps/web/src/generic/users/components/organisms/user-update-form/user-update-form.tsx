@@ -1,16 +1,16 @@
 "use client";
 
 import type { UserResponse } from "@repo/sdk";
-import { Button } from "@/presentation/components/ui/button";
+import { Button } from "@/ui/primitives/button";
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/presentation/components/ui/form";
-import { Input } from "@/presentation/components/ui/input";
-import { Textarea } from "@/presentation/components/ui/textarea";
+} from "@/ui/primitives/form";
+import { Input } from "@/ui/primitives/input";
+import { Textarea } from "@/ui/primitives/textarea";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import {

@@ -3,7 +3,7 @@
 import {
 	Card,
 	CardContent,
-} from "@/presentation/components/ui/card";
+} from "@/ui/primitives/card";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 

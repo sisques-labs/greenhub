@@ -5,17 +5,17 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from "@/presentation/components/ui/avatar";
+} from "@/ui/primitives/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/presentation/components/ui/dropdown-menu";
+} from "@/ui/primitives/dropdown-menu";
 import {
 	TableCell,
 	TableRow,
-} from "@/presentation/components/ui/table";
+} from "@/ui/primitives/table";
 import { MapPinIcon, MoreVerticalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";

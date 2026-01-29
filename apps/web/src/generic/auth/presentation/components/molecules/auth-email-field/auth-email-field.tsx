@@ -5,8 +5,8 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/presentation/components/ui/form";
-import { Input } from "@/presentation/components/ui/input";
+} from "@/ui/primitives/form";
+import { Input } from "@/ui/primitives/input";
 import { useTranslations } from "next-intl";
 
 interface AuthEmailFieldProps {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton } from "@/presentation/components/ui/skeleton";
+import { Skeleton } from "@/ui/primitives/skeleton";
 import {
 	Table,
 	TableBody,
@@ -8,11 +8,11 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/presentation/components/ui/table";
+} from "@/ui/primitives/table";
 import {
 	PageHeaderSkeleton,
 	SearchAndFiltersSkeleton,
-} from "@/shared/components/ui/page-skeleton/page-skeleton";
+} from "@/ui/composites/page-skeleton";
 
 /**
  * Skeleton component for the plants list page

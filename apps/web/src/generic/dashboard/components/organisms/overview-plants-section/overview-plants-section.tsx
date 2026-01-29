@@ -1,14 +1,14 @@
 "use client";
 
 import type { OverviewResponse } from "@repo/sdk";
-import { Badge } from "@/presentation/components/ui/badge";
+import { Badge } from "@/ui/primitives/badge";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@/presentation/components/ui/card";
-import { Progress } from "@/presentation/components/ui/progress";
+} from "@/ui/primitives/card";
+import { Progress } from "@/ui/primitives/progress";
 import {
 	ArchiveIcon,
 	CalendarIcon,

@@ -4,8 +4,8 @@ import {
 	Card,
 	CardContent,
 	CardHeader,
-} from "@/presentation/components/ui/card";
-import { Skeleton } from "@/presentation/components/ui/skeleton";
+} from "@/ui/primitives/card";
+import { Skeleton } from "@/ui/primitives/skeleton";
 import {
 	Table,
 	TableBody,
@@ -13,7 +13,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/presentation/components/ui/table";
+} from "@/ui/primitives/table";
 
 /**
  * Skeleton component for the plant detail page

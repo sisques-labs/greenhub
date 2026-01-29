@@ -7,10 +7,10 @@ import { LocationDeleteDialog } from '@/core/location-context/location/component
 import { LocationUpdateForm } from '@/core/location-context/location/components/organisms/location-update-form/location-update-form';
 import { LocationsCardsSkeleton } from '@/core/location-context/location/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
 import { useLocationsPage } from '@/core/location-context/location/hooks/use-locations-page/use-locations-page';
-import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
-import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import { PageHeader } from '@/presentation/components/organisms/page-header';
-import { Button } from '@/presentation/components/ui/button';
+import { PaginatedResults } from '@/ui/composites/paginated-results';
+import { SearchAndFilters } from '@/ui/composites/search-and-filters';
+import { PageHeader } from '@/ui/composites/page-header';
+import { Button } from '@/ui/primitives/button';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

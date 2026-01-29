@@ -4,12 +4,12 @@ import {
 	Card,
 	CardContent,
 	CardHeader,
-} from "@/presentation/components/ui/card";
-import { Skeleton } from "@/presentation/components/ui/skeleton";
+} from "@/ui/primitives/card";
+import { Skeleton } from "@/ui/primitives/skeleton";
 import {
 	PageHeaderSkeleton,
 	SearchAndFiltersSkeleton,
-} from "@/shared/components/ui/page-skeleton/page-skeleton";
+} from "@/ui/composites/page-skeleton";
 
 /**
  * Skeleton component for a single growing unit card

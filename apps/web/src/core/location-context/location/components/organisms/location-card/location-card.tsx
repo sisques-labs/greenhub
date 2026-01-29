@@ -1,20 +1,20 @@
 'use client';
 
 import type { LocationResponse } from '@repo/sdk';
-import { Badge } from '@/presentation/components/ui/badge';
+import { Badge } from '@/ui/primitives/badge';
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@/presentation/components/ui/card';
+} from '@/ui/primitives/card';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@/presentation/components/ui/dropdown-menu';
+} from '@/ui/primitives/dropdown-menu';
 import { MoreVerticalIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

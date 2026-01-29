@@ -5,7 +5,7 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@/presentation/components/ui/card";
+} from "@/ui/primitives/card";
 import {
 	AlertTriangleIcon,
 	FlowerIcon,

@@ -1,14 +1,14 @@
 import {
 	AppSidebar,
 	AppSidebarProps,
-} from "@/presentation/components/organisms/app-sidebar";
-import { DesktopHeader } from "@/presentation/components/organisms/desktop-header/desktop-header";
-import { MobileHeader } from "@/presentation/components/organisms/mobile-header/mobile-header";
+} from "@/ui/composites/app-sidebar";
+import { DesktopHeader } from "@/ui/composites/desktop-header";
+import { MobileHeader } from "@/ui/composites/mobile-header";
 import PageTemplate from "@/presentation/components/templates/page-template";
 import {
 	SidebarInset,
 	SidebarProvider,
-} from "@/presentation/components/ui/sidebar";
+} from "@/ui/primitives/sidebar";
 import React from "react";
 
 interface PageWithSidebarTemplateProps {

@@ -11,7 +11,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@/presentation/components/ui/table";
+} from "@/ui/primitives/table";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { PlantTableRow } from "@/core/plant-context/plant/components/organisms/plant-table-row/plant-table-row";
