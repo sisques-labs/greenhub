@@ -5,7 +5,7 @@ import {
 	type LocationUpdateFormValues,
 } from '@/core/location-context/location/dtos/schemas/location-update/location-update.schema';
 import type { LocationResponse } from '@repo/sdk';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/ui/primitives/button';
 import {
 	Dialog,
 	DialogContent,
@@ -13,23 +13,23 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from '@/ui/primitives/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from '@/ui/primitives/form';
+import { Input } from '@/ui/primitives/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
-import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
+} from '@/ui/primitives/select';
+import { Textarea } from '@/ui/primitives/textarea';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 

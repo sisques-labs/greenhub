@@ -5,7 +5,7 @@ import { usePlantTransplant } from '@/core/plant-context/plant/hooks/use-plant-t
 import { usePlantUpdate } from '@/core/plant-context/plant/hooks/use-plant-update/use-plant-update';
 import { usePlantDetailPageStore } from '@/core/plant-context/plant/stores/plant-detail-page-store';
 import type { PlantStatus } from '@repo/sdk';
-import type { TimelineSequenceGroup } from '@repo/shared/presentation/components/molecules/timeline-sequence';
+import type { TimelineSequenceGroup } from '@/presentation/components/molecules/timeline-sequence';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
 

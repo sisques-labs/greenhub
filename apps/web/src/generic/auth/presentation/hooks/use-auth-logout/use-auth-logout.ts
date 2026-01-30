@@ -1,6 +1,6 @@
 import { useAuth } from "@repo/sdk";
 import { useRouter } from "next/navigation";
-import { useAppRoutes } from "@/shared/hooks/use-routes";
+import { useAppRoutes } from "@/lib/hooks/use-routes";
 
 /**
  * Hook that provides logout functionality

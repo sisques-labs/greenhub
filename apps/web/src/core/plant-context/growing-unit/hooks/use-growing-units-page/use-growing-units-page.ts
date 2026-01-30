@@ -4,7 +4,7 @@ import { useGrowingUnitCreate } from '@/core/plant-context/growing-unit/hooks/us
 import { useGrowingUnitUpdate } from '@/core/plant-context/growing-unit/hooks/use-growing-unit-update/use-growing-unit-update';
 import { useGrowingUnitsFindByCriteria } from '@/core/plant-context/growing-unit/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import { useGrowingUnitsPageStore } from '@/core/plant-context/growing-unit/stores/growing-units-page-store';
-import type { FilterOption } from '@/shared/components/ui/search-and-filters/search-and-filters';
+import type { FilterOption } from '@/ui/composites/search-and-filters';
 import type { FilterOperator } from '@repo/sdk';
 import { Building2Icon, FlowerIcon, HomeIcon, PackageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';

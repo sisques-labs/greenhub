@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { AuthLoginService } from "@/generic/auth/application/services/auth-login/auth-login.service";
 import { AuthLoginByEmailFormValues } from "@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema";
-import { useAppRoutes } from "@/shared/hooks/use-routes";
+import { useAppRoutes } from "@/lib/hooks/use-routes";
 
 /**
  * Hook that provides login functionality using the AuthLoginService

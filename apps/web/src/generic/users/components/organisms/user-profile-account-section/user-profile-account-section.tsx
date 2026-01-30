@@ -7,8 +7,8 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { Separator } from "@repo/shared/presentation/components/ui/separator";
+} from "@/ui/primitives/card";
+import { Separator } from "@/ui/primitives/separator";
 import { Calendar, Clock } from "lucide-react";
 import { useTranslations } from "next-intl";
 

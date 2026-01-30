@@ -1,12 +1,11 @@
-import baseConfig from "../../eslint.config.mjs";
+import baseConfig from '../../eslint.config.mjs';
 
 export default [
 	...baseConfig,
 	{
-		files: ["**/*.ts", "**/*.tsx"],
+		files: ['**/*.ts', '**/*.tsx'],
 		rules: {
-			"@typescript-eslint/explicit-module-boundary-types": "off",
+			'@typescript-eslint/explicit-module-boundary-types': 'off',
 		},
 	},
 ];
-

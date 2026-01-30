@@ -7,17 +7,17 @@ import { usePlantsPage } from '@/core/plant-context/plant/hooks/use-plants-page/
 import {
 	type FilterOption,
 	SearchAndFilters,
-} from '@/shared/components/ui/search-and-filters/search-and-filters';
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+} from '@/ui/composites/search-and-filters';
+import { PageHeader } from '@/ui/composites/page-header';
+import { TableLayout } from '@/ui/composites/table-layout';
+import { Button } from '@/ui/primitives/button';
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
+} from '@/ui/primitives/table';
 import {
 	Building2Icon,
 	CheckCircleIcon,

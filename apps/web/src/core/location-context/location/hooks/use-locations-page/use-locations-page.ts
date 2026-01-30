@@ -5,7 +5,7 @@ import { useLocationDelete } from '@/core/location-context/location/hooks/use-lo
 import { useLocationUpdate } from '@/core/location-context/location/hooks/use-location-update/use-location-update';
 import { useLocationsFindByCriteria } from '@/core/location-context/location/hooks/use-locations-find-by-criteria/use-locations-find-by-criteria';
 import { useLocationsPageStore } from '@/core/location-context/location/stores/locations-page-store';
-import type { FilterOption } from '@/shared/components/ui/search-and-filters/search-and-filters';
+import type { FilterOption } from '@/ui/composites/search-and-filters';
 import type { FilterOperator, LocationResponse } from '@repo/sdk';
 import { Building2Icon, HomeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
