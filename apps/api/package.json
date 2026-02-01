@@ -64,7 +64,7 @@
 	"devDependencies": {
 		"@nestjs/cli": "^10.0.0",
 		"@nestjs/schematics": "^10.0.0",
-		"@nestjs/testing": "^10.0.0",
+		"@nestjs/testing": "^11.1.12",
 		"@types/express": "^5.0.6",
 		"@types/form-data": "^2.5.2",
 		"@types/graphql-upload": "^17.0.0",
