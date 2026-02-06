@@ -1,5 +1,9 @@
 'use client';
 
+import type { GrowingUnitResponse } from '@/features/growing-units/api/types';
+import type { PlantResponse } from '@/features/plants/api/types';
+import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
+import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
 import {
 	Table,
 	TableBody,
@@ -7,10 +11,6 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/shared/components/ui/table';
-import type { GrowingUnitResponse } from 'features/growing-units/api/types';
-import type { PlantResponse } from 'features/plants/api/types';
-import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
-import { PLANT_STATUS } from 'features/plants/constants/plant-status';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
@@ -114,7 +114,6 @@ export function PlantsByGrowingUnitSection({
 							<PlantTableRow
 								key={plant.id}
 								plant={plant}
-								growingUnitName={growingUnit.name}
 								onEdit={onEdit}
 								onDelete={onDelete}
 							/>

@@ -272,11 +272,7 @@ export function GrowingUnitDetailPage() {
 								</TableHeader>
 								<TableBody>
 									{growingUnit.plants.map((plant) => (
-										<PlantTableRow
-											key={plant.id}
-											plant={plant}
-											growingUnitName={growingUnit.name}
-										/>
+										<PlantTableRow key={plant.id} plant={plant} />
 									))}
 								</TableBody>
 							</Table>
