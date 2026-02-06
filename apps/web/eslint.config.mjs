@@ -8,5 +8,8 @@ export default [
 			"@typescript-eslint/explicit-module-boundary-types": "off",
 		},
 	},
+	{
+		ignores: ["shared/components/ui/**"],
+	},
 ];
 

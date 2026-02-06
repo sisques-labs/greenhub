@@ -1,25 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
-import createMiddleware from "next-intl/middleware";
-import { routing } from "@/shared/i18n/routing";
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest, NextResponse } from 'next/server';
+import { routing } from 'shared/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-const STORAGE_PREFIX = "@repo/sdk:";
-const ACCESS_TOKEN_KEY = `${STORAGE_PREFIX}accessToken`;
+const ACCESS_TOKEN_KEY = 'access_token';
 
 /**
  * Public routes that don't require authentication
  */
-const PUBLIC_ROUTES = ["/auth"];
-
-/**
- * Encodes cookie name to match SDK encoding
- */
-function encodeCookieName(name: string): string {
-	return encodeURIComponent(name).replace(/[()]/g, (c) => {
-		return c === "(" ? "%28" : "%29";
-	});
-}
+const PUBLIC_ROUTES = ['/auth'];
 
 /**
  * Checks if a path is a public route
@@ -34,41 +24,40 @@ function isPublicRoute(path: string): boolean {
  * Gets access token from cookies
  */
 function getAccessTokenFromCookies(request: NextRequest): string | null {
-	const encodedKey = encodeCookieName(ACCESS_TOKEN_KEY);
-	const token = request.cookies.get(encodedKey)?.value;
+	const token = request.cookies.get(ACCESS_TOKEN_KEY)?.value;
 
 	// Return token only if it exists and is not empty
 	return token && token.trim().length > 0 ? token : null;
 }
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
 	// Get the pathname without locale
 	const pathname = request.nextUrl.pathname;
 
 	// Extract locale from pathname (format: /locale/path)
 	const localeMatch = pathname.match(/^\/([^/]+)/);
 	const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
-	const pathWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+	const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
 
 	// Redirect root path to /home
-	if (pathWithoutLocale === "/") {
+	if (pathWithoutLocale === '/') {
 		const url = request.nextUrl.clone();
 		url.pathname = `/${locale}/home`;
 		return NextResponse.redirect(url);
 	}
 
 	// Check if accessing auth page or other public routes
-	const isAuthPage = pathWithoutLocale === "/auth";
+	const isAuthPage = pathWithoutLocale === '/auth';
 	const isPublic = isPublicRoute(pathWithoutLocale);
 
 	// Get access token from cookies
 	const accessToken = getAccessTokenFromCookies(request);
 
 	// Case 1: User is authenticated (has valid token) and tries to access auth page
-	// Redirect to dashboard
+	// Redirect to home
 	if (accessToken && isAuthPage) {
 		const url = request.nextUrl.clone();
-		url.pathname = `/${locale}/dashboard`;
+		url.pathname = `/${locale}/home`;
 		return NextResponse.redirect(url);
 	}
 
@@ -88,5 +77,5 @@ export const config = {
 	// Match all pathnames except for
 	// - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
 	// - … the ones containing a dot (e.g. `favicon.ico`)
-	matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+	matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)',
 };

@@ -1,12 +1,10 @@
-import type { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
+import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin("./src/shared/i18n/request.ts");
+const withNextIntl = createNextIntlPlugin('./shared/i18n/request.ts');
 
 const nextConfig: NextConfig = {
-	/* config options here */
-	transpilePackages: ["@repo/sdk", "@repo/shared"],
-	output: "standalone",
+	output: 'standalone',
 };
 
 export default withNextIntl(nextConfig);

@@ -1,4 +1,4 @@
-import { LocationsPage } from "@/core/location-context/location/components/pages/locations-page";
+import { LocationsPage } from "features/locations/components/pages/locations-page";
 
 const Page = () => {
 	return <LocationsPage />;
