@@ -1,6 +1,7 @@
 'use client';
 
 import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
+import { usePlantCreateForm } from '@/features/plants/hooks/use-plant-create-form/use-plant-create-form';
 import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
@@ -26,12 +27,8 @@ import {
 	SelectValue,
 } from '@/shared/components/ui/select';
 import { Textarea } from '@/shared/components/ui/textarea';
-import {
-	createPlantCreateSchema,
-	PlantCreateFormValues,
-} from 'features/plants/schemas/plant-create/plant-create.schema';
+import { PlantCreateFormValues } from 'features/plants/schemas/plant-create/plant-create.schema';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
 
 interface PlantCreateFormProps {
 	open: boolean;
@@ -54,82 +51,29 @@ export function PlantCreateForm({
 }: PlantCreateFormProps) {
 	const t = useTranslations();
 
-	// Create schema with translations
-	const createSchema = useMemo(
-		() => createPlantCreateSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [selectedGrowingUnitId, setSelectedGrowingUnitId] = useState<string>(
-		initialGrowingUnitId || '',
-	);
-	const [name, setName] = useState('');
-	const [species, setSpecies] = useState('');
-	const [plantedDate, setPlantedDate] = useState<Date>(new Date());
-	const [notes, setNotes] = useState('');
-	const [status, setStatus] = useState<PlantCreateFormValues['status']>(
-		PLANT_STATUS.PLANTED,
-	);
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		// Use selected growing unit ID or the provided one
-		const finalGrowingUnitId =
-			selectedGrowingUnitId || initialGrowingUnitId || '';
-
-		// Validate form
-		const result = createSchema.safeParse({
-			name,
-			species,
-			plantedDate,
-			notes: notes || undefined,
-			status,
-			growingUnitId: finalGrowingUnitId,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(result.data);
-		if (!error) {
-			// Reset form
-			setSelectedGrowingUnitId(initialGrowingUnitId || '');
-			setName('');
-			setSpecies('');
-			setPlantedDate(new Date());
-			setNotes('');
-			setStatus(PLANT_STATUS.PLANTED);
-			onOpenChange(false);
-		}
-	};
-
-	const handleOpenChange = (newOpen: boolean) => {
-		if (!newOpen) {
-			// Reset form
-			setSelectedGrowingUnitId(initialGrowingUnitId || '');
-			setName('');
-			setSpecies('');
-			setPlantedDate(new Date());
-			setNotes('');
-			setStatus(PLANT_STATUS.PLANTED);
-			setFormErrors({});
-		}
-		onOpenChange(newOpen);
-	};
+	const {
+		selectedGrowingUnitId,
+		name,
+		species,
+		plantedDate,
+		notes,
+		status,
+		formErrors,
+		setSelectedGrowingUnitId,
+		setName,
+		setSpecies,
+		setPlantedDate,
+		setNotes,
+		setStatus,
+		handleSubmit,
+		handleOpenChange,
+	} = usePlantCreateForm({
+		initialGrowingUnitId,
+		onSubmit,
+		onOpenChange,
+		error,
+		translations: (key: string) => t(key),
+	});
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
