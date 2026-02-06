@@ -11,7 +11,7 @@ import {
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { GrowingUnitCard } from "@/core/plant-context/growing-unit/components/organisms/growing-unit-card/growing-unit-card";
+import { GrowingUnitCard } from "features/growing-units/components/organisms/growing-unit-card/growing-unit-card";
 import { useAppRoutes } from "@/shared/hooks/use-routes";
 
 interface GrowingUnitsStatusSectionProps {

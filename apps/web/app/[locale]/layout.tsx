@@ -53,6 +53,7 @@ export default async function LocaleLayout({
 			>
 				<Providers
 					apiUrl={process.env.NEXT_PUBLIC_API_URL || "http://localhost:4100"}
+					locale={locale}
 					messages={messages}
 				>
 					<AppLayoutWithSidebar>{children}</AppLayoutWithSidebar>

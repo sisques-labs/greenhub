@@ -1,19 +1,22 @@
+'use client';
+
 import { SDKAutoProvider } from "@repo/sdk/react";
-import { QueryProvider } from "@repo/shared/presentation/providers/query-client-provider";
+import { QueryClientProvider } from "@/shared/providers/query-client-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "next-themes";
 
 interface ProvidersProps extends React.PropsWithChildren {
 	apiUrl: string;
+	locale: string;
 	messages: Record<string, string>;
 }
 
-const Providers = async ({ children, apiUrl, messages }: ProvidersProps) => {
+const Providers = ({ children, apiUrl, locale, messages }: ProvidersProps) => {
 	return (
-		<NextIntlClientProvider messages={messages}>
+		<NextIntlClientProvider locale={locale} messages={messages}>
 			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 				<SDKAutoProvider apiUrl={apiUrl}>
-					<QueryProvider>{children}</QueryProvider>
+					<QueryClientProvider>{children}</QueryClientProvider>
 				</SDKAutoProvider>
 			</ThemeProvider>
 		</NextIntlClientProvider>

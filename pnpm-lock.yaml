@@ -244,6 +244,12 @@ importers:
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@tanstack/react-query':
+        specifier: ^5.90.9
+        version: 5.90.9(react@19.2.1)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.90.2
+        version: 5.90.2(@tanstack/react-query@5.90.9(react@19.2.1))(react@19.2.1)
       lucide-react:
         specifier: ^0.554.0
         version: 0.554.0(react@19.2.1)
@@ -11284,10 +11290,21 @@ snapshots:
       '@tanstack/react-query': 5.90.9(react@19.2.0)
       react: 19.2.0
 
+  '@tanstack/react-query-devtools@5.90.2(@tanstack/react-query@5.90.9(react@19.2.1))(react@19.2.1)':
+    dependencies:
+      '@tanstack/query-devtools': 5.90.1
+      '@tanstack/react-query': 5.90.9(react@19.2.1)
+      react: 19.2.1
+
   '@tanstack/react-query@5.90.9(react@19.2.0)':
     dependencies:
       '@tanstack/query-core': 5.90.9
       react: 19.2.0
+
+  '@tanstack/react-query@5.90.9(react@19.2.1)':
+    dependencies:
+      '@tanstack/query-core': 5.90.9
+      react: 19.2.1
 
   '@tokenizer/inflate@0.3.1':
     dependencies:

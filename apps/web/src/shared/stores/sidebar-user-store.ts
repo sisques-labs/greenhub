@@ -1,10 +1,13 @@
 import type { AuthUserProfileResponse } from "@repo/sdk";
 import { create } from "zustand";
 
+// Profile type that supports both SDK and our new auth types
+type ProfileType = AuthUserProfileResponse;
+
 interface SidebarUserStore {
-	profile: AuthUserProfileResponse | null;
-	setProfile: (profile: AuthUserProfileResponse | null) => void;
-	updateProfile: (updates: Partial<AuthUserProfileResponse>) => void;
+	profile: ProfileType | null;
+	setProfile: (profile: ProfileType | null) => void;
+	updateProfile: (updates: Partial<ProfileType>) => void;
 }
 
 /**
