@@ -20,17 +20,11 @@ import type { PlantResponse } from '../../../api/types';
 
 interface PlantTableRowProps {
 	plant: PlantResponse;
-	growingUnitName?: string;
 	onEdit?: (plant: PlantResponse) => void;
 	onDelete?: (id: string) => void;
 }
 
-export function PlantTableRow({
-	plant,
-	growingUnitName,
-	onEdit,
-	onDelete,
-}: PlantTableRowProps) {
+export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 	const t = useTranslations();
 	const locale = useLocale();
 	const router = useRouter();

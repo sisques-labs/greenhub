@@ -46,7 +46,6 @@ export function LocationsPage() {
 		isDeleting,
 		createError,
 		updateError,
-		deleteError,
 	} = useLocationsPage();
 
 	return (

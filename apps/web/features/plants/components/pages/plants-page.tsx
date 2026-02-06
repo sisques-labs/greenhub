@@ -40,7 +40,6 @@ export function PlantsPage() {
 		setPerPage,
 		createDialogOpen,
 		setCreateDialogOpen,
-		allFilteredPlants,
 		paginatedPlants,
 		totalPages,
 		isLoading,
@@ -150,7 +149,6 @@ export function PlantsPage() {
 									<PlantTableRow
 										key={plant.id}
 										plant={plant}
-										growingUnitName={plant.growingUnitName}
 										onEdit={handleEdit}
 										onDelete={handleDelete}
 									/>

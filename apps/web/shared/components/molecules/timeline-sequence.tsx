@@ -163,7 +163,7 @@ export function TimelineSequence({
 
 				{/* Groups */}
 				<div className="space-y-6">
-					{groups.map((group, groupIndex) => {
+					{groups.map((group) => {
 						const isActive = group.isActive ?? false;
 
 						return (

@@ -15,12 +15,7 @@ interface MobileHeaderProps {
  * Mobile header component that displays hamburger menu
  * Only visible on mobile devices
  */
-export function MobileHeader({
-	appName,
-	logoSrc,
-	logoUrl,
-	className,
-}: MobileHeaderProps) {
+export function MobileHeader({ className }: MobileHeaderProps) {
 	const isMobile = useIsMobile();
 
 	if (!isMobile) {
