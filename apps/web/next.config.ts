@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin('./shared/i18n/request.ts');
 
 const nextConfig: NextConfig = {
 	/* config options here */
-	transpilePackages: ['@repo/sdk', '@repo/shared'],
+	transpilePackages: ['@repo/shared'],
 	output: 'standalone',
 };
 
