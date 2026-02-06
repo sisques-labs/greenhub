@@ -1,6 +1,6 @@
 "use client";
 
-import type { PlantResponse } from "@repo/sdk";
+import type { PlantResponse } from "../../../api/types";
 import {
 	Avatar,
 	AvatarFallback,

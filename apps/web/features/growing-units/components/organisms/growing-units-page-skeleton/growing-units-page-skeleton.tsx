@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 import {
 	Card,
 	CardContent,
 	CardHeader,
-} from "@repo/shared/presentation/components/ui/card";
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+} from '@repo/shared/presentation/components/ui/card';
+import { Skeleton } from '@repo/shared/presentation/components/ui/skeleton';
 import {
 	PageHeaderSkeleton,
 	SearchAndFiltersSkeleton,
-} from "@/shared/components/ui/page-skeleton/page-skeleton";
+} from 'shared/components/ui/page-skeleton/page-skeleton';
 
 /**
  * Skeleton component for a single growing unit card

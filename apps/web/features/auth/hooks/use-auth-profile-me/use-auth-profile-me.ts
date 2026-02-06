@@ -1,9 +1,9 @@
 'use client';
 
-import { useSidebarUserStore } from '@/shared/stores/sidebar-user-store';
-import type { AuthUserProfileResponse } from '@repo/sdk';
+import type { AuthUserProfileResponse } from '@/features/auth/api/types';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useSidebarUserStore } from 'shared/stores/sidebar-user-store';
 import { authApiClient } from '../../api/auth-api.client';
 import { transformUserProfile } from '../../api/types';
 

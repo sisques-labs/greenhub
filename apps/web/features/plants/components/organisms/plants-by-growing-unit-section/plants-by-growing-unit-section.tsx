@@ -1,10 +1,8 @@
 "use client";
 
-import {
-	type GrowingUnitResponse,
-	PLANT_STATUS,
-	type PlantResponse,
-} from "@repo/sdk";
+import type { GrowingUnitResponse } from "features/growing-units/api/types";
+import { PLANT_STATUS } from "features/plants/constants/plant-status";
+import type { PlantResponse } from "features/plants/api/types";
 import {
 	Table,
 	TableBody,

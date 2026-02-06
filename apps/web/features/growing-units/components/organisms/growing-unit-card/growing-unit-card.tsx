@@ -1,6 +1,6 @@
 'use client';
 
-import type { GrowingUnitResponse } from '@repo/sdk';
+import type { GrowingUnitResponse } from '../../../api/types';
 import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
 	Card,

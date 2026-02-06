@@ -1,4 +1,4 @@
-import { PLANT_STATUS } from "@repo/sdk";
+import { PLANT_STATUS } from "../../constants/plant-status";
 import { z } from "zod";
 
 /**

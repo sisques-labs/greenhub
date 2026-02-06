@@ -4,7 +4,7 @@ import { usePlantFindById } from 'features/plants/hooks/use-plant-find-by-id/use
 import { usePlantTransplant } from 'features/plants/hooks/use-plant-transplant/use-plant-transplant';
 import { usePlantUpdate } from 'features/plants/hooks/use-plant-update/use-plant-update';
 import { usePlantDetailPageStore } from 'features/plants/stores/plant-detail-page-store';
-import type { PlantStatus } from '@repo/sdk';
+import type { PlantStatus } from '../../api/types';
 import type { TimelineSequenceGroup } from '@repo/shared/presentation/components/molecules/timeline-sequence';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';

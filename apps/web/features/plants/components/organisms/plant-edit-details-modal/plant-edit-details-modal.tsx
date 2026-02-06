@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { PLANT_STATUS } from "@repo/sdk";
-import type { PlantResponse } from "@repo/sdk";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import type { PlantResponse } from '@/features/plants/api/types';
+import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
+import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -10,29 +10,29 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@repo/shared/presentation/components/ui/dialog";
+} from '@repo/shared/presentation/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
+} from '@repo/shared/presentation/components/ui/form';
+import { Input } from '@repo/shared/presentation/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@repo/shared/presentation/components/ui/select";
-import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
-import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+} from '@repo/shared/presentation/components/ui/select';
+import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
 import {
 	createPlantUpdateSchema,
 	PlantUpdateFormValues,
-} from "features/plants/schemas/plant-update/plant-update.schema";
+} from 'features/plants/schemas/plant-update/plant-update.schema';
+import { useTranslations } from 'next-intl';
+import { useEffect, useMemo, useState } from 'react';
 
 interface PlantEditDetailsModalProps {
 	plant: PlantResponse;
@@ -60,14 +60,14 @@ export function PlantEditDetailsModal({
 	);
 
 	// Form state - initialize with plant data
-	const [name, setName] = useState(plant.name || "");
-	const [species, setSpecies] = useState(plant.species || "");
+	const [name, setName] = useState(plant.name || '');
+	const [species, setSpecies] = useState(plant.species || '');
 	const [plantedDate, setPlantedDate] = useState<Date | null>(
 		plant.plantedDate ? new Date(plant.plantedDate) : null,
 	);
-	const [notes, setNotes] = useState(plant.notes || "");
-	const [status, setStatus] = useState<PlantUpdateFormValues["status"]>(
-		(plant.status as PlantUpdateFormValues["status"]) || PLANT_STATUS.PLANTED,
+	const [notes, setNotes] = useState(plant.notes || '');
+	const [status, setStatus] = useState<PlantUpdateFormValues['status']>(
+		(plant.status as PlantUpdateFormValues['status']) || PLANT_STATUS.PLANTED,
 	);
 	const [formErrors, setFormErrors] = useState<
 		Record<string, { message?: string }>
@@ -76,12 +76,12 @@ export function PlantEditDetailsModal({
 	// Update form when plant changes
 	useEffect(() => {
 		if (plant) {
-			setName(plant.name || "");
-			setSpecies(plant.species || "");
+			setName(plant.name || '');
+			setSpecies(plant.species || '');
 			setPlantedDate(plant.plantedDate ? new Date(plant.plantedDate) : null);
-			setNotes(plant.notes || "");
+			setNotes(plant.notes || '');
 			setStatus(
-				(plant.status as PlantUpdateFormValues["status"]) ||
+				(plant.status as PlantUpdateFormValues['status']) ||
 					PLANT_STATUS.PLANTED,
 			);
 		}
@@ -120,12 +120,12 @@ export function PlantEditDetailsModal({
 	const handleOpenChange = (newOpen: boolean) => {
 		if (!newOpen) {
 			// Reset form to plant data
-			setName(plant.name || "");
-			setSpecies(plant.species || "");
+			setName(plant.name || '');
+			setSpecies(plant.species || '');
 			setPlantedDate(plant.plantedDate ? new Date(plant.plantedDate) : null);
-			setNotes(plant.notes || "");
+			setNotes(plant.notes || '');
 			setStatus(
-				(plant.status as PlantUpdateFormValues["status"]) ||
+				(plant.status as PlantUpdateFormValues['status']) ||
 					PLANT_STATUS.PLANTED,
 			);
 			setFormErrors({});
@@ -138,10 +138,10 @@ export function PlantEditDetailsModal({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t("pages.plants.detail.modals.editDetails.title")}
+						{t('pages.plants.detail.modals.editDetails.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t("pages.plants.detail.modals.editDetails.description")}
+						{t('pages.plants.detail.modals.editDetails.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
@@ -149,12 +149,12 @@ export function PlantEditDetailsModal({
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
 								<FormLabel>
-									{t("pages.plants.detail.fields.name.label")}
+									{t('pages.plants.detail.fields.name.label')}
 								</FormLabel>
 								<FormControl>
 									<Input
 										placeholder={t(
-											"pages.plants.detail.fields.name.placeholder",
+											'pages.plants.detail.fields.name.placeholder',
 										)}
 										disabled={isLoading}
 										value={name}
@@ -165,10 +165,10 @@ export function PlantEditDetailsModal({
 							</FormItem>
 
 							<FormItem>
-								<FormLabel>{t("shared.fields.species.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.species.label')}</FormLabel>
 								<FormControl>
 									<Input
-										placeholder={t("shared.fields.species.placeholder")}
+										placeholder={t('shared.fields.species.placeholder')}
 										disabled={isLoading}
 										value={species}
 										onChange={(e) => setSpecies(e.target.value)}
@@ -181,7 +181,7 @@ export function PlantEditDetailsModal({
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
 								<FormLabel>
-									{t("pages.plants.detail.fields.plantedDate.label")}
+									{t('pages.plants.detail.fields.plantedDate.label')}
 								</FormLabel>
 								<FormControl>
 									<Input
@@ -189,8 +189,8 @@ export function PlantEditDetailsModal({
 										disabled={isLoading}
 										value={
 											plantedDate
-												? new Date(plantedDate).toISOString().split("T")[0]
-												: ""
+												? new Date(plantedDate).toISOString().split('T')[0]
+												: ''
 										}
 										onChange={(e) =>
 											setPlantedDate(
@@ -203,10 +203,10 @@ export function PlantEditDetailsModal({
 							</FormItem>
 
 							<FormItem>
-								<FormLabel>{t("shared.fields.status.label")}</FormLabel>
+								<FormLabel>{t('shared.fields.status.label')}</FormLabel>
 								<Select
 									onValueChange={(value) =>
-										setStatus(value as PlantUpdateFormValues["status"])
+										setStatus(value as PlantUpdateFormValues['status'])
 									}
 									value={status}
 									disabled={isLoading}
@@ -214,25 +214,25 @@ export function PlantEditDetailsModal({
 									<FormControl>
 										<SelectTrigger>
 											<SelectValue
-												placeholder={t("shared.fields.status.placeholder")}
+												placeholder={t('shared.fields.status.placeholder')}
 											/>
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
 										<SelectItem value={PLANT_STATUS.PLANTED}>
-											{t("shared.status.plant.PLANTED")}
+											{t('shared.status.plant.PLANTED')}
 										</SelectItem>
 										<SelectItem value={PLANT_STATUS.GROWING}>
-											{t("shared.status.plant.GROWING")}
+											{t('shared.status.plant.GROWING')}
 										</SelectItem>
 										<SelectItem value={PLANT_STATUS.HARVESTED}>
-											{t("shared.status.plant.HARVESTED")}
+											{t('shared.status.plant.HARVESTED')}
 										</SelectItem>
 										<SelectItem value={PLANT_STATUS.DEAD}>
-											{t("shared.status.plant.DEAD")}
+											{t('shared.status.plant.DEAD')}
 										</SelectItem>
 										<SelectItem value={PLANT_STATUS.ARCHIVED}>
-											{t("shared.status.plant.ARCHIVED")}
+											{t('shared.status.plant.ARCHIVED')}
 										</SelectItem>
 									</SelectContent>
 								</Select>
@@ -241,10 +241,10 @@ export function PlantEditDetailsModal({
 						</div>
 
 						<FormItem>
-							<FormLabel>{t("shared.fields.notes.label")}</FormLabel>
+							<FormLabel>{t('shared.fields.notes.label')}</FormLabel>
 							<FormControl>
 								<Textarea
-									placeholder={t("shared.fields.notes.placeholder")}
+									placeholder={t('shared.fields.notes.placeholder')}
 									disabled={isLoading}
 									rows={4}
 									value={notes}
@@ -265,12 +265,16 @@ export function PlantEditDetailsModal({
 								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t("common.cancel")}
+								{t('common.cancel')}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t("pages.plants.detail.modals.editDetails.actions.submit.loading")
-									: t("pages.plants.detail.modals.editDetails.actions.submit.label")}
+									? t(
+											'pages.plants.detail.modals.editDetails.actions.submit.loading',
+										)
+									: t(
+											'pages.plants.detail.modals.editDetails.actions.submit.label',
+										)}
 							</Button>
 						</DialogFooter>
 					</form>
@@ -279,5 +283,3 @@ export function PlantEditDetailsModal({
 		</Dialog>
 	);
 }
-
-

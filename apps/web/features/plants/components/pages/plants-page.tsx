@@ -1,13 +1,5 @@
 'use client';
 
-import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
-import { PlantsTableSkeleton } from 'features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
-import { usePlantsPage } from 'features/plants/hooks/use-plants-page/use-plants-page';
-import {
-	type FilterOption,
-	SearchAndFilters,
-} from '@/shared/components/ui/search-and-filters/search-and-filters';
 import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
 import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
 import { Button } from '@repo/shared/presentation/components/ui/button';
@@ -18,6 +10,10 @@ import {
 	TableHeader,
 	TableRow,
 } from '@repo/shared/presentation/components/ui/table';
+import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
+import { PlantsTableSkeleton } from 'features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
+import { usePlantsPage } from 'features/plants/hooks/use-plants-page/use-plants-page';
 import {
 	Building2Icon,
 	CheckCircleIcon,
@@ -26,6 +22,10 @@ import {
 	PlusIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import {
+	type FilterOption,
+	SearchAndFilters,
+} from 'shared/components/ui/search-and-filters/search-and-filters';
 
 export function PlantsPage() {
 	const t = useTranslations();

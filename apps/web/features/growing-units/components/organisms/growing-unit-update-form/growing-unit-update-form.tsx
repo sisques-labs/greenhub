@@ -1,15 +1,5 @@
 'use client';
 
-import { useLocationsList } from '@/core/location-context/location/hooks/use-locations-list/use-locations-list';
-import {
-	createGrowingUnitUpdateSchema,
-	GrowingUnitUpdateFormValues,
-} from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
-import type {
-	GrowingUnitResponse,
-	GrowingUnitType,
-	LengthUnit,
-} from '@repo/sdk';
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
 	Dialog,
@@ -34,8 +24,16 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@repo/shared/presentation/components/ui/select';
+import {
+	createGrowingUnitUpdateSchema,
+	GrowingUnitUpdateFormValues,
+} from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
+import { useLocationsList } from 'features/locations/hooks/use-locations-list/use-locations-list';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
+import type { LengthUnit } from 'shared/constants/length-unit';
+import type { GrowingUnitResponse } from '../../../api/types';
+import type { GrowingUnitType } from '../../../constants/growing-unit-type';
 
 interface GrowingUnitUpdateFormProps {
 	growingUnit: GrowingUnitResponse | null;

@@ -30,7 +30,7 @@ import {
 	createGrowingUnitCreateSchema,
 	type GrowingUnitCreateFormValues,
 } from "features/growing-units/schemas/growing-unit-create/growing-unit-create.schema";
-import { useLocationsList } from "@/core/location-context/location/hooks/use-locations-list/use-locations-list";
+import { useLocationsList } from "features/locations/hooks/use-locations-list/use-locations-list";
 
 interface GrowingUnitCreateFormProps {
 	open: boolean;

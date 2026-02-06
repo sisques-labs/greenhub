@@ -1,10 +1,10 @@
 "use client";
 
+import type { GrowingUnitResponse } from "features/growing-units/api/types";
 import type {
-	GrowingUnitResponse,
 	PlantGrowingUnitReference,
 	PlantResponse,
-} from "@repo/sdk";
+} from "../../../api/types";
 import { Button } from "@repo/shared/presentation/components/ui/button";
 import {
 	Dialog,

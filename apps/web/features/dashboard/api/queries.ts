@@ -1,0 +1,43 @@
+/**
+ * Dashboard/Overview GraphQL Queries
+ */
+
+export const OVERVIEW_QUERY = `
+  query OverviewFind {
+    overviewFind {
+      id
+      totalPlants
+      totalActivePlants
+      averagePlantsPerGrowingUnit
+      plantsPlanted
+      plantsGrowing
+      plantsHarvested
+      plantsDead
+      plantsArchived
+      plantsWithoutPlantedDate
+      plantsWithNotes
+      recentPlants
+      totalGrowingUnits
+      activeGrowingUnits
+      emptyGrowingUnits
+      growingUnitsPot
+      growingUnitsGardenBed
+      growingUnitsHangingBasket
+      growingUnitsWindowBox
+      totalCapacity
+      totalCapacityUsed
+      averageOccupancy
+      growingUnitsAtLimit
+      growingUnitsFull
+      totalRemainingCapacity
+      growingUnitsWithDimensions
+      totalVolume
+      averageVolume
+      minPlantsPerGrowingUnit
+      maxPlantsPerGrowingUnit
+      medianPlantsPerGrowingUnit
+      createdAt
+      updatedAt
+    }
+  }
+`;

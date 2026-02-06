@@ -1,4 +1,4 @@
-import { UserProfilePage } from "@/generic/users/components/pages/user-profile-page";
+import { UserProfilePage } from "features/users/components/pages/user-profile-page";
 
 const Page = () => {
 	return <UserProfilePage />;

@@ -2,8 +2,8 @@ import { useGrowingUnitsFindByCriteria } from 'features/growing-units/hooks/use-
 import type { PlantCreateFormValues } from 'features/plants/schemas/plant-create/plant-create.schema';
 import { usePlantAdd } from 'features/plants/hooks/use-plant-add/use-plant-add';
 import { usePlantsFindByCriteria } from 'features/plants/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
-import { PLANT_STATUS, type PlantResponse } from '@repo/sdk';
-import type { FilterOperator, PlantStatus } from 'features/plants/api/types';
+import { PLANT_STATUS } from '../../constants/plant-status';
+import type { FilterOperator, PlantResponse, PlantStatus } from 'features/plants/api/types';
 import { useEffect, useMemo, useState } from 'react';
 
 const PLANTS_PER_PAGE = 10;

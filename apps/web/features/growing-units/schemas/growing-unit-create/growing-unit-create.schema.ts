@@ -1,5 +1,6 @@
-import { GROWING_UNIT_TYPE, LENGTH_UNIT } from "@repo/sdk";
-import { z } from "zod";
+import { LENGTH_UNIT } from 'shared/constants/length-unit';
+import { z } from 'zod';
+import { GROWING_UNIT_TYPE } from '../../constants/growing-unit-type';
 
 /**
  * Schema factory for growing unit create form validation
@@ -15,8 +16,8 @@ export function createGrowingUnitCreateSchema(
 	return z.object({
 		locationId: z
 			.string()
-			.min(1, translations("shared.validation.locationId.required")),
-		name: z.string().min(1, translations("shared.validation.name.required")),
+			.min(1, translations('shared.validation.locationId.required')),
+		name: z.string().min(1, translations('shared.validation.name.required')),
 		type: z
 			.string()
 			.refine(
@@ -25,12 +26,12 @@ export function createGrowingUnitCreateSchema(
 						value,
 					),
 				{
-					message: translations("shared.validation.type.invalid"),
+					message: translations('shared.validation.type.invalid'),
 				},
 			),
 		capacity: z
 			.number()
-			.min(1, translations("shared.validation.capacity.required")),
+			.min(1, translations('shared.validation.capacity.required')),
 		length: z.number().optional(),
 		width: z.number().optional(),
 		height: z.number().optional(),
@@ -40,7 +41,7 @@ export function createGrowingUnitCreateSchema(
 				(value) =>
 					Object.values(LENGTH_UNIT as Record<string, string>).includes(value),
 				{
-					message: translations("shared.validation.unit.invalid"),
+					message: translations('shared.validation.unit.invalid'),
 				},
 			)
 			.optional(),

@@ -1,16 +1,16 @@
 'use client';
 
+import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
+import { Button } from '@repo/shared/presentation/components/ui/button';
 import { GrowingUnitAddCard } from 'features/growing-units/components/organisms/growing-unit-add-card/growing-unit-add-card';
 import { GrowingUnitCard } from 'features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
 import { GrowingUnitCreateForm } from 'features/growing-units/components/organisms/growing-unit-create-form/growing-unit-create-form';
 import { GrowingUnitsCardsSkeleton } from 'features/growing-units/components/organisms/growing-units-cards-skeleton/growing-units-cards-skeleton';
 import { useGrowingUnitsPage } from 'features/growing-units/hooks/use-growing-units-page/use-growing-units-page';
-import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
-import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { Button } from '@repo/shared/presentation/components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { PaginatedResults } from 'shared/components/ui/paginated-results/paginated-results';
+import { SearchAndFilters } from 'shared/components/ui/search-and-filters/search-and-filters';
 
 const GROWING_UNITS_PER_PAGE = 12;
 

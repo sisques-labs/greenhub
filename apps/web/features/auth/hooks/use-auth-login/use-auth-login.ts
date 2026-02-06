@@ -1,6 +1,6 @@
-import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useAppRoutes } from 'shared/hooks/use-routes';
 import { authApiClient } from '../../api/auth-api.client';
 import type { LoginByEmailInput } from '../../api/types';
 
