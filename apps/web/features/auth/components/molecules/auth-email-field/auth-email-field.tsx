@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
 import {
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
-import { useTranslations } from "next-intl";
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
+import { useTranslations } from 'next-intl';
 
 interface AuthEmailFieldProps {
 	value: string;
@@ -28,11 +28,11 @@ export function AuthEmailField({
 
 	return (
 		<FormItem>
-			<FormLabel>{t("pages.auth.fields.email.label")}</FormLabel>
+			<FormLabel>{t('pages.auth.fields.email.label')}</FormLabel>
 			<FormControl>
 				<Input
 					type="email"
-					placeholder={t("pages.auth.fields.email.placeholder")}
+					placeholder={t('pages.auth.fields.email.placeholder')}
 					disabled={disabled}
 					value={value}
 					onChange={(e) => {

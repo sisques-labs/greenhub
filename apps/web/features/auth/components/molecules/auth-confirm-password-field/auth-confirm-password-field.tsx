@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
 import {
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
-import { useTranslations } from "next-intl";
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
+import { useTranslations } from 'next-intl';
 
 interface AuthConfirmPasswordFieldProps {
 	value: string;
@@ -28,11 +28,11 @@ export function AuthConfirmPasswordField({
 
 	return (
 		<FormItem>
-			<FormLabel>{t("pages.auth.fields.confirmPassword.label")}</FormLabel>
+			<FormLabel>{t('pages.auth.fields.confirmPassword.label')}</FormLabel>
 			<FormControl>
 				<Input
 					type="password"
-					placeholder={t("pages.auth.fields.confirmPassword.placeholder")}
+					placeholder={t('pages.auth.fields.confirmPassword.placeholder')}
 					disabled={disabled}
 					value={value}
 					onChange={(e) => {

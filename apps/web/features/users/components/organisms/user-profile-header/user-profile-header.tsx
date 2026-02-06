@@ -5,12 +5,9 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-} from '@repo/shared/presentation/components/ui/avatar';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
-import {
-	Card,
-	CardContent,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/shared/components/ui/avatar';
+import { Badge } from '@/shared/components/ui/badge';
+import { Card, CardContent } from '@/shared/components/ui/card';
 import { useTranslations } from 'next-intl';
 
 interface UserProfileHeaderProps {

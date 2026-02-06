@@ -2,7 +2,7 @@
 
 import type { PlantResponse } from '@/features/plants/api/types';
 import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -10,23 +10,23 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from '@/shared/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
-import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
+} from '@/shared/components/ui/select';
+import { Textarea } from '@/shared/components/ui/textarea';
 import {
 	createPlantUpdateSchema,
 	PlantUpdateFormValues,
@@ -205,7 +205,7 @@ export function PlantEditDetailsModal({
 							<FormItem>
 								<FormLabel>{t('shared.fields.status.label')}</FormLabel>
 								<Select
-									onValueChange={(value) =>
+									onValueChange={(value: string) =>
 										setStatus(value as PlantUpdateFormValues['status'])
 									}
 									value={status}

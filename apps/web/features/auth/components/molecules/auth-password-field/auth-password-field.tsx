@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
 import {
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
-import { useTranslations } from "next-intl";
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
+import { useTranslations } from 'next-intl';
 
 interface AuthPasswordFieldProps {
 	value: string;
 	onChange: (value: string) => void;
 	disabled?: boolean;
-	placeholder?: "login" | "signup";
+	placeholder?: 'login' | 'signup';
 	error?: { message?: string };
 	onPasswordChange?: (value: string) => void;
 }
@@ -22,7 +22,7 @@ export function AuthPasswordField({
 	value,
 	onChange,
 	disabled = false,
-	placeholder = "login",
+	placeholder = 'login',
 	error,
 	onPasswordChange,
 }: AuthPasswordFieldProps) {
@@ -30,7 +30,7 @@ export function AuthPasswordField({
 
 	return (
 		<FormItem>
-			<FormLabel>{t("pages.auth.fields.password.label")}</FormLabel>
+			<FormLabel>{t('pages.auth.fields.password.label')}</FormLabel>
 			<FormControl>
 				<Input
 					type="password"

@@ -24,7 +24,7 @@
 			"**",
 			"!dist/**",
 			"!node_modules/**",
-			"!@repo/shared/presentation/components/ui/**"
+			"!@/shared/components/ui/**"
 		]
 	},
 	"javascript": { "formatter": { "quoteStyle": "double" } },

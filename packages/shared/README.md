@@ -16,7 +16,7 @@ Shared package containing domain value objects, UI components, utilities, and pr
 This package is part of the monorepo workspace and is automatically available to other packages and apps. To use it in your app:
 
 ```typescript
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import { UuidValueObject } from '@repo/shared/domain/value-objects/uuid.vo';
 ```
 
@@ -73,9 +73,9 @@ Located in `presentation/components/ui/`, these are the building blocks:
 ### Using UI Components
 
 ```typescript
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@repo/shared/presentation/components/ui/card';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+import { Button } from '@/shared/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/ui/card';
+import { Input } from '@/shared/components/ui/input';
 
 function MyComponent() {
   return (
@@ -146,9 +146,9 @@ console.log(id.value); // 'uuid-string'
 
 // Invalid values throw exceptions
 try {
-  new EmailValueObject('invalid-email'); // ❌ Throws InvalidEmailException
+	new EmailValueObject('invalid-email'); // ❌ Throws InvalidEmailException
 } catch (error) {
-  // Handle validation error
+	// Handle validation error
 }
 ```
 
@@ -164,9 +164,9 @@ import { Criteria } from '@repo/shared/domain/entities/criteria';
 import { PaginatedResult } from '@repo/shared/domain/entities/paginated-result.entity';
 
 const criteria = new Criteria(
-  [{ field: 'status', operator: 'EQUALS', value: 'ACTIVE' }],
-  [{ field: 'name', direction: 'ASC' }],
-  { page: 1, perPage: 10 },
+	[{ field: 'status', operator: 'EQUALS', value: 'ACTIVE' }],
+	[{ field: 'name', direction: 'ASC' }],
+	{ page: 1, perPage: 10 },
 );
 
 const result = new PaginatedResult(items, total, page, perPage);
@@ -210,9 +210,9 @@ Utility functions in `presentation/lib/`:
 import { cn } from '@repo/shared/presentation/lib/utils';
 
 const className = cn(
-  'base-class',
-  condition && 'conditional-class',
-  'another-class',
+	'base-class',
+	condition && 'conditional-class',
+	'another-class',
 );
 ```
 
@@ -236,7 +236,7 @@ React providers in `presentation/providers/`:
 Standard page template with consistent layout:
 
 ```typescript
-import { PageTemplate } from '@repo/shared/presentation/components/templates/page-template';
+import { PageTemplate } from '@/shared/components/templates/page-template';
 
 function MyPage() {
   return (
@@ -252,7 +252,7 @@ function MyPage() {
 Page template with sidebar layout:
 
 ```typescript
-import { PageWithSidebarTemplate } from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
+import { PageWithSidebarTemplate } from '@/shared/components/templates/page-with-sidebar-template';
 
 function MyPageWithSidebar() {
   return (
@@ -320,8 +320,8 @@ import { UuidValueObject } from '@repo/shared/domain/value-objects/uuid.vo';
 import { Criteria } from '@repo/shared/domain/entities/criteria';
 
 // UI component exports
-import { Button } from '@repo/shared/presentation/components/ui/button';
-import { Card } from '@repo/shared/presentation/components/ui/card';
+import { Button } from '@/shared/components/ui/button';
+import { Card } from '@/shared/components/ui/card';
 
 // Utility exports
 import { cn } from '@repo/shared/presentation/lib/utils';

@@ -6,8 +6,8 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { Spinner } from '@repo/shared/presentation/components/ui/spinner';
+} from '@/shared/components/ui/card';
+import { Spinner } from '@/shared/components/ui/spinner';
 import { AuthErrorMessage } from 'features/auth/components/molecules/auth-error-message/auth-error-message';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';

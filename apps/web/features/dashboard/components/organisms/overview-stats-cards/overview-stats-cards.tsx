@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import type { OverviewResponse } from "features/dashboard/api/types";
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
+} from '@/shared/components/ui/card';
+import type { OverviewResponse } from 'features/dashboard/api/types';
 import {
 	AlertTriangleIcon,
 	FlowerIcon,
 	Grid3x3Icon,
 	PackageIcon,
 	TrendingUpIcon,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface OverviewStatsCardsProps {
 	overview: OverviewResponse | null;
@@ -29,8 +29,8 @@ export function OverviewStatsCards({
 	overview,
 	isLoading = false,
 }: OverviewStatsCardsProps) {
-	const t = useTranslations("dashboard.stats");
-	const tCommon = useTranslations("dashboard.common");
+	const t = useTranslations('dashboard.stats');
+	const tCommon = useTranslations('dashboard.common');
 
 	if (isLoading || !overview) {
 		return (
@@ -58,36 +58,36 @@ export function OverviewStatsCards({
 
 	const stats = [
 		{
-			title: t("totalPlants.title"),
+			title: t('totalPlants.title'),
 			value: overview.totalPlants.toLocaleString(),
-			subtitle: `${overview.totalActivePlants} ${tCommon("active")}`,
+			subtitle: `${overview.totalActivePlants} ${tCommon('active')}`,
 			icon: FlowerIcon,
-			iconColor: "text-green-600",
-			bgColor: "bg-green-50 dark:bg-green-950/20",
+			iconColor: 'text-green-600',
+			bgColor: 'bg-green-50 dark:bg-green-950/20',
 		},
 		{
-			title: t("activeUnits.title"),
+			title: t('activeUnits.title'),
 			value: overview.activeGrowingUnits.toString(),
-			subtitle: `${overview.totalGrowingUnits} ${tCommon("total")}`,
+			subtitle: `${overview.totalGrowingUnits} ${tCommon('total')}`,
 			icon: Grid3x3Icon,
-			iconColor: "text-blue-600",
-			bgColor: "bg-blue-50 dark:bg-blue-950/20",
+			iconColor: 'text-blue-600',
+			bgColor: 'bg-blue-50 dark:bg-blue-950/20',
 		},
 		{
-			title: t("readyForHarvest.title"),
+			title: t('readyForHarvest.title'),
 			value: overview.plantsHarvested.toString(),
-			subtitle: `${overview.plantsGrowing} ${tCommon("growing")}`,
+			subtitle: `${overview.plantsGrowing} ${tCommon('growing')}`,
 			icon: PackageIcon,
-			iconColor: "text-orange-600",
-			bgColor: "bg-orange-50 dark:bg-orange-950/20",
+			iconColor: 'text-orange-600',
+			bgColor: 'bg-orange-50 dark:bg-orange-950/20',
 		},
 		{
-			title: t("criticalAlerts.title"),
+			title: t('criticalAlerts.title'),
 			value: criticalAlerts.toString(),
-			subtitle: `${overview.growingUnitsAtLimit} ${tCommon("atLimit")}`,
+			subtitle: `${overview.growingUnitsAtLimit} ${tCommon('atLimit')}`,
 			icon: AlertTriangleIcon,
-			iconColor: "text-red-600",
-			bgColor: "bg-red-50 dark:bg-red-950/20",
+			iconColor: 'text-red-600',
+			bgColor: 'bg-red-50 dark:bg-red-950/20',
 		},
 	];
 

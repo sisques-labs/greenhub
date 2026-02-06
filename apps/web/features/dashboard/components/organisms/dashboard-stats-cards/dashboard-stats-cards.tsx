@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
+} from '@/shared/components/ui/card';
 import {
 	AlertTriangleIcon,
 	FlowerIcon,
@@ -13,8 +13,8 @@ import {
 	TractorIcon,
 	TrendingDownIcon,
 	TrendingUpIcon,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface DashboardStatsCardsProps {
 	totalPlants: number;
@@ -35,7 +35,7 @@ export function DashboardStatsCards({
 	criticalAlerts,
 	isLoading = false,
 }: DashboardStatsCardsProps) {
-	const t = useTranslations("dashboard.stats");
+	const t = useTranslations('dashboard.stats');
 
 	if (isLoading) {
 		return (
@@ -60,36 +60,36 @@ export function DashboardStatsCards({
 
 	const stats = [
 		{
-			title: t("totalPlants.title"),
+			title: t('totalPlants.title'),
 			value: totalPlants.toLocaleString(),
-			change: "+12%",
-			changeType: "increase" as const,
+			change: '+12%',
+			changeType: 'increase' as const,
 			icon: FlowerIcon,
-			iconColor: "text-green-600",
+			iconColor: 'text-green-600',
 		},
 		{
-			title: t("activeUnits.title"),
+			title: t('activeUnits.title'),
 			value: activeUnits.toString(),
-			change: "+2%",
-			changeType: "increase" as const,
+			change: '+2%',
+			changeType: 'increase' as const,
 			icon: Grid3x3Icon,
-			iconColor: "text-blue-600",
+			iconColor: 'text-blue-600',
 		},
 		{
-			title: t("readyForHarvest.title"),
+			title: t('readyForHarvest.title'),
 			value: readyForHarvest.toString(),
-			change: "+5%",
-			changeType: "increase" as const,
+			change: '+5%',
+			changeType: 'increase' as const,
 			icon: TractorIcon,
-			iconColor: "text-orange-600",
+			iconColor: 'text-orange-600',
 		},
 		{
-			title: t("criticalAlerts.title"),
+			title: t('criticalAlerts.title'),
 			value: criticalAlerts.toString(),
-			change: "-1%",
-			changeType: "decrease" as const,
+			change: '-1%',
+			changeType: 'decrease' as const,
 			icon: AlertTriangleIcon,
-			iconColor: "text-red-600",
+			iconColor: 'text-red-600',
 		},
 	];
 
@@ -98,9 +98,9 @@ export function DashboardStatsCards({
 			{stats.map((stat) => {
 				const Icon = stat.icon;
 				const TrendIcon =
-					stat.changeType === "increase" ? TrendingUpIcon : TrendingDownIcon;
+					stat.changeType === 'increase' ? TrendingUpIcon : TrendingDownIcon;
 				const trendColor =
-					stat.changeType === "increase" ? "text-green-600" : "text-red-600";
+					stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600';
 
 				return (
 					<Card key={stat.title}>
@@ -116,7 +116,7 @@ export function DashboardStatsCards({
 								<TrendIcon className={`h-3 w-3 ${trendColor}`} />
 								<span className={trendColor}>{stat.change}</span>
 								<span className="text-muted-foreground">
-									{t("changeSuffix")}
+									{t('changeSuffix')}
 								</span>
 							</p>
 						</CardContent>

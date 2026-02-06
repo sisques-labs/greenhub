@@ -1,43 +1,43 @@
-import { SidebarData } from "@repo/shared/domain/interfaces/sidebar-data.interface";
-import { Home, LayoutGrid, MapPin, Settings, Sprout } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { SidebarData } from '@/shared/interfaces/sidebar-data.interface';
+import { Home, LayoutGrid, MapPin, Settings, Sprout } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 export const useAppRoutes = () => {
 	const pathname = usePathname();
 	const locale = useLocale();
-	const t = useTranslations("nav");
+	const t = useTranslations('nav');
 
 	// Helper function to build localized URLs
 	const buildLocalizedUrl = (path: string): string => {
 		// Remove leading slash if present
-		const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+		const cleanPath = path.startsWith('/') ? path.slice(1) : path;
 		// Build URL with locale prefix
 		return `/${locale}/${cleanPath}`;
 	};
 
 	const routes = {
-		home: buildLocalizedUrl("/home"),
-		settings: buildLocalizedUrl("/settings"),
-		auth: buildLocalizedUrl("/auth"),
-		userProfile: buildLocalizedUrl("/user/profile"),
-		plants: buildLocalizedUrl("/plants"),
-		growingUnits: buildLocalizedUrl("/growing-units"),
-		locations: buildLocalizedUrl("/locations"),
+		home: buildLocalizedUrl('/home'),
+		settings: buildLocalizedUrl('/settings'),
+		auth: buildLocalizedUrl('/auth'),
+		userProfile: buildLocalizedUrl('/user/profile'),
+		plants: buildLocalizedUrl('/plants'),
+		growingUnits: buildLocalizedUrl('/growing-units'),
+		locations: buildLocalizedUrl('/locations'),
 	} as const;
 
 	/**
 	 * Generates sidebar data structure with active state based on current pathname
 	 */
-	const getSidebarData = (): Omit<SidebarData, "header" | "footer"> => {
+	const getSidebarData = (): Omit<SidebarData, 'header' | 'footer'> => {
 		return {
 			navMain: [
 				{
-					title: t("home"),
-					url: "#",
+					title: t('home'),
+					url: '#',
 					items: [
 						{
-							title: t("home"),
+							title: t('home'),
 							url: routes.home,
 							isActive: pathname === routes.home,
 							icon: Home,
@@ -45,17 +45,17 @@ export const useAppRoutes = () => {
 					],
 				},
 				{
-					title: t("plants"),
-					url: "#",
+					title: t('plants'),
+					url: '#',
 					items: [
 						{
-							title: t("plants"),
+							title: t('plants'),
 							url: routes.plants,
 							isActive: pathname === routes.plants,
 							icon: Sprout,
 						},
 						{
-							title: t("growingUnits"),
+							title: t('growingUnits'),
 							url: routes.growingUnits,
 							isActive: pathname === routes.growingUnits,
 							icon: LayoutGrid,
@@ -63,11 +63,11 @@ export const useAppRoutes = () => {
 					],
 				},
 				{
-					title: t("locations"),
-					url: "#",
+					title: t('locations'),
+					url: '#',
 					items: [
 						{
-							title: t("locations"),
+							title: t('locations'),
 							url: routes.locations,
 							isActive: pathname === routes.locations,
 							icon: MapPin,
@@ -75,11 +75,11 @@ export const useAppRoutes = () => {
 					],
 				},
 				{
-					title: t("settings"),
+					title: t('settings'),
 					url: routes.settings,
 					items: [
 						{
-							title: t("settings"),
+							title: t('settings'),
 							url: routes.settings,
 							isActive: pathname === routes.settings,
 							icon: Settings,

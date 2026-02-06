@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -8,29 +8,29 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@repo/shared/presentation/components/ui/dialog";
+} from '@/shared/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@repo/shared/presentation/components/ui/select";
-import { Textarea } from "@repo/shared/presentation/components/ui/textarea";
-import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+} from '@/shared/components/ui/select';
+import { Textarea } from '@/shared/components/ui/textarea';
 import {
 	createLocationCreateSchema,
 	type LocationCreateFormValues,
-} from "features/locations/schemas/location-create/location-create.schema";
+} from 'features/locations/schemas/location-create/location-create.schema';
+import { useTranslations } from 'next-intl';
+import { useMemo, useState } from 'react';
 
 interface LocationCreateFormProps {
 	open: boolean;
@@ -56,8 +56,9 @@ export function LocationCreateForm({
 	);
 
 	// Form state
-	const [name, setName] = useState("");
-	const [type, setType] = useState<LocationCreateFormValues["type"]>("INDOOR_SPACE");
+	const [name, setName] = useState('');
+	const [type, setType] =
+		useState<LocationCreateFormValues['type']>('INDOOR_SPACE');
 	const [description, setDescription] = useState<string | null>(null);
 	const [formErrors, setFormErrors] = useState<
 		Record<string, { message?: string }>
@@ -88,8 +89,8 @@ export function LocationCreateForm({
 		await onSubmit(result.data);
 		if (!error) {
 			// Reset form
-			setName("");
-			setType("INDOOR_SPACE");
+			setName('');
+			setType('INDOOR_SPACE');
 			setDescription(null);
 			onOpenChange(false);
 		}
@@ -98,8 +99,8 @@ export function LocationCreateForm({
 	const handleOpenChange = (newOpen: boolean) => {
 		if (!newOpen) {
 			// Reset form
-			setName("");
-			setType("INDOOR_SPACE");
+			setName('');
+			setType('INDOOR_SPACE');
 			setDescription(null);
 			setFormErrors({});
 		}
@@ -111,19 +112,19 @@ export function LocationCreateForm({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t("pages.locations.list.actions.create.title")}
+						{t('pages.locations.list.actions.create.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t("pages.locations.list.actions.create.description")}
+						{t('pages.locations.list.actions.create.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
 					<form onSubmit={handleSubmit} className="space-y-4">
 						<FormItem>
-							<FormLabel>{t("shared.fields.name.label")}</FormLabel>
+							<FormLabel>{t('shared.fields.name.label')}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder={t("shared.fields.name.placeholder")}
+									placeholder={t('shared.fields.name.placeholder')}
 									disabled={isLoading}
 									value={name}
 									onChange={(e) => setName(e.target.value)}
@@ -133,10 +134,10 @@ export function LocationCreateForm({
 						</FormItem>
 
 						<FormItem>
-							<FormLabel>{t("shared.fields.type.label")}</FormLabel>
+							<FormLabel>{t('shared.fields.type.label')}</FormLabel>
 							<Select
 								onValueChange={(value) =>
-									setType(value as LocationCreateFormValues["type"])
+									setType(value as LocationCreateFormValues['type'])
 								}
 								value={type}
 								disabled={isLoading}
@@ -144,28 +145,28 @@ export function LocationCreateForm({
 								<FormControl>
 									<SelectTrigger>
 										<SelectValue
-											placeholder={t("shared.fields.type.placeholder")}
+											placeholder={t('shared.fields.type.placeholder')}
 										/>
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
 									<SelectItem value="ROOM">
-										{t("shared.types.location.ROOM")}
+										{t('shared.types.location.ROOM')}
 									</SelectItem>
 									<SelectItem value="BALCONY">
-										{t("shared.types.location.BALCONY")}
+										{t('shared.types.location.BALCONY')}
 									</SelectItem>
 									<SelectItem value="GARDEN">
-										{t("shared.types.location.GARDEN")}
+										{t('shared.types.location.GARDEN')}
 									</SelectItem>
 									<SelectItem value="GREENHOUSE">
-										{t("shared.types.location.GREENHOUSE")}
+										{t('shared.types.location.GREENHOUSE')}
 									</SelectItem>
 									<SelectItem value="OUTDOOR_SPACE">
-										{t("shared.types.location.OUTDOOR_SPACE")}
+										{t('shared.types.location.OUTDOOR_SPACE')}
 									</SelectItem>
 									<SelectItem value="INDOOR_SPACE">
-										{t("shared.types.location.INDOOR_SPACE")}
+										{t('shared.types.location.INDOOR_SPACE')}
 									</SelectItem>
 								</SelectContent>
 							</Select>
@@ -173,12 +174,12 @@ export function LocationCreateForm({
 						</FormItem>
 
 						<FormItem>
-							<FormLabel>{t("shared.fields.description.label")}</FormLabel>
+							<FormLabel>{t('shared.fields.description.label')}</FormLabel>
 							<FormControl>
 								<Textarea
-									placeholder={t("shared.fields.description.placeholder")}
+									placeholder={t('shared.fields.description.placeholder')}
 									disabled={isLoading}
-									value={description || ""}
+									value={description || ''}
 									onChange={(e) => setDescription(e.target.value || null)}
 									rows={4}
 								/>
@@ -197,12 +198,12 @@ export function LocationCreateForm({
 								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t("common.cancel")}
+								{t('common.cancel')}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t("pages.locations.list.actions.create.loading")
-									: t("pages.locations.list.actions.create.submit")}
+									? t('pages.locations.list.actions.create.loading')
+									: t('pages.locations.list.actions.create.submit')}
 							</Button>
 						</DialogFooter>
 					</form>
@@ -211,4 +212,3 @@ export function LocationCreateForm({
 		</Dialog>
 	);
 }
-

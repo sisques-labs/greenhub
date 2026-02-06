@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -8,22 +8,22 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from '@/shared/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
+} from '@/shared/components/ui/select';
 import {
 	createGrowingUnitUpdateSchema,
 	GrowingUnitUpdateFormValues,

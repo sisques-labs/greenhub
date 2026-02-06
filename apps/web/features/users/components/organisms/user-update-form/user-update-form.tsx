@@ -1,16 +1,16 @@
 'use client';
 
 import type { UserResponse } from '@/features/users/api/types';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
-import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
+import { Textarea } from '@/shared/components/ui/textarea';
 import {
 	createUserUpdateSchema,
 	UserUpdateFormValues,

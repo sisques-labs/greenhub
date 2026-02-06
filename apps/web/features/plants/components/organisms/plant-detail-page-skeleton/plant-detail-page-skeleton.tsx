@@ -1,11 +1,7 @@
-"use client";
+'use client';
 
-import {
-	Card,
-	CardContent,
-	CardHeader,
-} from "@repo/shared/presentation/components/ui/card";
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from '@/shared/components/ui/card';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 import {
 	Table,
 	TableBody,
@@ -13,7 +9,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@repo/shared/presentation/components/ui/table";
+} from '@/shared/components/ui/table';
 
 /**
  * Skeleton component for the plant detail page
@@ -220,4 +216,3 @@ export function PlantDetailPageSkeleton() {
 		</div>
 	);
 }
-

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from '@/shared/components/ui/button';
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@repo/shared/presentation/components/ui/card";
-import { Checkbox } from "@repo/shared/presentation/components/ui/checkbox";
-import { PlusIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+} from '@/shared/components/ui/card';
+import { Checkbox } from '@/shared/components/ui/checkbox';
+import { PlusIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface Task {
 	id: string;
@@ -33,7 +33,7 @@ export function TodayTasksSection({
 	tasks,
 	isLoading = false,
 }: TodayTasksSectionProps) {
-	const t = useTranslations("dashboard.todayTasks");
+	const t = useTranslations('dashboard.todayTasks');
 
 	if (isLoading) {
 		return (
@@ -58,14 +58,14 @@ export function TodayTasksSection({
 			<Card>
 				<CardHeader>
 					<CardTitle className="flex items-center justify-between">
-						<span>{t("title")}</span>
+						<span>{t('title')}</span>
 						<Button variant="ghost" size="icon">
 							<PlusIcon className="h-4 w-4" />
 						</Button>
 					</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p className="text-muted-foreground text-center py-8">{t("empty")}</p>
+					<p className="text-muted-foreground text-center py-8">{t('empty')}</p>
 				</CardContent>
 			</Card>
 		);
@@ -75,7 +75,7 @@ export function TodayTasksSection({
 		<Card>
 			<CardHeader>
 				<CardTitle className="flex items-center justify-between">
-					<span>{t("title")}</span>
+					<span>{t('title')}</span>
 					<Button variant="ghost" size="icon">
 						<PlusIcon className="h-4 w-4" />
 					</Button>
@@ -92,21 +92,21 @@ export function TodayTasksSection({
 							<div className="flex items-center gap-2 mb-1">
 								<span
 									className={`font-medium ${
-										task.completed ? "line-through text-muted-foreground" : ""
+										task.completed ? 'line-through text-muted-foreground' : ''
 									}`}
 								>
 									{task.title}
 								</span>
 								{task.completed && (
 									<span className="text-xs text-green-600 font-medium">
-										{t("completed")}
+										{t('completed')}
 									</span>
 								)}
 							</div>
 							<div className="text-sm text-muted-foreground space-y-0.5">
 								{task.assignedTo && (
 									<div>
-										{t("assignedTo")}: {task.assignedTo}
+										{t('assignedTo')}: {task.assignedTo}
 									</div>
 								)}
 								{task.location && <div>{task.location}</div>}
@@ -117,7 +117,7 @@ export function TodayTasksSection({
 				))}
 				<div className="pt-2">
 					<Button variant="link" className="w-full text-green-600">
-						{t("seeAll")}
+						{t('seeAll')}
 					</Button>
 				</div>
 			</CardContent>

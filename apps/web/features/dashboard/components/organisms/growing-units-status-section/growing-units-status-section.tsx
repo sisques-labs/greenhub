@@ -1,12 +1,12 @@
 'use client';
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/shared/components/ui/card';
 import type { GrowingUnitResponse } from 'features/growing-units/api/types';
 import { GrowingUnitCard } from 'features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
 import { ArrowRightIcon } from 'lucide-react';

@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import type { GrowingUnitResponse } from "features/growing-units/api/types";
-import { PLANT_STATUS } from "features/plants/constants/plant-status";
-import type { PlantResponse } from "features/plants/api/types";
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from "@repo/shared/presentation/components/ui/table";
-import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { PlantTableRow } from "features/plants/components/organisms/plant-table-row/plant-table-row";
+} from '@/shared/components/ui/table';
+import type { GrowingUnitResponse } from 'features/growing-units/api/types';
+import type { PlantResponse } from 'features/plants/api/types';
+import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
+import { PLANT_STATUS } from 'features/plants/constants/plant-status';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 
 interface PlantsByGrowingUnitSectionProps {
 	growingUnit: GrowingUnitResponse;
@@ -24,8 +24,8 @@ interface PlantsByGrowingUnitSectionProps {
 
 export function PlantsByGrowingUnitSection({
 	growingUnit,
-	searchQuery = "",
-	selectedFilter = "all",
+	searchQuery = '',
+	selectedFilter = 'all',
 	onEdit,
 	onDelete,
 }: PlantsByGrowingUnitSectionProps) {
@@ -47,12 +47,12 @@ export function PlantsByGrowingUnitSection({
 		}
 
 		// Apply status filter
-		if (selectedFilter !== "all") {
+		if (selectedFilter !== 'all') {
 			switch (selectedFilter) {
-				case "needsWater":
+				case 'needsWater':
 					// TODO: Implement needs water filter when status logic is available
 					break;
-				case "healthy":
+				case 'healthy':
 					// TODO: Implement healthy filter when health status logic is available
 					plants = plants.filter(
 						(plant) => plant.status === PLANT_STATUS.GROWING,
@@ -78,7 +78,7 @@ export function PlantsByGrowingUnitSection({
 				<div>
 					<h3 className="text-lg font-semibold">{growingUnit.name}</h3>
 					<p className="text-sm text-muted-foreground">
-						{t("pages.plants.list.growingUnit.plantCount", {
+						{t('pages.plants.list.growingUnit.plantCount', {
 							count: filteredPlants.length,
 							total: growingUnit.numberOfPlants,
 						})}
@@ -93,19 +93,19 @@ export function PlantsByGrowingUnitSection({
 						<TableRow>
 							<TableHead className="w-[80px]">IMG</TableHead>
 							<TableHead>
-								{t("pages.plants.list.table.columns.plant")}
+								{t('pages.plants.list.table.columns.plant')}
 							</TableHead>
 							<TableHead>
-								{t("pages.plants.list.table.columns.location")}
+								{t('pages.plants.list.table.columns.location')}
 							</TableHead>
 							<TableHead>
-								{t("pages.plants.list.table.columns.status")}
+								{t('pages.plants.list.table.columns.status')}
 							</TableHead>
 							<TableHead>
-								{t("pages.plants.list.table.columns.lastWatering")}
+								{t('pages.plants.list.table.columns.lastWatering')}
 							</TableHead>
 							<TableHead className="w-[80px]">
-								{t("pages.plants.list.table.columns.actions")}
+								{t('pages.plants.list.table.columns.actions')}
 							</TableHead>
 						</TableRow>
 					</TableHeader>

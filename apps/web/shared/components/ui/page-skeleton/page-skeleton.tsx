@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+import { Skeleton } from '@/shared/components/ui/skeleton';
 
 interface PageSkeletonProps {
 	showSearchAndFilters?: boolean;
@@ -67,7 +67,7 @@ export function PageSkeleton({
 	className,
 }: PageSkeletonProps) {
 	return (
-		<div className={`mx-auto space-y-6 ${className || ""}`}>
+		<div className={`mx-auto space-y-6 ${className || ''}`}>
 			<PageHeaderSkeleton />
 			{showSearchAndFilters && <SearchAndFiltersSkeleton />}
 			{showPagination && <PaginationSkeleton />}

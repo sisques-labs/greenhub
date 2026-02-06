@@ -1,6 +1,6 @@
 'use client';
 
-import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
+import PageWithSidebarTemplate from '@/shared/components/templates/page-with-sidebar-template';
 import { useAuthLogout } from 'features/auth/hooks/use-auth-logout/use-auth-logout';
 import { useAuthProfileMe } from 'features/auth/hooks/use-auth-profile-me/use-auth-profile-me';
 import { useTranslations } from 'next-intl';

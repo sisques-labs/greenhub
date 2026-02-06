@@ -1,6 +1,5 @@
 'use client';
 
-import type { LocationResponse } from "../../../api/types";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -10,8 +9,9 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-} from '@repo/shared/presentation/components/ui/alert-dialog';
+} from '@/shared/components/ui/alert-dialog';
 import { useTranslations } from 'next-intl';
+import type { LocationResponse } from '../../../api/types';
 
 interface LocationDeleteDialogProps {
 	location: LocationResponse | null;

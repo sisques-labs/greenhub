@@ -1,22 +1,22 @@
 'use client';
 
-import type { LocationResponse } from "../../../api/types";
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
+import { Badge } from '@/shared/components/ui/badge';
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/shared/components/ui/card';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@repo/shared/presentation/components/ui/dropdown-menu';
+} from '@/shared/components/ui/dropdown-menu';
 import { MoreVerticalIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import type { LocationResponse } from '../../../api/types';
 
 interface LocationCardProps {
 	location: LocationResponse;

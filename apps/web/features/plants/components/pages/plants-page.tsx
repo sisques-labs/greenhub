@@ -1,15 +1,15 @@
 'use client';
 
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { TableLayout } from '@repo/shared/presentation/components/organisms/table-layout';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { PageHeader } from '@/shared/components/organisms/page-header';
+import { TableLayout } from '@/shared/components/organisms/table-layout';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Table,
 	TableBody,
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
+} from '@/shared/components/ui/table';
 import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
 import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
 import { PlantsTableSkeleton } from 'features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Form } from '@repo/shared/presentation/components/ui/form';
+import { Form } from '@/shared/components/ui/form';
 import { AuthEmailField } from 'features/auth/components/molecules/auth-email-field/auth-email-field';
 import { AuthErrorMessage } from 'features/auth/components/molecules/auth-error-message/auth-error-message';
 import { AuthPasswordField } from 'features/auth/components/molecules/auth-password-field/auth-password-field';

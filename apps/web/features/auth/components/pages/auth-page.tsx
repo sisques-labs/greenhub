@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import { AuthCard } from 'features/auth/components/organisms/auth-card/auth-card';
 import { AuthLoginForm } from 'features/auth/components/organisms/auth-login-form/auth-login-form';
 import { AuthRegisterForm } from 'features/auth/components/organisms/auth-register-form/auth-register-form';

@@ -1,13 +1,13 @@
 'use client';
 
-import { UserResponse } from '@/features/users/api/types';
+import { UserResponse, UserRole, UserStatus } from '@/features/users/api/types';
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/shared/components/ui/card';
 import { useAuthProfileMe } from 'features/auth/hooks/use-auth-profile-me/use-auth-profile-me';
 import { UserProfileAccountSection } from 'features/users/components/organisms/user-profile-account-section/user-profile-account-section';
 import { UserProfileAuthSection } from 'features/users/components/organisms/user-profile-auth-section/user-profile-auth-section';
@@ -73,16 +73,21 @@ export function UserProfilePage() {
 
 	// Convert AuthUserProfileResponse to UserResponse format for the form
 	const user: UserResponse = {
-		id: profile.userId,
-		userName: profile.userName || undefined,
-		name: profile.name || undefined,
-		lastName: profile.lastName || undefined,
-		bio: profile.bio || undefined,
-		avatarUrl: profile.avatarUrl || undefined,
-		role: profile.role || undefined,
-		status: profile.status || undefined,
-		createdAt: profile.createdAt ?? undefined,
-		updatedAt: profile.updatedAt ?? undefined,
+		userId: profile.userId,
+		userName: profile.userName || null,
+		name: profile.name || null,
+		lastName: profile.lastName || null,
+		bio: profile.bio || null,
+		avatarUrl: profile.avatarUrl || null,
+		role: profile.role as UserRole,
+		status: profile.status as UserStatus,
+		createdAt: profile.createdAt ?? new Date(),
+		updatedAt: profile.updatedAt ?? new Date(),
+		email: profile.email ?? null,
+		phoneNumber: profile.phoneNumber || null,
+		emailVerified: profile.emailVerified ?? false,
+		twoFactorEnabled: profile.twoFactorEnabled ?? false,
+		lastLogin: profile.lastLoginAt ?? null,
 	};
 
 	return (

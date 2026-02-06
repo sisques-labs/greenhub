@@ -1,11 +1,6 @@
 'use client';
 
-import {
-	createLocationUpdateSchema,
-	type LocationUpdateFormValues,
-} from 'features/locations/schemas/location-update/location-update.schema';
-import type { LocationResponse } from "../../../api/types";
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -13,25 +8,30 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from '@repo/shared/presentation/components/ui/dialog';
+} from '@/shared/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@repo/shared/presentation/components/ui/form';
-import { Input } from '@repo/shared/presentation/components/ui/input';
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@repo/shared/presentation/components/ui/select';
-import { Textarea } from '@repo/shared/presentation/components/ui/textarea';
+} from '@/shared/components/ui/select';
+import { Textarea } from '@/shared/components/ui/textarea';
+import {
+	createLocationUpdateSchema,
+	type LocationUpdateFormValues,
+} from 'features/locations/schemas/location-update/location-update.schema';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
+import type { LocationResponse } from '../../../api/types';
 
 interface LocationUpdateFormProps {
 	location: LocationResponse | null;

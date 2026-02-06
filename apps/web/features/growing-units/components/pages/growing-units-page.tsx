@@ -1,7 +1,7 @@
 'use client';
 
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { PageHeader } from '@/shared/components/organisms/page-header';
+import { Button } from '@/shared/components/ui/button';
 import { GrowingUnitAddCard } from 'features/growing-units/components/organisms/growing-unit-add-card/growing-unit-add-card';
 import { GrowingUnitCard } from 'features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
 import { GrowingUnitCreateForm } from 'features/growing-units/components/organisms/growing-unit-create-form/growing-unit-create-form';

@@ -1,19 +1,14 @@
 'use client';
 
-import { PlantDetailPageSkeleton } from 'features/plants/components/organisms/plant-detail-page-skeleton/plant-detail-page-skeleton';
-import { PlantEditDetailsModal } from 'features/plants/components/organisms/plant-edit-details-modal/plant-edit-details-modal';
-import { PlantTransplantModal } from 'features/plants/components/organisms/plant-transplant-modal/plant-transplant-modal';
-import { usePlantDetailPage } from 'features/plants/hooks/use-plant-detail-page/use-plant-detail-page';
-import { getPlantStatusBadge } from 'features/plants/utils/plant-status.utils';
-import { TimelineSequence } from '@repo/shared/presentation/components/molecules/timeline-sequence';
-import { Badge } from '@repo/shared/presentation/components/ui/badge';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { TimelineSequence } from '@/shared/components/molecules/timeline-sequence';
+import { Badge } from '@/shared/components/ui/badge';
+import { Button } from '@/shared/components/ui/button';
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
+} from '@/shared/components/ui/card';
 import {
 	Table,
 	TableBody,
@@ -21,7 +16,12 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@repo/shared/presentation/components/ui/table';
+} from '@/shared/components/ui/table';
+import { PlantDetailPageSkeleton } from 'features/plants/components/organisms/plant-detail-page-skeleton/plant-detail-page-skeleton';
+import { PlantEditDetailsModal } from 'features/plants/components/organisms/plant-edit-details-modal/plant-edit-details-modal';
+import { PlantTransplantModal } from 'features/plants/components/organisms/plant-transplant-modal/plant-transplant-modal';
+import { usePlantDetailPage } from 'features/plants/hooks/use-plant-detail-page/use-plant-detail-page';
+import { getPlantStatusBadge } from 'features/plants/utils/plant-status.utils';
 import {
 	ArrowRightLeftIcon,
 	CalendarIcon,

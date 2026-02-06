@@ -1,11 +1,6 @@
-"use client";
+'use client';
 
-import type { GrowingUnitResponse } from "features/growing-units/api/types";
-import type {
-	PlantGrowingUnitReference,
-	PlantResponse,
-} from "../../../api/types";
-import { Button } from "@repo/shared/presentation/components/ui/button";
+import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
@@ -13,31 +8,36 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "@repo/shared/presentation/components/ui/dialog";
+} from '@/shared/components/ui/dialog';
 import {
 	Form,
 	FormControl,
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@repo/shared/presentation/components/ui/form";
-import { Input } from "@repo/shared/presentation/components/ui/input";
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@repo/shared/presentation/components/ui/select";
-import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
-import { z } from "zod";
+} from '@/shared/components/ui/select';
+import type { GrowingUnitResponse } from 'features/growing-units/api/types';
+import { useTranslations } from 'next-intl';
+import { useMemo, useState } from 'react';
+import { z } from 'zod';
+import type {
+	PlantGrowingUnitReference,
+	PlantResponse,
+} from '../../../api/types';
 
 const createPlantTransplantSchema = (translations: (key: string) => string) =>
 	z.object({
 		targetGrowingUnitId: z.string().min(1, {
 			message: translations(
-				"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.required",
+				'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.required',
 			),
 		}),
 	});
@@ -75,7 +75,7 @@ export function PlantTransplantModal({
 	);
 
 	// Form state
-	const [targetGrowingUnitId, setTargetGrowingUnitId] = useState("");
+	const [targetGrowingUnitId, setTargetGrowingUnitId] = useState('');
 	const [formErrors, setFormErrors] = useState<
 		Record<string, { message?: string }>
 	>({});
@@ -108,14 +108,14 @@ export function PlantTransplantModal({
 		setFormErrors({});
 		await onSubmit(targetGrowingUnitId);
 		if (!error) {
-			setTargetGrowingUnitId("");
+			setTargetGrowingUnitId('');
 			onOpenChange(false);
 		}
 	};
 
 	const handleOpenChange = (newOpen: boolean) => {
 		if (!newOpen) {
-			setTargetGrowingUnitId("");
+			setTargetGrowingUnitId('');
 			setFormErrors({});
 		}
 		onOpenChange(newOpen);
@@ -126,10 +126,10 @@ export function PlantTransplantModal({
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>
-						{t("pages.plants.detail.modals.transplant.title")}
+						{t('pages.plants.detail.modals.transplant.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t("pages.plants.detail.modals.transplant.description")}
+						{t('pages.plants.detail.modals.transplant.description')}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -139,14 +139,14 @@ export function PlantTransplantModal({
 						<FormItem>
 							<FormLabel>
 								{t(
-									"pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.label",
+									'pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.label',
 								)}
 							</FormLabel>
 							<Input
 								value={
 									sourceGrowingUnit?.name ||
 									t(
-										"pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.unknown",
+										'pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.unknown',
 									)
 								}
 								disabled
@@ -154,47 +154,47 @@ export function PlantTransplantModal({
 							/>
 							<p className="text-xs text-muted-foreground">
 								{t(
-									"pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.helper",
+									'pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.helper',
 								)}
 							</p>
 						</FormItem>
 
 						{/* Target Growing Unit (select) */}
-								<FormItem>
-									<FormLabel>
-										{t(
-											"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label",
-										)}
-									</FormLabel>
-									<Select
+						<FormItem>
+							<FormLabel>
+								{t(
+									'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label',
+								)}
+							</FormLabel>
+							<Select
 								onValueChange={setTargetGrowingUnitId}
 								value={targetGrowingUnitId}
-										disabled={isLoading}
-									>
-										<FormControl>
-											<SelectTrigger>
-												<SelectValue
-													placeholder={t(
-														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder",
-													)}
-												/>
-											</SelectTrigger>
-										</FormControl>
-										<SelectContent>
-											{availableTargetGrowingUnits.map((growingUnit) => (
-												<SelectItem key={growingUnit.id} value={growingUnit.id}>
-													{growingUnit.name} ({growingUnit.remainingCapacity}/
-													{growingUnit.capacity}{" "}
-													{t(
-														"pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable",
-													)}
-													)
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
+								disabled={isLoading}
+							>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue
+											placeholder={t(
+												'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder',
+											)}
+										/>
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{availableTargetGrowingUnits.map((growingUnit) => (
+										<SelectItem key={growingUnit.id} value={growingUnit.id}>
+											{growingUnit.name} ({growingUnit.remainingCapacity}/
+											{growingUnit.capacity}{' '}
+											{t(
+												'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable',
+											)}
+											)
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
 							<FormMessage fieldName="targetGrowingUnitId" />
-								</FormItem>
+						</FormItem>
 
 						{error && (
 							<div className="text-sm text-destructive">{error.message}</div>
@@ -207,15 +207,15 @@ export function PlantTransplantModal({
 								onClick={() => handleOpenChange(false)}
 								disabled={isLoading}
 							>
-								{t("common.cancel")}
+								{t('common.cancel')}
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
 									? t(
-											"pages.plants.detail.modals.transplant.actions.submit.loading",
+											'pages.plants.detail.modals.transplant.actions.submit.loading',
 										)
 									: t(
-											"pages.plants.detail.modals.transplant.actions.submit.label",
+											'pages.plants.detail.modals.transplant.actions.submit.label',
 										)}
 							</Button>
 						</DialogFooter>

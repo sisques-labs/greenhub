@@ -1,7 +1,7 @@
 'use client';
 
-import { PageHeader } from '@repo/shared/presentation/components/organisms/page-header';
-import { Button } from '@repo/shared/presentation/components/ui/button';
+import { PageHeader } from '@/shared/components/organisms/page-header';
+import { Button } from '@/shared/components/ui/button';
 import { LocationAddCard } from 'features/locations/components/organisms/location-add-card/location-add-card';
 import { LocationCard } from 'features/locations/components/organisms/location-card/location-card';
 import { LocationCreateForm } from 'features/locations/components/organisms/location-create-form/location-create-form';

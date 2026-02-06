@@ -1,11 +1,7 @@
-"use client";
+'use client';
 
-import {
-	Card,
-	CardContent,
-	CardHeader,
-} from "@repo/shared/presentation/components/ui/card";
-import { Skeleton } from "@repo/shared/presentation/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from '@/shared/components/ui/card';
+import { Skeleton } from '@/shared/components/ui/skeleton';
 
 /**
  * Skeleton component for a single location card
@@ -45,4 +41,3 @@ export function LocationCardSkeleton() {
 		</Card>
 	);
 }
-
