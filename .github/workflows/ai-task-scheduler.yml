@@ -1,0 +1,26 @@
+name: AI Task Scheduler
+
+on:
+  schedule:
+    - cron: '0 */5 * * *' # Cada 5 horas
+  workflow_dispatch:
+
+jobs:
+  assign-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install @octokit/rest
+
+      - name: Run AI Task Scheduler
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/scripts/assign-ai-task.js
