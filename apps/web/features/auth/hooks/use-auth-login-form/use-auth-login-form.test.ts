@@ -25,7 +25,13 @@ describe('useAuthLoginForm', () => {
 
 	beforeEach(() => {
 		jest.clearAllMocks();
+		jest.spyOn(console, 'log').mockImplementation(() => {});
+		jest.spyOn(console, 'error').mockImplementation(() => {});
 		mockOnSubmit.mockResolvedValue(undefined);
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
 	});
 
 	describe('Initialization', () => {

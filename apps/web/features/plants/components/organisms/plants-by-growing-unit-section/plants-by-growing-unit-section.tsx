@@ -3,7 +3,8 @@
 import type { GrowingUnitResponse } from '@/features/growing-units/api/types';
 import type { PlantResponse } from '@/features/plants/api/types';
 import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
-import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
+import type { PlantFilterType } from '@/features/plants/hooks/use-plants-filtering/use-plants-filtering';
+import { usePlantsFiltering } from '@/features/plants/hooks/use-plants-filtering/use-plants-filtering';
 import {
 	Table,
 	TableBody,
@@ -12,12 +13,11 @@ import {
 	TableRow,
 } from '@/shared/components/ui/table';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
 
 interface PlantsByGrowingUnitSectionProps {
 	growingUnit: GrowingUnitResponse;
 	searchQuery?: string;
-	selectedFilter?: string;
+	selectedFilter?: PlantFilterType;
 	onEdit?: (plant: PlantResponse) => void;
 	onDelete?: (id: string) => void;
 }
@@ -31,40 +31,13 @@ export function PlantsByGrowingUnitSection({
 }: PlantsByGrowingUnitSectionProps) {
 	const t = useTranslations();
 
-	// Filter plants based on search query and filter
-	const filteredPlants = useMemo(() => {
-		let plants = growingUnit.plants || [];
-
-		// Apply search filter
-		if (searchQuery) {
-			const query = searchQuery.toLowerCase();
-			plants = plants.filter(
-				(plant) =>
-					plant.name?.toLowerCase().includes(query) ||
-					plant.species?.toLowerCase().includes(query) ||
-					growingUnit.name?.toLowerCase().includes(query),
-			);
-		}
-
-		// Apply status filter
-		if (selectedFilter !== 'all') {
-			switch (selectedFilter) {
-				case 'needsWater':
-					// TODO: Implement needs water filter when status logic is available
-					break;
-				case 'healthy':
-					// TODO: Implement healthy filter when health status logic is available
-					plants = plants.filter(
-						(plant) => plant.status === PLANT_STATUS.GROWING,
-					);
-					break;
-				default:
-					break;
-			}
-		}
-
-		return plants;
-	}, [growingUnit.plants, searchQuery, selectedFilter, growingUnit.name]);
+	const { filteredPlants } = usePlantsFiltering({
+		plants: growingUnit.plants || [],
+		searchQuery,
+		selectedFilter,
+		growingUnitId: growingUnit.id,
+		growingUnitName: growingUnit.name,
+	});
 
 	// Don't render section if no plants after filtering
 	if (filteredPlants.length === 0) {
