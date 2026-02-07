@@ -5,7 +5,9 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 
 // Mock dependencies
-jest.mock('next/navigation');
+jest.mock('next/navigation', () => ({
+	useRouter: jest.fn(),
+}));
 jest.mock('@/features/auth/api/auth-api.client');
 jest.mock('@/shared/hooks/use-routes');
 
@@ -42,10 +44,6 @@ describe('useAuthLogin', () => {
 				login: '/login',
 			},
 		});
-
-		// Mock window.location.href
-		delete (window as any).location;
-		window.location = { href: '' } as any;
 	});
 
 	afterEach(() => {
