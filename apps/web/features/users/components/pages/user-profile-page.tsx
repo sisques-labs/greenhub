@@ -1,6 +1,9 @@
 'use client';
 
-import { UserResponse, UserRole, UserStatus } from '@/features/users/api/types';
+import {
+	UserResponse,
+	transformAuthProfileToUser,
+} from '@/features/users/api/types';
 import {
 	Card,
 	CardContent,
@@ -72,23 +75,7 @@ export function UserProfilePage() {
 	}
 
 	// Convert AuthUserProfileResponse to UserResponse format for the form
-	const user: UserResponse = {
-		userId: profile.userId,
-		userName: profile.userName || null,
-		name: profile.name || null,
-		lastName: profile.lastName || null,
-		bio: profile.bio || null,
-		avatarUrl: profile.avatarUrl || null,
-		role: profile.role as UserRole,
-		status: profile.status as UserStatus,
-		createdAt: profile.createdAt ?? new Date(),
-		updatedAt: profile.updatedAt ?? new Date(),
-		email: profile.email ?? null,
-		phoneNumber: profile.phoneNumber || null,
-		emailVerified: profile.emailVerified ?? false,
-		twoFactorEnabled: profile.twoFactorEnabled ?? false,
-		lastLogin: profile.lastLoginAt ?? null,
-	};
+	const user: UserResponse = transformAuthProfileToUser(profile);
 
 	return (
 		<div className="mx-auto space-y-6">
