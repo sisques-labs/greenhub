@@ -1,8 +1,8 @@
-import { renderHook, act } from '@testing-library/react';
-import { useAuthLoginForm } from './use-auth-login-form';
+import { useAuthLoginForm } from '@/features/auth/hooks/use-auth-login-form/use-auth-login-form';
+import { act, renderHook } from '@testing-library/react';
 
 // Mock the auth store
-jest.mock('features/auth/stores/auth-page-store', () => ({
+jest.mock('@/features/auth/stores/auth-page-store', () => ({
 	useAuthPageStore: () => ({
 		email: '',
 		password: '',
