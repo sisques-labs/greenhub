@@ -50,7 +50,7 @@ export function PlantsPage() {
 		handleDelete,
 		handlePageChange,
 		hasAnyPlants,
-		growingUnits,
+		transformedGrowingUnits,
 		isCreating,
 		createError,
 	} = usePlantsPage();
@@ -174,12 +174,7 @@ export function PlantsPage() {
 				onSubmit={handleCreateSubmit}
 				isLoading={isCreating}
 				error={createError}
-				growingUnits={
-					growingUnits?.items.map((unit: { id: string; name: string }) => ({
-						id: unit.id,
-						name: unit.name,
-					})) || []
-				}
+				growingUnits={transformedGrowingUnits}
 			/>
 		</div>
 	);
