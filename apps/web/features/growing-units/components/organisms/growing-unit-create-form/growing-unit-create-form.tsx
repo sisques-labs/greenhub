@@ -24,13 +24,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/shared/components/ui/select';
-import {
-	createGrowingUnitCreateSchema,
-	type GrowingUnitCreateFormValues,
-} from 'features/growing-units/schemas/growing-unit-create/growing-unit-create.schema';
-import { useLocationsList } from 'features/locations/hooks/use-locations-list/use-locations-list';
+import { type GrowingUnitCreateFormValues } from 'features/growing-units/schemas/growing-unit-create/growing-unit-create.schema';
+import { useGrowingUnitCreateForm } from 'features/growing-units/hooks/use-growing-unit-create-form/use-growing-unit-create-form';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
 
 interface GrowingUnitCreateFormProps {
 	open: boolean;
@@ -48,85 +44,35 @@ export function GrowingUnitCreateForm({
 	error,
 }: GrowingUnitCreateFormProps) {
 	const t = useTranslations();
-	const { locations, isLoading: isLoadingLocations } = useLocationsList();
 
-	// Create schema with translations
-	const createSchema = useMemo(
-		() => createGrowingUnitCreateSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [locationId, setLocationId] = useState<string>('');
-	const [name, setName] = useState('');
-	const [type, setType] = useState<GrowingUnitCreateFormValues['type']>('POT');
-	const [capacity, setCapacity] = useState(1);
-	const [length, setLength] = useState<number | undefined>(undefined);
-	const [width, setWidth] = useState<number | undefined>(undefined);
-	const [height, setHeight] = useState<number | undefined>(undefined);
-	const [unit, setUnit] =
-		useState<GrowingUnitCreateFormValues['unit']>('CENTIMETER');
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		// Validate form
-		const result = createSchema.safeParse({
-			locationId,
-			name,
-			type,
-			capacity,
-			length,
-			width,
-			height,
-			unit,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(result.data);
-		if (!error) {
-			// Reset form
-			setLocationId('');
-			setName('');
-			setType('POT');
-			setCapacity(1);
-			setLength(undefined);
-			setWidth(undefined);
-			setHeight(undefined);
-			setUnit('CENTIMETER');
-			onOpenChange(false);
-		}
-	};
-
-	const handleOpenChange = (newOpen: boolean) => {
-		if (!newOpen) {
-			// Reset form
-			setLocationId('');
-			setName('');
-			setType('POT');
-			setCapacity(1);
-			setLength(undefined);
-			setWidth(undefined);
-			setHeight(undefined);
-			setUnit('CENTIMETER');
-			setFormErrors({});
-		}
-		onOpenChange(newOpen);
-	};
+	const {
+		locationId,
+		setLocationId,
+		name,
+		setName,
+		type,
+		setType,
+		capacity,
+		setCapacity,
+		length,
+		setLength,
+		width,
+		setWidth,
+		height,
+		setHeight,
+		unit,
+		setUnit,
+		formErrors,
+		locations,
+		isLoadingLocations,
+		handleSubmit,
+		handleOpenChange,
+	} = useGrowingUnitCreateForm({
+		onSubmit,
+		error,
+		onOpenChange,
+		translations: (key: string) => t(key),
+	});
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>

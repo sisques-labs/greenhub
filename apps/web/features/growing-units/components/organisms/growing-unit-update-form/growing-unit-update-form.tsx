@@ -24,16 +24,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/shared/components/ui/select';
-import {
-	createGrowingUnitUpdateSchema,
-	GrowingUnitUpdateFormValues,
-} from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
-import { useLocationsList } from 'features/locations/hooks/use-locations-list/use-locations-list';
+import type { GrowingUnitUpdateFormValues } from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
-import type { LengthUnit } from 'shared/constants/length-unit';
 import type { GrowingUnitResponse } from '../../../api/types';
-import type { GrowingUnitType } from '../../../constants/growing-unit-type';
+import { useGrowingUnitUpdateForm } from '../../../hooks/use-growing-unit-update-form/use-growing-unit-update-form';
 
 interface GrowingUnitUpdateFormProps {
 	growingUnit: GrowingUnitResponse | null;
@@ -53,85 +47,36 @@ export function GrowingUnitUpdateForm({
 	error,
 }: GrowingUnitUpdateFormProps) {
 	const t = useTranslations();
-	const { locations, isLoading: isLoadingLocations } = useLocationsList();
 
-	// Create schema with translations
-	const updateSchema = useMemo(
-		() => createGrowingUnitUpdateSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [id, setId] = useState('');
-	const [locationId, setLocationId] = useState<string>('');
-	const [name, setName] = useState('');
-	const [type, setType] = useState<GrowingUnitUpdateFormValues['type']>('POT');
-	const [capacity, setCapacity] = useState<number | undefined>(undefined);
-	const [length, setLength] = useState<number | undefined>(undefined);
-	const [width, setWidth] = useState<number | undefined>(undefined);
-	const [height, setHeight] = useState<number | undefined>(undefined);
-	const [unit, setUnit] =
-		useState<GrowingUnitUpdateFormValues['unit']>(undefined);
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	// Update form when growing unit changes
-	useEffect(() => {
-		if (growingUnit) {
-			setId(growingUnit.id);
-			setLocationId(growingUnit.location.id);
-			setName(growingUnit.name);
-			setType(growingUnit.type as GrowingUnitType);
-			setCapacity(growingUnit.capacity);
-			setLength(growingUnit.dimensions?.length);
-			setWidth(growingUnit.dimensions?.width);
-			setHeight(growingUnit.dimensions?.height);
-			setUnit(growingUnit.dimensions?.unit as LengthUnit);
-			setFormErrors({});
-		}
-	}, [growingUnit]);
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		// Validate form
-		const result = updateSchema.safeParse({
-			id,
-			locationId: locationId || undefined,
-			name: name || undefined,
-			type,
-			capacity,
-			length,
-			width,
-			height,
-			unit,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(result.data);
-		if (!error) {
-			onOpenChange(false);
-		}
-	};
-
-	const handleOpenChange = (newOpen: boolean) => {
-		if (!newOpen) {
-			setFormErrors({});
-		}
-		onOpenChange(newOpen);
-	};
+	const {
+		locationId,
+		setLocationId,
+		name,
+		setName,
+		type,
+		setType,
+		capacity,
+		setCapacity,
+		length,
+		setLength,
+		width,
+		setWidth,
+		height,
+		setHeight,
+		unit,
+		setUnit,
+		formErrors,
+		locations,
+		isLoadingLocations,
+		handleSubmit,
+		handleOpenChange,
+	} = useGrowingUnitUpdateForm({
+		growingUnit,
+		onSubmit,
+		error,
+		onOpenChange,
+		translations: (key: string) => t(key),
+	});
 
 	if (!growingUnit) return null;
 
