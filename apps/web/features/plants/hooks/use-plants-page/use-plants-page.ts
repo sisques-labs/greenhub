@@ -165,6 +165,14 @@ export function usePlantsPage() {
     return plants && plants.total > 0;
   }, [plants]);
 
+  // Transform growing units for the create form
+  const transformedGrowingUnits = useMemo(() => {
+    return growingUnits?.items.map((unit: { id: string; name: string }) => ({
+      id: unit.id,
+      name: unit.name,
+    })) || [];
+  }, [growingUnits]);
+
   return {
     // State
     searchQuery,
@@ -179,6 +187,7 @@ export function usePlantsPage() {
 
     // Data
     growingUnits,
+    transformedGrowingUnits,
     allFilteredPlants,
     paginatedPlants,
     totalPages,
