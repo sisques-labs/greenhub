@@ -119,6 +119,16 @@ export function usePlantDetailPage(id: string) {
 		}
 	}, [plantAge, t]);
 
+	// Format planted date for display
+	const formattedPlantedDate = useMemo(() => {
+		if (!plant?.plantedDate) return null;
+		return new Date(plant.plantedDate).toLocaleDateString('en-US', {
+			day: 'numeric',
+			month: 'short',
+			year: 'numeric',
+		});
+	}, [plant?.plantedDate]);
+
 	// Prepare upcoming care data for TimelineSequence
 	// TODO: This should be fetched from the backend and not hardcoded
 	const upcomingCareGroups: TimelineSequenceGroup[] = useMemo(() => {
@@ -167,6 +177,7 @@ export function usePlantDetailPage(id: string) {
 		targetGrowingUnits: growingUnits?.items || [],
 		plantAge,
 		plantAgeText,
+		formattedPlantedDate,
 		upcomingCareGroups,
 
 		// Loading states
