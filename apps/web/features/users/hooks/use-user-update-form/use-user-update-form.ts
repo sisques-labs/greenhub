@@ -4,7 +4,7 @@ import type { UserResponse } from '@/features/users/api/types';
 import {
 	createUserUpdateSchema,
 	UserUpdateFormValues,
-} from 'features/users/schemas/user-update/user-update.schema';
+} from '@/features/users/schemas/user-update/user-update.schema';
 import { useEffect, useMemo, useState } from 'react';
 
 interface UseUserUpdateFormProps {

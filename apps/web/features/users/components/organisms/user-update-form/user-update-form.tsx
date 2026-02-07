@@ -11,9 +11,9 @@ import {
 } from '@/shared/components/ui/form';
 import { Input } from '@/shared/components/ui/input';
 import { Textarea } from '@/shared/components/ui/textarea';
-import { UserUpdateFormValues } from 'features/users/schemas/user-update/user-update.schema';
+import { UserUpdateFormValues } from '@/features/users/schemas/user-update/user-update.schema';
 import { useTranslations } from 'next-intl';
-import { useUserUpdateForm } from '../../hooks/use-user-update-form/use-user-update-form';
+import { useUserUpdateForm } from '@/features/users/hooks/use-user-update-form/use-user-update-form';
 
 interface UserUpdateFormProps {
 	user: UserResponse;
