@@ -25,12 +25,9 @@ import {
 	SelectValue,
 } from '@/shared/components/ui/select';
 import { Textarea } from '@/shared/components/ui/textarea';
-import {
-	createLocationCreateSchema,
-	type LocationCreateFormValues,
-} from 'features/locations/schemas/location-create/location-create.schema';
+import { type LocationCreateFormValues } from 'features/locations/schemas/location-create/location-create.schema';
+import { useLocationCreateForm } from 'features/locations/hooks/use-location-create-form/use-location-create-form';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
 
 interface LocationCreateFormProps {
 	open: boolean;
@@ -49,63 +46,22 @@ export function LocationCreateForm({
 }: LocationCreateFormProps) {
 	const t = useTranslations();
 
-	// Create schema with translations
-	const createSchema = useMemo(
-		() => createLocationCreateSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [name, setName] = useState('');
-	const [type, setType] =
-		useState<LocationCreateFormValues['type']>('INDOOR_SPACE');
-	const [description, setDescription] = useState<string | null>(null);
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		// Validate form
-		const result = createSchema.safeParse({
-			name,
-			type,
-			description,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(result.data);
-		if (!error) {
-			// Reset form
-			setName('');
-			setType('INDOOR_SPACE');
-			setDescription(null);
-			onOpenChange(false);
-		}
-	};
-
-	const handleOpenChange = (newOpen: boolean) => {
-		if (!newOpen) {
-			// Reset form
-			setName('');
-			setType('INDOOR_SPACE');
-			setDescription(null);
-			setFormErrors({});
-		}
-		onOpenChange(newOpen);
-	};
+	const {
+		name,
+		type,
+		description,
+		formErrors,
+		setName,
+		setType,
+		setDescription,
+		handleSubmit,
+		handleOpenChange,
+	} = useLocationCreateForm({
+		onSubmit,
+		onOpenChange,
+		error,
+		translations: (key: string) => t(key),
+	});
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
