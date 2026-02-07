@@ -11,6 +11,10 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"lint:check": "eslint .",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"test:coverage": "jest --coverage",
+		"test:ci": "jest --ci --coverage --maxWorkers=2",
 		"release": "semantic-release",
 		"git:clean": "git branch --merged | grep -vE '^*|main|dev' | xargs -n 1 git branch -d"
 	},
