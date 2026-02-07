@@ -12,8 +12,11 @@ import {
 	DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
 import { TableCell, TableRow } from '@/shared/components/ui/table';
+import { formatPlantDate } from '@/shared/lib/date-utils';
+import { getLocationIcon } from '@/shared/lib/icon-utils';
+import { getPlantInitials } from '@/shared/lib/string-utils';
 import { getPlantStatusBadge } from 'features/plants/utils/plant-status.utils';
-import { MapPinIcon, MoreVerticalIcon } from 'lucide-react';
+import { MoreVerticalIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type { PlantResponse } from '../../../api/types';
@@ -29,37 +32,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 	const locale = useLocale();
 	const router = useRouter();
 
-	const formatDate = (date?: Date | null): string => {
-		if (!date) return '-';
-		const now = new Date();
-		const plantDate = new Date(date);
-		const diffTime = Math.abs(now.getTime() - plantDate.getTime());
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-		if (diffDays === 0) return t('pages.plants.list.table.lastWatering.today');
-		if (diffDays === 1)
-			return t('pages.plants.list.table.lastWatering.yesterday');
-		if (diffDays < 7)
-			return t('pages.plants.list.table.lastWatering.daysAgo', {
-				days: diffDays,
-			});
-		if (diffDays < 14)
-			return t('pages.plants.list.table.lastWatering.weeksAgo', {
-				weeks: Math.floor(diffDays / 7),
-			});
-		return plantDate.toLocaleDateString();
-	};
-
-	const getLocationIcon = () => {
-		return <MapPinIcon className="h-4 w-4 text-muted-foreground" />;
-	};
-
-	const initials = (plant.name || plant.species || 'P')
-		.split(' ')
-		.map((n) => n[0])
-		.join('')
-		.toUpperCase()
-		.slice(0, 2);
+	const initials = getPlantInitials(plant.name, plant.species);
 
 	const handleRowClick = () => {
 		router.push(`/${locale}/plants/${plant.id}`);
@@ -108,7 +81,14 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 			<TableCell>{getPlantStatusBadge(plant.status, t)}</TableCell>
 			<TableCell>
 				<span className="text-sm text-muted-foreground">
-					{formatDate(plant.updatedAt)}
+					{formatPlantDate(plant.updatedAt, {
+						today: t('pages.plants.list.table.lastWatering.today'),
+						yesterday: t('pages.plants.list.table.lastWatering.yesterday'),
+						daysAgo: (days: number) =>
+							t('pages.plants.list.table.lastWatering.daysAgo', { days }),
+						weeksAgo: (weeks: number) =>
+							t('pages.plants.list.table.lastWatering.weeksAgo', { weeks }),
+					})}
 				</span>
 			</TableCell>
 			<TableCell onClick={handleActionClick}>
