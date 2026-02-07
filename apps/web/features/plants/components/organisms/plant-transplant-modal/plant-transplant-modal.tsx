@@ -25,26 +25,12 @@ import {
 	SelectValue,
 } from '@/shared/components/ui/select';
 import type { GrowingUnitResponse } from 'features/growing-units/api/types';
+import { usePlantTransplantForm } from 'features/plants/hooks/use-plant-transplant-form/use-plant-transplant-form';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
-import { z } from 'zod';
 import type {
 	PlantGrowingUnitReference,
 	PlantResponse,
 } from '../../../api/types';
-
-const createPlantTransplantSchema = (translations: (key: string) => string) =>
-	z.object({
-		targetGrowingUnitId: z.string().min(1, {
-			message: translations(
-				'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.required',
-			),
-		}),
-	});
-
-export type PlantTransplantFormValues = z.infer<
-	ReturnType<typeof createPlantTransplantSchema>
->;
 
 interface PlantTransplantModalProps {
 	plant: PlantResponse;
@@ -68,58 +54,21 @@ export function PlantTransplantModal({
 }: PlantTransplantModalProps) {
 	const t = useTranslations();
 
-	// Create schema with translations
-	const transplantSchema = useMemo(
-		() => createPlantTransplantSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [targetGrowingUnitId, setTargetGrowingUnitId] = useState('');
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	// Filter out the source growing unit from target options
-	const availableTargetGrowingUnits = useMemo(() => {
-		if (!sourceGrowingUnit) return targetGrowingUnits;
-		return targetGrowingUnits.filter((gu) => gu.id !== sourceGrowingUnit.id);
-	}, [targetGrowingUnits, sourceGrowingUnit]);
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		// Validate form
-		const result = transplantSchema.safeParse({
-			targetGrowingUnitId,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(targetGrowingUnitId);
-		if (!error) {
-			setTargetGrowingUnitId('');
-			onOpenChange(false);
-		}
-	};
-
-	const handleOpenChange = (newOpen: boolean) => {
-		if (!newOpen) {
-			setTargetGrowingUnitId('');
-			setFormErrors({});
-		}
-		onOpenChange(newOpen);
-	};
+	const {
+		targetGrowingUnitId,
+		formErrors,
+		availableTargetGrowingUnits,
+		setTargetGrowingUnitId,
+		handleSubmit,
+		handleOpenChange,
+	} = usePlantTransplantForm({
+		sourceGrowingUnit,
+		targetGrowingUnits,
+		onSubmit,
+		onOpenChange,
+		error,
+		translations: (key: string) => t(key),
+	});
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
