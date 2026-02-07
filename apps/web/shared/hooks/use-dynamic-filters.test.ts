@@ -434,7 +434,10 @@ describe('useDynamicFilters', () => {
 
 	describe('Integration Tests', () => {
 		it('should handle complete filter lifecycle', () => {
-			const { result } = renderHook(() => useDynamicFilters(defaultProps));
+			const { result, rerender } = renderHook(
+				({ filters }) => useDynamicFilters({ ...defaultProps, filters }),
+				{ initialProps: { filters: [] as DynamicFilter[] } },
+			);
 
 			// Add filter
 			act(() => {
@@ -442,6 +445,9 @@ describe('useDynamicFilters', () => {
 			});
 
 			const addedFilter = mockOnFiltersChange.mock.calls[0][0][0];
+
+			// Simulate parent component updating filters prop
+			rerender({ filters: [addedFilter] });
 
 			// Update filter
 			act(() => {
@@ -460,6 +466,11 @@ describe('useDynamicFilters', () => {
 				},
 			]);
 
+			const updatedFilter = mockOnFiltersChange.mock.calls[1][0][0];
+
+			// Simulate parent component updating filters prop
+			rerender({ filters: [updatedFilter] });
+
 			// Remove filter
 			act(() => {
 				result.current.removeFilter(addedFilter.id);
@@ -469,7 +480,10 @@ describe('useDynamicFilters', () => {
 		});
 
 		it('should handle multiple filters correctly', () => {
-			const { result } = renderHook(() => useDynamicFilters(defaultProps));
+			const { result, rerender } = renderHook(
+				({ filters }) => useDynamicFilters({ ...defaultProps, filters }),
+				{ initialProps: { filters: [] as DynamicFilter[] } },
+			);
 
 			// Add first filter
 			act(() => {
@@ -477,6 +491,9 @@ describe('useDynamicFilters', () => {
 			});
 
 			const firstFilter = mockOnFiltersChange.mock.calls[0][0][0];
+
+			// Simulate parent component updating filters prop
+			rerender({ filters: [firstFilter] });
 
 			// Mock new timestamp for second filter
 			jest.spyOn(Date, 'now').mockReturnValue(1234567891);
