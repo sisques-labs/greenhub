@@ -25,13 +25,10 @@ import {
 	SelectValue,
 } from '@/shared/components/ui/select';
 import { Textarea } from '@/shared/components/ui/textarea';
-import {
-	createLocationUpdateSchema,
-	type LocationUpdateFormValues,
-} from 'features/locations/schemas/location-update/location-update.schema';
+import type { LocationUpdateFormValues } from 'features/locations/schemas/location-update/location-update.schema';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
 import type { LocationResponse } from '../../../api/types';
+import { useLocationUpdateForm } from '../../../hooks/use-location-update-form';
 
 interface LocationUpdateFormProps {
 	location: LocationResponse | null;
@@ -52,74 +49,23 @@ export function LocationUpdateForm({
 }: LocationUpdateFormProps) {
 	const t = useTranslations();
 
-	// Create schema with translations
-	const updateSchema = useMemo(
-		() => createLocationUpdateSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [name, setName] = useState('');
-	const [type, setType] =
-		useState<LocationUpdateFormValues['type']>('INDOOR_SPACE');
-	const [description, setDescription] = useState<string | null>(null);
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	// Update form when location changes
-	useEffect(() => {
-		if (location) {
-			setName(location.name);
-			setType(location.type as LocationUpdateFormValues['type']);
-			setDescription(location.description || null);
-			setFormErrors({});
-		}
-	}, [location]);
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (!location) return;
-
-		// Validate form
-		const result = updateSchema.safeParse({
-			id: location.id,
-			name,
-			type,
-			description,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(result.data);
-		if (!error) {
-			onOpenChange(false);
-		}
-	};
-
-	const handleOpenChange = (newOpen: boolean) => {
-		if (!newOpen) {
-			// Reset form
-			if (location) {
-				setName(location.name);
-				setType(location.type as LocationUpdateFormValues['type']);
-				setDescription(location.description || null);
-			}
-			setFormErrors({});
-		}
-		onOpenChange(newOpen);
-	};
+	const {
+		name,
+		setName,
+		type,
+		setType,
+		description,
+		setDescription,
+		formErrors,
+		handleSubmit,
+		handleOpenChange,
+	} = useLocationUpdateForm({
+		location,
+		onSubmit,
+		error,
+		onOpenChange,
+		t: (key: string) => t(key),
+	});
 
 	if (!location) {
 		return null;
