@@ -491,17 +491,17 @@ describe('useGrowingUnitCreateForm', () => {
 			expect(mockOnOpenChange).toHaveBeenCalledWith(true);
 		});
 
-		it('should clear form errors when closing dialog', () => {
+		it('should clear form errors when closing dialog', async () => {
 			const { result } = renderHook(() =>
 				useGrowingUnitCreateForm(defaultProps),
 			);
 
-			// Manually set form errors
+			// Manually set form errors by submitting empty form
 			const mockEvent = {
 				preventDefault: jest.fn(),
 			} as unknown as React.FormEvent<HTMLFormElement>;
 
-			act(async () => {
+			await act(async () => {
 				await result.current.handleSubmit(mockEvent);
 			});
 

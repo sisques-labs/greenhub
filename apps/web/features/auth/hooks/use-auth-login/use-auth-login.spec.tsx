@@ -33,10 +33,10 @@ describe('useAuthLogin', () => {
 			},
 		});
 
-		// Clear all mocks before each test
 		jest.clearAllMocks();
+		jest.spyOn(console, 'log').mockImplementation(() => {});
+		jest.spyOn(console, 'error').mockImplementation(() => {});
 
-		// Setup mocks
 		(useRouter as jest.Mock).mockReturnValue(mockRouter);
 		(useAppRoutes as jest.Mock).mockReturnValue({
 			routes: {
@@ -48,6 +48,7 @@ describe('useAuthLogin', () => {
 
 	afterEach(() => {
 		queryClient.clear();
+		jest.restoreAllMocks();
 	});
 
 	const wrapper = ({ children }: { children: React.ReactNode }) => (
