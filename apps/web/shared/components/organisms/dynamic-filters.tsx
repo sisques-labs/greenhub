@@ -9,6 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/shared/components/ui/select';
+import { useDynamicFilters } from '@/shared/hooks/use-dynamic-filters';
 import { PlusIcon, XIcon } from 'lucide-react';
 
 export interface FilterField {
@@ -40,33 +41,18 @@ export function DynamicFilters({
 	onFiltersChange,
 	className,
 }: DynamicFiltersProps) {
-	const addFilter = () => {
-		const newFilter: DynamicFilter = {
-			id: `filter-${Date.now()}`,
-			field: fields[0]?.key || '',
-			operator: operators[0]?.value || '',
-			value: '',
-		};
-		onFiltersChange([...filters, newFilter]);
-	};
-
-	const removeFilter = (id: string) => {
-		onFiltersChange(filters.filter((f) => f.id !== id));
-	};
-
-	const updateFilter = (id: string, updates: Partial<DynamicFilter>) => {
-		onFiltersChange(
-			filters.map((f) => (f.id === id ? { ...f, ...updates } : f)),
-		);
-	};
-
-	const getFieldType = (fieldKey: string): FilterField['type'] => {
-		return fields.find((f) => f.key === fieldKey)?.type || 'text';
-	};
-
-	const getFieldEnumOptions = (fieldKey: string) => {
-		return fields.find((f) => f.key === fieldKey)?.enumOptions || [];
-	};
+	const {
+		addFilter,
+		removeFilter,
+		updateFilter,
+		getFieldType,
+		getFieldEnumOptions,
+	} = useDynamicFilters({
+		fields,
+		operators,
+		filters,
+		onFiltersChange,
+	});
 
 	const renderValueInput = (filter: DynamicFilter) => {
 		const fieldType = getFieldType(filter.field);
