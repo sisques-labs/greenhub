@@ -16,9 +16,11 @@ export function getInitials(
 	name: string | null | undefined,
 	fallback = 'P',
 ): string {
-	const text = name || fallback;
-	return text
-		.split(' ')
+	const text = (name ?? '').trim() || fallback;
+	const words = text.split(/\s+/).filter(Boolean);
+	if (words.length === 0) return fallback.slice(0, 2).toUpperCase();
+	if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+	return words
 		.map((n) => n[0])
 		.join('')
 		.toUpperCase()

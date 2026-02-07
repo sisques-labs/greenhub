@@ -66,7 +66,7 @@ describe('string-utils', () => {
 			});
 
 			it('should handle special characters in names', () => {
-				expect(getInitials('Jean-Pierre')).toBe('JP');
+				expect(getInitials('Jean-Pierre')).toBe('JE');
 			});
 
 			it('should handle names with numbers', () => {

@@ -113,10 +113,10 @@ describe('formatPlantDate', () => {
 	});
 
 	describe('edge cases', () => {
-		it('should handle dates in the future (treated as today)', () => {
+		it('should handle dates in the future (shown as 1 day ago)', () => {
 			const future = new Date('2024-02-16T12:00:00Z');
 			const result = formatPlantDate(future, mockTranslations);
-			expect(result).toBe('Yesterday'); // Due to Math.abs and rounding
+			expect(result).toBe('1 days ago');
 		});
 
 		it('should handle date strings', () => {

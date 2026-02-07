@@ -25,14 +25,21 @@ export function formatPlantDate(
 
 	const now = new Date();
 	const plantDate = new Date(date);
-	const diffTime = Math.abs(now.getTime() - plantDate.getTime());
-	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-	if (diffDays === 0) return translations.today;
+	const toDayKey = (d: Date) =>
+		`${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
+	const nowKey = toDayKey(now);
+	const plantKey = toDayKey(plantDate);
+	const diffDays = Math.round(
+		(now.getTime() - plantDate.getTime()) / (1000 * 60 * 60 * 24),
+	);
+	const diffDaysAbs = Math.abs(diffDays);
+
+	if (nowKey === plantKey) return translations.today;
 	if (diffDays === 1) return translations.yesterday;
-	if (diffDays < 7) return translations.daysAgo(diffDays);
-	if (diffDays < 14)
-		return translations.weeksAgo(Math.floor(diffDays / 7));
+	if (diffDaysAbs < 7) return translations.daysAgo(diffDaysAbs);
+	if (diffDaysAbs < 14)
+		return translations.weeksAgo(Math.floor(diffDaysAbs / 7));
 
 	return plantDate.toLocaleDateString();
 }
