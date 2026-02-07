@@ -351,12 +351,17 @@ describe('useUserUpdateForm', () => {
 		});
 
 		it('should set form errors when validation fails', async () => {
-			const { result } = renderHook(() => useUserUpdateForm(defaultProps));
+			const userWithEmptyId: UserResponse = {
+				...mockUser,
+				userId: '',
+			};
 
-			// Clear id to make validation fail
-			act(() => {
-				(result.current as any).id = '';
-			});
+			const { result } = renderHook(() =>
+				useUserUpdateForm({
+					...defaultProps,
+					user: userWithEmptyId,
+				}),
+			);
 
 			const mockEvent = {
 				preventDefault: jest.fn(),
@@ -402,27 +407,35 @@ describe('useUserUpdateForm', () => {
 		});
 
 		it('should clear form errors before submission', async () => {
-			const { result } = renderHook(() => useUserUpdateForm(defaultProps));
+			const userWithEmptyId: UserResponse = {
+				...mockUser,
+				userId: '',
+			};
 
-			// First, submit with invalid data to generate errors
-			act(() => {
-				(result.current as any).id = '';
-			});
+			const { result, rerender } = renderHook(
+				({ user }) =>
+					useUserUpdateForm({
+						...defaultProps,
+						user,
+					}),
+				{
+					initialProps: { user: userWithEmptyId },
+				},
+			);
 
 			const mockEvent = {
 				preventDefault: jest.fn(),
 			} as unknown as React.FormEvent<HTMLFormElement>;
 
+			// First, submit with invalid data to generate errors
 			await act(async () => {
 				await result.current.handleSubmit(mockEvent);
 			});
 
 			expect(result.current.formErrors).not.toEqual({});
 
-			// Fix the data
-			act(() => {
-				(result.current as any).id = 'user-123';
-			});
+			// Fix the data by updating user
+			rerender({ user: mockUser });
 
 			// Submit again
 			await act(async () => {
