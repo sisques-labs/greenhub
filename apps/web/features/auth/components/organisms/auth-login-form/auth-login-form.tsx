@@ -5,13 +5,8 @@ import { AuthEmailField } from 'features/auth/components/molecules/auth-email-fi
 import { AuthErrorMessage } from 'features/auth/components/molecules/auth-error-message/auth-error-message';
 import { AuthPasswordField } from 'features/auth/components/molecules/auth-password-field/auth-password-field';
 import { AuthSubmitButton } from 'features/auth/components/molecules/auth-submit-button/auth-submit-button';
-import {
-	AuthLoginByEmailFormValues,
-	createAuthLoginByEmailSchema,
-} from 'features/auth/schemas/auth-login-by-email/auth-login-by-email.schema';
-import { useAuthPageStore } from 'features/auth/stores/auth-page-store';
-import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useAuthLoginForm } from 'features/auth/hooks/use-auth-login-form/use-auth-login-form';
+import { AuthLoginByEmailFormValues } from 'features/auth/schemas/auth-login-by-email/auth-login-by-email.schema';
 
 interface AuthLoginFormProps {
 	onSubmit: (values: AuthLoginByEmailFormValues) => Promise<unknown>;
@@ -24,53 +19,16 @@ export function AuthLoginForm({
 	isLoading,
 	error,
 }: AuthLoginFormProps) {
-	const t = useTranslations();
-	const { email, password, setEmail, setPassword } = useAuthPageStore();
-
-	// Create schema with translations
-	const loginSchema = useMemo(
-		() => createAuthLoginByEmailSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [formEmail, setFormEmail] = useState(email);
-	const [formPassword, setFormPassword] = useState(password);
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		console.log('Form submitted');
-
-		// Validate form
-		const result = loginSchema.safeParse({
-			email: formEmail,
-			password: formPassword,
-		});
-
-		if (!result.success) {
-			console.log('Validation failed:', result.error);
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		console.log('Validation passed, calling onSubmit');
-		setFormErrors({});
-		try {
-			const response = await onSubmit(result.data);
-			console.log('onSubmit response:', response);
-		} catch (error) {
-			console.error('onSubmit error:', error);
-		}
-	};
+	const {
+		formEmail,
+		setFormEmail,
+		formPassword,
+		setFormPassword,
+		formErrors,
+		handleSubmit,
+		setEmail,
+		setPassword,
+	} = useAuthLoginForm({ onSubmit });
 
 	return (
 		<Form errors={formErrors}>
