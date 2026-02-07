@@ -94,3 +94,29 @@ export function transformUserResponse(
 		updatedAt: new Date(apiUser.updatedAt),
 	};
 }
+
+/**
+ * Transform AuthUserProfileResponse to UserResponse format
+ * Used to convert auth profile data to user response format for forms and UI
+ */
+export function transformAuthProfileToUser(
+	profile: import('features/auth/api/types').AuthUserProfileResponse,
+): UserResponse {
+	return {
+		userId: profile.userId,
+		userName: profile.userName || null,
+		name: profile.name || null,
+		lastName: profile.lastName || null,
+		bio: profile.bio || null,
+		avatarUrl: profile.avatarUrl || null,
+		role: profile.role as UserRole,
+		status: profile.status as UserStatus,
+		createdAt: profile.createdAt ?? new Date(),
+		updatedAt: profile.updatedAt ?? new Date(),
+		email: profile.email ?? null,
+		phoneNumber: profile.phoneNumber || null,
+		emailVerified: profile.emailVerified ?? false,
+		twoFactorEnabled: profile.twoFactorEnabled ?? false,
+		lastLogin: profile.lastLoginAt ?? null,
+	};
+}

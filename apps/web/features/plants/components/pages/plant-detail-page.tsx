@@ -49,6 +49,7 @@ export function PlantDetailPage() {
 		sourceGrowingUnit,
 		targetGrowingUnits,
 		plantAgeText,
+		formattedPlantedDate,
 		upcomingCareGroups,
 		isLoading,
 		isLoadingTransplant,
@@ -261,13 +262,7 @@ export function PlantDetailPage() {
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">
-							{plant.plantedDate
-								? new Date(plant.plantedDate).toLocaleDateString('en-US', {
-										day: 'numeric',
-										month: 'short',
-										year: 'numeric',
-									})
-								: t('common.notSet')}
+							{formattedPlantedDate || t('common.notSet')}
 						</div>
 						{plantAgeText && (
 							<p className="text-xs text-muted-foreground">
