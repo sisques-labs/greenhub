@@ -279,6 +279,7 @@ describe('usePlantsFiltering', () => {
 				usePlantsFiltering({
 					plants: plantsWithGrowingUnit,
 					searchQuery: 'greenhouse',
+					growingUnitId: 'unit-1',
 					growingUnitName: 'Greenhouse 1',
 				}),
 			);

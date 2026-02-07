@@ -35,6 +35,7 @@ export function PlantsByGrowingUnitSection({
 		plants: growingUnit.plants || [],
 		searchQuery,
 		selectedFilter,
+		growingUnitId: growingUnit.id,
 		growingUnitName: growingUnit.name,
 	});
 

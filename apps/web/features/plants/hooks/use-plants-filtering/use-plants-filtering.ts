@@ -8,6 +8,7 @@ export interface UsePlantsFilteringParams {
 	plants: PlantResponse[];
 	searchQuery?: string;
 	selectedFilter?: PlantFilterType;
+	growingUnitId?: string;
 	growingUnitName?: string;
 }
 
@@ -25,6 +26,7 @@ export interface UsePlantsFilteringResult {
  * @param params.plants - Array of plants to filter
  * @param params.searchQuery - Optional search query to filter by name, species, or growing unit name
  * @param params.selectedFilter - Optional filter type ('all', 'needsWater', 'healthy')
+ * @param params.growingUnitId - Optional growing unit id to filter plants by unit
  * @param params.growingUnitName - Optional growing unit name for search filtering
  *
  * @returns Object containing filtered plants array
@@ -35,6 +37,7 @@ export interface UsePlantsFilteringResult {
  *   plants: allPlants,
  *   searchQuery: 'tomato',
  *   selectedFilter: 'healthy',
+ *   growingUnitId: 'unit-1',
  *   growingUnitName: 'Greenhouse 1'
  * });
  * ```
@@ -43,14 +46,23 @@ export function usePlantsFiltering({
 	plants,
 	searchQuery = '',
 	selectedFilter = 'all',
+	growingUnitId,
 	growingUnitName = '',
 }: UsePlantsFilteringParams): UsePlantsFilteringResult {
 	const filteredPlants = useMemo(() => {
 		let result = plants || [];
 
+		// Filter by growing unit when specified
+		if (growingUnitId) {
+			result = result.filter(
+				(plant) => plant.growingUnitId === growingUnitId,
+			);
+		}
+
 		// Apply search filter
-		if (searchQuery) {
-			const query = searchQuery.toLowerCase();
+		const trimmedQuery = searchQuery?.trim();
+		if (trimmedQuery) {
+			const query = trimmedQuery.toLowerCase();
 			result = result.filter(
 				(plant) =>
 					plant.name?.toLowerCase().includes(query) ||
@@ -77,7 +89,7 @@ export function usePlantsFiltering({
 		}
 
 		return result;
-	}, [plants, searchQuery, selectedFilter, growingUnitName]);
+	}, [plants, searchQuery, selectedFilter, growingUnitId, growingUnitName]);
 
 	return { filteredPlants };
 }
