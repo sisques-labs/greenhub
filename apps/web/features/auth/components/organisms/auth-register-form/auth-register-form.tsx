@@ -6,13 +6,8 @@ import { AuthEmailField } from 'features/auth/components/molecules/auth-email-fi
 import { AuthErrorMessage } from 'features/auth/components/molecules/auth-error-message/auth-error-message';
 import { AuthPasswordField } from 'features/auth/components/molecules/auth-password-field/auth-password-field';
 import { AuthSubmitButton } from 'features/auth/components/molecules/auth-submit-button/auth-submit-button';
-import {
-	AuthRegisterByEmailFormValues,
-	createAuthRegisterByEmailSchema,
-} from 'features/auth/schemas/auth-register-by-email/auth-register-by-email.schema';
-import { useAuthPageStore } from 'features/auth/stores/auth-page-store';
-import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useAuthRegisterForm } from 'features/auth/hooks/use-auth-register-form/use-auth-register-form';
+import { AuthRegisterByEmailFormValues } from 'features/auth/schemas/auth-register-by-email/auth-register-by-email.schema';
 
 interface AuthRegisterFormProps {
 	onSubmit: (values: AuthRegisterByEmailFormValues) => Promise<unknown>;
@@ -25,55 +20,19 @@ export function AuthRegisterForm({
 	isLoading,
 	error,
 }: AuthRegisterFormProps) {
-	const t = useTranslations();
 	const {
-		email,
-		password,
-		confirmPassword,
+		formEmail,
+		setFormEmail,
+		formPassword,
+		setFormPassword,
+		formConfirmPassword,
+		setFormConfirmPassword,
+		formErrors,
+		handleSubmit,
 		setEmail,
 		setPassword,
 		setConfirmPassword,
-	} = useAuthPageStore();
-
-	// Create schema with translations
-	const registerSchema = useMemo(
-		() => createAuthRegisterByEmailSchema((key: string) => t(key)),
-		[t],
-	);
-
-	// Form state
-	const [formEmail, setFormEmail] = useState(email);
-	const [formPassword, setFormPassword] = useState(password);
-	const [formConfirmPassword, setFormConfirmPassword] =
-		useState(confirmPassword);
-	const [formErrors, setFormErrors] = useState<
-		Record<string, { message?: string }>
-	>({});
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		// Validate form
-		const result = registerSchema.safeParse({
-			email: formEmail,
-			password: formPassword,
-			confirmPassword: formConfirmPassword,
-		});
-
-		if (!result.success) {
-			const errors: Record<string, { message?: string }> = {};
-			result.error.issues.forEach((err) => {
-				if (err.path[0]) {
-					errors[err.path[0] as string] = { message: err.message };
-				}
-			});
-			setFormErrors(errors);
-			return;
-		}
-
-		setFormErrors({});
-		await onSubmit(result.data);
-	};
+	} = useAuthRegisterForm({ onSubmit });
 
 	return (
 		<Form errors={formErrors}>
