@@ -1,15 +1,15 @@
-import { renderHook, act } from '@testing-library/react';
-import { useGrowingUnitDetailPage } from './use-growing-unit-detail-page';
-import { useGrowingUnitFindById } from 'features/growing-units/hooks/use-growing-unit-find-by-id';
-import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update';
-import { useGrowingUnitDetailPageStore } from 'features/growing-units/stores/growing-unit-detail-page-store';
-import { usePlantAdd } from 'features/plants/hooks/use-plant-add';
+import { useGrowingUnitDetailPage } from '@/features/growing-units/hooks/use-growing-unit-detail-page';
+import { useGrowingUnitFindById } from '@/features/growing-units/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
+import { useGrowingUnitUpdate } from '@/features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
+import { useGrowingUnitDetailPageStore } from '@/features/growing-units/stores/growing-unit-detail-page-store';
+import { usePlantAdd } from '@/features/plants/hooks/use-plant-add/use-plant-add';
+import { act, renderHook } from '@testing-library/react';
 
-// Mock dependencies
-jest.mock('features/growing-units/hooks/use-growing-unit-find-by-id');
-jest.mock('features/growing-units/hooks/use-growing-unit-update');
-jest.mock('features/growing-units/stores/growing-unit-detail-page-store');
-jest.mock('features/plants/hooks/use-plant-add');
+// Mock dependencies - use exact import paths to ensure mocks are applied
+jest.mock('@/features/growing-units/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id');
+jest.mock('@/features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update');
+jest.mock('@/features/growing-units/stores/growing-unit-detail-page-store');
+jest.mock('@/features/plants/hooks/use-plant-add/use-plant-add');
 
 describe('useGrowingUnitDetailPage', () => {
 	const mockGrowingUnit = {
@@ -49,7 +49,7 @@ describe('useGrowingUnitDetailPage', () => {
 			error: null,
 		});
 
-		(useGrowingUnitDetailPageStore as jest.Mock).mockReturnValue({
+		(useGrowingUnitDetailPageStore as unknown as jest.Mock).mockReturnValue({
 			updateDialogOpen: false,
 			setUpdateDialogOpen: mockSetUpdateDialogOpen,
 			createPlantDialogOpen: false,
@@ -257,7 +257,10 @@ describe('useGrowingUnitDetailPage', () => {
 			};
 
 			await act(async () => {
-				await result.current.handlePlantCreateSubmit(values);
+				await result.current.handlePlantCreateSubmit({
+					...values,
+					plantedDate: values.plantedDate || undefined,
+				});
 			});
 
 			expect(mockHandlePlantCreate).toHaveBeenCalledWith(
@@ -374,7 +377,7 @@ describe('useGrowingUnitDetailPage', () => {
 
 	describe('Dialog state management', () => {
 		it('should expose update dialog open state', () => {
-			(useGrowingUnitDetailPageStore as jest.Mock).mockReturnValue({
+			(useGrowingUnitDetailPageStore as unknown as jest.Mock).mockReturnValue({
 				updateDialogOpen: true,
 				setUpdateDialogOpen: mockSetUpdateDialogOpen,
 				createPlantDialogOpen: false,
@@ -387,7 +390,7 @@ describe('useGrowingUnitDetailPage', () => {
 		});
 
 		it('should expose create plant dialog open state', () => {
-			(useGrowingUnitDetailPageStore as jest.Mock).mockReturnValue({
+			(useGrowingUnitDetailPageStore as unknown as jest.Mock).mockReturnValue({
 				updateDialogOpen: false,
 				setUpdateDialogOpen: mockSetUpdateDialogOpen,
 				createPlantDialogOpen: true,
