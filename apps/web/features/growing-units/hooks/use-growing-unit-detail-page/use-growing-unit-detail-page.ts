@@ -63,7 +63,10 @@ export function useGrowingUnitDetailPage(id: string) {
 
 	// Calculate derived state
 	const location = useMemo(
-		() => (growingUnit ? determineLocation(growingUnit.type) : 'outdoor'),
+		() =>
+			growingUnit
+				? determineLocation(growingUnit.type as GrowingUnitType)
+				: 'outdoor',
 		[growingUnit],
 	);
 
