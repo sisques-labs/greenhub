@@ -18,14 +18,9 @@ import {
 	TableRow,
 } from '@/shared/components/ui/table';
 import { GrowingUnitUpdateForm } from 'features/growing-units/components/organisms/growing-unit-update-form/growing-unit-update-form';
-import { useGrowingUnitFindById } from 'features/growing-units/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
-import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
-import type { GrowingUnitUpdateFormValues } from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
-import { useGrowingUnitDetailPageStore } from 'features/growing-units/stores/growing-unit-detail-page-store';
+import { useGrowingUnitDetailPage } from 'features/growing-units/hooks/use-growing-unit-detail-page';
 import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
 import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
-import { usePlantAdd } from 'features/plants/hooks/use-plant-add/use-plant-add';
-import type { PlantCreateFormValues } from 'features/plants/schemas/plant-create/plant-create.schema';
 import {
 	DropletsIcon,
 	Grid3x3Icon,
@@ -42,57 +37,26 @@ export function GrowingUnitDetailPage() {
 	const params = useParams();
 	const id = params?.id as string;
 
-	const { growingUnit, isLoading, error, refetch } = useGrowingUnitFindById(
-		id || '',
-	);
 	const {
+		growingUnit,
+		isLoading,
+		error,
+		location,
+		occupancyPercentage,
 		updateDialogOpen,
 		setUpdateDialogOpen,
 		createPlantDialogOpen,
 		setCreatePlantDialogOpen,
-	} = useGrowingUnitDetailPageStore();
+		isUpdating,
+		updateError,
+		isCreatingPlant,
+		createPlantError,
+		handleUpdateSubmit,
+		handlePlantCreateSubmit,
+		handleAddPlant,
+		handleEditUnit,
+	} = useGrowingUnitDetailPage(id);
 
-	const {
-		handleUpdate,
-		isLoading: isUpdating,
-		error: updateError,
-	} = useGrowingUnitUpdate();
-
-	const {
-		handleCreate: handlePlantCreate,
-		isLoading: isCreatingPlant,
-		error: createPlantError,
-	} = usePlantAdd();
-
-	const handleUpdateSubmit = async (values: GrowingUnitUpdateFormValues) => {
-		await handleUpdate(values, () => {
-			refetch();
-			setUpdateDialogOpen(false);
-		});
-	};
-
-	const handlePlantCreateSubmit = async (values: PlantCreateFormValues) => {
-		await handlePlantCreate(
-			{
-				growingUnitId: values.growingUnitId,
-				name: values.name,
-				species: values.species,
-				plantedDate: values.plantedDate?.toISOString() || null,
-				notes: values.notes,
-				status: values.status as any,
-			},
-			() => {
-				refetch();
-				setCreatePlantDialogOpen(false);
-			},
-		);
-	};
-
-	const handleAddPlant = () => {
-		setCreatePlantDialogOpen(true);
-	};
-
-	// Show skeleton while loading or if data is not yet available
 	if (isLoading || growingUnit === null || growingUnit === undefined) {
 		return (
 			<div className="mx-auto space-y-6">
@@ -121,18 +85,6 @@ export function GrowingUnitDetailPage() {
 		);
 	}
 
-	// Determine location based on type
-	// TODO: Add this to the backend
-	const location =
-		growingUnit.type === 'POT' || growingUnit.type === 'WINDOW_BOX'
-			? 'indoor'
-			: 'outdoor';
-
-	// TODO: Add this to the backend
-	const occupancyPercentage = Math.round(
-		(growingUnit.numberOfPlants / growingUnit.capacity) * 100,
-	);
-
 	return (
 		<div className="mx-auto space-y-6">
 			{/* Header */}
@@ -158,11 +110,7 @@ export function GrowingUnitDetailPage() {
 					</div>
 				}
 				actions={[
-					<Button
-						key="edit"
-						variant="outline"
-						onClick={() => setUpdateDialogOpen(true)}
-					>
+					<Button key="edit" variant="outline" onClick={handleEditUnit}>
 						<PencilIcon className="mr-2 h-4 w-4" />
 						{t('pages.growingUnits.detail.actions.editUnit')}
 					</Button>,
