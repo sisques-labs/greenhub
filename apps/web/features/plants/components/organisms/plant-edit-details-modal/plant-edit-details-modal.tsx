@@ -77,10 +77,10 @@ export function PlantEditDetailsModal({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t('pages.plants.detail.modals.editDetails.title')}
+						{t('features.plants.detail.modals.editDetails.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t('pages.plants.detail.modals.editDetails.description')}
+						{t('features.plants.detail.modals.editDetails.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
@@ -88,12 +88,12 @@ export function PlantEditDetailsModal({
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
 								<FormLabel>
-									{t('pages.plants.detail.fields.name.label')}
+									{t('features.plants.detail.fields.name.label')}
 								</FormLabel>
 								<FormControl>
 									<Input
 										placeholder={t(
-											'pages.plants.detail.fields.name.placeholder',
+											'features.plants.detail.fields.name.placeholder',
 										)}
 										disabled={isLoading}
 										value={name}
@@ -120,7 +120,7 @@ export function PlantEditDetailsModal({
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
 								<FormLabel>
-									{t('pages.plants.detail.fields.plantedDate.label')}
+									{t('features.plants.detail.fields.plantedDate.label')}
 								</FormLabel>
 								<FormControl>
 									<Input
@@ -209,10 +209,10 @@ export function PlantEditDetailsModal({
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
 									? t(
-											'pages.plants.detail.modals.editDetails.actions.submit.loading',
+											'features.plants.detail.modals.editDetails.actions.submit.loading',
 										)
 									: t(
-											'pages.plants.detail.modals.editDetails.actions.submit.label',
+											'features.plants.detail.modals.editDetails.actions.submit.label',
 										)}
 							</Button>
 						</DialogFooter>

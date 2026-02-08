@@ -55,7 +55,7 @@ export function UserProfilePage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('pages.user.profile.error.loading', {
+						{t('features.users.profile.error.loading', {
 							message: profileError.message,
 						})}
 					</p>
@@ -100,10 +100,10 @@ export function UserProfilePage() {
 				<Card>
 					<CardHeader>
 						<CardTitle>
-							{t('pages.user.profile.sections.editProfile.title')}
+							{t('features.users.profile.sections.editProfile.title')}
 						</CardTitle>
 						<CardDescription>
-							{t('pages.user.profile.sections.editProfile.description')}
+							{t('features.users.profile.sections.editProfile.description')}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>

@@ -1,6 +1,38 @@
 import { getRequestConfig } from 'next-intl/server';
 import { routing } from 'shared/i18n/routing';
 
+// Helper to merge translations from multiple sources
+async function loadMessages(locale: string) {
+	const [shared, plants, growingUnits, locations, auth, users, dashboard] =
+		await Promise.all([
+			import(`@/shared/locales/${locale}.json`).then((m) => m.default),
+			import(`@/features/plants/locales/${locale}.json`).then((m) => m.default),
+			import(`@/features/growing-units/locales/${locale}.json`).then(
+				(m) => m.default,
+			),
+			import(`@/features/locations/locales/${locale}.json`).then(
+				(m) => m.default,
+			),
+			import(`@/features/auth/locales/${locale}.json`).then((m) => m.default),
+			import(`@/features/users/locales/${locale}.json`).then((m) => m.default),
+			import(`@/features/dashboard/locales/${locale}.json`).then(
+				(m) => m.default,
+			),
+		]);
+
+	return {
+		...shared,
+		features: {
+			plants,
+			growingUnits,
+			locations,
+			auth,
+			users,
+			dashboard,
+		},
+	};
+}
+
 export default getRequestConfig(async ({ requestLocale }) => {
 	// This typically corresponds to the `[locale]` segment
 	let locale = await requestLocale;
@@ -12,7 +44,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
 	return {
 		locale: locale as string,
-		messages: (await import(`@/shared/locales/${locale}.json`)).default,
+		messages: await loadMessages(locale),
 		timeZone: 'Europe/Madrid',
 	};
 });

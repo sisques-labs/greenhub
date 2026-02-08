@@ -88,15 +88,15 @@ export function useLocationsPage() {
 
 	const filterOptions: FilterOption[] = useMemo(
 		() => [
-			{ value: 'all', label: t('pages.locations.list.filters.all') },
+			{ value: 'all', label: t('features.locations.list.filters.all') },
 			{
 				value: 'indoor',
-				label: t('pages.locations.list.filters.indoor'),
+				label: t('features.locations.list.filters.indoor'),
 				icon: HomeIcon,
 			},
 			{
 				value: 'outdoor',
-				label: t('pages.locations.list.filters.outdoor'),
+				label: t('features.locations.list.filters.outdoor'),
 				icon: Building2Icon,
 			},
 		],

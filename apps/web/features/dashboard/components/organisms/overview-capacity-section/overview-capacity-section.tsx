@@ -25,7 +25,7 @@ export function OverviewCapacitySection({
 	overview,
 	isLoading = false,
 }: OverviewCapacitySectionProps) {
-	const t = useTranslations('dashboard.sections.capacity');
+	const t = useTranslations('features.dashboard.sections.capacity');
 
 	if (isLoading || !overview) {
 		return (

@@ -51,7 +51,7 @@ export function PlantsByGrowingUnitSection({
 				<div>
 					<h3 className="text-lg font-semibold">{growingUnit.name}</h3>
 					<p className="text-sm text-muted-foreground">
-						{t('pages.plants.list.growingUnit.plantCount', {
+						{t('features.plants.list.growingUnit.plantCount', {
 							count: filteredPlants.length,
 							total: growingUnit.numberOfPlants,
 						})}
@@ -66,19 +66,19 @@ export function PlantsByGrowingUnitSection({
 						<TableRow>
 							<TableHead className="w-[80px]">IMG</TableHead>
 							<TableHead>
-								{t('pages.plants.list.table.columns.plant')}
+								{t('features.plants.list.table.columns.plant')}
 							</TableHead>
 							<TableHead>
-								{t('pages.plants.list.table.columns.location')}
+								{t('features.plants.list.table.columns.location')}
 							</TableHead>
 							<TableHead>
-								{t('pages.plants.list.table.columns.status')}
+								{t('features.plants.list.table.columns.status')}
 							</TableHead>
 							<TableHead>
-								{t('pages.plants.list.table.columns.lastWatering')}
+								{t('features.plants.list.table.columns.lastWatering')}
 							</TableHead>
 							<TableHead className="w-[80px]">
-								{t('pages.plants.list.table.columns.actions')}
+								{t('features.plants.list.table.columns.actions')}
 							</TableHead>
 						</TableRow>
 					</TableHeader>

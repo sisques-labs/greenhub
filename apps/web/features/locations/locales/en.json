@@ -1,0 +1,50 @@
+{
+  "list": {
+    "title": "Locations",
+    "description": "Manage your locations and organize your growing spaces.",
+    "empty": "No locations available",
+    "noDescription": "No description available",
+    "search": {
+      "placeholder": "Search by name or type..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor"
+    },
+    "actions": {
+      "create": {
+        "button": "Create Location",
+        "title": "Create Location",
+        "description": "Add a new location for your growing spaces",
+        "submit": "Create",
+        "loading": "Creating..."
+      },
+      "update": {
+        "title": "Update Location",
+        "description": "Update location information",
+        "submit": "Update",
+        "loading": "Updating..."
+      },
+      "delete": {
+        "label": "Delete",
+        "loading": "Deleting...",
+        "confirm": {
+          "title": "Delete Location",
+          "description": "Are you sure you want to delete the location {name}? This action cannot be undone."
+        }
+      }
+    },
+    "error": {
+      "loading": "Error loading locations: {message}"
+    }
+  },
+  "types": {
+    "ROOM": "Room",
+    "BALCONY": "Balcony",
+    "GARDEN": "Garden",
+    "GREENHOUSE": "Greenhouse",
+    "OUTDOOR_SPACE": "Outdoor Space",
+    "INDOOR_SPACE": "Indoor Space"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "profile": {
+    "title": "User Profile",
+    "anonymous": "Anonymous user",
+    "error": {
+      "loading": "Error loading user: {message}"
+    },
+    "sections": {
+      "personalInfo": {
+        "title": "Personal Information",
+        "description": "Personal and identification data"
+      },
+      "authInfo": {
+        "title": "Authentication Information",
+        "description": "Security and authentication settings"
+      },
+      "accountInfo": {
+        "title": "Account Information",
+        "description": "Account details and activity"
+      },
+      "contactInfo": {
+        "title": "Contact Information",
+        "description": "Contact and communication data"
+      },
+      "editProfile": {
+        "title": "Edit Profile",
+        "description": "Update your personal information"
+      }
+    },
+    "fields": {
+      "email": "Email",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "provider": "Authentication provider",
+      "twoFactor": "Two-factor authentication",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "createdAt": "Created at",
+      "lastLoginAt": "Last login",
+      "phoneNumber": "Phone number",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Enter your last name"
+      },
+      "userName": {
+        "label": "Username",
+        "placeholder": "Enter your username"
+      },
+      "bio": {
+        "label": "Bio",
+        "placeholder": "Write a brief bio about yourself"
+      },
+      "avatarUrl": {
+        "label": "Avatar URL",
+        "placeholder": "https://example.com/avatar.jpg"
+      },
+      "role": {
+        "label": "Role"
+      },
+      "status": {
+        "label": "Status"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Update Profile",
+        "loading": "Updating..."
+      }
+    }
+  },
+  "loading": "Loading user...",
+  "notFound": "User not found"
+}

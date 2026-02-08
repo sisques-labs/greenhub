@@ -42,17 +42,17 @@ export function UserProfileAccountSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Calendar className="size-5" />
-					{t('pages.user.profile.sections.accountInfo.title')}
+					{t('features.users.profile.sections.accountInfo.title')}
 				</CardTitle>
 				<CardDescription>
-					{t('pages.user.profile.sections.accountInfo.description')}
+					{t('features.users.profile.sections.accountInfo.description')}
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{profile.role && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('pages.user.profile.fields.role.label')}
+							{t('features.users.profile.fields.role.label')}
 						</p>
 						<p className="text-sm">{profile.role}</p>
 					</div>
@@ -63,7 +63,7 @@ export function UserProfileAccountSection({
 				{profile.status && (
 					<div className="space-y-1">
 						<p className="text-sm font-medium text-muted-foreground">
-							{t('pages.user.profile.fields.status.label')}
+							{t('features.users.profile.fields.status.label')}
 						</p>
 						<p className="text-sm">{profile.status}</p>
 					</div>
@@ -76,7 +76,7 @@ export function UserProfileAccountSection({
 						<div className="flex items-center gap-2">
 							<Calendar className="size-4 text-muted-foreground" />
 							<p className="text-sm font-medium text-muted-foreground">
-								{t('pages.user.profile.fields.createdAt')}
+								{t('features.users.profile.fields.createdAt')}
 							</p>
 						</div>
 						<p className="text-sm">{formatDate(profile.createdAt)}</p>
@@ -90,7 +90,7 @@ export function UserProfileAccountSection({
 						<div className="flex items-center gap-2">
 							<Clock className="size-4 text-muted-foreground" />
 							<p className="text-sm font-medium text-muted-foreground">
-								{t('pages.user.profile.fields.lastLoginAt')}
+								{t('features.users.profile.fields.lastLoginAt')}
 							</p>
 						</div>
 						<p className="text-sm">{formatDate(profile.lastLoginAt)}</p>

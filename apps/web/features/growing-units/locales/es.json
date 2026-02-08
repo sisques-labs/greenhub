@@ -1,0 +1,177 @@
+{
+  "list": {
+    "title": "Unidades de Cultivo",
+    "description": "Visualiza y gestiona tus espacios de cultivo de manera eficiente.",
+    "empty": "No hay unidades de cultivo disponibles",
+    "search": {
+      "placeholder": "Buscar por nombre, tipo o planta..."
+    },
+    "filters": {
+      "all": "Todo",
+      "indoor": "Interior",
+      "outdoor": "Exterior",
+      "pots": "Macetas",
+      "beds": "Bancales"
+    },
+    "actions": {
+      "create": {
+        "button": "Nueva Unidad",
+        "title": "Crear Unidad de Cultivo",
+        "description": "Agrega una nueva unidad de cultivo para tus plantas",
+        "submit": "Crear",
+        "loading": "Creando..."
+      }
+    },
+    "noPlants": "Sin plantas activas",
+    "common": {
+      "noDimensions": "Sin dimensiones"
+    }
+  },
+  "detail": {
+    "title": "Detalle de Unidad de Cultivo",
+    "notFound": "Unidad de cultivo no encontrada",
+    "error": {
+      "loading": "Error al cargar unidad de cultivo: {message}"
+    },
+    "breadcrumbs": {
+      "home": "Inicio",
+      "growingUnits": "Mis Unidades"
+    },
+    "status": {
+      "active": "ACTIVA",
+      "inactive": "INACTIVA"
+    },
+    "location": {
+      "label": "Ubicación",
+      "indoor": "Interior",
+      "outdoor": "Exterior"
+    },
+    "summary": {
+      "substrate": {
+        "label": "Sustrato",
+        "value": "Tierra Universal"
+      },
+      "exposure": {
+        "label": "Exposición",
+        "directSun": "Sol Directo",
+        "partialSun": "Sol Parcial",
+        "shade": "Sombra"
+      },
+      "lastWatering": {
+        "label": "Último Riego",
+        "today": "Hoy",
+        "yesterday": "Ayer",
+        "never": "Nunca"
+      },
+      "occupancy": {
+        "label": "Ocupación"
+      }
+    },
+    "sections": {
+      "plants": {
+        "title": "Plantas en cultivo",
+        "viewAll": "Ver todas",
+        "variety": "Variedad",
+        "planted": "PLANTADO",
+        "days": "días",
+        "manage": "Gestionar"
+      },
+      "history": {
+        "title": "Historial Reciente",
+        "viewAll": "Ver todo el historial",
+        "today": "HOY",
+        "yesterday": "AYER"
+      }
+    },
+    "actions": {
+      "editUnit": "Editar Unidad",
+      "addPlant": "Agregar Planta",
+      "update": {
+        "title": "Actualizar Unidad de Cultivo",
+        "description": "Actualizar información de la unidad de cultivo",
+        "submit": "Actualizar",
+        "loading": "Actualizando..."
+      },
+      "delete": {
+        "label": "Eliminar",
+        "loading": "Eliminando...",
+        "confirm": {
+          "title": "Eliminar Unidad de Cultivo",
+          "description": "¿Estás seguro de que quieres eliminar la unidad de cultivo {name}? Esta acción no se puede deshacer."
+        }
+      }
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Nombre de la unidad de cultivo"
+      },
+      "type": {
+        "label": "Tipo",
+        "placeholder": "Selecciona el tipo"
+      },
+      "capacity": {
+        "label": "Capacidad",
+        "placeholder": "Número de plantas"
+      },
+      "remainingCapacity": {
+        "label": "Capacidad Restante"
+      },
+      "volume": {
+        "label": "Volumen"
+      },
+      "dimensions": {
+        "label": "Dimensiones"
+      },
+      "length": {
+        "label": "Longitud",
+        "placeholder": "Longitud"
+      },
+      "width": {
+        "label": "Ancho",
+        "placeholder": "Ancho"
+      },
+      "height": {
+        "label": "Altura",
+        "placeholder": "Altura"
+      },
+      "unit": {
+        "label": "Unidad",
+        "placeholder": "Selecciona la unidad"
+      },
+      "plants": {
+        "label": "Plantas activas"
+      },
+      "createdAt": {
+        "label": "Fecha de creación"
+      }
+    }
+  },
+  "types": {
+    "POT": "Maceta",
+    "GARDEN_BED": "Cama de jardín",
+    "HANGING_BASKET": "Cesta colgante",
+    "WINDOW_BOX": "Jardín de ventana"
+  },
+  "units": {
+    "MILLIMETER": "Milímetro",
+    "CENTIMETER": "Centímetro",
+    "METER": "Metro",
+    "INCH": "Pulgada",
+    "FOOT": "Pie"
+  },
+  "validation": {
+    "id": {
+      "required": "El ID es requerido"
+    },
+    "name": {
+      "required": "El nombre es requerido"
+    },
+    "type": {
+      "invalid": "Tipo inválido"
+    },
+    "capacity": {
+      "required": "La capacidad es requerida"
+    }
+  }
+}

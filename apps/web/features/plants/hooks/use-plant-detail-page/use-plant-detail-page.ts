@@ -104,16 +104,16 @@ export function usePlantDetailPage(id: string) {
 		if (!plantAge) return null;
 		switch (plantAge.type) {
 			case 'yearsMonths':
-				return t('pages.plants.detail.age.yearsMonths', {
+				return t('features.plants.detail.age.yearsMonths', {
 					years: plantAge.years,
 					months: plantAge.months,
 				});
 			case 'years':
-				return t('pages.plants.detail.age.years', { years: plantAge.years });
+				return t('features.plants.detail.age.years', { years: plantAge.years });
 			case 'months':
-				return t('pages.plants.detail.age.months', { months: plantAge.months });
+				return t('features.plants.detail.age.months', { months: plantAge.months });
 			case 'days':
-				return t('pages.plants.detail.age.days', { days: plantAge.days });
+				return t('features.plants.detail.age.days', { days: plantAge.days });
 			default:
 				return null;
 		}
@@ -135,35 +135,35 @@ export function usePlantDetailPage(id: string) {
 		return [
 			{
 				id: 'tomorrow',
-				label: t('pages.plants.detail.sections.upcomingCare.tomorrow'),
+				label: t('features.plants.detail.sections.upcomingCare.tomorrow'),
 				isActive: true,
 				items: [
 					{
 						id: 'tomorrow-watering',
-						title: t('pages.plants.detail.sections.upcomingCare.lightWatering'),
+						title: t('features.plants.detail.sections.upcomingCare.lightWatering'),
 						subtitle: '10:00 AM',
 					},
 				],
 			},
 			{
 				id: 'in5days',
-				label: t('pages.plants.detail.sections.upcomingCare.in5Days'),
+				label: t('features.plants.detail.sections.upcomingCare.in5Days'),
 				items: [
 					{
 						id: 'in5days-cleaning',
-						title: t('pages.plants.detail.sections.upcomingCare.cleanLeaves'),
-						subtitle: t('pages.plants.detail.sections.upcomingCare.duringDay'),
+						title: t('features.plants.detail.sections.upcomingCare.cleanLeaves'),
+						subtitle: t('features.plants.detail.sections.upcomingCare.duringDay'),
 					},
 				],
 			},
 			{
 				id: 'in2weeks',
-				label: t('pages.plants.detail.sections.upcomingCare.in2Weeks'),
+				label: t('features.plants.detail.sections.upcomingCare.in2Weeks'),
 				items: [
 					{
 						id: 'in2weeks-fertilization',
-						title: t('pages.plants.detail.sections.upcomingCare.fertilization'),
-						subtitle: t('pages.plants.detail.sections.upcomingCare.spring'),
+						title: t('features.plants.detail.sections.upcomingCare.fertilization'),
+						subtitle: t('features.plants.detail.sections.upcomingCare.spring'),
 					},
 				],
 			},

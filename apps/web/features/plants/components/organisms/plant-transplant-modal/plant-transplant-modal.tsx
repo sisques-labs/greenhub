@@ -75,10 +75,10 @@ export function PlantTransplantModal({
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>
-						{t('pages.plants.detail.modals.transplant.title')}
+						{t('features.plants.detail.modals.transplant.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t('pages.plants.detail.modals.transplant.description')}
+						{t('features.plants.detail.modals.transplant.description')}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -88,14 +88,14 @@ export function PlantTransplantModal({
 						<FormItem>
 							<FormLabel>
 								{t(
-									'pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.label',
+									'features.plants.detail.modals.transplant.fields.sourceGrowingUnit.label',
 								)}
 							</FormLabel>
 							<Input
 								value={
 									sourceGrowingUnit?.name ||
 									t(
-										'pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.unknown',
+										'features.plants.detail.modals.transplant.fields.sourceGrowingUnit.unknown',
 									)
 								}
 								disabled
@@ -103,7 +103,7 @@ export function PlantTransplantModal({
 							/>
 							<p className="text-xs text-muted-foreground">
 								{t(
-									'pages.plants.detail.modals.transplant.fields.sourceGrowingUnit.helper',
+									'features.plants.detail.modals.transplant.fields.sourceGrowingUnit.helper',
 								)}
 							</p>
 						</FormItem>
@@ -112,7 +112,7 @@ export function PlantTransplantModal({
 						<FormItem>
 							<FormLabel>
 								{t(
-									'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.label',
+									'features.plants.detail.modals.transplant.fields.targetGrowingUnitId.label',
 								)}
 							</FormLabel>
 							<Select
@@ -124,7 +124,7 @@ export function PlantTransplantModal({
 									<SelectTrigger>
 										<SelectValue
 											placeholder={t(
-												'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder',
+												'features.plants.detail.modals.transplant.fields.targetGrowingUnitId.placeholder',
 											)}
 										/>
 									</SelectTrigger>
@@ -135,7 +135,7 @@ export function PlantTransplantModal({
 											{growingUnit.name} ({growingUnit.remainingCapacity}/
 											{growingUnit.capacity}{' '}
 											{t(
-												'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable',
+												'features.plants.detail.modals.transplant.fields.targetGrowingUnitId.capacityAvailable',
 											)}
 											)
 										</SelectItem>
@@ -161,10 +161,10 @@ export function PlantTransplantModal({
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
 									? t(
-											'pages.plants.detail.modals.transplant.actions.submit.loading',
+											'features.plants.detail.modals.transplant.actions.submit.loading',
 										)
 									: t(
-											'pages.plants.detail.modals.transplant.actions.submit.label',
+											'features.plants.detail.modals.transplant.actions.submit.label',
 										)}
 							</Button>
 						</DialogFooter>

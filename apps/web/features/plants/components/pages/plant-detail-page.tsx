@@ -75,7 +75,7 @@ export function PlantDetailPage() {
 			<div className="mx-auto py-8">
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('pages.plants.detail.error.loading', {
+						{t('features.plants.detail.error.loading', {
 							message: (error as Error)?.message || 'Unknown error',
 						})}
 					</p>
@@ -104,7 +104,7 @@ export function PlantDetailPage() {
 								<div className="flex items-start justify-between gap-4">
 									<div className="space-y-1">
 										<h1 className="text-3xl font-bold">
-											{plant.name || t('pages.plants.detail.unnamed')}
+											{plant.name || t('features.plants.detail.unnamed')}
 										</h1>
 										<p className="text-muted-foreground">
 											{plant.species || t('common.notSet')} • Araceae
@@ -113,7 +113,7 @@ export function PlantDetailPage() {
 									<div className="flex items-center gap-2 flex-wrap">
 										{getPlantStatusBadge(plant.status, t)}
 										<Badge variant="outline">
-											{t('pages.plants.detail.location.indoor')}
+											{t('features.plants.detail.location.indoor')}
 										</Badge>
 									</div>
 								</div>
@@ -125,27 +125,27 @@ export function PlantDetailPage() {
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<DropletsIcon className="h-4 w-4" />
 										<span>
-											{t('pages.plants.detail.metrics.watering.label')}
+											{t('features.plants.detail.metrics.watering.label')}
 										</span>
 									</div>
 									<p className="font-medium">
-										{t('pages.plants.detail.metrics.watering.every7Days')}
+										{t('features.plants.detail.metrics.watering.every7Days')}
 									</p>
 								</div>
 								<div className="space-y-1">
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<SunIcon className="h-4 w-4" />
-										<span>{t('pages.plants.detail.metrics.light.label')}</span>
+										<span>{t('features.plants.detail.metrics.light.label')}</span>
 									</div>
 									<p className="font-medium">
-										{t('pages.plants.detail.metrics.light.indirect')}
+										{t('features.plants.detail.metrics.light.indirect')}
 									</p>
 								</div>
 								<div className="space-y-1">
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<ThermometerIcon className="h-4 w-4" />
 										<span>
-											{t('pages.plants.detail.metrics.temperature.label')}
+											{t('features.plants.detail.metrics.temperature.label')}
 										</span>
 									</div>
 									<p className="font-medium">18-24°C</p>
@@ -154,11 +154,11 @@ export function PlantDetailPage() {
 									<div className="flex items-center gap-2 text-sm text-muted-foreground">
 										<CloudIcon className="h-4 w-4" />
 										<span>
-											{t('pages.plants.detail.metrics.humidity.label')}
+											{t('features.plants.detail.metrics.humidity.label')}
 										</span>
 									</div>
 									<p className="font-medium">
-										{t('pages.plants.detail.metrics.humidity.high')}
+										{t('features.plants.detail.metrics.humidity.high')}
 									</p>
 								</div>
 							</div>
@@ -170,22 +170,22 @@ export function PlantDetailPage() {
 									onClick={() => setEditDetailsDialogOpen(true)}
 								>
 									<PencilIcon className="mr-2 h-4 w-4" />
-									{t('pages.plants.detail.actions.editDetails')}
+									{t('features.plants.detail.actions.editDetails')}
 								</Button>
 								<Button variant="outline">
 									<DropletsIcon className="mr-2 h-4 w-4" />
-									{t('pages.plants.detail.actions.registerWatering')}
+									{t('features.plants.detail.actions.registerWatering')}
 								</Button>
 								<Button variant="outline">
 									<FlowerIcon className="mr-2 h-4 w-4" />
-									{t('pages.plants.detail.actions.fertilize')}
+									{t('features.plants.detail.actions.fertilize')}
 								</Button>
 								<Button
 									variant="outline"
 									onClick={() => setTransplantDialogOpen(true)}
 								>
 									<ArrowRightLeftIcon className="mr-2 h-4 w-4" />
-									{t('pages.plants.detail.actions.transplant')}
+									{t('features.plants.detail.actions.transplant')}
 								</Button>
 								<Button variant="ghost" size="icon">
 									<TrashIcon className="h-4 w-4 text-destructive" />
@@ -201,14 +201,14 @@ export function PlantDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('pages.plants.detail.currentStatus.lastWatering.label')}
+							{t('features.plants.detail.currentStatus.lastWatering.label')}
 						</CardTitle>
 						<DropletsIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="flex items-center gap-2 mb-2">
 							<Badge variant="default" className="bg-green-500">
-								{t('pages.plants.detail.currentStatus.lastWatering.onTime')}
+								{t('features.plants.detail.currentStatus.lastWatering.onTime')}
 							</Badge>
 						</div>
 						<div className="text-2xl font-bold">
@@ -217,7 +217,7 @@ export function PlantDetailPage() {
 							})}
 						</div>
 						<p className="text-xs text-muted-foreground">
-							{t('pages.plants.detail.currentStatus.lastWatering.next')}:{' '}
+							{t('features.plants.detail.currentStatus.lastWatering.next')}:{' '}
 							{t('common.tomorrow')}
 						</p>
 					</CardContent>
@@ -226,7 +226,7 @@ export function PlantDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('pages.plants.detail.currentStatus.lastFertilization.label')}
+							{t('features.plants.detail.currentStatus.lastFertilization.label')}
 						</CardTitle>
 						<FlowerIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
@@ -246,7 +246,7 @@ export function PlantDetailPage() {
 						</div>
 						<p className="text-xs text-muted-foreground">
 							{t(
-								'pages.plants.detail.currentStatus.lastFertilization.suggested',
+								'features.plants.detail.currentStatus.lastFertilization.suggested',
 							)}
 							: {t('common.today')}
 						</p>
@@ -256,7 +256,7 @@ export function PlantDetailPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							{t('pages.plants.detail.currentStatus.plantingDate.label')}
+							{t('features.plants.detail.currentStatus.plantingDate.label')}
 						</CardTitle>
 						<CalendarIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
@@ -266,7 +266,7 @@ export function PlantDetailPage() {
 						</div>
 						{plantAgeText && (
 							<p className="text-xs text-muted-foreground">
-								{t('pages.plants.detail.currentStatus.plantingDate.age')}:{' '}
+								{t('features.plants.detail.currentStatus.plantingDate.age')}:{' '}
 								{plantAgeText}
 							</p>
 						)}
@@ -283,17 +283,17 @@ export function PlantDetailPage() {
 						<CardHeader>
 							<div className="flex items-center justify-between">
 								<CardTitle>
-									{t('pages.plants.detail.sections.personalNotes.title')}
+									{t('features.plants.detail.sections.personalNotes.title')}
 								</CardTitle>
 								<Button variant="ghost" size="sm">
-									{t('pages.plants.detail.sections.personalNotes.edit')}
+									{t('features.plants.detail.sections.personalNotes.edit')}
 								</Button>
 							</div>
 						</CardHeader>
 						<CardContent>
 							<p className="text-muted-foreground whitespace-pre-wrap">
 								{plant.notes ||
-									t('pages.plants.detail.sections.personalNotes.empty')}
+									t('features.plants.detail.sections.personalNotes.empty')}
 							</p>
 						</CardContent>
 					</Card>
@@ -303,7 +303,7 @@ export function PlantDetailPage() {
 						<CardHeader>
 							<div className="flex items-center justify-between">
 								<CardTitle>
-									{t('pages.plants.detail.sections.recentHistory.title')}
+									{t('features.plants.detail.sections.recentHistory.title')}
 								</CardTitle>
 								<Button variant="link" className="h-auto p-0">
 									{t('common.viewAll')}
@@ -316,22 +316,22 @@ export function PlantDetailPage() {
 									<TableRow>
 										<TableHead>
 											{t(
-												'pages.plants.detail.sections.recentHistory.table.date',
+												'features.plants.detail.sections.recentHistory.table.date',
 											)}
 										</TableHead>
 										<TableHead>
 											{t(
-												'pages.plants.detail.sections.recentHistory.table.action',
+												'features.plants.detail.sections.recentHistory.table.action',
 											)}
 										</TableHead>
 										<TableHead>
 											{t(
-												'pages.plants.detail.sections.recentHistory.table.details',
+												'features.plants.detail.sections.recentHistory.table.details',
 											)}
 										</TableHead>
 										<TableHead>
 											{t(
-												'pages.plants.detail.sections.recentHistory.table.status',
+												'features.plants.detail.sections.recentHistory.table.status',
 											)}
 										</TableHead>
 									</TableRow>
@@ -346,14 +346,14 @@ export function PlantDetailPage() {
 												</div>
 												<span>
 													{t(
-														'pages.plants.detail.sections.recentHistory.watering',
+														'features.plants.detail.sections.recentHistory.watering',
 													)}
 												</span>
 											</div>
 										</TableCell>
 										<TableCell>
 											{t(
-												'pages.plants.detail.sections.recentHistory.wateringDetails',
+												'features.plants.detail.sections.recentHistory.wateringDetails',
 											)}
 										</TableCell>
 										<TableCell>
@@ -372,14 +372,14 @@ export function PlantDetailPage() {
 												</div>
 												<span>
 													{t(
-														'pages.plants.detail.sections.recentHistory.pruning',
+														'features.plants.detail.sections.recentHistory.pruning',
 													)}
 												</span>
 											</div>
 										</TableCell>
 										<TableCell>
 											{t(
-												'pages.plants.detail.sections.recentHistory.pruningDetails',
+												'features.plants.detail.sections.recentHistory.pruningDetails',
 											)}
 										</TableCell>
 										<TableCell>
@@ -398,14 +398,14 @@ export function PlantDetailPage() {
 												</div>
 												<span>
 													{t(
-														'pages.plants.detail.sections.recentHistory.fertilization',
+														'features.plants.detail.sections.recentHistory.fertilization',
 													)}
 												</span>
 											</div>
 										</TableCell>
 										<TableCell>
 											{t(
-												'pages.plants.detail.sections.recentHistory.fertilizationDetails',
+												'features.plants.detail.sections.recentHistory.fertilizationDetails',
 											)}
 										</TableCell>
 										<TableCell>
@@ -425,7 +425,7 @@ export function PlantDetailPage() {
 						<CardHeader>
 							<div className="flex items-center justify-between">
 								<CardTitle>
-									{t('pages.plants.detail.sections.progressGallery.title')}
+									{t('features.plants.detail.sections.progressGallery.title')}
 								</CardTitle>
 								<Button variant="ghost" size="icon">
 									<FlowerIcon className="h-4 w-4" />
@@ -442,7 +442,7 @@ export function PlantDetailPage() {
 										{i === 4 ? (
 											<span className="text-xs text-muted-foreground">
 												+12{' '}
-												{t('pages.plants.detail.sections.progressGallery.more')}
+												{t('features.plants.detail.sections.progressGallery.more')}
 											</span>
 										) : (
 											<FlowerIcon className="h-8 w-8 text-muted-foreground" />
@@ -460,7 +460,7 @@ export function PlantDetailPage() {
 					<Card>
 						<CardHeader>
 							<CardTitle>
-								{t('pages.plants.detail.sections.upcomingCare.title')}
+								{t('features.plants.detail.sections.upcomingCare.title')}
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="px-6 pb-6">
@@ -477,21 +477,21 @@ export function PlantDetailPage() {
 							<div className="flex items-center gap-2">
 								<FlowerIcon className="h-5 w-5 text-green-600" />
 								<CardTitle className="text-green-900">
-									{t('pages.plants.detail.sections.wiki.title')}
+									{t('features.plants.detail.sections.wiki.title')}
 								</CardTitle>
 							</div>
 						</CardHeader>
 						<CardContent>
 							<p className="text-sm text-green-800 mb-2">
 								<strong>
-									{t('pages.plants.detail.sections.wiki.didYouKnow')}
+									{t('features.plants.detail.sections.wiki.didYouKnow')}
 								</strong>
 							</p>
 							<p className="text-green-700 mb-4">
-								{t('pages.plants.detail.sections.wiki.description')}
+								{t('features.plants.detail.sections.wiki.description')}
 							</p>
 							<Button variant="link" className="p-0 text-green-600">
-								{t('pages.plants.detail.sections.wiki.readMore')} →
+								{t('features.plants.detail.sections.wiki.readMore')} →
 							</Button>
 						</CardContent>
 					</Card>

@@ -1,0 +1,248 @@
+{
+  "list": {
+    "title": "Lista de Plantas",
+    "description": "Gestiona tu colección botánica y monitorea su salud",
+    "empty": "No hay plantas registradas",
+    "emptyFiltered": "No hay plantas que coincidan con los filtros actuales",
+    "search": {
+      "placeholder": "Buscar por nombre, especie o ubicación..."
+    },
+    "filters": {
+      "all": "Todas",
+      "indoor": "Interior",
+      "outdoor": "Exterior",
+      "needsWater": "Necesita Agua",
+      "healthy": "Saludables"
+    },
+    "table": {
+      "columns": {
+        "plant": "PLANTA / ESPECIE",
+        "location": "UBICACIÓN",
+        "status": "ESTADO",
+        "lastWatering": "ÚLTIMO RIEGO",
+        "actions": "ACCIONES"
+      },
+      "lastWatering": {
+        "today": "Hoy",
+        "yesterday": "Ayer",
+        "daysAgo": "Hace {days} días",
+        "weeksAgo": "Hace {weeks} semanas"
+      },
+      "pagination": {
+        "showing": "Mostrando {from} a {to} de {total} plantas"
+      }
+    },
+    "actions": {
+      "create": {
+        "button": "Añadir Planta",
+        "title": "Crear Planta",
+        "description": "Agrega una nueva planta a tu colección",
+        "submit": "Crear",
+        "loading": "Creando..."
+      },
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "error": {
+      "loading": "Error al cargar plantas: {message}"
+    },
+    "growingUnit": {
+      "plantCount": "{count} de {total} plantas"
+    }
+  },
+  "detail": {
+    "title": "Detalle de Planta",
+    "notFound": "Planta no encontrada",
+    "unnamed": "Planta sin nombre",
+    "error": {
+      "loading": "Error al cargar planta: {message}"
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Nombre de la planta"
+      },
+      "species": {
+        "label": "Especie",
+        "placeholder": "Especie de la planta"
+      },
+      "plantedDate": {
+        "label": "Fecha de plantación"
+      },
+      "notes": {
+        "label": "Notas",
+        "placeholder": "Notas adicionales sobre la planta"
+      },
+      "growingUnitId": {
+        "label": "Unidad de Cultivo",
+        "placeholder": "Selecciona una unidad de cultivo"
+      }
+    },
+    "location": {
+      "indoor": "INTERIOR",
+      "outdoor": "EXTERIOR"
+    },
+    "actions": {
+      "editDetails": "Editar Detalles",
+      "registerWatering": "Registrar Riego",
+      "fertilize": "Fertilizar",
+      "transplant": "Trasplantar"
+    },
+    "metrics": {
+      "title": "Requisitos de Cuidado",
+      "watering": {
+        "label": "RIEGO",
+        "every7Days": "Cada 7 días"
+      },
+      "light": {
+        "label": "LUZ",
+        "indirect": "Indirecta"
+      },
+      "temperature": {
+        "label": "TEMP"
+      },
+      "humidity": {
+        "label": "HUMEDAD",
+        "high": "Alta"
+      }
+    },
+    "currentStatus": {
+      "lastWatering": {
+        "label": "Último Riego",
+        "onTime": "A tiempo",
+        "daysAgo": "Hace {days} días",
+        "next": "Próximo",
+        "tomorrow": "Mañana"
+      },
+      "lastFertilization": {
+        "label": "Última Fertilización",
+        "pending": "Pendiente",
+        "monthAgo": "Hace {months} mes{months, plural, =1 {} other {es}}",
+        "suggested": "Sugerido",
+        "today": "Hoy"
+      },
+      "plantingDate": {
+        "label": "Fecha de Plantación",
+        "age": "Edad"
+      }
+    },
+    "age": {
+      "yearsMonths": "{years} año {months} meses",
+      "years": "{years} año",
+      "months": "{months} meses",
+      "days": "{days} días"
+    },
+    "sections": {
+      "personalNotes": {
+        "title": "Notas Personales",
+        "edit": "Editar Notas",
+        "empty": "Aún no hay notas personales. ¡Agrega algunas notas sobre tu rutina de cuidado de plantas!"
+      },
+      "upcomingCare": {
+        "title": "Próximos Cuidados",
+        "tomorrow": "MAÑANA",
+        "lightWatering": "Riego Ligero",
+        "in5Days": "EN 5 DÍAS",
+        "cleanLeaves": "Limpiar Hojas",
+        "duringDay": "Durante el día",
+        "in2Weeks": "EN 2 SEMANAS",
+        "fertilization": "Fertilización",
+        "spring": "Primavera"
+      },
+      "recentHistory": {
+        "title": "Historial Reciente",
+        "viewAll": "Ver todo",
+        "today": "Hoy",
+        "watering": "Riego",
+        "wateringDetails": "250ml de agua filtrada",
+        "pruning": "Poda",
+        "pruningDetails": "Hojas amarillas inferiores",
+        "fertilization": "Fertilización",
+        "fertilizationDetails": "Fertilizante líquido NPK 20-20-20",
+        "completed": "Completado",
+        "table": {
+          "date": "FECHA",
+          "action": "ACCIÓN",
+          "details": "DETALLES",
+          "status": "ESTADO"
+        }
+      },
+      "progressGallery": {
+        "title": "Galería de Progreso",
+        "more": "más"
+      },
+      "wiki": {
+        "title": "Wiki Planta",
+        "didYouKnow": "Sabías que...",
+        "description": "La Monstera Deliciosa también es conocida como 'Costilla de Adán' debido a la forma única de sus hojas que desarrollan agujeros naturales (fenestraciones) a medida que maduran.",
+        "readMore": "LEER MÁS"
+      }
+    },
+    "modals": {
+      "transplant": {
+        "title": "Trasplantar Planta",
+        "description": "Mueve esta planta a una unidad de cultivo diferente",
+        "fields": {
+          "sourceGrowingUnit": {
+            "label": "Desde",
+            "unknown": "Unidad de cultivo desconocida",
+            "helper": "Unidad de cultivo actual (no se puede cambiar)"
+          },
+          "targetGrowingUnitId": {
+            "label": "Hacia",
+            "placeholder": "Selecciona una unidad de cultivo destino",
+            "required": "Debes seleccionar una unidad de cultivo destino",
+            "capacityAvailable": "espacios disponibles"
+          }
+        },
+        "actions": {
+          "submit": {
+            "label": "Trasplantar",
+            "loading": "Trasplantando..."
+          }
+        }
+      },
+      "editDetails": {
+        "title": "Editar Detalles de la Planta",
+        "description": "Actualiza la información de esta planta",
+        "actions": {
+          "submit": {
+            "label": "Guardar Cambios",
+            "loading": "Guardando..."
+          }
+        }
+      }
+    },
+    "image": {
+      "placeholder": "Imagen de la planta"
+    }
+  },
+  "status": {
+    "PLANTED": "Plantada",
+    "GROWING": "Creciendo",
+    "HARVESTED": "Cosechada",
+    "DEAD": "Muerta",
+    "ARCHIVED": "Archivada"
+  },
+  "validation": {
+    "id": {
+      "required": "El ID es requerido"
+    },
+    "plantId": {
+      "required": "El ID de la planta es requerido"
+    },
+    "species": {
+      "required": "La especie es requerida"
+    },
+    "status": {
+      "invalid": "Estado inválido"
+    },
+    "sourceGrowingUnitId": {
+      "required": "El ID de la unidad de cultivo origen es requerido"
+    },
+    "targetGrowingUnitId": {
+      "required": "El ID de la unidad de cultivo destino es requerido"
+    }
+  }
+}
