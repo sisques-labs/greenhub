@@ -27,16 +27,16 @@ export function UserProfileContactSection({
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Phone className="size-5" />
-					{t('pages.user.profile.sections.contactInfo.title')}
+					{t('features.users.profile.sections.contactInfo.title')}
 				</CardTitle>
 				<CardDescription>
-					{t('pages.user.profile.sections.contactInfo.description')}
+					{t('features.users.profile.sections.contactInfo.description')}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<div className="space-y-1">
 					<p className="text-sm font-medium text-muted-foreground">
-						{t('pages.user.profile.fields.phoneNumber')}
+						{t('features.users.profile.fields.phoneNumber')}
 					</p>
 					<p className="text-sm">{profile.phoneNumber}</p>
 				</div>

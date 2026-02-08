@@ -115,7 +115,7 @@ export function LocationCard({
 					</div>
 				) : (
 					<div className="text-sm text-muted-foreground">
-						{t('pages.locations.list.noDescription')}
+						{t('features.locations.list.noDescription')}
 					</div>
 				)}
 			</CardContent>

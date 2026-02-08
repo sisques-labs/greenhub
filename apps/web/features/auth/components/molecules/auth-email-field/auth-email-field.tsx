@@ -28,11 +28,11 @@ export function AuthEmailField({
 
 	return (
 		<FormItem>
-			<FormLabel>{t('pages.auth.fields.email.label')}</FormLabel>
+			<FormLabel>{t('features.auth.fields.email.label')}</FormLabel>
 			<FormControl>
 				<Input
 					type="email"
-					placeholder={t('pages.auth.fields.email.placeholder')}
+					placeholder={t('features.auth.fields.email.placeholder')}
 					disabled={disabled}
 					value={value}
 					onChange={(e) => {

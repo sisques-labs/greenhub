@@ -1,0 +1,248 @@
+{
+  "list": {
+    "title": "Plant List",
+    "description": "Manage your botanical collection and monitor its health",
+    "empty": "No plants registered",
+    "emptyFiltered": "No plants match the current filters",
+    "search": {
+      "placeholder": "Search by name, species or location..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "needsWater": "Needs Water",
+      "healthy": "Healthy"
+    },
+    "table": {
+      "columns": {
+        "plant": "PLANT / SPECIES",
+        "location": "LOCATION",
+        "status": "STATUS",
+        "lastWatering": "LAST WATERING",
+        "actions": "ACTIONS"
+      },
+      "lastWatering": {
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{days} days ago",
+        "weeksAgo": "{weeks} weeks ago"
+      },
+      "pagination": {
+        "showing": "Showing {from} to {to} of {total} plants"
+      }
+    },
+    "actions": {
+      "create": {
+        "button": "Add Plant",
+        "title": "Create Plant",
+        "description": "Add a new plant to your collection",
+        "submit": "Create",
+        "loading": "Creating..."
+      },
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "error": {
+      "loading": "Error loading plants: {message}"
+    },
+    "growingUnit": {
+      "plantCount": "{count} of {total} plants"
+    }
+  },
+  "detail": {
+    "title": "Plant Detail",
+    "notFound": "Plant not found",
+    "unnamed": "Unnamed plant",
+    "error": {
+      "loading": "Error loading plant: {message}"
+    },
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Plant name"
+      },
+      "species": {
+        "label": "Species",
+        "placeholder": "Plant species"
+      },
+      "plantedDate": {
+        "label": "Planted Date"
+      },
+      "notes": {
+        "label": "Notes",
+        "placeholder": "Additional notes about the plant"
+      },
+      "growingUnitId": {
+        "label": "Growing Unit",
+        "placeholder": "Select a growing unit"
+      }
+    },
+    "location": {
+      "indoor": "INDOOR",
+      "outdoor": "OUTDOOR"
+    },
+    "actions": {
+      "editDetails": "Edit Details",
+      "registerWatering": "Register Watering",
+      "fertilize": "Fertilize",
+      "transplant": "Transplant"
+    },
+    "metrics": {
+      "title": "Care Requirements",
+      "watering": {
+        "label": "WATERING",
+        "every7Days": "Every 7 days"
+      },
+      "light": {
+        "label": "LIGHT",
+        "indirect": "Indirect"
+      },
+      "temperature": {
+        "label": "TEMP"
+      },
+      "humidity": {
+        "label": "HUMIDITY",
+        "high": "High"
+      }
+    },
+    "currentStatus": {
+      "lastWatering": {
+        "label": "Last Watering",
+        "onTime": "On time",
+        "daysAgo": "Days ago",
+        "next": "Next",
+        "tomorrow": "Tomorrow"
+      },
+      "lastFertilization": {
+        "label": "Last Fertilization",
+        "pending": "Pending",
+        "monthAgo": "{months} month ago",
+        "suggested": "Suggested",
+        "today": "Today"
+      },
+      "plantingDate": {
+        "label": "Planting Date",
+        "age": "Age"
+      }
+    },
+    "age": {
+      "yearsMonths": "{years} year {months} months",
+      "years": "{years} year",
+      "months": "{months} months",
+      "days": "{days} days"
+    },
+    "sections": {
+      "personalNotes": {
+        "title": "Personal Notes",
+        "edit": "Edit Notes",
+        "empty": "No personal notes yet. Add some notes about your plant care routine!"
+      },
+      "upcomingCare": {
+        "title": "Upcoming Care",
+        "tomorrow": "TOMORROW",
+        "lightWatering": "Light Watering",
+        "in5Days": "IN 5 DAYS",
+        "cleanLeaves": "Clean Leaves",
+        "duringDay": "During the day",
+        "in2Weeks": "IN 2 WEEKS",
+        "fertilization": "Fertilization",
+        "spring": "Spring"
+      },
+      "recentHistory": {
+        "title": "Recent History",
+        "viewAll": "View all",
+        "today": "Today",
+        "watering": "Watering",
+        "wateringDetails": "250ml filtered water",
+        "pruning": "Pruning",
+        "pruningDetails": "Lower yellow leaves",
+        "fertilization": "Fertilization",
+        "fertilizationDetails": "Liquid fertilizer NPK 20-20-20",
+        "completed": "Completed",
+        "table": {
+          "date": "DATE",
+          "action": "ACTION",
+          "details": "DETAILS",
+          "status": "STATUS"
+        }
+      },
+      "progressGallery": {
+        "title": "Progress Gallery",
+        "more": "more"
+      },
+      "wiki": {
+        "title": "Plant Wiki",
+        "didYouKnow": "Did you know...",
+        "description": "Monstera Deliciosa is also known as 'Adam's Rib' due to the unique shape of its leaves that develop natural holes (fenestrations) as they mature.",
+        "readMore": "READ MORE"
+      }
+    },
+    "modals": {
+      "transplant": {
+        "title": "Transplant Plant",
+        "description": "Move this plant to a different growing unit",
+        "fields": {
+          "sourceGrowingUnit": {
+            "label": "From",
+            "unknown": "Unknown growing unit",
+            "helper": "Current growing unit (cannot be changed)"
+          },
+          "targetGrowingUnitId": {
+            "label": "To",
+            "placeholder": "Select a target growing unit",
+            "required": "You must select a target growing unit",
+            "capacityAvailable": "spaces available"
+          }
+        },
+        "actions": {
+          "submit": {
+            "label": "Transplant",
+            "loading": "Transplanting..."
+          }
+        }
+      },
+      "editDetails": {
+        "title": "Edit Plant Details",
+        "description": "Update the information for this plant",
+        "actions": {
+          "submit": {
+            "label": "Save Changes",
+            "loading": "Saving..."
+          }
+        }
+      }
+    },
+    "image": {
+      "placeholder": "Plant image placeholder"
+    }
+  },
+  "status": {
+    "PLANTED": "Planted",
+    "GROWING": "Growing",
+    "HARVESTED": "Harvested",
+    "DEAD": "Dead",
+    "ARCHIVED": "Archived"
+  },
+  "validation": {
+    "id": {
+      "required": "ID is required"
+    },
+    "plantId": {
+      "required": "Plant ID is required"
+    },
+    "species": {
+      "required": "Species is required"
+    },
+    "status": {
+      "invalid": "Invalid status"
+    },
+    "sourceGrowingUnitId": {
+      "required": "Source growing unit ID is required"
+    },
+    "targetGrowingUnitId": {
+      "required": "Target growing unit ID is required"
+    }
+  }
+}

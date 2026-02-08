@@ -76,10 +76,10 @@ export function LocationUpdateForm({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t('pages.locations.list.actions.update.title')}
+						{t('features.locations.list.actions.update.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t('pages.locations.list.actions.update.description')}
+						{t('features.locations.list.actions.update.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
@@ -166,8 +166,8 @@ export function LocationUpdateForm({
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.locations.list.actions.update.loading')
-									: t('pages.locations.list.actions.update.submit')}
+									? t('features.locations.list.actions.update.loading')
+									: t('features.locations.list.actions.update.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

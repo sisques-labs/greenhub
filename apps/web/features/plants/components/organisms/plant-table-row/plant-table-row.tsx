@@ -56,7 +56,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 			<TableCell>
 				<div>
 					<div className="font-medium">
-						{plant.name || t('pages.plants.detail.unnamed')}
+						{plant.name || t('features.plants.detail.unnamed')}
 					</div>
 					<div className="text-sm text-muted-foreground">
 						{plant.species || '-'}
@@ -82,12 +82,12 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 			<TableCell>
 				<span className="text-sm text-muted-foreground">
 					{formatPlantDate(plant.updatedAt, {
-						today: t('pages.plants.list.table.lastWatering.today'),
-						yesterday: t('pages.plants.list.table.lastWatering.yesterday'),
+						today: t('features.plants.list.table.lastWatering.today'),
+						yesterday: t('features.plants.list.table.lastWatering.yesterday'),
 						daysAgo: (days: number) =>
-							t('pages.plants.list.table.lastWatering.daysAgo', { days }),
+							t('features.plants.list.table.lastWatering.daysAgo', { days }),
 						weeksAgo: (weeks: number) =>
-							t('pages.plants.list.table.lastWatering.weeksAgo', { weeks }),
+							t('features.plants.list.table.lastWatering.weeksAgo', { weeks }),
 					})}
 				</span>
 			</TableCell>
@@ -102,11 +102,11 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 						<DropdownMenuItem
 							onClick={() => router.push(`/${locale}/plants/${plant.id}`)}
 						>
-							{t('pages.plants.list.actions.view')}
+							{t('features.plants.list.actions.view')}
 						</DropdownMenuItem>
 						{onEdit && (
 							<DropdownMenuItem onClick={() => onEdit(plant)}>
-								{t('pages.plants.list.actions.edit')}
+								{t('features.plants.list.actions.edit')}
 							</DropdownMenuItem>
 						)}
 						{onDelete && (
@@ -114,7 +114,7 @@ export function PlantTableRow({ plant, onEdit, onDelete }: PlantTableRowProps) {
 								onClick={() => onDelete(plant.id)}
 								className="text-destructive"
 							>
-								{t('pages.plants.list.actions.delete')}
+								{t('features.plants.list.actions.delete')}
 							</DropdownMenuItem>
 						)}
 					</DropdownMenuContent>

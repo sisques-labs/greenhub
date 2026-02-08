@@ -35,7 +35,7 @@ export function DashboardStatsCards({
 	criticalAlerts,
 	isLoading = false,
 }: DashboardStatsCardsProps) {
-	const t = useTranslations('dashboard.stats');
+	const t = useTranslations('features.dashboard.stats');
 
 	if (isLoading) {
 		return (

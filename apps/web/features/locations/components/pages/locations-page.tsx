@@ -52,19 +52,19 @@ export function LocationsPage() {
 		<div className="mx-auto space-y-6">
 			{/* Header */}
 			<PageHeader
-				title={t('pages.locations.list.title')}
-				description={t('pages.locations.list.description')}
+				title={t('features.locations.list.title')}
+				description={t('features.locations.list.description')}
 				actions={[
 					<Button key="create" onClick={handleAddClick}>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t('pages.locations.list.actions.create.button')}
+						{t('features.locations.list.actions.create.button')}
 					</Button>,
 				]}
 			/>
 
 			{/* Search and Filters */}
 			<SearchAndFilters
-				searchPlaceholder={t('pages.locations.list.search.placeholder')}
+				searchPlaceholder={t('features.locations.list.search.placeholder')}
 				searchValue={searchQuery}
 				onSearchChange={setSearchQuery}
 				filterOptions={filterOptions}
@@ -78,7 +78,7 @@ export function LocationsPage() {
 			) : locationsError ? (
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('pages.locations.list.error.loading', {
+						{t('features.locations.list.error.loading', {
 							message: locationsError.message,
 						})}
 					</p>

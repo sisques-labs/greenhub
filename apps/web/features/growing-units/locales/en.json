@@ -1,0 +1,177 @@
+{
+  "list": {
+    "title": "Growing Units",
+    "description": "Visualize and manage your cultivation spaces efficiently.",
+    "empty": "No growing units available",
+    "search": {
+      "placeholder": "Search by name, type or plant..."
+    },
+    "filters": {
+      "all": "All",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "pots": "Pots",
+      "beds": "Beds"
+    },
+    "actions": {
+      "create": {
+        "button": "Create Growing Unit",
+        "title": "Create Growing Unit",
+        "description": "Add a new growing unit for your plants",
+        "submit": "Create",
+        "loading": "Creating..."
+      }
+    },
+    "noPlants": "No active plants",
+    "common": {
+      "noDimensions": "No dimensions"
+    }
+  },
+  "detail": {
+    "title": "Growing Unit Detail",
+    "notFound": "Growing unit not found",
+    "error": {
+      "loading": "Error loading growing unit: {message}"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "growingUnits": "My Units"
+    },
+    "status": {
+      "active": "ACTIVE",
+      "inactive": "INACTIVE"
+    },
+    "location": {
+      "label": "Location",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor"
+    },
+    "summary": {
+      "substrate": {
+        "label": "Substrate",
+        "value": "Universal Soil"
+      },
+      "exposure": {
+        "label": "Exposure",
+        "directSun": "Direct Sun",
+        "partialSun": "Partial Sun",
+        "shade": "Shade"
+      },
+      "lastWatering": {
+        "label": "Last Watering",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "never": "Never"
+      },
+      "occupancy": {
+        "label": "Occupancy"
+      }
+    },
+    "sections": {
+      "plants": {
+        "title": "Plants in cultivation",
+        "viewAll": "View all",
+        "variety": "Variety",
+        "planted": "PLANTED",
+        "days": "days",
+        "manage": "Manage"
+      },
+      "history": {
+        "title": "Recent History",
+        "viewAll": "View all history",
+        "today": "TODAY",
+        "yesterday": "YESTERDAY"
+      }
+    },
+    "actions": {
+      "editUnit": "Edit Unit",
+      "addPlant": "Add Plant",
+      "update": {
+        "title": "Update Growing Unit",
+        "description": "Update growing unit information",
+        "submit": "Update",
+        "loading": "Updating..."
+      },
+      "delete": {
+        "label": "Delete",
+        "loading": "Deleting...",
+        "confirm": {
+          "title": "Delete Growing Unit",
+          "description": "Are you sure you want to delete the growing unit {name}? This action cannot be undone."
+        }
+      }
+    },
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Growing unit name"
+      },
+      "type": {
+        "label": "Type",
+        "placeholder": "Select type"
+      },
+      "capacity": {
+        "label": "Capacity",
+        "placeholder": "Number of plants"
+      },
+      "remainingCapacity": {
+        "label": "Remaining Capacity"
+      },
+      "volume": {
+        "label": "Volume"
+      },
+      "dimensions": {
+        "label": "Dimensions"
+      },
+      "length": {
+        "label": "Length",
+        "placeholder": "Length"
+      },
+      "width": {
+        "label": "Width",
+        "placeholder": "Width"
+      },
+      "height": {
+        "label": "Height",
+        "placeholder": "Height"
+      },
+      "unit": {
+        "label": "Unit",
+        "placeholder": "Select unit"
+      },
+      "plants": {
+        "label": "Active plants"
+      },
+      "createdAt": {
+        "label": "Created at"
+      }
+    }
+  },
+  "types": {
+    "POT": "Pot",
+    "GARDEN_BED": "Garden Bed",
+    "HANGING_BASKET": "Hanging Basket",
+    "WINDOW_BOX": "Window Box"
+  },
+  "units": {
+    "MILLIMETER": "Millimeter",
+    "CENTIMETER": "Centimeter",
+    "METER": "Meter",
+    "INCH": "Inch",
+    "FOOT": "Foot"
+  },
+  "validation": {
+    "id": {
+      "required": "ID is required"
+    },
+    "name": {
+      "required": "Name is required"
+    },
+    "type": {
+      "invalid": "Invalid type"
+    },
+    "capacity": {
+      "required": "Capacity is required"
+    }
+  }
+}

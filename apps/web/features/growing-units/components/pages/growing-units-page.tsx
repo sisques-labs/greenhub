@@ -38,19 +38,19 @@ export function GrowingUnitsPage() {
 		<div className="mx-auto space-y-6">
 			{/* Header */}
 			<PageHeader
-				title={t('pages.growingUnits.list.title')}
-				description={t('pages.growingUnits.list.description')}
+				title={t('features.growingUnits.list.title')}
+				description={t('features.growingUnits.list.description')}
 				actions={[
 					<Button key="create" onClick={handleAddClick}>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t('pages.growingUnits.list.actions.create.button')}
+						{t('features.growingUnits.list.actions.create.button')}
 					</Button>,
 				]}
 			/>
 
 			{/* Search and Filters */}
 			<SearchAndFilters
-				searchPlaceholder={t('pages.growingUnits.list.search.placeholder')}
+				searchPlaceholder={t('features.growingUnits.list.search.placeholder')}
 				searchValue={searchQuery}
 				onSearchChange={setSearchQuery}
 				filterOptions={filterOptions}
@@ -64,7 +64,7 @@ export function GrowingUnitsPage() {
 			) : growingUnitsError ? (
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
-						{t('pages.growingUnits.list.error.loading', {
+						{t('features.growingUnits.list.error.loading', {
 							message: growingUnitsError.message,
 						})}
 					</p>

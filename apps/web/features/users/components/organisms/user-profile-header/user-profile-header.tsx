@@ -20,7 +20,7 @@ export function UserProfileHeader({ profile }: UserProfileHeaderProps) {
 	const fullName =
 		[profile.name, profile.lastName].filter(Boolean).join(' ') ||
 		profile.userName ||
-		t('pages.user.profile.anonymous');
+		t('features.users.profile.anonymous');
 
 	const initials =
 		[profile.name, profile.lastName]

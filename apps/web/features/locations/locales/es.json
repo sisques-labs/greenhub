@@ -1,0 +1,50 @@
+{
+  "list": {
+    "title": "Ubicaciones",
+    "description": "Gestiona tus ubicaciones y organiza tus espacios de cultivo.",
+    "empty": "No hay ubicaciones disponibles",
+    "noDescription": "Sin descripción disponible",
+    "search": {
+      "placeholder": "Buscar por nombre o tipo..."
+    },
+    "filters": {
+      "all": "Todas",
+      "indoor": "Interior",
+      "outdoor": "Exterior"
+    },
+    "actions": {
+      "create": {
+        "button": "Crear Ubicación",
+        "title": "Crear Ubicación",
+        "description": "Agrega una nueva ubicación para tus espacios de cultivo",
+        "submit": "Crear",
+        "loading": "Creando..."
+      },
+      "update": {
+        "title": "Actualizar Ubicación",
+        "description": "Actualizar información de la ubicación",
+        "submit": "Actualizar",
+        "loading": "Actualizando..."
+      },
+      "delete": {
+        "label": "Eliminar",
+        "loading": "Eliminando...",
+        "confirm": {
+          "title": "Eliminar Ubicación",
+          "description": "¿Estás seguro de que quieres eliminar la ubicación {name}? Esta acción no se puede deshacer."
+        }
+      }
+    },
+    "error": {
+      "loading": "Error al cargar ubicaciones: {message}"
+    }
+  },
+  "types": {
+    "ROOM": "Habitación",
+    "BALCONY": "Balcón",
+    "GARDEN": "Jardín",
+    "GREENHOUSE": "Invernadero",
+    "OUTDOOR_SPACE": "Espacio Exterior",
+    "INDOOR_SPACE": "Espacio Interior"
+  }
+}

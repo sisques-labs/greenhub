@@ -57,10 +57,10 @@ export function UserUpdateForm({
 		<Form errors={formErrors}>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<FormItem>
-					<FormLabel>{t('pages.user.profile.fields.name.label')}</FormLabel>
+					<FormLabel>{t('features.users.profile.fields.name.label')}</FormLabel>
 					<FormControl>
 						<Input
-							placeholder={t('pages.user.profile.fields.name.placeholder')}
+							placeholder={t('features.users.profile.fields.name.placeholder')}
 							disabled={isLoading}
 							value={name}
 							onChange={(e) => setName(e.target.value)}
@@ -70,10 +70,10 @@ export function UserUpdateForm({
 				</FormItem>
 
 				<FormItem>
-					<FormLabel>{t('pages.user.profile.fields.lastName.label')}</FormLabel>
+					<FormLabel>{t('features.users.profile.fields.lastName.label')}</FormLabel>
 					<FormControl>
 						<Input
-							placeholder={t('pages.user.profile.fields.lastName.placeholder')}
+							placeholder={t('features.users.profile.fields.lastName.placeholder')}
 							disabled={isLoading}
 							value={lastName}
 							onChange={(e) => setLastName(e.target.value)}
@@ -83,10 +83,10 @@ export function UserUpdateForm({
 				</FormItem>
 
 				<FormItem>
-					<FormLabel>{t('pages.user.profile.fields.userName.label')}</FormLabel>
+					<FormLabel>{t('features.users.profile.fields.userName.label')}</FormLabel>
 					<FormControl>
 						<Input
-							placeholder={t('pages.user.profile.fields.userName.placeholder')}
+							placeholder={t('features.users.profile.fields.userName.placeholder')}
 							disabled={isLoading}
 							value={userName}
 							onChange={(e) => setUserName(e.target.value)}
@@ -96,10 +96,10 @@ export function UserUpdateForm({
 				</FormItem>
 
 				<FormItem>
-					<FormLabel>{t('pages.user.profile.fields.bio.label')}</FormLabel>
+					<FormLabel>{t('features.users.profile.fields.bio.label')}</FormLabel>
 					<FormControl>
 						<Textarea
-							placeholder={t('pages.user.profile.fields.bio.placeholder')}
+							placeholder={t('features.users.profile.fields.bio.placeholder')}
 							disabled={isLoading}
 							value={bio}
 							onChange={(e) => setBio(e.target.value)}
@@ -110,12 +110,12 @@ export function UserUpdateForm({
 
 				<FormItem>
 					<FormLabel>
-						{t('pages.user.profile.fields.avatarUrl.label')}
+						{t('features.users.profile.fields.avatarUrl.label')}
 					</FormLabel>
 					<FormControl>
 						<Input
 							type="url"
-							placeholder={t('pages.user.profile.fields.avatarUrl.placeholder')}
+							placeholder={t('features.users.profile.fields.avatarUrl.placeholder')}
 							disabled={isLoading}
 							value={avatarUrl}
 							onChange={(e) => setAvatarUrl(e.target.value)}
@@ -131,8 +131,8 @@ export function UserUpdateForm({
 				<div className="flex justify-end pt-2">
 					<Button type="submit" disabled={!isDirty || isSubmitting}>
 						{isSubmitting
-							? t('pages.user.profile.actions.update.loading')
-							: t('pages.user.profile.actions.update.label')}
+							? t('features.users.profile.actions.update.loading')
+							: t('features.users.profile.actions.update.label')}
 					</Button>
 				</div>
 			</form>

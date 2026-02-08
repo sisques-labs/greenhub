@@ -122,25 +122,25 @@ export function useGrowingUnitsPage() {
 
 	const filterOptions: FilterOption[] = useMemo(
 		() => [
-			{ value: 'all', label: t('pages.growingUnits.list.filters.all') },
+			{ value: 'all', label: t('features.growingUnits.list.filters.all') },
 			{
 				value: 'indoor',
-				label: t('pages.growingUnits.list.filters.indoor'),
+				label: t('features.growingUnits.list.filters.indoor'),
 				icon: HomeIcon,
 			},
 			{
 				value: 'outdoor',
-				label: t('pages.growingUnits.list.filters.outdoor'),
+				label: t('features.growingUnits.list.filters.outdoor'),
 				icon: Building2Icon,
 			},
 			{
 				value: 'pots',
-				label: t('pages.growingUnits.list.filters.pots'),
+				label: t('features.growingUnits.list.filters.pots'),
 				icon: FlowerIcon,
 			},
 			{
 				value: 'beds',
-				label: t('pages.growingUnits.list.filters.beds'),
+				label: t('features.growingUnits.list.filters.beds'),
 				icon: PackageIcon,
 			},
 		],

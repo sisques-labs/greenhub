@@ -29,8 +29,8 @@ export function OverviewStatsCards({
 	overview,
 	isLoading = false,
 }: OverviewStatsCardsProps) {
-	const t = useTranslations('dashboard.stats');
-	const tCommon = useTranslations('dashboard.common');
+	const t = useTranslations('features.dashboard.stats');
+	const tCommon = useTranslations('features.dashboard.common');
 
 	if (isLoading || !overview) {
 		return (

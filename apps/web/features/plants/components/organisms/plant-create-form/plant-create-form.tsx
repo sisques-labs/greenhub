@@ -100,7 +100,7 @@ export function PlantCreateForm({
 										<SelectTrigger>
 											<SelectValue
 												placeholder={t(
-													'pages.plants.detail.fields.growingUnitId.placeholder',
+													'features.plants.detail.fields.growingUnitId.placeholder',
 												)}
 											/>
 										</SelectTrigger>
@@ -120,12 +120,12 @@ export function PlantCreateForm({
 						<div className="grid grid-cols-2 gap-4">
 							<FormItem>
 								<FormLabel>
-									{t('pages.plants.detail.fields.name.label')}
+									{t('features.plants.detail.fields.name.label')}
 								</FormLabel>
 								<FormControl>
 									<Input
 										placeholder={t(
-											'pages.plants.detail.fields.name.placeholder',
+											'features.plants.detail.fields.name.placeholder',
 										)}
 										disabled={isLoading}
 										value={name}
@@ -238,8 +238,8 @@ export function PlantCreateForm({
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.plants.list.actions.create.loading')
-									: t('pages.plants.list.actions.create.submit')}
+									? t('features.plants.list.actions.create.loading')
+									: t('features.plants.list.actions.create.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

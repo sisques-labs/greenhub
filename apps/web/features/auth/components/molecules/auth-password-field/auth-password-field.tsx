@@ -30,12 +30,12 @@ export function AuthPasswordField({
 
 	return (
 		<FormItem>
-			<FormLabel>{t('pages.auth.fields.password.label')}</FormLabel>
+			<FormLabel>{t('features.auth.fields.password.label')}</FormLabel>
 			<FormControl>
 				<Input
 					type="password"
 					placeholder={t(
-						`pages.auth.fields.password.placeholder.${placeholder}`,
+						`features.auth.fields.password.placeholder.${placeholder}`,
 					)}
 					disabled={disabled}
 					value={value}

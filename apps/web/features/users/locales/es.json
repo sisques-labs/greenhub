@@ -1,0 +1,77 @@
+{
+  "profile": {
+    "title": "Perfil de Usuario",
+    "anonymous": "Usuario anónimo",
+    "error": {
+      "loading": "Error al cargar usuario: {message}"
+    },
+    "sections": {
+      "personalInfo": {
+        "title": "Información Personal",
+        "description": "Datos personales y de identificación"
+      },
+      "authInfo": {
+        "title": "Información de Autenticación",
+        "description": "Configuración de seguridad y autenticación"
+      },
+      "accountInfo": {
+        "title": "Información de Cuenta",
+        "description": "Detalles de la cuenta y actividad"
+      },
+      "contactInfo": {
+        "title": "Información de Contacto",
+        "description": "Datos de contacto y comunicación"
+      },
+      "editProfile": {
+        "title": "Editar Perfil",
+        "description": "Actualiza tu información personal"
+      }
+    },
+    "fields": {
+      "email": "Correo electrónico",
+      "verified": "Verificado",
+      "unverified": "No verificado",
+      "provider": "Proveedor de autenticación",
+      "twoFactor": "Autenticación de dos factores",
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado",
+      "createdAt": "Fecha de creación",
+      "lastLoginAt": "Último inicio de sesión",
+      "phoneNumber": "Número de teléfono",
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Ingresa tu nombre"
+      },
+      "lastName": {
+        "label": "Apellido",
+        "placeholder": "Ingresa tu apellido"
+      },
+      "userName": {
+        "label": "Nombre de usuario",
+        "placeholder": "Ingresa tu nombre de usuario"
+      },
+      "bio": {
+        "label": "Biografía",
+        "placeholder": "Escribe una breve biografía sobre ti"
+      },
+      "avatarUrl": {
+        "label": "URL del avatar",
+        "placeholder": "https://ejemplo.com/avatar.jpg"
+      },
+      "role": {
+        "label": "Rol"
+      },
+      "status": {
+        "label": "Estado"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Actualizar perfil",
+        "loading": "Actualizando..."
+      }
+    }
+  },
+  "loading": "Cargando usuario...",
+  "notFound": "Usuario no encontrado"
+}

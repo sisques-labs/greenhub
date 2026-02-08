@@ -44,27 +44,27 @@ export function UserProfileInfoSection({
 		<Card>
 			<CardHeader>
 				<CardTitle>
-					{t('pages.user.profile.sections.personalInfo.title')}
+					{t('features.users.profile.sections.personalInfo.title')}
 				</CardTitle>
 				<CardDescription>
-					{t('pages.user.profile.sections.personalInfo.description')}
+					{t('features.users.profile.sections.personalInfo.description')}
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<InfoItem
-					label={t('pages.user.profile.fields.name.label')}
+					label={t('features.users.profile.fields.name.label')}
 					value={profile.name}
 				/>
 				{profile.name && profile.lastName && <Separator />}
 				<InfoItem
-					label={t('pages.user.profile.fields.lastName.label')}
+					label={t('features.users.profile.fields.lastName.label')}
 					value={profile.lastName}
 				/>
 				{(profile.name || profile.lastName) && profile.userName && (
 					<Separator />
 				)}
 				<InfoItem
-					label={t('pages.user.profile.fields.userName.label')}
+					label={t('features.users.profile.fields.userName.label')}
 					value={profile.userName}
 				/>
 			</CardContent>

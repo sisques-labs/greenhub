@@ -31,7 +31,7 @@ export function RecentAlertsSection({
 	alerts,
 	isLoading = false,
 }: RecentAlertsSectionProps) {
-	const t = useTranslations('dashboard.recentAlerts');
+	const t = useTranslations('features.dashboard.recentAlerts');
 
 	if (isLoading) {
 		return (

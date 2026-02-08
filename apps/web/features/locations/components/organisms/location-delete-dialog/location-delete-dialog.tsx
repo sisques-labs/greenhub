@@ -39,10 +39,10 @@ export function LocationDeleteDialog({
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>
-						{t('pages.locations.list.actions.delete.confirm.title')}
+						{t('features.locations.list.actions.delete.confirm.title')}
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						{t('pages.locations.list.actions.delete.confirm.description', {
+						{t('features.locations.list.actions.delete.confirm.description', {
 							name: location.name,
 						})}
 					</AlertDialogDescription>
@@ -57,7 +57,7 @@ export function LocationDeleteDialog({
 						className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
 					>
 						{isLoading
-							? t('pages.locations.list.actions.delete.loading')
+							? t('features.locations.list.actions.delete.loading')
 							: t('common.delete')}
 					</AlertDialogAction>
 				</AlertDialogFooter>
