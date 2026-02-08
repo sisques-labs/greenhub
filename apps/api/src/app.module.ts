@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AppResolver } from '@/app.resolver';
+import { validate } from '@/config/env.validation';
 import { GraphQLModule } from '@nestjs/graphql';
 import { CoreModule } from '@/core/core.module';
 import { GenericModule } from '@/generic/generic.module';
@@ -19,6 +20,7 @@ const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];
 		ConfigModule.forRoot({
 			isGlobal: true,
 			envFilePath: '.env',
+			validate,
 		}),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,

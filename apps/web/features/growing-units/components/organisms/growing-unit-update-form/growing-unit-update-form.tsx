@@ -85,10 +85,10 @@ export function GrowingUnitUpdateForm({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t('pages.growingUnits.detail.actions.update.title')}
+						{t('features.growingUnits.detail.actions.update.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t('pages.growingUnits.detail.actions.update.description')}
+						{t('features.growingUnits.detail.actions.update.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
@@ -123,7 +123,7 @@ export function GrowingUnitUpdateForm({
 							<FormControl>
 								<Input
 									placeholder={t(
-										'pages.growingUnits.detail.fields.name.placeholder',
+										'features.growingUnits.detail.fields.name.placeholder',
 									)}
 									disabled={isLoading}
 									value={name}
@@ -299,8 +299,8 @@ export function GrowingUnitUpdateForm({
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.growingUnits.detail.actions.update.loading')
-									: t('pages.growingUnits.detail.actions.update.submit')}
+									? t('features.growingUnits.detail.actions.update.loading')
+									: t('features.growingUnits.detail.actions.update.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

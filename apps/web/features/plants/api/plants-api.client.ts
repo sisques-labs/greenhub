@@ -1,14 +1,17 @@
 import { httpClient } from '@/lib/client/http-client';
+import { PaginatedResult } from '@/shared/dtos/paginated-result.entity';
+import type { IMutationResponse } from '@/shared/interfaces/mutation-response.interface';
 import type {
   PlantFindByCriteriaInput,
   PlantFindByIdInput,
   PlantCreateInput,
   PlantUpdateInput,
   PlantTransplantInput,
-  PaginatedPlantResult,
   PlantResponse,
-  MutationResponse,
+  PlantApiResponse,
+  PaginatedPlantResult,
 } from './types';
+import { transformPlantResponse } from './types';
 
 /**
  * Plants API client for frontend
@@ -27,8 +30,19 @@ export const plantsApiClient = {
       params.append('input', JSON.stringify(input));
     }
 
-    return httpClient.get<PaginatedPlantResult>(
-      `/api/plants?${params.toString()}`
+    const result = await httpClient.get<{
+      items: PlantApiResponse[];
+      total: number;
+      page: number;
+      perPage: number;
+    }>(`/api/plants?${params.toString()}`);
+
+    // Use PaginatedResult constructor
+    return new PaginatedResult(
+      result.items.map(transformPlantResponse),
+      result.total,
+      result.page,
+      result.perPage
     );
   },
 
@@ -42,8 +56,8 @@ export const plantsApiClient = {
   /**
    * Create a new plant
    */
-  create: async (input: PlantCreateInput): Promise<MutationResponse> => {
-    return httpClient.post<MutationResponse>('/api/plants/create', input);
+  create: async (input: PlantCreateInput): Promise<IMutationResponse> => {
+    return httpClient.post<IMutationResponse>('/api/plants/create', input);
   },
 
   /**
@@ -52,8 +66,8 @@ export const plantsApiClient = {
   update: async (
     id: string,
     input: Omit<PlantUpdateInput, 'id'>
-  ): Promise<MutationResponse> => {
-    return httpClient.put<MutationResponse>(`/api/plants/${id}/update`, input);
+  ): Promise<IMutationResponse> => {
+    return httpClient.put<IMutationResponse>(`/api/plants/${id}/update`, input);
   },
 
   /**
@@ -62,8 +76,8 @@ export const plantsApiClient = {
   transplant: async (
     id: string,
     input: Omit<PlantTransplantInput, 'plantId'>
-  ): Promise<MutationResponse> => {
-    return httpClient.post<MutationResponse>(
+  ): Promise<IMutationResponse> => {
+    return httpClient.post<IMutationResponse>(
       `/api/plants/${id}/transplant`,
       input
     );

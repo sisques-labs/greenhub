@@ -30,7 +30,7 @@ export function OverviewGrowingUnitsSection({
 	overview,
 	isLoading = false,
 }: OverviewGrowingUnitsSectionProps) {
-	const t = useTranslations('dashboard.sections.growingUnits');
+	const t = useTranslations('features.dashboard.sections.growingUnits');
 
 	if (isLoading || !overview) {
 		return (

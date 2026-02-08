@@ -33,7 +33,7 @@ export function OverviewPlantsSection({
 	overview,
 	isLoading = false,
 }: OverviewPlantsSectionProps) {
-	const t = useTranslations('dashboard.sections.plants');
+	const t = useTranslations('features.dashboard.sections.plants');
 
 	if (isLoading || !overview) {
 		return (

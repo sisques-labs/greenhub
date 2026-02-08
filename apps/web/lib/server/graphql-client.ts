@@ -106,6 +106,7 @@ export class GraphQLClient {
         mutation RefreshToken($input: RefreshTokenInput!) {
           refreshToken(input: $input) {
             accessToken
+            refreshToken
           }
         }
       `;
@@ -128,6 +129,7 @@ export class GraphQLClient {
       const result = (await response.json()) as GraphQLResponse<{
         refreshToken: {
           accessToken: string;
+          refreshToken: string;
         };
       }>;
 
@@ -135,9 +137,9 @@ export class GraphQLClient {
         throw new Error('Failed to refresh token');
       }
 
-      // Update only the access token
-      const newAccessToken = result.data.refreshToken.accessToken;
-      await setAuthTokens(newAccessToken, refreshToken);
+      // Update both tokens
+      const { accessToken, refreshToken: newRefreshToken } = result.data.refreshToken;
+      await setAuthTokens(accessToken, newRefreshToken);
     } finally {
       this.isRefreshing = false;
     }

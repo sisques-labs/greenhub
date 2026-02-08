@@ -40,3 +40,22 @@ export function paginate<T>(
 		endIndex,
 	};
 }
+
+/**
+ * Calculates the occupancy percentage based on current plants and capacity
+ *
+ * @param numberOfPlants - Current number of plants
+ * @param capacity - Maximum capacity
+ * @returns Rounded occupancy percentage (0-100)
+ *
+ * @example
+ * calculateOccupancyPercentage(5, 10); // Returns: 50
+ * calculateOccupancyPercentage(7, 10); // Returns: 70
+ */
+export function calculateOccupancyPercentage(
+	numberOfPlants: number,
+	capacity: number,
+): number {
+	if (capacity === 0) return 0;
+	return Math.round((numberOfPlants / capacity) * 100);
+}

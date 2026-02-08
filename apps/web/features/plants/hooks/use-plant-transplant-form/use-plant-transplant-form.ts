@@ -9,7 +9,7 @@ const createPlantTransplantSchema = (translations: (key: string) => string) =>
 	z.object({
 		targetGrowingUnitId: z.string().min(1, {
 			message: translations(
-				'pages.plants.detail.modals.transplant.fields.targetGrowingUnitId.required',
+				'features.plants.detail.modals.transplant.fields.targetGrowingUnitId.required',
 			),
 		}),
 	});

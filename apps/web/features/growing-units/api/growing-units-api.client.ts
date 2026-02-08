@@ -1,13 +1,16 @@
 import { httpClient } from '@/lib/client/http-client';
+import { PaginatedResult } from '@/shared/dtos/paginated-result.entity';
+import type { IMutationResponse } from '@/shared/interfaces/mutation-response.interface';
 import type {
 	CreateGrowingUnitInput,
 	GrowingUnitFindByCriteriaInput,
 	GrowingUnitFindByIdInput,
 	GrowingUnitResponse,
-	MutationResponse,
+	GrowingUnitApiResponse,
 	PaginatedGrowingUnitResult,
 	UpdateGrowingUnitInput,
 } from './types';
+import { transformGrowingUnitResponse } from './types';
 
 /**
  * Growing Units API client for frontend
@@ -26,8 +29,19 @@ export const growingUnitsApiClient = {
 			params.append('input', JSON.stringify(input));
 		}
 
-		return httpClient.get<PaginatedGrowingUnitResult>(
-			`/api/growing-units?${params.toString()}`,
+		const result = await httpClient.get<{
+			items: GrowingUnitApiResponse[];
+			total: number;
+			page: number;
+			perPage: number;
+		}>(`/api/growing-units?${params.toString()}`);
+
+		// Use PaginatedResult constructor
+		return new PaginatedResult(
+			result.items.map(transformGrowingUnitResponse),
+			result.total,
+			result.page,
+			result.perPage,
 		);
 	},
 
@@ -45,8 +59,8 @@ export const growingUnitsApiClient = {
 	/**
 	 * Create a new growing unit
 	 */
-	create: async (input: CreateGrowingUnitInput): Promise<MutationResponse> => {
-		return httpClient.post<MutationResponse>(
+	create: async (input: CreateGrowingUnitInput): Promise<IMutationResponse> => {
+		return httpClient.post<IMutationResponse>(
 			'/api/growing-units/create',
 			input,
 		);
@@ -58,8 +72,8 @@ export const growingUnitsApiClient = {
 	update: async (
 		id: string,
 		input: Omit<UpdateGrowingUnitInput, 'id'>,
-	): Promise<MutationResponse> => {
-		return httpClient.put<MutationResponse>(
+	): Promise<IMutationResponse> => {
+		return httpClient.put<IMutationResponse>(
 			`/api/growing-units/${id}/update`,
 			input,
 		);
@@ -68,8 +82,8 @@ export const growingUnitsApiClient = {
 	/**
 	 * Delete a growing unit
 	 */
-	delete: async (id: string): Promise<MutationResponse> => {
-		return httpClient.delete<MutationResponse>(
+	delete: async (id: string): Promise<IMutationResponse> => {
+		return httpClient.delete<IMutationResponse>(
 			`/api/growing-units/${id}/delete`,
 		);
 	},

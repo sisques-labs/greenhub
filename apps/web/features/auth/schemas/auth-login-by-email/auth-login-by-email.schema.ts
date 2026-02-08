@@ -13,12 +13,12 @@ export function createAuthLoginByEmailSchema(
 	return z.object({
 		email: z
 			.string()
-			.min(1, translations("pages.auth.validation.email.required"))
-			.email(translations("pages.auth.validation.email.invalid")),
+			.min(1, translations("features.auth.validation.email.required"))
+			.email(translations("features.auth.validation.email.invalid")),
 		password: z
 			.string()
-			.min(1, translations("pages.auth.validation.password.required"))
-			.min(8, translations("pages.auth.validation.password.minLength")),
+			.min(1, translations("features.auth.validation.password.required"))
+			.min(8, translations("features.auth.validation.password.minLength")),
 	});
 }
 

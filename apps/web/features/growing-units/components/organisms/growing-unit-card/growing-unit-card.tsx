@@ -88,7 +88,7 @@ export function GrowingUnitCard({ growingUnit }: GrowingUnitCardProps) {
 									<span>
 										{plant.name ||
 											plant.species ||
-											t('pages.plants.detail.unnamed')}
+											t('features.plants.detail.unnamed')}
 									</span>
 								</div>
 							))}
@@ -101,7 +101,7 @@ export function GrowingUnitCard({ growingUnit }: GrowingUnitCardProps) {
 					</div>
 				) : (
 					<div className="text-sm text-muted-foreground">
-						{t('pages.growingUnits.list.noPlants')}
+						{t('features.growingUnits.list.noPlants')}
 					</div>
 				)}
 			</CardContent>

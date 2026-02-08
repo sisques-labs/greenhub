@@ -22,10 +22,10 @@ export function AuthSubmitButton({
 			{isLoading ? (
 				<>
 					<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-					{t(`pages.auth.actions.loading.${mode}`)}
+					{t(`features.auth.actions.loading.${mode}`)}
 				</>
 			) : (
-				t(`pages.auth.actions.${mode}`)
+				t(`features.auth.actions.${mode}`)
 			)}
 		</Button>
 	);

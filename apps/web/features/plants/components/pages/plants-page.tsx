@@ -56,25 +56,25 @@ export function PlantsPage() {
 	} = usePlantsPage();
 
 	const filterOptions: FilterOption[] = [
-		{ value: 'all', label: t('pages.plants.list.filters.all') },
+		{ value: 'all', label: t('features.plants.list.filters.all') },
 		{
 			value: 'indoor',
-			label: t('pages.plants.list.filters.indoor'),
+			label: t('features.plants.list.filters.indoor'),
 			icon: HomeIcon,
 		},
 		{
 			value: 'outdoor',
-			label: t('pages.plants.list.filters.outdoor'),
+			label: t('features.plants.list.filters.outdoor'),
 			icon: Building2Icon,
 		},
 		{
 			value: 'needsWater',
-			label: t('pages.plants.list.filters.needsWater'),
+			label: t('features.plants.list.filters.needsWater'),
 			icon: DropletsIcon,
 		},
 		{
 			value: 'healthy',
-			label: t('pages.plants.list.filters.healthy'),
+			label: t('features.plants.list.filters.healthy'),
 			icon: CheckCircleIcon,
 		},
 	];
@@ -83,19 +83,19 @@ export function PlantsPage() {
 		<div className="mx-auto space-y-6">
 			{/* Header */}
 			<PageHeader
-				title={t('pages.plants.list.title')}
-				description={t('pages.plants.list.description')}
+				title={t('features.plants.list.title')}
+				description={t('features.plants.list.description')}
 				actions={[
 					<Button key="create" onClick={handleAddClick}>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						{t('pages.plants.list.actions.create.button')}
+						{t('features.plants.list.actions.create.button')}
 					</Button>,
 				]}
 			/>
 
 			{/* Search and Filters */}
 			<SearchAndFilters
-				searchPlaceholder={t('pages.plants.list.search.placeholder')}
+				searchPlaceholder={t('features.plants.list.search.placeholder')}
 				searchValue={searchQuery}
 				onSearchChange={setSearchQuery}
 				filterOptions={filterOptions}
@@ -116,7 +116,7 @@ export function PlantsPage() {
 				) : error ? (
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-destructive">
-							{t('pages.plants.list.error.loading', {
+							{t('features.plants.list.error.loading', {
 								message: (error as Error).message,
 							})}
 						</p>
@@ -128,19 +128,19 @@ export function PlantsPage() {
 								<TableRow>
 									<TableHead className="w-[80px]">IMG</TableHead>
 									<TableHead>
-										{t('pages.plants.list.table.columns.plant')}
+										{t('features.plants.list.table.columns.plant')}
 									</TableHead>
 									<TableHead>
-										{t('pages.plants.list.table.columns.location')}
+										{t('features.plants.list.table.columns.location')}
 									</TableHead>
 									<TableHead>
-										{t('pages.plants.list.table.columns.status')}
+										{t('features.plants.list.table.columns.status')}
 									</TableHead>
 									<TableHead>
-										{t('pages.plants.list.table.columns.lastWatering')}
+										{t('features.plants.list.table.columns.lastWatering')}
 									</TableHead>
 									<TableHead className="w-[80px]">
-										{t('pages.plants.list.table.columns.actions')}
+										{t('features.plants.list.table.columns.actions')}
 									</TableHead>
 								</TableRow>
 							</TableHeader>
@@ -160,8 +160,8 @@ export function PlantsPage() {
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-muted-foreground">
 							{hasAnyPlants
-								? t('pages.plants.list.empty.filtered')
-								: t('pages.plants.list.empty')}
+								? t('features.plants.list.empty.filtered')
+								: t('features.plants.list.empty')}
 						</p>
 					</div>
 				)}

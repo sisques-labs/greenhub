@@ -68,10 +68,10 @@ export function LocationCreateForm({
 			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t('pages.locations.list.actions.create.title')}
+						{t('features.locations.list.actions.create.title')}
 					</DialogTitle>
 					<DialogDescription>
-						{t('pages.locations.list.actions.create.description')}
+						{t('features.locations.list.actions.create.description')}
 					</DialogDescription>
 				</DialogHeader>
 				<Form errors={formErrors}>
@@ -158,8 +158,8 @@ export function LocationCreateForm({
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								{isLoading
-									? t('pages.locations.list.actions.create.loading')
-									: t('pages.locations.list.actions.create.submit')}
+									? t('features.locations.list.actions.create.loading')
+									: t('features.locations.list.actions.create.submit')}
 							</Button>
 						</DialogFooter>
 					</form>

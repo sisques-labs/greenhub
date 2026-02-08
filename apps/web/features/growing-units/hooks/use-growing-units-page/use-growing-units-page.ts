@@ -1,8 +1,9 @@
 import type {
-	FilterOperator,
 	GrowingUnitType,
 	LengthUnit,
-} from 'features/growing-units/api/types';
+} from '@/features/growing-units/api/types';
+import { Criteria } from '@/shared/dtos/criteria.dto';
+import { FilterOperator } from '@/shared/enums/filter-operator.enum';
 import { useGrowingUnitCreate } from 'features/growing-units/hooks/use-growing-unit-create/use-growing-unit-create';
 import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
 import { useGrowingUnitsFindByCriteria } from 'features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
@@ -61,7 +62,7 @@ export function useGrowingUnitsPage() {
 		if (debouncedSearchQuery) {
 			backendFilters.push({
 				field: 'name',
-				operator: 'LIKE',
+				operator: FilterOperator.LIKE,
 				value: debouncedSearchQuery,
 			});
 		}
@@ -106,7 +107,7 @@ export function useGrowingUnitsPage() {
 		isLoading: isLoadingGrowingUnits,
 		error: growingUnitsError,
 		refetch,
-	} = useGrowingUnitsFindByCriteria(criteriaInput);
+	} = useGrowingUnitsFindByCriteria(criteriaInput as Criteria);
 
 	const {
 		handleCreate,
@@ -122,25 +123,25 @@ export function useGrowingUnitsPage() {
 
 	const filterOptions: FilterOption[] = useMemo(
 		() => [
-			{ value: 'all', label: t('pages.growingUnits.list.filters.all') },
+			{ value: 'all', label: t('features.growingUnits.list.filters.all') },
 			{
 				value: 'indoor',
-				label: t('pages.growingUnits.list.filters.indoor'),
+				label: t('features.growingUnits.list.filters.indoor'),
 				icon: HomeIcon,
 			},
 			{
 				value: 'outdoor',
-				label: t('pages.growingUnits.list.filters.outdoor'),
+				label: t('features.growingUnits.list.filters.outdoor'),
 				icon: Building2Icon,
 			},
 			{
 				value: 'pots',
-				label: t('pages.growingUnits.list.filters.pots'),
+				label: t('features.growingUnits.list.filters.pots'),
 				icon: FlowerIcon,
 			},
 			{
 				value: 'beds',
-				label: t('pages.growingUnits.list.filters.beds'),
+				label: t('features.growingUnits.list.filters.beds'),
 				icon: PackageIcon,
 			},
 		],
