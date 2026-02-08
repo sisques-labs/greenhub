@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { graphqlClient } from '@/lib/server/graphql-client';
 import { GROWING_UNIT_CREATE_MUTATION } from '@/features/growing-units/api/mutations';
+import type { IMutationResponse } from '@/shared/interfaces/mutation-response.interface';
 import type {
   CreateGrowingUnitInput,
-  MutationResponse,
 } from '@/features/growing-units/api/types';
 
 export async function POST(request: NextRequest) {
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     // Call GraphQL backend
     const result = await graphqlClient.request<{
-      growingUnitCreate: MutationResponse;
+      growingUnitCreate: IMutationResponse;
     }>({
       query: GROWING_UNIT_CREATE_MUTATION,
       variables: { input: body },
