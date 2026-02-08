@@ -1,17 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import { useGrowingUnitDetailPage } from './use-growing-unit-detail-page';
-import { useGrowingUnitFindById } from 'features/growing-units/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id';
-import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
+import { useGrowingUnitFindById } from 'features/growing-units/hooks/use-growing-unit-find-by-id';
+import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update';
 import { useGrowingUnitDetailPageStore } from 'features/growing-units/stores/growing-unit-detail-page-store';
-import { usePlantAdd } from 'features/plants/hooks/use-plant-add/use-plant-add';
+import { usePlantAdd } from 'features/plants/hooks/use-plant-add';
 
 // Mock dependencies
-jest.mock(
-	'features/growing-units/hooks/use-growing-unit-find-by-id/use-growing-unit-find-by-id',
-);
-jest.mock('features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update');
+jest.mock('features/growing-units/hooks/use-growing-unit-find-by-id');
+jest.mock('features/growing-units/hooks/use-growing-unit-update');
 jest.mock('features/growing-units/stores/growing-unit-detail-page-store');
-jest.mock('features/plants/hooks/use-plant-add/use-plant-add');
+jest.mock('features/plants/hooks/use-plant-add');
 
 describe('useGrowingUnitDetailPage', () => {
 	const mockGrowingUnit = {
