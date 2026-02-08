@@ -2,52 +2,16 @@
  * Plants API types - matches backend GraphQL schema
  */
 
+import type { Criteria } from '@/shared/dtos/criteria.dto';
+import type { PaginatedResult } from '@/shared/dtos/paginated-result.entity';
+import type { IMutationResponse } from '@/shared/interfaces/mutation-response.interface';
+
 export type PlantStatus =
   | 'PLANTED'
   | 'GROWING'
   | 'HARVESTED'
   | 'DEAD'
   | 'ARCHIVED';
-
-export type FilterOperator =
-  | 'EQUALS'
-  | 'NOT_EQUALS'
-  | 'LIKE'
-  | 'IN'
-  | 'GREATER_THAN'
-  | 'LESS_THAN'
-  | 'GREATER_THAN_OR_EQUAL'
-  | 'LESS_THAN_OR_EQUAL';
-
-export type SortDirection = 'ASC' | 'DESC';
-
-export interface BaseFilter {
-  field: string;
-  operator: FilterOperator;
-  value: string;
-}
-
-export interface BaseSort {
-  field: string;
-  direction: SortDirection;
-}
-
-export interface PaginationInput {
-  page: number;
-  perPage: number;
-}
-
-export interface FindByCriteriaInput {
-  filters?: BaseFilter[];
-  sorts?: BaseSort[];
-  pagination?: PaginationInput;
-}
-
-export interface MutationResponse {
-  success: boolean;
-  message?: string;
-  id?: string;
-}
 
 // Plant-specific types
 
@@ -120,17 +84,11 @@ export interface PlantResponse {
   updatedAt?: Date;
 }
 
-export interface PaginatedPlantResult {
-  total: number;
-  page: number;
-  perPage: number;
-  totalPages: number;
-  items: PlantResponse[];
-}
+export type PaginatedPlantResult = PaginatedResult<PlantResponse>;
 
 // Input types
 
-export type PlantFindByCriteriaInput = FindByCriteriaInput;
+export type PlantFindByCriteriaInput = Criteria;
 
 export interface PlantFindByIdInput {
   id: string;

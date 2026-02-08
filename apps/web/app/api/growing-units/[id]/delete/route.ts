@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { graphqlClient } from '@/lib/server/graphql-client';
 import { GROWING_UNIT_DELETE_MUTATION } from '@/features/growing-units/api/mutations';
+import type { IMutationResponse } from '@/shared/interfaces/mutation-response.interface';
 import type {
   DeleteGrowingUnitInput,
-  MutationResponse,
 } from '@/features/growing-units/api/types';
 
 export async function DELETE(
@@ -27,7 +27,7 @@ export async function DELETE(
 
     // Call GraphQL backend
     const result = await graphqlClient.request<{
-      growingUnitDelete: MutationResponse;
+      growingUnitDelete: IMutationResponse;
     }>({
       query: GROWING_UNIT_DELETE_MUTATION,
       variables: { input },

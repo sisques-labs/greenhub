@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { graphqlClient } from '@/lib/server/graphql-client';
 import { PLANT_UPDATE_MUTATION } from '@/features/plants/api/mutations';
+import type { IMutationResponse } from '@/shared/interfaces/mutation-response.interface';
 import type {
   PlantUpdateInput,
-  MutationResponse,
 } from '@/features/plants/api/types';
 
 export async function PUT(
@@ -29,7 +29,7 @@ export async function PUT(
 
     // Call GraphQL backend
     const result = await graphqlClient.request<{
-      plantUpdate: MutationResponse;
+      plantUpdate: IMutationResponse;
     }>({
       query: PLANT_UPDATE_MUTATION,
       variables: { input },
