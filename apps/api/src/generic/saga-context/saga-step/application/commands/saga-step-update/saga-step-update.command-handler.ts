@@ -19,11 +19,11 @@ export class SagaStepUpdateCommandHandler
 
 	constructor(
 		private readonly assertSagaStepExistsService: AssertSagaStepExistsService,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		@Inject(SAGA_STEP_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaStepWriteRepository: SagaStepWriteRepository,
 	) {
-		super();
+		super(eventBus);
 	}
 
 	/**
@@ -55,7 +55,6 @@ export class SagaStepUpdateCommandHandler
 		await this.sagaStepWriteRepository.save(existingSagaStep);
 
 		// 05: Publish the saga step updated event
-		await this.eventBus.publishAll(existingSagaStep.getUncommittedEvents());
-		await existingSagaStep.commit();
+		await this.publishEvents(existingSagaStep);
 	}
 }

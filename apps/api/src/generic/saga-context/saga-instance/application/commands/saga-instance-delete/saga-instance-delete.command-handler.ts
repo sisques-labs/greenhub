@@ -3,13 +3,16 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { SagaInstanceDeleteCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command';
 import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 @CommandHandler(SagaInstanceDeleteCommand)
 export class SagaInstanceDeleteCommandHandler
+	extends BaseCommandHandler<SagaInstanceDeleteCommand, SagaInstanceAggregate>
 	implements ICommandHandler<SagaInstanceDeleteCommand>
 {
 	private readonly logger = new Logger(SagaInstanceDeleteCommandHandler.name);
@@ -17,9 +20,11 @@ export class SagaInstanceDeleteCommandHandler
 	constructor(
 		@Inject(SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaInstanceWriteRepository: SagaInstanceWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertSagaInstanceExistsService: AssertSagaInstanceExistsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the saga instance delete command.
@@ -45,7 +50,6 @@ export class SagaInstanceDeleteCommandHandler
 		);
 
 		// 05: Publish the saga instance deleted event
-		await this.eventBus.publishAll(existingSagaInstance.getUncommittedEvents());
-		await existingSagaInstance.commit();
+		await this.publishEvents(existingSagaInstance);
 	}
 }

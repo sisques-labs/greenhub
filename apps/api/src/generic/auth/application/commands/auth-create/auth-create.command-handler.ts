@@ -2,18 +2,21 @@ import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { PasswordHashingService } from '@/generic/auth/application/services/password-hashing/password-hashing.service';
+import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthAggregateFactory } from '@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory';
 import {
 	AUTH_WRITE_REPOSITORY_TOKEN,
 	AuthWriteRepository,
 } from '@/generic/auth/domain/repositories/auth-write.repository';
 import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 import { AuthCreateCommand } from './auth-create.command';
 
 @CommandHandler(AuthCreateCommand)
 export class AuthCreateCommandHandler
+	extends BaseCommandHandler<AuthCreateCommand, AuthAggregate>
 	implements ICommandHandler<AuthCreateCommand>
 {
 	private readonly logger = new Logger(AuthCreateCommandHandler.name);
@@ -22,9 +25,11 @@ export class AuthCreateCommandHandler
 		@Inject(AUTH_WRITE_REPOSITORY_TOKEN)
 		private readonly authWriteRepository: AuthWriteRepository,
 		private readonly authAggregateFactory: AuthAggregateFactory,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly passwordHashingService: PasswordHashingService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the auth create command
@@ -69,8 +74,7 @@ export class AuthCreateCommandHandler
 		await this.authWriteRepository.save(auth);
 
 		// 03: Publish all events
-		await this.eventBus.publishAll(auth.getUncommittedEvents());
-		await auth.commit();
+		await this.publishEvents(auth);
 
 		// 04: Return the auth id
 		return auth.id.value;
