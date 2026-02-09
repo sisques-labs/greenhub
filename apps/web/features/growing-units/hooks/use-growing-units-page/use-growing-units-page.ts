@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { FilterOption } from 'shared/components/ui/search-and-filters/search-and-filters';
 
 const GROWING_UNITS_PER_PAGE = 12;
+const GROWING_UNITS_PER_PAGE_VIRTUAL = 1000; // Fetch many items for virtualization
 const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 /**
@@ -40,6 +41,7 @@ export function useGrowingUnitsPage() {
 	} = useGrowingUnitsPageStore();
 
 	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+	const [useVirtualization, setUseVirtualization] = useState(true); // Enable by default for large datasets
 
 	// Debounce search query
 	useEffect(() => {
@@ -89,8 +91,8 @@ export function useGrowingUnitsPage() {
 		() => ({
 			filters: filters.length > 0 ? filters : undefined,
 			pagination: {
-				page: currentPage,
-				perPage: GROWING_UNITS_PER_PAGE,
+				page: useVirtualization ? 1 : currentPage,
+				perPage: useVirtualization ? GROWING_UNITS_PER_PAGE_VIRTUAL : GROWING_UNITS_PER_PAGE,
 			},
 			sorts: [
 				{
@@ -99,7 +101,7 @@ export function useGrowingUnitsPage() {
 				},
 			],
 		}),
-		[filters, currentPage],
+		[filters, currentPage, useVirtualization],
 	);
 
 	const {
@@ -223,6 +225,8 @@ export function useGrowingUnitsPage() {
 		setSearchQuery,
 		selectedFilter,
 		setSelectedFilter,
+		useVirtualization,
+		setUseVirtualization,
 		filterOptions,
 
 		// Data

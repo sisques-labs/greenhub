@@ -8,6 +8,7 @@ import { LocationCreateForm } from 'features/locations/components/organisms/loca
 import { LocationDeleteDialog } from 'features/locations/components/organisms/location-delete-dialog/location-delete-dialog';
 import { LocationUpdateForm } from 'features/locations/components/organisms/location-update-form/location-update-form';
 import { LocationsCardsSkeleton } from 'features/locations/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
+import { LocationsVirtualizedGrid } from 'features/locations/components/organisms/locations-virtualized-grid/locations-virtualized-grid';
 import { useLocationsPage } from 'features/locations/hooks/use-locations-page/use-locations-page';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -30,6 +31,8 @@ export function LocationsPage() {
 		setSearchQuery,
 		selectedFilter,
 		setSelectedFilter,
+		useVirtualization,
+		setUseVirtualization,
 		filterOptions,
 		locations,
 		isLoading,
@@ -73,52 +76,77 @@ export function LocationsPage() {
 			/>
 
 			{/* Locations Grid */}
-			{isLoading ? (
-				<LocationsCardsSkeleton cards={LOCATIONS_PER_PAGE} />
-			) : locationsError ? (
-				<div className="flex items-center justify-center min-h-[400px]">
-					<p className="text-destructive">
-						{t('features.locations.list.error.loading', {
-							message: locationsError.message,
-						})}
-					</p>
-				</div>
-			) : locations && locations.items.length > 0 ? (
-				<>
+			{useVirtualization ? (
+				isLoading ? (
+					<LocationsCardsSkeleton cards={12} />
+				) : locationsError ? (
+					<div className="flex items-center justify-center min-h-[400px]">
+						<p className="text-destructive">
+							{t('features.locations.list.error.loading', {
+								message: locationsError.message,
+							})}
+						</p>
+					</div>
+				) : locations && locations.items.length > 0 ? (
+					<LocationsVirtualizedGrid
+						locations={locations.items}
+						onAddClick={handleAddClick}
+						onEdit={handleEditClick}
+						onDelete={handleDeleteClick}
+					/>
+				) : (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{locations.items.map((location) => (
-							<LocationCard
-								key={location.id}
-								location={location}
-								onEdit={handleEditClick}
-								onDelete={handleDeleteClick}
-							/>
-						))}
 						<LocationAddCard onClick={handleAddClick} />
 					</div>
-
-					{/* Pagination */}
-					{locations.totalPages > 1 && (
-						<>
-							<div className="text-sm text-muted-foreground text-center">
-								{t('shared.pagination.info', {
-									page: locations.page,
-									totalPages: locations.totalPages,
-									total: locations.total,
-								})}
-							</div>
-							<PaginatedResults
-								currentPage={locations.page}
-								totalPages={locations.totalPages}
-								onPageChange={handlePageChange}
-							/>
-						</>
-					)}
-				</>
+				)
 			) : (
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					<LocationAddCard onClick={handleAddClick} />
-				</div>
+				isLoading ? (
+					<LocationsCardsSkeleton cards={LOCATIONS_PER_PAGE} />
+				) : locationsError ? (
+					<div className="flex items-center justify-center min-h-[400px]">
+						<p className="text-destructive">
+							{t('features.locations.list.error.loading', {
+								message: locationsError.message,
+							})}
+						</p>
+					</div>
+				) : locations && locations.items.length > 0 ? (
+					<>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+							{locations.items.map((location) => (
+								<LocationCard
+									key={location.id}
+									location={location}
+									onEdit={handleEditClick}
+									onDelete={handleDeleteClick}
+								/>
+							))}
+							<LocationAddCard onClick={handleAddClick} />
+						</div>
+
+						{/* Pagination */}
+						{locations.totalPages > 1 && (
+							<>
+								<div className="text-sm text-muted-foreground text-center">
+									{t('shared.pagination.info', {
+										page: locations.page,
+										totalPages: locations.totalPages,
+										total: locations.total,
+									})}
+								</div>
+								<PaginatedResults
+									currentPage={locations.page}
+									totalPages={locations.totalPages}
+									onPageChange={handlePageChange}
+								/>
+							</>
+						)}
+					</>
+				) : (
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<LocationAddCard onClick={handleAddClick} />
+					</div>
+				)
 			)}
 
 			{/* Create Dialog */}
