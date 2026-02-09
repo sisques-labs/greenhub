@@ -7,13 +7,13 @@ import { AggregateRoot, EventBus } from '@nestjs/cqrs';
  * This abstract class encapsulates the pattern of publishing domain events and committing aggregates,
  * eliminating duplicate code across command handlers.
  *
- * @typeParam TCommand - The command type this handler processes
+ * @typeParam _TCommand - The command type this handler processes
  * @typeParam TAggregate - The aggregate type (must extend AggregateRoot)
  *
  * @public
  */
 export abstract class BaseCommandHandler<
-	TCommand,
+	_TCommand,
 	TAggregate extends AggregateRoot,
 > {
 	/**
