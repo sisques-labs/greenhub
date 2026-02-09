@@ -4,16 +4,16 @@ import type {
 } from '@/features/growing-units/api/types';
 import { Criteria } from '@/shared/dtos/criteria.dto';
 import { FilterOperator } from '@/shared/enums/filter-operator.enum';
-import { useGrowingUnitCreate } from 'features/growing-units/hooks/use-growing-unit-create/use-growing-unit-create';
-import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
-import { useGrowingUnitsFindByCriteria } from 'features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
-import type { GrowingUnitCreateFormValues } from 'features/growing-units/schemas/growing-unit-create/growing-unit-create.schema';
-import type { GrowingUnitUpdateFormValues } from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
-import { useGrowingUnitsPageStore } from 'features/growing-units/stores/growing-units-page-store';
+import { useGrowingUnitCreate } from '@/features/growing-units/hooks/use-growing-unit-create/use-growing-unit-create';
+import { useGrowingUnitUpdate } from '@/features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
+import { useGrowingUnitsFindByCriteria } from '@/features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import type { GrowingUnitCreateFormValues } from '@/features/growing-units/schemas/growing-unit-create/growing-unit-create.schema';
+import type { GrowingUnitUpdateFormValues } from '@/features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
+import { useGrowingUnitsPageStore } from '@/features/growing-units/stores/growing-units-page-store';
 import { Building2Icon, FlowerIcon, HomeIcon, PackageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
-import type { FilterOption } from 'shared/components/ui/search-and-filters/search-and-filters';
+import type { FilterOption } from '@/shared/components/ui/search-and-filters/search-and-filters';
 
 const GROWING_UNITS_PER_PAGE = 12;
 const GROWING_UNITS_PER_PAGE_VIRTUAL = 1000; // Fetch many items for virtualization

@@ -2,18 +2,18 @@
 
 import { PageHeader } from '@/shared/components/organisms/page-header';
 import { Button } from '@/shared/components/ui/button';
-import { LocationAddCard } from 'features/locations/components/organisms/location-add-card/location-add-card';
-import { LocationCard } from 'features/locations/components/organisms/location-card/location-card';
-import { LocationCreateForm } from 'features/locations/components/organisms/location-create-form/location-create-form';
-import { LocationDeleteDialog } from 'features/locations/components/organisms/location-delete-dialog/location-delete-dialog';
-import { LocationUpdateForm } from 'features/locations/components/organisms/location-update-form/location-update-form';
-import { LocationsCardsSkeleton } from 'features/locations/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
-import { LocationsVirtualizedGrid } from 'features/locations/components/organisms/locations-virtualized-grid/locations-virtualized-grid';
-import { useLocationsPage } from 'features/locations/hooks/use-locations-page/use-locations-page';
+import { LocationAddCard } from '@/features/locations/components/organisms/location-add-card/location-add-card';
+import { LocationCard } from '@/features/locations/components/organisms/location-card/location-card';
+import { LocationCreateForm } from '@/features/locations/components/organisms/location-create-form/location-create-form';
+import { LocationDeleteDialog } from '@/features/locations/components/organisms/location-delete-dialog/location-delete-dialog';
+import { LocationUpdateForm } from '@/features/locations/components/organisms/location-update-form/location-update-form';
+import { LocationsCardsSkeleton } from '@/features/locations/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
+import { LocationsVirtualizedGrid } from '@/features/locations/components/organisms/locations-virtualized-grid/locations-virtualized-grid';
+import { useLocationsPage } from '@/features/locations/hooks/use-locations-page/use-locations-page';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { PaginatedResults } from 'shared/components/ui/paginated-results/paginated-results';
-import { SearchAndFilters } from 'shared/components/ui/search-and-filters/search-and-filters';
+import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
+import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
 
 const LOCATIONS_PER_PAGE = 12;
 

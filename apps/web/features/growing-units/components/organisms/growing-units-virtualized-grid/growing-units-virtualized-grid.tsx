@@ -1,10 +1,10 @@
 'use client';
 
-import { GrowingUnitAddCard } from 'features/growing-units/components/organisms/growing-unit-add-card/growing-unit-add-card';
-import { GrowingUnitCard } from 'features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
+import { GrowingUnitAddCard } from '@/features/growing-units/components/organisms/growing-unit-add-card/growing-unit-add-card';
+import { GrowingUnitCard } from '@/features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type { GrowingUnitResponse } from '../../../api/types';
+import type { GrowingUnitResponse } from '@/features/growing-units/api/types';
 
 interface GrowingUnitsVirtualizedGridProps {
 	growingUnits: GrowingUnitResponse[];

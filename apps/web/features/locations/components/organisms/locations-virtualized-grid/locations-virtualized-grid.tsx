@@ -1,10 +1,10 @@
 'use client';
 
-import { LocationAddCard } from 'features/locations/components/organisms/location-add-card/location-add-card';
-import { LocationCard } from 'features/locations/components/organisms/location-card/location-card';
+import { LocationAddCard } from '@/features/locations/components/organisms/location-add-card/location-add-card';
+import { LocationCard } from '@/features/locations/components/organisms/location-card/location-card';
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import type { LocationResponse } from '../../../api/types';
+import type { LocationResponse } from '@/features/locations/api/types';
 
 interface LocationsVirtualizedGridProps {
 	locations: LocationResponse[];

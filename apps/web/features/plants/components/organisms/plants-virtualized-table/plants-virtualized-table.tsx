@@ -7,8 +7,8 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/shared/components/ui/table';
-import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
-import type { PlantWithGrowingUnit } from 'features/plants/hooks/use-plants-page/use-plants-page';
+import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
+import type { PlantWithGrowingUnit } from '@/features/plants/hooks/use-plants-page/use-plants-page';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';

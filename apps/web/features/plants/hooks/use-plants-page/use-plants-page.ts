@@ -1,12 +1,12 @@
 import type { PlantResponse, PlantStatus } from '@/features/plants/api/types';
 import { Criteria } from '@/shared/dtos/criteria.dto';
 import { FilterOperator } from '@/shared/enums/filter-operator.enum';
-import { useGrowingUnitsFindByCriteria } from 'features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
-import { usePlantAdd } from 'features/plants/hooks/use-plant-add/use-plant-add';
-import { usePlantsFindByCriteria } from 'features/plants/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
-import type { PlantCreateFormValues } from 'features/plants/schemas/plant-create/plant-create.schema';
+import { useGrowingUnitsFindByCriteria } from '@/features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import { usePlantAdd } from '@/features/plants/hooks/use-plant-add/use-plant-add';
+import { usePlantsFindByCriteria } from '@/features/plants/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
+import type { PlantCreateFormValues } from '@/features/plants/schemas/plant-create/plant-create.schema';
 import { useEffect, useMemo, useState } from 'react';
-import { PLANT_STATUS } from '../../constants/plant-status';
+import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
 
 const PLANTS_PER_PAGE = 10;
 const PLANTS_PER_PAGE_VIRTUAL = 1000; // Fetch many items for virtualization
