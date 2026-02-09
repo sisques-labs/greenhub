@@ -9,6 +9,7 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
@@ -24,6 +25,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
  */
 @CommandHandler(PlantAddCommand)
 export class PlantAddCommandHandler
+	extends BaseCommandHandler<PlantAddCommand, GrowingUnitAggregate>
 	implements ICommandHandler<PlantAddCommand>
 {
 	/**
@@ -43,11 +45,13 @@ export class PlantAddCommandHandler
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly plantEntityFactory: PlantEntityFactory,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the {@link PlantAddCommand}, adding a plant to the growing unit and persisting changes.
@@ -90,8 +94,7 @@ export class PlantAddCommandHandler
 		await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
 		// 06: Publish all domain events
-		await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
-		await growingUnitAggregate.commit();
+		await this.publishDomainEvents(growingUnitAggregate);
 
 		// 07: Publish the PlantCreatedEvent integration event
 		await this.publishIntegrationEventsService.execute(

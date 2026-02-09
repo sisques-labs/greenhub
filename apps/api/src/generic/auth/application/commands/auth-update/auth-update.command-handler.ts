@@ -21,10 +21,10 @@ export class AuthUpdateCommandHandler
 	constructor(
 		@Inject(AUTH_WRITE_REPOSITORY_TOKEN)
 		private readonly authWriteRepository: AuthWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertAuthExistsService: AssertAuthExistsService,
 	) {
-		super();
+		super(eventBus);
 	}
 
 	/**
@@ -50,7 +50,6 @@ export class AuthUpdateCommandHandler
 		await this.authWriteRepository.save(existingAuth);
 
 		// 05: Publish the auth updated event
-		await this.eventBus.publishAll(existingAuth.getUncommittedEvents());
-		await existingAuth.commit();
+		await this.publishDomainEvents(existingAuth);
 	}
 }

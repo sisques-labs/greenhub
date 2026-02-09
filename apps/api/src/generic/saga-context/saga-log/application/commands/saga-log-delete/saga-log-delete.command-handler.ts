@@ -3,13 +3,16 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { SagaLogDeleteCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command';
 import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
+import { SagaLogAggregate } from '@/generic/saga-context/saga-log/domain/aggregates/saga-log.aggregate';
 import {
 	SAGA_LOG_WRITE_REPOSITORY_TOKEN,
 	SagaLogWriteRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 @CommandHandler(SagaLogDeleteCommand)
 export class SagaLogDeleteCommandHandler
+	extends BaseCommandHandler<SagaLogDeleteCommand, SagaLogAggregate>
 	implements ICommandHandler<SagaLogDeleteCommand>
 {
 	private readonly logger = new Logger(SagaLogDeleteCommandHandler.name);
@@ -17,9 +20,11 @@ export class SagaLogDeleteCommandHandler
 	constructor(
 		@Inject(SAGA_LOG_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaLogWriteRepository: SagaLogWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertSagaLogExistsService: AssertSagaLogExistsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the saga log delete command.
@@ -44,7 +49,6 @@ export class SagaLogDeleteCommandHandler
 		await this.sagaLogWriteRepository.delete(existingSagaLog.id.value);
 
 		// 04: Publish the saga log deleted event
-		await this.eventBus.publishAll(existingSagaLog.getUncommittedEvents());
-		await existingSagaLog.commit();
+		await this.publishDomainEvents(existingSagaLog);
 	}
 }

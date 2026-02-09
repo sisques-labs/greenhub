@@ -9,6 +9,7 @@ import {
 	ILocationWriteRepository,
 	LOCATION_WRITE_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -20,6 +21,7 @@ import { PublishIntegrationEventsService } from '@/shared/application/services/p
  */
 @CommandHandler(LocationUpdateCommand)
 export class LocationUpdateCommandHandler
+	extends BaseCommandHandler<LocationUpdateCommand, LocationAggregate>
 	implements ICommandHandler<LocationUpdateCommand>
 {
 	/**
@@ -40,8 +42,10 @@ export class LocationUpdateCommandHandler
 		private readonly locationWriteRepository: ILocationWriteRepository,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
-		private eventBus: EventBus,
-	) {}
+		eventBus: EventBus,
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the {@link LocationUpdateCommand}, updating the specified location and
@@ -77,8 +81,7 @@ export class LocationUpdateCommandHandler
 		await this.locationWriteRepository.save(existingLocation);
 
 		// 04: Publish all domain events
-		await this.eventBus.publishAll(existingLocation.getUncommittedEvents());
-		await existingLocation.commit();
+		await this.publishDomainEvents(existingLocation);
 
 		// 05: Publish the integration event for the LocationUpdatedEvent
 		await this.publishIntegrationEventsService.execute(

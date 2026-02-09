@@ -13,6 +13,7 @@ import {
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
 import { PlantTransplantService } from '@/core/plant-context/domain/services/plant/plant-transplant/plant-transplant.service';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -27,6 +28,7 @@ import { PublishIntegrationEventsService } from '@/shared/application/services/p
  */
 @CommandHandler(PlantTransplantCommand)
 export class PlantTransplantCommandHandler
+	extends BaseCommandHandler<PlantTransplantCommand, GrowingUnitAggregate>
 	implements ICommandHandler<PlantTransplantCommand>
 {
 	/**
@@ -47,12 +49,14 @@ export class PlantTransplantCommandHandler
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
 		private readonly plantTransplantService: PlantTransplantService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the {@link PlantTransplantCommand}, transplanting a plant between growing units and persisting changes.
@@ -91,16 +95,10 @@ export class PlantTransplantCommandHandler
 		await this.growingUnitWriteRepository.save(targetGrowingUnitAggregate);
 
 		// 07: Publish all events from source growing unit
-		await this.eventBus.publishAll(
-			sourceGrowingUnitAggregate.getUncommittedEvents(),
-		);
-		await sourceGrowingUnitAggregate.commit();
+		await this.publishDomainEvents(sourceGrowingUnitAggregate);
 
 		// 08: Publish all events from target growing unit
-		await this.eventBus.publishAll(
-			targetGrowingUnitAggregate.getUncommittedEvents(),
-		);
-		await targetGrowingUnitAggregate.commit();
+		await this.publishDomainEvents(targetGrowingUnitAggregate);
 
 		// 09: Publish the PlantUpdatedEvent and GrowingUpdatedEVent integration event
 		await this.publishIntegrationEventsService.execute([

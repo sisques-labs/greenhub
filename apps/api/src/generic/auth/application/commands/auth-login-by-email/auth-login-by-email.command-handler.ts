@@ -21,11 +21,13 @@ import {
 } from '@/generic/auth/domain/repositories/auth-write.repository';
 import { AuthLastLoginAtValueObject } from '@/generic/auth/domain/value-objects/auth-last-login-at/auth-last-login-at.vo';
 import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
 @CommandHandler(AuthLoginByEmailCommand)
 export class AuthLoginByEmailCommandHandler
+	extends BaseCommandHandler<AuthLoginByEmailCommand, AuthAggregate>
 	implements ICommandHandler<AuthLoginByEmailCommand>
 {
 	private readonly logger = new Logger(AuthLoginByEmailCommandHandler.name);
@@ -38,9 +40,11 @@ export class AuthLoginByEmailCommandHandler
 		private readonly assertAuthEmailExistsService: AssertAuthEmailExistsService,
 		private readonly passwordHashingService: PasswordHashingService,
 		private readonly jwtAuthService: JwtAuthService,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly queryBus: QueryBus,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the auth login command
@@ -82,8 +86,7 @@ export class AuthLoginByEmailCommandHandler
 		await this.authWriteRepository.save(auth);
 
 		// 07: Publish all events
-		await this.eventBus.publishAll(auth.getUncommittedEvents());
-		await auth.commit();
+		await this.publishDomainEvents(auth);
 
 		// 09: Generate JWT tokens
 		const tokens = this.jwtAuthService.generateTokenPair({

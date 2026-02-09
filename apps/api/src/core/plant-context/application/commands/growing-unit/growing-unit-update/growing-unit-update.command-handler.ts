@@ -9,6 +9,7 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -22,6 +23,7 @@ import { PublishIntegrationEventsService } from '@/shared/application/services/p
  */
 @CommandHandler(GrowingUnitUpdateCommand)
 export class GrowingUnitUpdateCommandHandler
+	extends BaseCommandHandler<GrowingUnitUpdateCommand, GrowingUnitAggregate>
 	implements ICommandHandler<GrowingUnitUpdateCommand>
 {
 	/**
@@ -41,8 +43,10 @@ export class GrowingUnitUpdateCommandHandler
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
-		private eventBus: EventBus,
-	) {}
+		eventBus: EventBus,
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the {@link GrowingUnitUpdateCommand}, updating the specified growing unit and
@@ -81,8 +85,7 @@ export class GrowingUnitUpdateCommandHandler
 		await this.growingUnitWriteRepository.save(existingGrowingUnit);
 
 		// 04: Publish all domain events
-		await this.eventBus.publishAll(existingGrowingUnit.getUncommittedEvents());
-		await existingGrowingUnit.commit();
+		await this.publishDomainEvents(existingGrowingUnit);
 
 		// 05: Publish the integration event for the GrowingUnitUpdatedEvent
 		await this.publishIntegrationEventsService.execute(

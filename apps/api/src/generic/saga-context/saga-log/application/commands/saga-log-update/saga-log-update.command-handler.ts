@@ -19,11 +19,11 @@ export class SagaLogUpdateCommandHandler
 
 	constructor(
 		private readonly assertSagaLogExistsService: AssertSagaLogExistsService,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		@Inject(SAGA_LOG_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaLogWriteRepository: SagaLogWriteRepository,
 	) {
-		super();
+		super(eventBus);
 	}
 
 	/**
@@ -56,7 +56,6 @@ export class SagaLogUpdateCommandHandler
 		await this.sagaLogWriteRepository.save(existingSagaLog);
 
 		// 05: Publish the saga log updated event
-		await this.eventBus.publishAll(existingSagaLog.getUncommittedEvents());
-		await existingSagaLog.commit();
+		await this.publishDomainEvents(existingSagaLog);
 	}
 }

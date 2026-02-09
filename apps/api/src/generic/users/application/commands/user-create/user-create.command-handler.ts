@@ -2,26 +2,31 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { AssertUserUsernameIsUniqueService } from '@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import { UserAggregateFactory } from '@/generic/users/domain/factories/user-aggregate/user-aggregate.factory';
 import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 import { UserCreateCommand } from './user-create.command';
 
 @CommandHandler(UserCreateCommand)
 export class UserCreateCommandHandler
+	extends BaseCommandHandler<UserCreateCommand, UserAggregate>
 	implements ICommandHandler<UserCreateCommand>
 {
 	constructor(
 		@Inject(USER_WRITE_REPOSITORY_TOKEN)
 		private readonly userWriteRepository: UserWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly userAggregateFactory: UserAggregateFactory,
 		private readonly assertUserUsernameIsUniqueService: AssertUserUsernameIsUniqueService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the user create command
@@ -48,7 +53,7 @@ export class UserCreateCommandHandler
 		await this.userWriteRepository.save(user);
 
 		// 03: Publish all events
-		await this.eventBus.publishAll(user.getUncommittedEvents());
+		await this.publishDomainEvents(user);
 
 		// 04: Return the user id
 		return user.id.value;

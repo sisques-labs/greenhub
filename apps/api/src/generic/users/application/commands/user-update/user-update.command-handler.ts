@@ -3,6 +3,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { UserUpdateCommand } from '@/generic/users/application/commands/user-update/user-update.command';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import { IUserUpdateDto } from '@/generic/users/domain/dtos/entities/user-update/user-update.dto';
 import {
 	USER_WRITE_REPOSITORY_TOKEN,
@@ -12,7 +13,7 @@ import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/b
 
 @CommandHandler(UserUpdateCommand)
 export class UserUpdateCommandHandler
-	extends BaseUpdateCommandHandler<UserUpdateCommand, IUserUpdateDto>
+	extends BaseUpdateCommandHandler<UserUpdateCommand, IUserUpdateDto, UserAggregate>
 	implements ICommandHandler<UserUpdateCommand>
 {
 	protected readonly logger = new Logger(UserUpdateCommandHandler.name);
@@ -20,10 +21,10 @@ export class UserUpdateCommandHandler
 	constructor(
 		@Inject(USER_WRITE_REPOSITORY_TOKEN)
 		private readonly userWriteRepository: UserWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertUserExsistsService: AssertUserExsistsService,
 	) {
-		super();
+		super(eventBus);
 	}
 
 	/**
@@ -50,7 +51,6 @@ export class UserUpdateCommandHandler
 		await this.userWriteRepository.save(existingUser);
 
 		// 05: Publish the user updated event
-		await this.eventBus.publishAll(existingUser.getUncommittedEvents());
-		await existingUser.commit();
+		await this.publishDomainEvents(existingUser);
 	}
 }

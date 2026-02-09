@@ -7,17 +7,20 @@ import {
 } from '@nestjs/cqrs';
 
 import { AssertSagaStepNotExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-not-exists/assert-saga-step-not-exists.service';
+import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
 import { SagaStepAggregateFactory } from '@/generic/saga-context/saga-step/domain/factories/saga-step-aggregate/saga-step-aggregate.factory';
 import {
 	SAGA_STEP_WRITE_REPOSITORY_TOKEN,
 	SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 import { SagaStepCreateCommand } from './saga-step-create.command';
 
 @CommandHandler(SagaStepCreateCommand)
 export class SagaStepCreateCommandHandler
+	extends BaseCommandHandler<SagaStepCreateCommand, SagaStepAggregate>
 	implements ICommandHandler<SagaStepCreateCommand>
 {
 	private readonly logger = new Logger(SagaStepCreateCommandHandler.name);
@@ -25,11 +28,13 @@ export class SagaStepCreateCommandHandler
 	constructor(
 		@Inject(SAGA_STEP_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaStepWriteRepository: SagaStepWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly queryBus: QueryBus,
 		private readonly sagaStepAggregateFactory: SagaStepAggregateFactory,
 		private readonly assertSagaStepNotExistsService: AssertSagaStepNotExistsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the saga step create command
@@ -59,8 +64,7 @@ export class SagaStepCreateCommandHandler
 		await this.sagaStepWriteRepository.save(sagaStep);
 
 		// 05: Publish all events
-		await this.eventBus.publishAll(sagaStep.getUncommittedEvents());
-		await sagaStep.commit();
+		await this.publishDomainEvents(sagaStep);
 
 		// 06: Return the saga step id
 		return sagaStep.id.value;
