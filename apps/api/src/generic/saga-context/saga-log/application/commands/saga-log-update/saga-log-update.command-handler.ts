@@ -56,6 +56,6 @@ export class SagaLogUpdateCommandHandler
 		await this.sagaLogWriteRepository.save(existingSagaLog);
 
 		// 05: Publish the saga log updated event
-		await this.publishDomainEvents(existingSagaLog);
+		await this.publishEvents(existingSagaLog);
 	}
 }

@@ -81,7 +81,7 @@ export class LocationUpdateCommandHandler
 		await this.locationWriteRepository.save(existingLocation);
 
 		// 04: Publish all domain events
-		await this.publishDomainEvents(existingLocation);
+		await this.publishEvents(existingLocation);
 
 		// 05: Publish the integration event for the LocationUpdatedEvent
 		await this.publishIntegrationEventsService.execute(

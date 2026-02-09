@@ -49,6 +49,6 @@ export class SagaStepDeleteCommandHandler
 		await this.sagaStepWriteRepository.delete(existingSagaStep.id.value);
 
 		// 04: Publish the saga step deleted event
-		await this.publishDomainEvents(existingSagaStep);
+		await this.publishEvents(existingSagaStep);
 	}
 }

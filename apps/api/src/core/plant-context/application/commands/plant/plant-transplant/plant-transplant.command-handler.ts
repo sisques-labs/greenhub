@@ -95,10 +95,10 @@ export class PlantTransplantCommandHandler
 		await this.growingUnitWriteRepository.save(targetGrowingUnitAggregate);
 
 		// 07: Publish all events from source growing unit
-		await this.publishDomainEvents(sourceGrowingUnitAggregate);
+		await this.publishEvents(sourceGrowingUnitAggregate);
 
 		// 08: Publish all events from target growing unit
-		await this.publishDomainEvents(targetGrowingUnitAggregate);
+		await this.publishEvents(targetGrowingUnitAggregate);
 
 		// 09: Publish the PlantUpdatedEvent and GrowingUpdatedEVent integration event
 		await this.publishIntegrationEventsService.execute([

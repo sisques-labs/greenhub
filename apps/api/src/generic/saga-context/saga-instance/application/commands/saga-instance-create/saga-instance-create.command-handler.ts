@@ -64,7 +64,7 @@ export class SagaInstanceCreateCommandHandler
 		await this.sagaInstanceWriteRepository.save(sagaInstance);
 
 		// 05: Publish all events
-		await this.publishDomainEvents(sagaInstance);
+		await this.publishEvents(sagaInstance);
 
 		// 06: Return the saga instance id
 		return sagaInstance.id.value;

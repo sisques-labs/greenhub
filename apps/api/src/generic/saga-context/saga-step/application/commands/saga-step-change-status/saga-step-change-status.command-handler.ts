@@ -71,6 +71,6 @@ export class SagaStepChangeStatusCommandHandler
 		await this.sagaStepWriteRepository.save(existingSagaStep);
 
 		// 04: Publish all events
-		await this.publishDomainEvents(existingSagaStep);
+		await this.publishEvents(existingSagaStep);
 	}
 }

@@ -85,7 +85,7 @@ export class GrowingUnitUpdateCommandHandler
 		await this.growingUnitWriteRepository.save(existingGrowingUnit);
 
 		// 04: Publish all domain events
-		await this.publishDomainEvents(existingGrowingUnit);
+		await this.publishEvents(existingGrowingUnit);
 
 		// 05: Publish the integration event for the GrowingUnitUpdatedEvent
 		await this.publishIntegrationEventsService.execute(

@@ -55,7 +55,7 @@ export class SagaLogCreateCommandHandler
 		await this.sagaLogWriteRepository.save(sagaLog);
 
 		// 04: Publish all events
-		await this.publishDomainEvents(sagaLog);
+		await this.publishEvents(sagaLog);
 
 		// 05: Return the saga log id
 		return sagaLog.id.value;

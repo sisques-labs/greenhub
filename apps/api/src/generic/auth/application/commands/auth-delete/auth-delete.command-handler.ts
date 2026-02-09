@@ -39,6 +39,6 @@ export class AuthDeleteCommandHandler
 		await this.authWriteRepository.delete(existingAuth.id.value);
 
 		// 04: Publish the auth deleted event
-		await this.publishDomainEvents(existingAuth);
+		await this.publishEvents(existingAuth);
 	}
 }

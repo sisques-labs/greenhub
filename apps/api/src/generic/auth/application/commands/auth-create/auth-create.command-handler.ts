@@ -74,7 +74,7 @@ export class AuthCreateCommandHandler
 		await this.authWriteRepository.save(auth);
 
 		// 03: Publish all events
-		await this.publishDomainEvents(auth);
+		await this.publishEvents(auth);
 
 		// 04: Return the auth id
 		return auth.id.value;

@@ -8,7 +8,7 @@ import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
-import { BaseCommandHandler } from '@/shared/application/commands/base';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 @CommandHandler(UserDeleteCommand)
 export class UserDeleteCommandHandler
@@ -41,6 +41,6 @@ export class UserDeleteCommandHandler
 		await this.userWriteRepository.delete(existingUser.id.value);
 
 		// 05: Publish the user deleted event
-		await this.publishDomainEvents(existingUser);
+		await this.publishEvents(existingUser);
 	}
 }

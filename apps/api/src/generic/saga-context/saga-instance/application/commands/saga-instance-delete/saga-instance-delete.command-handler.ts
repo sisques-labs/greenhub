@@ -50,6 +50,6 @@ export class SagaInstanceDeleteCommandHandler
 		);
 
 		// 05: Publish the saga instance deleted event
-		await this.publishDomainEvents(existingSagaInstance);
+		await this.publishEvents(existingSagaInstance);
 	}
 }

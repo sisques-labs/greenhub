@@ -49,6 +49,6 @@ export class SagaLogDeleteCommandHandler
 		await this.sagaLogWriteRepository.delete(existingSagaLog.id.value);
 
 		// 04: Publish the saga log deleted event
-		await this.publishDomainEvents(existingSagaLog);
+		await this.publishEvents(existingSagaLog);
 	}
 }

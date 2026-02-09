@@ -64,7 +64,7 @@ export class SagaStepCreateCommandHandler
 		await this.sagaStepWriteRepository.save(sagaStep);
 
 		// 05: Publish all events
-		await this.publishDomainEvents(sagaStep);
+		await this.publishEvents(sagaStep);
 
 		// 06: Return the saga step id
 		return sagaStep.id.value;

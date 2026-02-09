@@ -51,6 +51,6 @@ export class UserUpdateCommandHandler
 		await this.userWriteRepository.save(existingUser);
 
 		// 05: Publish the user updated event
-		await this.publishDomainEvents(existingUser);
+		await this.publishEvents(existingUser);
 	}
 }

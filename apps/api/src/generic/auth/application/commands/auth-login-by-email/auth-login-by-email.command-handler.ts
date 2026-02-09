@@ -86,7 +86,7 @@ export class AuthLoginByEmailCommandHandler
 		await this.authWriteRepository.save(auth);
 
 		// 07: Publish all events
-		await this.publishDomainEvents(auth);
+		await this.publishEvents(auth);
 
 		// 09: Generate JWT tokens
 		const tokens = this.jwtAuthService.generateTokenPair({

@@ -38,11 +38,11 @@ export abstract class BaseCommandHandler<
 	 * ```typescript
 	 * const user = this.userFactory.create(command);
 	 * await this.repository.save(user);
-	 * await this.publishDomainEvents(user);
+	 * await this.publishEvents(user);
 	 * return user.id.value;
 	 * ```
 	 */
-	protected async publishDomainEvents(aggregate: TAggregate): Promise<void> {
+	protected async publishEvents(aggregate: TAggregate): Promise<void> {
 		await this.eventBus.publishAll(aggregate.getUncommittedEvents());
 		await aggregate.commit();
 	}

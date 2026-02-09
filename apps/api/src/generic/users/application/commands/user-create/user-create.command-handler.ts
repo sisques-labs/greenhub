@@ -8,7 +8,7 @@ import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
-import { BaseCommandHandler } from '@/shared/application/commands/base';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 import { UserCreateCommand } from './user-create.command';
@@ -53,7 +53,7 @@ export class UserCreateCommandHandler
 		await this.userWriteRepository.save(user);
 
 		// 03: Publish all events
-		await this.publishDomainEvents(user);
+		await this.publishEvents(user);
 
 		// 04: Return the user id
 		return user.id.value;

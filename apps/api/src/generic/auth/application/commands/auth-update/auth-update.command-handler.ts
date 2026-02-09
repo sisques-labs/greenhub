@@ -50,6 +50,6 @@ export class AuthUpdateCommandHandler
 		await this.authWriteRepository.save(existingAuth);
 
 		// 05: Publish the auth updated event
-		await this.publishDomainEvents(existingAuth);
+		await this.publishEvents(existingAuth);
 	}
 }

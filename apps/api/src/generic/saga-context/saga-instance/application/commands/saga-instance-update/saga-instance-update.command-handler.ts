@@ -54,6 +54,6 @@ export class SagaInstanceUpdateCommandHandler
 		await this.sagaInstanceWriteRepository.save(existingSagaInstance);
 
 		// 05: Publish the saga instance updated event
-		await this.publishDomainEvents(existingSagaInstance);
+		await this.publishEvents(existingSagaInstance);
 	}
 }

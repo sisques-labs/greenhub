@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { AggregateRoot, EventBus } from '@nestjs/cqrs';
 
-import { BaseCommandHandler } from '@/shared/application/commands/base';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 /**
  * Abstract base class for update command handlers.

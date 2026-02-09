@@ -94,7 +94,7 @@ export class PlantAddCommandHandler
 		await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
 		// 06: Publish all domain events
-		await this.publishDomainEvents(growingUnitAggregate);
+		await this.publishEvents(growingUnitAggregate);
 
 		// 07: Publish the PlantCreatedEvent integration event
 		await this.publishIntegrationEventsService.execute(
