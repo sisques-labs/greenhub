@@ -58,7 +58,6 @@ export class LocationAggregate extends AggregateRoot {
 	 * Changes the name of this location.
 	 *
 	 * @param name - The new name value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeName(name: LocationNameValueObject) {
 		const oldValue = this._name.value;
@@ -86,7 +85,6 @@ export class LocationAggregate extends AggregateRoot {
 	 * Changes the type of this location.
 	 *
 	 * @param type - The new type value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeType(type: LocationTypeValueObject) {
 		const oldValue = this._type.value;
@@ -114,7 +112,6 @@ export class LocationAggregate extends AggregateRoot {
 	 * Changes the description of this location.
 	 *
 	 * @param description - The new description value object or null.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeDescription(description: LocationDescriptionValueObject | null) {
 		const oldValue = this._description?.value ?? null;
