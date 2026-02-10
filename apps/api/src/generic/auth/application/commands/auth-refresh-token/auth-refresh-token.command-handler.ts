@@ -4,6 +4,7 @@ import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
 import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
+import { ITokenPair } from '@/generic/auth/domain/interfaces/token-pair.interface';
 import { UserFindByIdQuery } from '@/generic/users/application/queries/user-find-by-id/user-find-by-id.query';
 
 import { AuthRefreshTokenCommand } from './auth-refresh-token.command';
@@ -24,9 +25,9 @@ export class AuthRefreshTokenCommandHandler
 	 * Executes the auth refresh token command
 	 *
 	 * @param command - The command to execute
-	 * @returns The new access token
+	 * @returns The new access token and refresh token pair
 	 */
-	async execute(command: AuthRefreshTokenCommand): Promise<string> {
+	async execute(command: AuthRefreshTokenCommand): Promise<ITokenPair> {
 		this.logger.log('Executing refresh token command');
 
 		// 01: Verify and decode the refresh token
@@ -44,8 +45,8 @@ export class AuthRefreshTokenCommandHandler
 			new UserFindByIdQuery({ id: auth.userId.value }),
 		);
 
-		// 05: Generate new access token with current user data
-		const newAccessToken = this.jwtAuthService.generateAccessToken({
+		// 04: Generate new token pair with current user data (refresh token rotation)
+		const tokenPair = this.jwtAuthService.generateTokenPair({
 			id: auth.id.value,
 			userId: auth.userId.value,
 			email: auth.email?.value || undefined,
@@ -53,8 +54,10 @@ export class AuthRefreshTokenCommandHandler
 			role: user?.role?.value ?? undefined,
 		});
 
-		this.logger.log(`New access token generated for auth: ${auth.id.value}`);
+		this.logger.log(
+			`New token pair generated for auth: ${auth.id.value} (refresh token rotation)`,
+		);
 
-		return newAccessToken;
+		return tokenPair;
 	}
 }

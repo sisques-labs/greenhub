@@ -2,16 +2,22 @@ import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 import { SagaInstanceChangeStatusCommand } from './saga-instance-change-status.command';
 
 @CommandHandler(SagaInstanceChangeStatusCommand)
 export class SagaInstanceChangeStatusCommandHandler
+	extends BaseCommandHandler<
+		SagaInstanceChangeStatusCommand,
+		SagaInstanceAggregate
+	>
 	implements ICommandHandler<SagaInstanceChangeStatusCommand>
 {
 	private readonly logger = new Logger(
@@ -21,9 +27,11 @@ export class SagaInstanceChangeStatusCommandHandler
 	constructor(
 		@Inject(SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaInstanceWriteRepository: SagaInstanceWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertSagaInstanceExistsService: AssertSagaInstanceExistsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the saga instance change status command
@@ -73,7 +81,6 @@ export class SagaInstanceChangeStatusCommandHandler
 		await this.sagaInstanceWriteRepository.save(existingSagaInstance);
 
 		// 04: Publish all events
-		await this.eventBus.publishAll(existingSagaInstance.getUncommittedEvents());
-		await existingSagaInstance.commit();
+		await this.publishEvents(existingSagaInstance);
 	}
 }

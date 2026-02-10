@@ -1,14 +1,14 @@
 import type { PlantResponse, PlantStatus } from '@/features/plants/api/types';
 import { Criteria } from '@/shared/dtos/criteria.dto';
 import { FilterOperator } from '@/shared/enums/filter-operator.enum';
-import { useGrowingUnitsFindByCriteria } from 'features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
-import { usePlantAdd } from 'features/plants/hooks/use-plant-add/use-plant-add';
-import { usePlantsFindByCriteria } from 'features/plants/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
-import type { PlantCreateFormValues } from 'features/plants/schemas/plant-create/plant-create.schema';
+import { useGrowingUnitsFindByCriteria } from '@/features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import { usePlantAdd } from '@/features/plants/hooks/use-plant-add/use-plant-add';
+import { usePlantsFindByCriteria } from '@/features/plants/hooks/use-plants-find-by-criteria/use-plants-find-by-criteria';
+import type { PlantCreateFormValues } from '@/features/plants/schemas/plant-create/plant-create.schema';
 import { useEffect, useMemo, useState } from 'react';
-import { PLANT_STATUS } from '../../constants/plant-status';
+import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
+import { DEFAULT_PER_PAGE } from '@/shared/constants/pagination.constants';
 
-const PLANTS_PER_PAGE = 10;
 const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 export type PlantWithGrowingUnit = PlantResponse & {
@@ -20,7 +20,7 @@ export function usePlantsPage() {
 	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 	const [selectedFilter, setSelectedFilter] = useState('all');
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
+	const [perPage, setPerPage] = useState(DEFAULT_PER_PAGE);
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
 	// Debounce search query
@@ -76,7 +76,7 @@ export function usePlantsPage() {
 			filters: filters.length > 0 ? filters : undefined,
 			pagination: {
 				page: currentPage,
-				perPage,
+				perPage: perPage,
 			},
 			sorts: [
 				{
@@ -137,7 +137,7 @@ export function usePlantsPage() {
 				species: values.species,
 				plantedDate: values.plantedDate?.toISOString() || null,
 				notes: values.notes,
-				status: values.status as PlantStatus | undefined,
+				status: values.status as PlantStatus,
 			},
 			() => {
 				refetch();

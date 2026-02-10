@@ -3,13 +3,16 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
+import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import {
 	USER_WRITE_REPOSITORY_TOKEN,
 	UserWriteRepository,
 } from '@/generic/users/domain/repositories/user-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 @CommandHandler(UserDeleteCommand)
 export class UserDeleteCommandHandler
+	extends BaseCommandHandler<UserDeleteCommand, UserAggregate>
 	implements ICommandHandler<UserDeleteCommand>
 {
 	private readonly logger = new Logger(UserDeleteCommandHandler.name);
@@ -17,9 +20,11 @@ export class UserDeleteCommandHandler
 	constructor(
 		@Inject(USER_WRITE_REPOSITORY_TOKEN)
 		private readonly userWriteRepository: UserWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertUserExsistsService: AssertUserExsistsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	async execute(command: UserDeleteCommand): Promise<void> {
 		this.logger.log(`Executing delete user command by id: ${command.id}`);
@@ -36,7 +41,6 @@ export class UserDeleteCommandHandler
 		await this.userWriteRepository.delete(existingUser.id.value);
 
 		// 05: Publish the user deleted event
-		await this.eventBus.publishAll(existingUser.getUncommittedEvents());
-		await existingUser.commit();
+		await this.publishEvents(existingUser);
 	}
 }

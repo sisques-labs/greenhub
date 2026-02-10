@@ -4,16 +4,8 @@ import {
 	setAuthTokens,
 } from '@/lib/server/auth-cookies';
 import { graphqlClient } from '@/lib/server/graphql-client';
+import { AUTH_REFRESH_TOKEN_MUTATION } from '@/features/auth/api/mutations';
 import { NextRequest, NextResponse } from 'next/server';
-
-const REFRESH_TOKEN_MUTATION = `
-  mutation RefreshToken($input: RefreshTokenInput!) {
-    refreshToken(input: $input) {
-      accessToken
-      refreshToken
-    }
-  }
-`;
 
 export async function POST(_request: NextRequest) {
 	try {
@@ -33,7 +25,7 @@ export async function POST(_request: NextRequest) {
 				refreshToken: string;
 			};
 		}>({
-			query: REFRESH_TOKEN_MUTATION,
+			query: AUTH_REFRESH_TOKEN_MUTATION,
 			variables: { input: { refreshToken } },
 			useAuth: false,
 		});

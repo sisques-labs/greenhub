@@ -27,7 +27,7 @@ export function GrowingUnitsStatusSection({
 	growingUnits,
 	isLoading = false,
 }: GrowingUnitsStatusSectionProps) {
-	const t = useTranslations('features.dashboard.growingUnitsStatus');
+	const t = useTranslations('features.dashboard.sections.growingUnitsStatus');
 	const { routes } = useAppRoutes();
 
 	if (isLoading) {

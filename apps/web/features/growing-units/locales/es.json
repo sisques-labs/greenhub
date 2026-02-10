@@ -13,6 +13,19 @@
       "pots": "Macetas",
       "beds": "Bancales"
     },
+    "table": {
+      "columns": {
+        "unit": "Unidad de cultivo",
+        "location": "Ubicación",
+        "plants": "Plantas / Capacidad",
+        "updatedAt": "Última actualización"
+      },
+      "plantsCapacity": "plantas / capacidad"
+    },
+    "location": {
+      "indoor": "INTERIOR",
+      "outdoor": "EXTERIOR"
+    },
     "actions": {
       "create": {
         "button": "Nueva Unidad",
@@ -21,6 +34,9 @@
         "submit": "Crear",
         "loading": "Creando..."
       }
+    },
+    "error": {
+      "loading": "Error al cargar unidades de cultivo: {message}"
     },
     "noPlants": "Sin plantas activas",
     "common": {

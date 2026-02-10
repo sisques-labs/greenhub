@@ -11,6 +11,7 @@ import {
 	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
 	IGrowingUnitWriteRepository,
 } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 
 /**
@@ -24,6 +25,7 @@ import { PublishIntegrationEventsService } from '@/shared/application/services/p
  */
 @CommandHandler(PlantRemoveCommand)
 export class PlantRemoveCommandHandler
+	extends BaseCommandHandler<PlantRemoveCommand, GrowingUnitAggregate>
 	implements ICommandHandler<PlantRemoveCommand>
 {
 	/**
@@ -43,11 +45,13 @@ export class PlantRemoveCommandHandler
 	constructor(
 		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
 		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly assertGrowingUnitExistsService: AssertGrowingUnitExistsService,
 		private readonly assertPlantExistsInGrowingUnitService: AssertPlantExistsInGrowingUnitService,
 		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the {@link PlantRemoveCommand}, removing a plant from the growing unit and persisting changes.
@@ -80,8 +84,7 @@ export class PlantRemoveCommandHandler
 		await this.growingUnitWriteRepository.save(growingUnitAggregate);
 
 		// 06: Publish all domain events
-		await this.eventBus.publishAll(growingUnitAggregate.getUncommittedEvents());
-		await growingUnitAggregate.commit();
+		await this.publishEvents(growingUnitAggregate);
 
 		// 07: Publish the PlantDeletedEvent integration event
 		await this.publishIntegrationEventsService.execute(

@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAccessToken, getRefreshToken, setAuthTokens } from './auth-cookies';
 import { graphqlClient } from './graphql-client';
-
-const REFRESH_TOKEN_MUTATION = `
-  mutation RefreshToken($input: RefreshTokenInput!) {
-    refreshToken(input: $input) {
-      accessToken
-      refreshToken
-    }
-  }
-`;
+import { AUTH_REFRESH_TOKEN_MUTATION } from '@/features/auth/api/mutations';
 
 /**
  * Try to refresh the access token if it's missing or expired
@@ -28,7 +20,7 @@ async function tryRefreshToken(): Promise<boolean> {
         refreshToken: string;
       };
     }>({
-      query: REFRESH_TOKEN_MUTATION,
+      query: AUTH_REFRESH_TOKEN_MUTATION,
       variables: { input: { refreshToken } },
       useAuth: false,
     });

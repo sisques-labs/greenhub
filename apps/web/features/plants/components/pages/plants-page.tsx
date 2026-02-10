@@ -1,34 +1,49 @@
 'use client';
 
+import { PlantCreateForm } from '@/features/plants/components/organisms/plant-create-form/plant-create-form';
+import { usePlantsPage } from '@/features/plants/hooks/use-plants-page/use-plants-page';
+import { formatPlantDate } from '@/shared/lib/date-utils';
+import { getLocationIcon } from '@/shared/lib/icon-utils';
+import { getPlantInitials } from '@/shared/lib/string-utils';
+import { DEFAULT_PER_PAGE_OPTIONS } from '@/shared/constants/pagination.constants';
 import { PageHeader } from '@/shared/components/organisms/page-header';
-import { TableLayout } from '@/shared/components/organisms/table-layout';
+import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+} from '@/shared/components/ui/avatar';
 import { Button } from '@/shared/components/ui/button';
 import {
-	Table,
-	TableBody,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from '@/shared/components/ui/table';
-import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
-import { PlantsTableSkeleton } from 'features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
-import { usePlantsPage } from 'features/plants/hooks/use-plants-page/use-plants-page';
+	type ColumnDef,
+	DataTable,
+} from '@/shared/components/ui/data-table';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu';
+import {
+	type FilterOption,
+	SearchAndFilters,
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
+import { getPlantStatusBadge } from 'features/plants/utils/plant-status.utils';
 import {
 	Building2Icon,
 	CheckCircleIcon,
 	DropletsIcon,
 	HomeIcon,
+	MoreVerticalIcon,
 	PlusIcon,
 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import {
-	type FilterOption,
-	SearchAndFilters,
-} from 'shared/components/ui/search-and-filters/search-and-filters';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import type { PlantResponse } from '../../api/types';
 
 export function PlantsPage() {
 	const t = useTranslations();
+	const locale = useLocale();
+	const router = useRouter();
 
 	const {
 		searchQuery,
@@ -79,6 +94,122 @@ export function PlantsPage() {
 		},
 	];
 
+	const plantsColumns: ColumnDef<PlantResponse>[] = [
+		{
+			id: 'avatar',
+			header: 'IMG',
+			headerClassName: 'w-[80px]',
+			cell: (plant) => (
+				<Avatar className="h-10 w-10">
+					<AvatarImage src={undefined} alt={plant.name || plant.species} />
+					<AvatarFallback>
+						{getPlantInitials(plant.name, plant.species)}
+					</AvatarFallback>
+				</Avatar>
+			),
+		},
+		{
+			id: 'plant',
+			header: t('features.plants.list.table.columns.plant'),
+			cell: (plant) => (
+				<div>
+					<div className="font-medium">
+						{plant.name || t('features.plants.detail.unnamed')}
+					</div>
+					<div className="text-sm text-muted-foreground">
+						{plant.species || '-'}
+					</div>
+				</div>
+			),
+		},
+		{
+			id: 'location',
+			header: t('features.plants.list.table.columns.location'),
+			cell: (plant) =>
+				plant.location ? (
+					<div className="flex items-center gap-2">
+						{getLocationIcon()}
+						<span className="text-sm">{plant.location.name}</span>
+					</div>
+				) : (
+					<div className="flex items-center gap-2">
+						{getLocationIcon()}
+						<span className="text-sm text-muted-foreground">
+							{t('common.unknown')}
+						</span>
+					</div>
+				),
+		},
+		{
+			id: 'status',
+			header: t('features.plants.list.table.columns.status'),
+			cell: (plant) => getPlantStatusBadge(plant.status, t),
+		},
+		{
+			id: 'lastWatering',
+			header: t('features.plants.list.table.columns.lastWatering'),
+			cell: (plant) => (
+				<span className="text-sm text-muted-foreground">
+					{formatPlantDate(plant.updatedAt, {
+						today: t('features.plants.list.table.lastWatering.today'),
+						yesterday: t('features.plants.list.table.lastWatering.yesterday'),
+						daysAgo: (days: number) =>
+							t('features.plants.list.table.lastWatering.daysAgo', { days }),
+						weeksAgo: (weeks: number) =>
+							t('features.plants.list.table.lastWatering.weeksAgo', { weeks }),
+					})}
+				</span>
+			),
+		},
+		{
+			id: 'actions',
+			header: t('features.plants.list.table.columns.actions'),
+			headerClassName: 'w-[80px]',
+			cell: (plant) => (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<button
+							className="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-accent"
+							onClick={(e) => e.stopPropagation()}
+						>
+							<MoreVerticalIcon className="h-4 w-4" />
+						</button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
+						align="end"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<DropdownMenuItem
+							onClick={(e) => {
+								e.stopPropagation();
+								router.push(`/${locale}/plants/${plant.id}`);
+							}}
+						>
+							{t('features.plants.list.actions.view')}
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							onClick={(e) => {
+								e.stopPropagation();
+								handleEdit(plant);
+							}}
+						>
+							{t('features.plants.list.actions.edit')}
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							onClick={(e) => {
+								e.stopPropagation();
+								handleDelete(plant.id);
+							}}
+							className="text-destructive"
+						>
+							{t('features.plants.list.actions.delete')}
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			),
+		},
+	];
+
 	return (
 		<div className="mx-auto space-y-6">
 			{/* Header */}
@@ -103,69 +234,38 @@ export function PlantsPage() {
 				onFilterChange={setSelectedFilter}
 			/>
 
-			{/* Plants Table with Pagination */}
-			<TableLayout
-				page={currentPage}
-				totalPages={totalPages}
-				onPageChange={handlePageChange}
-				perPage={perPage}
-				onPerPageChange={setPerPage}
-			>
-				{isLoading ? (
-					<PlantsTableSkeleton rows={perPage} />
-				) : error ? (
-					<div className="flex items-center justify-center min-h-[400px]">
-						<p className="text-destructive">
-							{t('features.plants.list.error.loading', {
-								message: (error as Error).message,
-							})}
-						</p>
-					</div>
-				) : paginatedPlants.length > 0 ? (
-					<div className="rounded-md border">
-						<Table>
-							<TableHeader>
-								<TableRow>
-									<TableHead className="w-[80px]">IMG</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.plant')}
-									</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.location')}
-									</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.status')}
-									</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.lastWatering')}
-									</TableHead>
-									<TableHead className="w-[80px]">
-										{t('features.plants.list.table.columns.actions')}
-									</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{paginatedPlants.map((plant) => (
-									<PlantTableRow
-										key={plant.id}
-										plant={plant}
-										onEdit={handleEdit}
-										onDelete={handleDelete}
-									/>
-								))}
-							</TableBody>
-						</Table>
-					</div>
-				) : (
-					<div className="flex items-center justify-center min-h-[400px]">
-						<p className="text-muted-foreground">
-							{hasAnyPlants
-								? t('features.plants.list.empty.filtered')
-								: t('features.plants.list.empty')}
-						</p>
-					</div>
-				)}
-			</TableLayout>
+			{/* Plants Table */}
+			{error ? (
+				<div className="flex items-center justify-center min-h-[400px]">
+					<p className="text-destructive">
+						{t('features.plants.list.error.loading', {
+							message: (error as Error).message,
+						})}
+					</p>
+				</div>
+			) : (
+				<DataTable
+					data={paginatedPlants}
+					columns={plantsColumns}
+					isLoading={isLoading}
+					paginated
+					page={currentPage}
+					totalPages={totalPages}
+					onPageChange={handlePageChange}
+					perPage={perPage}
+					perPageOptions={DEFAULT_PER_PAGE_OPTIONS}
+					onPerPageChange={setPerPage}
+					onRowClick={(plant) => router.push(`/${locale}/plants/${plant.id}`)}
+					getRowId={(plant) => plant.id}
+					emptyMessage={
+						hasAnyPlants
+							? t('features.plants.list.empty.filtered')
+							: t('features.plants.list.empty')
+					}
+					bordered
+					rowClassName="hover:bg-muted/50 transition-colors"
+				/>
+			)}
 
 			{/* Create Plant Form */}
 			<PlantCreateForm

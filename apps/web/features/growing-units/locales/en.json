@@ -13,6 +13,19 @@
       "pots": "Pots",
       "beds": "Beds"
     },
+    "table": {
+      "columns": {
+        "unit": "Growing Unit",
+        "location": "Location",
+        "plants": "Plants / Capacity",
+        "updatedAt": "Last Updated"
+      },
+      "plantsCapacity": "plants / capacity"
+    },
+    "location": {
+      "indoor": "INDOOR",
+      "outdoor": "OUTDOOR"
+    },
     "actions": {
       "create": {
         "button": "Create Growing Unit",
@@ -21,6 +34,9 @@
         "submit": "Create",
         "loading": "Creating..."
       }
+    },
+    "error": {
+      "loading": "Error loading growing units: {message}"
     },
     "noPlants": "No active plants",
     "common": {

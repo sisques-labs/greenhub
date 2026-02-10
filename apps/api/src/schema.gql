@@ -216,6 +216,9 @@ type LoginResponseDto {
 type RefreshTokenResponseDto {
   """The new access token"""
   accessToken: String!
+
+  """The new refresh token"""
+  refreshToken: String!
 }
 
 type AuthUserProfileResponseDto {

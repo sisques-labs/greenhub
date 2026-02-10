@@ -95,7 +95,7 @@ export interface PlantCreateInput {
 	species: string;
 	plantedDate?: string | null;
 	notes?: string | null;
-	status?: PlantStatus;
+	status: PlantStatus;
 }
 
 export interface PlantUpdateInput {

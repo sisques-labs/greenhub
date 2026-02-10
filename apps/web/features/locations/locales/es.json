@@ -12,6 +12,14 @@
       "indoor": "Interior",
       "outdoor": "Exterior"
     },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "description": "Descripción",
+        "actions": "Acciones"
+      }
+    },
     "actions": {
       "create": {
         "button": "Crear Ubicación",

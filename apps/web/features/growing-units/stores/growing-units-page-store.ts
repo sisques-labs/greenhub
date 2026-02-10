@@ -1,4 +1,5 @@
 import type { GrowingUnitResponse } from "../api/types";
+import { DEFAULT_PER_PAGE } from "@/shared/constants/pagination.constants";
 import { create } from "zustand";
 
 interface GrowingUnitsPageStore {
@@ -21,6 +22,8 @@ interface GrowingUnitsPageStore {
 	// Pagination
 	currentPage: number;
 	setCurrentPage: (page: number) => void;
+	perPage: number;
+	setPerPage: (perPage: number) => void;
 }
 
 /**
@@ -49,5 +52,7 @@ export const useGrowingUnitsPageStore = create<GrowingUnitsPageStore>(
 		// Pagination
 		currentPage: 1,
 		setCurrentPage: (page) => set({ currentPage: page }),
+		perPage: DEFAULT_PER_PAGE,
+		setPerPage: (perPage) => set({ perPage: perPage }),
 	}),
 );
