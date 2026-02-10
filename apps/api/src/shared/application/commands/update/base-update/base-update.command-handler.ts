@@ -1,16 +1,29 @@
 import { Logger } from '@nestjs/common';
+import { AggregateRoot, EventBus } from '@nestjs/cqrs';
+
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 
 /**
  * Abstract base class for update command handlers.
  *
  * Provides a common implementation for extracting update data from commands
  * by filtering out undefined values and optional exclusion of specific fields.
+ * Extends BaseCommandHandler to provide event publishing functionality.
  *
  * @template TCommand - The command type
  * @template TUpdateDto - The DTO type for the update operation
+ * @template TAggregate - The aggregate type (must extend AggregateRoot)
  */
-export abstract class BaseUpdateCommandHandler<TCommand, TUpdateDto> {
+export abstract class BaseUpdateCommandHandler<
+	TCommand,
+	TUpdateDto,
+	TAggregate extends AggregateRoot = AggregateRoot,
+> extends BaseCommandHandler<TCommand, TAggregate> {
 	protected readonly logger = new Logger(BaseUpdateCommandHandler.name);
+
+	constructor(eventBus: EventBus) {
+		super(eventBus);
+	}
 
 	/**
 	 * Extracts update data from a command, filtering out undefined values.
