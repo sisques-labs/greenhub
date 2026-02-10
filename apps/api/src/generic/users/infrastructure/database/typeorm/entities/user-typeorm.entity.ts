@@ -1,8 +1,7 @@
-import { Column, Entity, Index } from 'typeorm';
-
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/entities/base-typeorm.entity';
+import { Column, Entity, Index } from 'typeorm';
 
 @Entity('users')
 @Index(['userName'])

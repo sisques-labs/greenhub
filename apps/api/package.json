@@ -22,7 +22,13 @@
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
 		"test:e2e": "jest --config ./test/jest-e2e.json",
 		"release": "semantic-release",
-		"git:clean": "git branch --merged | grep -vE '^*|main|dev' | xargs -n 1 git branch -d"
+		"git:clean": "git branch --merged | grep -vE '^*|main|dev' | xargs -n 1 git branch -d",
+		"typeorm": "node --require tsconfig-paths/register --require ts-node/register ./node_modules/typeorm/cli.js -d src/shared/infrastructure/database/typeorm/data-source.ts",
+		"migration:create": "typeorm migration:create",
+		"migration:generate": "npm run typeorm -- migration:generate",
+		"migration:run": "npm run typeorm -- migration:run",
+		"migration:revert": "npm run typeorm -- migration:revert",
+		"migration:show": "npm run typeorm -- migration:show"
 	},
 	"dependencies": {
 		"@apollo/server": "^5.0.0",
@@ -48,6 +54,7 @@
 		"bcrypt": "^6.0.0",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.2",
+		"dotenv": "^17.2.4",
 		"form-data": "^4.0.4",
 		"graphql": "^16.11.0",
 		"graphql-upload": "^17.0.0",
