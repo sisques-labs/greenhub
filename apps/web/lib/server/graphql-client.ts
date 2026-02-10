@@ -1,4 +1,5 @@
 import { getAccessToken, getRefreshToken, setAuthTokens } from './auth-cookies';
+import { AUTH_REFRESH_TOKEN_MUTATION } from '@/features/auth/api/mutations';
 
 /**
  * GraphQL request options
@@ -102,22 +103,13 @@ export class GraphQLClient {
         throw new Error('No refresh token available');
       }
 
-      const query = `
-        mutation RefreshToken($input: RefreshTokenInput!) {
-          refreshToken(input: $input) {
-            accessToken
-            refreshToken
-          }
-        }
-      `;
-
       const response = await fetch(`${this.baseURL}/graphql`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query,
+          query: AUTH_REFRESH_TOKEN_MUTATION,
           variables: {
             input: {
               refreshToken,

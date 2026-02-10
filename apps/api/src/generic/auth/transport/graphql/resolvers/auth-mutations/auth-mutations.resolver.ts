@@ -71,16 +71,17 @@ export class AuthMutationsResolver {
 	): Promise<RefreshTokenResponseDto> {
 		this.logger.log('Refresh token requested');
 
-		// 01: Send the command to the command bus
-		const newAccessToken = await this.commandBus.execute(
+		// 01: Send the command to the command bus (returns both tokens)
+		const tokens = await this.commandBus.execute(
 			new AuthRefreshTokenCommand({
 				refreshToken: input.refreshToken,
 			}),
 		);
 
-		// 02: Return new access token
+		// 02: Return new token pair (refresh token rotation)
 		return {
-			accessToken: newAccessToken,
+			accessToken: tokens.accessToken,
+			refreshToken: tokens.refreshToken,
 		};
 	}
 

@@ -25,6 +25,7 @@ export const AUTH_REFRESH_TOKEN_MUTATION = `
   mutation RefreshToken($input: AuthRefreshTokenRequestDto!) {
     refreshToken(input: $input) {
       accessToken
+      refreshToken
     }
   }
 `;
