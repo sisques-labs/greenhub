@@ -3,6 +3,7 @@
 import {
 	Table,
 	TableBody,
+	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
@@ -36,16 +37,24 @@ export function PlantsVirtualizedTable({
 	});
 
 	return (
-		<div ref={parentRef} className="rounded-md border overflow-auto" style={{ height: '600px' }}>
+		<div
+			ref={parentRef}
+			className="rounded-md border overflow-auto"
+			style={{ height: '600px' }}
+		>
 			<Table>
 				<TableHeader className="sticky top-0 bg-background z-10">
 					<TableRow>
 						<TableHead className="w-[80px]">IMG</TableHead>
-						<TableHead>{t('features.plants.list.table.columns.plant')}</TableHead>
+						<TableHead>
+							{t('features.plants.list.table.columns.plant')}
+						</TableHead>
 						<TableHead>
 							{t('features.plants.list.table.columns.location')}
 						</TableHead>
-						<TableHead>{t('features.plants.list.table.columns.status')}</TableHead>
+						<TableHead>
+							{t('features.plants.list.table.columns.status')}
+						</TableHead>
 						<TableHead>
 							{t('features.plants.list.table.columns.lastWatering')}
 						</TableHead>
@@ -54,34 +63,54 @@ export function PlantsVirtualizedTable({
 						</TableHead>
 					</TableRow>
 				</TableHeader>
-				<TableBody
-					style={{
-						height: `${virtualizer.getTotalSize()}px`,
-						position: 'relative',
-					}}
-				>
-					{virtualizer.getVirtualItems().map((virtualRow) => {
-						const plant = plants[virtualRow.index];
+				<TableBody>
+					{(() => {
+						const virtualRows = virtualizer.getVirtualItems();
+
+						if (virtualRows.length === 0) {
+							return null;
+						}
+
+						const totalSize = virtualizer.getTotalSize();
+						const paddingTop = virtualRows[0]?.start ?? 0;
+						const paddingBottom =
+							totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
+
 						return (
-							<div
-								key={plant.id}
-								style={{
-									position: 'absolute',
-									top: 0,
-									left: 0,
-									width: '100%',
-									height: `${virtualRow.size}px`,
-									transform: `translateY(${virtualRow.start}px)`,
-								}}
-							>
-								<PlantTableRow
-									plant={plant}
-									onEdit={onEdit}
-									onDelete={onDelete}
-								/>
-							</div>
+							<>
+								{paddingTop > 0 && (
+									<TableRow aria-hidden="true">
+										<TableCell
+											colSpan={6}
+											style={{ height: `${paddingTop}px`, padding: 0 }}
+										/>
+									</TableRow>
+								)}
+
+								{virtualRows.map((virtualRow) => {
+									const plant = plants[virtualRow.index];
+
+									return (
+										<PlantTableRow
+											key={plant.id}
+											plant={plant}
+											onEdit={onEdit}
+											onDelete={onDelete}
+										/>
+									);
+								})}
+
+								{paddingBottom > 0 && (
+									<TableRow aria-hidden="true">
+										<TableCell
+											colSpan={6}
+											style={{ height: `${paddingBottom}px`, padding: 0 }}
+										/>
+									</TableRow>
+								)}
+							</>
 						);
-					})}
+					})()}
 				</TableBody>
 			</Table>
 		</div>
