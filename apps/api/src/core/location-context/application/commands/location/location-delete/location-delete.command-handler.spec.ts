@@ -2,18 +2,27 @@ import { LocationDeleteCommand } from '@/core/location-context/application/comma
 import { LocationDeleteCommandHandler } from '@/core/location-context/application/commands/location/location-delete/location-delete.command-handler';
 import { ILocationDeleteCommandDto } from '@/core/location-context/application/dtos/commands/location/location-delete/location-delete-command.dto';
 import { LocationDeletedEvent } from '@/core/location-context/application/events/location/location-deleted/location-deleted.event';
+import { LocationHasDependentGrowingUnitsException } from '@/core/location-context/application/exceptions/location/location-has-dependent-growing-units/location-has-dependent-growing-units.exception';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
 import { ILocationWriteRepository } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
 import { LocationNameValueObject } from '@/core/location-context/domain/value-objects/location/location-name/location-name.vo';
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
+import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
+import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit-type/growing-unit-type.enum';
+import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
+import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
+import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
 
 describe('LocationDeleteCommandHandler', () => {
 	let handler: LocationDeleteCommandHandler;
 	let mockLocationWriteRepository: jest.Mocked<ILocationWriteRepository>;
+	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
 
@@ -23,6 +32,13 @@ describe('LocationDeleteCommandHandler', () => {
 			save: jest.fn(),
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<ILocationWriteRepository>;
+
+		mockGrowingUnitWriteRepository = {
+			findById: jest.fn(),
+			save: jest.fn(),
+			delete: jest.fn(),
+			findByLocationId: jest.fn(),
+		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
 		mockPublishIntegrationEventsService = {
 			execute: jest.fn(),
@@ -34,6 +50,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 		handler = new LocationDeleteCommandHandler(
 			mockLocationWriteRepository,
+			mockGrowingUnitWriteRepository,
 			mockAssertLocationExistsService,
 			mockPublishIntegrationEventsService,
 		);
@@ -44,7 +61,7 @@ describe('LocationDeleteCommandHandler', () => {
 	});
 
 	describe('execute', () => {
-		it('should delete location successfully', async () => {
+		it('should delete location successfully when no growing units exist', async () => {
 			const locationId = '123e4567-e89b-12d3-a456-426614174000';
 			const commandDto: ILocationDeleteCommandDto = {
 				id: locationId,
@@ -59,12 +76,16 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
+			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
+				locationId,
+			);
+			expect(mockGrowingUnitWriteRepository.findByLocationId).toHaveBeenCalledWith(
 				locationId,
 			);
 			expect(mockLocationWriteRepository.delete).toHaveBeenCalledWith(
@@ -91,6 +112,7 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
+			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
@@ -117,6 +139,7 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
+			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
@@ -141,10 +164,159 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockRejectedValue(error);
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
+			expect(mockGrowingUnitWriteRepository.findByLocationId).not.toHaveBeenCalled();
 			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(
 				mockPublishIntegrationEventsService.execute,
 			).not.toHaveBeenCalled();
+		});
+
+		it('should throw LocationHasDependentGrowingUnitsException when location has one growing unit', async () => {
+			const locationId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId = 'aaae4567-e89b-12d3-a456-426614174000';
+			const commandDto: ILocationDeleteCommandDto = {
+				id: locationId,
+			};
+
+			const command = new LocationDeleteCommand(commandDto);
+			const mockLocation = new LocationAggregate({
+				id: new LocationUuidValueObject(locationId),
+				name: new LocationNameValueObject('Living Room'),
+				type: new LocationTypeValueObject(LocationTypeEnum.ROOM),
+				description: null,
+			});
+
+			const mockGrowingUnit = new GrowingUnitAggregate({
+				id: new GrowingUnitUuidValueObject(growingUnitId),
+				locationId: new LocationUuidValueObject(locationId),
+				name: new GrowingUnitNameValueObject('Test Unit'),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.HYDROPONIC),
+				capacity: new GrowingUnitCapacityValueObject(10),
+				dimensions: null,
+				plants: [],
+			});
+
+			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
+			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([
+				mockGrowingUnit,
+			]);
+
+			await expect(handler.execute(command)).rejects.toThrow(
+				LocationHasDependentGrowingUnitsException,
+			);
+			await expect(handler.execute(command)).rejects.toThrow(
+				`Cannot delete location with id ${locationId}. It has 1 dependent growing unit. Please remove or reassign all growing units before deleting the location.`,
+			);
+
+			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
+				locationId,
+			);
+			expect(mockGrowingUnitWriteRepository.findByLocationId).toHaveBeenCalledWith(
+				locationId,
+			);
+			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
+			expect(
+				mockPublishIntegrationEventsService.execute,
+			).not.toHaveBeenCalled();
+		});
+
+		it('should throw LocationHasDependentGrowingUnitsException when location has multiple growing units', async () => {
+			const locationId = '123e4567-e89b-12d3-a456-426614174000';
+			const growingUnitId1 = 'aaae4567-e89b-12d3-a456-426614174000';
+			const growingUnitId2 = 'bbbb4567-e89b-12d3-a456-426614174000';
+			const growingUnitId3 = 'cccc4567-e89b-12d3-a456-426614174000';
+			const commandDto: ILocationDeleteCommandDto = {
+				id: locationId,
+			};
+
+			const command = new LocationDeleteCommand(commandDto);
+			const mockLocation = new LocationAggregate({
+				id: new LocationUuidValueObject(locationId),
+				name: new LocationNameValueObject('Living Room'),
+				type: new LocationTypeValueObject(LocationTypeEnum.ROOM),
+				description: null,
+			});
+
+			const mockGrowingUnits = [
+				new GrowingUnitAggregate({
+					id: new GrowingUnitUuidValueObject(growingUnitId1),
+					locationId: new LocationUuidValueObject(locationId),
+					name: new GrowingUnitNameValueObject('Test Unit 1'),
+					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.HYDROPONIC),
+					capacity: new GrowingUnitCapacityValueObject(10),
+					dimensions: null,
+					plants: [],
+				}),
+				new GrowingUnitAggregate({
+					id: new GrowingUnitUuidValueObject(growingUnitId2),
+					locationId: new LocationUuidValueObject(locationId),
+					name: new GrowingUnitNameValueObject('Test Unit 2'),
+					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.SOIL),
+					capacity: new GrowingUnitCapacityValueObject(5),
+					dimensions: null,
+					plants: [],
+				}),
+				new GrowingUnitAggregate({
+					id: new GrowingUnitUuidValueObject(growingUnitId3),
+					locationId: new LocationUuidValueObject(locationId),
+					name: new GrowingUnitNameValueObject('Test Unit 3'),
+					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.AEROPONIC),
+					capacity: new GrowingUnitCapacityValueObject(8),
+					dimensions: null,
+					plants: [],
+				}),
+			];
+
+			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
+			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue(
+				mockGrowingUnits,
+			);
+
+			await expect(handler.execute(command)).rejects.toThrow(
+				LocationHasDependentGrowingUnitsException,
+			);
+			await expect(handler.execute(command)).rejects.toThrow(
+				`Cannot delete location with id ${locationId}. It has 3 dependent growing units. Please remove or reassign all growing units before deleting the location.`,
+			);
+
+			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
+				locationId,
+			);
+			expect(mockGrowingUnitWriteRepository.findByLocationId).toHaveBeenCalledWith(
+				locationId,
+			);
+			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
+			expect(
+				mockPublishIntegrationEventsService.execute,
+			).not.toHaveBeenCalled();
+		});
+
+		it('should validate growing units before deleting location', async () => {
+			const locationId = '123e4567-e89b-12d3-a456-426614174000';
+			const commandDto: ILocationDeleteCommandDto = {
+				id: locationId,
+			};
+
+			const command = new LocationDeleteCommand(commandDto);
+			const mockLocation = new LocationAggregate({
+				id: new LocationUuidValueObject(locationId),
+				name: new LocationNameValueObject('Living Room'),
+				type: new LocationTypeValueObject(LocationTypeEnum.ROOM),
+				description: null,
+			});
+
+			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
+			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
+			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
+			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
+
+			await handler.execute(command);
+
+			const findByLocationIdOrder =
+				mockGrowingUnitWriteRepository.findByLocationId.mock.invocationCallOrder[0];
+			const deleteOrder =
+				mockLocationWriteRepository.delete.mock.invocationCallOrder[0];
+			expect(findByLocationIdOrder).toBeLessThan(deleteOrder);
 		});
 	});
 });
