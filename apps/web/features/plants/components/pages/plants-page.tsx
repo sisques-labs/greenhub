@@ -1,8 +1,17 @@
 'use client';
 
+import { PlantCreateForm } from '@/features/plants/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
+import { PlantsTableSkeleton } from '@/features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
+import { PlantsVirtualizedTable } from '@/features/plants/components/organisms/plants-virtualized-table/plants-virtualized-table';
+import { usePlantsPage } from '@/features/plants/hooks/use-plants-page/use-plants-page';
 import { PageHeader } from '@/shared/components/organisms/page-header';
 import { TableLayout } from '@/shared/components/organisms/table-layout';
 import { Button } from '@/shared/components/ui/button';
+import {
+	type FilterOption,
+	SearchAndFilters,
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
 import {
 	Table,
 	TableBody,
@@ -10,10 +19,6 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/shared/components/ui/table';
-import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
-import { PlantsTableSkeleton } from 'features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
-import { usePlantsPage } from 'features/plants/hooks/use-plants-page/use-plants-page';
 import {
 	Building2Icon,
 	CheckCircleIcon,
@@ -22,10 +27,6 @@ import {
 	PlusIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import {
-	type FilterOption,
-	SearchAndFilters,
-} from 'shared/components/ui/search-and-filters/search-and-filters';
 
 export function PlantsPage() {
 	const t = useTranslations();
@@ -38,6 +39,7 @@ export function PlantsPage() {
 		currentPage,
 		perPage,
 		setPerPage,
+		useVirtualization,
 		createDialogOpen,
 		setCreateDialogOpen,
 		paginatedPlants,
@@ -103,16 +105,10 @@ export function PlantsPage() {
 				onFilterChange={setSelectedFilter}
 			/>
 
-			{/* Plants Table with Pagination */}
-			<TableLayout
-				page={currentPage}
-				totalPages={totalPages}
-				onPageChange={handlePageChange}
-				perPage={perPage}
-				onPerPageChange={setPerPage}
-			>
-				{isLoading ? (
-					<PlantsTableSkeleton rows={perPage} />
+			{/* Plants Table with Pagination or Virtualization */}
+			{useVirtualization ? (
+				isLoading ? (
+					<PlantsTableSkeleton rows={10} />
 				) : error ? (
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-destructive">
@@ -122,40 +118,11 @@ export function PlantsPage() {
 						</p>
 					</div>
 				) : paginatedPlants.length > 0 ? (
-					<div className="rounded-md border">
-						<Table>
-							<TableHeader>
-								<TableRow>
-									<TableHead className="w-[80px]">IMG</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.plant')}
-									</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.location')}
-									</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.status')}
-									</TableHead>
-									<TableHead>
-										{t('features.plants.list.table.columns.lastWatering')}
-									</TableHead>
-									<TableHead className="w-[80px]">
-										{t('features.plants.list.table.columns.actions')}
-									</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{paginatedPlants.map((plant) => (
-									<PlantTableRow
-										key={plant.id}
-										plant={plant}
-										onEdit={handleEdit}
-										onDelete={handleDelete}
-									/>
-								))}
-							</TableBody>
-						</Table>
-					</div>
+					<PlantsVirtualizedTable
+						plants={paginatedPlants}
+						onEdit={handleEdit}
+						onDelete={handleDelete}
+					/>
 				) : (
 					<div className="flex items-center justify-center min-h-[400px]">
 						<p className="text-muted-foreground">
@@ -164,8 +131,71 @@ export function PlantsPage() {
 								: t('features.plants.list.empty')}
 						</p>
 					</div>
-				)}
-			</TableLayout>
+				)
+			) : (
+				<TableLayout
+					page={currentPage}
+					totalPages={totalPages}
+					onPageChange={handlePageChange}
+					perPage={perPage}
+					onPerPageChange={setPerPage}
+				>
+					{isLoading ? (
+						<PlantsTableSkeleton rows={perPage} />
+					) : error ? (
+						<div className="flex items-center justify-center min-h-[400px]">
+							<p className="text-destructive">
+								{t('features.plants.list.error.loading', {
+									message: (error as Error).message,
+								})}
+							</p>
+						</div>
+					) : paginatedPlants.length > 0 ? (
+						<div className="rounded-md border">
+							<Table>
+								<TableHeader>
+									<TableRow>
+										<TableHead className="w-[80px]">IMG</TableHead>
+										<TableHead>
+											{t('features.plants.list.table.columns.plant')}
+										</TableHead>
+										<TableHead>
+											{t('features.plants.list.table.columns.location')}
+										</TableHead>
+										<TableHead>
+											{t('features.plants.list.table.columns.status')}
+										</TableHead>
+										<TableHead>
+											{t('features.plants.list.table.columns.lastWatering')}
+										</TableHead>
+										<TableHead className="w-[80px]">
+											{t('features.plants.list.table.columns.actions')}
+										</TableHead>
+									</TableRow>
+								</TableHeader>
+								<TableBody>
+									{paginatedPlants.map((plant) => (
+										<PlantTableRow
+											key={plant.id}
+											plant={plant}
+											onEdit={handleEdit}
+											onDelete={handleDelete}
+										/>
+									))}
+								</TableBody>
+							</Table>
+						</div>
+					) : (
+						<div className="flex items-center justify-center min-h-[400px]">
+							<p className="text-muted-foreground">
+								{hasAnyPlants
+									? t('features.plants.list.empty.filtered')
+									: t('features.plants.list.empty')}
+							</p>
+						</div>
+					)}
+				</TableLayout>
+			)}
 
 			{/* Create Plant Form */}
 			<PlantCreateForm

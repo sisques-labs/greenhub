@@ -1,18 +1,19 @@
 'use client';
 
+import { LocationAddCard } from '@/features/locations/components/organisms/location-add-card/location-add-card';
+import { LocationCard } from '@/features/locations/components/organisms/location-card/location-card';
+import { LocationCreateForm } from '@/features/locations/components/organisms/location-create-form/location-create-form';
+import { LocationDeleteDialog } from '@/features/locations/components/organisms/location-delete-dialog/location-delete-dialog';
+import { LocationUpdateForm } from '@/features/locations/components/organisms/location-update-form/location-update-form';
+import { LocationsCardsSkeleton } from '@/features/locations/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
+import { LocationsVirtualizedGrid } from '@/features/locations/components/organisms/locations-virtualized-grid/locations-virtualized-grid';
+import { useLocationsPage } from '@/features/locations/hooks/use-locations-page/use-locations-page';
 import { PageHeader } from '@/shared/components/organisms/page-header';
 import { Button } from '@/shared/components/ui/button';
-import { LocationAddCard } from 'features/locations/components/organisms/location-add-card/location-add-card';
-import { LocationCard } from 'features/locations/components/organisms/location-card/location-card';
-import { LocationCreateForm } from 'features/locations/components/organisms/location-create-form/location-create-form';
-import { LocationDeleteDialog } from 'features/locations/components/organisms/location-delete-dialog/location-delete-dialog';
-import { LocationUpdateForm } from 'features/locations/components/organisms/location-update-form/location-update-form';
-import { LocationsCardsSkeleton } from 'features/locations/components/organisms/locations-cards-skeleton/locations-cards-skeleton';
-import { useLocationsPage } from 'features/locations/hooks/use-locations-page/use-locations-page';
+import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
+import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { PaginatedResults } from 'shared/components/ui/paginated-results/paginated-results';
-import { SearchAndFilters } from 'shared/components/ui/search-and-filters/search-and-filters';
 
 const LOCATIONS_PER_PAGE = 12;
 
@@ -30,6 +31,7 @@ export function LocationsPage() {
 		setSearchQuery,
 		selectedFilter,
 		setSelectedFilter,
+		useVirtualization,
 		filterOptions,
 		locations,
 		isLoading,
@@ -73,7 +75,30 @@ export function LocationsPage() {
 			/>
 
 			{/* Locations Grid */}
-			{isLoading ? (
+			{useVirtualization ? (
+				isLoading ? (
+					<LocationsCardsSkeleton cards={12} />
+				) : locationsError ? (
+					<div className="flex items-center justify-center min-h-[400px]">
+						<p className="text-destructive">
+							{t('features.locations.list.error.loading', {
+								message: locationsError.message,
+							})}
+						</p>
+					</div>
+				) : locations && locations.items.length > 0 ? (
+					<LocationsVirtualizedGrid
+						locations={locations.items}
+						onAddClick={handleAddClick}
+						onEdit={handleEditClick}
+						onDelete={handleDeleteClick}
+					/>
+				) : (
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<LocationAddCard onClick={handleAddClick} />
+					</div>
+				)
+			) : isLoading ? (
 				<LocationsCardsSkeleton cards={LOCATIONS_PER_PAGE} />
 			) : locationsError ? (
 				<div className="flex items-center justify-center min-h-[400px]">

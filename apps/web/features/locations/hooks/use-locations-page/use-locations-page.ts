@@ -1,17 +1,18 @@
 import { Building2Icon, HomeIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
-import type { FilterOption } from 'shared/components/ui/search-and-filters/search-and-filters';
-import type { LocationResponse } from '../../api/types';
-import type { LocationCreateFormValues } from '../../schemas/location-create/location-create.schema';
-import type { LocationUpdateFormValues } from '../../schemas/location-update/location-update.schema';
-import { useLocationsPageStore } from '../../stores/locations-page-store';
-import { useLocationCreate } from '../use-location-create/use-location-create';
-import { useLocationDelete } from '../use-location-delete/use-location-delete';
-import { useLocationUpdate } from '../use-location-update/use-location-update';
-import { useLocationsFindByCriteria } from '../use-locations-find-by-criteria/use-locations-find-by-criteria';
+import type { FilterOption } from '@/shared/components/ui/search-and-filters/search-and-filters';
+import type { LocationResponse } from '@/features/locations/api/types';
+import type { LocationCreateFormValues } from '@/features/locations/schemas/location-create/location-create.schema';
+import type { LocationUpdateFormValues } from '@/features/locations/schemas/location-update/location-update.schema';
+import { useLocationsPageStore } from '@/features/locations/stores/locations-page-store';
+import { useLocationCreate } from '@/features/locations/hooks/use-location-create/use-location-create';
+import { useLocationDelete } from '@/features/locations/hooks/use-location-delete/use-location-delete';
+import { useLocationUpdate } from '@/features/locations/hooks/use-location-update/use-location-update';
+import { useLocationsFindByCriteria } from '@/features/locations/hooks/use-locations-find-by-criteria/use-locations-find-by-criteria';
 
 const LOCATIONS_PER_PAGE = 12;
+const LOCATIONS_PER_PAGE_VIRTUAL = 1000; // Fetch many items for virtualization
 const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 /**
@@ -39,6 +40,7 @@ export function useLocationsPage() {
 	} = useLocationsPageStore();
 
 	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+	const [useVirtualization, setUseVirtualization] = useState(true); // Enable by default for large datasets
 
 	// Debounce search query
 	useEffect(() => {
@@ -52,13 +54,13 @@ export function useLocationsPage() {
 	// Build input for API
 	const criteriaInput = useMemo(
 		() => ({
-			page: currentPage,
-			perPage: LOCATIONS_PER_PAGE,
+			page: useVirtualization ? 1 : currentPage,
+			perPage: useVirtualization ? LOCATIONS_PER_PAGE_VIRTUAL : LOCATIONS_PER_PAGE,
 			search: debouncedSearchQuery || undefined,
 			sortBy: 'createdAt',
 			sortOrder: 'desc' as const,
 		}),
-		[debouncedSearchQuery, currentPage],
+		[debouncedSearchQuery, currentPage, useVirtualization],
 	);
 
 	const {
@@ -178,6 +180,8 @@ export function useLocationsPage() {
 		setSearchQuery,
 		selectedFilter,
 		setSelectedFilter,
+		useVirtualization,
+		setUseVirtualization,
 		filterOptions,
 
 		// Data
