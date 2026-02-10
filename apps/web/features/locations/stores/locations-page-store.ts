@@ -1,4 +1,5 @@
 import type { LocationResponse } from '../api/types';
+import { DEFAULT_PER_PAGE } from '@/shared/constants/pagination.constants';
 import { create } from 'zustand';
 
 interface LocationsPageStore {
@@ -23,6 +24,8 @@ interface LocationsPageStore {
 	// Pagination
 	currentPage: number;
 	setCurrentPage: (page: number) => void;
+	perPage: number;
+	setPerPage: (perPage: number) => void;
 }
 
 /**
@@ -51,4 +54,6 @@ export const useLocationsPageStore = create<LocationsPageStore>((set) => ({
 	// Pagination
 	currentPage: 1,
 	setCurrentPage: (page) => set({ currentPage: page }),
+	perPage: DEFAULT_PER_PAGE,
+	setPerPage: (perPage) => set({ perPage: perPage }),
 }));

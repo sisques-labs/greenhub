@@ -1,8 +1,26 @@
 import { cn } from '@/shared/lib/utils';
+import { DEFAULT_PER_PAGE_OPTIONS } from '@/shared/constants/pagination.constants';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import * as React from 'react';
 import { Checkbox } from './checkbox';
 import { Input } from './input';
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from './pagination';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from './select';
+import { Skeleton } from './skeleton';
 import {
 	Table,
 	TableBody,
@@ -115,6 +133,46 @@ export interface DataTableProps<T> {
 	 * Callback when selection changes
 	 */
 	onSelectionChange?: (selectedRowIds: Set<string | number>) => void;
+	/**
+	 * Enable pagination
+	 */
+	paginated?: boolean;
+	/**
+	 * Current page (1-indexed)
+	 */
+	page?: number;
+	/**
+	 * Total number of pages
+	 */
+	totalPages?: number;
+	/**
+	 * Callback when page changes
+	 */
+	onPageChange?: (page: number) => void;
+	/**
+	 * Number of items per page
+	 */
+	perPage?: number;
+	/**
+	 * Options for items per page selector
+	 */
+	perPageOptions?: readonly number[];
+	/**
+	 * Callback when items per page changes
+	 */
+	onPerPageChange?: (perPage: number) => void;
+	/**
+	 * Loading state
+	 */
+	isLoading?: boolean;
+	/**
+	 * Number of skeleton rows to show when loading
+	 */
+	loadingRowCount?: number;
+	/**
+	 * Wrap table in a bordered container
+	 */
+	bordered?: boolean;
 }
 
 /**
@@ -154,7 +212,7 @@ export interface DataTableProps<T> {
  * />
  * ```
  */
-export function DataTable<T extends Record<string, unknown>>({
+export function DataTable<T extends object>({
 	data,
 	columns,
 	getRowId,
@@ -168,6 +226,16 @@ export function DataTable<T extends Record<string, unknown>>({
 	enableRowSelection = false,
 	selectedRowIds,
 	onSelectionChange,
+	paginated = false,
+	page = 1,
+	totalPages = 1,
+	onPageChange,
+	perPage = 10,
+	perPageOptions = DEFAULT_PER_PAGE_OPTIONS,
+	onPerPageChange,
+	isLoading = false,
+	loadingRowCount,
+	bordered = false,
 }: DataTableProps<T>) {
 	const [editingCell, setEditingCell] = React.useState<{
 		rowId: string | number;
@@ -374,7 +442,140 @@ export function DataTable<T extends Record<string, unknown>>({
 			return currentSelectedRowIds.has(rowKey);
 		});
 
-	return (
+	// Pagination helpers
+	const handlePageChange = (newPage: number) => {
+		if (newPage >= 1 && newPage <= totalPages && onPageChange) {
+			onPageChange(newPage);
+		}
+	};
+
+	const renderPagination = () => {
+		if (!paginated) return null;
+
+		const effectiveTotalPages = Math.max(1, totalPages);
+		const pages: (number | 'ellipsis')[] = [];
+		const maxVisible = 7;
+
+		if (effectiveTotalPages <= maxVisible) {
+			for (let i = 1; i <= effectiveTotalPages; i++) {
+				pages.push(i);
+			}
+		} else {
+			pages.push(1);
+
+			if (page > 3) {
+				pages.push('ellipsis');
+			}
+
+			const start = Math.max(2, page - 1);
+			const end = Math.min(effectiveTotalPages - 1, page + 1);
+
+			for (let i = start; i <= end; i++) {
+				pages.push(i);
+			}
+
+			if (page < effectiveTotalPages - 2) {
+				pages.push('ellipsis');
+			}
+
+			pages.push(effectiveTotalPages);
+		}
+
+		return (
+			<div className="flex items-center justify-between gap-4 py-4">
+				{onPerPageChange && (
+					<div className="flex items-center gap-2">
+						<span className="text-sm text-muted-foreground">
+							Items per page:
+						</span>
+						<Select
+							value={perPage.toString()}
+							onValueChange={(value) => {
+								const newPerPage = parseInt(value, 10);
+								onPerPageChange(newPerPage);
+								if (onPageChange) {
+									onPageChange(1);
+								}
+							}}
+						>
+							<SelectTrigger className="w-[100px]">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{perPageOptions.map((option) => (
+									<SelectItem key={option} value={option.toString()}>
+										{option}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+				)}
+
+				<div className="ml-auto">
+					<Pagination>
+						<PaginationContent>
+							<PaginationItem>
+								<PaginationPrevious
+									size="default"
+									onClick={() => handlePageChange(page - 1)}
+									className={cn(page === 1 && 'pointer-events-none opacity-50')}
+								/>
+							</PaginationItem>
+
+							{pages.map((p, index) => (
+								<PaginationItem key={index}>
+									{p === 'ellipsis' ? (
+										<PaginationEllipsis />
+									) : (
+										<PaginationLink
+											size="icon"
+											onClick={() => handlePageChange(p)}
+											isActive={p === page}
+										>
+											{p}
+										</PaginationLink>
+									)}
+								</PaginationItem>
+							))}
+
+							<PaginationItem>
+								<PaginationNext
+									size="default"
+									onClick={() => handlePageChange(page + 1)}
+									className={cn(
+										page === effectiveTotalPages &&
+											'pointer-events-none opacity-50',
+									)}
+								/>
+							</PaginationItem>
+						</PaginationContent>
+					</Pagination>
+				</div>
+			</div>
+		);
+	};
+
+	// Skeleton rendering
+	const renderSkeletonRows = () => {
+		const rowCount = loadingRowCount || perPage || 10;
+		return Array.from({ length: rowCount }).map((_, index) => (
+			<TableRow key={`skeleton-${index}`}>
+				{enableRowSelection && (
+					<TableCell>
+						<Skeleton className="h-4 w-4" />
+					</TableCell>
+				)}
+				{columns.map((column) => (
+					<TableCell key={column.id} className={column.cellClassName}>
+						<Skeleton className="h-4 w-full" />
+					</TableCell>
+				))}
+			</TableRow>
+		));
+	};
+
+	const tableContent = (
 		<Table className={className}>
 			<TableHeader>
 				<TableRow>
@@ -407,7 +608,9 @@ export function DataTable<T extends Record<string, unknown>>({
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{data.length === 0 ? (
+				{isLoading ? (
+					renderSkeletonRows()
+				) : data.length === 0 ? (
 					<TableRow>
 						<TableCell
 							colSpan={enableRowSelection ? columns.length + 1 : columns.length}
@@ -486,5 +689,20 @@ export function DataTable<T extends Record<string, unknown>>({
 				)}
 			</TableBody>
 		</Table>
+	);
+
+	if (!paginated && !bordered) {
+		return tableContent;
+	}
+
+	return (
+		<div className="space-y-0">
+			{bordered ? (
+				<div className="rounded-md border">{tableContent}</div>
+			) : (
+				tableContent
+			)}
+			{paginated && renderPagination()}
+		</div>
 	);
 }

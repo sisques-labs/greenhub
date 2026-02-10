@@ -11,8 +11,6 @@ import { useLocationDelete } from '@/features/locations/hooks/use-location-delet
 import { useLocationUpdate } from '@/features/locations/hooks/use-location-update/use-location-update';
 import { useLocationsFindByCriteria } from '@/features/locations/hooks/use-locations-find-by-criteria/use-locations-find-by-criteria';
 
-const LOCATIONS_PER_PAGE = 12;
-const LOCATIONS_PER_PAGE_VIRTUAL = 1000; // Fetch many items for virtualization
 const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 /**
@@ -37,10 +35,11 @@ export function useLocationsPage() {
 		setSelectedFilter,
 		currentPage,
 		setCurrentPage,
+		perPage,
+		setPerPage,
 	} = useLocationsPageStore();
 
 	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
-	const [useVirtualization, setUseVirtualization] = useState(true); // Enable by default for large datasets
 
 	// Debounce search query
 	useEffect(() => {
@@ -54,13 +53,13 @@ export function useLocationsPage() {
 	// Build input for API
 	const criteriaInput = useMemo(
 		() => ({
-			page: useVirtualization ? 1 : currentPage,
-			perPage: useVirtualization ? LOCATIONS_PER_PAGE_VIRTUAL : LOCATIONS_PER_PAGE,
+			page: currentPage,
+			perPage: perPage,
 			search: debouncedSearchQuery || undefined,
 			sortBy: 'createdAt',
 			sortOrder: 'desc' as const,
 		}),
-		[debouncedSearchQuery, currentPage, useVirtualization],
+		[debouncedSearchQuery, currentPage, perPage],
 	);
 
 	const {
@@ -180,9 +179,9 @@ export function useLocationsPage() {
 		setSearchQuery,
 		selectedFilter,
 		setSelectedFilter,
-		useVirtualization,
-		setUseVirtualization,
 		filterOptions,
+		perPage,
+		setPerPage,
 
 		// Data
 		locations,

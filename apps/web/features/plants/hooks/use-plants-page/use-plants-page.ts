@@ -7,9 +7,8 @@ import { usePlantsFindByCriteria } from '@/features/plants/hooks/use-plants-find
 import type { PlantCreateFormValues } from '@/features/plants/schemas/plant-create/plant-create.schema';
 import { useEffect, useMemo, useState } from 'react';
 import { PLANT_STATUS } from '@/features/plants/constants/plant-status';
+import { DEFAULT_PER_PAGE } from '@/shared/constants/pagination.constants';
 
-const PLANTS_PER_PAGE = 10;
-const PLANTS_PER_PAGE_VIRTUAL = 1000; // Fetch many items for virtualization
 const SEARCH_DEBOUNCE_DELAY = 250; // milliseconds
 
 export type PlantWithGrowingUnit = PlantResponse & {
@@ -21,8 +20,7 @@ export function usePlantsPage() {
 	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 	const [selectedFilter, setSelectedFilter] = useState('all');
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage, setPerPage] = useState(PLANTS_PER_PAGE);
-	const [useVirtualization, setUseVirtualization] = useState(true); // Enable by default for large datasets
+	const [perPage, setPerPage] = useState(DEFAULT_PER_PAGE);
 	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
 	// Debounce search query
@@ -77,8 +75,8 @@ export function usePlantsPage() {
 		() => ({
 			filters: filters.length > 0 ? filters : undefined,
 			pagination: {
-				page: useVirtualization ? 1 : currentPage,
-				perPage: useVirtualization ? PLANTS_PER_PAGE_VIRTUAL : perPage,
+				page: currentPage,
+				perPage: perPage,
 			},
 			sorts: [
 				{
@@ -87,7 +85,7 @@ export function usePlantsPage() {
 				},
 			],
 		}),
-		[filters, currentPage, perPage, useVirtualization],
+		[filters, currentPage, perPage],
 	);
 
 	const { plants, isLoading, error, refetch } = usePlantsFindByCriteria(
@@ -191,8 +189,6 @@ export function usePlantsPage() {
 		currentPage,
 		perPage,
 		setPerPage,
-		useVirtualization,
-		setUseVirtualization,
 		createDialogOpen,
 		setCreateDialogOpen,
 

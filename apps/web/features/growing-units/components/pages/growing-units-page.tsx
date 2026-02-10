@@ -1,22 +1,22 @@
 'use client';
 
-import { GrowingUnitAddCard } from '@/features/growing-units/components/organisms/growing-unit-add-card/growing-unit-add-card';
-import { GrowingUnitCard } from '@/features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
+import type { GrowingUnitResponse } from '@/features/growing-units/api/types';
 import { GrowingUnitCreateForm } from '@/features/growing-units/components/organisms/growing-unit-create-form/growing-unit-create-form';
-import { GrowingUnitsCardsSkeleton } from '@/features/growing-units/components/organisms/growing-units-cards-skeleton/growing-units-cards-skeleton';
-import { GrowingUnitsVirtualizedGrid } from '@/features/growing-units/components/organisms/growing-units-virtualized-grid/growing-units-virtualized-grid';
 import { useGrowingUnitsPage } from '@/features/growing-units/hooks/use-growing-units-page/use-growing-units-page';
+import { DEFAULT_PER_PAGE_OPTIONS } from '@/shared/constants/pagination.constants';
 import { PageHeader } from '@/shared/components/organisms/page-header';
 import { Button } from '@/shared/components/ui/button';
-import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
+import { type ColumnDef, DataTable } from '@/shared/components/ui/data-table';
 import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
 import { PlusIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-
-const GROWING_UNITS_PER_PAGE = 12;
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 export function GrowingUnitsPage() {
 	const t = useTranslations();
+	const locale = useLocale();
+	const router = useRouter();
+
 	const {
 		createDialogOpen,
 		setCreateDialogOpen,
@@ -24,7 +24,6 @@ export function GrowingUnitsPage() {
 		setSearchQuery,
 		selectedFilter,
 		setSelectedFilter,
-		useVirtualization,
 		filterOptions,
 		growingUnits,
 		isLoading,
@@ -34,7 +33,80 @@ export function GrowingUnitsPage() {
 		handlePageChange,
 		isCreating,
 		createError,
+		perPage,
+		setPerPage,
 	} = useGrowingUnitsPage();
+
+	const growingUnitsColumns: ColumnDef<GrowingUnitResponse>[] = [
+		{
+			id: 'unit',
+			header: t('features.growingUnits.list.table.columns.unit', {
+				default: 'Unidad de cultivo',
+			}),
+			cell: (growingUnit) => (
+				<div>
+					<div className="font-medium">{growingUnit.name}</div>
+					<div className="text-sm text-muted-foreground">
+						{t(`shared.types.growingUnit.${growingUnit.type}`)}
+					</div>
+				</div>
+			),
+		},
+		{
+			id: 'location',
+			header: t('features.growingUnits.list.table.columns.location', {
+				default: 'Ubicación',
+			}),
+			cell: (growingUnit) => {
+				const locationLabel =
+					growingUnit.type === 'POT' || growingUnit.type === 'WINDOW_BOX'
+						? t('features.growingUnits.list.location.indoor', {
+								default: 'INTERIOR',
+							})
+						: t('features.growingUnits.list.location.outdoor', {
+								default: 'EXTERIOR',
+							});
+
+				return (
+					<div>
+						<div className="text-sm">{growingUnit.location?.name}</div>
+						<div className="text-xs text-muted-foreground uppercase">
+							{locationLabel}
+						</div>
+					</div>
+				);
+			},
+		},
+		{
+			id: 'plants',
+			header: t('features.growingUnits.list.table.columns.plants', {
+				default: 'Plantas / Capacidad',
+			}),
+			cell: (growingUnit) => (
+				<div>
+					<div className="text-sm font-medium">
+						{growingUnit.numberOfPlants} / {growingUnit.capacity}
+					</div>
+					<div className="text-xs text-muted-foreground">
+						{t('features.growingUnits.list.table.plantsCapacity', {
+							default: 'plants / capacity',
+						})}
+					</div>
+				</div>
+			),
+		},
+		{
+			id: 'updatedAt',
+			header: t('features.growingUnits.list.table.columns.updatedAt', {
+				default: 'Última actualización',
+			}),
+			cell: (growingUnit) => (
+				<span className="text-sm text-muted-foreground">
+					{growingUnit.updatedAt.toLocaleDateString(locale)}
+				</span>
+			),
+		},
+	];
 
 	return (
 		<div className="mx-auto space-y-6">
@@ -60,31 +132,8 @@ export function GrowingUnitsPage() {
 				onFilterChange={setSelectedFilter}
 			/>
 
-			{/* Growing Units Grid */}
-			{useVirtualization ? (
-				isLoading ? (
-					<GrowingUnitsCardsSkeleton cards={12} />
-				) : growingUnitsError ? (
-					<div className="flex items-center justify-center min-h-[400px]">
-						<p className="text-destructive">
-							{t('features.growingUnits.list.error.loading', {
-								message: growingUnitsError.message,
-							})}
-						</p>
-					</div>
-				) : growingUnits && growingUnits.items.length > 0 ? (
-					<GrowingUnitsVirtualizedGrid
-						growingUnits={growingUnits.items}
-						onAddClick={handleAddClick}
-					/>
-				) : (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						<GrowingUnitAddCard onClick={handleAddClick} />
-					</div>
-				)
-			) : isLoading ? (
-				<GrowingUnitsCardsSkeleton cards={GROWING_UNITS_PER_PAGE} />
-			) : growingUnitsError ? (
+			{/* Growing Units Table */}
+			{growingUnitsError ? (
 				<div className="flex items-center justify-center min-h-[400px]">
 					<p className="text-destructive">
 						{t('features.growingUnits.list.error.loading', {
@@ -92,37 +141,28 @@ export function GrowingUnitsPage() {
 						})}
 					</p>
 				</div>
-			) : growingUnits && growingUnits.items.length > 0 ? (
-				<>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{growingUnits.items.map((growingUnit) => (
-							<GrowingUnitCard key={growingUnit.id} growingUnit={growingUnit} />
-						))}
-						<GrowingUnitAddCard onClick={handleAddClick} />
-					</div>
-
-					{/* Pagination */}
-					{growingUnits.totalPages > 1 && (
-						<>
-							<div className="text-sm text-muted-foreground text-center">
-								{t('shared.pagination.info', {
-									page: growingUnits.page,
-									totalPages: growingUnits.totalPages,
-									total: growingUnits.total,
-								})}
-							</div>
-							<PaginatedResults
-								currentPage={growingUnits.page}
-								totalPages={growingUnits.totalPages}
-								onPageChange={handlePageChange}
-							/>
-						</>
-					)}
-				</>
 			) : (
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					<GrowingUnitAddCard onClick={handleAddClick} />
-				</div>
+				<DataTable
+					data={growingUnits?.items ?? []}
+					columns={growingUnitsColumns}
+					isLoading={isLoading}
+					paginated
+					page={growingUnits?.page ?? 1}
+					totalPages={growingUnits?.totalPages ?? 0}
+					onPageChange={handlePageChange}
+					perPage={perPage}
+					perPageOptions={DEFAULT_PER_PAGE_OPTIONS}
+					onPerPageChange={setPerPage}
+					onRowClick={(growingUnit) =>
+						router.push(`/${locale}/growing-units/${growingUnit.id}`)
+					}
+					getRowId={(growingUnit) => growingUnit.id}
+					emptyMessage={t('features.growingUnits.list.empty', {
+						default: 'No hay unidades de cultivo todavía',
+					})}
+					bordered
+					rowClassName="hover:bg-muted/50 transition-colors"
+				/>
 			)}
 
 			{/* Create Dialog */}
