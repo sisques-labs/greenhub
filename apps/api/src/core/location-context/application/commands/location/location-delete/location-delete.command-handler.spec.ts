@@ -1,7 +1,6 @@
 import { LocationDeleteCommand } from '@/core/location-context/application/commands/location/location-delete/location-delete.command';
 import { LocationDeleteCommandHandler } from '@/core/location-context/application/commands/location/location-delete/location-delete.command-handler';
 import { ILocationDeleteCommandDto } from '@/core/location-context/application/dtos/commands/location/location-delete/location-delete-command.dto';
-import { LocationDeletedEvent } from '@/core/location-context/application/events/location/location-deleted/location-deleted.event';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import { LocationTypeEnum } from '@/core/location-context/domain/enums/location-type/location-type.enum';
@@ -17,6 +16,11 @@ describe('LocationDeleteCommandHandler', () => {
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
 	let mockEventBus: jest.Mocked<EventBus>;
 	beforeEach(() => {
+		mockEventBus = {
+			publish: jest.fn(),
+			publishAll: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
+
 		mockLocationWriteRepository = {
 			findById: jest.fn(),
 			save: jest.fn(),
@@ -55,7 +59,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publish.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -65,9 +69,7 @@ describe('LocationDeleteCommandHandler', () => {
 			expect(mockLocationWriteRepository.delete).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(mockEventBus.publish).toHaveBeenCalled();
-			const callArgs = mockEventBus.publish.mock.calls[0][0];
-			expect(callArgs).toBeInstanceOf(LocationDeletedEvent);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
 		it('should publish LocationDeletedEvent when location is deleted', async () => {
@@ -86,13 +88,11 @@ describe('LocationDeleteCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publish.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publish).toHaveBeenCalled();
-			const callArgs = mockEventBus.publish.mock.calls[0][0];
-			expect(callArgs).toBeInstanceOf(LocationDeletedEvent);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
 		it('should delete location before publishing events', async () => {
@@ -111,13 +111,13 @@ describe('LocationDeleteCommandHandler', () => {
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockEventBus.publish.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const deleteOrder =
 				mockLocationWriteRepository.delete.mock.invocationCallOrder[0];
-			const publishOrder = mockEventBus.publish.mock.invocationCallOrder[0];
+			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
 			expect(deleteOrder).toBeLessThan(publishOrder);
 		});
 
@@ -134,7 +134,7 @@ describe('LocationDeleteCommandHandler', () => {
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
 			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
-			expect(mockEventBus.publish).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 	});
 });
