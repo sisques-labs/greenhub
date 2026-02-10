@@ -65,7 +65,8 @@
     },
     "growingUnitsStatus": {
       "title": "Estado de Unidades de Cultivo",
-      "empty": "No hay unidades de cultivo disponibles"
+      "empty": "No hay unidades de cultivo disponibles",
+      "seeAll": "Ver Todas"
     },
     "recentAlerts": {
       "title": "Alertas Recientes",
@@ -74,7 +75,9 @@
     "todayTasks": {
       "title": "Tareas de Hoy",
       "assignedTo": "Asignado a",
-      "empty": "No hay tareas programadas para hoy"
+      "empty": "No hay tareas programadas para hoy",
+      "completed": "Completada",
+      "seeAll": "Ver Todas"
     }
   },
   "common": {

@@ -15,7 +15,7 @@ import { useTranslations } from 'next-intl';
  * Main dashboard that displays comprehensive overview of the entire system
  */
 export function DashboardPage() {
-	const t = useTranslations('dashboard');
+	const t = useTranslations('features.dashboard');
 	const { overview, isLoading, error } = useDashboardPage();
 
 	if (error) {

@@ -65,7 +65,8 @@
     },
     "growingUnitsStatus": {
       "title": "Status of Cultivation Units",
-      "empty": "No growing units available"
+      "empty": "No growing units available",
+      "seeAll": "See All"
     },
     "recentAlerts": {
       "title": "Recent Alerts",
@@ -74,7 +75,9 @@
     "todayTasks": {
       "title": "Today's Tasks",
       "assignedTo": "Assigned to",
-      "empty": "No tasks scheduled for today"
+      "empty": "No tasks scheduled for today",
+      "completed": "Completed",
+      "seeAll": "See All"
     }
   },
   "common": {

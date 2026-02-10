@@ -33,7 +33,7 @@ export function TodayTasksSection({
 	tasks,
 	isLoading = false,
 }: TodayTasksSectionProps) {
-	const t = useTranslations('features.dashboard.todayTasks');
+	const t = useTranslations('features.dashboard.sections.todayTasks');
 
 	if (isLoading) {
 		return (
