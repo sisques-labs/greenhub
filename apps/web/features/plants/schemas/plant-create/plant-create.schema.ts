@@ -25,8 +25,7 @@ export function createPlantCreateSchema(translations: (key: string) => string) {
 				{
 					message: translations("shared.validation.status.invalid"),
 				},
-			)
-			.optional(),
+			),
 		growingUnitId: z
 			.string()
 			.min(1, translations("shared.validation.growingUnitId.required")),
