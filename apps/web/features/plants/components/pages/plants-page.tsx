@@ -1,8 +1,17 @@
 'use client';
 
+import { PlantCreateForm } from '@/features/plants/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
+import { PlantsTableSkeleton } from '@/features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
+import { PlantsVirtualizedTable } from '@/features/plants/components/organisms/plants-virtualized-table/plants-virtualized-table';
+import { usePlantsPage } from '@/features/plants/hooks/use-plants-page/use-plants-page';
 import { PageHeader } from '@/shared/components/organisms/page-header';
 import { TableLayout } from '@/shared/components/organisms/table-layout';
 import { Button } from '@/shared/components/ui/button';
+import {
+	type FilterOption,
+	SearchAndFilters,
+} from '@/shared/components/ui/search-and-filters/search-and-filters';
 import {
 	Table,
 	TableBody,
@@ -10,11 +19,6 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/shared/components/ui/table';
-import { PlantCreateForm } from '@/features/plants/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
-import { PlantsTableSkeleton } from '@/features/plants/components/organisms/plants-table-skeleton/plants-table-skeleton';
-import { PlantsVirtualizedTable } from '@/features/plants/components/organisms/plants-virtualized-table/plants-virtualized-table';
-import { usePlantsPage } from '@/features/plants/hooks/use-plants-page/use-plants-page';
 import {
 	Building2Icon,
 	CheckCircleIcon,
@@ -23,10 +27,6 @@ import {
 	PlusIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import {
-	type FilterOption,
-	SearchAndFilters,
-} from '@/shared/components/ui/search-and-filters/search-and-filters';
 
 export function PlantsPage() {
 	const t = useTranslations();
@@ -40,7 +40,6 @@ export function PlantsPage() {
 		perPage,
 		setPerPage,
 		useVirtualization,
-		setUseVirtualization,
 		createDialogOpen,
 		setCreateDialogOpen,
 		paginatedPlants,

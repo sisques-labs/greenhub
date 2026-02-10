@@ -1,17 +1,17 @@
 'use client';
 
-import { PageHeader } from '@/shared/components/organisms/page-header';
-import { Button } from '@/shared/components/ui/button';
 import { GrowingUnitAddCard } from '@/features/growing-units/components/organisms/growing-unit-add-card/growing-unit-add-card';
 import { GrowingUnitCard } from '@/features/growing-units/components/organisms/growing-unit-card/growing-unit-card';
 import { GrowingUnitCreateForm } from '@/features/growing-units/components/organisms/growing-unit-create-form/growing-unit-create-form';
 import { GrowingUnitsCardsSkeleton } from '@/features/growing-units/components/organisms/growing-units-cards-skeleton/growing-units-cards-skeleton';
 import { GrowingUnitsVirtualizedGrid } from '@/features/growing-units/components/organisms/growing-units-virtualized-grid/growing-units-virtualized-grid';
 import { useGrowingUnitsPage } from '@/features/growing-units/hooks/use-growing-units-page/use-growing-units-page';
-import { PlusIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { PageHeader } from '@/shared/components/organisms/page-header';
+import { Button } from '@/shared/components/ui/button';
 import { PaginatedResults } from '@/shared/components/ui/paginated-results/paginated-results';
 import { SearchAndFilters } from '@/shared/components/ui/search-and-filters/search-and-filters';
+import { PlusIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const GROWING_UNITS_PER_PAGE = 12;
 
@@ -25,7 +25,6 @@ export function GrowingUnitsPage() {
 		selectedFilter,
 		setSelectedFilter,
 		useVirtualization,
-		setUseVirtualization,
 		filterOptions,
 		growingUnits,
 		isLoading,
@@ -83,49 +82,47 @@ export function GrowingUnitsPage() {
 						<GrowingUnitAddCard onClick={handleAddClick} />
 					</div>
 				)
-			) : (
-				isLoading ? (
-					<GrowingUnitsCardsSkeleton cards={GROWING_UNITS_PER_PAGE} />
-				) : growingUnitsError ? (
-					<div className="flex items-center justify-center min-h-[400px]">
-						<p className="text-destructive">
-							{t('features.growingUnits.list.error.loading', {
-								message: growingUnitsError.message,
-							})}
-						</p>
-					</div>
-				) : growingUnits && growingUnits.items.length > 0 ? (
-					<>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-							{growingUnits.items.map((growingUnit) => (
-								<GrowingUnitCard key={growingUnit.id} growingUnit={growingUnit} />
-							))}
-							<GrowingUnitAddCard onClick={handleAddClick} />
-						</div>
-
-						{/* Pagination */}
-						{growingUnits.totalPages > 1 && (
-							<>
-								<div className="text-sm text-muted-foreground text-center">
-									{t('shared.pagination.info', {
-										page: growingUnits.page,
-										totalPages: growingUnits.totalPages,
-										total: growingUnits.total,
-									})}
-								</div>
-								<PaginatedResults
-									currentPage={growingUnits.page}
-									totalPages={growingUnits.totalPages}
-									onPageChange={handlePageChange}
-								/>
-							</>
-						)}
-					</>
-				) : (
+			) : isLoading ? (
+				<GrowingUnitsCardsSkeleton cards={GROWING_UNITS_PER_PAGE} />
+			) : growingUnitsError ? (
+				<div className="flex items-center justify-center min-h-[400px]">
+					<p className="text-destructive">
+						{t('features.growingUnits.list.error.loading', {
+							message: growingUnitsError.message,
+						})}
+					</p>
+				</div>
+			) : growingUnits && growingUnits.items.length > 0 ? (
+				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						{growingUnits.items.map((growingUnit) => (
+							<GrowingUnitCard key={growingUnit.id} growingUnit={growingUnit} />
+						))}
 						<GrowingUnitAddCard onClick={handleAddClick} />
 					</div>
-				)
+
+					{/* Pagination */}
+					{growingUnits.totalPages > 1 && (
+						<>
+							<div className="text-sm text-muted-foreground text-center">
+								{t('shared.pagination.info', {
+									page: growingUnits.page,
+									totalPages: growingUnits.totalPages,
+									total: growingUnits.total,
+								})}
+							</div>
+							<PaginatedResults
+								currentPage={growingUnits.page}
+								totalPages={growingUnits.totalPages}
+								onPageChange={handlePageChange}
+							/>
+						</>
+					)}
+				</>
+			) : (
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					<GrowingUnitAddCard onClick={handleAddClick} />
+				</div>
 			)}
 
 			{/* Create Dialog */}
