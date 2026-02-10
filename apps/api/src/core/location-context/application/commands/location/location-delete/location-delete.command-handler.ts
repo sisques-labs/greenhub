@@ -46,27 +46,15 @@ export class LocationDeleteCommandHandler
 		const existingLocation: LocationAggregate =
 			await this.assertLocationExistsService.execute(command.id.value);
 
-		// 02: Delete the location entity
+		// 02: Call aggregate behavior to mark as deleted
+		existingLocation.delete();
+
+		// 03: Delete the location entity from repository
 		await this.locationWriteRepository.delete(existingLocation.id.value);
 
-		// 03: Publish the integration event LocationDeletedEvent
-		await this.publishIntegrationEventsService.execute(
-			new LocationDeletedEvent(
-				{
-					aggregateRootId: existingLocation.id.value,
-					aggregateRootType: LocationAggregate.name,
-					entityId: existingLocation.id.value,
-					entityType: LocationAggregate.name,
-					eventType: LocationDeletedEvent.name,
-				},
-				{
-					id: existingLocation.id.value,
-					name: existingLocation.name.value,
-					type: existingLocation.type.value,
-					description: existingLocation.description?.value ?? null,
-					parentLocationId: null,
-				},
-			),
+		// 04: Publish the domain events
+		await this.publishIntegrationEventsService.executeAll(
+			existingLocation.getUncommittedEvents(),
 		);
 	}
 }
