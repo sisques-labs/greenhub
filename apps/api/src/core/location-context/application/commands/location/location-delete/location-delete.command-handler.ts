@@ -25,7 +25,7 @@ export class LocationDeleteCommandHandler
 		@Inject(LOCATION_WRITE_REPOSITORY_TOKEN)
 		private readonly locationWriteRepository: ILocationWriteRepository,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
-		private eventBus: EventBus,
+		private readonly eventBus: EventBus,
 	) {}
 
 	/**
@@ -50,7 +50,7 @@ export class LocationDeleteCommandHandler
 		await this.locationWriteRepository.delete(existingLocation.id.value);
 
 		// 04: Publish the domain events
-		await this.eventBus.publish(existingLocation.getUncommittedEvents());
+		await this.eventBus.publishAll(existingLocation.getUncommittedEvents());
 		existingLocation.commit();
 	}
 }
