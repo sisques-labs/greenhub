@@ -6,13 +6,15 @@ import {
 	ILocationWriteRepository,
 	LOCATION_WRITE_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
-import {
-	GROWING_UNIT_WRITE_REPOSITORY_TOKEN,
-	IGrowingUnitWriteRepository,
-} from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
+import { GrowingUnitFindByLocationIdQuery } from '@/core/plant-context/application/queries/growing-unit/growing-unit-find-by-location-id/growing-unit-find-by-location-id.query';
 import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import {
+	CommandHandler,
+	EventBus,
+	ICommandHandler,
+	QueryBus,
+} from '@nestjs/cqrs';
 
 /**
  * Command handler for deleting a location.
@@ -36,9 +38,8 @@ export class LocationDeleteCommandHandler
 	constructor(
 		@Inject(LOCATION_WRITE_REPOSITORY_TOKEN)
 		private readonly locationWriteRepository: ILocationWriteRepository,
-		@Inject(GROWING_UNIT_WRITE_REPOSITORY_TOKEN)
-		private readonly growingUnitWriteRepository: IGrowingUnitWriteRepository,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
+		private readonly queryBus: QueryBus,
 		eventBus: EventBus,
 	) {
 		super(eventBus);
@@ -62,8 +63,10 @@ export class LocationDeleteCommandHandler
 			await this.assertLocationExistsService.execute(command.id.value);
 
 		// 02: Check for dependent growing units
-		const growingUnits = await this.growingUnitWriteRepository.findByLocationId(
-			existingLocation.id.value,
+		const growingUnits = await this.queryBus.execute(
+			new GrowingUnitFindByLocationIdQuery({
+				locationId: existingLocation.id.value,
+			}),
 		);
 
 		if (growingUnits.length > 0) {

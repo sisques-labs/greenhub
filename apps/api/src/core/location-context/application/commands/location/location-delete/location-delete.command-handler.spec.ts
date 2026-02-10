@@ -10,19 +10,18 @@ import { LocationNameValueObject } from '@/core/location-context/domain/value-ob
 import { LocationTypeValueObject } from '@/core/location-context/domain/value-objects/location/location-type/location-type.vo';
 import { GrowingUnitAggregate } from '@/core/plant-context/domain/aggregates/growing-unit/growing-unit.aggregate';
 import { GrowingUnitTypeEnum } from '@/core/plant-context/domain/enums/growing-unit/growing-unit-type/growing-unit-type.enum';
-import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/repositories/growing-unit/growing-unit-write/growing-unit-write.repository';
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
+import { EventBus, QueryBus } from '@nestjs/cqrs';
 
 describe('LocationDeleteCommandHandler', () => {
 	let handler: LocationDeleteCommandHandler;
 	let mockLocationWriteRepository: jest.Mocked<ILocationWriteRepository>;
-	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
+	let mockQueryBus: jest.Mocked<QueryBus>;
 	let mockEventBus: jest.Mocked<EventBus>;
 	beforeEach(() => {
 		mockEventBus = {
@@ -36,12 +35,9 @@ describe('LocationDeleteCommandHandler', () => {
 			delete: jest.fn(),
 		} as unknown as jest.Mocked<ILocationWriteRepository>;
 
-		mockGrowingUnitWriteRepository = {
-			findById: jest.fn(),
-			save: jest.fn(),
-			delete: jest.fn(),
-			findByLocationId: jest.fn(),
-		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
+		mockQueryBus = {
+			execute: jest.fn(),
+		} as unknown as jest.Mocked<QueryBus>;
 
 		mockAssertLocationExistsService = {
 			execute: jest.fn(),
@@ -49,8 +45,8 @@ describe('LocationDeleteCommandHandler', () => {
 
 		handler = new LocationDeleteCommandHandler(
 			mockLocationWriteRepository,
-			mockGrowingUnitWriteRepository,
 			mockAssertLocationExistsService,
+			mockQueryBus,
 			mockEventBus,
 		);
 	});
@@ -75,7 +71,7 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
+			mockQueryBus.execute.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
@@ -84,9 +80,13 @@ describe('LocationDeleteCommandHandler', () => {
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(
-				mockGrowingUnitWriteRepository.findByLocationId,
-			).toHaveBeenCalledWith(locationId);
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.objectContaining({
+					locationId: expect.objectContaining({
+						_value: locationId,
+					}),
+				}),
+			);
 			expect(mockLocationWriteRepository.delete).toHaveBeenCalledWith(
 				locationId,
 			);
@@ -108,7 +108,7 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
+			mockQueryBus.execute.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
@@ -132,7 +132,7 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
+			mockQueryBus.execute.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
@@ -156,9 +156,7 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockRejectedValue(error);
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
-			expect(
-				mockGrowingUnitWriteRepository.findByLocationId,
-			).not.toHaveBeenCalled();
+			expect(mockQueryBus.execute).not.toHaveBeenCalled();
 			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
@@ -189,9 +187,7 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([
-				mockGrowingUnit,
-			]);
+			mockQueryBus.execute.mockResolvedValue([mockGrowingUnit]);
 
 			await expect(handler.execute(command)).rejects.toThrow(
 				LocationHasDependentGrowingUnitsException,
@@ -203,9 +199,13 @@ describe('LocationDeleteCommandHandler', () => {
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(
-				mockGrowingUnitWriteRepository.findByLocationId,
-			).toHaveBeenCalledWith(locationId);
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.objectContaining({
+					locationId: expect.objectContaining({
+						_value: locationId,
+					}),
+				}),
+			);
 			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
@@ -258,9 +258,7 @@ describe('LocationDeleteCommandHandler', () => {
 			];
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue(
-				mockGrowingUnits,
-			);
+			mockQueryBus.execute.mockResolvedValue(mockGrowingUnits);
 
 			await expect(handler.execute(command)).rejects.toThrow(
 				LocationHasDependentGrowingUnitsException,
@@ -272,9 +270,13 @@ describe('LocationDeleteCommandHandler', () => {
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(
-				mockGrowingUnitWriteRepository.findByLocationId,
-			).toHaveBeenCalledWith(locationId);
+			expect(mockQueryBus.execute).toHaveBeenCalledWith(
+				expect.objectContaining({
+					locationId: expect.objectContaining({
+						_value: locationId,
+					}),
+				}),
+			);
 			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
@@ -294,15 +296,14 @@ describe('LocationDeleteCommandHandler', () => {
 			});
 
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
-			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
+			mockQueryBus.execute.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const findByLocationIdOrder =
-				mockGrowingUnitWriteRepository.findByLocationId.mock
-					.invocationCallOrder[0];
+				mockQueryBus.execute.mock.invocationCallOrder[0];
 			const deleteOrder =
 				mockLocationWriteRepository.delete.mock.invocationCallOrder[0];
 			expect(findByLocationIdOrder).toBeLessThan(deleteOrder);
