@@ -3,6 +3,7 @@ import { useGrowingUnitFindById } from 'features/growing-units/hooks/use-growing
 import { useGrowingUnitUpdate } from 'features/growing-units/hooks/use-growing-unit-update/use-growing-unit-update';
 import type { GrowingUnitUpdateFormValues } from 'features/growing-units/schemas/growing-unit-update/growing-unit-update.schema';
 import { useGrowingUnitDetailPageStore } from 'features/growing-units/stores/growing-unit-detail-page-store';
+import type { PlantStatus } from 'features/plants/api/types';
 import { usePlantAdd } from 'features/plants/hooks/use-plant-add/use-plant-add';
 import type { PlantCreateFormValues } from 'features/plants/schemas/plant-create/plant-create.schema';
 import { useMemo } from 'react';
@@ -29,7 +30,7 @@ function transformPlantFormValues(values: PlantCreateFormValues) {
 		species: values.species,
 		plantedDate: values.plantedDate?.toISOString() || null,
 		notes: values.notes,
-		status: values.status,
+		status: values.status as PlantStatus | undefined,
 	};
 }
 
