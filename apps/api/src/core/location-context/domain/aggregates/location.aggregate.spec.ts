@@ -1,3 +1,4 @@
+import { LocationDeletedEvent } from "@/core/location-context/application/events/location/location-deleted/location-deleted.event";
 import { LocationAggregate } from "@/core/location-context/domain/aggregates/location.aggregate";
 import type { ILocationDto } from "@/core/location-context/domain/dtos/entities/location/location.dto";
 import { LocationTypeEnum } from "@/core/location-context/domain/enums/location-type/location-type.enum";
@@ -212,6 +213,33 @@ describe("LocationAggregate", () => {
 			expect(aggregate.description?.value).toBe(
 				"North-facing room with good sunlight",
 			);
+		});
+	});
+
+	describe("delete", () => {
+		it("should generate LocationDeletedEvent by default", () => {
+			const aggregate = new LocationAggregate(locationDto);
+
+			aggregate.delete();
+
+			const events = aggregate.getUncommittedEvents();
+			expect(events).toHaveLength(1);
+			expect(events[0]).toBeInstanceOf(LocationDeletedEvent);
+
+			const event = events[0] as LocationDeletedEvent;
+			expect(event.data.id).toBe(locationId.value);
+			expect(event.data.name).toBe("Living Room");
+			expect(event.data.type).toBe(LocationTypeEnum.ROOM);
+			expect(event.data.description).toBe("North-facing room with good sunlight");
+		});
+
+		it("should not generate event when generateEvent is false", () => {
+			const aggregate = new LocationAggregate(locationDto);
+
+			aggregate.delete(false);
+
+			const events = aggregate.getUncommittedEvents();
+			expect(events).toHaveLength(0);
 		});
 	});
 

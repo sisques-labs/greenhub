@@ -1,5 +1,6 @@
 import { AggregateRoot } from "@nestjs/cqrs";
 
+import { LocationDeletedEvent } from "@/core/location-context/application/events/location/location-deleted/location-deleted.event";
 import type { ILocationDto } from "@/core/location-context/domain/dtos/entities/location/location.dto";
 import { LocationDescriptionChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-description-changed/location-description-changed.event";
 import { LocationNameChangedEvent } from "@/core/location-context/domain/events/location/field-changed/location-name-changed/location-name-changed.event";
@@ -133,6 +134,34 @@ export class LocationAggregate extends AggregateRoot {
 				},
 			),
 		);
+	}
+
+	/**
+	 * Marks this location as deleted (soft-delete).
+	 *
+	 * @param generateEvent - Whether to emit the corresponding domain event.
+	 */
+	public delete(generateEvent: boolean = true) {
+		if (generateEvent) {
+			this.apply(
+				new LocationDeletedEvent(
+					{
+						aggregateRootId: this._id.value,
+						aggregateRootType: LocationAggregate.name,
+						entityId: this._id.value,
+						entityType: LocationAggregate.name,
+						eventType: LocationDeletedEvent.name,
+					},
+					{
+						id: this._id.value,
+						name: this._name.value,
+						type: this._type.value,
+						description: this._description?.value ?? null,
+						parentLocationId: null,
+					},
+				),
+			);
+		}
 	}
 
 	/**
