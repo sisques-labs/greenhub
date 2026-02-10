@@ -213,12 +213,19 @@ describe('UserCreateCommandHandler', () => {
 			mockUserWriteRepository.save.mockResolvedValue(undefined);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
 
+			// 01: Ensure the aggregate generated the UserCreatedEvent on creation
+			const uncommittedEventsBefore = mockUser.getUncommittedEvents();
+			expect(uncommittedEventsBefore).toHaveLength(1);
+			expect(uncommittedEventsBefore[0]).toBeInstanceOf(UserCreatedEvent);
+
+			// 02: Execute the handler, which should publish and then commit the events
 			await handler.execute(command);
 
-			const uncommittedEvents = mockUser.getUncommittedEvents();
-			expect(uncommittedEvents).toHaveLength(1);
-			expect(uncommittedEvents[0]).toBeInstanceOf(UserCreatedEvent);
-			expect(mockEventBus.publishAll).toHaveBeenCalledWith(uncommittedEvents);
+			// 03: Verify that the previously generated events were published
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+				uncommittedEventsBefore,
+			);
 		});
 
 		it('should save user before publishing events', async () => {

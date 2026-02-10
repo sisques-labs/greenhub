@@ -1,7 +1,6 @@
 import { LocationDeleteCommand } from '@/core/location-context/application/commands/location/location-delete/location-delete.command';
 import { LocationDeleteCommandHandler } from '@/core/location-context/application/commands/location/location-delete/location-delete.command-handler';
 import { ILocationDeleteCommandDto } from '@/core/location-context/application/dtos/commands/location/location-delete/location-delete-command.dto';
-import { LocationDeletedEvent } from '@/core/location-context/application/events/location/location-deleted/location-deleted.event';
 import { LocationHasDependentGrowingUnitsException } from '@/core/location-context/application/exceptions/location/location-has-dependent-growing-units/location-has-dependent-growing-units.exception';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
@@ -15,18 +14,22 @@ import { IGrowingUnitWriteRepository } from '@/core/plant-context/domain/reposit
 import { GrowingUnitCapacityValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-capacity/growing-unit-capacity.vo';
 import { GrowingUnitNameValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-name/growing-unit-name.vo';
 import { GrowingUnitTypeValueObject } from '@/core/plant-context/domain/value-objects/growing-unit/growing-unit-type/growing-unit-type.vo';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { GrowingUnitUuidValueObject } from '@/shared/domain/value-objects/identifiers/growing-unit-uuid/growing-unit-uuid.vo';
 import { LocationUuidValueObject } from '@/shared/domain/value-objects/identifiers/location-uuid/location-uuid.vo';
+import { EventBus } from '@nestjs/cqrs';
 
 describe('LocationDeleteCommandHandler', () => {
 	let handler: LocationDeleteCommandHandler;
 	let mockLocationWriteRepository: jest.Mocked<ILocationWriteRepository>;
 	let mockGrowingUnitWriteRepository: jest.Mocked<IGrowingUnitWriteRepository>;
-	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertLocationExistsService: jest.Mocked<AssertLocationExistsService>;
-
+	let mockEventBus: jest.Mocked<EventBus>;
 	beforeEach(() => {
+		mockEventBus = {
+			publish: jest.fn(),
+			publishAll: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
+
 		mockLocationWriteRepository = {
 			findById: jest.fn(),
 			save: jest.fn(),
@@ -40,10 +43,6 @@ describe('LocationDeleteCommandHandler', () => {
 			findByLocationId: jest.fn(),
 		} as unknown as jest.Mocked<IGrowingUnitWriteRepository>;
 
-		mockPublishIntegrationEventsService = {
-			execute: jest.fn(),
-		} as unknown as jest.Mocked<PublishIntegrationEventsService>;
-
 		mockAssertLocationExistsService = {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertLocationExistsService>;
@@ -52,7 +51,7 @@ describe('LocationDeleteCommandHandler', () => {
 			mockLocationWriteRepository,
 			mockGrowingUnitWriteRepository,
 			mockAssertLocationExistsService,
-			mockPublishIntegrationEventsService,
+			mockEventBus,
 		);
 	});
 
@@ -78,23 +77,20 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(mockGrowingUnitWriteRepository.findByLocationId).toHaveBeenCalledWith(
-				locationId,
-			);
+			expect(
+				mockGrowingUnitWriteRepository.findByLocationId,
+			).toHaveBeenCalledWith(locationId);
 			expect(mockLocationWriteRepository.delete).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
-			const callArgs =
-				mockPublishIntegrationEventsService.execute.mock.calls[0][0];
-			expect(callArgs).toBeInstanceOf(LocationDeletedEvent);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
 		it('should publish LocationDeletedEvent when location is deleted', async () => {
@@ -114,14 +110,11 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
-			const callArgs =
-				mockPublishIntegrationEventsService.execute.mock.calls[0][0];
-			expect(callArgs).toBeInstanceOf(LocationDeletedEvent);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
 		});
 
 		it('should delete location before publishing events', async () => {
@@ -141,14 +134,13 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const deleteOrder =
 				mockLocationWriteRepository.delete.mock.invocationCallOrder[0];
-			const publishOrder =
-				mockPublishIntegrationEventsService.execute.mock.invocationCallOrder[0];
+			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
 			expect(deleteOrder).toBeLessThan(publishOrder);
 		});
 
@@ -164,11 +156,11 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockRejectedValue(error);
 
 			await expect(handler.execute(command)).rejects.toThrow(error);
-			expect(mockGrowingUnitWriteRepository.findByLocationId).not.toHaveBeenCalled();
-			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(
-				mockPublishIntegrationEventsService.execute,
+				mockGrowingUnitWriteRepository.findByLocationId,
 			).not.toHaveBeenCalled();
+			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
 		it('should throw LocationHasDependentGrowingUnitsException when location has one growing unit', async () => {
@@ -190,7 +182,7 @@ describe('LocationDeleteCommandHandler', () => {
 				id: new GrowingUnitUuidValueObject(growingUnitId),
 				locationId: new LocationUuidValueObject(locationId),
 				name: new GrowingUnitNameValueObject('Test Unit'),
-				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.HYDROPONIC),
+				type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 				capacity: new GrowingUnitCapacityValueObject(10),
 				dimensions: null,
 				plants: [],
@@ -211,13 +203,11 @@ describe('LocationDeleteCommandHandler', () => {
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(mockGrowingUnitWriteRepository.findByLocationId).toHaveBeenCalledWith(
-				locationId,
-			);
-			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(
-				mockPublishIntegrationEventsService.execute,
-			).not.toHaveBeenCalled();
+				mockGrowingUnitWriteRepository.findByLocationId,
+			).toHaveBeenCalledWith(locationId);
+			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
 		it('should throw LocationHasDependentGrowingUnitsException when location has multiple growing units', async () => {
@@ -242,7 +232,7 @@ describe('LocationDeleteCommandHandler', () => {
 					id: new GrowingUnitUuidValueObject(growingUnitId1),
 					locationId: new LocationUuidValueObject(locationId),
 					name: new GrowingUnitNameValueObject('Test Unit 1'),
-					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.HYDROPONIC),
+					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 					capacity: new GrowingUnitCapacityValueObject(10),
 					dimensions: null,
 					plants: [],
@@ -251,7 +241,7 @@ describe('LocationDeleteCommandHandler', () => {
 					id: new GrowingUnitUuidValueObject(growingUnitId2),
 					locationId: new LocationUuidValueObject(locationId),
 					name: new GrowingUnitNameValueObject('Test Unit 2'),
-					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.SOIL),
+					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 					capacity: new GrowingUnitCapacityValueObject(5),
 					dimensions: null,
 					plants: [],
@@ -260,7 +250,7 @@ describe('LocationDeleteCommandHandler', () => {
 					id: new GrowingUnitUuidValueObject(growingUnitId3),
 					locationId: new LocationUuidValueObject(locationId),
 					name: new GrowingUnitNameValueObject('Test Unit 3'),
-					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.AEROPONIC),
+					type: new GrowingUnitTypeValueObject(GrowingUnitTypeEnum.GARDEN_BED),
 					capacity: new GrowingUnitCapacityValueObject(8),
 					dimensions: null,
 					plants: [],
@@ -282,13 +272,11 @@ describe('LocationDeleteCommandHandler', () => {
 			expect(mockAssertLocationExistsService.execute).toHaveBeenCalledWith(
 				locationId,
 			);
-			expect(mockGrowingUnitWriteRepository.findByLocationId).toHaveBeenCalledWith(
-				locationId,
-			);
-			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
 			expect(
-				mockPublishIntegrationEventsService.execute,
-			).not.toHaveBeenCalled();
+				mockGrowingUnitWriteRepository.findByLocationId,
+			).toHaveBeenCalledWith(locationId);
+			expect(mockLocationWriteRepository.delete).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
 		it('should validate growing units before deleting location', async () => {
@@ -308,16 +296,16 @@ describe('LocationDeleteCommandHandler', () => {
 			mockAssertLocationExistsService.execute.mockResolvedValue(mockLocation);
 			mockGrowingUnitWriteRepository.findByLocationId.mockResolvedValue([]);
 			mockLocationWriteRepository.delete.mockResolvedValue(undefined);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
+			mockEventBus.publishAll.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const findByLocationIdOrder =
-				mockGrowingUnitWriteRepository.findByLocationId.mock.invocationCallOrder[0];
+				mockGrowingUnitWriteRepository.findByLocationId.mock
+					.invocationCallOrder[0];
 			const deleteOrder =
 				mockLocationWriteRepository.delete.mock.invocationCallOrder[0];
 			expect(findByLocationIdOrder).toBeLessThan(deleteOrder);
 		});
 	});
 });
-

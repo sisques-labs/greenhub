@@ -1,3 +1,5 @@
+import { EventBus } from '@nestjs/cqrs';
+
 import { BaseUpdateCommandHandler } from './base-update.command-handler';
 
 // Create a concrete implementation for testing
@@ -21,6 +23,10 @@ class TestUpdateCommandHandler extends BaseUpdateCommandHandler<
 	TestCommand,
 	TestUpdateDto
 > {
+	constructor(eventBus: EventBus) {
+		super(eventBus);
+	}
+
 	// Expose protected methods for testing
 	public extractUpdateDataPublic(
 		command: TestCommand,
@@ -44,9 +50,15 @@ class TestUpdateCommandHandler extends BaseUpdateCommandHandler<
 
 describe('BaseUpdateCommandHandler', () => {
 	let handler: TestUpdateCommandHandler;
+	let mockEventBus: jest.Mocked<EventBus>;
 
 	beforeEach(() => {
-		handler = new TestUpdateCommandHandler();
+		mockEventBus = {
+			publish: jest.fn(),
+			publishAll: jest.fn(),
+		} as unknown as jest.Mocked<EventBus>;
+
+		handler = new TestUpdateCommandHandler(mockEventBus);
 	});
 
 	it('should be defined', () => {

@@ -7,17 +7,20 @@ import {
 } from '@nestjs/cqrs';
 
 import { AssertSagaInstanceNotExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-not-exists/assert-saga-instance-not-exists.service';
+import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
 import { SagaInstanceAggregateFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-aggregate/saga-instance-aggregate.factory';
 import {
 	SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN,
 	SagaInstanceWriteRepository,
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-write.repository';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 
 import { SagaInstanceCreateCommand } from './saga-instance-create.command';
 
 @CommandHandler(SagaInstanceCreateCommand)
 export class SagaInstanceCreateCommandHandler
+	extends BaseCommandHandler<SagaInstanceCreateCommand, SagaInstanceAggregate>
 	implements ICommandHandler<SagaInstanceCreateCommand>
 {
 	private readonly logger = new Logger(SagaInstanceCreateCommandHandler.name);
@@ -25,11 +28,13 @@ export class SagaInstanceCreateCommandHandler
 	constructor(
 		@Inject(SAGA_INSTANCE_WRITE_REPOSITORY_TOKEN)
 		private readonly sagaInstanceWriteRepository: SagaInstanceWriteRepository,
-		private readonly eventBus: EventBus,
+		eventBus: EventBus,
 		private readonly queryBus: QueryBus,
 		private readonly sagaInstanceAggregateFactory: SagaInstanceAggregateFactory,
 		private readonly assertSagaInstanceNotExistsService: AssertSagaInstanceNotExistsService,
-	) {}
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the saga instance create command
@@ -59,8 +64,7 @@ export class SagaInstanceCreateCommandHandler
 		await this.sagaInstanceWriteRepository.save(sagaInstance);
 
 		// 05: Publish all events
-		await this.eventBus.publishAll(sagaInstance.getUncommittedEvents());
-		await sagaInstance.commit();
+		await this.publishEvents(sagaInstance);
 
 		// 06: Return the saga instance id
 		return sagaInstance.id.value;
