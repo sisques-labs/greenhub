@@ -1,15 +1,12 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-
 import { LocationDeleteCommand } from '@/core/location-context/application/commands/location/location-delete/location-delete.command';
-import { LocationDeletedEvent } from '@/core/location-context/application/events/location/location-deleted/location-deleted.event';
 import { AssertLocationExistsService } from '@/core/location-context/application/services/location/assert-location-exists/assert-location-exists.service';
 import { LocationAggregate } from '@/core/location-context/domain/aggregates/location.aggregate';
 import {
-	LOCATION_WRITE_REPOSITORY_TOKEN,
 	ILocationWriteRepository,
+	LOCATION_WRITE_REPOSITORY_TOKEN,
 } from '@/core/location-context/domain/repositories/location-write/location-write.repository';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Command handler for deleting a location.
@@ -28,7 +25,7 @@ export class LocationDeleteCommandHandler
 		@Inject(LOCATION_WRITE_REPOSITORY_TOKEN)
 		private readonly locationWriteRepository: ILocationWriteRepository,
 		private readonly assertLocationExistsService: AssertLocationExistsService,
-		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
+		private eventBus: EventBus,
 	) {}
 
 	/**
@@ -53,9 +50,7 @@ export class LocationDeleteCommandHandler
 		await this.locationWriteRepository.delete(existingLocation.id.value);
 
 		// 04: Publish the domain events
-		await this.publishIntegrationEventsService.executeAll(
-			existingLocation.getUncommittedEvents(),
-		);
+		await this.eventBus.publish(existingLocation.getUncommittedEvents());
+		existingLocation.commit();
 	}
 }
-
