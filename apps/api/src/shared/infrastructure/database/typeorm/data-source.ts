@@ -24,7 +24,8 @@ export const dataSourceOptions: DataSourceOptions = {
 		configService.getOrThrow<string>('DATABASE_MIGRATIONS_TABLE_NAME') ||
 		'migrations',
 	migrationsRun: false,
-	synchronize: configService.getOrThrow<string>('NODE_ENV') !== 'production',
+	synchronize:
+		configService.getOrThrow<string>('DATABASE_SYNCHRONIZE') === 'true',
 	logging: configService.getOrThrow<string>('NODE_ENV') !== 'production',
 	extra: {
 		connectionLimit: 10, // Adjust based on your database connection pool requirements
