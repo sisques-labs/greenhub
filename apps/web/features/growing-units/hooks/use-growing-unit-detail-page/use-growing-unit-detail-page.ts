@@ -29,7 +29,7 @@ function transformPlantFormValues(values: PlantCreateFormValues) {
 		species: values.species,
 		plantedDate: values.plantedDate?.toISOString() || null,
 		notes: values.notes,
-		status: values.status as any,
+		status: values.status,
 	};
 }
 
