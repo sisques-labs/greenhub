@@ -1,4 +1,5 @@
 import { IPlantSpeciesViewModelDto } from '@/core/plant-species-context/domain/dtos/view-models/plant-species/plant-species-view-model.dto';
+import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
 import { BaseViewModel } from '@/shared/domain/view-models/base-view-model/base-view-model';
 
 /**
@@ -14,10 +15,10 @@ export class PlantSpeciesViewModel extends BaseViewModel {
 	private _growthRate: string;
 	private _lightRequirements: string;
 	private _waterRequirements: string;
-	private _temperatureRange: { min: number; max: number };
+	private _temperatureRange: INumericRange;
 	private _humidityRequirements: string;
 	private _soilType: string;
-	private _phRange: { min: number; max: number };
+	private _phRange: INumericRange;
 	private _matureSize: { height: number; width: number };
 	private _growthTime: number;
 	private _tags: string[];
@@ -82,7 +83,7 @@ export class PlantSpeciesViewModel extends BaseViewModel {
 		return this._waterRequirements;
 	}
 
-	public get temperatureRange(): { min: number; max: number } {
+	public get temperatureRange(): INumericRange {
 		return this._temperatureRange;
 	}
 
@@ -94,7 +95,7 @@ export class PlantSpeciesViewModel extends BaseViewModel {
 		return this._soilType;
 	}
 
-	public get phRange(): { min: number; max: number } {
+	public get phRange(): INumericRange {
 		return this._phRange;
 	}
 

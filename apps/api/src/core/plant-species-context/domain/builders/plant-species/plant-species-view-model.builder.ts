@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { IPlantSpeciesViewModelDto } from '@/core/plant-species-context/domain/dtos/view-models/plant-species/plant-species-view-model.dto';
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
+import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
 import { PlantSpeciesViewModelCategoryRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-view-model/plant-species-view-model-category-required/plant-species-view-model-category-required.exception';
 import { PlantSpeciesViewModelCommonNameRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-view-model/plant-species-view-model-common-name-required/plant-species-view-model-common-name-required.exception';
 import { PlantSpeciesViewModelIdRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-view-model/plant-species-view-model-id-required/plant-species-view-model-id-required.exception';
@@ -26,10 +27,10 @@ export class PlantSpeciesViewModelBuilder {
 	private _growthRate: string | null = null;
 	private _lightRequirements: string | null = null;
 	private _waterRequirements: string | null = null;
-	private _temperatureRange: { min: number; max: number } | null = null;
+	private _temperatureRange: INumericRange | null = null;
 	private _humidityRequirements: string | null = null;
 	private _soilType: string | null = null;
-	private _phRange: { min: number; max: number } | null = null;
+	private _phRange: INumericRange | null = null;
 	private _matureSize: { height: number; width: number } | null = null;
 	private _growthTime: number | null = null;
 	private _tags: string[] | null = null;
@@ -88,10 +89,7 @@ export class PlantSpeciesViewModelBuilder {
 		return this;
 	}
 
-	public withTemperatureRange(temperatureRange: {
-		min: number;
-		max: number;
-	}): this {
+	public withTemperatureRange(temperatureRange: INumericRange): this {
 		this._temperatureRange = temperatureRange;
 		return this;
 	}
@@ -106,7 +104,7 @@ export class PlantSpeciesViewModelBuilder {
 		return this;
 	}
 
-	public withPhRange(phRange: { min: number; max: number }): this {
+	public withPhRange(phRange: INumericRange): this {
 		this._phRange = phRange;
 		return this;
 	}

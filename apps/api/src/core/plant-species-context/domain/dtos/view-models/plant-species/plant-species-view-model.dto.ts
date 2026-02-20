@@ -1,3 +1,4 @@
+import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
 import { IBaseViewModelDto } from '@/shared/domain/interfaces/base-view-model-dto.interface';
 
 export interface IPlantSpeciesViewModelDto extends IBaseViewModelDto {
@@ -10,10 +11,10 @@ export interface IPlantSpeciesViewModelDto extends IBaseViewModelDto {
 	growthRate: string;
 	lightRequirements: string;
 	waterRequirements: string;
-	temperatureRange: { min: number; max: number };
+	temperatureRange: INumericRange;
 	humidityRequirements: string;
 	soilType: string;
-	phRange: { min: number; max: number };
+	phRange: INumericRange;
 	matureSize: { height: number; width: number };
 	growthTime: number;
 	tags: string[];

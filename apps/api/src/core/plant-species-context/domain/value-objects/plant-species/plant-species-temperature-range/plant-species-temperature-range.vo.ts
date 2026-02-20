@@ -1,3 +1,5 @@
+import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
+
 /**
  * Value object representing the temperature range (min/max in °C) for a plant species.
  */
@@ -5,7 +7,7 @@ export class PlantSpeciesTemperatureRangeValueObject {
 	private readonly _min: number;
 	private readonly _max: number;
 
-	constructor(range: { min: number; max: number }) {
+	constructor(range: INumericRange) {
 		this._min = range.min;
 		this._max = range.max;
 		this.validate();
@@ -19,11 +21,11 @@ export class PlantSpeciesTemperatureRangeValueObject {
 		return this._max;
 	}
 
-	public get value(): { min: number; max: number } {
+	public get value(): INumericRange {
 		return { min: this._min, max: this._max };
 	}
 
-	public toPrimitives(): { min: number; max: number } {
+	public toPrimitives(): INumericRange {
 		return { min: this._min, max: this._max };
 	}
 

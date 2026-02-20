@@ -1,3 +1,5 @@
+import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
+
 export interface IPlantSpeciesEventData {
 	id: string;
 	commonName?: string;
@@ -9,10 +11,10 @@ export interface IPlantSpeciesEventData {
 	growthRate?: string;
 	lightRequirements?: string;
 	waterRequirements?: string;
-	temperatureRange?: { min: number; max: number };
+	temperatureRange?: INumericRange;
 	humidityRequirements?: string;
 	soilType?: string;
-	phRange?: { min: number; max: number };
+	phRange?: INumericRange;
 	matureSize?: { height: number; width: number };
 	growthTime?: number;
 	tags?: string[];
