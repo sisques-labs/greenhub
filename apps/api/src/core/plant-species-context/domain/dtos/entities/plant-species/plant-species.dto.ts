@@ -1,0 +1,44 @@
+import { PlantSpeciesCategoryValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-category/plant-species-category.vo';
+import { PlantSpeciesCommonNameValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-common-name/plant-species-common-name.vo';
+import { PlantSpeciesDescriptionValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-description/plant-species-description.vo';
+import { PlantSpeciesDifficultyValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-difficulty/plant-species-difficulty.vo';
+import { PlantSpeciesFamilyValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-family/plant-species-family.vo';
+import { PlantSpeciesGrowthRateValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-growth-rate/plant-species-growth-rate.vo';
+import { PlantSpeciesGrowthTimeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-growth-time/plant-species-growth-time.vo';
+import { PlantSpeciesHumidityRequirementsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-humidity-requirements/plant-species-humidity-requirements.vo';
+import { PlantSpeciesLightRequirementsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-light-requirements/plant-species-light-requirements.vo';
+import { PlantSpeciesMatureSizeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-mature-size/plant-species-mature-size.vo';
+import { PlantSpeciesPhRangeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-ph-range/plant-species-ph-range.vo';
+import { PlantSpeciesScientificNameValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-scientific-name/plant-species-scientific-name.vo';
+import { PlantSpeciesSoilTypeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-soil-type/plant-species-soil-type.vo';
+import { PlantSpeciesTagsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-tags/plant-species-tags.vo';
+import { PlantSpeciesTemperatureRangeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-temperature-range/plant-species-temperature-range.vo';
+import { PlantSpeciesWaterRequirementsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-water-requirements/plant-species-water-requirements.vo';
+import { BooleanValueObject } from '@/shared/domain/value-objects/boolean/boolean.vo';
+import { PlantSpeciesUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-species-uuid/plant-species-uuid.vo';
+import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+
+export interface IPlantSpeciesDto {
+	id: PlantSpeciesUuidValueObject;
+	commonName: PlantSpeciesCommonNameValueObject;
+	scientificName: PlantSpeciesScientificNameValueObject;
+	family: PlantSpeciesFamilyValueObject;
+	description: PlantSpeciesDescriptionValueObject;
+	category: PlantSpeciesCategoryValueObject;
+	difficulty: PlantSpeciesDifficultyValueObject;
+	growthRate: PlantSpeciesGrowthRateValueObject;
+	lightRequirements: PlantSpeciesLightRequirementsValueObject;
+	waterRequirements: PlantSpeciesWaterRequirementsValueObject;
+	temperatureRange: PlantSpeciesTemperatureRangeValueObject;
+	humidityRequirements: PlantSpeciesHumidityRequirementsValueObject;
+	soilType: PlantSpeciesSoilTypeValueObject;
+	phRange: PlantSpeciesPhRangeValueObject;
+	matureSize: PlantSpeciesMatureSizeValueObject;
+	growthTime: PlantSpeciesGrowthTimeValueObject;
+	tags: PlantSpeciesTagsValueObject;
+	isVerified: BooleanValueObject;
+	contributorId: UserUuidValueObject | null;
+	createdAt: Date;
+	updatedAt: Date;
+	deletedAt: Date | null;
+}
