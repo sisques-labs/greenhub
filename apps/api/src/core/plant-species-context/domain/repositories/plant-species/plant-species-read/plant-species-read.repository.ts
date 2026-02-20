@@ -13,6 +13,7 @@ export const PLANT_SPECIES_READ_REPOSITORY_TOKEN = Symbol(
  */
 export interface IPlantSpeciesReadRepository
 	extends IBaseReadRepository<PlantSpeciesViewModel> {
+	findAll(): Promise<PlantSpeciesViewModel[]>;
 	findByCategory(
 		category: PlantSpeciesCategoryValueObject,
 	): Promise<PlantSpeciesViewModel[]>;
