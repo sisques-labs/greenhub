@@ -188,562 +188,491 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	/**
 	 * Changes the common name of the plant species.
 	 * @param commonName - The new common name value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeCommonName(
 		commonName: PlantSpeciesCommonNameValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._commonName.value;
 		this._commonName = commonName;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesCommonNameChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesCommonNameChangedEvent.name,
-					},
-					{ id: this._id.value, oldValue, newValue: this._commonName.value },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesCommonNameChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesCommonNameChangedEvent.name,
+				},
+				{ id: this._id.value, oldValue, newValue: this._commonName.value },
+			),
+		);
 	}
 
 	/**
 	 * Changes the scientific name of the plant species.
 	 * @param scientificName - The new scientific name value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeScientificName(
 		scientificName: PlantSpeciesScientificNameValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._scientificName.value;
 		this._scientificName = scientificName;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesScientificNameChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesScientificNameChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._scientificName.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesScientificNameChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesScientificNameChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._scientificName.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the family of the plant species.
 	 * @param family - The new family value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeFamily(
 		family: PlantSpeciesFamilyValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._family.value;
 		this._family = family;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesFamilyChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesFamilyChangedEvent.name,
-					},
-					{ id: this._id.value, oldValue, newValue: this._family.value },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesFamilyChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesFamilyChangedEvent.name,
+				},
+				{ id: this._id.value, oldValue, newValue: this._family.value },
+			),
+		);
 	}
 
 	/**
 	 * Changes the description of the plant species.
 	 * @param description - The new description value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeDescription(
 		description: PlantSpeciesDescriptionValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._description.value;
 		this._description = description;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesDescriptionChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesDescriptionChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._description.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesDescriptionChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesDescriptionChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._description.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the category of the plant species.
 	 * @param category - The new category value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeCategory(
 		category: PlantSpeciesCategoryValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._category.value;
 		this._category = category;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesCategoryChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesCategoryChangedEvent.name,
-					},
-					{ id: this._id.value, oldValue, newValue: this._category.value },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesCategoryChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesCategoryChangedEvent.name,
+				},
+				{ id: this._id.value, oldValue, newValue: this._category.value },
+			),
+		);
 	}
 
 	/**
 	 * Changes the difficulty of the plant species.
 	 * @param difficulty - The new difficulty value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeDifficulty(
 		difficulty: PlantSpeciesDifficultyValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._difficulty.value;
 		this._difficulty = difficulty;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesDifficultyChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesDifficultyChangedEvent.name,
-					},
-					{ id: this._id.value, oldValue, newValue: this._difficulty.value },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesDifficultyChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesDifficultyChangedEvent.name,
+				},
+				{ id: this._id.value, oldValue, newValue: this._difficulty.value },
+			),
+		);
 	}
 
 	/**
 	 * Changes the growth rate of the plant species.
 	 * @param growthRate - The new growth rate value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeGrowthRate(
 		growthRate: PlantSpeciesGrowthRateValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._growthRate.value;
 		this._growthRate = growthRate;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesGrowthRateChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesGrowthRateChangedEvent.name,
-					},
-					{ id: this._id.value, oldValue, newValue: this._growthRate.value },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesGrowthRateChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesGrowthRateChangedEvent.name,
+				},
+				{ id: this._id.value, oldValue, newValue: this._growthRate.value },
+			),
+		);
 	}
 
 	/**
 	 * Changes the light requirements of the plant species.
 	 * @param lightRequirements - The new light requirements value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeLightRequirements(
 		lightRequirements: PlantSpeciesLightRequirementsValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._lightRequirements.value;
 		this._lightRequirements = lightRequirements;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesLightRequirementsChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesLightRequirementsChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._lightRequirements.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesLightRequirementsChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesLightRequirementsChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._lightRequirements.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the water requirements of the plant species.
 	 * @param waterRequirements - The new water requirements value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeWaterRequirements(
 		waterRequirements: PlantSpeciesWaterRequirementsValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._waterRequirements.value;
 		this._waterRequirements = waterRequirements;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesWaterRequirementsChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesWaterRequirementsChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._waterRequirements.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesWaterRequirementsChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesWaterRequirementsChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._waterRequirements.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the temperature range of the plant species.
 	 * @param temperatureRange - The new temperature range value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeTemperatureRange(
 		temperatureRange: PlantSpeciesTemperatureRangeValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._temperatureRange.toPrimitives();
 		this._temperatureRange = temperatureRange;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesTemperatureRangeChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesTemperatureRangeChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._temperatureRange.toPrimitives(),
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesTemperatureRangeChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesTemperatureRangeChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._temperatureRange.toPrimitives(),
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the humidity requirements of the plant species.
 	 * @param humidityRequirements - The new humidity requirements value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeHumidityRequirements(
 		humidityRequirements: PlantSpeciesHumidityRequirementsValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._humidityRequirements.value;
 		this._humidityRequirements = humidityRequirements;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesHumidityRequirementsChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesHumidityRequirementsChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._humidityRequirements.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesHumidityRequirementsChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesHumidityRequirementsChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._humidityRequirements.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the soil type of the plant species.
 	 * @param soilType - The new soil type value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeSoilType(
 		soilType: PlantSpeciesSoilTypeValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._soilType.value;
 		this._soilType = soilType;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesSoilTypeChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesSoilTypeChangedEvent.name,
-					},
-					{ id: this._id.value, oldValue, newValue: this._soilType.value },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesSoilTypeChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesSoilTypeChangedEvent.name,
+				},
+				{ id: this._id.value, oldValue, newValue: this._soilType.value },
+			),
+		);
 	}
 
 	/**
 	 * Changes the pH range of the plant species.
 	 * @param phRange - The new pH range value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changePhRange(
 		phRange: PlantSpeciesPhRangeValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._phRange.toPrimitives();
 		this._phRange = phRange;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesPhRangeChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesPhRangeChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._phRange.toPrimitives(),
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesPhRangeChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesPhRangeChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._phRange.toPrimitives(),
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the mature size of the plant species.
 	 * @param matureSize - The new mature size value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeMatureSize(
 		matureSize: PlantSpeciesMatureSizeValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._matureSize.toPrimitives();
 		this._matureSize = matureSize;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesMatureSizeChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesMatureSizeChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._matureSize.toPrimitives(),
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesMatureSizeChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesMatureSizeChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._matureSize.toPrimitives(),
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the growth time of the plant species.
 	 * @param growthTime - The new growth time value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeGrowthTime(
 		growthTime: PlantSpeciesGrowthTimeValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._growthTime.value;
 		this._growthTime = growthTime;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesGrowthTimeChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesGrowthTimeChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._growthTime.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesGrowthTimeChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesGrowthTimeChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._growthTime.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the tags of the plant species.
 	 * @param tags - The new tags value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeTags(
 		tags: PlantSpeciesTagsValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._tags.toPrimitives();
 		this._tags = tags;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesTagsChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesTagsChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._tags.toPrimitives(),
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesTagsChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesTagsChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._tags.toPrimitives(),
+				},
+			),
+		);
 	}
 
 	/**
 	 * Changes the verification status of the plant species.
 	 * @param isVerified - The new verification status value object.
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
 	public changeIsVerified(
 		isVerified: BooleanValueObject,
-		generateEvent: boolean = true,
 	): void {
 		const oldValue = this._isVerified.value;
 		this._isVerified = isVerified;
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesIsVerifiedChangedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesIsVerifiedChangedEvent.name,
-					},
-					{
-						id: this._id.value,
-						oldValue,
-						newValue: this._isVerified.value,
-					},
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesIsVerifiedChangedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesIsVerifiedChangedEvent.name,
+				},
+				{
+					id: this._id.value,
+					oldValue,
+					newValue: this._isVerified.value,
+				},
+			),
+		);
 	}
 
 	/**
 	 * Marks this plant species as deleted (soft-delete).
-	 * @param generateEvent - Whether to emit the corresponding domain event.
 	 */
-	public delete(generateEvent: boolean = true): void {
+	public delete(): void {
 		this._deletedAt = new Date();
 		this._updatedAt = new Date();
 
-		if (generateEvent) {
-			this.apply(
-				new PlantSpeciesDeletedEvent(
-					{
-						aggregateRootId: this._id.value,
-						aggregateRootType: PlantSpeciesAggregate.name,
-						entityId: this._id.value,
-						entityType: PlantSpeciesAggregate.name,
-						eventType: PlantSpeciesDeletedEvent.name,
-					},
-					{ ...this.toPrimitives() },
-				),
-			);
-		}
+		this.apply(
+			new PlantSpeciesDeletedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesDeletedEvent.name,
+				},
+				{ ...this.toPrimitives() },
+			),
+		);
 	}
 
 	/**

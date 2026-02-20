@@ -105,57 +105,29 @@ describe('PlantSpeciesAggregate', () => {
 	});
 
 	describe('changeCommonName', () => {
-		it('should change the common name', () => {
+		it('should change the common name and emit event', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
 			const newName = new PlantSpeciesCommonNameValueObject('Cherry Tomato');
 
-			aggregate.changeCommonName(newName, false);
+			aggregate.changeCommonName(newName);
 
 			expect(aggregate.commonName.value).toBe('Cherry Tomato');
-		});
-
-		it('should emit PlantSpeciesCommonNameChangedEvent when generateEvent is true', () => {
-			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
-			const newName = new PlantSpeciesCommonNameValueObject('Cherry Tomato');
-
-			aggregate.changeCommonName(newName, true);
-
 			const events = aggregate.getUncommittedEvents();
 			expect(events).toHaveLength(1);
 			expect(events[0]).toBeInstanceOf(PlantSpeciesCommonNameChangedEvent);
 		});
-
-		it('should not emit event when generateEvent is false', () => {
-			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
-			const newName = new PlantSpeciesCommonNameValueObject('Cherry Tomato');
-
-			aggregate.changeCommonName(newName, false);
-
-			const events = aggregate.getUncommittedEvents();
-			expect(events).toHaveLength(0);
-		});
 	});
 
 	describe('changeCategory', () => {
-		it('should change the category', () => {
+		it('should change the category and emit event', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
 			const newCategory = new PlantSpeciesCategoryValueObject(
 				PlantSpeciesCategoryEnum.FRUIT,
 			);
 
-			aggregate.changeCategory(newCategory, false);
+			aggregate.changeCategory(newCategory);
 
 			expect(aggregate.category.value).toBe(PlantSpeciesCategoryEnum.FRUIT);
-		});
-
-		it('should emit PlantSpeciesCategoryChangedEvent when generateEvent is true', () => {
-			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
-			const newCategory = new PlantSpeciesCategoryValueObject(
-				PlantSpeciesCategoryEnum.FRUIT,
-			);
-
-			aggregate.changeCategory(newCategory, true);
-
 			const events = aggregate.getUncommittedEvents();
 			expect(events).toHaveLength(1);
 			expect(events[0]).toBeInstanceOf(PlantSpeciesCategoryChangedEvent);
@@ -163,19 +135,12 @@ describe('PlantSpeciesAggregate', () => {
 	});
 
 	describe('changeIsVerified', () => {
-		it('should change the verification status', () => {
+		it('should change the verification status and emit event', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
 
-			aggregate.changeIsVerified(new BooleanValueObject(true), false);
+			aggregate.changeIsVerified(new BooleanValueObject(true));
 
 			expect(aggregate.isVerified.value).toBe(true);
-		});
-
-		it('should emit PlantSpeciesIsVerifiedChangedEvent when generateEvent is true', () => {
-			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
-
-			aggregate.changeIsVerified(new BooleanValueObject(true), true);
-
 			const events = aggregate.getUncommittedEvents();
 			expect(events).toHaveLength(1);
 			expect(events[0]).toBeInstanceOf(PlantSpeciesIsVerifiedChangedEvent);
@@ -186,7 +151,7 @@ describe('PlantSpeciesAggregate', () => {
 		it('should set deletedAt when deleted', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
 
-			aggregate.delete(false);
+			aggregate.delete();
 
 			expect(aggregate.deletedAt).not.toBeNull();
 			expect(aggregate.isDeleted()).toBe(true);
