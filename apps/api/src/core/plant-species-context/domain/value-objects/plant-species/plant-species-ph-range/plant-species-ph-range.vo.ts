@@ -1,3 +1,4 @@
+import { InvalidPlantSpeciesPhRangeException } from '@/core/plant-species-context/domain/exceptions/plant-species-value-objects/plant-species-invalid-ph-range/plant-species-invalid-ph-range.exception';
 import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
 import { NumericRangeValueObject } from '@/shared/domain/value-objects/numeric-range/numeric-range.vo';
 
@@ -11,9 +12,7 @@ export class PlantSpeciesPhRangeValueObject extends NumericRangeValueObject {
 
 	protected override validate(): void {
 		if (this._min < 0 || this._max > 14) {
-			throw new Error(
-				`pH range must be between 0 and 14, got min: ${this._min}, max: ${this._max}`,
-			);
+			throw new InvalidPlantSpeciesPhRangeException(this._min, this._max);
 		}
 
 		super.validate();

@@ -1,6 +1,21 @@
 import { Injectable, Logger } from '@nestjs/common';
 
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
+import { PlantSpeciesAggregateCategoryRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-category-required/plant-species-aggregate-category-required.exception';
+import { PlantSpeciesAggregateCommonNameRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-common-name-required/plant-species-aggregate-common-name-required.exception';
+import { PlantSpeciesAggregateDescriptionRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-description-required/plant-species-aggregate-description-required.exception';
+import { PlantSpeciesAggregateDifficultyRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-difficulty-required/plant-species-aggregate-difficulty-required.exception';
+import { PlantSpeciesAggregateFamilyRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-family-required/plant-species-aggregate-family-required.exception';
+import { PlantSpeciesAggregateGrowthRateRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-growth-rate-required/plant-species-aggregate-growth-rate-required.exception';
+import { PlantSpeciesAggregateGrowthTimeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-growth-time-required/plant-species-aggregate-growth-time-required.exception';
+import { PlantSpeciesAggregateHumidityRequirementsRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-humidity-requirements-required/plant-species-aggregate-humidity-requirements-required.exception';
+import { PlantSpeciesAggregateLightRequirementsRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-light-requirements-required/plant-species-aggregate-light-requirements-required.exception';
+import { PlantSpeciesAggregateMatureSizeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-mature-size-required/plant-species-aggregate-mature-size-required.exception';
+import { PlantSpeciesAggregatePhRangeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-ph-range-required/plant-species-aggregate-ph-range-required.exception';
+import { PlantSpeciesAggregateScientificNameRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-scientific-name-required/plant-species-aggregate-scientific-name-required.exception';
+import { PlantSpeciesAggregateSoilTypeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-soil-type-required/plant-species-aggregate-soil-type-required.exception';
+import { PlantSpeciesAggregateTemperatureRangeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-temperature-range-required/plant-species-aggregate-temperature-range-required.exception';
+import { PlantSpeciesAggregateWaterRequirementsRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-water-requirements-required/plant-species-aggregate-water-requirements-required.exception';
 import { IPlantSpeciesDto } from '@/core/plant-species-context/domain/dtos/entities/plant-species/plant-species.dto';
 import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
 import { PlantSpeciesDifficultyEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-difficulty/plant-species-difficulty.enum';
@@ -325,63 +340,63 @@ export class PlantSpeciesAggregateBuilder {
 		}
 
 		if (!this._commonName) {
-			throw new Error('PlantSpeciesAggregate commonName is required');
+			throw new PlantSpeciesAggregateCommonNameRequiredException();
 		}
 
 		if (!this._scientificName) {
-			throw new Error('PlantSpeciesAggregate scientificName is required');
+			throw new PlantSpeciesAggregateScientificNameRequiredException();
 		}
 
 		if (!this._family) {
-			throw new Error('PlantSpeciesAggregate family is required');
+			throw new PlantSpeciesAggregateFamilyRequiredException();
 		}
 
 		if (!this._description) {
-			throw new Error('PlantSpeciesAggregate description is required');
+			throw new PlantSpeciesAggregateDescriptionRequiredException();
 		}
 
 		if (!this._category) {
-			throw new Error('PlantSpeciesAggregate category is required');
+			throw new PlantSpeciesAggregateCategoryRequiredException();
 		}
 
 		if (!this._difficulty) {
-			throw new Error('PlantSpeciesAggregate difficulty is required');
+			throw new PlantSpeciesAggregateDifficultyRequiredException();
 		}
 
 		if (!this._growthRate) {
-			throw new Error('PlantSpeciesAggregate growthRate is required');
+			throw new PlantSpeciesAggregateGrowthRateRequiredException();
 		}
 
 		if (!this._lightRequirements) {
-			throw new Error('PlantSpeciesAggregate lightRequirements is required');
+			throw new PlantSpeciesAggregateLightRequirementsRequiredException();
 		}
 
 		if (!this._waterRequirements) {
-			throw new Error('PlantSpeciesAggregate waterRequirements is required');
+			throw new PlantSpeciesAggregateWaterRequirementsRequiredException();
 		}
 
 		if (!this._temperatureRange) {
-			throw new Error('PlantSpeciesAggregate temperatureRange is required');
+			throw new PlantSpeciesAggregateTemperatureRangeRequiredException();
 		}
 
 		if (!this._humidityRequirements) {
-			throw new Error('PlantSpeciesAggregate humidityRequirements is required');
+			throw new PlantSpeciesAggregateHumidityRequirementsRequiredException();
 		}
 
 		if (!this._soilType) {
-			throw new Error('PlantSpeciesAggregate soilType is required');
+			throw new PlantSpeciesAggregateSoilTypeRequiredException();
 		}
 
 		if (!this._phRange) {
-			throw new Error('PlantSpeciesAggregate phRange is required');
+			throw new PlantSpeciesAggregatePhRangeRequiredException();
 		}
 
 		if (!this._matureSize) {
-			throw new Error('PlantSpeciesAggregate matureSize is required');
+			throw new PlantSpeciesAggregateMatureSizeRequiredException();
 		}
 
 		if (!this._growthTime) {
-			throw new Error('PlantSpeciesAggregate growthTime is required');
+			throw new PlantSpeciesAggregateGrowthTimeRequiredException();
 		}
 
 		const dto: IPlantSpeciesDto = {

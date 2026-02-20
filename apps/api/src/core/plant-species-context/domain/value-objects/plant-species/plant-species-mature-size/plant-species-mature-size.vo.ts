@@ -1,3 +1,6 @@
+import { InvalidPlantSpeciesMatureSizeHeightException } from '@/core/plant-species-context/domain/exceptions/plant-species-value-objects/plant-species-invalid-mature-size-height/plant-species-invalid-mature-size-height.exception';
+import { InvalidPlantSpeciesMatureSizeWidthException } from '@/core/plant-species-context/domain/exceptions/plant-species-value-objects/plant-species-invalid-mature-size-width/plant-species-invalid-mature-size-width.exception';
+
 /**
  * Value object representing the mature size (height/width in cm) of a plant species.
  */
@@ -33,15 +36,11 @@ export class PlantSpeciesMatureSizeValueObject {
 
 	private validate(): void {
 		if (this._height <= 0) {
-			throw new Error(
-				`Mature size height must be greater than 0, got ${this._height}`,
-			);
+			throw new InvalidPlantSpeciesMatureSizeHeightException(this._height);
 		}
 
 		if (this._width <= 0) {
-			throw new Error(
-				`Mature size width must be greater than 0, got ${this._width}`,
-			);
+			throw new InvalidPlantSpeciesMatureSizeWidthException(this._width);
 		}
 	}
 }

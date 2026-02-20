@@ -1,3 +1,4 @@
+import { InvalidNumericRangeException } from '@/shared/domain/exceptions/value-objects/invalid-numeric-range/invalid-numeric-range.exception';
 import { INumericRange } from '@/shared/domain/interfaces/numeric-range.interface';
 
 /**
@@ -37,9 +38,7 @@ export class NumericRangeValueObject {
 
 	protected validate(): void {
 		if (this._min > this._max) {
-			throw new Error(
-				`Range min (${this._min}) cannot be greater than max (${this._max})`,
-			);
+			throw new InvalidNumericRangeException(this._min, this._max);
 		}
 	}
 }
