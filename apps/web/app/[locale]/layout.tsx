@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import { ErrorBoundary } from 'shared/components/error-boundary/error-boundary';
 import { AppLayoutWithSidebar } from 'shared/components/templates/app-layout-with-sidebar';
 import { routing } from 'shared/i18n/routing';
 import Providers from 'shared/providers/providers';
@@ -51,7 +52,9 @@ export default async function LocaleLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<Providers locale={locale} messages={messages}>
-					<AppLayoutWithSidebar>{children}</AppLayoutWithSidebar>
+					<ErrorBoundary>
+						<AppLayoutWithSidebar>{children}</AppLayoutWithSidebar>
+					</ErrorBoundary>
 				</Providers>
 			</body>
 		</html>
