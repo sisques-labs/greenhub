@@ -9,6 +9,9 @@ import { PlantSpeciesAggregateBuilder } from '@/core/plant-species-context/domai
 import { PlantSpeciesViewModelBuilder } from '@/core/plant-species-context/domain/builders/plant-species/plant-species-view-model.builder';
 import { PLANT_SPECIES_READ_REPOSITORY_TOKEN } from '@/core/plant-species-context/domain/repositories/plant-species/plant-species-read/plant-species-read.repository';
 import { PLANT_SPECIES_WRITE_REPOSITORY_TOKEN } from '@/core/plant-species-context/domain/repositories/plant-species/plant-species-write/plant-species-write.repository';
+import { PlantSpeciesCreatedEventHandler } from '@/core/plant-species-context/infrastructure/event-handlers/plant-species/plant-species-created/plant-species-created.event-handler';
+import { PlantSpeciesDeletedEventHandler } from '@/core/plant-species-context/infrastructure/event-handlers/plant-species/plant-species-deleted/plant-species-deleted.event-handler';
+import { PlantSpeciesUpdatedEventHandler } from '@/core/plant-species-context/infrastructure/event-handlers/plant-species/plant-species-updated/plant-species-updated.event-handler';
 import { PlantSpeciesMongoDBMapper } from '@/core/plant-species-context/infrastructure/database/mongodb/mappers/plant-species/plant-species-mongodb.mapper';
 import { PlantSpeciesMongoRepository } from '@/core/plant-species-context/infrastructure/database/mongodb/repositories/plant-species/plant-species-mongodb.repository';
 import { PlantSpeciesTypeormEntity } from '@/core/plant-species-context/infrastructure/database/typeorm/entities/plant-species-typeorm.entity';
@@ -40,6 +43,12 @@ const COMMAND_HANDLERS = [
 	PlantSpeciesDeleteCommandHandler,
 ];
 
+const EVENT_HANDLERS = [
+	PlantSpeciesCreatedEventHandler,
+	PlantSpeciesUpdatedEventHandler,
+	PlantSpeciesDeletedEventHandler,
+];
+
 const BUILDERS = [PlantSpeciesAggregateBuilder, PlantSpeciesViewModelBuilder];
 
 const MAPPERS = [
@@ -69,6 +78,7 @@ const ENTITIES = [PlantSpeciesTypeormEntity];
 		...APPLICATION_SERVICES,
 		...QUERY_HANDLERS,
 		...COMMAND_HANDLERS,
+		...EVENT_HANDLERS,
 		...REPOSITORIES,
 		...BUILDERS,
 		...MAPPERS,

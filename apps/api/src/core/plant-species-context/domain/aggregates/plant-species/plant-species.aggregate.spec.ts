@@ -107,6 +107,7 @@ describe('PlantSpeciesAggregate', () => {
 	describe('changeCommonName', () => {
 		it('should change the common name and emit event', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
+			aggregate.commit();
 			const newName = new PlantSpeciesCommonNameValueObject('Cherry Tomato');
 
 			aggregate.changeCommonName(newName);
@@ -121,6 +122,7 @@ describe('PlantSpeciesAggregate', () => {
 	describe('changeCategory', () => {
 		it('should change the category and emit event', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
+			aggregate.commit();
 			const newCategory = new PlantSpeciesCategoryValueObject(
 				PlantSpeciesCategoryEnum.FRUIT,
 			);
@@ -137,6 +139,7 @@ describe('PlantSpeciesAggregate', () => {
 	describe('changeIsVerified', () => {
 		it('should change the verification status and emit event', () => {
 			const aggregate = new PlantSpeciesAggregate(plantSpeciesDto);
+			aggregate.commit();
 
 			aggregate.changeIsVerified(new BooleanValueObject(true));
 
