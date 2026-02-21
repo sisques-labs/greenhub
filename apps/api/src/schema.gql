@@ -205,6 +205,112 @@ type PaginatedGrowingUnitResultDto {
   items: [GrowingUnitResponseDto!]!
 }
 
+type PlantSpeciesTemperatureRangeResponseDto {
+  """Minimum value"""
+  min: Float!
+
+  """Maximum value"""
+  max: Float!
+}
+
+type PlantSpeciesPhRangeResponseDto {
+  """Minimum value"""
+  min: Float!
+
+  """Maximum value"""
+  max: Float!
+}
+
+type PlantSpeciesMatureSizeResponseDto {
+  """Mature height in centimeters"""
+  height: Float!
+
+  """Mature width in centimeters"""
+  width: Float!
+}
+
+type PlantSpeciesResponseDto {
+  """The id of the plant species"""
+  id: String!
+
+  """The common name of the plant species"""
+  commonName: String!
+
+  """The scientific name of the plant species"""
+  scientificName: String!
+
+  """The family of the plant species"""
+  family: String
+
+  """A description of the plant species"""
+  description: String
+
+  """The category of the plant species"""
+  category: String!
+
+  """The difficulty level of the plant species"""
+  difficulty: String!
+
+  """The growth rate of the plant species"""
+  growthRate: String!
+
+  """The light requirements of the plant species"""
+  lightRequirements: String!
+
+  """The water requirements of the plant species"""
+  waterRequirements: String!
+
+  """The temperature range the plant species can tolerate"""
+  temperatureRange: PlantSpeciesTemperatureRangeResponseDto
+
+  """The humidity requirements of the plant species"""
+  humidityRequirements: String
+
+  """The preferred soil type of the plant species"""
+  soilType: String
+
+  """The pH range the plant species prefers"""
+  phRange: PlantSpeciesPhRangeResponseDto
+
+  """The mature size of the plant species"""
+  matureSize: PlantSpeciesMatureSizeResponseDto
+
+  """The growth time in days"""
+  growthTime: Int
+
+  """Tags associated with the plant species"""
+  tags: [String!]
+
+  """Whether the plant species has been verified"""
+  isVerified: Boolean!
+
+  """The id of the contributor who added the plant species"""
+  contributorId: String
+
+  """The created at timestamp of the plant species"""
+  createdAt: DateTime!
+
+  """The updated at timestamp of the plant species"""
+  updatedAt: DateTime!
+}
+
+type PaginatedPlantSpeciesResultDto {
+  """The total number of items"""
+  total: Int!
+
+  """The page number"""
+  page: Int!
+
+  """The number of items per page"""
+  perPage: Int!
+
+  """The total number of pages"""
+  totalPages: Int!
+
+  """The plant species in the current page"""
+  items: [PlantSpeciesResponseDto!]!
+}
+
 type LoginResponseDto {
   """The access token"""
   accessToken: String!
@@ -665,6 +771,8 @@ type Query {
   plantFindById(input: PlantFindByIdRequestDto!): PlantResponseDto
   locationsFindByCriteria(input: LocationFindByCriteriaRequestDto): PaginatedLocationResultDto!
   locationFindById(input: LocationFindByIdRequestDto!): LocationResponseDto
+  plantSpeciesFindById(input: PlantSpeciesFindByIdRequestDto!): PlantSpeciesResponseDto!
+  plantSpeciesFindByCriteria(input: PlantSpeciesFindByCriteriaRequestDto): PaginatedPlantSpeciesResultDto!
   healthCheck: HealthResponseDto!
   authProfileMe: AuthUserProfileResponseDto!
   findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
@@ -775,6 +883,22 @@ input LocationFindByIdRequestDto {
   id: String!
 }
 
+input PlantSpeciesFindByIdRequestDto {
+  """The id of the plant species to find"""
+  id: String!
+}
+
+input PlantSpeciesFindByCriteriaRequestDto {
+  """The filters to find by"""
+  filters: [BaseFilterInput!] = []
+
+  """The sorts to find by"""
+  sorts: [BaseSortInput!] = []
+
+  """The pagination to find by"""
+  pagination: BasePaginationInput = {page: 1, perPage: 10}
+}
+
 input AuthFindByCriteriaRequestDto {
   """The filters to find by"""
   filters: [BaseFilterInput!] = []
@@ -876,6 +1000,9 @@ type Mutation {
   createLocation(input: LocationCreateRequestDto!): MutationResponseDto!
   updateLocation(input: LocationUpdateRequestDto!): MutationResponseDto!
   deleteLocation(input: LocationDeleteRequestDto!): MutationResponseDto!
+  plantSpeciesCreate(input: PlantSpeciesCreateRequestDto!): MutationResponseDto!
+  plantSpeciesUpdate(input: PlantSpeciesUpdateRequestDto!): MutationResponseDto!
+  plantSpeciesDelete(input: PlantSpeciesDeleteRequestDto!): MutationResponseDto!
   loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
   registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
   refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
@@ -1078,6 +1205,203 @@ input LocationUpdateRequestDto {
 
 input LocationDeleteRequestDto {
   """The id of the location"""
+  id: String!
+}
+
+input PlantSpeciesCreateRequestDto {
+  """The common name of the plant species"""
+  commonName: String!
+
+  """The scientific name of the plant species"""
+  scientificName: String!
+
+  """The family of the plant species"""
+  family: String
+
+  """A description of the plant species"""
+  description: String
+
+  """The category of the plant species"""
+  category: PlantSpeciesCategoryEnum!
+
+  """The difficulty level of the plant species"""
+  difficulty: PlantSpeciesDifficultyEnum!
+
+  """The growth rate of the plant species"""
+  growthRate: PlantSpeciesGrowthRateEnum!
+
+  """The light requirements of the plant species"""
+  lightRequirements: PlantSpeciesLightRequirementsEnum!
+
+  """The water requirements of the plant species"""
+  waterRequirements: PlantSpeciesWaterRequirementsEnum!
+
+  """The temperature range the plant species can tolerate"""
+  temperatureRange: PlantSpeciesTemperatureRangeInput
+
+  """The humidity requirements of the plant species"""
+  humidityRequirements: PlantSpeciesHumidityRequirementsEnum
+
+  """The preferred soil type of the plant species"""
+  soilType: PlantSpeciesSoilTypeEnum
+
+  """The pH range the plant species prefers"""
+  phRange: PlantSpeciesPhRangeInput
+
+  """The mature size of the plant species"""
+  matureSize: PlantSpeciesMatureSizeInput
+
+  """The growth time in days"""
+  growthTime: Int
+
+  """Tags associated with the plant species"""
+  tags: [String!]
+
+  """The id of the contributor who added the plant species"""
+  contributorId: String
+
+  """Whether the plant species has been verified"""
+  isVerified: Boolean
+}
+
+"""The category of the plant species"""
+enum PlantSpeciesCategoryEnum {
+  VEGETABLE
+  FRUIT
+  HERB
+  FLOWER
+  TREE
+  SHRUB
+  SUCCULENT
+  FERN
+  GRASS
+  OTHER
+}
+
+"""The difficulty level of the plant species"""
+enum PlantSpeciesDifficultyEnum {
+  EASY
+  MEDIUM
+  HARD
+}
+
+"""The growth rate of the plant species"""
+enum PlantSpeciesGrowthRateEnum {
+  SLOW
+  MEDIUM
+  FAST
+}
+
+"""The light requirements of the plant species"""
+enum PlantSpeciesLightRequirementsEnum {
+  FULL_SUN
+  PARTIAL_SUN
+  PARTIAL_SHADE
+  FULL_SHADE
+}
+
+"""The water requirements of the plant species"""
+enum PlantSpeciesWaterRequirementsEnum {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+input PlantSpeciesTemperatureRangeInput {
+  """Minimum value"""
+  min: Float!
+
+  """Maximum value"""
+  max: Float!
+}
+
+"""The humidity requirements of the plant species"""
+enum PlantSpeciesHumidityRequirementsEnum {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+"""The soil type preferred by the plant species"""
+enum PlantSpeciesSoilTypeEnum {
+  SANDY
+  LOAMY
+  CLAY
+  PEATY
+  CHALKY
+}
+
+input PlantSpeciesPhRangeInput {
+  """Minimum value"""
+  min: Float!
+
+  """Maximum value"""
+  max: Float!
+}
+
+input PlantSpeciesMatureSizeInput {
+  """Mature height in centimeters"""
+  height: Float!
+
+  """Mature width in centimeters"""
+  width: Float!
+}
+
+input PlantSpeciesUpdateRequestDto {
+  """The id of the plant species to update"""
+  id: String!
+
+  """The common name of the plant species"""
+  commonName: String
+
+  """The scientific name of the plant species"""
+  scientificName: String
+
+  """The family of the plant species"""
+  family: String
+
+  """A description of the plant species"""
+  description: String
+
+  """The category of the plant species"""
+  category: PlantSpeciesCategoryEnum
+
+  """The difficulty level of the plant species"""
+  difficulty: PlantSpeciesDifficultyEnum
+
+  """The growth rate of the plant species"""
+  growthRate: PlantSpeciesGrowthRateEnum
+
+  """The light requirements of the plant species"""
+  lightRequirements: PlantSpeciesLightRequirementsEnum
+
+  """The water requirements of the plant species"""
+  waterRequirements: PlantSpeciesWaterRequirementsEnum
+
+  """The temperature range the plant species can tolerate"""
+  temperatureRange: PlantSpeciesTemperatureRangeInput
+
+  """The humidity requirements of the plant species"""
+  humidityRequirements: PlantSpeciesHumidityRequirementsEnum
+
+  """The preferred soil type of the plant species"""
+  soilType: PlantSpeciesSoilTypeEnum
+
+  """The pH range the plant species prefers"""
+  phRange: PlantSpeciesPhRangeInput
+
+  """The mature size of the plant species"""
+  matureSize: PlantSpeciesMatureSizeInput
+
+  """The growth time in days"""
+  growthTime: Int
+
+  """Tags associated with the plant species"""
+  tags: [String!]
+}
+
+input PlantSpeciesDeleteRequestDto {
+  """The id of the plant species to delete"""
   id: String!
 }
 
