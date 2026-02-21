@@ -190,9 +190,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the common name of the plant species.
 	 * @param commonName - The new common name value object.
 	 */
-	public changeCommonName(
-		commonName: PlantSpeciesCommonNameValueObject,
-	): void {
+	public changeCommonName(commonName: PlantSpeciesCommonNameValueObject): void {
 		const oldValue = this._commonName.value;
 		this._commonName = commonName;
 		this._updatedAt = new Date();
@@ -244,9 +242,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the family of the plant species.
 	 * @param family - The new family value object.
 	 */
-	public changeFamily(
-		family: PlantSpeciesFamilyValueObject,
-	): void {
+	public changeFamily(family: PlantSpeciesFamilyValueObject): void {
 		const oldValue = this._family.value;
 		this._family = family;
 		this._updatedAt = new Date();
@@ -298,9 +294,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the category of the plant species.
 	 * @param category - The new category value object.
 	 */
-	public changeCategory(
-		category: PlantSpeciesCategoryValueObject,
-	): void {
+	public changeCategory(category: PlantSpeciesCategoryValueObject): void {
 		const oldValue = this._category.value;
 		this._category = category;
 		this._updatedAt = new Date();
@@ -323,9 +317,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the difficulty of the plant species.
 	 * @param difficulty - The new difficulty value object.
 	 */
-	public changeDifficulty(
-		difficulty: PlantSpeciesDifficultyValueObject,
-	): void {
+	public changeDifficulty(difficulty: PlantSpeciesDifficultyValueObject): void {
 		const oldValue = this._difficulty.value;
 		this._difficulty = difficulty;
 		this._updatedAt = new Date();
@@ -348,9 +340,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the growth rate of the plant species.
 	 * @param growthRate - The new growth rate value object.
 	 */
-	public changeGrowthRate(
-		growthRate: PlantSpeciesGrowthRateValueObject,
-	): void {
+	public changeGrowthRate(growthRate: PlantSpeciesGrowthRateValueObject): void {
 		const oldValue = this._growthRate.value;
 		this._growthRate = growthRate;
 		this._updatedAt = new Date();
@@ -489,9 +479,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the soil type of the plant species.
 	 * @param soilType - The new soil type value object.
 	 */
-	public changeSoilType(
-		soilType: PlantSpeciesSoilTypeValueObject,
-	): void {
+	public changeSoilType(soilType: PlantSpeciesSoilTypeValueObject): void {
 		const oldValue = this._soilType.value;
 		this._soilType = soilType;
 		this._updatedAt = new Date();
@@ -514,9 +502,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the pH range of the plant species.
 	 * @param phRange - The new pH range value object.
 	 */
-	public changePhRange(
-		phRange: PlantSpeciesPhRangeValueObject,
-	): void {
+	public changePhRange(phRange: PlantSpeciesPhRangeValueObject): void {
 		const oldValue = this._phRange.toPrimitives();
 		this._phRange = phRange;
 		this._updatedAt = new Date();
@@ -543,9 +529,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the mature size of the plant species.
 	 * @param matureSize - The new mature size value object.
 	 */
-	public changeMatureSize(
-		matureSize: PlantSpeciesMatureSizeValueObject,
-	): void {
+	public changeMatureSize(matureSize: PlantSpeciesMatureSizeValueObject): void {
 		const oldValue = this._matureSize.toPrimitives();
 		this._matureSize = matureSize;
 		this._updatedAt = new Date();
@@ -572,9 +556,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the growth time of the plant species.
 	 * @param growthTime - The new growth time value object.
 	 */
-	public changeGrowthTime(
-		growthTime: PlantSpeciesGrowthTimeValueObject,
-	): void {
+	public changeGrowthTime(growthTime: PlantSpeciesGrowthTimeValueObject): void {
 		const oldValue = this._growthTime.value;
 		this._growthTime = growthTime;
 		this._updatedAt = new Date();
@@ -601,9 +583,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the tags of the plant species.
 	 * @param tags - The new tags value object.
 	 */
-	public changeTags(
-		tags: PlantSpeciesTagsValueObject,
-	): void {
+	public changeTags(tags: PlantSpeciesTagsValueObject): void {
 		const oldValue = this._tags.toPrimitives();
 		this._tags = tags;
 		this._updatedAt = new Date();
@@ -630,9 +610,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 * Changes the verification status of the plant species.
 	 * @param isVerified - The new verification status value object.
 	 */
-	public changeIsVerified(
-		isVerified: BooleanValueObject,
-	): void {
+	public changeIsVerified(isVerified: BooleanValueObject): void {
 		const oldValue = this._isVerified.value;
 		this._isVerified = isVerified;
 		this._updatedAt = new Date();
@@ -661,24 +639,7 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 	 *
 	 * @param props - The fields to update (all optional).
 	 */
-	public update(props: {
-		commonName?: PlantSpeciesCommonNameValueObject;
-		scientificName?: PlantSpeciesScientificNameValueObject;
-		family?: PlantSpeciesFamilyValueObject;
-		description?: PlantSpeciesDescriptionValueObject;
-		category?: PlantSpeciesCategoryValueObject;
-		difficulty?: PlantSpeciesDifficultyValueObject;
-		growthRate?: PlantSpeciesGrowthRateValueObject;
-		lightRequirements?: PlantSpeciesLightRequirementsValueObject;
-		waterRequirements?: PlantSpeciesWaterRequirementsValueObject;
-		temperatureRange?: PlantSpeciesTemperatureRangeValueObject;
-		humidityRequirements?: PlantSpeciesHumidityRequirementsValueObject;
-		soilType?: PlantSpeciesSoilTypeValueObject;
-		phRange?: PlantSpeciesPhRangeValueObject;
-		matureSize?: PlantSpeciesMatureSizeValueObject;
-		growthTime?: PlantSpeciesGrowthTimeValueObject;
-		tags?: PlantSpeciesTagsValueObject;
-	}): void {
+	public update(props: Partial<IPlantSpeciesDto>): void {
 		if (props.commonName !== undefined) {
 			this.changeCommonName(props.commonName);
 		}
