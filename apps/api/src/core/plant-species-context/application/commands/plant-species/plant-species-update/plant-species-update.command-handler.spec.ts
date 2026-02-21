@@ -1,8 +1,8 @@
 import { PlantSpeciesUpdateCommand } from '@/core/plant-species-context/application/commands/plant-species/plant-species-update/plant-species-update.command';
 import { PlantSpeciesUpdateCommandHandler } from '@/core/plant-species-context/application/commands/plant-species/plant-species-update/plant-species-update.command-handler';
 import { IPlantSpeciesUpdateCommandDto } from '@/core/plant-species-context/application/dtos/commands/plant-species/plant-species-update/plant-species-update-command.dto';
-import { PlantSpeciesScientificNameAlreadyInUseException } from '@/core/plant-species-context/application/exceptions/plant-species/plant-species-scientific-name-already-in-use/plant-species-scientific-name-already-in-use.exception';
 import { PlantSpeciesUpdatedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-updated/plant-species-updated.event';
+import { PlantSpeciesScientificNameAlreadyInUseException } from '@/core/plant-species-context/application/exceptions/plant-species/plant-species-scientific-name-already-in-use/plant-species-scientific-name-already-in-use.exception';
 import { AssertPlantSpeciesExistsService } from '@/core/plant-species-context/application/services/plant-species/assert-plant-species-exists/assert-plant-species-exists.service';
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
 import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
@@ -66,7 +66,9 @@ function createMockPlantSpecies(id?: string): PlantSpeciesAggregate {
 		humidityRequirements: new PlantSpeciesHumidityRequirementsValueObject(
 			PlantSpeciesHumidityRequirementsEnum.MEDIUM,
 		),
-		soilType: new PlantSpeciesSoilTypeValueObject(PlantSpeciesSoilTypeEnum.LOAMY),
+		soilType: new PlantSpeciesSoilTypeValueObject(
+			PlantSpeciesSoilTypeEnum.LOAMY,
+		),
 		phRange: new PlantSpeciesPhRangeValueObject({ min: 6.0, max: 7.0 }),
 		matureSize: new PlantSpeciesMatureSizeValueObject({
 			height: 100,
@@ -259,20 +261,25 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 			mockAssertPlantSpeciesExistsService.execute.mockResolvedValue(
 				mockPlantSpecies,
 			);
-			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
+			mockPlantSpeciesWriteRepository.save.mockImplementation(
+				async (aggregate) => aggregate,
+			);
 
 			let capturedEvents: unknown[] = [];
-			mockEventBus.publishAll.mockImplementation((events: unknown[]) => {
-				capturedEvents = [...events];
-				return Promise.resolve();
+			mockEventBus.publishAll.mockImplementation(async (events) => {
+				capturedEvents = Array.isArray(events)
+					? [...events]
+					: [...(events as Iterable<unknown>)];
+				return undefined;
 			});
 
 			await handler.execute(command);
 
-			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(capturedEvents.length).toBeGreaterThanOrEqual(1);
 			expect(
 				capturedEvents.some(
-					(e) =>
+					(e: unknown) =>
 						(e as { eventType?: string }).eventType ===
 						PlantSpeciesUpdatedEvent.name,
 				),

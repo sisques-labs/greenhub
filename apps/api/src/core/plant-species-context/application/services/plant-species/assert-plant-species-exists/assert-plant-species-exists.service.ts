@@ -1,12 +1,11 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
-
-import { PlantSpeciesApplicationNotFoundException } from '@/core/plant-species-context/application/exceptions/plant-species/plant-species-not-found/plant-species-not-found.exception';
+import { PlantSpeciesNotFoundException } from '@/core/plant-species-context/application/exceptions/plant-species/plant-species-not-found/plant-species-not-found.exception';
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
 import {
 	IPlantSpeciesWriteRepository,
 	PLANT_SPECIES_WRITE_REPOSITORY_TOKEN,
 } from '@/core/plant-species-context/domain/repositories/plant-species/plant-species-write/plant-species-write.repository';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 
 /**
  * Service responsible for asserting that a plant species exists in the write repository.
@@ -42,7 +41,7 @@ export class AssertPlantSpeciesExistsService
 		// 02: If the plant species does not exist, throw an error
 		if (!existingPlantSpecies) {
 			this.logger.error(`Plant species not found by id: ${id}`);
-			throw new PlantSpeciesApplicationNotFoundException(id);
+			throw new PlantSpeciesNotFoundException(id);
 		}
 
 		return existingPlantSpecies;
