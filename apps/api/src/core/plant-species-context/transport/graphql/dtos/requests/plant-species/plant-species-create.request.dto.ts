@@ -19,28 +19,13 @@ import { PlantSpeciesHumidityRequirementsEnum } from '@/core/plant-species-conte
 import { PlantSpeciesLightRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-light-requirements/plant-species-light-requirements.enum';
 import { PlantSpeciesSoilTypeEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-soil-type/plant-species-soil-type.enum';
 import { PlantSpeciesWaterRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-water-requirements/plant-species-water-requirements.enum';
+import { NumericRangeInputDto } from '@/shared/transport/graphql/dtos/requests/numeric-range/numeric-range.input';
 
 @InputType('PlantSpeciesTemperatureRangeInput')
-export class PlantSpeciesTemperatureRangeInputDto {
-	@Field(() => Float, { description: 'Minimum temperature in Celsius' })
-	@IsNumber()
-	min: number;
-
-	@Field(() => Float, { description: 'Maximum temperature in Celsius' })
-	@IsNumber()
-	max: number;
-}
+export class PlantSpeciesTemperatureRangeInputDto extends NumericRangeInputDto {}
 
 @InputType('PlantSpeciesPhRangeInput')
-export class PlantSpeciesPhRangeInputDto {
-	@Field(() => Float, { description: 'Minimum pH value' })
-	@IsNumber()
-	min: number;
-
-	@Field(() => Float, { description: 'Maximum pH value' })
-	@IsNumber()
-	max: number;
-}
+export class PlantSpeciesPhRangeInputDto extends NumericRangeInputDto {}
 
 @InputType('PlantSpeciesMatureSizeInput')
 export class PlantSpeciesMatureSizeInputDto {
