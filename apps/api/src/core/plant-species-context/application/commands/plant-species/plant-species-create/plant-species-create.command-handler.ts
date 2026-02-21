@@ -1,16 +1,14 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-
 import { PlantSpeciesCreateCommand } from '@/core/plant-species-context/application/commands/plant-species/plant-species-create/plant-species-create.command';
 import { PlantSpeciesScientificNameAlreadyInUseException } from '@/core/plant-species-context/application/exceptions/plant-species/plant-species-scientific-name-already-in-use/plant-species-scientific-name-already-in-use.exception';
-import { PlantSpeciesCreatedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-created/plant-species-created.event';
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
 import { PlantSpeciesAggregateBuilder } from '@/core/plant-species-context/domain/builders/plant-species/plant-species-aggregate.builder';
 import {
 	IPlantSpeciesWriteRepository,
 	PLANT_SPECIES_WRITE_REPOSITORY_TOKEN,
 } from '@/core/plant-species-context/domain/repositories/plant-species/plant-species-write/plant-species-write.repository';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
+import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Command handler for creating a new plant species.
@@ -21,6 +19,7 @@ import { PublishIntegrationEventsService } from '@/shared/application/services/p
  */
 @CommandHandler(PlantSpeciesCreateCommand)
 export class PlantSpeciesCreateCommandHandler
+	extends BaseCommandHandler<PlantSpeciesCreateCommand, PlantSpeciesAggregate>
 	implements ICommandHandler<PlantSpeciesCreateCommand>
 {
 	private readonly logger = new Logger(PlantSpeciesCreateCommandHandler.name);
@@ -29,8 +28,10 @@ export class PlantSpeciesCreateCommandHandler
 		@Inject(PLANT_SPECIES_WRITE_REPOSITORY_TOKEN)
 		private readonly plantSpeciesWriteRepository: IPlantSpeciesWriteRepository,
 		private readonly plantSpeciesAggregateBuilder: PlantSpeciesAggregateBuilder,
-		private readonly publishIntegrationEventsService: PublishIntegrationEventsService,
-	) {}
+		eventBus: EventBus,
+	) {
+		super(eventBus);
+	}
 
 	/**
 	 * Executes the plant species create command.
@@ -59,7 +60,15 @@ export class PlantSpeciesCreateCommandHandler
 		// 02: Build the plant species aggregate
 		const builder = this.plantSpeciesAggregateBuilder.reset();
 
-		builder.withId(command.id).withCommonName(command.commonName).withScientificName(command.scientificName).withCategory(command.category).withDifficulty(command.difficulty).withGrowthRate(command.growthRate).withLightRequirements(command.lightRequirements).withWaterRequirements(command.waterRequirements);
+		builder
+			.withId(command.id)
+			.withCommonName(command.commonName)
+			.withScientificName(command.scientificName)
+			.withCategory(command.category)
+			.withDifficulty(command.difficulty)
+			.withGrowthRate(command.growthRate)
+			.withLightRequirements(command.lightRequirements)
+			.withWaterRequirements(command.waterRequirements);
 
 		if (command.family) {
 			builder.withFamily(command.family);
@@ -106,19 +115,8 @@ export class PlantSpeciesCreateCommandHandler
 		// 03: Save the plant species aggregate
 		await this.plantSpeciesWriteRepository.save(plantSpecies);
 
-		// 04: Publish the PlantSpeciesCreatedEvent
-		await this.publishIntegrationEventsService.execute(
-			new PlantSpeciesCreatedEvent(
-				{
-					aggregateRootId: plantSpecies.id.value,
-					aggregateRootType: PlantSpeciesAggregate.name,
-					entityId: plantSpecies.id.value,
-					entityType: PlantSpeciesAggregate.name,
-					eventType: PlantSpeciesCreatedEvent.name,
-				},
-				{ ...plantSpecies.toPrimitives() },
-			),
-		);
+		// 04: Publish the events
+		await this.publishEvents(plantSpecies);
 
 		// 05: Return the plant species id
 		return plantSpecies.id.value;

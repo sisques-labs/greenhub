@@ -29,9 +29,9 @@ import { PlantSpeciesSoilTypeValueObject } from '@/core/plant-species-context/do
 import { PlantSpeciesTagsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-tags/plant-species-tags.vo';
 import { PlantSpeciesTemperatureRangeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-temperature-range/plant-species-temperature-range.vo';
 import { PlantSpeciesWaterRequirementsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-water-requirements/plant-species-water-requirements.vo';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { BooleanValueObject } from '@/shared/domain/value-objects/boolean/boolean.vo';
 import { PlantSpeciesUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-species-uuid/plant-species-uuid.vo';
+import { EventBus } from '@nestjs/cqrs';
 
 function createMockPlantSpecies(id?: string): PlantSpeciesAggregate {
 	const speciesId = id ?? '123e4567-e89b-12d3-a456-426614174000';
@@ -82,7 +82,7 @@ function createMockPlantSpecies(id?: string): PlantSpeciesAggregate {
 describe('PlantSpeciesCreateCommandHandler', () => {
 	let handler: PlantSpeciesCreateCommandHandler;
 	let mockPlantSpeciesWriteRepository: jest.Mocked<IPlantSpeciesWriteRepository>;
-	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
+	let mockEventBus: jest.Mocked<EventBus>;
 	let mockPlantSpeciesAggregateBuilder: jest.Mocked<PlantSpeciesAggregateBuilder>;
 
 	const baseCommandDto: IPlantSpeciesCreateCommandDto = {
@@ -113,9 +113,10 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			findByCommonName: jest.fn(),
 		} as unknown as jest.Mocked<IPlantSpeciesWriteRepository>;
 
-		mockPublishIntegrationEventsService = {
-			execute: jest.fn(),
-		} as unknown as jest.Mocked<PublishIntegrationEventsService>;
+		mockEventBus = {
+			publish: jest.fn(),
+			publishAll: jest.fn().mockResolvedValue(undefined),
+		} as unknown as jest.Mocked<EventBus>;
 
 		mockPlantSpeciesAggregateBuilder = {
 			reset: jest.fn().mockReturnThis(),
@@ -143,7 +144,7 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 		handler = new PlantSpeciesCreateCommandHandler(
 			mockPlantSpeciesWriteRepository,
 			mockPlantSpeciesAggregateBuilder,
-			mockPublishIntegrationEventsService,
+			mockEventBus,
 		);
 	});
 
@@ -161,7 +162,6 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			);
 			mockPlantSpeciesAggregateBuilder.build.mockReturnValue(mockPlantSpecies);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
@@ -174,9 +174,7 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			expect(mockPlantSpeciesWriteRepository.save).toHaveBeenCalledWith(
 				mockPlantSpecies,
 			);
-			expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalledTimes(
-				1,
-			);
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
 		});
 
 		it('should throw when scientific name already exists', async () => {
@@ -193,9 +191,7 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 
 			expect(mockPlantSpeciesAggregateBuilder.build).not.toHaveBeenCalled();
 			expect(mockPlantSpeciesWriteRepository.save).not.toHaveBeenCalled();
-			expect(
-				mockPublishIntegrationEventsService.execute,
-			).not.toHaveBeenCalled();
+			expect(mockEventBus.publishAll).not.toHaveBeenCalled();
 		});
 
 		it('should publish PlantSpeciesCreatedEvent when plant species is created', async () => {
@@ -207,14 +203,25 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			);
 			mockPlantSpeciesAggregateBuilder.build.mockReturnValue(mockPlantSpecies);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
+
+			let capturedEvents: unknown[] = [];
+			mockEventBus.publishAll.mockImplementation(async (events) => {
+				capturedEvents = Array.isArray(events)
+					? [...events]
+					: [...(events as Iterable<unknown>)];
+				return undefined;
+			});
 
 			await handler.execute(command);
 
-			expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
-			const callArgs =
-				mockPublishIntegrationEventsService.execute.mock.calls[0][0];
-			expect(callArgs).toBeInstanceOf(PlantSpeciesCreatedEvent);
+			expect(mockEventBus.publishAll).toHaveBeenCalledTimes(1);
+			expect(
+				capturedEvents.some(
+					(e: unknown) =>
+						(e as { eventType?: string }).eventType ===
+						PlantSpeciesCreatedEvent.name,
+				),
+			).toBe(true);
 		});
 
 		it('should save plant species before publishing events', async () => {
@@ -226,14 +233,12 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			);
 			mockPlantSpeciesAggregateBuilder.build.mockReturnValue(mockPlantSpecies);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
 			const saveOrder =
 				mockPlantSpeciesWriteRepository.save.mock.invocationCallOrder[0];
-			const publishOrder =
-				mockPublishIntegrationEventsService.execute.mock.invocationCallOrder[0];
+			const publishOrder = mockEventBus.publishAll.mock.invocationCallOrder[0];
 			expect(saveOrder).toBeLessThan(publishOrder);
 		});
 
@@ -247,7 +252,6 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			);
 			mockPlantSpeciesAggregateBuilder.build.mockReturnValue(mockPlantSpecies);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 
@@ -273,7 +277,6 @@ describe('PlantSpeciesCreateCommandHandler', () => {
 			);
 			mockPlantSpeciesAggregateBuilder.build.mockReturnValue(mockPlantSpecies);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			const result = await handler.execute(command);
 

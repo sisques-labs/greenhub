@@ -1,6 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
-
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
+import { IPlantSpeciesDto } from '@/core/plant-species-context/domain/dtos/entities/plant-species/plant-species.dto';
+import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
+import { PlantSpeciesDifficultyEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-difficulty/plant-species-difficulty.enum';
+import { PlantSpeciesGrowthRateEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-growth-rate/plant-species-growth-rate.enum';
+import { PlantSpeciesHumidityRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-humidity-requirements/plant-species-humidity-requirements.enum';
+import { PlantSpeciesLightRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-light-requirements/plant-species-light-requirements.enum';
+import { PlantSpeciesSoilTypeEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-soil-type/plant-species-soil-type.enum';
+import { PlantSpeciesWaterRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-water-requirements/plant-species-water-requirements.enum';
 import { PlantSpeciesAggregateCategoryRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-category-required/plant-species-aggregate-category-required.exception';
 import { PlantSpeciesAggregateCommonNameRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-common-name-required/plant-species-aggregate-common-name-required.exception';
 import { PlantSpeciesAggregateDescriptionRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-description-required/plant-species-aggregate-description-required.exception';
@@ -16,14 +22,6 @@ import { PlantSpeciesAggregateScientificNameRequiredException } from '@/core/pla
 import { PlantSpeciesAggregateSoilTypeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-soil-type-required/plant-species-aggregate-soil-type-required.exception';
 import { PlantSpeciesAggregateTemperatureRangeRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-temperature-range-required/plant-species-aggregate-temperature-range-required.exception';
 import { PlantSpeciesAggregateWaterRequirementsRequiredException } from '@/core/plant-species-context/domain/exceptions/plant-species-aggregate/plant-species-aggregate-water-requirements-required/plant-species-aggregate-water-requirements-required.exception';
-import { IPlantSpeciesDto } from '@/core/plant-species-context/domain/dtos/entities/plant-species/plant-species.dto';
-import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
-import { PlantSpeciesDifficultyEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-difficulty/plant-species-difficulty.enum';
-import { PlantSpeciesGrowthRateEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-growth-rate/plant-species-growth-rate.enum';
-import { PlantSpeciesHumidityRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-humidity-requirements/plant-species-humidity-requirements.enum';
-import { PlantSpeciesLightRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-light-requirements/plant-species-light-requirements.enum';
-import { PlantSpeciesSoilTypeEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-soil-type/plant-species-soil-type.enum';
-import { PlantSpeciesWaterRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-water-requirements/plant-species-water-requirements.enum';
 import { PlantSpeciesPrimitives } from '@/core/plant-species-context/domain/primitives/plant-species/plant-species.primitives';
 import { PlantSpeciesCategoryValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-category/plant-species-category.vo';
 import { PlantSpeciesCommonNameValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-common-name/plant-species-common-name.vo';
@@ -44,6 +42,7 @@ import { PlantSpeciesWaterRequirementsValueObject } from '@/core/plant-species-c
 import { BooleanValueObject } from '@/shared/domain/value-objects/boolean/boolean.vo';
 import { PlantSpeciesUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-species-uuid/plant-species-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Builder class responsible for constructing {@link PlantSpeciesAggregate} instances
@@ -238,9 +237,7 @@ export class PlantSpeciesAggregateBuilder {
 	 * Populates the builder from primitives (serialized form).
 	 */
 	public fromPrimitives(primitives: PlantSpeciesPrimitives): this {
-		this.logger.log(
-			`Populating builder from primitives: ${primitives.id}`,
-		);
+		this.logger.log(`Populating builder from primitives: ${primitives.id}`);
 
 		this._id = new PlantSpeciesUuidValueObject(primitives.id);
 		this._commonName = new PlantSpeciesCommonNameValueObject(
@@ -271,9 +268,10 @@ export class PlantSpeciesAggregateBuilder {
 		this._temperatureRange = new PlantSpeciesTemperatureRangeValueObject(
 			primitives.temperatureRange,
 		);
-		this._humidityRequirements = new PlantSpeciesHumidityRequirementsValueObject(
-			primitives.humidityRequirements as PlantSpeciesHumidityRequirementsEnum,
-		);
+		this._humidityRequirements =
+			new PlantSpeciesHumidityRequirementsValueObject(
+				primitives.humidityRequirements as PlantSpeciesHumidityRequirementsEnum,
+			);
 		this._soilType = new PlantSpeciesSoilTypeValueObject(
 			primitives.soilType as PlantSpeciesSoilTypeEnum,
 		);

@@ -1,3 +1,4 @@
+import { PlantSpeciesCreatedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-created/plant-species-created.event';
 import { PlantSpeciesDeletedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-deleted/plant-species-deleted.event';
 import { PlantSpeciesUpdatedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-updated/plant-species-updated.event';
 import { IPlantSpeciesDto } from '@/core/plant-species-context/domain/dtos/entities/plant-species/plant-species.dto';
@@ -184,6 +185,19 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 		this._createdAt = props.createdAt;
 		this._updatedAt = props.updatedAt;
 		this._deletedAt = props.deletedAt;
+
+		this.apply(
+			new PlantSpeciesCreatedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesCreatedEvent.name,
+				},
+				{ ...this.toPrimitives() },
+			),
+		);
 	}
 
 	/**
