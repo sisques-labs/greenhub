@@ -260,13 +260,23 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 				mockPlantSpecies,
 			);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
-			mockEventBus.publishAll.mockResolvedValue(undefined);
+
+			let capturedEvents: unknown[] = [];
+			mockEventBus.publishAll.mockImplementation((events: unknown[]) => {
+				capturedEvents = [...events];
+				return Promise.resolve();
+			});
 
 			await handler.execute(command);
 
 			expect(mockEventBus.publishAll).toHaveBeenCalled();
-			const publishedEvents = mockEventBus.publishAll.mock.calls[0][0] as unknown[];
-			expect(publishedEvents.some(e => e instanceof PlantSpeciesUpdatedEvent)).toBe(true);
+			expect(
+				capturedEvents.some(
+					(e) =>
+						(e as { eventType?: string }).eventType ===
+						PlantSpeciesUpdatedEvent.name,
+				),
+			).toBe(true);
 		});
 
 		it('should throw exception when plant species does not exist', async () => {
