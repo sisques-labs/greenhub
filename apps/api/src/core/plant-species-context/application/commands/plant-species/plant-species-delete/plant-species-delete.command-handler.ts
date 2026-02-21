@@ -1,6 +1,3 @@
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-
 import { PlantSpeciesDeleteCommand } from '@/core/plant-species-context/application/commands/plant-species/plant-species-delete/plant-species-delete.command';
 import { AssertPlantSpeciesExistsService } from '@/core/plant-species-context/application/services/plant-species/assert-plant-species-exists/assert-plant-species-exists.service';
 import { PlantSpeciesAggregate } from '@/core/plant-species-context/domain/aggregates/plant-species/plant-species.aggregate';
@@ -9,6 +6,8 @@ import {
 	PLANT_SPECIES_WRITE_REPOSITORY_TOKEN,
 } from '@/core/plant-species-context/domain/repositories/plant-species/plant-species-write/plant-species-write.repository';
 import { BaseCommandHandler } from '@/shared/application/commands/base/base-command.handler';
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 /**
  * Command handler for deleting a plant species.
@@ -18,7 +17,7 @@ import { BaseCommandHandler } from '@/shared/application/commands/base/base-comm
  * It validates that the plant species exists before proceeding with deletion,
  * removes it from the write repository, and publishes domain events.
  *
- * @throws {PlantSpeciesApplicationNotFoundException} When the plant species does not exist
+ * @throws {PlantSpeciesNotFoundException} When the plant species does not exist
  */
 @CommandHandler(PlantSpeciesDeleteCommand)
 export class PlantSpeciesDeleteCommandHandler
@@ -41,7 +40,7 @@ export class PlantSpeciesDeleteCommandHandler
 	 *
 	 * @param command - The command to execute
 	 * @returns void
-	 * @throws {PlantSpeciesApplicationNotFoundException} When the plant species does not exist
+	 * @throws {PlantSpeciesNotFoundException} When the plant species does not exist
 	 */
 	async execute(command: PlantSpeciesDeleteCommand): Promise<void> {
 		this.logger.log(
@@ -56,7 +55,9 @@ export class PlantSpeciesDeleteCommandHandler
 		existingPlantSpecies.delete();
 
 		// 03: Delete the plant species from the repository
-		await this.plantSpeciesWriteRepository.delete(existingPlantSpecies.id.value);
+		await this.plantSpeciesWriteRepository.delete(
+			existingPlantSpecies.id.value,
+		);
 
 		// 04: Publish the domain events
 		await this.publishEvents(existingPlantSpecies);
