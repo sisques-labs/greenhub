@@ -1,5 +1,3 @@
-import { Injectable, Logger } from '@nestjs/common';
-
 import { PlantSpeciesViewModel } from '@/core/plant-species-context/domain/view-models/plant-species/plant-species.view-model';
 import {
 	PaginatedPlantSpeciesResultDto,
@@ -9,6 +7,7 @@ import {
 	PlantSpeciesTemperatureRangeResponseDto,
 } from '@/core/plant-species-context/transport/graphql/dtos/responses/plant-species/plant-species.response.dto';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
+import { Injectable, Logger } from '@nestjs/common';
 
 /**
  * Mapper for converting between Plant Species domain view models and GraphQL DTOs.
@@ -43,13 +42,12 @@ export class PlantSpeciesGraphQLMapper {
 				: null;
 
 		// 02: Map pH range if present
-		const phRange: PlantSpeciesPhRangeResponseDto | null =
-			plantSpecies.phRange
-				? {
-						min: plantSpecies.phRange.min,
-						max: plantSpecies.phRange.max,
-					}
-				: null;
+		const phRange: PlantSpeciesPhRangeResponseDto | null = plantSpecies.phRange
+			? {
+					min: plantSpecies.phRange.min,
+					max: plantSpecies.phRange.max,
+				}
+			: null;
 
 		// 03: Map mature size if present
 		const matureSize: PlantSpeciesMatureSizeResponseDto | null =

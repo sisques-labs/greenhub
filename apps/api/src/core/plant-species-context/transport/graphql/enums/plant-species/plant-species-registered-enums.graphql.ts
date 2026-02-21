@@ -1,5 +1,3 @@
-import { registerEnumType } from '@nestjs/graphql';
-
 import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
 import { PlantSpeciesDifficultyEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-difficulty/plant-species-difficulty.enum';
 import { PlantSpeciesGrowthRateEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-growth-rate/plant-species-growth-rate.enum';
@@ -7,6 +5,7 @@ import { PlantSpeciesHumidityRequirementsEnum } from '@/core/plant-species-conte
 import { PlantSpeciesLightRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-light-requirements/plant-species-light-requirements.enum';
 import { PlantSpeciesSoilTypeEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-soil-type/plant-species-soil-type.enum';
 import { PlantSpeciesWaterRequirementsEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-water-requirements/plant-species-water-requirements.enum';
+import { registerEnumType } from '@nestjs/graphql';
 
 /**
  * Registers all GraphQL enums for the plant species.
@@ -50,6 +49,10 @@ const registeredPlantSpeciesEnums = [
 	},
 ];
 
-for (const { enum: enumType, name, description } of registeredPlantSpeciesEnums) {
+for (const {
+	enum: enumType,
+	name,
+	description,
+} of registeredPlantSpeciesEnums) {
 	registerEnumType(enumType, { name, description });
 }

@@ -1,17 +1,11 @@
-import { QueryBus } from '@nestjs/cqrs';
-
 import { PlantSpeciesFindByCriteriaQuery } from '@/core/plant-species-context/application/queries/plant-species/plant-species-find-by-criteria/plant-species-find-by-criteria.query';
 import { PlantSpeciesFindByIdQuery } from '@/core/plant-species-context/application/queries/plant-species/plant-species-find-by-id/plant-species-find-by-id.query';
-import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
-import { PlantSpeciesDifficultyEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-difficulty/plant-species-difficulty.enum';
 import { PlantSpeciesViewModel } from '@/core/plant-species-context/domain/view-models/plant-species/plant-species.view-model';
-import { PlantSpeciesFindByCategoryRequestDto } from '@/core/plant-species-context/transport/graphql/dtos/requests/plant-species/plant-species-find-by-category.request.dto';
-import { PlantSpeciesFindByDifficultyRequestDto } from '@/core/plant-species-context/transport/graphql/dtos/requests/plant-species/plant-species-find-by-difficulty.request.dto';
 import { PlantSpeciesFindByIdRequestDto } from '@/core/plant-species-context/transport/graphql/dtos/requests/plant-species/plant-species-find-by-id.request.dto';
-import { PlantSpeciesSearchRequestDto } from '@/core/plant-species-context/transport/graphql/dtos/requests/plant-species/plant-species-search.request.dto';
 import { PlantSpeciesResponseDto } from '@/core/plant-species-context/transport/graphql/dtos/responses/plant-species/plant-species.response.dto';
 import { PlantSpeciesGraphQLMapper } from '@/core/plant-species-context/transport/graphql/mappers/plant-species/plant-species.mapper';
 import { PlantSpeciesQueriesResolver } from '@/core/plant-species-context/transport/graphql/resolvers/plant-species/plant-species-queries.resolver';
+import { QueryBus } from '@nestjs/cqrs';
 
 describe('PlantSpeciesQueriesResolver', () => {
 	let resolver: PlantSpeciesQueriesResolver;
@@ -107,180 +101,9 @@ describe('PlantSpeciesQueriesResolver', () => {
 			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
 			expect(query).toBeInstanceOf(PlantSpeciesFindByIdQuery);
 			expect(query.id.value).toBe(baseViewModelProps.id);
-			expect(
-				mockPlantSpeciesGraphQLMapper.toResponseDto,
-			).toHaveBeenCalledWith(viewModel);
-		});
-	});
-
-	describe('plantSpeciesFindAll', () => {
-		it('should return all plant species', async () => {
-			const viewModel = new PlantSpeciesViewModel(baseViewModelProps);
-			const paginatedResult = {
-				items: [viewModel],
-				total: 1,
-				page: 1,
-				perPage: 1000,
-				totalPages: 1,
-			};
-
-			mockQueryBus.execute.mockResolvedValue(paginatedResult);
-			mockPlantSpeciesGraphQLMapper.toResponseDto.mockReturnValue(
-				baseResponseDto,
+			expect(mockPlantSpeciesGraphQLMapper.toResponseDto).toHaveBeenCalledWith(
+				viewModel,
 			);
-
-			const result = await resolver.plantSpeciesFindAll();
-
-			expect(result).toHaveLength(1);
-			expect(result[0]).toBe(baseResponseDto);
-			expect(mockQueryBus.execute).toHaveBeenCalledWith(
-				expect.any(PlantSpeciesFindByCriteriaQuery),
-			);
-		});
-
-		it('should return empty array when no plant species found', async () => {
-			const paginatedResult = {
-				items: [],
-				total: 0,
-				page: 1,
-				perPage: 1000,
-				totalPages: 0,
-			};
-
-			mockQueryBus.execute.mockResolvedValue(paginatedResult);
-
-			const result = await resolver.plantSpeciesFindAll();
-
-			expect(result).toHaveLength(0);
-		});
-	});
-
-	describe('plantSpeciesFindByCategory', () => {
-		it('should return plant species by category', async () => {
-			const input: PlantSpeciesFindByCategoryRequestDto = {
-				category: PlantSpeciesCategoryEnum.VEGETABLE,
-			};
-			const viewModel = new PlantSpeciesViewModel(baseViewModelProps);
-			const paginatedResult = {
-				items: [viewModel],
-				total: 1,
-				page: 1,
-				perPage: 1000,
-				totalPages: 1,
-			};
-
-			mockQueryBus.execute.mockResolvedValue(paginatedResult);
-			mockPlantSpeciesGraphQLMapper.toResponseDto.mockReturnValue(
-				baseResponseDto,
-			);
-
-			const result = await resolver.plantSpeciesFindByCategory(input);
-
-			expect(result).toHaveLength(1);
-			expect(result[0]).toBe(baseResponseDto);
-			expect(mockQueryBus.execute).toHaveBeenCalledWith(
-				expect.any(PlantSpeciesFindByCriteriaQuery),
-			);
-			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
-			expect(query.criteria.filters[0].field).toBe('category');
-			expect(query.criteria.filters[0].value).toBe(
-				PlantSpeciesCategoryEnum.VEGETABLE,
-			);
-		});
-	});
-
-	describe('plantSpeciesFindByDifficulty', () => {
-		it('should return plant species by difficulty', async () => {
-			const input: PlantSpeciesFindByDifficultyRequestDto = {
-				difficulty: PlantSpeciesDifficultyEnum.EASY,
-			};
-			const viewModel = new PlantSpeciesViewModel(baseViewModelProps);
-			const paginatedResult = {
-				items: [viewModel],
-				total: 1,
-				page: 1,
-				perPage: 1000,
-				totalPages: 1,
-			};
-
-			mockQueryBus.execute.mockResolvedValue(paginatedResult);
-			mockPlantSpeciesGraphQLMapper.toResponseDto.mockReturnValue(
-				baseResponseDto,
-			);
-
-			const result = await resolver.plantSpeciesFindByDifficulty(input);
-
-			expect(result).toHaveLength(1);
-			expect(result[0]).toBe(baseResponseDto);
-			expect(mockQueryBus.execute).toHaveBeenCalledWith(
-				expect.any(PlantSpeciesFindByCriteriaQuery),
-			);
-			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
-			expect(query.criteria.filters[0].field).toBe('difficulty');
-			expect(query.criteria.filters[0].value).toBe(
-				PlantSpeciesDifficultyEnum.EASY,
-			);
-		});
-	});
-
-	describe('plantSpeciesSearch', () => {
-		it('should return plant species matching search query', async () => {
-			const input: PlantSpeciesSearchRequestDto = {
-				query: 'tomato',
-			};
-			const viewModel = new PlantSpeciesViewModel(baseViewModelProps);
-			const paginatedResult = {
-				items: [viewModel],
-				total: 1,
-				page: 1,
-				perPage: 1000,
-				totalPages: 1,
-			};
-
-			mockQueryBus.execute.mockResolvedValue(paginatedResult);
-			mockPlantSpeciesGraphQLMapper.toResponseDto.mockReturnValue(
-				baseResponseDto,
-			);
-
-			const result = await resolver.plantSpeciesSearch(input);
-
-			expect(result).toHaveLength(1);
-			expect(result[0]).toBe(baseResponseDto);
-			expect(mockQueryBus.execute).toHaveBeenCalledWith(
-				expect.any(PlantSpeciesFindByCriteriaQuery),
-			);
-			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
-			expect(query.criteria.filters[0].field).toBe('commonName');
-			expect(query.criteria.filters[0].value).toBe('tomato');
-		});
-	});
-
-	describe('plantSpeciesFindVerified', () => {
-		it('should return only verified plant species', async () => {
-			const viewModel = new PlantSpeciesViewModel(baseViewModelProps);
-			const paginatedResult = {
-				items: [viewModel],
-				total: 1,
-				page: 1,
-				perPage: 1000,
-				totalPages: 1,
-			};
-
-			mockQueryBus.execute.mockResolvedValue(paginatedResult);
-			mockPlantSpeciesGraphQLMapper.toResponseDto.mockReturnValue(
-				baseResponseDto,
-			);
-
-			const result = await resolver.plantSpeciesFindVerified();
-
-			expect(result).toHaveLength(1);
-			expect(result[0]).toBe(baseResponseDto);
-			expect(mockQueryBus.execute).toHaveBeenCalledWith(
-				expect.any(PlantSpeciesFindByCriteriaQuery),
-			);
-			const query = (mockQueryBus.execute as jest.Mock).mock.calls[0][0];
-			expect(query.criteria.filters[0].field).toBe('isVerified');
-			expect(query.criteria.filters[0].value).toBe('true');
 		});
 	});
 

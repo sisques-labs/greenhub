@@ -1,24 +1,12 @@
+import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
+import { NumericRangeResponseDto } from '@/shared/transport/graphql/dtos/responses/numeric-range/numeric-range.dto';
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 
-import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
-
 @ObjectType('PlantSpeciesTemperatureRangeResponseDto')
-export class PlantSpeciesTemperatureRangeResponseDto {
-	@Field(() => Float, { description: 'Minimum temperature in Celsius' })
-	min: number;
-
-	@Field(() => Float, { description: 'Maximum temperature in Celsius' })
-	max: number;
-}
+export class PlantSpeciesTemperatureRangeResponseDto extends NumericRangeResponseDto {}
 
 @ObjectType('PlantSpeciesPhRangeResponseDto')
-export class PlantSpeciesPhRangeResponseDto {
-	@Field(() => Float, { description: 'Minimum pH value' })
-	min: number;
-
-	@Field(() => Float, { description: 'Maximum pH value' })
-	max: number;
-}
+export class PlantSpeciesPhRangeResponseDto extends NumericRangeResponseDto {}
 
 @ObjectType('PlantSpeciesMatureSizeResponseDto')
 export class PlantSpeciesMatureSizeResponseDto {

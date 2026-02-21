@@ -1,17 +1,3 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
-import {
-	IsArray,
-	IsBoolean,
-	IsEnum,
-	IsNotEmpty,
-	IsNumber,
-	IsOptional,
-	IsString,
-	IsUUID,
-	ValidateNested,
-} from 'class-validator';
-import { Type } from 'class-transformer';
-
 import { PlantSpeciesCategoryEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-category/plant-species-category.enum';
 import { PlantSpeciesDifficultyEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-difficulty/plant-species-difficulty.enum';
 import { PlantSpeciesGrowthRateEnum } from '@/core/plant-species-context/domain/enums/plant-species/plant-species-growth-rate/plant-species-growth-rate.enum';
@@ -24,6 +10,18 @@ import {
 	PlantSpeciesPhRangeInputDto,
 	PlantSpeciesTemperatureRangeInputDto,
 } from '@/core/plant-species-context/transport/graphql/dtos/requests/plant-species/plant-species-create.request.dto';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { Type } from 'class-transformer';
+import {
+	IsArray,
+	IsEnum,
+	IsNotEmpty,
+	IsNumber,
+	IsOptional,
+	IsString,
+	IsUUID,
+	ValidateNested,
+} from 'class-validator';
 
 @InputType('PlantSpeciesUpdateRequestDto')
 export class PlantSpeciesUpdateRequestDto {

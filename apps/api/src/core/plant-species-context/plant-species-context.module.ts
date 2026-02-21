@@ -1,6 +1,3 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { PlantSpeciesCreateCommandHandler } from '@/core/plant-species-context/application/commands/plant-species/plant-species-create/plant-species-create.command-handler';
 import { PlantSpeciesDeleteCommandHandler } from '@/core/plant-species-context/application/commands/plant-species/plant-species-delete/plant-species-delete.command-handler';
 import { PlantSpeciesUpdateCommandHandler } from '@/core/plant-species-context/application/commands/plant-species/plant-species-update/plant-species-update.command-handler';
@@ -22,6 +19,8 @@ import { PlantSpeciesGraphQLMapper } from '@/core/plant-species-context/transpor
 import { PlantSpeciesMutationsResolver } from '@/core/plant-species-context/transport/graphql/resolvers/plant-species/plant-species-mutations.resolver';
 import { PlantSpeciesQueriesResolver } from '@/core/plant-species-context/transport/graphql/resolvers/plant-species/plant-species-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 const RESOLVERS = [PlantSpeciesMutationsResolver, PlantSpeciesQueriesResolver];
 
