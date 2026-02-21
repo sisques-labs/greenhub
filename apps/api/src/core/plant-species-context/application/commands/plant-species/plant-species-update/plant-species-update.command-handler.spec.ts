@@ -29,7 +29,6 @@ import { PlantSpeciesSoilTypeValueObject } from '@/core/plant-species-context/do
 import { PlantSpeciesTagsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-tags/plant-species-tags.vo';
 import { PlantSpeciesTemperatureRangeValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-temperature-range/plant-species-temperature-range.vo';
 import { PlantSpeciesWaterRequirementsValueObject } from '@/core/plant-species-context/domain/value-objects/plant-species/plant-species-water-requirements/plant-species-water-requirements.vo';
-import { PublishIntegrationEventsService } from '@/shared/application/services/publish-integration-events/publish-integration-events.service';
 import { BooleanValueObject } from '@/shared/domain/value-objects/boolean/boolean.vo';
 import { PlantSpeciesUuidValueObject } from '@/shared/domain/value-objects/identifiers/plant-species-uuid/plant-species-uuid.vo';
 import { EventBus } from '@nestjs/cqrs';
@@ -86,7 +85,6 @@ function createMockPlantSpecies(id?: string): PlantSpeciesAggregate {
 describe('PlantSpeciesUpdateCommandHandler', () => {
 	let handler: PlantSpeciesUpdateCommandHandler;
 	let mockPlantSpeciesWriteRepository: jest.Mocked<IPlantSpeciesWriteRepository>;
-	let mockPublishIntegrationEventsService: jest.Mocked<PublishIntegrationEventsService>;
 	let mockAssertPlantSpeciesExistsService: jest.Mocked<AssertPlantSpeciesExistsService>;
 	let mockEventBus: jest.Mocked<EventBus>;
 
@@ -99,10 +97,6 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 			findByCommonName: jest.fn(),
 		} as unknown as jest.Mocked<IPlantSpeciesWriteRepository>;
 
-		mockPublishIntegrationEventsService = {
-			execute: jest.fn(),
-		} as unknown as jest.Mocked<PublishIntegrationEventsService>;
-
 		mockAssertPlantSpeciesExistsService = {
 			execute: jest.fn(),
 		} as unknown as jest.Mocked<AssertPlantSpeciesExistsService>;
@@ -114,7 +108,6 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 
 		handler = new PlantSpeciesUpdateCommandHandler(
 			mockPlantSpeciesWriteRepository,
-			mockPublishIntegrationEventsService,
 			mockAssertPlantSpeciesExistsService,
 			mockEventBus,
 		);
@@ -139,7 +132,6 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 			);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
@@ -255,7 +247,7 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 			);
 		});
 
-		it('should publish PlantSpeciesUpdatedEvent when plant species is updated', async () => {
+		it('should publish PlantSpeciesUpdatedEvent via event bus when plant species is updated', async () => {
 			const commandDto: IPlantSpeciesUpdateCommandDto = {
 				id: PLANT_SPECIES_ID,
 				commonName: 'Wild Rose',
@@ -269,14 +261,12 @@ describe('PlantSpeciesUpdateCommandHandler', () => {
 			);
 			mockPlantSpeciesWriteRepository.save.mockResolvedValue(mockPlantSpecies);
 			mockEventBus.publishAll.mockResolvedValue(undefined);
-			mockPublishIntegrationEventsService.execute.mockResolvedValue(undefined);
 
 			await handler.execute(command);
 
-			expect(mockPublishIntegrationEventsService.execute).toHaveBeenCalled();
-			const callArgs =
-				mockPublishIntegrationEventsService.execute.mock.calls[0][0];
-			expect(callArgs).toBeInstanceOf(PlantSpeciesUpdatedEvent);
+			expect(mockEventBus.publishAll).toHaveBeenCalled();
+			const publishedEvents = mockEventBus.publishAll.mock.calls[0][0] as unknown[];
+			expect(publishedEvents.some(e => e instanceof PlantSpeciesUpdatedEvent)).toBe(true);
 		});
 
 		it('should throw exception when plant species does not exist', async () => {

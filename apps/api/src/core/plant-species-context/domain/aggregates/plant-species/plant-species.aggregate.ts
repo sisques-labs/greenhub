@@ -1,4 +1,5 @@
 import { PlantSpeciesDeletedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-deleted/plant-species-deleted.event';
+import { PlantSpeciesUpdatedEvent } from '@/core/plant-species-context/application/events/plant-species/plant-species-updated/plant-species-updated.event';
 import { IPlantSpeciesDto } from '@/core/plant-species-context/domain/dtos/entities/plant-species/plant-species.dto';
 import { PlantSpeciesCategoryChangedEvent } from '@/core/plant-species-context/domain/events/plant-species/field-changed/plant-species-category-changed/plant-species-category-changed.event';
 import { PlantSpeciesCommonNameChangedEvent } from '@/core/plant-species-context/domain/events/plant-species/field-changed/plant-species-common-name-changed/plant-species-common-name-changed.event';
@@ -650,6 +651,108 @@ export class PlantSpeciesAggregate extends AggregateRoot {
 					oldValue,
 					newValue: this._isVerified.value,
 				},
+			),
+		);
+	}
+
+	/**
+	 * Updates the plant species with the provided fields, calling the corresponding
+	 * change methods internally, and emits a {@link PlantSpeciesUpdatedEvent} at the end.
+	 *
+	 * @param props - The fields to update (all optional).
+	 */
+	public update(props: {
+		commonName?: PlantSpeciesCommonNameValueObject;
+		scientificName?: PlantSpeciesScientificNameValueObject;
+		family?: PlantSpeciesFamilyValueObject;
+		description?: PlantSpeciesDescriptionValueObject;
+		category?: PlantSpeciesCategoryValueObject;
+		difficulty?: PlantSpeciesDifficultyValueObject;
+		growthRate?: PlantSpeciesGrowthRateValueObject;
+		lightRequirements?: PlantSpeciesLightRequirementsValueObject;
+		waterRequirements?: PlantSpeciesWaterRequirementsValueObject;
+		temperatureRange?: PlantSpeciesTemperatureRangeValueObject;
+		humidityRequirements?: PlantSpeciesHumidityRequirementsValueObject;
+		soilType?: PlantSpeciesSoilTypeValueObject;
+		phRange?: PlantSpeciesPhRangeValueObject;
+		matureSize?: PlantSpeciesMatureSizeValueObject;
+		growthTime?: PlantSpeciesGrowthTimeValueObject;
+		tags?: PlantSpeciesTagsValueObject;
+	}): void {
+		if (props.commonName !== undefined) {
+			this.changeCommonName(props.commonName);
+		}
+
+		if (props.scientificName !== undefined) {
+			this.changeScientificName(props.scientificName);
+		}
+
+		if (props.family !== undefined) {
+			this.changeFamily(props.family);
+		}
+
+		if (props.description !== undefined) {
+			this.changeDescription(props.description);
+		}
+
+		if (props.category !== undefined) {
+			this.changeCategory(props.category);
+		}
+
+		if (props.difficulty !== undefined) {
+			this.changeDifficulty(props.difficulty);
+		}
+
+		if (props.growthRate !== undefined) {
+			this.changeGrowthRate(props.growthRate);
+		}
+
+		if (props.lightRequirements !== undefined) {
+			this.changeLightRequirements(props.lightRequirements);
+		}
+
+		if (props.waterRequirements !== undefined) {
+			this.changeWaterRequirements(props.waterRequirements);
+		}
+
+		if (props.temperatureRange !== undefined) {
+			this.changeTemperatureRange(props.temperatureRange);
+		}
+
+		if (props.humidityRequirements !== undefined) {
+			this.changeHumidityRequirements(props.humidityRequirements);
+		}
+
+		if (props.soilType !== undefined) {
+			this.changeSoilType(props.soilType);
+		}
+
+		if (props.phRange !== undefined) {
+			this.changePhRange(props.phRange);
+		}
+
+		if (props.matureSize !== undefined) {
+			this.changeMatureSize(props.matureSize);
+		}
+
+		if (props.growthTime !== undefined) {
+			this.changeGrowthTime(props.growthTime);
+		}
+
+		if (props.tags !== undefined) {
+			this.changeTags(props.tags);
+		}
+
+		this.apply(
+			new PlantSpeciesUpdatedEvent(
+				{
+					aggregateRootId: this._id.value,
+					aggregateRootType: PlantSpeciesAggregate.name,
+					entityId: this._id.value,
+					entityType: PlantSpeciesAggregate.name,
+					eventType: PlantSpeciesUpdatedEvent.name,
+				},
+				{ ...this.toPrimitives() },
 			),
 		);
 	}
