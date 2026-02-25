@@ -6,7 +6,7 @@ import {
 	PlantSpeciesLightRequirements,
 	PlantSpeciesSoilType,
 	PlantSpeciesWaterRequirements,
-} from '../api/types/plant-species.types';
+} from '@/features/plant-species/api/types/plant-species.types';
 import { z } from 'zod';
 
 /**
@@ -27,9 +27,9 @@ export function createPlantSpeciesSearchSchema(
 			.string()
 			.refine(
 				(value) =>
-					Object.values(PlantSpeciesCategory as Record<string, string>).includes(
-						value,
-					),
+					Object.values(
+						PlantSpeciesCategory as Record<string, string>,
+					).includes(value),
 				{ message: translations('shared.validation.category.invalid') },
 			)
 			.optional(),
@@ -61,9 +61,7 @@ export function createPlantSpeciesSearchSchema(
 						PlantSpeciesLightRequirements as Record<string, string>,
 					).includes(value),
 				{
-					message: translations(
-						'shared.validation.lightRequirements.invalid',
-					),
+					message: translations('shared.validation.lightRequirements.invalid'),
 				},
 			)
 			.optional(),
@@ -75,9 +73,7 @@ export function createPlantSpeciesSearchSchema(
 						PlantSpeciesWaterRequirements as Record<string, string>,
 					).includes(value),
 				{
-					message: translations(
-						'shared.validation.waterRequirements.invalid',
-					),
+					message: translations('shared.validation.waterRequirements.invalid'),
 				},
 			)
 			.optional(),
@@ -99,9 +95,9 @@ export function createPlantSpeciesSearchSchema(
 			.string()
 			.refine(
 				(value) =>
-					Object.values(PlantSpeciesSoilType as Record<string, string>).includes(
-						value,
-					),
+					Object.values(
+						PlantSpeciesSoilType as Record<string, string>,
+					).includes(value),
 				{ message: translations('shared.validation.soilType.invalid') },
 			)
 			.optional(),

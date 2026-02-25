@@ -6,7 +6,7 @@ import {
 	PlantSpeciesLightRequirements,
 	PlantSpeciesSoilType,
 	PlantSpeciesWaterRequirements,
-} from '../api/types/plant-species.types';
+} from '@/features/plant-species/api/types/plant-species.types';
 import { z } from 'zod';
 
 /**
@@ -46,9 +46,9 @@ export function createPlantSpeciesUpdateSchema(
 			.string()
 			.refine(
 				(value) =>
-					Object.values(PlantSpeciesCategory as Record<string, string>).includes(
-						value,
-					),
+					Object.values(
+						PlantSpeciesCategory as Record<string, string>,
+					).includes(value),
 				{ message: translations('shared.validation.category.invalid') },
 			)
 			.optional(),
@@ -80,9 +80,7 @@ export function createPlantSpeciesUpdateSchema(
 						PlantSpeciesLightRequirements as Record<string, string>,
 					).includes(value),
 				{
-					message: translations(
-						'shared.validation.lightRequirements.invalid',
-					),
+					message: translations('shared.validation.lightRequirements.invalid'),
 				},
 			)
 			.optional(),
@@ -94,9 +92,7 @@ export function createPlantSpeciesUpdateSchema(
 						PlantSpeciesWaterRequirements as Record<string, string>,
 					).includes(value),
 				{
-					message: translations(
-						'shared.validation.waterRequirements.invalid',
-					),
+					message: translations('shared.validation.waterRequirements.invalid'),
 				},
 			)
 			.optional(),
@@ -104,15 +100,29 @@ export function createPlantSpeciesUpdateSchema(
 			.object({
 				min: z
 					.number()
-					.min(-20, translations('shared.validation.temperatureRange.min.minValue'))
-					.max(50, translations('shared.validation.temperatureRange.min.maxValue')),
+					.min(
+						-20,
+						translations('shared.validation.temperatureRange.min.minValue'),
+					)
+					.max(
+						50,
+						translations('shared.validation.temperatureRange.min.maxValue'),
+					),
 				max: z
 					.number()
-					.min(-20, translations('shared.validation.temperatureRange.max.minValue'))
-					.max(50, translations('shared.validation.temperatureRange.max.maxValue')),
+					.min(
+						-20,
+						translations('shared.validation.temperatureRange.max.minValue'),
+					)
+					.max(
+						50,
+						translations('shared.validation.temperatureRange.max.maxValue'),
+					),
 			})
 			.refine((data) => data.min < data.max, {
-				message: translations('shared.validation.temperatureRange.minLessThanMax'),
+				message: translations(
+					'shared.validation.temperatureRange.minLessThanMax',
+				),
 			})
 			.nullable()
 			.optional(),
@@ -135,9 +145,9 @@ export function createPlantSpeciesUpdateSchema(
 			.string()
 			.refine(
 				(value) =>
-					Object.values(PlantSpeciesSoilType as Record<string, string>).includes(
-						value,
-					),
+					Object.values(
+						PlantSpeciesSoilType as Record<string, string>,
+					).includes(value),
 				{ message: translations('shared.validation.soilType.invalid') },
 			)
 			.nullable()
@@ -162,10 +172,14 @@ export function createPlantSpeciesUpdateSchema(
 			.object({
 				height: z
 					.number()
-					.positive(translations('shared.validation.matureSize.height.positive')),
+					.positive(
+						translations('shared.validation.matureSize.height.positive'),
+					),
 				width: z
 					.number()
-					.positive(translations('shared.validation.matureSize.width.positive')),
+					.positive(
+						translations('shared.validation.matureSize.width.positive'),
+					),
 			})
 			.nullable()
 			.optional(),
