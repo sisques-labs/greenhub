@@ -3,12 +3,8 @@ import type { IMutationResponse } from '@/shared/interfaces/mutation-response.in
 import type {
 	PlantSpeciesCreateInput,
 	PlantSpeciesDeleteInput,
-	PlantSpeciesFindByCategoryInput,
 	PlantSpeciesFindByCriteriaInput,
-	PlantSpeciesFindByDifficultyInput,
 	PlantSpeciesFindByIdInput,
-	PlantSpeciesSearchInput,
-	PlantSpeciesFindVerifiedInput,
 } from '../types/plant-species-request.types';
 import type {
 	PlantSpeciesApiResponse,
@@ -91,111 +87,4 @@ export const plantSpeciesClient = {
 		return transformPlantSpeciesPaginatedResponse(result);
 	},
 
-	/**
-	 * Find plant species by category
-	 */
-	findByCategory: async (
-		input: PlantSpeciesFindByCategoryInput,
-	): Promise<PlantSpeciesPaginatedResponse> => {
-		const criteria: PlantSpeciesFindByCriteriaInput = {
-			filters: [
-				{
-					field: 'category',
-					operator: 'EQUALS',
-					value: input.category,
-				},
-			],
-			pagination: input.pagination,
-		};
-
-		const params = new URLSearchParams();
-		params.append('input', JSON.stringify(criteria));
-
-		const result = await httpClient.get<PlantSpeciesPaginatedApiResponse>(
-			`/api/plant-species?${params.toString()}`,
-		);
-
-		return transformPlantSpeciesPaginatedResponse(result);
-	},
-
-	/**
-	 * Find plant species by difficulty level
-	 */
-	findByDifficulty: async (
-		input: PlantSpeciesFindByDifficultyInput,
-	): Promise<PlantSpeciesPaginatedResponse> => {
-		const criteria: PlantSpeciesFindByCriteriaInput = {
-			filters: [
-				{
-					field: 'difficulty',
-					operator: 'EQUALS',
-					value: input.difficulty,
-				},
-			],
-			pagination: input.pagination,
-		};
-
-		const params = new URLSearchParams();
-		params.append('input', JSON.stringify(criteria));
-
-		const result = await httpClient.get<PlantSpeciesPaginatedApiResponse>(
-			`/api/plant-species?${params.toString()}`,
-		);
-
-		return transformPlantSpeciesPaginatedResponse(result);
-	},
-
-	/**
-	 * Search plant species by name (common name or scientific name)
-	 */
-	search: async (
-		input: PlantSpeciesSearchInput,
-	): Promise<PlantSpeciesPaginatedResponse> => {
-		const criteria: PlantSpeciesFindByCriteriaInput = {
-			filters: [
-				{
-					field: 'commonName',
-					operator: 'CONTAINS',
-					value: input.query,
-				},
-			],
-			pagination: input.pagination,
-		};
-
-		const params = new URLSearchParams();
-		params.append('input', JSON.stringify(criteria));
-
-		const result = await httpClient.get<PlantSpeciesPaginatedApiResponse>(
-			`/api/plant-species?${params.toString()}`,
-		);
-
-		return transformPlantSpeciesPaginatedResponse(result);
-	},
-
-	/**
-	 * Find verified plant species
-	 */
-	findVerified: async (
-		input?: PlantSpeciesFindVerifiedInput,
-	): Promise<PlantSpeciesPaginatedResponse> => {
-		const criteria: PlantSpeciesFindByCriteriaInput = {
-			filters: [
-				{
-					field: 'isVerified',
-					operator: 'EQUALS',
-					value: true,
-				},
-			],
-			pagination: input?.pagination,
-		};
-
-		const params = new URLSearchParams();
-		params.append('input', JSON.stringify(criteria));
-
-		const result = await httpClient.get<PlantSpeciesPaginatedApiResponse>(
-			`/api/plant-species?${params.toString()}`,
-		);
-
-		return transformPlantSpeciesPaginatedResponse(result);
-	},
 };
