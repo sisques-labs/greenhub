@@ -104,34 +104,3 @@ export interface PlantSpeciesFindByCriteriaInput {
 	sorts?: PlantSpeciesSortInput[];
 	pagination?: PlantSpeciesPaginationInput;
 }
-
-/**
- * Input for finding plant species by category
- */
-export interface PlantSpeciesFindByCategoryInput {
-	category: PlantSpeciesCategory;
-	pagination?: PlantSpeciesPaginationInput;
-}
-
-/**
- * Input for finding plant species by difficulty
- */
-export interface PlantSpeciesFindByDifficultyInput {
-	difficulty: PlantSpeciesDifficulty;
-	pagination?: PlantSpeciesPaginationInput;
-}
-
-/**
- * Input for searching plant species by name
- */
-export interface PlantSpeciesSearchInput {
-	query: string;
-	pagination?: PlantSpeciesPaginationInput;
-}
-
-/**
- * Input for finding verified plant species
- */
-export interface PlantSpeciesFindVerifiedInput {
-	pagination?: PlantSpeciesPaginationInput;
-}
