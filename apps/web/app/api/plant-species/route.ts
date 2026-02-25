@@ -1,11 +1,10 @@
 import { PLANT_SPECIES_FIND_ALL_QUERY } from '@/features/plant-species/api/queries/plant-species-find-all.query';
+import type { PlantSpeciesFindByCriteriaInput } from '@/features/plant-species/api/types/plant-species-request.types';
 import type {
 	PlantSpeciesApiResponse,
-	PlantSpeciesPaginatedApiResponse,
 	PlantSpeciesPaginatedResponse,
 } from '@/features/plant-species/api/types/plant-species-response.types';
 import { transformPlantSpeciesPaginatedResponse } from '@/features/plant-species/api/types/plant-species-response.types';
-import type { PlantSpeciesFindByCriteriaInput } from '@/features/plant-species/api/types/plant-species-request.types';
 import { graphqlClient } from '@/lib/server/graphql-client';
 import { NextRequest, NextResponse } from 'next/server';
 
