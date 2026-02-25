@@ -1,5 +1,8 @@
 'use client';
 
+import type { LocationResponse } from '@/features/locations/api/types';
+import { useLocationUpdateForm } from '@/features/locations/hooks/use-location-update-form/use-location-update-form';
+import type { LocationUpdateFormValues } from '@/features/locations/schemas/location-update/location-update.schema';
 import { Button } from '@/shared/components/ui/button';
 import {
 	Dialog,
@@ -25,10 +28,7 @@ import {
 	SelectValue,
 } from '@/shared/components/ui/select';
 import { Textarea } from '@/shared/components/ui/textarea';
-import type { LocationUpdateFormValues } from 'features/locations/schemas/location-update/location-update.schema';
 import { useTranslations } from 'next-intl';
-import type { LocationResponse } from '../../../api/types';
-import { useLocationUpdateForm } from '../../../hooks/use-location-update-form';
 
 interface LocationUpdateFormProps {
 	location: LocationResponse | null;

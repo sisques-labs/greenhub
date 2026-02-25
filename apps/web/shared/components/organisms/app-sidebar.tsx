@@ -1,5 +1,10 @@
 import { SearchForm } from '@/shared/components/organisms/search-form';
 import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+} from '@/shared/components/ui/avatar';
+import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
@@ -23,7 +28,6 @@ import {
 	Sprout,
 } from 'lucide-react';
 import * as React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui';
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 	data: SidebarData;
