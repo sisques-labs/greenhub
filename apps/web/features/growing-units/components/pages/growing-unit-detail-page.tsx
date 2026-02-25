@@ -1,5 +1,9 @@
 'use client';
 
+import { GrowingUnitUpdateForm } from '@/features/growing-units/components/organisms/growing-unit-update-form/growing-unit-update-form';
+import { useGrowingUnitDetailPage } from '@/features/growing-units/hooks/use-growing-unit-detail-page/use-growing-unit-detail-page';
+import { PlantCreateForm } from '@/features/plants/components/organisms/plant-create-form/plant-create-form';
+import { PlantTableRow } from '@/features/plants/components/organisms/plant-table-row/plant-table-row';
 import { PageHeader } from '@/shared/components/organisms/page-header';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
@@ -17,10 +21,6 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/shared/components/ui/table';
-import { GrowingUnitUpdateForm } from 'features/growing-units/components/organisms/growing-unit-update-form/growing-unit-update-form';
-import { useGrowingUnitDetailPage } from 'features/growing-units/hooks/use-growing-unit-detail-page';
-import { PlantCreateForm } from 'features/plants/components/organisms/plant-create-form/plant-create-form';
-import { PlantTableRow } from 'features/plants/components/organisms/plant-table-row/plant-table-row';
 import {
 	DropletsIcon,
 	Grid3x3Icon,
