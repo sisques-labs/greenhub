@@ -5,7 +5,7 @@ import type { PlantSpeciesFindByCriteriaInput } from '../../api/types/plant-spec
 /**
  * Hook for fetching plant species list with optional criteria using TanStack Query
  */
-export function usePlantSpeciesFindAll(
+export function usePlantSpeciesFindByCriteria(
   input?: PlantSpeciesFindByCriteriaInput,
   options?: { enabled?: boolean },
 ) {
