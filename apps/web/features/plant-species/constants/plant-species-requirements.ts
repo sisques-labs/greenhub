@@ -1,8 +1,8 @@
 import {
 	PlantSpeciesLightRequirements,
-	PlantSpeciesWaterRequirements,
 	PlantSpeciesSoilType,
-} from '../api/types/plant-species.types';
+	PlantSpeciesWaterRequirements,
+} from '@/features/plant-species/api/types/plant-species.types';
 
 export const PLANT_SPECIES_LIGHT_REQUIREMENTS: Record<
 	PlantSpeciesLightRequirements,

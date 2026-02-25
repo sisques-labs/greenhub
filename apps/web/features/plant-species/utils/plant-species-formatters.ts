@@ -1,6 +1,11 @@
-import { PlantSpeciesNumericRange, PlantSpeciesMatureSize } from '../api/types/plant-species.types';
+import {
+	PlantSpeciesMatureSize,
+	PlantSpeciesNumericRange,
+} from '@/features/plant-species/api/types/plant-species.types';
 
-export function formatTemperatureRange(range?: PlantSpeciesNumericRange): string {
+export function formatTemperatureRange(
+	range?: PlantSpeciesNumericRange,
+): string {
 	if (!range) return 'N/A';
 	return `${range.min}°C - ${range.max}°C`;
 }

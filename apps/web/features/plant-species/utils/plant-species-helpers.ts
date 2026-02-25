@@ -1,6 +1,9 @@
-import { PlantSpeciesCategory, PlantSpeciesDifficulty } from '../api/types/plant-species.types';
-import { PLANT_SPECIES_CATEGORIES } from '../constants/plant-species-categories';
-import { PLANT_SPECIES_DIFFICULTY } from '../constants/plant-species-difficulty';
+import {
+	PlantSpeciesCategory,
+	PlantSpeciesDifficulty,
+} from '@/features/plant-species/api/types/plant-species.types';
+import { PLANT_SPECIES_CATEGORIES } from '@/features/plant-species/constants/plant-species-categories';
+import { PLANT_SPECIES_DIFFICULTY } from '@/features/plant-species/constants/plant-species-difficulty';
 
 export function getCategoryIcon(category: PlantSpeciesCategory): string {
 	return PLANT_SPECIES_CATEGORIES[category]?.icon ?? '🌱';

@@ -1,4 +1,4 @@
-import { PlantSpeciesDifficulty } from '../api/types/plant-species.types';
+import { PlantSpeciesDifficulty } from '@/features/plant-species/api/types/plant-species.types';
 
 export const PLANT_SPECIES_DIFFICULTY: Record<
 	PlantSpeciesDifficulty,
