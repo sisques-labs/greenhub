@@ -1,0 +1,82 @@
+{
+  "categories": {
+    "VEGETABLE": { "label": "Verdura" },
+    "FRUIT": { "label": "Fruta" },
+    "HERB": { "label": "Hierba aromática" },
+    "FLOWER": { "label": "Flor" },
+    "TREE": { "label": "Árbol" },
+    "SHRUB": { "label": "Arbusto" },
+    "SUCCULENT": { "label": "Suculenta" },
+    "FERN": { "label": "Helecho" },
+    "GRASS": { "label": "Hierba" },
+    "OTHER": { "label": "Otro" }
+  },
+  "difficulty": {
+    "EASY": {
+      "label": "Fácil",
+      "description": "Ideal para principiantes"
+    },
+    "MEDIUM": {
+      "label": "Intermedio",
+      "description": "Se necesita algo de experiencia"
+    },
+    "HARD": {
+      "label": "Difícil",
+      "description": "Para jardineros experimentados"
+    }
+  },
+  "lightRequirements": {
+    "FULL_SUN": {
+      "label": "Sol Pleno",
+      "description": "Más de 6 horas de luz solar directa"
+    },
+    "PARTIAL_SUN": {
+      "label": "Sol Parcial",
+      "description": "4-6 horas de luz solar directa"
+    },
+    "PARTIAL_SHADE": {
+      "label": "Semisombra",
+      "description": "2-4 horas de luz solar directa"
+    },
+    "FULL_SHADE": {
+      "label": "Sombra Total",
+      "description": "Sin luz solar directa"
+    }
+  },
+  "waterRequirements": {
+    "LOW": {
+      "label": "Bajo",
+      "description": "Regar con moderación, tolerante a la sequía"
+    },
+    "MEDIUM": {
+      "label": "Medio",
+      "description": "Riego regular necesario"
+    },
+    "HIGH": {
+      "label": "Alto",
+      "description": "Riego frecuente necesario"
+    }
+  },
+  "soilType": {
+    "SANDY": {
+      "label": "Arenoso",
+      "description": "Drenaje rápido, pocos nutrientes"
+    },
+    "LOAMY": {
+      "label": "Franco",
+      "description": "Equilibrado, ideal para la mayoría de plantas"
+    },
+    "CLAY": {
+      "label": "Arcilloso",
+      "description": "Denso, drenaje lento, rico en nutrientes"
+    },
+    "PEATY": {
+      "label": "Turboso",
+      "description": "Ácido, alta retención de humedad"
+    },
+    "CHALKY": {
+      "label": "Calcáreo",
+      "description": "Alcalino, buen drenaje"
+    }
+  }
+}
