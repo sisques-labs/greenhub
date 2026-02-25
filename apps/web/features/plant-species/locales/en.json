@@ -1,0 +1,82 @@
+{
+  "categories": {
+    "VEGETABLE": { "label": "Vegetable" },
+    "FRUIT": { "label": "Fruit" },
+    "HERB": { "label": "Herb" },
+    "FLOWER": { "label": "Flower" },
+    "TREE": { "label": "Tree" },
+    "SHRUB": { "label": "Shrub" },
+    "SUCCULENT": { "label": "Succulent" },
+    "FERN": { "label": "Fern" },
+    "GRASS": { "label": "Grass" },
+    "OTHER": { "label": "Other" }
+  },
+  "difficulty": {
+    "EASY": {
+      "label": "Easy",
+      "description": "Great for beginners"
+    },
+    "MEDIUM": {
+      "label": "Medium",
+      "description": "Some experience needed"
+    },
+    "HARD": {
+      "label": "Hard",
+      "description": "For experienced gardeners"
+    }
+  },
+  "lightRequirements": {
+    "FULL_SUN": {
+      "label": "Full Sun",
+      "description": "6+ hours direct sunlight"
+    },
+    "PARTIAL_SUN": {
+      "label": "Partial Sun",
+      "description": "4-6 hours direct sunlight"
+    },
+    "PARTIAL_SHADE": {
+      "label": "Partial Shade",
+      "description": "2-4 hours direct sunlight"
+    },
+    "FULL_SHADE": {
+      "label": "Full Shade",
+      "description": "No direct sunlight"
+    }
+  },
+  "waterRequirements": {
+    "LOW": {
+      "label": "Low",
+      "description": "Water sparingly, drought tolerant"
+    },
+    "MEDIUM": {
+      "label": "Medium",
+      "description": "Regular watering required"
+    },
+    "HIGH": {
+      "label": "High",
+      "description": "Frequent watering needed"
+    }
+  },
+  "soilType": {
+    "SANDY": {
+      "label": "Sandy",
+      "description": "Fast-draining, low nutrients"
+    },
+    "LOAMY": {
+      "label": "Loamy",
+      "description": "Well-balanced, ideal for most plants"
+    },
+    "CLAY": {
+      "label": "Clay",
+      "description": "Dense, slow-draining, nutrient-rich"
+    },
+    "PEATY": {
+      "label": "Peaty",
+      "description": "Acidic, high moisture retention"
+    },
+    "CHALKY": {
+      "label": "Chalky",
+      "description": "Alkaline, free-draining"
+    }
+  }
+}
