@@ -5,7 +5,7 @@ import {
 import { DesktopHeader } from '@/shared/components/organisms/desktop-header/desktop-header';
 import { MobileHeader } from '@/shared/components/organisms/mobile-header/mobile-header';
 import PageTemplate from '@/shared/components/templates/page-template';
-import { SidebarInset, SidebarProvider } from '@/shared/components/ui';
+import { SidebarInset, SidebarProvider } from '@/shared/components/ui/sidebar';
 import React from 'react';
 
 interface PageWithSidebarTemplateProps {
