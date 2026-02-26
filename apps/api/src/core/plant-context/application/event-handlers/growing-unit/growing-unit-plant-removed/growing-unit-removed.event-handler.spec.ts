@@ -168,5 +168,37 @@ describe('GrowingUnitPlantRemovedEventHandler', () => {
 			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalled();
 			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledTimes(1);
 		});
+
+		it('should not throw when an error occurs', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const plantId = '223e4567-e89b-12d3-a456-426614174000';
+
+			const event = new GrowingUnitPlantRemovedEvent(
+				{
+					aggregateRootId: growingUnitId,
+					aggregateRootType: GrowingUnitAggregate.name,
+					entityId: plantId,
+					entityType: PlantEntity.name,
+					eventType: GrowingUnitPlantRemovedEvent.name,
+				},
+				{
+					plant: {
+						id: plantId,
+						name: 'Basil',
+						species: 'Ocimum basilicum',
+						plantedDate: null,
+						notes: null,
+						status: 'PLANTED',
+					},
+				},
+			);
+
+			mockAssertGrowingUnitExistsService.execute.mockRejectedValue(
+				new Error('Database error'),
+			);
+
+			await expect(handler.handle(event)).resolves.not.toThrow();
+			expect(mockGrowingUnitReadRepository.save).not.toHaveBeenCalled();
+		});
 	});
 });

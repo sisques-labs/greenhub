@@ -39,48 +39,55 @@ export class PlantCreatedEventHandler
 	 * @param event - The PlantCreatedEvent event to handle
 	 */
 	async handle(event: PlantCreatedEvent) {
-		this.logger.log(`Handling plant created event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling plant created event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Plant created event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Plant created event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Get the growing unit aggregate to have the complete state
-		const growingUnitAggregate =
-			await this.assertGrowingUnitExistsService.execute(event.aggregateRootId);
+			// 01: Get the growing unit aggregate to have the complete state
+			const growingUnitAggregate =
+				await this.assertGrowingUnitExistsService.execute(event.aggregateRootId);
 
-		// 02: Get the plant entity from the growing unit aggregate
-		const plantEntity =
-			await this.assertPlantExistsInGrowingUnitService.execute({
-				growingUnitAggregate,
-				plantId: event.entityId,
-			});
+			// 02: Get the plant entity from the growing unit aggregate
+			const plantEntity =
+				await this.assertPlantExistsInGrowingUnitService.execute({
+					growingUnitAggregate,
+					plantId: event.entityId,
+				});
 
-		// 03: Get the location view model
-		const locationViewModel = await this.queryBus.execute(
-			new LocationViewModelFindByIdQuery({
-				id: growingUnitAggregate.locationId.value,
-			}),
-		);
+			// 03: Get the location view model
+			const locationViewModel = await this.queryBus.execute(
+				new LocationViewModelFindByIdQuery({
+					id: growingUnitAggregate.locationId.value,
+				}),
+			);
 
-		// 04: Create the growing unit reference with basic information
-		const growingUnitReference = {
-			id: growingUnitAggregate.id.value,
-			name: growingUnitAggregate.name.value,
-			type: growingUnitAggregate.type.value,
-			capacity: growingUnitAggregate.capacity.value,
-		};
+			// 04: Create the growing unit reference with basic information
+			const growingUnitReference = {
+				id: growingUnitAggregate.id.value,
+				name: growingUnitAggregate.name.value,
+				type: growingUnitAggregate.type.value,
+				capacity: growingUnitAggregate.capacity.value,
+			};
 
-		// 05: Create the plant view model with all information
-		const plantViewModel: PlantViewModel = this.plantViewModelBuilder
-			.reset()
-			.fromEntity(plantEntity)
-			.withGrowingUnitId(growingUnitAggregate.id.value)
-			.withLocation(locationViewModel)
-			.withGrowingUnit(growingUnitReference)
-			.build();
+			// 05: Create the plant view model with all information
+			const plantViewModel: PlantViewModel = this.plantViewModelBuilder
+				.reset()
+				.fromEntity(plantEntity)
+				.withGrowingUnitId(growingUnitAggregate.id.value)
+				.withLocation(locationViewModel)
+				.withGrowingUnit(growingUnitReference)
+				.build();
 
-		// 06: Save the plant view model
-		await this.plantReadRepository.save(plantViewModel);
+			// 06: Save the plant view model
+			await this.plantReadRepository.save(plantViewModel);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle plant created event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }

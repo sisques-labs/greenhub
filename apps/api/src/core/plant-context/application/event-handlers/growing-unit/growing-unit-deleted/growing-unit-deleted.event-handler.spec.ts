@@ -70,5 +70,34 @@ describe('GrowingUnitDeletedEventHandler', () => {
 			);
 			expect(mockGrowingUnitReadRepository.delete).toHaveBeenCalledTimes(1);
 		});
+
+		it('should not throw when an error occurs', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
+			const event = new GrowingUnitDeletedEvent(
+				{
+					aggregateRootId: growingUnitId,
+					aggregateRootType: 'GrowingUnitAggregate',
+					entityId: growingUnitId,
+					entityType: 'GrowingUnitAggregate',
+					eventType: 'GrowingUnitDeletedEvent',
+				},
+				{
+					id: growingUnitId,
+					locationId,
+					name: 'Garden Bed 1',
+					type: 'GARDEN_BED',
+					capacity: 10,
+					dimensions: null,
+					plants: [],
+				},
+			);
+
+			mockGrowingUnitReadRepository.delete.mockRejectedValue(
+				new Error('Database error'),
+			);
+
+			await expect(handler.handle(event)).resolves.not.toThrow();
+		});
 	});
 });

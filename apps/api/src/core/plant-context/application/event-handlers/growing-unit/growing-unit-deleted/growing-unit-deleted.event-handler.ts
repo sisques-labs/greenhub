@@ -31,13 +31,20 @@ export class GrowingUnitDeletedEventHandler
 	 * @param event - The GrowingUnitDeletedEvent event to handle
 	 */
 	async handle(event: GrowingUnitDeletedEvent) {
-		this.logger.log(`Handling growing unit deleted event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling growing unit deleted event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Growing unit deleted event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Growing unit deleted event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Delete the growing unit view model
-		await this.growingUnitReadRepository.delete(event.entityId);
+			// 01: Delete the growing unit view model
+			await this.growingUnitReadRepository.delete(event.entityId);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle growing unit deleted event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }
