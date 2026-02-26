@@ -31,7 +31,7 @@ export function usePlantSpeciesDetailPage(id: string) {
 	);
 
 	const handleUpdateSpecies = useCallback(
-		async (data: PlantSpeciesUpdateInput) => {
+		async (data: Omit<PlantSpeciesUpdateInput, 'id'>) => {
 			await handleUpdate(
 				{ id, ...data },
 				() => {
