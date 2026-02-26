@@ -5,13 +5,11 @@ import { PlantSpeciesDeleteModal } from '@/features/plant-species/components/mod
 import { PlantSpeciesUpdateForm } from '@/features/plant-species/components/forms/PlantSpeciesUpdateForm/PlantSpeciesUpdateForm';
 import { usePlantSpeciesDetailPage } from '@/features/plant-species/hooks/pages/usePlantSpeciesDetailPage';
 import type { PlantSpeciesUpdateFormValues } from '@/features/plant-species/schemas/plant-species-update.schema';
-import { Button } from '@/shared/components/ui/button';
 import { Skeleton } from '@/shared/components/ui/skeleton';
-import { ChevronRightIcon, PencilIcon, Trash2Icon } from 'lucide-react';
+import { ChevronRightIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
 
 export function PlantSpeciesDetailPage() {
 	const t = useTranslations();
@@ -27,27 +25,12 @@ export function PlantSpeciesDetailPage() {
 		handleDelete,
 		isUpdating,
 		isDeleting,
+		updateDialogOpen,
+		setUpdateDialogOpen,
+		deleteDialogOpen,
+		setDeleteDialogOpen,
 	} = usePlantSpeciesDetailPage(id);
 
-	// Dialog state
-	const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
-	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-	const handleUpdateSubmit = useCallback(
-		async (values: PlantSpeciesUpdateFormValues) => {
-			await handleUpdate(
-				values as Parameters<typeof handleUpdate>[0],
-			);
-			setUpdateDialogOpen(false);
-		},
-		[handleUpdate],
-	);
-
-	const handleDeleteConfirm = useCallback(async () => {
-		await handleDelete();
-	}, [handleDelete]);
-
-	// Loading state
 	if (isLoading || plantSpecies === undefined) {
 		return (
 			<div className="mx-auto space-y-6">
@@ -56,19 +39,11 @@ export function PlantSpeciesDetailPage() {
 					<Skeleton className="h-4 w-4" />
 					<Skeleton className="h-4 w-32" />
 				</div>
-				<div className="flex items-center justify-between">
-					<Skeleton className="h-8 w-48" />
-					<div className="flex gap-2">
-						<Skeleton className="h-9 w-20" />
-						<Skeleton className="h-9 w-20" />
-					</div>
-				</div>
 				<Skeleton className="h-96 w-full" />
 			</div>
 		);
 	}
 
-	// Error state
 	if (error || !plantSpecies) {
 		return (
 			<div className="mx-auto py-8">
@@ -87,7 +62,6 @@ export function PlantSpeciesDetailPage() {
 
 	return (
 		<div className="mx-auto space-y-6">
-			{/* Breadcrumbs */}
 			<nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
 				<Link
 					href={`/${locale}/plant-species`}
@@ -101,50 +75,28 @@ export function PlantSpeciesDetailPage() {
 				</span>
 			</nav>
 
-			{/* Header with actions */}
-			<div className="flex items-center justify-between gap-4">
-				<h1 className="text-2xl font-bold">{plantSpecies.commonName}</h1>
-				<div className="flex gap-2 shrink-0">
-					<Button
-						variant="outline"
-						onClick={() => setUpdateDialogOpen(true)}
-					>
-						<PencilIcon className="mr-2 h-4 w-4" />
-						{t('features.plantSpecies.detail.actions.edit')}
-					</Button>
-					<Button
-						variant="destructive"
-						onClick={() => setDeleteDialogOpen(true)}
-					>
-						<Trash2Icon className="mr-2 h-4 w-4" />
-						{t('features.plantSpecies.detail.actions.delete')}
-					</Button>
-				</div>
-			</div>
-
-			{/* Detail Card */}
 			<PlantSpeciesDetailCard
 				plantSpecies={plantSpecies}
 				onEdit={() => setUpdateDialogOpen(true)}
 				onDelete={() => setDeleteDialogOpen(true)}
 			/>
 
-			{/* Update Form */}
 			<PlantSpeciesUpdateForm
 				plantSpecies={plantSpecies}
 				open={updateDialogOpen}
 				onOpenChange={setUpdateDialogOpen}
-				onSubmit={handleUpdateSubmit}
+				onSubmit={(values: PlantSpeciesUpdateFormValues) =>
+					handleUpdate(values as Parameters<typeof handleUpdate>[0])
+				}
 				isLoading={isUpdating}
 				error={null}
 			/>
 
-			{/* Delete Modal */}
 			<PlantSpeciesDeleteModal
 				plantSpecies={plantSpecies}
 				open={deleteDialogOpen}
 				onOpenChange={setDeleteDialogOpen}
-				onConfirm={handleDeleteConfirm}
+				onConfirm={handleDelete}
 				isLoading={isDeleting}
 			/>
 		</div>
