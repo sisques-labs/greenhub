@@ -28,7 +28,8 @@
     "completed": "Completado",
     "pending": "Pendiente",
     "viewAll": "Ver todo",
-    "seeAll": "Ver todas"
+    "seeAll": "Ver todas",
+    "add": "Añadir"
   },
   "nav": {
     "home": "Inicio",
@@ -36,6 +37,7 @@
     "plants": "Plantas",
     "growingUnits": "Unidades de Cultivo",
     "locations": "Ubicaciones",
+    "plantSpecies": "Biblioteca de Especies",
     "search": "Buscar",
     "searchPlaceholder": "Buscar..."
   },

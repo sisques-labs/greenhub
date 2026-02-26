@@ -28,7 +28,8 @@
     "completed": "Completed",
     "pending": "Pending",
     "viewAll": "View all",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "add": "Add"
   },
   "nav": {
     "home": "Home",
@@ -36,6 +37,7 @@
     "plants": "Plants",
     "growingUnits": "Growing Units",
     "locations": "Locations",
+    "plantSpecies": "Species Library",
     "search": "Search",
     "searchPlaceholder": "Search..."
   },
