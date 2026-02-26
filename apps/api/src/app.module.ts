@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -14,7 +13,6 @@ import { SharedModule } from '@/shared/shared.module';
 import '@/shared/transport/graphql/registered-enums/registered-enums.graphql';
 import { SupportModule } from '@/support/generic.module';
 import { ComplexityPlugin } from '@/shared/transport/graphql/plugins/complexity.plugin';
-import { GqlThrottlerGuard } from '@/shared/transport/graphql/guards/gql-throttler.guard';
 
 const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];
 
@@ -44,10 +42,6 @@ const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];
 	providers: [
 		AppResolver,
 		ComplexityPlugin,
-		{
-			provide: APP_GUARD,
-			useClass: GqlThrottlerGuard,
-		},
 	],
 })
 export class AppModule {}
