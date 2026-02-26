@@ -31,14 +31,21 @@ export class LocationDeletedEventHandler
 	 * @param event - The LocationDeletedEvent event to handle
 	 */
 	async handle(event: LocationDeletedEvent) {
-		this.logger.log(`Handling location deleted event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling location deleted event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Location deleted event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Location deleted event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Delete the location view model
-		await this.locationReadRepository.delete(event.entityId);
+			// 01: Delete the location view model
+			await this.locationReadRepository.delete(event.entityId);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle location deleted event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }
 

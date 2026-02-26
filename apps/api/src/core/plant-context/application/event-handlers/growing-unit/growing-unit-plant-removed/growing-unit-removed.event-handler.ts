@@ -44,37 +44,44 @@ export class GrowingUnitPlantRemovedEventHandler
 	 * @param event - The GrowingUnitPlantRemovedEvent event to handle
 	 */
 	async handle(event: GrowingUnitPlantRemovedEvent) {
-		this.logger.log(
-			`Handling growing unit plant removed event: ${event.entityId}`,
-		);
+		try {
+			this.logger.log(
+				`Handling growing unit plant removed event: ${event.entityId}`,
+			);
 
-		this.logger.debug(
-			`Growing unit plant removed event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Growing unit plant removed event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Get the growing unit aggregate to have the complete state
-		const growingUnitAggregate =
-			await this.assertGrowingUnitExistsService.execute(event.aggregateRootId);
+			// 01: Get the growing unit aggregate to have the complete state
+			const growingUnitAggregate =
+				await this.assertGrowingUnitExistsService.execute(event.aggregateRootId);
 
-		// 02: Get the location view model
-		const locationViewModel = await this.queryBus.execute(
-			new LocationViewModelFindByIdQuery({
-				id: growingUnitAggregate.locationId.value,
-			}),
-		);
+			// 02: Get the location view model
+			const locationViewModel = await this.queryBus.execute(
+				new LocationViewModelFindByIdQuery({
+					id: growingUnitAggregate.locationId.value,
+				}),
+			);
 
-		// 03: Create the updated growing unit view model from the aggregate
-		const growingUnitViewModel: GrowingUnitViewModel =
-			this.growingUnitViewModelBuilder
-				.reset()
-				.fromAggregate(growingUnitAggregate)
-				.withLocation(locationViewModel)
-				.build();
+			// 03: Create the updated growing unit view model from the aggregate
+			const growingUnitViewModel: GrowingUnitViewModel =
+				this.growingUnitViewModelBuilder
+					.reset()
+					.fromAggregate(growingUnitAggregate)
+					.withLocation(locationViewModel)
+					.build();
 
-		// 04: Save the updated growing unit view model
-		// Note: We don't update the plant view model here because:
-		// - If it's a transplant, GrowingUnitPlantAddedEvent will update the plant's growingUnitId
-		// - If the plant is actually deleted, PlantDeletedEvent will handle the deletion
-		await this.growingUnitReadRepository.save(growingUnitViewModel);
+			// 04: Save the updated growing unit view model
+			// Note: We don't update the plant view model here because:
+			// - If it's a transplant, GrowingUnitPlantAddedEvent will update the plant's growingUnitId
+			// - If the plant is actually deleted, PlantDeletedEvent will handle the deletion
+			await this.growingUnitReadRepository.save(growingUnitViewModel);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle growing unit plant removed event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }

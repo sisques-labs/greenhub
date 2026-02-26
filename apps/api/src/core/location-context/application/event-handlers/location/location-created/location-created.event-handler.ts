@@ -36,22 +36,29 @@ export class LocationCreatedEventHandler
 	 * @param event - The LocationCreatedEvent event to handle
 	 */
 	async handle(event: LocationCreatedEvent) {
-		this.logger.log(`Handling location created event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling location created event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Location created event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Location created event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Get the location aggregate to have the complete state
-		const locationAggregate = await this.assertLocationExistsService.execute(
-			event.entityId,
-		);
+			// 01: Get the location aggregate to have the complete state
+			const locationAggregate = await this.assertLocationExistsService.execute(
+				event.entityId,
+			);
 
-		// 02: Create the location view model from the aggregate
-		const locationViewModel: LocationViewModel =
-			this.locationViewModelFactory.fromAggregate(locationAggregate);
+			// 02: Create the location view model from the aggregate
+			const locationViewModel: LocationViewModel =
+				this.locationViewModelFactory.fromAggregate(locationAggregate);
 
-		// 03: Save the location view model
-		await this.locationReadRepository.save(locationViewModel);
+			// 03: Save the location view model
+			await this.locationReadRepository.save(locationViewModel);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle location created event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }

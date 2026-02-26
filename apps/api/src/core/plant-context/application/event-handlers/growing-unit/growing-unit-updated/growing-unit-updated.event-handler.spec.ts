@@ -167,5 +167,35 @@ describe('GrowingUnitUpdatedEventHandler', () => {
 			);
 			expect(mockGrowingUnitReadRepository.save).toHaveBeenCalledTimes(1);
 		});
+
+		it('should not throw when an error occurs', async () => {
+			const growingUnitId = '123e4567-e89b-12d3-a456-426614174000';
+			const locationId = '323e4567-e89b-12d3-a456-426614174000';
+			const event = new GrowingUnitUpdatedEvent(
+				{
+					aggregateRootId: growingUnitId,
+					aggregateRootType: 'GrowingUnitAggregate',
+					entityId: growingUnitId,
+					entityType: 'GrowingUnitAggregate',
+					eventType: 'GrowingUnitUpdatedEvent',
+				},
+				{
+					id: growingUnitId,
+					locationId,
+					name: 'Garden Bed 1 Updated',
+					type: GrowingUnitTypeEnum.GARDEN_BED,
+					capacity: 15,
+					dimensions: null,
+					plants: [],
+				},
+			);
+
+			mockAssertGrowingUnitExistsService.execute.mockRejectedValue(
+				new Error('Database error'),
+			);
+
+			await expect(handler.handle(event)).resolves.not.toThrow();
+			expect(mockGrowingUnitReadRepository.save).not.toHaveBeenCalled();
+		});
 	});
 });

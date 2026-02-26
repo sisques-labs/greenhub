@@ -35,24 +35,31 @@ export class PlantSpeciesCreatedEventHandler
 	 * @param event - The PlantSpeciesCreatedEvent event to handle
 	 */
 	async handle(event: PlantSpeciesCreatedEvent) {
-		this.logger.log(`Handling plant species created event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling plant species created event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Plant species created event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Plant species created event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Get the plant species aggregate to have the complete state
-		const plantSpeciesAggregate =
-			await this.assertPlantSpeciesExistsService.execute(event.entityId);
+			// 01: Get the plant species aggregate to have the complete state
+			const plantSpeciesAggregate =
+				await this.assertPlantSpeciesExistsService.execute(event.entityId);
 
-		// 02: Create the plant species view model from the aggregate
-		const plantSpeciesViewModel: PlantSpeciesViewModel =
-			this.plantSpeciesViewModelBuilder
-				.reset()
-				.fromAggregate(plantSpeciesAggregate)
-				.build();
+			// 02: Create the plant species view model from the aggregate
+			const plantSpeciesViewModel: PlantSpeciesViewModel =
+				this.plantSpeciesViewModelBuilder
+					.reset()
+					.fromAggregate(plantSpeciesAggregate)
+					.build();
 
-		// 03: Save the plant species view model
-		await this.plantSpeciesReadRepository.save(plantSpeciesViewModel);
+			// 03: Save the plant species view model
+			await this.plantSpeciesReadRepository.save(plantSpeciesViewModel);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle plant species created event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }

@@ -31,13 +31,20 @@ export class PlantDeletedEventHandler
 	 * @param event - The PlantDeletedEvent event to handle
 	 */
 	async handle(event: PlantDeletedEvent) {
-		this.logger.log(`Handling plant deleted event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling plant deleted event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Plant deleted event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Plant deleted event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Delete the plant view model
-		await this.plantReadRepository.delete(event.entityId);
+			// 01: Delete the plant view model
+			await this.plantReadRepository.delete(event.entityId);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle plant deleted event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }

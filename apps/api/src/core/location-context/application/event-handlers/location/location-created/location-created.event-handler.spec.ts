@@ -120,6 +120,33 @@ describe('LocationCreatedEventHandler', () => {
 			);
 			expect(mockLocationReadRepository.save).toHaveBeenCalledTimes(1);
 		});
+
+		it('should not throw when an error occurs', async () => {
+			const locationId = '123e4567-e89b-12d3-a456-426614174000';
+			const event = new LocationCreatedEvent(
+				{
+					aggregateRootId: locationId,
+					aggregateRootType: 'LocationAggregate',
+					entityId: locationId,
+					entityType: 'LocationAggregate',
+					eventType: 'LocationCreatedEvent',
+				},
+				{
+					id: locationId,
+					name: 'Living Room',
+					type: LocationTypeEnum.ROOM,
+					description: 'North-facing room with good sunlight',
+					parentLocationId: null,
+				},
+			);
+
+			mockAssertLocationExistsService.execute.mockRejectedValue(
+				new Error('Database error'),
+			);
+
+			await expect(handler.handle(event)).resolves.not.toThrow();
+			expect(mockLocationReadRepository.save).not.toHaveBeenCalled();
+		});
 	});
 });
 

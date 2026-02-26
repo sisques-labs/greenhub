@@ -37,31 +37,38 @@ export class GrowingUnitCreatedEventHandler
 	 * @param event - The GrowingUnitCreatedEvent event to handle
 	 */
 	async handle(event: GrowingUnitCreatedEvent) {
-		this.logger.log(`Handling growing unit created event: ${event.entityId}`);
+		try {
+			this.logger.log(`Handling growing unit created event: ${event.entityId}`);
 
-		this.logger.debug(
-			`Growing unit created event data: ${JSON.stringify(event.data)}`,
-		);
+			this.logger.debug(
+				`Growing unit created event data: ${JSON.stringify(event.data)}`,
+			);
 
-		// 01: Get the growing unit aggregate to have the complete state
-		const growingUnitAggregate =
-			await this.assertGrowingUnitExistsService.execute(event.entityId);
+			// 01: Get the growing unit aggregate to have the complete state
+			const growingUnitAggregate =
+				await this.assertGrowingUnitExistsService.execute(event.entityId);
 
-		const locationViewModel = await this.queryBus.execute(
-			new LocationViewModelFindByIdQuery({
-				id: growingUnitAggregate.locationId.value,
-			}),
-		);
+			const locationViewModel = await this.queryBus.execute(
+				new LocationViewModelFindByIdQuery({
+					id: growingUnitAggregate.locationId.value,
+				}),
+			);
 
-		// 02: Create the growing unit view model from the aggregate
-		const growingUnitViewModel: GrowingUnitViewModel =
-			this.growingUnitViewModelBuilder
-				.reset()
-				.fromAggregate(growingUnitAggregate)
-				.withLocation(locationViewModel)
-				.build();
+			// 02: Create the growing unit view model from the aggregate
+			const growingUnitViewModel: GrowingUnitViewModel =
+				this.growingUnitViewModelBuilder
+					.reset()
+					.fromAggregate(growingUnitAggregate)
+					.withLocation(locationViewModel)
+					.build();
 
-		// 03: Save the growing unit view model
-		await this.growingUnitReadRepository.save(growingUnitViewModel);
+			// 03: Save the growing unit view model
+			await this.growingUnitReadRepository.save(growingUnitViewModel);
+		} catch (error) {
+			this.logger.error(
+				`Failed to handle growing unit created event: ${event.entityId}`,
+				error,
+			);
+		}
 	}
 }

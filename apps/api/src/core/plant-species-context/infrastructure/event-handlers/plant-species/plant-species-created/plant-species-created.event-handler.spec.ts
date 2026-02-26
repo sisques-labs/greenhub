@@ -188,5 +188,51 @@ describe('PlantSpeciesCreatedEventHandler', () => {
 			expect(mockPlantSpeciesReadRepository.save).toHaveBeenCalledWith(mockViewModel);
 			expect(mockPlantSpeciesReadRepository.save).toHaveBeenCalledTimes(1);
 		});
+
+		it('should not throw when an error occurs', async () => {
+			const plantSpeciesId = '123e4567-e89b-12d3-a456-426614174000';
+			const now = new Date();
+
+			const event = new PlantSpeciesCreatedEvent(
+				{
+					aggregateRootId: plantSpeciesId,
+					aggregateRootType: 'PlantSpeciesAggregate',
+					entityId: plantSpeciesId,
+					entityType: 'PlantSpeciesAggregate',
+					eventType: 'PlantSpeciesCreatedEvent',
+				},
+				{
+					id: plantSpeciesId,
+					commonName: 'Tomato',
+					scientificName: 'Solanum lycopersicum',
+					family: 'Solanaceae',
+					description: 'A common garden vegetable.',
+					category: PlantSpeciesCategoryEnum.VEGETABLE,
+					difficulty: PlantSpeciesDifficultyEnum.EASY,
+					growthRate: PlantSpeciesGrowthRateEnum.FAST,
+					lightRequirements: PlantSpeciesLightRequirementsEnum.FULL_SUN,
+					waterRequirements: PlantSpeciesWaterRequirementsEnum.MEDIUM,
+					temperatureRange: { min: 15, max: 30 },
+					humidityRequirements: PlantSpeciesHumidityRequirementsEnum.MEDIUM,
+					soilType: PlantSpeciesSoilTypeEnum.LOAMY,
+					phRange: { min: 6.0, max: 7.0 },
+					matureSize: { height: 150, width: 60 },
+					growthTime: 90,
+					tags: ['edible', 'garden'],
+					isVerified: true,
+					contributorId: null,
+					createdAt: now,
+					updatedAt: now,
+					deletedAt: null,
+				},
+			);
+
+			mockAssertPlantSpeciesExistsService.execute.mockRejectedValue(
+				new Error('Database error'),
+			);
+
+			await expect(handler.handle(event)).resolves.not.toThrow();
+			expect(mockPlantSpeciesReadRepository.save).not.toHaveBeenCalled();
+		});
 	});
 });
