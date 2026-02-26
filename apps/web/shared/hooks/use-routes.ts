@@ -1,5 +1,5 @@
 import { SidebarData } from '@/shared/interfaces/sidebar-data.interface';
-import { Home, LayoutGrid, MapPin, Settings, Sprout } from 'lucide-react';
+import { BookOpen, Home, LayoutGrid, MapPin, Settings, Sprout } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
@@ -24,6 +24,7 @@ export const useAppRoutes = () => {
 		plants: buildLocalizedUrl('/plants'),
 		growingUnits: buildLocalizedUrl('/growing-units'),
 		locations: buildLocalizedUrl('/locations'),
+		plantSpecies: buildLocalizedUrl('/plant-species'),
 	} as const;
 
 	/**
@@ -59,6 +60,12 @@ export const useAppRoutes = () => {
 							url: routes.growingUnits,
 							isActive: pathname === routes.growingUnits,
 							icon: LayoutGrid,
+						},
+						{
+							title: t('plantSpecies'),
+							url: routes.plantSpecies,
+							isActive: pathname?.startsWith(routes.plantSpecies) ?? false,
+							icon: BookOpen,
 						},
 					],
 				},

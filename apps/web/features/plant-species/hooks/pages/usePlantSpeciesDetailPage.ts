@@ -26,9 +26,8 @@ export function usePlantSpeciesDetailPage(id: string) {
 		isLoading: isDeleting,
 	} = usePlantSpeciesDelete();
 
-	const [activeTab, setActiveTab] = useState<'overview' | 'care' | 'growth'>(
-		'overview',
-	);
+	const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
 	const handleUpdateSpecies = useCallback(
 		async (data: Omit<PlantSpeciesUpdateInput, 'id'>) => {
@@ -36,6 +35,7 @@ export function usePlantSpeciesDetailPage(id: string) {
 				{ id, ...data },
 				() => {
 					toast.success('Species updated successfully');
+					setUpdateDialogOpen(false);
 				},
 				() => {
 					toast.error('Failed to update species');
@@ -62,8 +62,10 @@ export function usePlantSpeciesDetailPage(id: string) {
 		plantSpecies,
 		isLoading,
 		error,
-		activeTab,
-		setActiveTab,
+		updateDialogOpen,
+		setUpdateDialogOpen,
+		deleteDialogOpen,
+		setDeleteDialogOpen,
 		handleUpdate: handleUpdateSpecies,
 		handleDelete: handleDeleteSpecies,
 		isUpdating,

@@ -1,4 +1,6 @@
 {
+  "verified": "Verified",
+  "noEnvironmentalData": "No environmental data available",
   "categories": {
     "VEGETABLE": { "label": "Vegetable" },
     "FRUIT": { "label": "Fruit" },
@@ -77,6 +79,86 @@
     "CHALKY": {
       "label": "Chalky",
       "description": "Alkaline, free-draining"
+    }
+  },
+  "tabs": {
+    "care": "Care",
+    "growth": "Growth",
+    "environment": "Environment"
+  },
+  "sections": {
+    "careOverview": "Care Overview",
+    "growthInfo": "Growth Information",
+    "environmentalConditions": "Environmental Conditions"
+  },
+  "list": {
+    "title": "Species Library",
+    "description": "Browse and manage plant species in your library.",
+    "searchPlaceholder": "Search species...",
+    "empty": "No species found",
+    "emptyDescription": "Start building your species library by adding your first plant species.",
+    "filters": {
+      "allCategories": "All Categories",
+      "allDifficulties": "All Difficulties",
+      "verifiedOnly": "Verified Only",
+      "clearFilters": "Clear Filters"
+    },
+    "table": {
+      "columns": {
+        "image": "Image",
+        "name": "Name",
+        "category": "Category",
+        "difficulty": "Difficulty",
+        "status": "Status",
+        "actions": "Actions"
+      }
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "create": {
+        "button": "Add Species",
+        "title": "Add Species",
+        "description": "Add a new plant species to the library",
+        "submit": "Create",
+        "loading": "Creating...",
+        "success": "Species created successfully",
+        "error": "Failed to create species"
+      },
+      "update": {
+        "title": "Update Species",
+        "description": "Update plant species information",
+        "submit": "Update",
+        "loading": "Updating...",
+        "success": "Species updated successfully",
+        "error": "Failed to update species"
+      },
+      "delete": {
+        "label": "Delete",
+        "loading": "Deleting...",
+        "success": "Species deleted successfully",
+        "error": "Failed to delete species",
+        "confirm": {
+          "title": "Delete Species",
+          "description": "Are you sure you want to delete {name}? This action cannot be undone."
+        }
+      }
+    },
+    "error": {
+      "loading": "Error loading species: {message}"
+    }
+  },
+  "detail": {
+    "breadcrumbs": {
+      "speciesLibrary": "Species Library"
+    },
+    "notFound": "Species not found",
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "error": {
+      "loading": "Error loading species: {message}"
     }
   }
 }
