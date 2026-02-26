@@ -98,8 +98,8 @@ export function PlantSpeciesListPage() {
 			if (!selectedSpecies) return;
 			await handleUpdate(
 				{
-					id: selectedSpecies.id,
 					...(values as Parameters<typeof handleUpdate>[0]),
+					id: selectedSpecies.id,
 				},
 				() => {
 					setUpdateDialogOpen(false);
