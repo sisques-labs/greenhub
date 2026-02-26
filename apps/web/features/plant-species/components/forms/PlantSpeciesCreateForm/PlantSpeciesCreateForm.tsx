@@ -118,7 +118,7 @@ export function PlantSpeciesCreateForm({
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+			<DialogContent className="w-full max-w-2xl max-h-[90vh] overflow-y-auto sm:max-h-[80vh]">
 				<DialogHeader>
 					<DialogTitle>
 						{t('features.plantSpecies.list.actions.create.title')}
@@ -130,7 +130,7 @@ export function PlantSpeciesCreateForm({
 				<Form errors={formErrors}>
 					<form onSubmit={handleSubmit} className="space-y-4">
 						{/* Basic Info */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>{t('shared.fields.commonName.label')}</FormLabel>
 								<FormControl>
@@ -186,7 +186,7 @@ export function PlantSpeciesCreateForm({
 						</FormItem>
 
 						{/* Classification */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>{t('shared.fields.category.label')}</FormLabel>
 								<Select
@@ -266,7 +266,7 @@ export function PlantSpeciesCreateForm({
 						</FormItem>
 
 						{/* Care Requirements */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>
 									{t('shared.fields.lightRequirements.label')}
@@ -328,7 +328,7 @@ export function PlantSpeciesCreateForm({
 							</FormItem>
 						</div>
 
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>
 									{t('shared.fields.humidityRequirements.label')}
@@ -392,7 +392,7 @@ export function PlantSpeciesCreateForm({
 						</div>
 
 						{/* Temperature Range */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>
 									{t('shared.fields.temperatureRange.min.label')}
@@ -430,7 +430,7 @@ export function PlantSpeciesCreateForm({
 						</div>
 
 						{/* pH Range */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>{t('shared.fields.phRange.min.label')}</FormLabel>
 								<FormControl>
@@ -462,7 +462,7 @@ export function PlantSpeciesCreateForm({
 						</div>
 
 						{/* Mature Size */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid gap-4 md:grid-cols-2">
 							<FormItem>
 								<FormLabel>
 									{t('shared.fields.matureSize.height.label')}
@@ -515,7 +515,7 @@ export function PlantSpeciesCreateForm({
 						{/* Tags */}
 						<FormItem>
 							<FormLabel>{t('shared.fields.tags.label')}</FormLabel>
-							<div className="flex gap-2">
+							<div className="flex flex-col gap-2 sm:flex-row">
 								<FormControl>
 									<Input
 										placeholder={t('shared.fields.tags.placeholder')}
