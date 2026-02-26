@@ -63,12 +63,11 @@ describe('plant-status.utils', () => {
 			expect(mockTranslate).toHaveBeenCalledWith('shared.status.plant.PLANTED');
 		});
 
-		it('should not call translation function for unknown status', () => {
-			const mockTranslate = jest.fn((key: string) => key);
+		it('should return a Badge with raw status text for unknown status', () => {
+			const badge = getPlantStatusBadge('UNKNOWN', mockT);
+			const { container } = render(badge);
 
-			getPlantStatusBadge('UNKNOWN', mockTranslate);
-
-			expect(mockTranslate).not.toHaveBeenCalled();
+			expect(container.textContent).toBe('UNKNOWN');
 		});
 	});
 });

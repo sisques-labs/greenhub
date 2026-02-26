@@ -1,19 +1,19 @@
 import { usePlantDetailPage } from '@/features/plants/hooks/use-plant-detail-page/use-plant-detail-page';
-import { usePlantFindById } from 'features/plants/hooks/use-plant-find-by-id/use-plant-find-by-id';
-import { usePlantTransplant } from 'features/plants/hooks/use-plant-transplant/use-plant-transplant';
-import { usePlantUpdate } from 'features/plants/hooks/use-plant-update/use-plant-update';
-import { usePlantDetailPageStore } from 'features/plants/stores/plant-detail-page-store';
-import { useGrowingUnitsFindByCriteria } from 'features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
+import { usePlantFindById } from '@/features/plants/hooks/use-plant-find-by-id/use-plant-find-by-id';
+import { usePlantTransplant } from '@/features/plants/hooks/use-plant-transplant/use-plant-transplant';
+import { usePlantUpdate } from '@/features/plants/hooks/use-plant-update/use-plant-update';
+import { usePlantDetailPageStore } from '@/features/plants/stores/plant-detail-page-store';
+import { useGrowingUnitsFindByCriteria } from '@/features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria';
 import { act, renderHook } from '@testing-library/react';
 
-jest.mock('features/plants/hooks/use-plant-find-by-id/use-plant-find-by-id');
+jest.mock('@/features/plants/hooks/use-plant-find-by-id/use-plant-find-by-id');
 jest.mock(
-	'features/plants/hooks/use-plant-transplant/use-plant-transplant',
+	'@/features/plants/hooks/use-plant-transplant/use-plant-transplant',
 );
-jest.mock('features/plants/hooks/use-plant-update/use-plant-update');
-jest.mock('features/plants/stores/plant-detail-page-store');
+jest.mock('@/features/plants/hooks/use-plant-update/use-plant-update');
+jest.mock('@/features/plants/stores/plant-detail-page-store');
 jest.mock(
-	'features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria',
+	'@/features/growing-units/hooks/use-growing-units-find-by-criteria/use-growing-units-find-by-criteria',
 );
 
 describe('usePlantDetailPage', () => {

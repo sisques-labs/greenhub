@@ -1,13 +1,13 @@
 import { authApiClient } from '@/features/auth/api/auth-api.client';
 import { useAuthRegister } from '@/features/auth/hooks/use-auth-register/use-auth-register';
-import { useAppRoutes } from 'shared/hooks/use-routes';
+import { useAppRoutes } from '@/shared/hooks/use-routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 jest.mock('@/features/auth/api/auth-api.client');
-jest.mock('shared/hooks/use-routes');
+jest.mock('@/shared/hooks/use-routes');
 
 const mockPush = jest.fn();
 
