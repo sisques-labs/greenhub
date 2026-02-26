@@ -113,6 +113,84 @@
     },
     "growingUnitId": {
       "label": "Unidad de Cultivo"
+    },
+    "commonName": {
+      "label": "Nombre Común",
+      "placeholder": "Introduce el nombre común"
+    },
+    "scientificName": {
+      "label": "Nombre Científico",
+      "placeholder": "Introduce el nombre científico"
+    },
+    "family": {
+      "label": "Familia",
+      "placeholder": "Introduce la familia de la planta"
+    },
+    "category": {
+      "label": "Categoría",
+      "placeholder": "Selecciona la categoría"
+    },
+    "difficulty": {
+      "label": "Nivel de Dificultad",
+      "placeholder": "Selecciona la dificultad"
+    },
+    "growthRate": {
+      "label": "Velocidad de Crecimiento",
+      "placeholder": "Selecciona la velocidad de crecimiento"
+    },
+    "lightRequirements": {
+      "label": "Necesidades de Luz",
+      "placeholder": "Selecciona las necesidades de luz"
+    },
+    "waterRequirements": {
+      "label": "Necesidades de Agua",
+      "placeholder": "Selecciona las necesidades de agua"
+    },
+    "humidityRequirements": {
+      "label": "Necesidades de Humedad",
+      "placeholder": "Selecciona las necesidades de humedad"
+    },
+    "soilType": {
+      "label": "Tipo de Suelo",
+      "placeholder": "Selecciona el tipo de suelo"
+    },
+    "temperatureRange": {
+      "min": {
+        "label": "Temperatura Mínima (°C)",
+        "placeholder": "Ej: 10"
+      },
+      "max": {
+        "label": "Temperatura Máxima (°C)",
+        "placeholder": "Ej: 35"
+      }
+    },
+    "phRange": {
+      "min": {
+        "label": "pH Mínimo",
+        "placeholder": "Ej: 6.0"
+      },
+      "max": {
+        "label": "pH Máximo",
+        "placeholder": "Ej: 7.5"
+      }
+    },
+    "matureSize": {
+      "height": {
+        "label": "Altura Adulta (cm)",
+        "placeholder": "Ej: 100"
+      },
+      "width": {
+        "label": "Anchura Adulta (cm)",
+        "placeholder": "Ej: 50"
+      }
+    },
+    "growthTime": {
+      "label": "Tiempo de Crecimiento (días)",
+      "placeholder": "Ej: 90"
+    },
+    "tags": {
+      "label": "Etiquetas",
+      "placeholder": "Añade una etiqueta y pulsa Enter"
     }
   },
   "types": {

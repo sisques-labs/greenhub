@@ -11,6 +11,9 @@
     "SUCCULENT": { "label": "Succulent" },
     "FERN": { "label": "Fern" },
     "GRASS": { "label": "Grass" },
+    "VINE": { "label": "Vine" },
+    "CACTUS": { "label": "Cactus" },
+    "PALM": { "label": "Palm" },
     "OTHER": { "label": "Other" }
   },
   "difficulty": {
