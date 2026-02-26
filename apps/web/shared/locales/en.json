@@ -113,6 +113,84 @@
     },
     "growingUnitId": {
       "label": "Growing Unit ID"
+    },
+    "commonName": {
+      "label": "Common Name",
+      "placeholder": "Enter common name"
+    },
+    "scientificName": {
+      "label": "Scientific Name",
+      "placeholder": "Enter scientific name"
+    },
+    "family": {
+      "label": "Family",
+      "placeholder": "Enter plant family"
+    },
+    "category": {
+      "label": "Category",
+      "placeholder": "Select category"
+    },
+    "difficulty": {
+      "label": "Difficulty Level",
+      "placeholder": "Select difficulty"
+    },
+    "growthRate": {
+      "label": "Growth Rate",
+      "placeholder": "Select growth rate"
+    },
+    "lightRequirements": {
+      "label": "Light Requirements",
+      "placeholder": "Select light requirements"
+    },
+    "waterRequirements": {
+      "label": "Water Requirements",
+      "placeholder": "Select water requirements"
+    },
+    "humidityRequirements": {
+      "label": "Humidity Requirements",
+      "placeholder": "Select humidity requirements"
+    },
+    "soilType": {
+      "label": "Soil Type",
+      "placeholder": "Select soil type"
+    },
+    "temperatureRange": {
+      "min": {
+        "label": "Min Temperature (°C)",
+        "placeholder": "e.g. 10"
+      },
+      "max": {
+        "label": "Max Temperature (°C)",
+        "placeholder": "e.g. 35"
+      }
+    },
+    "phRange": {
+      "min": {
+        "label": "Min pH",
+        "placeholder": "e.g. 6.0"
+      },
+      "max": {
+        "label": "Max pH",
+        "placeholder": "e.g. 7.5"
+      }
+    },
+    "matureSize": {
+      "height": {
+        "label": "Mature Height (cm)",
+        "placeholder": "e.g. 100"
+      },
+      "width": {
+        "label": "Mature Width (cm)",
+        "placeholder": "e.g. 50"
+      }
+    },
+    "growthTime": {
+      "label": "Growth Time (days)",
+      "placeholder": "e.g. 90"
+    },
+    "tags": {
+      "label": "Tags",
+      "placeholder": "Add a tag and press Enter"
     }
   },
   "types": {

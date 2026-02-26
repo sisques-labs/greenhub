@@ -11,6 +11,9 @@
     "SUCCULENT": { "label": "Suculenta" },
     "FERN": { "label": "Helecho" },
     "GRASS": { "label": "Hierba" },
+    "VINE": { "label": "Enredadera" },
+    "CACTUS": { "label": "Cactus" },
+    "PALM": { "label": "Palmera" },
     "OTHER": { "label": "Otro" }
   },
   "difficulty": {
