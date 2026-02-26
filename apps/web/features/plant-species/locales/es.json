@@ -1,4 +1,6 @@
 {
+  "verified": "Verificado",
+  "noEnvironmentalData": "No hay datos ambientales disponibles",
   "categories": {
     "VEGETABLE": { "label": "Verdura" },
     "FRUIT": { "label": "Fruta" },
@@ -77,6 +79,86 @@
     "CHALKY": {
       "label": "Calcáreo",
       "description": "Alcalino, buen drenaje"
+    }
+  },
+  "tabs": {
+    "care": "Cuidados",
+    "growth": "Crecimiento",
+    "environment": "Entorno"
+  },
+  "sections": {
+    "careOverview": "Resumen de Cuidados",
+    "growthInfo": "Información de Crecimiento",
+    "environmentalConditions": "Condiciones Ambientales"
+  },
+  "list": {
+    "title": "Biblioteca de Especies",
+    "description": "Navega y gestiona las especies de plantas en tu biblioteca.",
+    "searchPlaceholder": "Buscar especies...",
+    "empty": "No se encontraron especies",
+    "emptyDescription": "Empieza a construir tu biblioteca de especies añadiendo tu primera especie de planta.",
+    "filters": {
+      "allCategories": "Todas las Categorías",
+      "allDifficulties": "Todas las Dificultades",
+      "verifiedOnly": "Solo Verificadas",
+      "clearFilters": "Limpiar Filtros"
+    },
+    "table": {
+      "columns": {
+        "image": "Imagen",
+        "name": "Nombre",
+        "category": "Categoría",
+        "difficulty": "Dificultad",
+        "status": "Estado",
+        "actions": "Acciones"
+      }
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "create": {
+        "button": "Añadir Especie",
+        "title": "Añadir Especie",
+        "description": "Añade una nueva especie de planta a la biblioteca",
+        "submit": "Crear",
+        "loading": "Creando...",
+        "success": "Especie creada correctamente",
+        "error": "Error al crear la especie"
+      },
+      "update": {
+        "title": "Actualizar Especie",
+        "description": "Actualiza la información de la especie de planta",
+        "submit": "Actualizar",
+        "loading": "Actualizando...",
+        "success": "Especie actualizada correctamente",
+        "error": "Error al actualizar la especie"
+      },
+      "delete": {
+        "label": "Eliminar",
+        "loading": "Eliminando...",
+        "success": "Especie eliminada correctamente",
+        "error": "Error al eliminar la especie",
+        "confirm": {
+          "title": "Eliminar Especie",
+          "description": "¿Estás seguro de que quieres eliminar {name}? Esta acción no se puede deshacer."
+        }
+      }
+    },
+    "error": {
+      "loading": "Error al cargar las especies: {message}"
+    }
+  },
+  "detail": {
+    "breadcrumbs": {
+      "speciesLibrary": "Biblioteca de Especies"
+    },
+    "notFound": "Especie no encontrada",
+    "actions": {
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "error": {
+      "loading": "Error al cargar la especie: {message}"
     }
   }
 }
